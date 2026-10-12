@@ -1,0 +1,88 @@
+{
+  "schema": "videohub-layout-v1",
+  "description": "三个上游仓库在磁盘上的固定相对布局。任何自动化脚本都必须按本文件解析路径，不得硬编码。",
+  "updated_at": "2026-09-21",
+  "root_definition": {
+    "env_var": "VIDEOHUB_ROOT",
+    "comment": "工作根目录。三个仓库都必须是它的直接或隔一层子目录。",
+    "example": "D:/work",
+    "sibling_of_repos": true
+  },
+  "repos": {
+    "haike": {
+      "path": "Haike_video",
+      "depth": 1,
+      "upstream_url": "https://github.com/hrbj18/Haike_video.git",
+      "default_branch": "dev",
+      "purpose": "视频生产工作台：分镜 / Remotion 渲染 / 配音 / 预览 / 成片",
+      "runtime": "Python 3.12",
+      "sentinel_files": [
+        "AGENT_GUIDE.md",
+        "VERSION",
+        "backlot",
+        "scripts/audit_context_handoff.py",
+        "scripts/setup.ps1",
+        "scripts/preflight.ps1",
+        "启动工作台.bat"
+      ]
+    },
+    "copyskill": {
+      "path": "copy_skill/copy_skill-main",
+      "depth": 2,
+      "upstream_url": "https://github.com/hrbj18/copy_skill.git",
+      "default_branch": "main",
+      "purpose": "素材采集与选题情报：B站/抖音采集、候选池、每期研究包",
+      "runtime": "Python >= 3.11, 用 uv 管理（不是 pip）",
+      "sentinel_files": [
+        "AGENTS.md",
+        "pyproject.toml",
+        "config/content_intelligence.json",
+        "src/douyin_intelligence/episode_research_pack.py",
+        "src/douyin_intelligence/daily_hot_candidate_pool.py",
+        "docs/handoff/context-policy.json"
+      ]
+    },
+    "creatorhub": {
+      "path": "creatorhub",
+      "depth": 1,
+      "upstream_url": "https://github.com/3441293738/creatorhub.git",
+      "default_branch": "main",
+      "purpose": "多平台发布面板：抖音 / 快手 / 视频号 / 小红书",
+      "runtime": "Python 3.11+ (FastAPI + Patchright)",
+      "sentinel_files": [
+        "requirements.txt",
+        "config.example.yaml",
+        "app/main.py"
+      ]
+    }
+  },
+  "hard_constraints": [
+    {
+      "id": "LAYOUT-1",
+      "rule": "copyskill 必须是两层路径 copy_skill/copy_skill-main，不是单层 copy_skill。",
+      "reason": "Haike 的跨仓测试用 Path(REPO_ROOT).parent/'copy_skill'/'copy_skill-main'/'src' 解析生产端模块。",
+      "evidence": "Haike_video/tests/backlot/test_copy_skill_research_pack.py:1316",
+      "failure_mode": "路径写错时 pytest.skip() 静默跳过，不报错、不失败，跨仓用例从此永不执行。"
+    },
+    {
+      "id": "LAYOUT-2",
+      "rule": "三个仓库必须是同一个根目录下的兄弟关系，且相对深度固定为 1 / 2 / 1。",
+      "reason": "Haike 的 REPO_ROOT 来自 lib/paths，断言隐含了与 copy_skill 的兄弟关系。",
+      "evidence": "Haike_video/lib/paths.py (REPO_ROOT) + test_copy_skill_research_pack.py:1316",
+      "failure_mode": "布局错位导致跨仓读取函数无法解析到对端，退化为 skip 或 missing。"
+    },
+    {
+      "id": "LAYOUT-3",
+      "rule": "contracts/research-pack-contract.md 的取用路径同样是父目录下的 copy_skill/copy_skill-main/docs/tasks/。",
+      "reason": "合同一致性断言直接读该文档文本。",
+      "evidence": "test_copy_skill_research_pack.py:1385-1396",
+      "failure_mode": "文档缺失时 skip 并提示 'CopySkill 冻结合同文档不在本机'。"
+    }
+  ],
+  "root_environment_variables": {
+    "VIDEOHUB_ROOT": "工作根目录绝对路径",
+    "COPY_SKILL_HOTSPOT_ROOT": "Haike 侧读取候选池的根目录，默认 integrations/copy_skill_hotspot（相对 Haike 仓）",
+    "OPENMONTAGE_RUNTIME_ROOT": "渲染运行时目录，默认 projects（相对 Haike 仓）"
+  },
+  "verification_command": "python verify/check_all.py --level=1"
+}

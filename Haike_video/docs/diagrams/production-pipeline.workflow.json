@@ -1,0 +1,96 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Haike_video 主生产线流程",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "output": "docs/diagrams/production-pipeline.html",
+    "views": [
+      {
+        "id": "full-line",
+        "label": "完整生产链",
+        "focus": ["source", "script", "narration", "visual", "queue", "compose", "preview", "release"],
+        "note": "从选题素材一路到正式成片的正常路径。"
+      },
+      {
+        "id": "paid-and-human",
+        "label": "付费门与人工门",
+        "focus": ["visual", "queue", "preview", "release"],
+        "note": "两处必须停下来确认的地方：付费调用与成片交付。"
+      },
+      {
+        "id": "rework",
+        "label": "不达标返工",
+        "focus": ["preview", "rework", "compose"],
+        "note": "验收失败后如何保留已付费产物、只重跑受影响的阶段。"
+      }
+    ]
+  },
+  "lanes": [
+    { "id": "content", "label": "内容生产" },
+    { "id": "pipeline", "label": "队列与合成" },
+    { "id": "gate", "label": "人工验收与交付", "variant": "exception" }
+  ],
+  "phases": [
+    { "id": "prepare", "label": "准备", "fromCol": 0, "toCol": 1 },
+    { "id": "produce", "label": "生产", "fromCol": 2, "toCol": 3, "variant": "emphasis" },
+    { "id": "deliver", "label": "验收与交付", "fromCol": 4, "toCol": 5, "variant": "dashed" }
+  ],
+  "groups": [
+    { "id": "master_clock", "label": "主时钟", "lane": "content", "fromCol": 2, "toCol": 3, "variant": "emphasis" },
+    { "id": "rework_path", "label": "不达标返工", "lane": "gate", "fromCol": 4, "toCol": 4, "variant": "dashed" }
+  ],
+  "mainPath": ["source", "script", "narration", "visual", "queue", "compose", "preview", "release"],
+  "nodes": [
+    { "id": "source", "lane": "content", "col": 0, "type": "external", "label": "选题与素材", "sublabel": "研究包·热点·实拍", "width": 132 },
+    { "id": "script", "lane": "content", "col": 1, "type": "backend", "label": "脚本定稿", "sublabel": "取材分档 + 六门禁", "tag": "定稿前跑免费 TTS", "width": 132 },
+    { "id": "narration", "lane": "content", "col": 2, "type": "backend", "label": "配音", "sublabel": "本地 Qwen3-TTS", "tag": "成片主时钟", "width": 132 },
+    { "id": "visual", "lane": "content", "col": 3, "type": "cloud", "label": "数字人与画面", "sublabel": "InfiniteTalk / B-roll", "tag": "付费前须声明", "width": 132 },
+    { "id": "queue", "lane": "pipeline", "col": 3, "type": "messagebus", "label": "统一生产队列", "sublabel": "单 worker · 幂等", "tag": "唯一执行权威", "width": 132 },
+    { "id": "compose", "lane": "pipeline", "col": 4, "type": "backend", "label": "合成", "sublabel": "overlay→audio→music", "tag": "预览与成片同时间线", "width": 132 },
+    { "id": "preview", "lane": "pipeline", "col": 5, "type": "backend", "label": "待审预览", "sublabel": "review_ready", "width": 132 },
+    { "id": "rework", "lane": "gate", "col": 4, "type": "security", "label": "不达标返工", "sublabel": "响度 / 字幕安全区", "tag": "保留已付费产物", "width": 132 },
+    { "id": "release", "lane": "gate", "col": 5, "type": "security", "label": "正式成片", "sublabel": "人工确认后交付", "tag": "不自动发布", "width": 132 }
+  ],
+  "edges": [
+    { "id": "source-script", "from": "source", "to": "script" },
+    { "id": "script-narration", "from": "script", "to": "narration", "variant": "emphasis" },
+    { "id": "narration-visual", "from": "narration", "to": "visual", "label": "音频时长为主时钟", "variant": "emphasis" },
+    { "id": "visual-queue", "from": "visual", "to": "queue", "variant": "emphasis" },
+    { "id": "queue-compose", "from": "queue", "to": "compose", "route": "straight" },
+    { "id": "compose-preview", "from": "compose", "to": "preview", "label": "产出待审预览", "route": "straight" },
+    { "id": "preview-release", "from": "preview", "to": "release", "label": "人工确认", "variant": "security" },
+    { "id": "preview-rework", "from": "preview", "to": "rework", "label": "不达标", "variant": "security", "role": "error" },
+    { "id": "rework-compose", "from": "rework", "to": "compose", "variant": "dashed", "role": "return" }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "主线口径",
+      "items": [
+        "配音是成片主时钟，画面跟着音频走，不反过来拉长语速迁就画格",
+        "所有父任务经统一生产队列提交，队列是唯一执行权威",
+        "待审预览与正式成片共用同一条时间线、字幕与裁切合同"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "两处必须停下来",
+      "items": [
+        "付费调用前必须声明 provider、模型或实例与成本上限",
+        "正式渲染响度不达标直接 raise，预览阶段只告警",
+        "预览显示 review_ready 不等于批准，成片需人工观看确认"
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "证据与资产",
+      "items": [
+        "每个上片素材都有来源与稳定 ID，数字人与主画面是两层",
+        "重试保留已完成的付费产物，禁止为一个镜头整片重跑",
+        "正式视频不自动发布，自动化最多停在待审预览"
+      ]
+    }
+  ]
+}

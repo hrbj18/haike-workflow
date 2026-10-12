@@ -1,0 +1,2769 @@
+{
+  "version": "1.0",
+  "timezone": "Asia/Shanghai",
+  "media_tools": {
+    "ffmpeg": "ffmpeg",
+    "ffprobe": "ffprobe"
+  },
+  "window_mode": "target_calendar_day",
+  "top_n": 30,
+  "state_path": "data/state/seen_videos.json",
+  "jobs": {
+    "state_path": "data/state/workbench_status.json",
+    "control_path": "data/state/workbench_control.json",
+    "lock_root": ".locks",
+    "log_root": "data/logs",
+    "daily_news": {
+      "schedule_time": "02:00",
+      "output_root": "output/daily-news",
+      "max_output_items": 5,
+      "max_douyin_reference_videos": 10,
+      "source_timeout_seconds": 20,
+      "sources": [
+        {
+          "name": "OpenAI News",
+          "url": "https://openai.com/news/rss.xml",
+          "kind": "official",
+          "enabled": true
+        },
+        {
+          "name": "Google Blog",
+          "url": "https://blog.google/feed/",
+          "kind": "official",
+          "enabled": true
+        },
+        {
+          "name": "GitHub Changelog",
+          "url": "https://github.blog/changelog/feed/",
+          "kind": "official",
+          "enabled": true
+        }
+      ]
+    },
+    "douyin_tech_ranking": {
+      "output_root": "output/douyin-tech-ranking",
+      "max_metadata_records": 10,
+      "keywords": [
+        "AI新品"
+      ],
+      "weights": {
+        "like": 22.0,
+        "comment": 20.0,
+        "collect": 18.0,
+        "share": 22.0,
+        "related_videos": 8.0,
+        "freshness": 10.0
+      }
+    },
+    "trusted_account_news": {
+      "output_root": "output/trusted-news-accounts",
+      "temp_root": "data/temp/trusted-news-accounts",
+      "window_hours": 48,
+      "max_items": 10,
+      "hard_max_items": 10,
+      "min_description_chars": 120,
+      "min_asr_chars": 40,
+      "collection_timeout_seconds": 120,
+      "asr_timeout_seconds": 300,
+      "total_timeout_seconds": 900,
+      "ai_brief": {
+        "enabled": true,
+        "auto_after_collection": true,
+        "prompt_version": "trusted-news-editorial-v2",
+        "schema_version": "1.0",
+        "max_items": 10,
+        "max_chars_per_item": 6000,
+        "max_total_chars": 40000,
+        "max_output_tokens": 3200,
+        "request_limit": 1
+      },
+      "visual_ocr": {
+        "enabled": true,
+        "ffmpeg_path": "ffmpeg",
+        "ffprobe_path": "ffprobe",
+        "frame_strategy": "scene_plus_interval_guard",
+        "scene_threshold": 0.15,
+        "interval_seconds": 1.0,
+        "first_pass_width": 960,
+        "retry_width": 1280,
+        "retry_max_frames": 10,
+        "per_video_timeout_seconds": 60,
+        "batch_timeout_seconds": 480,
+        "batch_soft_frame_limit": 300,
+        "batch_hard_frame_limit": 400,
+        "frame_budgets": [
+          {
+            "max_duration_seconds": 15,
+            "first_pass": 20,
+            "hard": 30
+          },
+          {
+            "max_duration_seconds": 30,
+            "first_pass": 30,
+            "hard": 45
+          },
+          {
+            "max_duration_seconds": 60,
+            "first_pass": 40,
+            "hard": 60
+          },
+          {
+            "max_duration_seconds": 120,
+            "first_pass": 60,
+            "hard": 80
+          },
+          {
+            "max_duration_seconds": null,
+            "first_pass": 80,
+            "hard": 100
+          }
+        ],
+        "usable_min_chars": 8,
+        "usable_min_confidence": 0.65,
+        "success_min_chars": 60,
+        "success_min_card_chars": 15,
+        "success_min_cards": 2,
+        "success_min_confidence": 0.75,
+        "success_min_coverage": 0.7,
+        "partial_min_chars": 15,
+        "partial_min_confidence": 0.55,
+        "partial_min_coverage": 0.3,
+        "text_similarity": 0.88,
+        "near_identical_mean_delta": 0.5,
+        "near_identical_changed_ratio": 0.001
+      },
+      "weights": {
+        "like": 30.0,
+        "comment": 25.0,
+        "collect": 18.0,
+        "share": 17.0,
+        "freshness": 10.0
+      }
+    },
+    "account_pool": {
+      "state_path": "data/state/candidate_accounts.json",
+      "output_root": "output/account-pool",
+      "temp_root": "data/temp/account-pool",
+      "window_days": 14,
+      "max_posts_per_account": 30,
+      "collection_timeout_seconds": 120,
+      "total_timeout_seconds": 300,
+      "concurrency": 1,
+      "short_video_max_seconds": 180,
+      "min_sample_posts": 5,
+      "thresholds": {
+        "core_min_active_days": 10,
+        "supplemental_min_active_days": 5,
+        "min_technology_news_ratio": 0.6,
+        "min_short_video_ratio": 0.6,
+        "max_promotion_ratio": 0.3,
+        "min_duration_coverage": 0.6
+      },
+      "technology_keywords": [
+        "AI",
+        "人工智能",
+        "大模型",
+        "芯片",
+        "科技",
+        "手机",
+        "机器人",
+        "软件",
+        "硬件",
+        "互联网",
+        "发布",
+        "开源",
+        "算力",
+        "数据中心",
+        "苹果",
+        "华为",
+        "小米",
+        "英伟达",
+        "OpenAI"
+      ],
+      "promotion_keywords": [
+        "课程",
+        "训练营",
+        "报名",
+        "购买",
+        "优惠",
+        "下单",
+        "直播间",
+        "咨询",
+        "招生",
+        "带货",
+        "限时福利"
+      ],
+      "visual_sampling": {
+        "enabled": false,
+        "global_max_samples": 3,
+        "audio_policy": "never"
+      },
+      "initial_candidates": [
+        {
+          "display_name": "量子位",
+          "profile_url": "https://www.douyin.com/user/MS4wLjABAAAA1bL6-89P1h_ODlkg17TXKneHuPfHijf8ogsmg6gPVAQ",
+          "note": "候选观察账号；未经用户手动晋级。"
+        },
+        {
+          "display_name": "36氪",
+          "profile_url": "https://www.douyin.com/user/MS4wLjABAAAAVlVXeG5jSANae673ZqtesxdJnMXcffIRYggdheHgyNA",
+          "note": "候选观察账号；未经用户手动晋级。"
+        },
+        {
+          "display_name": "大计算AI产业",
+          "id": "42896519316",
+          "profile_url": "https://www.douyin.com/user/MS4wLjABAAAArcRAVxpIteqgtpJ7yeKGeD2bUwheN4_Ulb2A4WV6-aqsulGktxw_ibElK2oeFjhk",
+          "lifecycle_status": "candidate",
+          "enabled": true,
+          "production_role": "topic_radar",
+          "discovery_enabled": true,
+          "source_group_id": "kaishi-dajisuan-ai-matrix",
+          "source_group_name": "大计算 / 开市科技矩阵",
+          "editorial_lane": "ai_general",
+          "note": "选题雷达候选；不构成 trusted、benchmark 或事实来源。"
+        },
+        {
+          "display_name": "大计算AI产业平台",
+          "id": "44882093155",
+          "profile_url": "https://www.douyin.com/user/MS4wLjABAAAAgq4RryZ2DMxbpwxcM012yGzkGPJUdlKSUySPWfbG3_1a3OkjIUYrE_Py-TAs3sMC",
+          "lifecycle_status": "candidate",
+          "enabled": true,
+          "production_role": "topic_radar",
+          "discovery_enabled": true,
+          "source_group_id": "kaishi-dajisuan-ai-matrix",
+          "source_group_name": "大计算 / 开市科技矩阵",
+          "editorial_lane": "compute_infrastructure",
+          "note": "选题雷达候选；不构成 trusted、benchmark 或事实来源。"
+        },
+        {
+          "display_name": "大计算算力炼丹炉",
+          "id": "49506654128",
+          "profile_url": "https://www.douyin.com/user/MS4wLjABAAAAyGZquNZOuBYdFAUgPU47rW2VECNk0umlDyjeojSPPn0nZQvnda1nEoE_SdQo1VQc",
+          "lifecycle_status": "candidate",
+          "enabled": true,
+          "production_role": "topic_radar",
+          "discovery_enabled": true,
+          "source_group_id": "kaishi-dajisuan-ai-matrix",
+          "source_group_name": "大计算 / 开市科技矩阵",
+          "editorial_lane": "chips_hardware",
+          "note": "选题雷达候选；不构成 trusted、benchmark 或事实来源。"
+        }
+      ]
+    },
+    "visual_anchor": {
+      "stories_path": "config/visual_anchor_stories.json",
+      "output_root": "output/visual-anchor",
+      "temp_root": "data/temp/visual-anchor",
+      "max_stories": 3,
+      "max_candidates": 12,
+      "max_final_assets": 3,
+      "minimum_relevance_score": 45,
+      "total_timeout_seconds_per_story": 300,
+      "request_timeout_seconds": 15,
+      "max_requests_per_story": 10,
+      "max_total_bytes_per_story": 52428800,
+      "max_asset_bytes": 15728640,
+      "max_html_bytes": 2097152,
+      "min_dimension": 480,
+      "max_redirects": 3,
+      "fake_ip_networks": [
+        "198.18.0.0/15",
+        "fd7a:746f:6c69:6e65:66::/96"
+      ],
+      "generic_negative_terms": [
+        "AI大脑",
+        "蓝色电路",
+        "通用机器人",
+        "generic AI",
+        "stock photo",
+        "placeholder",
+        "avatar",
+        "二维码"
+      ],
+      "allowed_domains": [
+        "firstinspires.org",
+        "www.firstinspires.org",
+        "info.firstinspires.org",
+        "community.firstinspires.org",
+        "nintendo.com",
+        "www.nintendo.com",
+        "assets.nintendo.com",
+        "openai.com",
+        "www.openai.com",
+        "images.ctfassets.net",
+        "github.blog",
+        "sspai.com",
+        "cdn.sspai.com",
+        "cdnfile.sspai.com",
+        "www.ithome.com",
+        "img.ithome.com",
+        "apps.apple.com",
+        "is1-ssl.mzstatic.com",
+        "developer.cloud.tencent.com",
+        "developer.qcloudimg.com",
+        "qccommunity.qcloudimg.com",
+        "qcloudimg.tencent-cloud.cn",
+        "hyperos.mi.com",
+        "cia.hyperos.mi.com",
+        "www.beijing.gov.cn"
+      ],
+      "rss_sources": [
+        {
+          "name": "少数派",
+          "url": "https://sspai.com/feed",
+          "locale": "zh-CN",
+          "enabled": true,
+          "health_check": {
+            "checked_at": "2026-08-28T15:40:00+08:00",
+            "status": "reachable_no_images",
+            "http_status": 200,
+            "content_type": "application/xml",
+            "image_candidates_observed": 0
+          }
+        },
+        {
+          "name": "IT之家",
+          "url": "https://www.ithome.com/rss/",
+          "locale": "zh-CN",
+          "enabled": true,
+          "health_check": {
+            "checked_at": "2026-08-28T15:40:00+08:00",
+            "status": "reachable_with_embedded_images",
+            "http_status": 200,
+            "content_type": "text/xml",
+            "image_candidates_observed": 55
+          }
+        }
+      ],
+      "douyin": {
+        "enabled_by_default": false,
+        "max_queries": 3,
+        "max_results": 8,
+        "max_cover_downloads": 2,
+        "max_cover_requests": 4,
+        "max_cover_bytes_each": 8388608,
+        "max_cover_bytes_total": 12582912,
+        "max_video_downloads": 1,
+        "max_video_bytes": 62914560,
+        "max_video_duration_seconds": 90,
+        "max_frames": 8,
+        "audio_policy": "never",
+        "concurrency": 1
+      },
+      "domestic_smoke": {
+        "batch_paths": [
+          "config/visual_anchor_domestic_batch_1.json",
+          "config/visual_anchor_domestic_batch_2.json"
+        ],
+        "output_root": "output/visual-anchor-domestic-smoke",
+        "target_date": "2026-08-28"
+      }
+    },
+    "material_probe": {
+      "story_path": "config/material_probe_story.json",
+      "output_root": "output/material-probe",
+      "temp_root": "data/temp/material-probe",
+      "total_timeout_seconds": 300,
+      "request_timeout_seconds": 15,
+      "max_requests": 10,
+      "max_assets": 5,
+      "max_total_bytes": 52428800,
+      "max_asset_bytes": 15728640,
+      "max_html_bytes": 2097152,
+      "min_dimension": 480,
+      "max_official_images": 2,
+      "max_commons_assets": 1,
+      "max_redirects": 3,
+      "fake_ip_networks": [
+        "198.18.0.0/15",
+        "fd7a:746f:6c69:6e65:66::/96"
+      ],
+      "allowed_domains": [
+        "gatesnotes.com",
+        "www.gatesnotes.com",
+        "assets.gatesnotes.com",
+        "commons.wikimedia.org",
+        "upload.wikimedia.org"
+      ],
+      "supported_commons_licenses": [
+        "cc0",
+        "public domain",
+        "cc by 2.0",
+        "cc by 3.0",
+        "cc by 4.0",
+        "cc by-sa 2.0",
+        "cc by-sa 3.0",
+        "cc by-sa 4.0"
+      ]
+    },
+    "daily_material_pack": {
+      "selection_input": "config/daily_material_pack_domestic_2026-08-28.json",
+      "output_root": "output/daily-material-pack",
+      "temp_root": "data/temp/daily-material-pack",
+      "max_stories": 4,
+      "max_assets_per_story": 2,
+      "max_wall_seconds": 300,
+      "max_network_requests": 40,
+      "max_download_bytes": 209715200,
+      "quick_by_default": true
+    },
+    "daily_hot_candidate_pool_v2": {
+      "output_root": "output/每日新闻素材",
+      "max_wall_seconds": 3600,
+      "per_keyword_limit": 10,
+      "max_raw_records": 100,
+      "max_events": 30,
+      "supplemental_stop_events": 20,
+      "core_keywords": [
+        "科技快讯",
+        "AI新品",
+        "大模型发布",
+        "开源大模型",
+        "芯片发布",
+        "人形机器人"
+      ],
+      "supplemental_keywords": [
+        "最新开源大模型",
+        "热门开源项目",
+        "GitHub热门项目",
+        "智能硬件新品",
+        "手机系统更新"
+      ],
+      "editorial_priority": {
+        "enabled": true,
+        "weights": {
+          "heat": 0.45,
+          "strategic_significance": 0.25,
+          "public_relevance": 0.2,
+          "discussion_value": 0.1
+        }
+      },
+      "max_image_requests": 6,
+      "max_image_bytes": 52428800,
+      "max_asset_bytes": 15728640,
+      "image_total_seconds": 900,
+      "story_enrichment": {
+        "enabled": true,
+        "max_detailed_stories": 40,
+        "max_selected_videos": 40,
+        "max_supporting_videos": 20,
+        "max_evidence_videos": 3,
+        "min_description_chars": 80,
+        "min_evidence_chars": 40,
+        "max_media_videos": 20,
+        "media_total_seconds": 900,
+        "per_media_timeout_seconds": 45,
+        "ocr_frame_soft_limit": 160,
+        "ocr_frame_hard_limit": 220,
+        "max_asr_videos": 0,
+        "asr_total_seconds": 180,
+        "per_asr_timeout_seconds": 90,
+        "llm_max_batches": 4,
+        "llm_batch_size": 10,
+        "config_path": "config/content_intelligence.json"
+      },
+      "consumer_hot_list": {
+        "enabled": true,
+        "target_count": 20,
+        "llm_batch_size": 10,
+        "max_output_tokens": 3000
+      },
+      "public_detail_discovery": {
+        "enabled": true,
+        "provider": "google_news_rss",
+        "max_queries": 40,
+        "max_results_per_query": 3,
+        "request_timeout_seconds": 12,
+        "max_response_bytes": 131072,
+        "max_total_bytes": 1048576,
+        "min_detail_chars": 60,
+        "freshness_days": 3,
+        "freshness_grace_hours": 12
+      },
+      "official_discovery": {
+        "enabled": true,
+        "max_sources": 14,
+        "max_requests": 14,
+        "max_total_bytes": 10485760,
+        "max_page_bytes": 1048576,
+        "total_timeout_seconds": 300,
+        "request_timeout_seconds": 20,
+        "max_redirects": 2,
+        "max_events": 50,
+        "douyin_signal_max_events": 20,
+        "douyin_signal_per_event_limit": 5,
+        "article_detail_max_events": 24,
+        "article_detail_max_requests": 48,
+        "article_detail_max_total_bytes": 12582912,
+        "article_detail_max_page_bytes": 524288,
+        "article_detail_total_timeout_seconds": 300,
+        "article_detail_timeout_seconds": 12,
+        "article_detail_allowed_domains": [
+          "www.stdaily.com",
+          "www.chinanews.com",
+          "www.cas.cn",
+          "www.news.cn",
+          "www.xinhuanet.com",
+          "www.cnr.cn",
+          "news.cnr.cn",
+          "www.people.com.cn",
+          "paper.people.com.cn",
+          "www.36kr.com",
+          "m.36kr.com",
+          "www.ithome.com",
+          "www.leiphone.com",
+          "www.qbitai.com",
+          "www.geekpark.net",
+          "www.thepaper.cn",
+          "www.cls.cn",
+          "www.caixin.com",
+          "www.jiemian.com",
+          "www.huxiu.com",
+          "oschina.net",
+          "www.oschina.net",
+          "finance.sina.com.cn",
+          "www.sina.com.cn",
+          "k.sina.com.cn",
+          "www.eeo.com.cn",
+          "www.miit.gov.cn",
+          "www.cac.gov.cn"
+        ],
+        "company_event_priority": {
+          "enabled": true,
+          "routine_exclusion_terms": [
+            "售价",
+            "价格",
+            "优惠",
+            "促销",
+            "售罄",
+            "耳机",
+            "手表",
+            "笔记本",
+            "平板",
+            "显示器",
+            "配色",
+            "海外发布",
+            "例行更新",
+            "修复已知问题"
+          ],
+          "context_exclusion_terms": [
+            "呼吁",
+            "吐槽",
+            "建议",
+            "期待",
+            "评论",
+            "实测",
+            "传闻",
+            "曝光",
+            "预测",
+            "争议",
+            "对比",
+            "测评",
+            "怎么看"
+          ],
+          "tiers": [
+            {
+              "id": "ai_core",
+              "boost": 12,
+              "aliases": [
+                "OpenAI",
+                "ChatGPT",
+                "Anthropic",
+                "Claude",
+                "Google",
+                "谷歌",
+                "Gemini",
+                "DeepMind",
+                "Meta",
+                "微软",
+                "Microsoft",
+                "Copilot",
+                "英伟达",
+                "NVIDIA",
+                "阿里",
+                "通义",
+                "Qwen",
+                "腾讯",
+                "混元",
+                "Hunyuan",
+                "DeepSeek",
+                "字节",
+                "豆包",
+                "Doubao",
+                "百度",
+                "文心",
+                "ERNIE",
+                "智谱",
+                "GLM",
+                "MiniMax",
+                "月之暗面",
+                "Kimi"
+              ],
+              "eligible_categories": [
+                "ai_security",
+                "model_release",
+                "generative_media",
+                "ai_infrastructure",
+                "embodied_ai",
+                "autonomous_mobility"
+              ],
+              "action_terms": [
+                "发布",
+                "开源",
+                "上线",
+                "推出",
+                "升级",
+                "更新",
+                "开放",
+                "启动",
+                "交付",
+                "量产",
+                "收购",
+                "融资"
+              ]
+            },
+            {
+              "id": "industry_leaders",
+              "boost": 6,
+              "aliases": [
+                "华为",
+                "Huawei",
+                "小米",
+                "Xiaomi",
+                "苹果",
+                "Apple",
+                "特斯拉",
+                "Tesla",
+                "小鹏",
+                "XPeng",
+                "比亚迪",
+                "BYD",
+                "宇树",
+                "Unitree",
+                "智元机器人",
+                "优必选"
+              ],
+              "eligible_categories": [
+                "model_release",
+                "generative_media",
+                "ai_infrastructure",
+                "embodied_ai",
+                "autonomous_mobility",
+                "consumer_product"
+              ],
+              "required_terms": [
+                "AI",
+                "人工智能",
+                "模型",
+                "芯片",
+                "算力",
+                "机器人",
+                "具身",
+                "智能驾驶",
+                "自动驾驶",
+                "辅助驾驶",
+                "智驾",
+                "系统",
+                "平台",
+                "操作系统"
+              ],
+              "action_terms": [
+                "发布",
+                "开源",
+                "上线",
+                "推出",
+                "升级",
+                "更新",
+                "开放",
+                "启动",
+                "交付",
+                "量产",
+                "收购",
+                "融资"
+              ]
+            }
+          ]
+        },
+        "brief_localization": {
+          "enabled": true,
+          "max_events": 24,
+          "max_output_tokens": 4800
+        },
+        "reader_editorial": {
+          "enabled": true,
+          "preview_terms": [
+            "预告",
+            "计划",
+            "即将",
+            "将于",
+            "拟",
+            "有望",
+            "或将",
+            "准备推出"
+          ],
+          "research_terms": [
+            "评测基准",
+            "benchmark",
+            "测试标准",
+            "数据集",
+            "论文",
+            "协议",
+            "迁移",
+            "企业迁移"
+          ],
+          "platform_terms": [
+            "开放平台",
+            "开发者平台",
+            "开放能力",
+            "开放基座",
+            "新增功能",
+            "新增能力",
+            "升级"
+          ],
+          "consumer_impact_terms": [
+            "用户",
+            "消费者",
+            "手机",
+            "汽车",
+            "智能硬件",
+            "眼镜",
+            "耳机",
+            "家用",
+            "设备",
+            "应用"
+          ],
+          "industry_only_terms": [
+            "开发者",
+            "企业级",
+            "基础设施",
+            "工作流",
+            "连接器",
+            "框架",
+            "协议",
+            "数据驻留"
+          ],
+          "mainstream_categories": [
+            "ai_security",
+            "model_release",
+            "generative_media",
+            "policy_governance",
+            "consumer_product",
+            "autonomous_mobility",
+            "embodied_ai"
+          ]
+        },
+        "fake_ip_networks": [
+          "198.18.0.0/15",
+          "fd7a:746f:6c69:6e65:66::/96"
+        ],
+        "sources": [
+          {
+            "name": "OpenAI News",
+            "url": "https://openai.com/news/rss.xml",
+            "kind": "official",
+            "format": "feed",
+            "allowed_domains": [
+              "openai.com",
+              "www.openai.com"
+            ],
+            "enabled": true
+          },
+          {
+            "name": "GitHub Changelog",
+            "url": "https://github.blog/changelog/feed/",
+            "kind": "official",
+            "format": "feed",
+            "allowed_domains": [
+              "github.blog"
+            ],
+            "enabled": true
+          },
+          {
+            "name": "Anthropic News",
+            "url": "https://www.anthropic.com/news",
+            "kind": "official",
+            "format": "html_listing",
+            "allowed_domains": [
+              "www.anthropic.com"
+            ],
+            "article_path_prefixes": [
+              "/news/",
+              "/claude-"
+            ],
+            "enabled": true
+          },
+          {
+            "name": "World Labs Blog",
+            "url": "https://www.worldlabs.ai/blog",
+            "kind": "official",
+            "format": "html_listing",
+            "allowed_domains": [
+              "www.worldlabs.ai"
+            ],
+            "article_path_prefixes": [
+              "/blog/"
+            ],
+            "enabled": true
+          },
+          {
+            "name": "IT之家 RSS",
+            "url": "https://www.ithome.com/rss/",
+            "kind": "media",
+            "format": "feed",
+            "allowed_domains": [
+              "www.ithome.com"
+            ],
+            "enabled": true
+          },
+          {
+            "name": "量子位 RSS",
+            "url": "https://www.qbitai.com/feed",
+            "kind": "media",
+            "format": "feed",
+            "allowed_domains": [
+              "www.qbitai.com"
+            ],
+            "enabled": true
+          },
+          {
+            "name": "雷峰网 RSS",
+            "url": "https://www.leiphone.com/feed",
+            "kind": "media",
+            "format": "feed",
+            "allowed_domains": [
+              "www.leiphone.com"
+            ],
+            "enabled": true
+          },
+          {
+            "name": "极客公园 RSS",
+            "url": "https://www.geekpark.net/rss",
+            "kind": "media",
+            "format": "feed",
+            "allowed_domains": [
+              "www.geekpark.net"
+            ],
+            "enabled": true
+          },
+          {
+            "name": "Google 科技人工智能",
+            "url": "https://news.google.com/rss/search?q=人工智能%20when%3A3d&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+            "kind": "news_index",
+            "format": "google_news_rss",
+            "allowed_domains": [
+              "news.google.com"
+            ],
+            "enabled": true
+          },
+          {
+            "name": "Google 大模型",
+            "url": "https://news.google.com/rss/search?q=大模型%20when%3A3d&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+            "kind": "news_index",
+            "format": "google_news_rss",
+            "allowed_domains": [
+              "news.google.com"
+            ],
+            "enabled": true
+          },
+          {
+            "name": "Google 芯片算力",
+            "url": "https://news.google.com/rss/search?q=芯片%20when%3A3d&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+            "kind": "news_index",
+            "format": "google_news_rss",
+            "allowed_domains": [
+              "news.google.com"
+            ],
+            "enabled": true
+          },
+          {
+            "name": "Google 机器人",
+            "url": "https://news.google.com/rss/search?q=机器人%20when%3A3d&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+            "kind": "news_index",
+            "format": "google_news_rss",
+            "allowed_domains": [
+              "news.google.com"
+            ],
+            "enabled": true
+          },
+          {
+            "name": "Google 智能硬件",
+            "url": "https://news.google.com/rss/search?q=智能硬件%20when%3A3d&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+            "kind": "news_index",
+            "format": "google_news_rss",
+            "allowed_domains": [
+              "news.google.com"
+            ],
+            "enabled": true
+          },
+          {
+            "name": "Google 自动驾驶",
+            "url": "https://news.google.com/rss/search?q=自动驾驶%20when%3A3d&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+            "kind": "news_index",
+            "format": "google_news_rss",
+            "allowed_domains": [
+              "news.google.com"
+            ],
+            "enabled": true
+          }
+        ]
+      },
+      "public_web_discovery": {
+        "enabled": true,
+        "provider": "google_news_rss",
+        "endpoint": "https://news.google.com/rss/search",
+        "max_queries": 12,
+        "max_results_per_query": 5,
+        "request_timeout_seconds": 12,
+        "max_response_bytes": 131072,
+        "max_total_bytes": 1572864,
+        "total_timeout_seconds": 180,
+        "fake_ip_networks": [
+          "198.18.0.0/15",
+          "fd7a:746f:6c69:6e65:66::/96"
+        ],
+        "target_count": 20,
+        "queries": [
+          {
+            "id": "openai_model_or_safety",
+            "text": "OpenAI 模型 发布 安全 when:3d"
+          },
+          {
+            "id": "anthropic_model",
+            "text": "Anthropic Claude 模型 发布 when:3d"
+          },
+          {
+            "id": "google_ai",
+            "text": "Google Gemini AI 发布 升级 when:3d"
+          },
+          {
+            "id": "meta_or_nvidia",
+            "text": "Meta NVIDIA AI 芯片 模型 发布 when:3d"
+          },
+          {
+            "id": "tencent_hunyuan",
+            "text": "腾讯 混元 AI 发布 开放 when:3d"
+          },
+          {
+            "id": "alibaba_qwen",
+            "text": "阿里 通义 Qwen 模型 发布 开源 when:3d"
+          },
+          {
+            "id": "domestic_model",
+            "text": "DeepSeek 智谱 MiniMax 大模型 发布 开源 when:3d"
+          },
+          {
+            "id": "ai_security_policy",
+            "text": "AI 安全 监管 网络安全 发布 when:3d"
+          },
+          {
+            "id": "chips_and_compute",
+            "text": "AI 芯片 算力 服务器 发布 建设 when:3d"
+          },
+          {
+            "id": "robotics",
+            "text": "人形机器人 机器人 AI 发布 量产 when:3d"
+          },
+          {
+            "id": "consumer_ai",
+            "text": "AI 硬件 智能设备 手机 新功能 发布 when:3d"
+          },
+          {
+            "id": "mobility_and_esim",
+            "text": "智能驾驶 自动驾驶 AI eSIM 发布 升级 when:3d"
+          }
+        ]
+      },
+      "min_dimension": 480,
+      "max_aspect_ratio": 3.5,
+      "request_timeout_seconds": 15,
+      "max_redirects": 3,
+      "fake_ip_networks": [
+        "198.18.0.0/15",
+        "fd7a:746f:6c69:6e65:66::/96"
+      ],
+      "allowed_domains": [
+        "www.stdaily.com",
+        "img.ithome.com",
+        "n.sinaimg.cn",
+        "www.tencent.com"
+      ],
+      "weights": {
+        "like": 22.0,
+        "comment": 20.0,
+        "collect": 18.0,
+        "share": 22.0,
+        "freshness": 10.0,
+        "related_videos": 4.0,
+        "source_group_coverage": 2.0,
+        "cross_lane": 2.0
+      },
+      "image_hints": [
+        {
+          "match_all": [
+            "腾讯",
+            "hy4"
+          ],
+          "image_url": "https://www.tencent.com/wp-content/uploads/2026/08/image-3-1024x306.png",
+          "source_article_url": "https://www.tencent.com/zh-cn/tencent-releases-and-open-sources-tencent-hy4-preview/",
+          "source_name": "腾讯"
+        },
+        {
+          "match_all": [
+            "谷歌",
+            "omni",
+            "flash"
+          ],
+          "image_url": "https://img.ithome.com/newsuploadfiles/2026/8/c9607fcc-2229-4ef0-bc0b-98252552097a.jpg?x-bce-process=image/format,f_auto",
+          "source_article_url": "https://www.ithome.com/0/995/352.htm",
+          "source_name": "IT之家"
+        },
+        {
+          "match_all": [
+            "奔图",
+            "喷墨"
+          ],
+          "image_url": "https://www.stdaily.com/web/gdxw/pic/2026-08/27/570592_3da21153-b2a7-47e6-8a71-608d0adceb0e.png",
+          "source_article_url": "https://www.stdaily.com/web/gdxw/2026-08/27/content_570592.html",
+          "source_name": "科技日报"
+        },
+        {
+          "match_all": [
+            "小鹏",
+            "vla"
+          ],
+          "image_url": "https://img.ithome.com/newsuploadfiles/2026/8/ab553403-6966-4a8f-bf97-be8d7cd92f1e.jpg",
+          "source_article_url": "https://www.ithome.com/0/995/109.htm",
+          "source_name": "IT之家"
+        },
+        {
+          "match_all": [
+            "玄戒"
+          ],
+          "image_url": "https://n.sinaimg.cn/sinakd20260828s/200/w1080h720/20260828/61df-b7336c927f64dcdb2f111be42d729fb8.jpg",
+          "source_article_url": "https://finance.sina.com.cn/jjxw/2026-08-28/doc-inipwxpp9790004.shtml",
+          "source_name": "新浪财经转载"
+        }
+      ]
+    },
+    "daily_material_exchange": {
+      "selection_input": "config/daily_material_exchange_2026-08-28-ranked.json",
+      "output_root": "output/每日新闻素材",
+      "max_wall_seconds": 3600,
+      "max_network_requests": 24,
+      "max_download_bytes": 52428800,
+      "max_html_bytes": 2097152,
+      "max_asset_bytes": 15728640,
+      "min_dimension": 480,
+      "request_timeout_seconds": 15,
+      "max_redirects": 3,
+      "fake_ip_networks": [
+        "198.18.0.0/15",
+        "fd7a:746f:6c69:6e65:66::/96"
+      ],
+      "allowed_domains": [
+        "www.ithome.com",
+        "img.ithome.com",
+        "news.cnr.cn",
+        "finance.cnr.cn",
+        "www.cnfin.com",
+        "www.wired.com",
+        "www.cq.gov.cn",
+        "www.miit.gov.cn",
+        "www.news.cn",
+        "www.pantum.cn",
+        "drivers.pantum.cn",
+        "www.xiaopeng.com",
+        "paper.people.com.cn",
+        "m.sohu.com",
+        "q9.itc.cn",
+        "www.stdaily.com",
+        "n.sinaimg.cn"
+      ]
+    },
+    "inspiration": {
+      "output_root": "output/inspiration",
+      "default_reference_videos": 100,
+      "hard_max_reference_videos": 100,
+      "max_detail_videos": 20,
+      "media_analysis_videos": 3,
+      "hard_max_media_videos": 5,
+      "max_output_items": 8,
+      "search_keywords": [
+        "AI新品",
+        "大模型",
+        "科技新闻",
+        "开源项目",
+        "效率软件",
+        "芯片",
+        "机器人",
+        "智能硬件",
+        "黑科技",
+        "未来科技"
+      ]
+    },
+    "material_replication": {
+      "output_root": "output/复刻视频",
+      "temp_root": "data/temp/material-replication",
+      "keep_analysis_temp": true,
+      "cache_root": "data/cache/material-replication",
+      "media_root": "data/media/material-replication",
+      "default_pool_size": 80,
+      "min_pool_size": 40,
+      "max_pool_size": 120,
+      "min_keywords": 3,
+      "max_keywords": 10,
+      "theme_max_chars": 12,
+      "_theme_keywords_comment": "趋势/资讯类主题的显式泛关键词表（2026-09-15 新增），形如 {主题: [泛词…]}。命中的主题【替换】掉由措辞派生（lanes）出来的搜索词——因为这类主题是编辑式标题、没有产品型号可挂后缀，历史 lanes 只会产出平台用户根本不会输入的 query（9.14「内存涨价 最贵装机季」实测：26 条候选池里 13 条因标题不含该编辑短语被 relevance 闸门剔除）。键可写【原样主题】或 sanitize 后的 base；值为字符串数组，空白项忽略。主题不在此表中、或本键整体缺省时，词表构造与改动前逐字节相同。注意：本键只改【搜索词】，不改 subject_terms（主体闸门口径）——泛化搜索不会顺带放宽准入；若某主题的标题命中率也要放宽，必须显式改主题措辞或单独设计，不能靠词表副作用顺带发生。",
+      "theme_keywords": {
+        "特朗普致电黄仁勋": [
+          "特朗普 黄仁勋",
+          "黄仁勋 特朗普 电话",
+          "黄仁勋 免提",
+          "All-In 峰会 黄仁勋",
+          "特朗普 AI 骗局",
+          "黄仁勋 访谈",
+          "黄仁勋 演讲",
+          "特朗普 最新"
+        ],
+        "雷军夜访宇树科技": [
+          "雷军 宇树",
+          "雷军 王兴兴",
+          "雷军 踹 机器人",
+          "宇树科技 雷军",
+          "雷军 人形机器人",
+          "宇树 机器人 表演",
+          "王兴兴 雷军",
+          "雷军 杭州"
+        ],
+        "马斯克谈特斯拉合并": [
+          "马斯克 特斯拉 SpaceX",
+          "特斯拉 SpaceX 合并",
+          "SpaceX 特斯拉",
+          "马斯克 All-In",
+          "特斯拉 Roadster",
+          "SpaceX 星舰",
+          "马斯克 最新",
+          "特斯拉 合并"
+        ],
+        "理想i9": [
+          "理想 i9",
+          "理想i9 上市",
+          "理想 i9 发布会",
+          "理想 i9 价格",
+          "理想 纯电 旗舰",
+          "理想 i9 续航",
+          "理想 i9 智驾",
+          "理想 i9 内饰"
+        ],
+        "努比亚豆包手机": [
+          "努比亚 NaviX Ultra",
+          "豆包手机",
+          "努比亚 豆包手机助手",
+          "努比亚 新机",
+          "豆包 AI 手机",
+          "努比亚 NaviX",
+          "努比亚 NaviX 价格",
+          "豆包手机二代"
+        ],
+        "荣耀Magic9超能版": [
+          "荣耀 Magic9",
+          "荣耀 超能版",
+          "荣耀 11000mAh",
+          "荣耀 Magic9 电池",
+          "荣耀 青海湖电池",
+          "荣耀 Magic9 发布",
+          "荣耀 新机",
+          "荣耀 Magic9 参数"
+        ],
+        "众擎 URKL 格斗联赛": [
+          "众擎 URKL",
+          "人形机器人格斗联赛",
+          "机器人格斗大赛",
+          "众擎 T800",
+          "URKL 机器人格斗",
+          "机器人格斗",
+          "人形机器人 对打"
+        ],
+        "智谱 335亿融资": [
+          "智谱 融资",
+          "智谱 GLM",
+          "智谱 完全自训练",
+          "国产大模型 融资",
+          "智谱 上市",
+          "智谱清言",
+          "大模型 RSI"
+        ],
+        "追觅 MOVA AstraX 机械臂割草机": [
+          "追觅 MOVA AstraX",
+          "MOVA AstraX",
+          "机械臂割草机",
+          "MOVA 割草机器人",
+          "追觅 割草机",
+          "追觅IFA2026"
+        ],
+        "平陆运河": [
+          "平陆运河 通航",
+          "平陆运河 首航",
+          "平陆运河 开通",
+          "平陆运河 马道枢纽",
+          "平陆运河 货船",
+          "平陆运河 船闸",
+          "平陆运河 航拍",
+          "平陆运河 现场"
+        ],
+        "华为昇腾960": [
+          "华为 昇腾960",
+          "昇腾960 超节点",
+          "华为昇腾 960",
+          "昇腾 960 发布",
+          "华为全联接大会 2026",
+          "昇腾 超节点",
+          "华为 算力 超节点",
+          "昇腾960 参数"
+        ],
+        "AI智能体劫持网站": [
+          "AI 智能体 劫持",
+          "智能体 抱团",
+          "AI 智能体 安全",
+          "国安部 AI 智能体",
+          "AI 攻击 网站",
+          "大模型 失控",
+          "AI 智能体 攻击",
+          "智能体 漏洞"
+        ],
+        "AI能源联盟AEMA": [
+          "英伟达 谷歌 AI 能源",
+          "AI 能源联盟",
+          "Emerald AI",
+          "AEMA 联盟",
+          "数据中心 电力",
+          "AI 数据中心 用电",
+          "英伟达 谷歌 联盟",
+          "100GW 电网"
+        ],
+        "苹果iPhoneDuo": [
+          "iPhone Duo",
+          "苹果 折叠屏",
+          "苹果 首款折叠屏",
+          "iPhone 18 Pro",
+          "苹果 发布会 2026",
+          "iPhone Duo 参数",
+          "苹果 折叠 价格",
+          "iPhone Duo 开售"
+        ],
+        "华为MateXT2": [
+          "华为 Mate XT 2",
+          "Mate XT2 非凡大师",
+          "华为 三折叠",
+          "麒麟9050 Pro",
+          "华为 三折叠 发布",
+          "Mate XT2 开售",
+          "鸿蒙7",
+          "华为 折叠屏 价格"
+        ],
+        "手机集体涨价": [
+          "手机 涨价",
+          "内存 涨价",
+          "存储 涨价",
+          "手机 集体涨价",
+          "存储芯片 短缺",
+          "手机 价格上涨",
+          "HBM 产能 手机",
+          "内存 涨价 手机"
+        ],
+        "日本AI篡改历史观": [
+          "大模型历史观污染",
+          "日本AI历史观",
+          "日本历史观",
+          "AI篡改历史",
+          "日本篡改侵华历史",
+          "数字军国主义"
+        ],
+        "AI圈核弹雨": [
+          "大模型 即将发布",
+          "GPT 新模型",
+          "Claude 新模型",
+          "Gemini 新模型",
+          "下一代大模型",
+          "AI 发布会",
+          "国产大模型 发布",
+          "大模型 爆料",
+          "大模型 预测"
+        ],
+        "星舰首次入轨": [
+          "星舰 试飞",
+          "星舰 入轨",
+          "SpaceX 星舰 发射",
+          "星舰 第14次",
+          "星链 V3",
+          "星舰 回收",
+          "马斯克 星舰",
+          "星舰 直播"
+        ],
+        "AI巨头冲刺IPO": [
+          "Anthropic 上市",
+          "OpenAI IPO",
+          "Anthropic 估值",
+          "AI 公司 上市",
+          "Anthropic Claude",
+          "AI 独角兽 融资",
+          "大模型 公司 上市",
+          "Anthropic 收入"
+        ],
+        "Figure机器人做家务": [
+          "Figure 机器人",
+          "人形机器人 做家务",
+          "机器人 叠衣服",
+          "Figure 03",
+          "具身智能 泛化",
+          "机器人 铺床",
+          "Figure AI",
+          "机器人 整理房间"
+        ],
+        "三星2纳米AI5": [
+          "三星 2nm",
+          "特斯拉 AI5",
+          "三星 泰勒厂",
+          "AI5 芯片",
+          "特斯拉 芯片",
+          "三星 代工",
+          "2纳米 量产",
+          "三星 得州 工厂"
+        ],
+        "张一鸣登顶亚洲首富": [
+          "张一鸣 亚洲首富",
+          "张一鸣 首富",
+          "张一鸣 身家",
+          "字节跳动 估值",
+          "彭博富豪榜",
+          "张一鸣 最新",
+          "中国首富 排名"
+        ],
+        "Wi-Fi 8路由器首发": [
+          "Wi-Fi 8",
+          "Wi-Fi 8 路由器",
+          "Wi-Fi 8 首发",
+          "Wi-Fi 8 实测",
+          "Wi-Fi 7 Wi-Fi 8 区别",
+          "Archer 8 Ultra",
+          "Deco 8 Ultra"
+        ],
+        "阿里真武V900": [
+          "真武V900",
+          "阿里 真武V900",
+          "平头哥 真武V900",
+          "真武V900 AI芯片",
+          "阿里 AI芯片 发布",
+          "国产AI芯片 真武",
+          "真武V900 实测",
+          "阿里云栖大会 芯片"
+        ],
+        "高通2nm": [
+          "高通 2nm",
+          "高通骁龙 2nm",
+          "骁龙 2nm 芯片",
+          "Snapdragon 2nm",
+          "骁龙 Gen6",
+          "高通 2nm 实测",
+          "骁龙峰会 新芯片",
+          "高通芯片 2纳米"
+        ],
+        "内存涨价": [
+          "内存 涨价",
+          "DRAM 涨价",
+          "存储芯片 涨价",
+          "HBM 产能 内存",
+          "手机内存 涨价",
+          "内存价格 上涨",
+          "DDR5 价格",
+          "AI服务器 存储"
+        ],
+        "Mac发售": [
+          "Mac Studio 新款",
+          "M5 Ultra",
+          "Mac Studio 开售",
+          "苹果 Mac 发售",
+          "Mac mini 新款",
+          "Mac Studio 上手",
+          "M5 Ultra 评测",
+          "苹果电脑 开卖"
+        ],
+        "Grok4.7": [
+          "Grok 4.7",
+          "Grok4.7",
+          "xAI Grok 4.7",
+          "Grok 新模型",
+          "Grok 编程",
+          "Grok 4.7 实测",
+          "马斯克 Grok 发布",
+          "Grok 大模型"
+        ],
+        "小米开源登顶": [
+          "小米 大模型 开源",
+          "小米开源模型 榜单",
+          "MiMo 开源",
+          "Xiaomi MiMo 模型",
+          "小米大模型 登顶",
+          "小米 AI 模型 训练",
+          "MiMo 模型 评测",
+          "小米 开源模型"
+        ],
+        "机器人进乐园": [
+          "智元 长隆 机器人",
+          "机器人 进乐园",
+          "智元 机器人 乐园",
+          "机器人 主题乐园",
+          "机器人 文旅",
+          "横琴 长隆 机器人",
+          "具身智能 乐园",
+          "机器人 乐园 实拍"
+        ],
+        "启元机器人": [
+          "启元机器人 19999",
+          "上纬 启元机器人",
+          "上纬新材 机器人",
+          "启元机器人 发售",
+          "启元机器人 上手",
+          "19999元 人形机器人",
+          "消费级机器人 启元",
+          "上纬 机器人 价格"
+        ],
+        "英伟达玻璃基板": [
+          "英伟达 玻璃基板",
+          "NVIDIA 玻璃基板",
+          "英伟达 两年 玻璃基板",
+          "NVIDIA glass substrate",
+          "AI芯片 玻璃基板",
+          "玻璃基板 TGV",
+          "英伟达 基板厂",
+          "玻璃基板 供应链"
+        ],
+        "DeepSeek上市": [
+          "DeepSeek 上市",
+          "DeepSeek 科创板",
+          "DeepSeek 融资",
+          "DeepSeek 梁文锋",
+          "DeepSeek 营收",
+          "DeepSeek IPO",
+          "深度求索 上市",
+          "DeepSeek 估值"
+        ],
+        "高光D35量产": [
+          "高光D35",
+          "睿芯 高光D35",
+          "RISC-V AI芯片",
+          "RISC-V 芯片 量产",
+          "数据流 AI芯片",
+          "数贸会 芯片",
+          "睿芯 芯片",
+          "RISC-V 量产"
+        ],
+        "Claude5.5发布": [
+          "Claude Opus 5.5",
+          "Claude 5.5",
+          "Claude Opus",
+          "Anthropic Claude",
+          "Claude 发布",
+          "Opus 5.5 发布",
+          "Anthropic 新模型",
+          "Claude 更新"
+        ],
+        "太空算力卫星": [
+          "太空算力",
+          "太空 数据中心",
+          "谷歌 卫星",
+          "卫星 算力",
+          "太空 AI",
+          "轨道数据中心",
+          "Suncatcher",
+          "太空 服务器"
+        ],
+        "AI智能体越界": [
+          "AI智能体",
+          "OpenAI agent",
+          "智能体 安全",
+          "AI agent 攻击",
+          "AI 越权访问",
+          "OpenAI 智能体",
+          "AI 安全事件",
+          "智能体 澳大利亚"
+        ],
+        "千问Eva桌面机器人": [
+          "千问 Eva",
+          "QwenNote Eva",
+          "阿里桌面机器人",
+          "千问办公 Eva",
+          "云栖大会 Eva",
+          "QwenWork Eva",
+          "899元 桌面机器人",
+          "千问 桌面机器人"
+        ],
+        "荣耀Magic9发布": [
+          "荣耀Magic9",
+          "荣耀 Magic9",
+          "Magic9 Pro Max",
+          "荣耀发布会 2026",
+          "荣耀阿莱影像",
+          "荣耀Magic9价格",
+          "荣耀MagicOS11",
+          "荣耀Magic9开售"
+        ],
+        "特斯拉Optimus量产": [
+          "特斯拉Optimus",
+          "Optimus 机器人",
+          "特斯拉人形机器人",
+          "Optimus 量产",
+          "Optimus 周产千台",
+          "特斯拉机器人产能",
+          "Optimus 产线",
+          "马斯克 机器人"
+        ],
+        "GPT6开真车": [
+          "GPT6 开车",
+          "GPT-6 真车",
+          "DrivingBench",
+          "GPT6 Astra",
+          "AI 开真车",
+          "GPT6 科目二",
+          "大模型 开车",
+          "GPT6 自动驾驶"
+        ],
+        "马斯克Colossus2算力": [
+          "Colossus 2",
+          "马斯克 算力",
+          "英伟达 GB300",
+          "xAI 数据中心",
+          "Colossus 翻倍",
+          "马斯克 英伟达芯片",
+          "xAI Colossus",
+          "55万颗芯片"
+        ],
+        "全国产具身机器人": [
+          "全国产化电子架构",
+          "具身智能机器人",
+          "国产机器人 发布",
+          "宜昌 机器人",
+          "具身智能 国产",
+          "电子架构 机器人",
+          "全国产 机器人",
+          "具身智能 发布会"
+        ],
+        "OpenAI DevDay 500美元": [
+          "OpenAI DevDay",
+          "ChatGPT Pro Max",
+          "500美元 订阅",
+          "OpenAI 开发者大会",
+          "ChatGPT 500",
+          "OpenAI Codex",
+          "DevDay 2026",
+          "OpenAI 新订阅"
+        ],
+        "Meta Muse 智能体": [
+          "Meta Muse",
+          "Muse 智能体",
+          "Meta Muse 下载",
+          "Muse 苹果榜第一",
+          "Muse 超越 GPT",
+          "Meta AI 智能体",
+          "Muse 上线12天",
+          "Meta 股价暴涨"
+        ],
+        "华为昇腾950": [
+          "华为 全联接大会",
+          "昇腾950 超节点",
+          "昇腾950 真机",
+          "昇腾950 机柜",
+          "华为 超节点 机房",
+          "华为 数据中心 液冷",
+          "WAIC 昇腾950",
+          "华为 logo",
+          "华为 芯片 特写",
+          "参观 昇腾950"
+        ],
+        "GPT6.1Sol发布": [
+          "GPT-6.1 Sol",
+          "GPT6.1 Sol",
+          "OpenAI GPT-6.1",
+          "GPT-6.1 Sol 发布",
+          "OpenAI Sol 模型",
+          "GPT-6.1 Sol 价格",
+          "DevDay GPT-6.1",
+          "OpenAI 新模型"
+        ],
+        "OpenAIdots": [
+          "OpenAI dots",
+          "ChatGPT dots",
+          "dots 智能体",
+          "OpenAI 智能体",
+          "ChatGPT 智能体",
+          "Dottie OpenAI",
+          "OpenAI DevDay 智能体",
+          "OpenAI 常驻智能体"
+        ],
+        "Pro500套餐": [
+          "ChatGPT Pro 500",
+          "ChatGPT 500 美元",
+          "OpenAI Pro 500",
+          "ChatGPT 最贵套餐",
+          "Ultrafast ChatGPT",
+          "ChatGPT 25 倍用量",
+          "ChatGPT 新套餐",
+          "OpenAI 新订阅"
+        ],
+        "ChatGPT12亿": [
+          "ChatGPT 12亿",
+          "ChatGPT 12 亿用户",
+          "ChatGPT 周活",
+          "ChatGPT 用户数",
+          "OpenAI 12亿",
+          "ChatGPT 250万企业",
+          "ChatGPT 3500万",
+          "OpenAI DevDay 数据"
+        ],
+        "谷歌Gemini新模型": [
+          "Gemini 4",
+          "Gemini 4 Argon",
+          "谷歌 Gemini 4",
+          "Gemini 4 发布",
+          "Gemini 4 实测",
+          "Gemini 4 跑分",
+          "谷歌新旗舰模型",
+          "Gemini Argon"
+        ]
+      },
+      "_theme_subject_terms_comment": "与 theme_keywords 配对的【主体闸门】补充词表（2026-09-15 新增）。刻意独立成键、而不是复用 theme_keywords：放宽搜索词 与 放宽准入 是两个独立决定。9.14 实测里一个裸类目词（「扫地机」）就能放行竞品视频，因为 min_subject_hits=1 只要求命中【某一个】主体词 ⇒ 加类目词是一种必须显式点名的放宽；若复用关键词表，一次搜索侧改动会静默改变闸门接受范围。本表用语是【追加】到 head 派生词表之后，绝不替换，故召回单调不减。同样支持原样主题或 base 作键；缺省时 subject_terms 与改动前逐字节相同。",
+      "theme_subject_terms": {
+        "特朗普致电黄仁勋": [
+          "特朗普",
+          "黄仁勋",
+          "免提"
+        ],
+        "雷军夜访宇树科技": [
+          "雷军",
+          "宇树",
+          "王兴兴"
+        ],
+        "马斯克谈特斯拉合并": [
+          "马斯克",
+          "特斯拉",
+          "SpaceX"
+        ],
+        "理想i9": [
+          "理想",
+          "i9"
+        ],
+        "努比亚豆包手机": [
+          "努比亚",
+          "NaviX",
+          "豆包"
+        ],
+        "荣耀Magic9超能版": [
+          "荣耀",
+          "Magic9",
+          "超能版"
+        ],
+        "追觅 MOVA AstraX 机械臂割草机": [
+          "割草机器人",
+          "割草机"
+        ],
+        "华为昇腾960": [
+          "昇腾",
+          "华为昇腾",
+          "昇腾960"
+        ],
+        "AI智能体劫持网站": [
+          "智能体",
+          "AI 智能体",
+          "AI智能体"
+        ],
+        "AI能源联盟AEMA": [
+          "英伟达",
+          "谷歌",
+          "Emerald AI",
+          "AEMA",
+          "数据中心"
+        ],
+        "苹果iPhoneDuo": [
+          "iPhone",
+          "苹果",
+          "Duo"
+        ],
+        "华为MateXT2": [
+          "Mate XT",
+          "Mate XT2",
+          "华为 三折叠",
+          "麒麟 9050"
+        ],
+        "手机集体涨价": [
+          "涨价",
+          "内存涨价",
+          "存储涨价",
+          "手机涨价"
+        ],
+        "日本AI篡改历史观": [
+          "历史观",
+          "篡改历史",
+          "AI篡改",
+          "篡改侵华",
+          "数字军国主义",
+          "污染大模型"
+        ],
+        "AI圈核弹雨": [
+          "大模型",
+          "新模型",
+          "GPT",
+          "Claude",
+          "Gemini",
+          "Qwen",
+          "GLM",
+          "Grok",
+          "下一代模型"
+        ],
+        "星舰首次入轨": [
+          "星舰",
+          "SpaceX",
+          "星链",
+          "Starship"
+        ],
+        "AI巨头冲刺IPO": [
+          "Anthropic",
+          "OpenAI",
+          "IPO",
+          "估值",
+          "融资",
+          "上市"
+        ],
+        "Figure机器人做家务": [
+          "Figure",
+          "机器人",
+          "人形机器人",
+          "具身智能",
+          "Helix"
+        ],
+        "三星2纳米AI5": [
+          "三星",
+          "特斯拉",
+          "AI5",
+          "2nm",
+          "2纳米",
+          "芯片"
+        ],
+        "张一鸣登顶亚洲首富": [
+          "张一鸣",
+          "字节跳动",
+          "字节",
+          "TikTok"
+        ],
+        "Wi-Fi 8路由器首发": [
+          "Wi-Fi 8",
+          "WiFi 8",
+          "802.11bn",
+          "Archer 8",
+          "Deco 8"
+        ],
+        "阿里真武V900": [
+          "真武V900",
+          "真武 V900",
+          "平头哥",
+          "阿里芯片"
+        ],
+        "高通2nm": [
+          "高通 2nm",
+          "骁龙",
+          "Snapdragon",
+          "高通芯片"
+        ],
+        "内存涨价": [
+          "内存",
+          "DRAM",
+          "HBM",
+          "存储芯片"
+        ],
+        "Mac发售": [
+          "Mac Studio",
+          "M5 Ultra",
+          "Mac mini",
+          "苹果电脑"
+        ],
+        "Grok4.7": [
+          "Grok",
+          "Grok 4.7",
+          "xAI"
+        ],
+        "小米开源登顶": [
+          "小米",
+          "MiMo",
+          "Xiaomi"
+        ],
+        "机器人进乐园": [
+          "智元",
+          "长隆",
+          "横琴",
+          "机器人 乐园"
+        ],
+        "启元机器人": [
+          "启元机器人",
+          "上纬新材",
+          "启元",
+          "19999元机器人"
+        ],
+        "英伟达玻璃基板": [
+          "英伟达",
+          "NVIDIA",
+          "玻璃基板"
+        ],
+        "DeepSeek上市": [
+          "DeepSeek",
+          "深度求索",
+          "梁文锋"
+        ],
+        "高光D35量产": [
+          "高光D35",
+          "睿芯",
+          "RISC-V"
+        ],
+        "Claude5.5发布": [
+          "Claude",
+          "Anthropic",
+          "Opus"
+        ],
+        "太空算力卫星": [
+          "太空算力",
+          "卫星",
+          "数据中心"
+        ],
+        "AI智能体越界": [
+          "AI智能体",
+          "OpenAI",
+          "agent"
+        ],
+        "千问Eva桌面机器人": [
+          "千问 Eva",
+          "QwenNote",
+          "桌面机器人",
+          "阿里千问办公"
+        ],
+        "荣耀Magic9发布": [
+          "荣耀Magic9",
+          "荣耀 Magic9",
+          "Magic9 Pro Max",
+          "荣耀手机",
+          "ARRI"
+        ],
+        "特斯拉Optimus量产": [
+          "特斯拉Optimus",
+          "Optimus",
+          "人形机器人",
+          "特斯拉机器人",
+          "马斯克"
+        ],
+        "GPT6开真车": [
+          "GPT6",
+          "GPT-6",
+          "DrivingBench",
+          "Astra",
+          "OpenAI"
+        ],
+        "马斯克Colossus2算力": [
+          "Colossus",
+          "马斯克",
+          "xAI",
+          "英伟达",
+          "GB300"
+        ],
+        "全国产具身机器人": [
+          "具身智能",
+          "电子架构",
+          "国产机器人",
+          "机器人发布",
+          "全国产化"
+        ],
+        "OpenAI DevDay 500美元": [
+          "OpenAI",
+          "DevDay",
+          "ChatGPT",
+          "Pro Max",
+          "Codex"
+        ],
+        "Meta Muse 智能体": [
+          "Muse",
+          "Meta",
+          "智能体",
+          "苹果榜",
+          "下载量"
+        ],
+        "华为昇腾950": [
+          "昇腾",
+          "超节点",
+          "全联接",
+          "Atlas",
+          "华为",
+          "logo",
+          "Logo"
+        ],
+        "GPT6.1Sol发布": [
+          "GPT-6.1",
+          "GPT6.1",
+          "Sol",
+          "OpenAI"
+        ],
+        "OpenAIdots": [
+          "dots",
+          "Dot",
+          "Dots",
+          "智能体",
+          "OpenAI"
+        ],
+        "Pro500套餐": [
+          "Pro 500",
+          "500 美元",
+          "Ultrafast",
+          "ChatGPT",
+          "OpenAI"
+        ],
+        "ChatGPT12亿": [
+          "12亿",
+          "12 亿",
+          "周活",
+          "ChatGPT",
+          "OpenAI"
+        ],
+        "谷歌Gemini新模型": [
+          "Gemini",
+          "谷歌",
+          "Google",
+          "Gemini4",
+          "Argon",
+          "Gemini 4"
+        ],
+        "谷歌芯片": [
+          "谷歌",
+          "TPU",
+          "Google",
+          "Gemini",
+          "皮衣刀客"
+        ],
+        "Nano Banana": [
+          "谷歌",
+          "Nano",
+          "Banana",
+          "生图",
+          "画图",
+          "Google",
+          "NanoBanana"
+        ],
+        "马斯克": [
+          "马斯克",
+          "特斯拉",
+          "SpaceX",
+          "星舰",
+          "Terafab"
+        ],
+        "英伟达": [
+          "英伟达",
+          "黄仁勋",
+          "NVIDIA"
+        ],
+        "一加16": [
+          "一加",
+          "东方屏",
+          "一加16",
+          "OnePlus"
+        ],
+        "vivo": [
+          "vivo",
+          "X Fold6",
+          "折叠屏",
+          "Fold6"
+        ],
+        "台积电": [
+          "台积电",
+          "TSMC",
+          "芯片代工"
+        ],
+        "ChatGPT": [
+          "ChatGPT",
+          "GPT6",
+          "GPT-6",
+          "OpenAI"
+        ]
+      },
+      "_theme_event_terms_comment": "【事件词表】（2026-09-16 新增），只被 material_replica.direct_delivery（原片直投）消费，形如 {主题: [事件词…]}。作用是给「名人＋事件」类主题做交付分类：标题命中任一词的候选算【事件直接素材】→ 02-主素材（例如完整采访、现场实录）；一个都没命中的算【通用人物素材】→ 03-辅助素材（挥手、打招呼、走红毯这类不体现具体事件的画面）。刻意做成第三张独立表：前两张表决定【什么能进池子】，这张决定【进了池子怎么分类】，复用会让一次搜索侧放宽静默改变主/辅划分。缺省 → []，此时主素材回落到「时长最长」，行为与不配该键时一致。",
+      "theme_event_terms": {
+        "特朗普致电黄仁勋": [
+          "电话",
+          "通话",
+          "免提",
+          "峰会",
+          "All-In",
+          "访谈",
+          "采访",
+          "现场"
+        ],
+        "雷军夜访宇树科技": [
+          "宇树",
+          "王兴兴",
+          "踹",
+          "过招",
+          "到访",
+          "探访",
+          "夜访",
+          "现场"
+        ],
+        "马斯克谈特斯拉合并": [
+          "合并",
+          "All-In",
+          "峰会",
+          "访谈",
+          "采访",
+          "Roadster",
+          "Terafab"
+        ],
+        "理想i9": [
+          "发布会",
+          "上市",
+          "实测",
+          "试驾",
+          "体验",
+          "评测",
+          "开箱"
+        ],
+        "努比亚豆包手机": [
+          "发布会",
+          "开售",
+          "实测",
+          "上手",
+          "体验",
+          "开箱",
+          "评测"
+        ],
+        "荣耀Magic9超能版": [
+          "发布会",
+          "实测",
+          "上手",
+          "体验",
+          "开箱",
+          "评测",
+          "电池"
+        ],
+        "平陆运河": [
+          "通航",
+          "首航",
+          "开通",
+          "通水",
+          "试航",
+          "过闸",
+          "船闸",
+          "闸门",
+          "航拍",
+          "现场",
+          "仪式"
+        ],
+        "华为昇腾960": [
+          "发布",
+          "发布会",
+          "超节点",
+          "全联接",
+          "算力",
+          "NPO",
+          "现场",
+          "讲解"
+        ],
+        "AI智能体劫持网站": [
+          "劫持",
+          "攻击",
+          "国安部",
+          "通报",
+          "抱团",
+          "安全",
+          "失控",
+          "漏洞"
+        ],
+        "AI能源联盟AEMA": [
+          "联盟",
+          "成立",
+          "电力",
+          "电网",
+          "数据中心",
+          "用电",
+          "并网",
+          "需求响应"
+        ],
+        "苹果iPhoneDuo": [
+          "发布",
+          "发布会",
+          "开售",
+          "预售",
+          "上手",
+          "开箱",
+          "实测",
+          "折叠",
+          "价格"
+        ],
+        "华为MateXT2": [
+          "发布",
+          "发布会",
+          "开售",
+          "上手",
+          "开箱",
+          "实测",
+          "三折叠",
+          "麒麟",
+          "鸿蒙"
+        ],
+        "手机集体涨价": [
+          "涨价",
+          "上调",
+          "调价",
+          "成本",
+          "内存",
+          "存储",
+          "缺货",
+          "价格"
+        ],
+        "日本AI篡改历史观": [
+          "篡改",
+          "历史观",
+          "军国主义",
+          "侵华",
+          "污染",
+          "国安部"
+        ],
+        "AI圈核弹雨": [
+          "发布",
+          "发布会",
+          "曝光",
+          "爆料",
+          "预告",
+          "剧透",
+          "即将",
+          "上线"
+        ],
+        "星舰首次入轨": [
+          "发射",
+          "试飞",
+          "入轨",
+          "回收",
+          "直播",
+          "现场",
+          "溅落"
+        ],
+        "AI巨头冲刺IPO": [
+          "上市",
+          "IPO",
+          "估值",
+          "融资",
+          "财报",
+          "收入"
+        ],
+        "Figure机器人做家务": [
+          "做家务",
+          "叠衣服",
+          "铺床",
+          "整理",
+          "实测",
+          "演示",
+          "家务"
+        ],
+        "三星2纳米AI5": [
+          "试产",
+          "量产",
+          "芯片",
+          "代工",
+          "工厂",
+          "2纳米",
+          "良率"
+        ],
+        "张一鸣登顶亚洲首富": [
+          "首富",
+          "登顶",
+          "富豪榜",
+          "身家",
+          "财富",
+          "估值",
+          "彭博",
+          "超越"
+        ],
+        "Wi-Fi 8路由器首发": [
+          "发布",
+          "首发",
+          "开售",
+          "预订",
+          "开箱",
+          "实测",
+          "发布会",
+          "速测"
+        ]
+      },
+      "_theme_material_profiles_comment": "【题材策略档案】（2026-09-18 新增），形如 {profile名: {...}}。内置 default 兜底，另含 person_or_company_event / official_notice_or_security_event / product_or_industry_trend 三类。每个 profile 提供：preferred_source_kinds（允许/优先的来源类别）、main_roles（主素材角色优先序）、original_source_bonus（原始/官方来源加分）、event_term_weight（标题事件词权重）、heat_weight（平台内热度权重）、label（报告/目录标签），以及 official_accounts / news_accounts（人工维护的账号子串表，用于确定性判定官方原片与新闻播报）、commentary_terms（自媒体二次剪辑/解说标记）、role_terms（按 lane 覆盖内置角色词表，未给出的 lane 沿用内置）。本块是【下游选择与交付层】的纯函数契约，不改变 theme_keywords / theme_subject_terms / theme_event_terms 的任何语义；缺省或坏配置一律回退 default；题材只由显式配置或确定性默认规则决定，不用 LLM、不用模糊词表猜。official_accounts 默认留空：离线环境无法确认账号主体，宁可判 platform_video 也不虚构「官方」；需要判定官方原片时由运营显式补账号。tests/conftest.py 的 opt-in seam 会把它从测试夹具里剥掉。",
+      "theme_material_profiles": {
+        "default": {
+          "label": "通用",
+          "preferred_source_kinds": [
+            "official_original",
+            "news_broadcast",
+            "creator_commentary",
+            "platform_video"
+          ],
+          "main_roles": [
+            "event_direct",
+            "subject_person",
+            "product_or_scene",
+            "news_anchor_or_reporter",
+            "commentary"
+          ],
+          "original_source_bonus": 0.1,
+          "event_term_weight": 1.0,
+          "heat_weight": 0.2,
+          "official_accounts": [],
+          "news_accounts": [],
+          "commentary_terms": [
+            "解说",
+            "点评",
+            "讲解",
+            "科普",
+            "吐槽",
+            "怎么看",
+            "分析",
+            "盘点",
+            "解读",
+            "总结",
+            "开箱",
+            "实测",
+            "评测",
+            "上手"
+          ],
+          "role_terms": {}
+        },
+        "person_or_company_event": {
+          "label": "人物/企业事件",
+          "preferred_source_kinds": [
+            "official_original",
+            "news_broadcast",
+            "creator_commentary",
+            "platform_video"
+          ],
+          "main_roles": [
+            "event_direct",
+            "subject_person",
+            "news_anchor_or_reporter",
+            "commentary",
+            "product_or_scene"
+          ],
+          "original_source_bonus": 0.15,
+          "event_term_weight": 4.0,
+          "heat_weight": 0.25,
+          "official_accounts": [],
+          "news_accounts": [
+            "央视",
+            "新华社",
+            "人民日报",
+            "澎湃",
+            "环球时报",
+            "科技日报",
+            "中国新闻网",
+            "中新社"
+          ],
+          "commentary_terms": [
+            "解说",
+            "点评",
+            "讲解",
+            "科普",
+            "吐槽",
+            "怎么看",
+            "分析",
+            "盘点",
+            "解读",
+            "总结",
+            "开箱",
+            "实测",
+            "评测",
+            "上手"
+          ],
+          "role_terms": {}
+        },
+        "official_notice_or_security_event": {
+          "label": "官方通报/安全事件",
+          "preferred_source_kinds": [
+            "official_original",
+            "news_broadcast",
+            "platform_video",
+            "creator_commentary"
+          ],
+          "main_roles": [
+            "news_anchor_or_reporter",
+            "event_direct",
+            "subject_person",
+            "commentary",
+            "product_or_scene"
+          ],
+          "original_source_bonus": 0.35,
+          "event_term_weight": 3.0,
+          "heat_weight": 0.15,
+          "official_accounts": [
+            "工信部",
+            "网信办",
+            "应急管理部",
+            "市场监管总局",
+            "公安部",
+            "国家医保局",
+            "国家安全部"
+          ],
+          "news_accounts": [
+            "央视",
+            "新华社",
+            "人民日报",
+            "澎湃",
+            "环球时报",
+            "科技日报",
+            "中国新闻网",
+            "中新社"
+          ],
+          "commentary_terms": [
+            "解说",
+            "点评",
+            "讲解",
+            "科普",
+            "吐槽",
+            "怎么看",
+            "分析",
+            "盘点",
+            "解读",
+            "总结",
+            "开箱",
+            "实测",
+            "评测",
+            "上手"
+          ],
+          "role_terms": {
+            "news_anchor_or_reporter": [
+              "记者",
+              "主持人",
+              "主播",
+              "播报",
+              "连线",
+              "现场报道",
+              "发言人",
+              "通报",
+              "新闻"
+            ]
+          }
+        },
+        "product_or_industry_trend": {
+          "label": "产品/行业趋势",
+          "preferred_source_kinds": [
+            "official_original",
+            "creator_commentary",
+            "platform_video",
+            "news_broadcast"
+          ],
+          "main_roles": [
+            "product_or_scene",
+            "event_direct",
+            "commentary",
+            "subject_person",
+            "news_anchor_or_reporter"
+          ],
+          "original_source_bonus": 0.2,
+          "event_term_weight": 2.0,
+          "heat_weight": 0.3,
+          "official_accounts": [],
+          "news_accounts": [
+            "央视",
+            "新华社",
+            "人民日报",
+            "澎湃",
+            "环球时报",
+            "科技日报",
+            "中国新闻网",
+            "中新社"
+          ],
+          "commentary_terms": [
+            "解说",
+            "点评",
+            "讲解",
+            "科普",
+            "吐槽",
+            "怎么看",
+            "分析",
+            "盘点",
+            "解读",
+            "总结",
+            "开箱",
+            "实测",
+            "评测",
+            "上手"
+          ],
+          "role_terms": {}
+        }
+      },
+      "_theme_profile_map_comment": "【主题→profile 显式映射】（2026-09-18 新增）。键可写【原样主题】或 sanitize 后的 base；值为上方 profile 名。未列出、值未知或本键整体缺省时一律回退 default（坏拼写绝不静默换档）。与 theme_keywords / theme_subject_terms / theme_event_terms 完全解耦。",
+      "theme_profile_map": {
+        "特朗普致电黄仁勋": "person_or_company_event",
+        "雷军夜访宇树科技": "person_or_company_event",
+        "马斯克谈特斯拉合并": "person_or_company_event",
+        "智谱 335亿融资": "person_or_company_event",
+        "理想i9": "product_or_industry_trend",
+        "努比亚豆包手机": "product_or_industry_trend",
+        "荣耀Magic9超能版": "product_or_industry_trend",
+        "众擎 URKL 格斗联赛": "product_or_industry_trend",
+        "追觅 MOVA AstraX 机械臂割草机": "product_or_industry_trend",
+        "华为昇腾960": "product_or_industry_trend",
+        "AI能源联盟AEMA": "product_or_industry_trend",
+        "苹果iPhoneDuo": "product_or_industry_trend",
+        "华为MateXT2": "product_or_industry_trend",
+        "手机集体涨价": "product_or_industry_trend",
+        "平陆运河": "official_notice_or_security_event",
+        "AI智能体劫持网站": "official_notice_or_security_event",
+        "日本AI篡改历史观": "official_notice_or_security_event",
+        "AI圈核弹雨": "product_or_industry_trend",
+        "星舰首次入轨": "person_or_company_event",
+        "AI巨头冲刺IPO": "person_or_company_event",
+        "Figure机器人做家务": "product_or_industry_trend",
+        "三星2纳米AI5": "product_or_industry_trend",
+        "张一鸣登顶亚洲首富": "person_or_company_event",
+        "Wi-Fi 8路由器首发": "product_or_industry_trend",
+        "DeepSeek上市": "person_or_company_event",
+        "高光D35量产": "product_or_industry_trend",
+        "Claude5.5发布": "product_or_industry_trend",
+        "太空算力卫星": "product_or_industry_trend",
+        "AI智能体越界": "product_or_industry_trend"
+      },
+      "max_path_chars": 260,
+      "sources": [
+        "douyin"
+      ],
+      "_sources_comment": "素材源清单（2026-09-17 启用）。本机抖音登录态因企业认证更换主体处于迁移中，搜索接口返回空 data，抖音素材链暂不可用 ⇒ 让 B站顶上来当素材源。缺省时抖音路径与改动前逐字节等价（含 Referer 头 https://www.douyin.com/）；tests/conftest.py 的 opt-in seam 会把它从测试夹具里剥掉，故生产开启不会污染任何未显式声明的用例。",
+      "source_duration_windows": {
+        "bilibili": {
+          "min_seconds": 10,
+          "max_seconds": 1200
+        }
+      },
+      "_source_duration_windows_comment": "按源的时长窗口（2026-09-17 新增）。B站实测 11 条候选里 8 条 > 300s（268s~12194s），会被 prefilter.max_seconds=300 与 material_replica.max_seconds=300 在下载前剔成全灭；但【绝不可】全局放宽 prefilter.max_seconds——那会同时改变抖音路径的选材品质（抖音短片本在窗内，是 B站长片超窗）。正解是按源分档：此处列出的源用自己的窗口，其余源（含抖音）与整轮缺省时一律沿用各闸门原窗口，逐字节等价。B站窗口 min_seconds=10 / max_seconds=1200 覆盖实测主力 268~1048s；12194s / 2998s 两条超 download_budget.max_item_bytes=80 MiB，会在下载时被正常拒绝（期望行为）。缺该键 = 不改任何闸门。",
+      "budget": {
+        "collection_seconds": 480,
+        "collection_hard_seconds": 720,
+        "download_seconds": 480,
+        "download_hard_seconds": 720,
+        "asr_seconds": 180,
+        "asr_hard_seconds": 300,
+        "face_seconds": 360,
+        "face_hard_seconds": 600,
+        "clip_seconds": 180,
+        "clip_hard_seconds": 360,
+        "total_seconds": 1800,
+        "total_hard_seconds": 2700
+      },
+      "script_replica": {
+        "target_count": 1,
+        "min_chars": 150,
+        "min_chars_per_second": 1.2,
+        "min_seconds": 30,
+        "max_seconds": 300,
+        "top_ratio": 0.1,
+        "min_top": 5
+      },
+      "material_replica": {
+        "target_count": 8,
+        "min_count": 2,
+        "min_seconds": 15,
+        "max_seconds": 600,
+        "_max_speech_rate_comment": "口播密度上限（字/秒）。原值 1.2 等于「几乎不说话」，而正常中文语速 4~6 字/秒 ⇒ 2026-09-14 六期实跑合格率仅 6~10%（Model Y 下载 17 条只选出 1 条），五期未达 70 MiB 体积下限。口播不影响画面复用（复刻时会替换音频），且切片阶段会再按「无人脸+有画面变化」细筛 8s 片段，故放开粗筛至 8.0。若需回到纯画面素材，改回 1.2 即可。",
+        "max_speech_rate": 8.0,
+        "_motion_threshold_comment": "旧键 motion_threshold=0.30 把「帧对占比」与「逐帧灰度变化量」两个量纲混用，使运动判据恒为假（死代码）；该键已废弃、不做语义映射。运动判据拆成两个独立阈值：motion_delta_threshold（单对帧变化量，0~1）与 min_motion_frame_ratio（变化帧对占比下限，0~1）。默认值在 9.12 语料 46 条真实抖音片上标定。",
+        "motion_delta_threshold": 0.02,
+        "min_motion_frame_ratio": 0.2,
+        "max_ocr_coverage": 0.4,
+        "max_per_author": 1,
+        "heat_gate_percentile": 0.0,
+        "_delivered_bytes_comment": "交付体积配额：min_delivered_bytes 是入选源片「文件字节和」的下限，未达时选材循环会越过 target_count 继续扫描更长/更多的候选（不再在 4 条就停）；max_delivered_bytes 是上限，加入后会超上限的候选直接跳过、不入选（0=不限）。两键缺省(=0)时行为与改动前逐字节相同。上限只约束「最终入选源片」，8s 切片段另占交付目录、不计入。",
+        "min_delivered_bytes": 73400320,
+        "max_delivered_bytes": 104857600,
+        "_max_age_days_comment": "素材层时效闸门（2026-09-14 启用）。按候选自带的 published_at 剔除超龄素材，位置在下载之前、不花一个字节，是唯一能在不耗带宽的前提下缩小候选池的闸门。值 90 天是【已知残余缺陷】下的折中：单一全局键表达不了五档时效口径（非日常前沿硬件 3 月 / 全民消费品 1 月 / 大模型与八卦 1 周 / 行情供需 1 周 / 政策管制 1 周）。离线建模（用已交付 04-原片 的 size/duration 中位数反推经验码率 147210 B/s）实测：7 天窗口让「内存涨价 最贵装机季」变成 0 条；30 天让内存期(1条/35MiB)、显卡期(3条/38MiB)够不到 70 MiB 下限；90 天 7 期最少 9 条、估计 101 MiB。不设窗口时离群极大（Roomba 池最旧 2367 天、苹果期 2029 天、显卡期 1244 天）。要实现真正的五档须新增【按题材类的时效键】，别用词表猜类目（太脆）。缺该键或值为 0 = 不过滤（与改动前逐字节等价）；tests/conftest.py 的 opt-in seam 会把它从测试夹具里剥掉。",
+        "max_age_days": 90,
+        "keep_analysis_temp": true
+      },
+      "direct_delivery": {
+        "_comment": "【原片直投】（2026-09-16 新增）。enabled=true 时，入选素材不再切成 3~8 秒无人脸片段，而是把【完整原片】按角色复制进 02-主素材 / 03-辅助素材。选择理由：对「名人＋事件」类主题，8 秒碎片没有交付价值——要的是完整采访（事件直接素材）与通用人物画面（挥手、打招呼这类不体现事件的素材）。此模式下人脸硬门槛被显式豁免（主素材必须 face_free、任何素材不得 face_heavy 两条都不再判），因为受访者必然出镜；这些人脸数值仍逐条记进清单，读者仍能看见交付了什么。主素材的选取判据改为：标题命中 theme_event_terms 者优先 → 其次按时长最长 → 再次按热度，同一作者只取一条，仍取 2 条；未配 theme_event_terms 时前一项恒为 0，退化为「时长最长的两条」。main_min_seconds 是最短时长（秒，0=不限），用来挡住「短促的通用人物素材被误判成采访」。缺省/缺块时行为与改动前逐字节相同。",
+        "enabled": true,
+        "main_min_seconds": 60
+      },
+      "relevance_gate": {
+        "_comment": "下载前相关性准入闸门（2026-09-14 新增）。enabled=true 时，标题未命中主题主体词（replication_theme.subject_terms）的候选在下载前即被剔除，stage=\"relevance\"、计入 rejected_relevance。min_subject_hits 是单条候选标题至少要命中的主体词个数（默认 1）。min_hit_ratio 是【池级】合理性下限，分母是整个候选池（不是选定集）⇒ 只能取低水位（0.05），绝不能设 0.8：0.8 会让每一期都 degraded、彻底失去区分度；真正的「命中率 ≥80%」由 min_subject_hits=1 保证（每条入选素材标题都含主体词，选定集命中率天然 100%）。min_hit_ratio 仅在主题确实解析出主体词时才生效（主体词为空时不触发，避免误报）。两键缺省时行为与改动前逐字节相同。注意：本闸门依赖调用方传入 theme，replication_pipeline 已于 2026-09-14 补上 theme=theme。",
+        "enabled": true,
+        "min_subject_hits": 1,
+        "min_hit_ratio": 0.05
+      },
+      "visual_verify": {
+        "_comment": "全自动视觉确认（2026-09-14 新增，用户明确要求「不要有人工确认的部分」）。对入选源片抽 3 帧（首帧/1/3/2/3）跑 RapidOCR，用 OCR 文本（+ 文件名）与主题主体词做比对，结果落 05-过程数据/visual_verify.json。它是「佐证」不是「闸门」：conclusive=False 时不剔除任何素材、也不计入顶层 degraded，只追加一条 warning 并写进清单摘要（误杀比漏放更贵）。注意：比对文本【不含标题】—— 标题已被 relevance_gate 消费过，含标题会让本项丧失独立性，无法发现「元数据对、画面错」。enabled 缺省 false（不产生 visual_verify.json）。",
+        "enabled": true
+      },
+      "prefilter": {
+        "enabled": true,
+        "min_seconds": 10,
+        "max_seconds": 600,
+        "heat_gate_percentile": 0.0,
+        "allow_unknown_duration": true,
+        "drop_non_video": true,
+        "_drop_non_video_comment": "drop_non_video（默认 true，受 enabled 管辖）：复用一个既有的 is_video_candidate()，在下载前剔除无视频流的作品（抖音图文帖 aweme_type=68、或下载地址指向图文帖配乐），使其不再占排序名额与下载预算。判定顺序：排除词 → 图文 → 时长 → 热度。置 false 可逐字段还原改动前的候选池。",
+        "_exclude_terms_comment": "exclude_terms 默认空（不设全局排除词）；标题（忽略大小写）包含任一排除词即在下载前剔除。可用 --exclude-term 追加。",
+        "exclude_terms": []
+      },
+      "search": {
+        "_comment": "min_searched_keywords（可选，默认不设置）：设置后把候选池规模抬升到 该值×10，使爬虫的 候选池规模//10 关键词切片覆盖足够多搜索词；受 max_pool_size 上限约束，无法满足时会告警。不设置时行为与既有完全一致。 publish_time_type（可选，默认不设置=沿用上游 1）：MediaCrawler 的发布时长筛选，枚举 0=不限 / 1=一天 / 7=一周 / 180=半年（见 third_party/MediaCrawler/media_platform/douyin/field.py 的 PublishTimeType；注意 180 会被抖音搜索 API 拒绝、实测返回 0 条，勿用）。素材复刻须用 0（不限）：24 小时窗口会把候选池压到 20~50 条、其中约 80% 是图文帖，导致 70 MiB 交付体积下限达不到。2026-09-14 实测（同题材「大疆Pocket3」、同会话、间隔 5 分钟静默）：PT=1 → 7 条候选/5 条视频/2 条图文；PT=0 → 23 条候选/23 条视频/0 条图文（4.6 倍）。本键缺省（不设置）时行为与改动前完全一致；回滚只需删掉本键。",
+        "publish_time_type": 0,
+        "min_searched_keywords": 10
+      },
+      "download_budget": {
+        "enabled": true,
+        "max_count": 24,
+        "max_bytes": 188743680,
+        "max_item_bytes": 83886080
+      },
+      "validation": {
+        "_comment": "decode_time_budget_seconds=0 表示不做全片解码、直接抽帧校验（如实记 degraded）；解码预算 <0 由 config 校验拒绝。时长窗口（prefilter.min_seconds/max_seconds）是一处配置、两处执行：元数据有时长 -> 下载前判；元数据无时长 -> 下载后按实测时长执行同一窗口。",
+        "enabled": true,
+        "duration_tolerance": 0.05,
+        "full_decode": true,
+        "decode_time_budget_seconds": 20,
+        "require_metadata_duration": false,
+        "cache_attestation": true
+      },
+      "clips": {
+        "min_seconds": 3,
+        "max_seconds": 8,
+        "max_per_video": 2,
+        "max_total": 24
+      },
+      "retention": {
+        "keep_source_video": true
+      },
+      "download": {
+        "timeout_seconds": 180,
+        "retries": 3,
+        "max_video_bytes": 524288000
+      },
+      "face": {
+        "backend_priority": [
+          "opencv_yunet",
+          "opencv_dnn"
+        ],
+        "sampling_interval_seconds": 1,
+        "max_frames": 120,
+        "frame_width": 960,
+        "min_face_area_ratio": 0.015,
+        "free_max_ratio": 0.05,
+        "low_max_ratio": 0.15,
+        "model_root": "data/models/face",
+        "auto_download": true,
+        "download_timeout_seconds": 60,
+        "score_threshold": 0.9,
+        "yunet": {
+          "file": "face_detection_yunet_2023mar.onnx",
+          "url": "https://github.com/opencv/opencv_zoo/raw/main/models/face_detection_yunet/face_detection_yunet_2023mar.onnx",
+          "expected_bytes": 232589
+        },
+        "dnn": {
+          "prototxt": "",
+          "weights": ""
+        }
+      },
+      "_episode_research_pack_comment": "单主题研究包 episode-research-pack-v1（2026-09-16 新增）。enabled=true 时，material-replication 完成旧交付后额外发布独立、不可变、可校验的研究包到 output/每期研究包/<日期>_研究包/<episode_id>/，供 Haike 只读消费；enabled=false 时输出与改动前逐字节相同，旧交付语义不变；当前置为 true（生产上线口径，测试由 tests/conftest.py 强制回 false）。annotate_delivery_manifest=true 时才在新交付的 清单.json 追加可选 research_pack_ref（默认走 sidecar 05-过程数据/research_pack_ref.json，历史交付永不回写）。consumer_root 是消费端（Haike）仓库根目录，仅供工作台只读 <consumer_root>/.backlot/research_pack_intake.json 与 research-pack-snapshots 来显示「消费端有没有接收这个包」；留空则面板明说未配置，生产端不 import 消费端代码、不跑消费端 CLI。",
+      "episode_research_pack": {
+        "enabled": true,
+        "output_root": "output/每期研究包",
+        "ledger_root": "input/research-ledgers",
+        "annotate_delivery_manifest": false,
+        "consumer_root": "../../Haike_video"
+      },
+      "_report_doc_comment": "交付汇报文档 汇报文档.md v1（2026-09-18 新增）。该文件原先是 scripts/build_report_doc.py 这一份纯人工脚本，src/ 全树零引用，因此管线既不产出也不校验——39 期已发布交付里有 31 期缺它，而 status=success / 体积 / 清单自校验全部照常通过，缺失对任何自动检查都不可见。现在核心逻辑迁入 douyin_intelligence/report_doc.py，并接入交付收尾阶段：enabled=true 时在 _apply_delivery_folder_size_gate 之前把汇报文档骨架写进 stage（随 _publish 原子发布，并被体积门禁计入），同时在 清单.json 与 00-交付说明.md 落 report_doc{status,pending_sections}；人工段 二/三/六 仍由 agent 填写，交付前必须跑 scripts/build_report_doc.py --delivery <目录> --check 退 0。该状态刻意不翻 degraded——待人工填写是流程状态、不是素材质量缺陷，冒充降级会淹掉既有的质量信号。enabled=false 时输出与改动前逐字节相同；当前置为 true（生产上线口径，测试由 tests/conftest.py 强制回 false）。批量巡检：scripts/build_report_doc.py --check --all --since <YYYY-MM-DD>。",
+      "report_doc": {
+        "enabled": true
+      }
+    }
+  },
+  "workbench": {
+    "title": "双轨科技选题编辑工作台",
+    "refresh_seconds": 5,
+    "task_name": "CopySkillDailyTechNews",
+    "editorial_override_path": "data/state/editorial_overrides.json",
+    "editorial_output_root": "output/editorial-board"
+  },
+  "media_crawler": {
+    "root": "third_party/MediaCrawler",
+    "python": "third_party/MediaCrawler/.venv/Scripts/python.exe",
+    "raw_output": "data/raw/mediacrawler",
+    "runs_output": "data/raw/mediacrawler/runs",
+    "chrome_path": "",
+    "user_data_dir": "third_party/MediaCrawler/browser_data/cdp_dy_user_data_dir",
+    "cdp_port": 9223,
+    "cdp_timeout_seconds": 2,
+    "browser_start_timeout_seconds": 20,
+    "browser_lock_timeout_seconds": 10,
+    "browser_lease_root": "data/state/browser-leases",
+    "browser_state_path": "data/state/project_browser_status.json",
+    "max_project_pages": 1,
+    "close_owned_browser_on_completion": true,
+    "keep_open_on_needs_login": true,
+    "reuse_persistent_profile": true,
+    "navigation_timeout_seconds": 90,
+    "collection_timeout_seconds": 300,
+    "max_notes_per_source": 30,
+    "comments_enabled": false
+  },
+  "benchmark_accounts": [
+    {
+      "id": "48304051157",
+      "name": "benchmark-48304051157",
+      "sec_uid": "MS4wLjABAAAAZRap_ZAI105qW8rpkSxJQ1nFjbA8mCc_bYKV231bRqsUAw2QiYkowFE2TvWilC34",
+      "url": "https://www.douyin.com/user/MS4wLjABAAAAZRap_ZAI105qW8rpkSxJQ1nFjbA8mCc_bYKV231bRqsUAw2QiYkowFE2TvWilC34",
+      "category": "hardware_products",
+      "enabled": true
+    },
+    {
+      "id": "dyontudflg8w",
+      "name": "AI壹号",
+      "sec_uid": "MS4wLjABAAAAEOyzyjzVibQEwo1VoHKzHg8YqMosPi4e6-mBxNQEIs8xSAnJ3l3sM2HgJf_4x5q0",
+      "url": "https://www.douyin.com/user/MS4wLjABAAAAEOyzyjzVibQEwo1VoHKzHg8YqMosPi4e6-mBxNQEIs8xSAnJ3l3sM2HgJf_4x5q0",
+      "category": "hardware_products",
+      "enabled": true
+    },
+    {
+      "id": "844568434",
+      "name": "AI硬件情报局",
+      "sec_uid": "MS4wLjABAAAA92Wjgi6DlQr0S6idRdT3mo3TUh_GrkaLjbX-BHgpBVw",
+      "url": "https://www.douyin.com/user/MS4wLjABAAAA92Wjgi6DlQr0S6idRdT3mo3TUh_GrkaLjbX-BHgpBVw",
+      "category": "hardware_products",
+      "enabled": true
+    }
+  ],
+  "trusted_news_accounts": [
+    {
+      "id": "caiyan-ai",
+      "stable_id": "MS4wLjABAAAAfVfARdZ9z4DHsrfaQzanny7s5yOt6CmTHPmIILlx8QAt_-VsBRTWfUAiQ_0v9eJM",
+      "expected_creator_hash": "859ea7092dbf1121",
+      "name": "财研网AI",
+      "share_entry_url": "https://v.douyin.com/PoAPJ56GPu0/",
+      "profile_url": "https://www.douyin.com/user/MS4wLjABAAAAfVfARdZ9z4DHsrfaQzanny7s5yOt6CmTHPmIILlx8QAt_-VsBRTWfUAiQ_0v9eJM",
+      "category": "technology_news",
+      "enabled": true,
+      "source_tier": "trusted_creator",
+      "editorial_confidence": "high",
+      "approval_basis": "user_curated_account",
+      "content_extraction_profile": "visual_text_only",
+      "audio_policy": "never",
+      "frame_strategy": "scene_plus_interval_guard",
+      "window_hours": 48,
+      "max_items": 10,
+      "follower_count_observed": null,
+      "notes": "用户口述该账号约两百万粉丝；未从当前公开页面观察到可确认的实时粉丝数。"
+    }
+  ],
+  "materials": {
+    "recent_days": 30,
+    "top_n": 3,
+    "max_per_account": 2,
+    "media_root": "data/media",
+    "output_root": "output/materials",
+    "download_timeout_seconds": 180,
+    "download_retries": 3,
+    "max_video_bytes": 524288000,
+    "cache_root": "data/cache/materials",
+    "retention": {
+      "keep_video": false,
+      "keep_audio": false,
+      "temp_root": "data/temp/materials",
+      "quota_bytes": 2147483648,
+      "ttl_hours": 24
+    },
+    "transcription": {
+      "enabled": true,
+      "model": "base",
+      "device": "cpu",
+      "compute_type": "int8",
+      "cpu_threads": 2,
+      "language": "zh",
+      "beam_size": 5,
+      "chunk_seconds": 180,
+      "keep_audio_parts": true,
+      "model_cache": "data/models/faster-whisper"
+    },
+    "ocr": {
+      "enabled": true,
+      "frame_interval_seconds": 3,
+      "keep_frames": true,
+      "max_frames": 20,
+      "max_width": 960
+    },
+    "llm": {
+      "enabled": true,
+      "base_url": "",
+      "allow_insecure_http": true,
+      "model": "",
+      "chunk_chars": 8000,
+      "timeout_seconds": 120,
+      "retries": 3,
+      "analysis_version": "2026-08-26-v1"
+    }
+  },
+  "categories": {
+    "daily_news": [
+      "发布",
+      "宣布",
+      "上线",
+      "更新",
+      "事故",
+      "漏洞",
+      "召回",
+      "涨价",
+      "降价"
+    ],
+    "ai_models": [
+      "大模型",
+      "模型",
+      "AI",
+      "人工智能",
+      "推理",
+      "多模态",
+      "智能体",
+      "Agent"
+    ],
+    "software_tools": [
+      "软件",
+      "应用",
+      "App",
+      "工具",
+      "插件",
+      "浏览器",
+      "效率"
+    ],
+    "hardware_products": [
+      "硬件",
+      "芯片",
+      "机器人",
+      "手机",
+      "电脑",
+      "眼镜",
+      "耳机",
+      "设备"
+    ],
+    "open_source": [
+      "开源",
+      "GitHub",
+      "仓库",
+      "项目",
+      "代码",
+      "框架"
+    ],
+    "interesting_tech": [
+      "新品",
+      "黑科技",
+      "有趣",
+      "首次",
+      "实验",
+      "原型",
+      "未来科技"
+    ]
+  }
+}

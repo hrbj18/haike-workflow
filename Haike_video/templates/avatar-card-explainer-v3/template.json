@@ -1,0 +1,66 @@
+{
+  "template_id": "avatar-template3-card-3x4-v001",
+  "display_name": "数字人口播模板3-卡片式讲解",
+  "short_name": "数字人口播模板3",
+  "frame": {
+    "width": 1080,
+    "height": 1440,
+    "fps": 30
+  },
+  "sample": {
+    "duration_seconds": 15,
+    "duration_in_frames": 450,
+    "composition_id": "AvatarTemplate3Sample"
+  },
+  "source_archival": {
+    "type": "baseline",
+    "source_project": "projects/avatar-template3-preview-20261011",
+    "archived_on": "2026-10-11",
+    "description": "用户确认的15秒样片源码原样归档；三个TSX文件保持逐字节一致，未做通用化或行为修改。",
+    "source_sha256": {
+      "index.tsx": "a58f804bf74bab68b4549aa5c715eb4a89ec5835206d198fc79b462b4fc71ef9",
+      "Root.tsx": "04755a8b960fa2874211190a40bf783da48a36fddfba23e46c9daaa2eb2b00c2",
+      "Composition.tsx": "a2eef8485c4e75d7f5fcbb1093278a86a772bb4a986873e7e0ae1e1fdcb18323"
+    }
+  },
+  "props_contract": {
+    "avatar": {
+      "type": "string",
+      "required": true,
+      "asset_resolution": "staticFile, per-project public directory",
+      "description": "已裁成正方形且时长为15秒的数字人口播片段；视频静音，音频由audio独立提供。样片末尾使用已准备的停帧补足。"
+    },
+    "broll": {
+      "type": "string | null",
+      "required": true,
+      "asset_resolution": "staticFile, per-project public directory",
+      "description": "第一章的素材视频；null时使用源码内的用户到商品示意卡。"
+    },
+    "audio": {
+      "type": "string",
+      "required": true,
+      "asset_resolution": "staticFile, per-project public directory",
+      "description": "已准备的配音音轨；人物视频不重复输出声音。"
+    },
+    "cues": {
+      "type": "array",
+      "required": true,
+      "items": {
+        "start": "number, seconds",
+        "end": "number, seconds",
+        "text": "string",
+        "emphasis": "string[]"
+      },
+      "description": "按真实配音时轴准备的逐句字幕；默认44px，按实际字宽缩小至最低36px；36px仍超过880px时明确报错，须拆句。emphasis为静态蓝色关键词，不作伪逐字卡拉OK。"
+    }
+  },
+  "sample_verified": true,
+  "full_pipeline_verified": false,
+  "platform_ui_verified": false,
+  "reuse_policy": [
+    "新主题先把归档源码复制到本期project，再按本期素材、文案和时轴调整；不要直接改动本基准。",
+    "当前源码中的AI购物三章、章节时间和15秒时长是已确认样片内容，不是正式全片的章节数或时长限制。",
+    "正式全片需要接入项目生产合同与工作台队列，并重新验证完整时间轴、字幕、画幅及预览与正式输出一致性。",
+    "样片确认不等于真实手机平台UI遮挡验收通过。"
+  ]
+}

@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>已发布成片索引 · 海客视频</title>
+  <link rel="stylesheet" href="/ui/published_clips.css">
+  <script type="module" src="/ui/published_clips.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div><a href="/">← 项目库</a> · <a href="/material-library">素材库与分级选材</a><h1>已发布成片索引</h1><p>搜索原片内容与具体片段，核对后再用于二次剪辑。</p></div>
+    <span id="stats" aria-live="polite">正在读取索引…</span>
+  </header>
+  <main>
+    <section class="search-panel" aria-label="片段检索">
+      <label>搜索内容 <input id="query" type="search" placeholder="例如：唱歌、比心、游客大笑、广州" autocomplete="off"></label>
+      <label>事件标签 <select id="tag"><option value="">所有标签</option></select></label>
+      <label>事件主体 <select id="actor-filter"><option value="">全部主体</option></select></label>
+      <label>回应内容 <input id="reaction-filter" placeholder="例如：大笑、围观"></label>
+      <label>审核进度 <select id="status-filter"><option value="">默认</option><option value="candidate">待确认</option><option value="confirmed">已确认</option><option value="rejected">已驳回</option></select></label>
+      <label class="check"><input id="confirmed" type="checkbox">只看人工确认</label>
+      <button id="search" type="button">搜索</button>
+      <p id="search-message" class="message" role="status" aria-live="polite"></p>
+    </section>
+    <details id="benchmark-panel" class="benchmark-panel">
+      <summary>十片评估与独立真值核对</summary>
+      <p>先完整观看和回听，再独立标记真实事件。空标注只有在完整复核后才作为负例；下方候选不是真值。</p>
+      <p id="benchmark-metrics" role="status"></p><div id="benchmark-cases"></div>
+    </details>
+    <details id="remix-workbench" class="benchmark-panel">
+      <summary>二剪选材篮 · 编排与导出</summary>
+      <p>加入原片区间后，调整顺序、切口和原声。输出为待审视频；原片内已烧录的字幕和配乐不会自动消除。</p>
+      <div class="remix-fields">
+        <label>二剪草稿 <select id="remix-project"><option value="">选择二剪草稿</option></select></label>
+        <label>新草稿名称 <input id="remix-new-title" maxlength="120" placeholder="例如：粤仔与游客的暖心互动"></label>
+        <button id="remix-create" type="button">新建二剪草稿</button>
+      </div>
+      <fieldset id="remix-editor"><legend>选材与编排</legend>
+        <label>草稿名称 <input id="remix-title" maxlength="120"></label>
+        <p id="remix-summary">选择或新建一个二剪草稿</p>
+        <div id="remix-segments"></div>
+        <div class="actions"><button id="remix-save" type="button">保存二剪草稿</button><button id="remix-render" type="button">保存并生成预览</button><button id="remix-reload" class="secondary" type="button">放弃本页修改，重读草稿</button></div>
+      </fieldset>
+      <p id="remix-message" class="message" role="status" aria-live="polite"></p>
+      <button id="remix-refresh" class="secondary" type="button">刷新渲染状态</button>
+      <div id="remix-versions"></div>
+      <p id="remix-preview-label" class="muted"></p><video id="remix-preview" controls playsinline preload="metadata" hidden></video>
+    </details>
+    <div class="columns">
+      <section class="result-panel" aria-label="搜索结果">
+        <h2>匹配片段 <small id="count"></small></h2>
+        <div id="results" class="results"></div>
+      </section>
+      <section class="detail-panel" aria-label="视频详情">
+        <h2 id="video-title">选择一条结果</h2>
+        <p id="video-state" class="muted"></p>
+        <form id="description-form" hidden>
+          <label>作品摘要 <textarea id="video-description" rows="2" maxlength="1000" placeholder="简述这条作品讲了什么；人工填写，方便跨作品检索"></textarea></label>
+          <button type="submit">保存摘要</button><span id="description-message" class="message" role="status"></span>
+        </form>
+        <video id="player" controls preload="metadata" playsinline hidden></video>
+        <p id="play-range" class="muted"></p>
+        <div id="review-controls" hidden>
+          <div class="actions review-toolbar">
+            <button id="play-event" type="button">播放事件</button>
+            <button id="play-context" type="button" class="secondary">播放前后文</button>
+            <button id="add-current-remix" type="button">当前区间加入选材篮</button>
+            <label><input id="loop-range" type="checkbox">循环片段</label>
+            <button id="previous-event" type="button" class="secondary">上一个候选</button>
+            <button id="next-event" type="button" class="secondary">下一个候选</button>
+          </div>
+          <p class="muted">快捷键：空格播放/暂停，← → 移动半秒，I 入点，O 出点，P 精彩点。输入文字时不生效。</p>
+          <button id="analyze-video" type="button" class="secondary">分析本片声画线索</button>
+          <p id="analysis-message" role="status" class="muted"></p>
+          <svg id="signal-chart" viewBox="0 0 800 100" role="img" aria-label="声音强度和画面变化时间曲线"></svg>
+          <p id="signal-caption" class="muted"></p>
+        </div>
+        <section class="events">
+          <h3>事件时间轴</h3>
+          <div id="events"></div>
+        </section>
+        <form id="event-form" hidden>
+          <h3 id="form-title">新增事件</h3>
+          <div class="time-grid">
+            <label>开始秒数 <input id="start" type="number" min="0" step="0.001" required></label>
+            <label>结束秒数 <input id="end" type="number" min="0" step="0.001" required></label>
+            <label>精彩点（可空）<input id="peak" type="number" min="0" step="0.001"></label>
+          </div>
+          <label>拖动入点 <input id="start-slider" type="range" min="0" step="0.1"></label>
+          <label>拖动出点 <input id="end-slider" type="range" min="0" step="0.1"></label>
+          <div class="time-grid">
+            <label>上下文开始 <input id="context-start" type="number" min="0" step="0.001" required></label>
+            <label>上下文结束 <input id="context-end" type="number" min="0" step="0.001" required></label>
+            <button id="expand-context" type="button" class="secondary">前后各加 3 秒</button>
+          </div>
+          <label>事件主体 <select id="event-actor"></select></label>
+          <label>主体动作 <input id="event-action" maxlength="120" placeholder="例如：粤仔摆动身体"></label>
+          <label>对方反应 <input id="event-reaction" maxlength="120" placeholder="例如：两名游客鼓掌、大笑"></label>
+          <label>事件摘要 <input id="event-summary" maxlength="500" required placeholder="例如：游客听完粤仔的回答后大笑"></label>
+          <label>核对依据 <textarea id="review-note" rows="2" maxlength="1000" placeholder="例如：连续观看 48–50 秒画面，确认两人用手比心；边界约半秒误差"></textarea></label>
+          <fieldset><legend>本次实际核对的渠道</legend><label><input id="checked-audio" type="checkbox">已回听原声</label><label><input id="checked-video" type="checkbox">已连续观看画面</label><label><input id="checked-transcript" type="checkbox">已核对转写</label></fieldset>
+          <fieldset><legend>事件标签</legend><div id="tag-options" class="tag-options"></div></fieldset>
+          <label>审核状态 <select id="review-status"><option value="confirmed">人工确认</option><option value="candidate">待确认</option><option value="rejected">驳回候选</option></select></label>
+          <div class="actions"><button type="submit">保存事件</button><button id="save-next" type="submit">保存并核对下一个</button><button id="cancel-event" type="button" class="secondary">取消</button></div>
+          <p id="form-message" class="message" role="status"></p>
+        </form>
+        <button id="new-event" type="button" hidden>＋ 标注当前视频的事件</button>
+        <form id="truth-form" hidden>
+          <h3>独立评估标注</h3>
+          <p>对整条作品独立标注每个真实事件。未完成全片核对时保存为草稿；完整观看后没有目标事件，可保留空列表。</p>
+          <div id="truth-events"></div><button id="add-truth" type="button" class="secondary">＋ 添加真值片段</button>
+          <label>复核说明<textarea id="truth-note" rows="2" maxlength="1000"></textarea></label>
+          <label><input id="truth-audio" type="checkbox">全片原声已回听</label>
+          <label><input id="truth-video" type="checkbox">全片画面已观看</label>
+          <label><input id="truth-complete" type="checkbox">完整标注结束，可计入评估</label>
+          <button type="submit">保存独立标注</button><p id="truth-message" role="status"></p>
+        </form>
+        <section class="transcript"><h3>带时间的原声转写 <small>自动识别，可能有误</small></h3><div id="transcript"></div></section>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

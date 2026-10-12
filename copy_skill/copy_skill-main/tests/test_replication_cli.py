@@ -1,0 +1,748 @@
+from __future__ import annotations
+
+import argparse
+import json
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Any
+
+import pytest
+
+from douyin_intelligence import cli
+from douyin_intelligence.config import ConfigurationError, load_config
+from douyin_intelligence.replication_pipeline import ReplicationDeps, replication_doctor, run_material_replication
+from douyin_intelligence.replication_theme import expand_keywords, subject_terms
+
+_EXISTING_COMMANDS = (
+    "doctor", "normalize", "run", "export-openmontage", "crawl-plan", "crawl", "browser-start",
+    "browser-close", "collect-creators", "build-materials", "collect-materials", "llm-doctor",
+    "cleanup-temp", "daily-news", "douyin-tech-ranking", "trusted-account-news", "trusted-ai-brief",
+    "account-pool", "material-probe", "visual-anchor", "daily-material-pack", "daily-material-exchange",
+    "inspiration", "scheduler", "workbench",
+)
+
+
+def _subcommands() -> set[str]:
+    parser = cli.build_parser()
+    action = next(item for item in parser._actions if isinstance(item, argparse._SubParsersAction))
+    return set(action.choices)
+
+
+def _row(video_id: str, author: str, *, duration: float = 60.0, digg: int = 100, url: str = "") -> dict:
+    row = {
+        "aweme_id": video_id,
+        "desc": f"标题-{video_id}",
+        "author": {"uid": f"uid-{author}", "nickname": author},
+        "create_time": "2026-09-11T08:00:00+08:00",
+        "statistics": {"digg_count": digg, "comment_count": 10, "share_count": 5, "collect_count": 20},
+        "duration": duration,
+        "share_url": f"https://www.douyin.com/video/{video_id}",
+    }
+    if url:
+        row["video_download_url"] = url
+    return row
+
+
+def _config(tmp_path: Path) -> dict:
+    config = load_config()
+    config["_project_root"] = str(tmp_path)
+    # These CLI tests inject a fake downloader that writes non-media bytes, so
+    # isolate them from the download-validation layer (real ffprobe+ffmpeg).
+    material = config["jobs"]["material_replication"]
+    material["validation"] = {"enabled": False}
+    # The shipped config switches the two download/selection gates on.  They are
+    # *decisions under their own tests* (here and in test_replication_selection.py);
+    # every other CLI test is about pipeline plumbing (attribution, counters,
+    # degradation, delivery), so the switches are pinned off here -- exactly the
+    # same isolation as ``validation`` above.  A test that wants a gate on turns
+    # it back on explicitly at its call site.
+    material["relevance_gate"] = {"enabled": False}
+    material["visual_verify"] = {"enabled": False}
+    return config
+
+
+def _collector(rows: list[dict]):
+    def collect(config, budget, *, run_id=None, keywords=None, hard_max=None, before_sanitize=None, **kwargs):
+        source = Path(str(config.get("_project_root"))) / "raw" / "search_contents_1.json"
+        source.parent.mkdir(parents=True, exist_ok=True)
+        source.write_text(json.dumps(rows, ensure_ascii=False), encoding="utf-8")
+        assert before_sanitize is not None
+        before_sanitize([source])
+        return {"status": "success", "keywords": keywords, "budget": budget}
+    return collect
+
+
+class _Ocr:
+    def run(self, video, duration, cache_dir, temp_dir):
+        return {"status": "no_text", "items": [], "sampled_frames": 10}
+
+
+class _Transcriber:
+    def run(self, video, cache_dir, temp_dir, **kwargs):
+        # Stage is identified by ``cache_dir`` (script vs material sub-dir): since
+        # P1a both stages share one video cache root, so the source ``.mp4`` no
+        # longer distinguishes them.
+        if "script" in str(cache_dir):
+            return {"status": "success", "text": "字" * 200, "segments": [{"start": 0, "end": 5, "text": "开场"}]}
+        return {"status": "no_speech", "text": "", "segments": []}
+
+
+class _Face:
+    backend = "opencv_yunet"
+
+    def status(self):
+        return {"backend": "opencv_yunet", "status": "ok", "model_present": True}
+
+    def run(self, video, duration, cache_dir, temp_dir):
+        return {
+            "backend": "opencv_yunet", "status": "ok", "face_frame_ratio": 0.0, "max_face_area_ratio": 0.0,
+            "face_class": "face_free", "sampled_frames": 10, "face_per_frame": [False] * 10,
+            "sample_interval_seconds": 1,
+        }
+
+
+def _deps(tmp_path: Path, rows: list[dict]) -> ReplicationDeps:
+    def downloader(url, destination, config):
+        Path(destination).parent.mkdir(parents=True, exist_ok=True)
+        Path(destination).write_bytes(b"video")
+
+    def prober(path, config):
+        return {"duration_seconds": 60.0, "width": 1080, "height": 1920, "codec": "h264"}
+
+    return ReplicationDeps(
+        collector=_collector(rows), downloader=downloader, prober=prober,
+        transcriber=_Transcriber(), ocr=_Ocr(), face_detector=_Face(),
+    )
+
+
+def test_config_exposes_valid_material_replication(tmp_path: Path) -> None:
+    config = load_config()
+    settings = config["jobs"]["material_replication"]
+    assert settings["default_pool_size"] == 80
+    assert settings["face"]["yunet"]["expected_bytes"] == 232589
+
+
+def test_config_rejects_inverted_pool_bounds(tmp_path: Path) -> None:
+    config = load_config()
+    config["jobs"]["material_replication"]["default_pool_size"] = 10
+    config["jobs"]["material_replication"]["min_pool_size"] = 90
+    bad = tmp_path / "bad_config.json"
+    bad.write_text(json.dumps(config, ensure_ascii=False), encoding="utf-8")
+    with pytest.raises(ConfigurationError):
+        load_config(bad)
+
+
+def test_cli_registers_material_replication_without_changing_existing() -> None:
+    names = _subcommands()
+    assert "material-replication" in names
+    for command in _EXISTING_COMMANDS:
+        assert command in names
+
+
+def test_cli_material_replication_doctor_and_help_run_offline(capsys) -> None:
+    assert "material-replication" in cli.build_parser().format_help()
+    assert cli.main(["material-replication", "doctor"]) == 0
+    output = json.loads(capsys.readouterr().out)
+    assert "face" in output and "ffmpeg" in output
+
+
+def test_replication_doctor_reports_face_and_ffmpeg(tmp_path: Path) -> None:
+    config = _config(tmp_path)
+    report = replication_doctor(config)
+    assert set(report) >= {"status", "ffmpeg", "ffprobe", "face", "model_present", "asr", "ocr"}
+
+
+def test_replication_doctor_flags_missing_asr_model(tmp_path: Path) -> None:
+    config = _config(tmp_path)
+    config["materials"]["transcription"]["model_cache"] = str(tmp_path / "empty-models")
+    report = replication_doctor(config)
+    assert report["asr"] is False
+    assert report["asr_model_present"] is False
+    assert report["asr_reason"]
+
+
+def test_replication_doctor_accepts_present_asr_model(tmp_path: Path) -> None:
+    config = _config(tmp_path)
+    model_dir = tmp_path / "models" / "base"
+    model_dir.mkdir(parents=True)
+    (model_dir / "model.bin").write_bytes(b"weights")
+    config["materials"]["transcription"]["model_cache"] = str(tmp_path / "models")
+    report = replication_doctor(config)
+    assert report["asr"] is True
+    assert report["asr_model_present"] is True
+    assert report["asr_reason"] == ""
+
+
+def test_dry_run_produces_pool_and_scoring_without_download(tmp_path: Path) -> None:
+    config = _config(tmp_path)
+    rows = [_row("7300000000000000001", "作者A", url="https://signed.example/secret"), _row("7300000000000000002", "作者B")]
+    result = run_material_replication(
+        config, "苹果折叠屏手机", business_date="2026-09-12", dry_run=True,
+        deps=_deps(tmp_path, rows),
+    )
+    assert result["status"] == "success"
+    assert result["dry_run"] is True
+    output_dir = Path(result["output_dir"])
+    assert output_dir.name == "9.12苹果折叠屏手机复刻视频"
+    process_dir = output_dir / "05-过程数据"
+    assert (process_dir / "candidate_pool.json").is_file()
+    assert (process_dir / "scoring.json").is_file()
+    assert not list(output_dir.rglob("*.mp4"))
+    serialized = (process_dir / "candidate_pool.json").read_text(encoding="utf-8")
+    assert "signed.example" not in serialized
+
+
+def test_full_run_offline_degrades_without_ffmpeg(tmp_path: Path, monkeypatch) -> None:
+    config = _config(tmp_path)
+    rows = [
+        _row("7300000000000000001", "作者A", url="https://signed.example/1"),
+        _row("7300000000000000002", "作者B", url="https://signed.example/2"),
+        _row("7300000000000000003", "作者C", url="https://signed.example/3"),
+    ]
+    monkeypatch.setattr("douyin_intelligence.replication_pipeline.media_tool_available", lambda config, name: False)
+    monkeypatch.setattr(
+        "douyin_intelligence.replication_selection.compute_visual_metrics",
+        lambda *args, **kwargs: __import__("douyin_intelligence.replication_selection", fromlist=["VisualMetrics"]).VisualMetrics(
+            sampled_frames=10, motion_frame_ratio=0.9, ocr_text_frame_ratio=0.0, visual_ok=True,
+        ),
+    )
+    result = run_material_replication(
+        config, "苹果折叠屏手机", business_date="2026-09-12", deps=_deps(tmp_path, rows),
+    )
+    assert result["degraded"] is True
+    assert result["status"] == "partial"
+    output_dir = Path(result["output_dir"])
+    assert (output_dir / "清单.json").is_file()
+    assert (output_dir / "01-脚本思路" / "脚本思路.md").is_file()
+    assert list((output_dir / "04-原片").glob("*.mp4"))
+    validation = json.loads((output_dir / "05-过程数据" / "run_log.json").read_text(encoding="utf-8"))
+    assert validation["degraded"] is True
+    # manifest self-validation stays green even in the degraded path.
+    from douyin_intelligence.replication_delivery import validate_delivery_manifest
+    assert validate_delivery_manifest(output_dir / "清单.json")["status"] == "pass"
+
+
+def test_full_run_marks_degraded_when_face_sampling_fails(tmp_path: Path, monkeypatch) -> None:
+    # A healthy static backend status must not hide per-video face failures.
+    config = _config(tmp_path)
+    rows = [
+        _row("7300000000000000001", "作者A", url="https://signed.example/1"),
+        _row("7300000000000000002", "作者B", url="https://signed.example/2"),
+    ]
+    monkeypatch.setattr("douyin_intelligence.replication_pipeline.media_tool_available", lambda config, name: True)
+    monkeypatch.setattr(
+        "douyin_intelligence.replication_selection.compute_visual_metrics",
+        lambda *args, **kwargs: __import__("douyin_intelligence.replication_selection", fromlist=["VisualMetrics"]).VisualMetrics(
+            sampled_frames=10, motion_frame_ratio=0.9, ocr_text_frame_ratio=0.0, visual_ok=True,
+        ),
+    )
+
+    class _ErrorFace:
+        backend = "opencv_yunet"
+
+        def status(self):
+            return {"backend": "opencv_yunet", "status": "ok", "model_present": True}
+
+        def run(self, video, duration, cache_dir, temp_dir):
+            return {
+                "backend": "opencv_yunet", "status": "error", "face_class": "unavailable",
+                "error": "无法读取采样帧", "face_per_frame": [],
+            }
+
+    deps = _deps(tmp_path, rows)
+    deps.face_detector = _ErrorFace()
+    result = run_material_replication(config, "苹果折叠屏手机", business_date="2026-09-12", deps=deps)
+    assert result["degraded"] is True
+    output_dir = Path(result["output_dir"])
+    manifest = json.loads((output_dir / "清单.json").read_text(encoding="utf-8"))
+    assert manifest["degraded"] is True
+    assert manifest["counters"]["face_errors"] >= 1
+    assert any("人脸采样失败" in warning for warning in manifest["warnings"])
+
+
+# --------------------------------------------------------------------------- #
+# T3a: relevance degradation must reach the top level
+#
+# The 9.14 corpus shipped four deliveries (机械鸭 / 充电宝 3C / 内存涨价 /
+# 华为昇腾950DT) whose ``search_attribution.relevance.degraded`` was ``true``
+# while the top level said ``degraded=false, status="done"`` -- a false pass that
+# no upstream reader could see.  These tests pin both directions of the OR, and
+# the two distinct warning causes.
+# --------------------------------------------------------------------------- #
+def _healthy_tooling(monkeypatch) -> None:
+    """ffmpeg/ffprobe "present" and no real frame decoding -- nothing degrades."""
+    from douyin_intelligence.replication_selection import VisualMetrics
+
+    monkeypatch.setattr("douyin_intelligence.replication_pipeline.media_tool_available", lambda config, name: True)
+    monkeypatch.setattr(
+        "douyin_intelligence.replication_selection.compute_visual_metrics",
+        lambda *args, **kwargs: VisualMetrics(
+            sampled_frames=10, motion_frame_ratio=0.9, ocr_text_frame_ratio=0.0, visual_ok=True,
+        ),
+    )
+
+
+def _themed_rows(theme_title: str) -> list[dict]:
+    rows = [
+        _row("7300000000000000001", "作者A", url="https://signed.example/1"),
+        _row("7300000000000000002", "作者B", url="https://signed.example/2"),
+    ]
+    for row in rows:
+        row["desc"] = theme_title
+    return rows
+
+
+def _run(tmp_path: Path, rows: list[dict]) -> tuple[dict, dict, dict]:
+    result = run_material_replication(
+        _config(tmp_path), "苹果折叠屏手机", business_date="2026-09-12", deps=_deps(tmp_path, rows),
+    )
+    output_dir = Path(result["output_dir"])
+    manifest = json.loads((output_dir / "清单.json").read_text(encoding="utf-8"))
+    run_log = json.loads((output_dir / "05-过程数据" / "run_log.json").read_text(encoding="utf-8"))
+    return result, manifest, run_log
+
+
+def test_relevance_degradation_reaches_top_level_degraded(tmp_path: Path, monkeypatch) -> None:
+    """No term hits the pool -> relevance cannot discriminate -> degraded=True."""
+    _healthy_tooling(monkeypatch)
+    # Synthetic titles carry no theme term, so ``live_count == 0``.
+    result, manifest, run_log = _run(tmp_path, _themed_rows("标题-无主题词"))
+
+    assert run_log["search_attribution"]["relevance"]["degraded"] is True
+    assert run_log["search_attribution"]["relevance"]["live_count"] == 0
+    # The whole point: the false pass is gone.
+    assert result["degraded"] is True
+    assert manifest["degraded"] is True
+    assert run_log["degraded"] is True
+    assert result["status"] == "partial"
+    # ...and the cause is named, with the pre-existing wording unchanged.
+    warning = next(item for item in result["warnings"] if "题材相关度" in item)
+    assert warning.startswith("题材相关度无法区分本轮候选池：")
+    assert "均未在任何候选标题中命中" in warning
+    assert "命中率过低" not in warning
+
+
+def test_healthy_relevance_leaves_top_level_degraded_false(tmp_path: Path, monkeypatch) -> None:
+    """The ``degraded=False`` direction: nothing is degraded unless it is."""
+    _healthy_tooling(monkeypatch)
+    result, manifest, run_log = _run(tmp_path, _themed_rows("苹果折叠屏手机 折叠屏上手体验"))
+
+    assert run_log["search_attribution"]["relevance"]["degraded"] is False
+    assert run_log["search_attribution"]["relevance"]["live_count"] > 0
+    assert result["degraded"] is False
+    assert manifest["degraded"] is False
+    assert not [item for item in result["warnings"] if "题材相关度" in item]
+
+
+def _forced_report(*, degraded: bool, live_count: int, hit_ratio: object = None):
+    """Real scores, but a forced ``degraded``/``live_count``/``hit_ratio``.
+
+    ``hit_ratio=None`` removes the key entirely, which is how the pre-T2 report
+    looked; the pipeline must cope without either.
+    """
+    from douyin_intelligence.replication_selection import relevance_report as real_report
+
+    def report(candidates, theme, keywords=None, *, config=None):
+        payload = dict(real_report(candidates, theme, keywords, config=config))
+        payload["degraded"] = degraded
+        payload["live_count"] = live_count
+        if hit_ratio is None:
+            payload.pop("hit_ratio", None)
+        else:
+            payload["hit_ratio"] = hit_ratio
+        return payload
+    return report
+
+
+def test_low_hit_ratio_has_its_own_warning_and_still_degrades(tmp_path: Path, monkeypatch) -> None:
+    """The reserved branch: degraded because the subject hit too *few* candidates."""
+    _healthy_tooling(monkeypatch)
+    monkeypatch.setattr(
+        "douyin_intelligence.replication_pipeline.relevance_report",
+        _forced_report(degraded=True, live_count=2, hit_ratio=0.25),
+    )
+    result, manifest, _run_log = _run(tmp_path, _themed_rows("苹果折叠屏手机 上手"))
+
+    assert result["degraded"] is True and manifest["degraded"] is True
+    warning = next(item for item in result["warnings"] if "题材相关度" in item)
+    assert warning.startswith("题材相关度命中率过低：")
+    assert "0.25" in warning
+    assert "均未在任何候选标题中命中" not in warning
+
+
+def test_low_hit_ratio_warning_without_the_field_never_raises(tmp_path: Path, monkeypatch) -> None:
+    """``hit_ratio`` absent: no invented number, no crash, cause still named."""
+    _healthy_tooling(monkeypatch)
+    monkeypatch.setattr(
+        "douyin_intelligence.replication_pipeline.relevance_report",
+        _forced_report(degraded=True, live_count=2, hit_ratio=None),
+    )
+    result, manifest, _run_log = _run(tmp_path, _themed_rows("苹果折叠屏手机 上手"))
+
+    assert result["degraded"] is True and manifest["degraded"] is True
+    warning = next(item for item in result["warnings"] if "题材相关度" in item)
+    assert warning.startswith("题材相关度命中率过低：")
+    assert "主体词命中率" not in warning
+    assert "均未在任何候选标题中命中" not in warning
+
+
+# --------------------------------------------------------------------------- #
+# T3b / T6c: the automatic visual gate is wired in, and the manifest rows
+# carry provenance.  Off by default, so the whole feature is additive.
+# --------------------------------------------------------------------------- #
+@dataclass
+class _VisualDeps:
+    """The bundle handed to ``replication_visual.verify_videos(deps=...)``."""
+
+    frame_extractor: Any = None
+    ocr: Any = None
+
+
+def _visual_deps(text: str, *, frames: int = 3) -> _VisualDeps:
+    def extractor(video: Path, destination: Path) -> list[Path]:
+        written = []
+        for index in range(frames):
+            path = destination / f"frame-{index:02d}.jpg"
+            path.write_bytes(b"fake-jpeg")
+            written.append(path)
+        return written
+
+    def ocr(frame: Path) -> str:
+        return text
+    return _VisualDeps(frame_extractor=extractor, ocr=ocr)
+
+
+def _run_with_visual(
+    tmp_path: Path,
+    rows: list[dict],
+    *,
+    enabled: bool,
+    ocr_text: str,
+) -> tuple[dict, dict, dict]:
+    config = _config(tmp_path)
+    config["jobs"]["material_replication"]["visual_verify"] = {"enabled": enabled}
+    deps = _deps(tmp_path, rows)
+    deps.visual = _visual_deps(ocr_text)
+    result = run_material_replication(
+        config, "苹果折叠屏手机", business_date="2026-09-12", deps=deps,
+    )
+    output_dir = Path(result["output_dir"])
+    manifest = json.loads((output_dir / "清单.json").read_text(encoding="utf-8"))
+    payload = output_dir / "05-过程数据" / "visual_verify.json"
+    artifact = json.loads(payload.read_text(encoding="utf-8")) if payload.is_file() else None
+    return result, manifest, artifact
+
+
+def _assert_provenance_fields(rows: list[dict]) -> None:
+    """T6c: the additive row fields exist, with or without the visual gate."""
+    assert rows, "the fixture pool must deliver at least one source"
+    for row in rows:
+        assert row["title"]
+        assert int(row["bytes"]) > 0
+        assert row["published_at"]
+        assert row["source"] == "douyin"
+        assert isinstance(row["hit_ratio"], float)
+        assert "visual_verdict" in row
+
+
+def test_visual_gate_switch_off_adds_fields_but_no_artifact(tmp_path: Path, monkeypatch) -> None:
+    _healthy_tooling(monkeypatch)
+    rows = _themed_rows("苹果折叠屏手机 上手")
+    result, manifest, artifact = _run_with_visual(tmp_path, rows, enabled=False, ocr_text="机械鸭")
+
+    # Off == the feature does not exist: no artifact, no manifest block, and the
+    # per-row verdict stays null...
+    assert artifact is None
+    assert "visual_verify" not in manifest
+    assert all(row["visual_verdict"] is None for row in manifest["material_replica_sources"])
+    assert not [item for item in result["warnings"] if "视觉确认" in item]
+    # ...while the purely additive provenance fields are always present.
+    _assert_provenance_fields(manifest["material_replica_sources"])
+
+
+def test_visual_gate_conclusive_does_not_change_degraded(tmp_path: Path, monkeypatch) -> None:
+    """A conclusive batch is recorded and changes nothing else."""
+    _healthy_tooling(monkeypatch)
+    rows = _themed_rows("苹果折叠屏手机 上手")
+    terms = subject_terms("苹果折叠屏手机", _config(tmp_path))
+    assert terms, "the theme must yield a subject vocabulary"
+    result, manifest, artifact = _run_with_visual(
+        tmp_path, rows, enabled=True, ocr_text=f"{terms[0]} 开箱演示",
+    )
+
+    assert artifact is not None and artifact["enabled"] is True
+    assert artifact["conclusive"] is True
+    assert [item["verdict"] for item in artifact["items"]] == ["hit"] * len(artifact["items"])
+    assert all(item["frames"] == 3 for item in artifact["items"])
+    assert manifest["visual_verify"]["conclusive"] is True
+    assert all(row["visual_verdict"] == "hit" for row in manifest["material_replica_sources"])
+    assert not [item for item in result["warnings"] if "视觉确认" in item]
+    # conclusive=True is not a degradation signal.
+    assert result["degraded"] is False and manifest["degraded"] is False
+    _assert_provenance_fields(manifest["material_replica_sources"])
+
+
+def test_visual_gate_inconclusive_warns_but_keeps_material(tmp_path: Path, monkeypatch) -> None:
+    """``conclusive=False`` annotates; it never removes material or degrades."""
+    _healthy_tooling(monkeypatch)
+    rows = _themed_rows("苹果折叠屏手机 上手")
+    result, manifest, artifact = _run_with_visual(
+        tmp_path, rows, enabled=True, ocr_text="机械鸭机器人 演示",
+    )
+
+    assert artifact is not None and artifact["conclusive"] is False
+    assert [item["verdict"] for item in artifact["items"]] == ["miss"] * len(artifact["items"])
+    assert manifest["visual_verify"]["conclusive"] is False
+    # Every selected source is still delivered, and its row records the verdict.
+    assert manifest["material_replica_sources"]
+    assert all(row["visual_verdict"] == "miss" for row in manifest["material_replica_sources"])
+    output_dir = Path(result["output_dir"])
+    assert manifest["source_retention"]["selected_count"] >= 1
+    assert list((output_dir / "04-原片").glob("*.mp4"))
+    warning = next(item for item in result["warnings"] if "视觉确认不结论" in item)
+    assert "条源片均未在画面文字中命中主体词" in warning
+    # Inconclusive visual evidence is a *separate* signal from relevance.
+    assert result["degraded"] is False and manifest["degraded"] is False
+    _assert_provenance_fields(manifest["material_replica_sources"])
+
+
+def test_visual_gate_never_raises_out_of_the_run(tmp_path: Path, monkeypatch) -> None:
+    """A broken visual bundle degrades that step only, never the whole run."""
+    _healthy_tooling(monkeypatch)
+    rows = _themed_rows("苹果折叠屏手机 上手")
+    config = _config(tmp_path)
+    config["jobs"]["material_replication"]["visual_verify"] = {"enabled": True}
+    deps = _deps(tmp_path, rows)
+
+    class _Boom:
+        def __getattr__(self, name: str) -> Any:
+            raise RuntimeError("视觉依赖不可用")
+
+    deps.visual = _Boom()
+    result = run_material_replication(
+        config, "苹果折叠屏手机", business_date="2026-09-12", deps=deps,
+    )
+
+    output_dir = Path(result["output_dir"])
+    manifest = json.loads((output_dir / "清单.json").read_text(encoding="utf-8"))
+    artifact = json.loads((output_dir / "05-过程数据" / "visual_verify.json").read_text(encoding="utf-8"))
+    assert artifact["conclusive"] is False
+    assert any("视觉确认未能完成" in item for item in result["warnings"])
+    assert all(row["visual_verdict"] is None for row in manifest["material_replica_sources"])
+    _assert_provenance_fields(manifest["material_replica_sources"])
+
+
+def test_relevance_gate_bites_on_the_production_call_path(tmp_path: Path, monkeypatch) -> None:
+    """The theme must reach ``select_material_replicas``, or the gate is dead code.
+
+    ``select_material_replicas`` resolves ``gate_requested = enabled and bool(theme)``;
+    the pipeline call site therefore has to pass ``theme=``.  Without it the newly
+    shipped relevance gate silently never runs, which no unit test of the gate
+    itself would catch -- hence this end-to-end assertion.
+    """
+    _healthy_tooling(monkeypatch)
+    # Titles that hit no subject term of the theme -> every candidate is refused.
+    rows = _themed_rows("与主题完全无关的标题")
+    config = _config(tmp_path)
+    config["jobs"]["material_replication"]["relevance_gate"] = {"enabled": True}
+    result = run_material_replication(
+        config, "苹果折叠屏手机", business_date="2026-09-12", deps=_deps(tmp_path, rows),
+    )
+
+    output_dir = Path(result["output_dir"])
+    manifest = json.loads((output_dir / "清单.json").read_text(encoding="utf-8"))
+    rejected = [item for item in manifest["material_replica"]["rejected"] if item["stage"] == "relevance"]
+    assert rejected, "闸门未生效：主题没有传到 select_material_replicas（theme=theme 缺线）"
+    assert {item["video_id"] for item in rejected} == {"7300000000000000001", "7300000000000000002"}
+    assert all("主体词" in item["reason"] for item in rejected)
+
+
+def test_relevance_gate_switch_off_rejects_nothing(tmp_path: Path, monkeypatch) -> None:
+    """Switch off on the production call path: no ``relevance`` rejection at all."""
+    _healthy_tooling(monkeypatch)
+    rows = _themed_rows("与主题完全无关的标题")
+    config = _config(tmp_path)
+    config["jobs"]["material_replication"]["relevance_gate"] = {"enabled": False}
+    result = run_material_replication(
+        config, "苹果折叠屏手机", business_date="2026-09-12", deps=_deps(tmp_path, rows),
+    )
+    output_dir = Path(result["output_dir"])
+    manifest = json.loads((output_dir / "清单.json").read_text(encoding="utf-8"))
+
+    assert not [item for item in manifest["material_replica"]["rejected"] if item["stage"] == "relevance"]
+
+
+def test_script_not_found_is_attributable_in_manifest_and_run_log(tmp_path: Path, monkeypatch) -> None:
+    config = _config(tmp_path)
+    rows = [
+        _row("7300000000000000001", "作者A", url="https://signed.example/1"),
+        _row("7300000000000000002", "作者B", url="https://signed.example/2"),
+    ]
+    monkeypatch.setattr("douyin_intelligence.replication_pipeline.media_tool_available", lambda config, name: False)
+    monkeypatch.setattr(
+        "douyin_intelligence.replication_selection.compute_visual_metrics",
+        lambda *args, **kwargs: __import__("douyin_intelligence.replication_selection", fromlist=["VisualMetrics"]).VisualMetrics(
+            sampled_frames=10, motion_frame_ratio=0.9, ocr_text_frame_ratio=0.0, visual_ok=True,
+        ),
+    )
+
+    class _FailingTranscriber:
+        def run(self, video, cache_dir, temp_dir, **kwargs):
+            return {"status": "error", "text": "", "segments": [], "error": "ASR 引擎不可用"}
+
+    deps = _deps(tmp_path, rows)
+    deps.transcriber = _FailingTranscriber()
+    result = run_material_replication(config, "苹果折叠屏手机", business_date="2026-09-12", deps=deps)
+    output_dir = Path(result["output_dir"])
+    manifest = json.loads((output_dir / "清单.json").read_text(encoding="utf-8"))
+    script = manifest["script_replica"]
+    assert script["status"] == "not_found"
+    assert script["unmet_conditions"], "not_found must expose attributable unmet conditions"
+    first = script["unmet_conditions"][0]
+    assert first["video_id"] and first["stage"] == "speech" and first["reason"]
+    assert any("脚本复刻" in warning for warning in manifest["warnings"])
+    run_log = json.loads((output_dir / "05-过程数据" / "run_log.json").read_text(encoding="utf-8"))
+    assert run_log["script_replica"]["status"] == "not_found"
+    assert run_log["script_replica"]["stage"]["asr_attempted"] >= 1
+    assert run_log["script_replica"]["unmet_conditions"]
+
+
+def test_material_not_selected_is_attributable_in_manifest_and_run_log(tmp_path: Path, monkeypatch) -> None:
+    config = _config(tmp_path)
+    rows = [
+        _row("7300000000000000001", "作者A", url="https://signed.example/1"),
+        _row("7300000000000000002", "作者B", url="https://signed.example/2"),
+    ]
+    monkeypatch.setattr("douyin_intelligence.replication_pipeline.media_tool_available", lambda config, name: True)
+    monkeypatch.setattr(
+        "douyin_intelligence.replication_selection.compute_visual_metrics",
+        lambda *args, **kwargs: __import__("douyin_intelligence.replication_selection", fromlist=["VisualMetrics"]).VisualMetrics(
+            sampled_frames=10, motion_frame_ratio=0.9, ocr_text_frame_ratio=0.0, visual_ok=True,
+        ),
+    )
+
+    class _VerboseTranscriber:
+        def run(self, video, cache_dir, temp_dir, **kwargs):
+            # Stage via ``cache_dir`` (see ``_Transcriber``); the source path is
+            # shared across stages since P1a.
+            if "script" in str(cache_dir):
+                return {"status": "success", "text": "字" * 200, "segments": [{"start": 0, "end": 5, "text": "开场"}]}
+            # A deliberately extreme 50 chars/sec (3000 chars over the 60s material
+            # clip) is rejected for any sane ``max_speech_rate``: this asserts the
+            # attribution mechanism, not the shipped ceiling.
+            return {"status": "success", "text": "字" * 3000, "segments": []}
+
+    deps = _deps(tmp_path, rows)
+    deps.transcriber = _VerboseTranscriber()
+    result = run_material_replication(config, "苹果折叠屏手机", business_date="2026-09-12", deps=deps)
+    output_dir = Path(result["output_dir"])
+    manifest = json.loads((output_dir / "清单.json").read_text(encoding="utf-8"))
+    assert manifest["insufficient"] is True
+    block = manifest["material_replica"]
+    assert block["selected"] == 0
+    assert block["conclusion"] == "empty"
+    assert block["rejected"], "an empty material set must expose per-video reasons"
+    assert {entry["stage"] for entry in block["rejected"]} == {"speech"}
+    assert any("未选出素材复刻视频" in warning for warning in manifest["warnings"])
+    run_log = json.loads((output_dir / "05-过程数据" / "run_log.json").read_text(encoding="utf-8"))
+    assert run_log["material_replica"]["selected"] == 0
+    assert run_log["material_replica"]["unmet_conditions"]
+    from douyin_intelligence.replication_delivery import validate_delivery_manifest
+    assert validate_delivery_manifest(output_dir / "清单.json")["status"] == "pass"
+
+
+def test_manifest_readme_and_run_log_attribute_keyword_truncation(tmp_path: Path) -> None:
+    # The crawler searched only 4 of the 10 expanded keywords.  Every artifact
+    # must say so instead of claiming the full coverage.
+    config = _config(tmp_path)
+    rows = [_row("7300000000000000001", "作者A", url="https://signed.example/1")]
+    requested = expand_keywords("苹果折叠屏", config)
+    assert len(requested) > 4
+
+    def truncated_collector(config, budget, *, run_id=None, keywords=None, hard_max=None, before_sanitize=None, **kwargs):
+        source = Path(str(config.get("_project_root"))) / "raw" / "search_contents_1.json"
+        source.parent.mkdir(parents=True, exist_ok=True)
+        source.write_text(json.dumps(rows, ensure_ascii=False), encoding="utf-8")
+        assert before_sanitize is not None
+        before_sanitize([source])
+        return {
+            "status": "success", "keywords": list(keywords)[:4], "budget": budget,
+            "per_keyword_budget": 10, "raw_request_ceiling": 40,
+        }
+
+    deps = _deps(tmp_path, rows)
+    deps.collector = truncated_collector
+    result = run_material_replication(config, "苹果折叠屏", business_date="2026-09-12", dry_run=True, deps=deps)
+    output_dir = Path(result["output_dir"])
+
+    manifest = json.loads((output_dir / "清单.json").read_text(encoding="utf-8"))
+    assert manifest["keywords_requested"] == requested
+    assert manifest["keywords_used"] == requested[:4]
+    assert manifest["keywords_truncated"] is True
+    for keyword in requested[4:]:
+        assert keyword not in manifest["keywords_used"]
+    attribution = manifest["search_attribution"]
+    assert attribution["search_report_path"] == "05-过程数据/search_report.json"
+    assert attribution["keywords_used_count"] == 4
+    assert attribution["keywords_requested_count"] == len(requested)
+    assert attribution["keywords_truncated"] is True
+    assert attribution["min_pool_size"] == config["jobs"]["material_replication"]["min_pool_size"]
+    assert any(
+        "实际搜索关键词 4 个 / 请求 %d 个" % len(requested) in warning
+        and "05-过程数据/search_report.json" in warning
+        for warning in manifest["warnings"]
+    )
+
+    readme = (output_dir / "00-交付说明.md").read_text(encoding="utf-8")
+    assert "关键词覆盖：请求 %d 个 / 实际搜索 4 个（发生关键词截断" % len(requested) in readme
+    assert "搜索报告：05-过程数据/search_report.json" in readme
+
+    run_log = json.loads((output_dir / "05-过程数据" / "run_log.json").read_text(encoding="utf-8"))
+    assert run_log["keywords_used"] == requested[:4]
+    assert run_log["keywords_requested"] == requested
+    assert run_log["keywords_truncated"] is True
+
+
+def test_second_run_requires_overwrite(tmp_path: Path) -> None:
+    config = _config(tmp_path)
+    rows = [_row("7300000000000000001", "作者A", url="https://signed.example/1")]
+    deps = _deps(tmp_path, rows)
+    run_material_replication(config, "苹果折叠屏手机", business_date="2026-09-12", dry_run=True, deps=deps)
+    with pytest.raises(FileExistsError):
+        run_material_replication(config, "苹果折叠屏手机", business_date="2026-09-12", dry_run=True, deps=deps)
+    # --overwrite replaces atomically instead of half-overwriting.
+    result = run_material_replication(config, "苹果折叠屏手机", business_date="2026-09-12", dry_run=True, overwrite=True, deps=deps)
+    assert result["status"] == "success"
+
+
+def test_cli_download_only_flag_defaults_and_parses() -> None:
+    parser = cli.build_parser()
+    args = parser.parse_args(["material-replication", "run", "--theme", "苹果折叠屏手机", "--download-only"])
+    assert args.download_only is True
+    args_off = parser.parse_args(["material-replication", "run", "--theme", "苹果折叠屏手机"])
+    assert args_off.download_only is False
+
+
+def test_cli_download_only_passes_through_and_rejects_dry_run(monkeypatch, capsys) -> None:
+    captured = {}
+
+    def fake_run(config, theme, **kwargs):
+        captured["theme"] = theme
+        captured.update(kwargs)
+        return {"status": "success", "mode": "download_only", "counts": {}, "warnings": []}
+
+    monkeypatch.setattr("douyin_intelligence.replication_pipeline.run_material_replication", fake_run)
+    code = cli.main(["material-replication", "run", "--theme", "苹果折叠屏手机", "--download-only"])
+    capsys.readouterr()
+    assert code == 0
+    assert captured["theme"] == "苹果折叠屏手机"
+    assert captured["download_only"] is True
+    assert captured["dry_run"] is False
+
+    with pytest.raises(SystemExit):
+        cli.main(["material-replication", "run", "--theme", "苹果折叠屏手机", "--download-only", "--dry-run"])
+
+
+def test_cli_download_only_requires_theme() -> None:
+    with pytest.raises(SystemExit):
+        cli.main(["material-replication", "run", "--download-only"])

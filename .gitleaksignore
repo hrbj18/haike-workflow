@@ -1,0 +1,29 @@
+# Reviewed false positives only: documentation placeholders, model identifiers,
+# public protocol constants and synthetic idempotency/signature test data.
+# New findings require review; no directories or whole test files are excluded.
+Haike_video/.agents/skills/bfl-api/references/code-examples/curl-examples.sh:curl-auth-header:90
+Haike_video/.agents/skills/bfl-api/references/code-examples/curl-examples.sh:curl-auth-header:96
+Haike_video/.agents/skills/bfl-api/references/endpoints.md:curl-auth-header:157
+Haike_video/.agents/skills/bfl-api/references/endpoints.md:curl-auth-header:179
+Haike_video/.agents/skills/bfl-api/references/endpoints.md:curl-auth-header:199
+Haike_video/.agents/skills/bfl-api/references/endpoints.md:curl-auth-header:211
+Haike_video/.agents/skills/bfl-api/references/endpoints.md:curl-auth-header:223
+Haike_video/.agents/skills/bfl-api/references/endpoints.md:curl-auth-header:237
+Haike_video/.agents/skills/bfl-api/references/webhook-integration.md:curl-auth-header:24
+Haike_video/.agents/skills/website-to-video/references/capabilities.md:generic-api-key:382
+Haike_video/tests/backlot/test_cli.py:generic-api-key:99
+Haike_video/tools/video/jimeng_video.py:generic-api-key:46
+copy_skill/copy_skill-main/tests/test_bilibili_source.py:generic-api-key:42
+copy_skill/copy_skill-main/tests/test_bilibili_source.py:generic-api-key:43
+copy_skill/copy_skill-main/tests/test_bilibili_source.py:generic-api-key:44
+creatorhub/app/browser/douyin_im_ws.py:generic-api-key:18
+creatorhub/tests/test_access_and_submissions.py:generic-api-key:137
+creatorhub/tests/test_access_and_submissions.py:generic-api-key:161
+creatorhub/tests/test_access_and_submissions.py:generic-api-key:167
+creatorhub/tests/test_publish_contract_v2.py:generic-api-key:76
+creatorhub/tests/test_publish_contract_v2.py:generic-api-key:82
+creatorhub/tests/test_publish_contract_v2.py:generic-api-key:85
+creatorhub/tests/test_publish_contract_v2.py:generic-api-key:88
+creatorhub/tests/test_publish_contract_v2.py:generic-api-key:92
+creatorhub/tests/test_xhs_boundaries.py:generic-api-key:532
+creatorhub/tests/test_xhs_boundaries.py:generic-api-key:555

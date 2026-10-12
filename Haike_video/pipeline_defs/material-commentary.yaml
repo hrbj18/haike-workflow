@@ -1,0 +1,30 @@
+name: material-commentary
+version: "1.0"
+description: 先观察电影、直播等素材，再自由编排解说与原声；以素材证据决定结构。
+category: custom
+stability: beta
+default_checkpoint_policy: guided
+stages:
+  - name: idea
+    skill: pipelines/material-commentary/director
+    produces: [source_observations]
+    tools_available: []
+    checkpoint_required: true
+    human_approval_default: false
+  - name: edit
+    skill: pipelines/material-commentary/director
+    produces: [commentary_draft]
+    tools_available: []
+    checkpoint_required: true
+    human_approval_default: false
+  - name: compose
+    skill: pipelines/material-commentary/director
+    required_artifacts_in: [commentary_draft]
+    produces: [commentary_preview, commentary_qa]
+    tools_available: [video_trimmer]
+    checkpoint_required: true
+    human_approval_default: true
+metadata:
+  executor: material_commentary
+  provider: local-ffmpeg
+  automatic_publication: false

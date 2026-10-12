@@ -1,0 +1,31 @@
+name: published-remix
+version: "1.0"
+description: 已发布成片的本地选材、编排及待审预览；由 published_remix 统一队列执行器消费冻结清单。
+category: custom
+stability: beta
+default_checkpoint_policy: guided
+stages:
+  - name: idea
+    skill: pipelines/published-remix/director
+    produces: [remix_brief]
+    tools_available: []
+    checkpoint_required: true
+    human_approval_default: false
+  - name: edit
+    skill: pipelines/published-remix/director
+    produces: [remix_draft]
+    tools_available: []
+    checkpoint_required: true
+    human_approval_default: false
+  - name: compose
+    skill: pipelines/published-remix/director
+    required_artifacts_in: [remix_draft]
+    produces: [remix_preview, remix_qa]
+    tools_available: [video_trimmer]
+    checkpoint_required: true
+    human_approval_default: true
+metadata:
+  executor: published_remix
+  provider: local-ffmpeg
+  external_cost_cny: 0
+  automatic_publication: false

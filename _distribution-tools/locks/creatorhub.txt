@@ -1,0 +1,113 @@
+annotated-types==0.8.0
+    # via pydantic
+anyio==4.15.1
+    # via
+    #   httpx
+    #   starlette
+    #   watchfiles
+certifi==2026.7.22
+    # via
+    #   curl-cffi
+    #   httpcore
+    #   httpx
+cffi==2.1.1
+    # via curl-cffi
+click==8.5.0
+    # via uvicorn
+colorama==0.4.6
+    # via uvicorn
+curl-cffi==0.16.3
+    # via -r dist/haike-workflow-windows-x64-20261009/creatorhub/requirements.txt
+et-xmlfile==2.0.0
+    # via openpyxl
+fastapi==0.115.6
+    # via -r dist/haike-workflow-windows-x64-20261009/creatorhub/requirements.txt
+greenlet==3.5.6
+    # via
+    #   patchright
+    #   sqlalchemy
+h11==0.16.0
+    # via
+    #   httpcore
+    #   uvicorn
+httpcore==1.0.9
+    # via httpx
+httptools==0.8.0
+    # via uvicorn
+httpx==0.28.1
+    # via -r dist/haike-workflow-windows-x64-20261009/creatorhub/requirements.txt
+idna==3.20
+    # via
+    #   anyio
+    #   httpx
+imageio-ffmpeg==0.6.0
+    # via -r dist/haike-workflow-windows-x64-20261009/creatorhub/requirements.txt
+numpy==2.5.3
+    # via
+    #   -r dist/haike-workflow-windows-x64-20261009/creatorhub/requirements.txt
+    #   opencv-python-headless
+opencv-python-headless==5.0.0.93
+    # via -r dist/haike-workflow-windows-x64-20261009/creatorhub/requirements.txt
+openpyxl==3.1.5
+    # via -r dist/haike-workflow-windows-x64-20261009/creatorhub/requirements.txt
+patchright==1.61.2
+    # via -r dist/haike-workflow-windows-x64-20261009/creatorhub/requirements.txt
+pillow==12.3.0
+    # via -r dist/haike-workflow-windows-x64-20261009/creatorhub/requirements.txt
+pycparser==3.1
+    # via cffi
+pycryptodome==3.24.0
+    # via xhshow
+pydantic==2.14.0
+    # via
+    #   fastapi
+    #   sqlmodel
+pydantic-core==2.50.0
+    # via pydantic
+pyee==13.0.1
+    # via patchright
+pyexecjs==1.5.1
+    # via -r dist/haike-workflow-windows-x64-20261009/creatorhub/requirements.txt
+python-dotenv==1.2.4
+    # via uvicorn
+python-multipart==0.0.32
+    # via -r dist/haike-workflow-windows-x64-20261009/creatorhub/requirements.txt
+pyyaml==6.0.3
+    # via
+    #   -r dist/haike-workflow-windows-x64-20261009/creatorhub/requirements.txt
+    #   uvicorn
+six==1.17.0
+    # via pyexecjs
+socksio==1.0.0
+    # via httpx
+sqlalchemy==2.0.54
+    # via sqlmodel
+sqlmodel==0.0.22
+    # via -r dist/haike-workflow-windows-x64-20261009/creatorhub/requirements.txt
+starlette==0.41.3
+    # via fastapi
+typing-extensions==4.16.0
+    # via
+    #   anyio
+    #   fastapi
+    #   pydantic
+    #   pydantic-core
+    #   pyee
+    #   sqlalchemy
+    #   typing-inspection
+typing-inspection==0.4.4
+    # via pydantic
+tzdata==2026.5
+    # via -r dist/haike-workflow-windows-x64-20261009/creatorhub/requirements.txt
+uvicorn==0.34.0
+    # via -r dist/haike-workflow-windows-x64-20261009/creatorhub/requirements.txt
+watchfiles==1.3.0
+    # via uvicorn
+websockets==17.2
+    # via
+    #   -r dist/haike-workflow-windows-x64-20261009/creatorhub/requirements.txt
+    #   uvicorn
+xhshow==0.2.0
+    # via -r dist/haike-workflow-windows-x64-20261009/creatorhub/requirements.txt
+yt-dlp==2026.8.19
+    # via -r dist/haike-workflow-windows-x64-20261009/creatorhub/requirements.txt

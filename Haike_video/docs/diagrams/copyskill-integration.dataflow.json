@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "diagram_type": "dataflow",
+  "meta": {
+    "title": "CopySkill 接入数据流",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "output": "docs/diagrams/copyskill-integration.html",
+    "viewBox": [1080, 520],
+    "views": [
+      {
+        "id": "hotspot-channel",
+        "label": "热点候选池通道",
+        "focus": ["hotspot_pack", "hotspot_gate", "discovery", "daily_run", "news_gate"],
+        "note": "每日快报用的那条线：只当热度线索，不当事实来源。"
+      },
+      {
+        "id": "research-channel",
+        "label": "单期研究包通道",
+        "focus": ["episode_pack", "pack_gate", "snapshot", "intake_ledger", "editorial", "queue"],
+        "note": "复刻用的那条线：校验通过才落账，落账后才进编辑层。"
+      },
+      {
+        "id": "trust-boundary",
+        "label": "信任边界",
+        "focus": ["hotspot_gate", "hotspot_backoff", "pack_gate", "pack_reject"],
+        "note": "两道校验门与失败处置：宁可不用，也不半信半疑地消费。"
+      }
+    ]
+  },
+  "stages": [
+    { "label": "CopySkill 生产端" },
+    { "label": "只读校验" },
+    { "label": "分流与归一" },
+    { "label": "落账与运行状态" },
+    { "label": "项目下游消费" }
+  ],
+  "nodes": [
+    { "id": "hotspot_pack", "type": "external", "label": "热点候选池", "sublabel": "hot-candidate-pool-v2", "tag": "_READY + manifest", "stage": 0, "row": 0, "width": 120 },
+    { "id": "episode_pack", "type": "external", "label": "单期研究包", "sublabel": "research-pack-v1", "tag": "current.json 提交", "stage": 0, "row": 2, "width": 120 },
+    { "id": "hotspot_gate", "type": "security", "label": "日期哈希校验", "sublabel": "READY + 全量 manifest", "tag": "禁 latest 串日", "stage": 1, "row": 0, "width": 120 },
+    { "id": "hotspot_backoff", "type": "security", "label": "回落既有源", "sublabel": "缺 READY 或日期不符", "tag": "非致命跳过", "stage": 1, "row": 1, "width": 120 },
+    { "id": "pack_gate", "type": "security", "label": "双读一致性校验", "sublabel": "READY + 七语义文件", "tag": "原子翻转", "stage": 1, "row": 2, "width": 120 },
+    { "id": "discovery", "type": "backend", "label": "热度线索归一", "sublabel": "truth_status 未核", "tag": "非事实来源", "stage": 2, "row": 0, "width": 120 },
+    { "id": "snapshot", "type": "backend", "label": "编辑层快照", "sublabel": "editorial-snapshot-v1", "tag": "纯投影不写盘", "stage": 2, "row": 1, "width": 120 },
+    { "id": "pack_reject", "type": "security", "label": "拒收不落账", "sublabel": "双读不一致即丢弃", "tag": "不产生快照", "stage": 2, "row": 2, "width": 120 },
+    { "id": "daily_run", "type": "database", "label": "快报运行状态", "sublabel": ".backlot/daily-runs", "stage": 3, "row": 0, "width": 120 },
+    { "id": "intake_ledger", "type": "database", "label": "研究包账本", "sublabel": "按 revision 追加", "tag": "幂等按哈希", "stage": 3, "row": 1, "width": 120 },
+    { "id": "news_gate", "type": "backend", "label": "选题证据门", "sublabel": "热度决定是否播", "tag": "证据守硬事实", "stage": 4, "row": 0, "width": 120 },
+    { "id": "editorial", "type": "backend", "label": "编辑层裁决", "sublabel": "disposition → 主题", "tag": "不达标 exit 3", "stage": 4, "row": 1, "width": 120 },
+    { "id": "queue", "type": "messagebus", "label": "统一生产队列", "sublabel": "显式提交才出成片", "tag": "研究包不进队列", "stage": 4, "row": 2, "width": 120 }
+  ],
+  "flows": [
+    { "id": "hotspot-read", "from": "hotspot_pack", "to": "hotspot_gate", "label": "只读读取", "classification": "不写生产端", "variant": "default" },
+    { "id": "hotspot-fail", "from": "hotspot_gate", "to": "hotspot_backoff", "label": "校验失败", "classification": "回落既有来源", "variant": "security", "labelDy": 24 },
+    { "id": "hotspot-pass", "from": "hotspot_gate", "to": "discovery", "label": "校验通过", "classification": "日期与哈希一致", "variant": "emphasis" },
+    { "id": "to-daily", "from": "discovery", "to": "daily_run", "label": "热度线索", "classification": "discovery_only", "variant": "default" },
+    { "id": "to-news", "from": "daily_run", "to": "news_gate", "label": "候选池输入", "classification": "仅热度信号", "variant": "default" },
+    { "id": "episode-read", "from": "episode_pack", "to": "pack_gate", "label": "只读指针", "classification": "永不扫 staging", "variant": "default" },
+    { "id": "pack-fail", "from": "pack_gate", "to": "pack_reject", "label": "校验失败", "classification": "丢弃并重试", "variant": "security", "route": "bottom-channel", "fromSide": "bottom", "toSide": "bottom", "channelY": 434 },
+    { "id": "pack-pass", "from": "pack_gate", "to": "snapshot", "label": "校验通过", "classification": "双读一致", "variant": "emphasis" },
+    { "id": "to-ledger", "from": "snapshot", "to": "intake_ledger", "label": "revision 落账", "classification": "至少一次投递", "variant": "emphasis" },
+    { "id": "to-editorial", "from": "intake_ledger", "to": "editorial", "label": "admitted 包", "classification": "已校验已落账", "variant": "emphasis" },
+    { "id": "to-queue", "from": "editorial", "to": "queue", "label": "显式提交", "classification": "选材权归项目", "variant": "dashed", "labelDy": 24 }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "两条只读通道",
+      "items": [
+        "热点候选池服务每日科技快报，只作热度信号与发现线索",
+        "单期研究包服务外站素材复刻，校验通过才进编辑层",
+        "本仓永不写 CopySkill 目录，也不依赖它的 latest 镜像"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "信任边界",
+      "items": [
+        "热点条目 truth_status 恒为未核，图片保留原始权利复核状态",
+        "研究包按 current→READY→manifest→七语义双读，不一致就丢弃重试",
+        "抖音热度与 B-roll 素材都不是事实来源，material 只能作 B-roll"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "下游口径",
+      "items": [
+        "素材选择权归本项目，CopySkill 产出与 Pexels 等公开素材源地位平等",
+        "研究包本身不进生产队列，出成片必须在项目侧显式提交队列"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="540" height="960">
+<rect width="1080" height="1920" fill="#081b32"/>
+<g font-family="Microsoft YaHei, sans-serif" fill="white" font-size="28">
+<rect width="1080" height="288" fill="#782f45" opacity=".55"/><text x="50" y="140">顶部 15%：仅背景，避开导航 / 搜索</text>
+<rect x="125" y="420" width="540" height="100" fill="#254664"/><text x="135" y="480">本期标题（68 px，测量宽度）</text>
+<circle cx="809.0" cy="425.0" r="118.0" fill="#218fae"/><text x="729" y="437">数字人</text>
+<rect x="110" y="625" width="690" height="620" rx="36" fill="#e9f1f8"/>
+<text x="180" y="850" fill="#123">主体素材：690 × 620</text><text x="180" y="900" fill="#123">左上角 (110, 625)</text><text x="180" y="950" fill="#123">动态片段 / 官方产品标识</text>
+<rect x="915" y="750" width="165" height="850" fill="#782f45" opacity=".55"/><text x="932" y="1100" font-size="24">操作栏</text>
+<rect x="190" y="1342" width="700" height="100" fill="#254664"/><text x="230" y="1405">逐句字幕：48 px；超宽先拆句</text>
+<rect y="1536" width="1080" height="384" fill="#782f45" opacity=".55"/><text x="50" y="1740">底部预留：作者、描述、导航</text>
+<text x="45" y="1870" font-size="22">douyin-safe-circle-v1 · 参数示意；不是平台官方安全区</text></g></svg>
