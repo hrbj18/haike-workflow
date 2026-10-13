@@ -1,6 +1,6 @@
 # GitHub Actions
 
-工作流已启用，位于 `.github/workflows/`，提交、Pull Request 和手动运行都会触发：
+工作流已启用，位于 `.github/workflows/`，main/dev提交、Pull Request 和手动运行都会触发，标签不重复运行：
 
 - `source.yml`：Windows/Python3.12源码边界、迁移测试、PowerShell解析、固定版本Gitleaks凭据扫描。
 - `components.yml`：API账户/账本/网关假供应商测试、视频工作台/队列回归、Node22前端测试与生产构建。

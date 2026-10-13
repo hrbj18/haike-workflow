@@ -10,7 +10,7 @@
 | `creatorhub/` | 发布、账号连接及调度 |
 | `docs/`、`.taskmaster/tasks/` | 设计、验收、部署及迭代任务 |
 
-`origin` 是自己的私有仓库；`upstream` 是原 `hrbj18/haike-workflow`。只在明确需要同步时读取上游，不把自己的中转站代码推送到上游。ADu引擎仍是独立第三方依赖，固定版本见 `PRODUCT_AVATAR_MOTION.md`，不嵌套复制Git元数据。
+本机 `origin` 是自己的私有仓库；`upstream` 是原 `hrbj18/haike-workflow`。新克隆默认只有origin，需要时用 `git remote add upstream https://github.com/hrbj18/haike-workflow.git` 添加上游。只在明确需要同步时读取上游，不把自己的中转站代码推送到上游。ADu引擎仍是独立第三方依赖，固定版本见 `PRODUCT_AVATAR_MOTION.md`，不嵌套复制Git元数据。
 
 ## 分支与提交
 
