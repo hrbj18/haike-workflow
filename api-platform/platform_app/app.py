@@ -87,6 +87,10 @@ class Quote(Input):
     project_ref: str = Field(default="", max_length=100)
 
 
+class QuoteRenew(Input):
+    confirmed: Literal[True]
+
+
 class Submit(Input):
     quote_id: str = Field(max_length=80)
     max_charge_micros: str = Field(pattern=r"^[0-9]{1,13}$")
@@ -598,6 +602,10 @@ def create_app(db_path=None, worker_enabled=True, testing=False, public_origin=N
         return domain.create_quote(
             store, user, body.model, body.input, body.project_ref
         )
+
+    @app.post("/v2/quotes/{quote_id}/renew")
+    def renew_quote(quote_id: str, body: QuoteRenew, user=Depends(api_user)):
+        return gateway.renew_quote(store, vault, user, quote_id)
 
     @app.post("/v2/jobs")
     def jobs(body: Submit, user=Depends(api_user), idem=Depends(idem_key)):

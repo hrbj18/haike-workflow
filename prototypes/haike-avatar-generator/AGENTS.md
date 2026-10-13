@@ -17,3 +17,10 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 - Keep original template3 baseline immutable. New parameterized avatar rendering belongs to templates/studio-avatar-v1 with its own version. Graphic uses the native safe_v2 nine-second/three-scene layout.
 - Publication is through real CreatorHub receipts: future times, Beijing display, approved final version, owned/authorized sources, title/description/cover and live account checks. Save a draft first, activate only on explicit user confirmation. Unknown results reuse the original idempotency key; partial cancellation stays visible and recoverable.
 - No real paid call or external publish during automated validation. Local outputs remain pending user review. Unconfirmed procurement prices must block the relevant capability.
+
+## Accepted unified avatar flow (2026-10-13)
+
+- Use one「选择模板」dialog for basic3 and ADu styles, preserving script, voice/audio, portrait and uploaded materials. The professional manual editor remains an optional deeper entry.
+- User materials have must/prefer/reference intent and an explicit usage/AI-analysis rights checkbox. AI previews are content suggestions, with no invented seconds. Final timing uses original ASR sentence timestamps; display subtitle wrapping must not become the storyboard clock.
+- New gpt-6-luna / gpt-image-2 features are currently merchant-sponsored trials, with customer charge0 and unknown procurement cost. Keep supplier credentials exclusively in ignored backend configuration; do not package them for customers. Native TTS/avatar/ASR keep their separate commercial quotes and caps.
+- Douyin/MediaCrawler precedes Pexels. Login and content authorization are visible pauses; explicit skip resumes the original task. Network failure never authorizes image generation. Image fallback is capped and requires supplier acceptance before enabling it.

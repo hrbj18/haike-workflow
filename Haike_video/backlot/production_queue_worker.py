@@ -202,6 +202,8 @@ class ProductionQueueWorker:
         project_dir = self._project_dir(job)
         if job["kind"] in {"studio_graphic", "studio_avatar", "studio_motion"}:
             filename = {"studio_graphic": "graphic-preview.mp4", "studio_avatar": "avatar-preview.mp4", "studio_motion": "motion-preview.mp4"}[job["kind"]]
+            if job["kind"] == "studio_avatar" and job["frozen_request"].get("draft", {}).get("input", {}).get("motion"):
+                filename = "motion-preview.mp4"
             output = project_dir / "renders" / job["frozen_request"]["render_id"] / filename
             report = output.parent / "qa.json"
             if output.is_file() and report.is_file():

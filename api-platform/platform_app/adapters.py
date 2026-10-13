@@ -95,6 +95,24 @@ class Adapter:
             raise Rejected()
         config.update(inputs.get("_provider_config", {}))
         if provider == "openai" or provider.startswith("channel/"):
+            if info["capability"] == "image":
+                result = http(
+                    config["base_url"].rstrip("/") + "/images/generations",
+                    {"Authorization": "Bearer " + config["api_key"], "Content-Type": "application/json"},
+                    {"model": config.get("image_model", info["target_model"]), "prompt": inputs["prompt"],
+                     "n": 1, "size": "1024x1536", "quality": "medium"},
+                )
+                usage = result.get("usage", {})
+                images = result.get("data", [])
+                if not isinstance(images, list) or len(images) != 1 or not isinstance(images[0], dict):
+                    raise Uncertain()
+                item = images[0]
+                media = {"image_base64": item["b64_json"]} if isinstance(item.get("b64_json"), str) else {"image_url": safe_url(item.get("url"))}
+                media.update(generated=True, source="gpt-image-2", size="1024x1536", quality="medium")
+                if any(type(usage.get(k)) is not int or usage[k] < 0 for k in ("input_tokens", "output_tokens")):
+                    raise ReceiptMissing(str(result.get("id", "")), media)
+                return {"usage": {k: usage[k] for k in ("input_tokens", "output_tokens")}, "result": media,
+                        "upstream_id": str(result.get("id", result.get("created", "")))}
             messages = json.loads(json.dumps(inputs["messages"]))
             for message in messages:
                 if isinstance(message["content"], list):
@@ -122,7 +140,7 @@ class Adapter:
                     "Content-Type": "application/json",
                 },
                 {
-                    "model": config.get("text_model", "gpt-5.6-terra"),
+                    "model": config.get("text_model", info["target_model"]),
                     "messages": messages,
                     "max_completion_tokens": inputs["max_output_tokens"],
                     "stream": False,

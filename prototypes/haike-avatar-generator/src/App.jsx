@@ -5,12 +5,14 @@ import { readDraft, writeDraft } from "./draft-store.js";
 import { api, upload } from "./studio-api.js";
 import { ActionBar, Button, Dialog as Modal, Field, Heading, Notice, PreviewPanel, availableModels } from './ui.jsx';
 import {Motion} from './Motion.jsx';
-import {AvatarModeBar} from './AvatarModeBar.jsx';
+import {AvatarTemplatePicker} from './AvatarTemplatePicker.jsx';
+import {AiMaterials,AI_DEFAULTS} from './AiMaterials.jsx';
+import {DouyinRecovery} from './DouyinRecovery.jsx';
 
 const sampleAudio = { name: "海客介绍口播.wav", duration: 6.56, type: "audio/wav" };
 const samplePortrait = { name: "人物示例.png", type: "image/png" };
 const assetPath = name => `${import.meta.env.BASE_URL}assets/${name}`;
-const initial = () => ({ templateId: TEMPLATES[2].id, text: EXAMPLE_TEXT, soundMode: "audio", audio: sampleAudio, portrait: samplePortrait, voiceId: '', rate: 1, title: "", subtitles: true });
+const initial = () => {const q=new URLSearchParams(location.search),style=q.get('style');return { templateId: TEMPLATES.some(t=>t.id===q.get('template'))?q.get('template'):TEMPLATES[2].id, text: EXAMPLE_TEXT, soundMode: "audio", audio: sampleAudio, portrait: samplePortrait, voiceId: '', rate: 1, title: "", subtitles: true,ai:{...AI_DEFAULTS,enabled:!!style},motion:style?{style,layout:q.get('layout')==='landscape'?'landscape':'portrait'}:null };};
 function useAssetUrl(asset, fallback) {
   const [url, setUrl] = useState(fallback);
   useEffect(() => {
@@ -29,6 +31,7 @@ export function App() {
 }
 function BasicAvatar() {
   const [serverDraft, setServerDraft] = useState(null);
+  const [storyboard,setStoryboard]=useState(null),[motionPreview,setMotionPreview]=useState(null);
   const [quote, setQuote] = useState(null), [budget, setBudget] = useState('10.00'), [job, setJob] = useState(null);
   const uploaded = useRef(new WeakMap());
   const [layout, setLayout] = useState({ title_size: 60, accent: "#316dd6" });
@@ -67,8 +70,9 @@ function BasicAvatar() {
   useEffect(() => {
     let live = true;
     const id = new URLSearchParams(location.search).get('draft');
-    const fromServer = async id => {const d=await api(`/api/studio/drafts/${id}`);if(live){setServerDraft(d);setLayout(d.layout);}return {version:1,input:{...d.input,templateId:d.template_id,text:d.text,title:d.title}};};
-    const restore = id ? fromServer(id) : readDraft().then(d=>d?.studioDraftId?fromServer(d.studioDraftId):d);
+    const fromServer = async id => {const d=await api(`/api/studio/drafts/${id}`);if(live){setServerDraft(d);setLayout(d.layout);}try{const r=await api(`/api/studio/drafts/${id}/avatar-job`);if(live)setJob(r.job);if(!r.job){const p=await api(`/api/studio/drafts/${id}/ai-preview`);if(live)setStoryboard(p.plan);}}catch{}return {version:1,input:{...d.input,templateId:d.template_id,text:d.text,title:d.title}};};
+    const q=new URLSearchParams(location.search);
+    const restore = id ? fromServer(id) : q.has('style')||q.has('template')?Promise.resolve(null):readDraft().then(d=>d?.studioDraftId?fromServer(d.studioDraftId):d);
     restore.then(draft => {
       if (!live || !draft) return;
       if (draft.version !== 1 || !draft.input || typeof draft.input.text !== "string" || !TEMPLATES.some(t => t.id === draft.input.templateId)) throw new Error();
@@ -76,6 +80,8 @@ function BasicAvatar() {
     }).catch(() => { if (live) setToast("未能读取本地草稿，你可以继续填写并重新保存。"); }).finally(() => { if (live) setDraftLoading(false); });
     return () => { live = false; };
   }, []);
+  useEffect(()=>{setMotionPreview(null);if(!input.motion)return;let live=true;api(`/api/studio/motion/catalog?layout=${input.motion.layout}`).then(c=>{if(live)setMotionPreview(c.styles.find(s=>s.id===input.motion.style)?.preview);}).catch(()=>{});return()=>{live=false;};},[input.motion?.style,input.motion?.layout]);
+  useEffect(()=>{if(!serverDraft||!job)return;const revision=Number(job.parent_job_id?.replace('studio-',''));api(`/api/studio/drafts/${serverDraft.id}/storyboard${Number.isInteger(revision)&&revision>0?'?revision='+revision:''}`).then(r=>setStoryboard(r.plan)).catch(()=>{});},[job?.status,job?.stage,serverDraft?.id]);
   useEffect(() => {
     if (!toast) return;
     const timer = setTimeout(() => setToast(""), 6000);
@@ -155,7 +161,7 @@ function BasicAvatar() {
   }
   async function persistServer() {
     await writeDraft(input, serverDraft?.id);
-    let d=await api('/api/studio/drafts',{id:serverDraft?.id,revision:serverDraft?.revision,template_id:input.templateId,title:input.title||input.text.split(/[。！？\n]/)[0].slice(0,16),text:input.text,layout,input:{soundMode:input.soundMode,voiceId:input.voiceId,rate:input.rate,subtitles:input.subtitles}});
+    let d=await api('/api/studio/drafts',{id:serverDraft?.id,revision:serverDraft?.revision,template_id:input.templateId,title:input.title||input.text.split(/[。！？\n]/)[0].slice(0,16),text:input.text,layout,input:{soundMode:input.soundMode,voiceId:input.voiceId,rate:input.rate,subtitles:input.subtitles,ai:input.ai||AI_DEFAULTS,motion:input.motion||null}});
     setServerDraft(d);
     const assets={};
     for (const [name,kind,sample] of [['audio','audio','narration.wav'],['portrait','image','presenter.png']]) {
@@ -171,6 +177,8 @@ function BasicAvatar() {
     const next={...input,...Object.fromEntries(Object.entries(assets).map(([name,value])=>[name,{...input[name],...value}]))};setInput(next);await writeDraft(next,d.id);setSaved(true);return d;
   }
   async function saveDraft(){setSaving(true);setError(null);try{await persistServer();setToast('制作项目已保存到工作台，可从我的作品继续编辑。');}catch(e){setError({field:'draft',message:e.message});}finally{setSaving(false);}}
+  async function importMaterial(file){if(!/\.(jpg|jpeg|png|mp4|mov)$/i.test(file.name)||file.size>80*1024*1024)throw new Error('素材支持JPG、PNG、MP4、MOV，最多80MB');setSaving(true);try{const d=await persistServer(),a=await upload(d.id,file,/\.(mp4|mov)$/i.test(file.name)?'video':'image'),ai={...AI_DEFAULTS,...input.ai,materials:[...(input.ai?.materials||[]),{id:a.id,name:a.name,kind:a.kind,url:a.url,offset:0,mode:'prefer',note:'',rights_confirmed:false}]},savedDraft=await api('/api/studio/drafts',{...d,input:{...d.input,ai}});setServerDraft(savedDraft);update({ai});setStoryboard(null);setToast('素材已上传，请填写说明并确认使用权。');}finally{setSaving(false);}}
+  async function planPreview(){setSaving(true);setError(null);try{const d=await persistServer();const r=await api(`/api/studio/drafts/${d.id}/ai-preview`,{revision:d.revision,confirmed:true});setStoryboard(r.plan);setToast('AI分镜建议已生成；实际时间将在声音就绪后对齐。');}catch(e){setError({field:'ai',message:e.message});}finally{setSaving(false);}}
   async function confirmGeneration() {
     const problem = validateInputs(input, voices);
     if (problem) { setError(problem); if (problem.field === "text") textArea.current.focus(); return; }
@@ -187,21 +195,16 @@ function BasicAvatar() {
   }
   useEffect(()=>{if(!job||!['queued','running'].includes(job.status))return;const timer=setInterval(()=>api(`/api/production-queue/jobs/${job.job_id}`).then(setJob).catch(e=>setError({message:e.message})),2500);return()=>clearInterval(timer);},[job?.job_id,job?.status]);
   async function retry(){setSaving(true);try{setJob(await api(`/api/production-queue/jobs/${job.job_id}/retry`,{}));}catch(e){setError({message:e.message});}finally{setSaving(false);}}
+  async function skipDouyin(){setSaving(true);try{setJob(await api(`/api/studio/ai/jobs/${job.job_id}/skip-douyin`,{confirmed:true}));}catch(e){setError({message:e.message});}finally{setSaving(false);}}
   const seconds = Math.round(input.audio?.duration || 0);
   const audioTime = `${String(Math.floor(seconds / 60)).padStart(2, "0")}:${String(seconds % 60).padStart(2, "0")}`;
   const models = availableModels(accountState);
-  const blocked = accountState === null ? '正在读取模型能力…' : accountState.error ? '暂时无法验证模型能力' : !models.has('haike/avatar') ? '数字人模型尚未开通' : input.subtitles && !models.has('haike/tencent-asr') ? '字幕识别尚未开通' : '';
+  const blocked = accountState === null ? '正在读取模型能力…' : accountState.error ? '暂时无法验证模型能力' : !models.has('haike/avatar') ? '数字人模型尚未开通' : (input.subtitles||input.ai?.enabled) && !models.has('haike/tencent-asr') ? '字幕识别尚未开通' : '';
   const inProgress = ['queued','running'].includes(job?.status);
   return <main className="workspace creation-workspace">
     <Heading title="数字人口播" helper="选择模板，放入文案、声音和人物图片。"/>
-    <AvatarModeBar/>
     <div className="editor-shell avatar-editor"><section className="editor-content" aria-label="填写制作内容" aria-busy={draftLoading}>
-      <div ref={templateGrid} className="template-grid" role="group" aria-label="选择视频模板">
-        {TEMPLATES.map(t => <button key={t.id} className={`template-tile ${t.id === input.templateId ? "selected" : ""}`} aria-pressed={t.id === input.templateId} onClick={() => {update({templateId:t.id});setSamplePlaying(false);}}>
-          <div className="template-cover"><img src={assetPath(t.poster)} alt={`${t.name}${t.kind}`}/><span>{t.kind}</span></div>
-          <div className="template-copy"><strong>{t.name}</strong><p>{t.ratio} · {t.description}</p></div>
-        </button>)}
-      </div>
+      <AvatarTemplatePicker templateId={input.templateId} motion={input.motion} onChoose={choice=>{update({...choice,ai:{...AI_DEFAULTS,...input.ai,enabled:choice.motion?true:input.ai?.enabled||false}});setSamplePlaying(false);setStoryboard(null);}}/>
       <div className="avatar-fields">
         <Step number="1" title="文案" helper="上传文案或直接粘贴内容" className="text-step" action={<div className="upload-text"><Button disabled={importing||draftLoading} loading={importing} onClick={()=>textUpload.current.click()}><Upload size={16}/>上传文案</Button><span>DOCX / TXT</span></div>}>
           <label className="sr-only" htmlFor="script-text">口播文案</label><div className="textarea-wrap"><textarea id="script-text" ref={textArea} value={input.text} disabled={draftLoading||importing} onChange={e=>update({text:e.target.value})} placeholder="粘贴你的口播文案…" aria-invalid={error?.field==="text"}/><small className="character-count">{[...input.text].length.toLocaleString()} / 5,000</small></div>
@@ -215,12 +218,14 @@ function BasicAvatar() {
           <div className="portrait-row"><img src={portraitUrl} alt="已选择的人物图片"/><div className="portrait-description"><strong>{input.portrait?.name||"尚未上传图片"}</strong><small>至少256 × 256像素</small></div><Button onClick={()=>portraitUpload.current.click()}><Upload size={16}/>上传 / 更换图片</Button></div>
         </Step>
       </div>
+      <AiMaterials value={input.ai} busy={saving||draftLoading} onFile={importMaterial} onPlan={planPreview} onChange={ai=>{update({ai});setStoryboard(null);}} plan={storyboard}/>
       <section className="more-settings"><button className="settings-toggle" onClick={()=>setMore(!more)} aria-expanded={more} aria-controls="more-fields"><ChevronDown size={18} className={more?'':'collapsed'}/><strong>模板排版配置</strong><span>标题、字号、强调色与字幕</span></button>
         {more&&<div id="more-fields" className="settings-fields"><Field label="视频标题"><input value={input.title} maxLength={36} placeholder="自动取文案首句，建议16字以内" onChange={e=>update({title:e.target.value})}/></Field><div className="layout-fields"><Field label="标题字号"><select value={layout.title_size} onChange={e=>updateLayout({title_size:Number(e.target.value)})}>{[48,54,60,66].map(n=><option key={n} value={n}>{n}px</option>)}</select></Field><Field label="强调色"><input type="color" value={layout.accent} onChange={e=>updateLayout({accent:e.target.value})}/></Field></div><label className="checkbox-row"><input type="checkbox" checked={input.subtitles} onChange={e=>update({subtitles:e.target.checked})}/>显示字幕</label>{input.soundMode==="voice"&&<Field label="配音语速"><select value={input.rate} onChange={e=>update({rate:Number(e.target.value)})}>{[.8,1,1.2,1.5].map(n=><option key={n} value={n}>{n.toFixed(2)}×</option>)}</select></Field>}<p className="helper">画幅和人物位置跟随模板；配置效果在生成后查看。</p><Button variant="text" onClick={()=>{setInput(initial());setSaved(false);setQuote(null);setError(null);setToast("已载入示例内容，保存后更新草稿。");}}>载入示例内容</Button></div>}
       </section>
       <div className="notice-stack avatar-notices"><Notice message={error?.message} error/>{blocked&&<Notice message={blocked} error={accountState!==null}><a href="/settings">查看 API 设置<ArrowRight size={14}/></a></Notice>}</div>
-      {job&&<div className="job-state"><strong>{({queued:'排队中',running:'正在制作',completed:'已合成 · 待审核',failed:'需要处理',canceled:'已取消'})[job.status]||job.status}</strong><p>{job.stage}</p>{job.result?.work_id&&<Button href="/projects">观看并审核成片</Button>}{job.retryable&&<Button disabled={saving} onClick={retry}>恢复原任务</Button>}</div>}
-    </section><PreviewPanel label="模板效果预览" metadata={template.ratio}><div className="poster-frame"><img src={assetPath(template.poster)} alt={`${template.name} · ${template.kind}`}/></div><p className="preview-note">{template.sample?"现有真实样片，生成后使用你的内容。":"模板布局示意，生成后使用你的内容。"}</p>{template.sample&&<Button className="preview-play" onClick={()=>{setModal("sample");setSamplePlaying(true);}}><Play size={16}/>播放样片</Button>}</PreviewPanel>
+      {job&&<div className="job-state"><strong>{({queued:'排队中',running:'正在制作',completed:'已合成 · 待审核',failed:'需要处理',canceled:'已取消'})[job.status]||job.status}</strong><p>{job.stage}</p>{job.result?.work_id&&<Button href="/projects">观看并审核成片</Button>}{job.retryable&&<Button disabled={saving} onClick={retry}>恢复原任务</Button>}{job.status==='failed'&&/抖音/.test(job.stage)&&<Button disabled={saving} onClick={skipDouyin}>跳过抖音并恢复原任务</Button>}</div>}
+      <DouyinRecovery job={job} onJob={setJob}/>
+    </section><PreviewPanel label="模板效果预览" metadata={input.motion?(input.motion.layout==='portrait'?'9:16':'16:9'):template.ratio}><div className="poster-frame"><img src={motionPreview||assetPath(template.poster)} alt={`${input.motion?.style||template.name} · 版式参考`}/></div><p className="preview-note">{input.motion?'上游风格参考；AI按本期原文、素材与实际时钟安排动作。':template.sample?"现有真实样片，生成后使用你的内容。":"模板布局示意，生成后使用你的内容。"}</p>{!input.motion&&template.sample&&<Button className="preview-play" onClick={()=>{setModal("sample");setSamplePlaying(true);}}><Play size={16}/>播放样片</Button>}{input.motion&&<Button href="/avatar?mode=motion">进入专业分镜编辑</Button>}</PreviewPanel>
     <ActionBar note={<span><Info size={16}/> {blocked||'生成前确认本次调用费用'}</span>}><Button disabled={saving||draftLoading||importing} loading={saving&&modal!=="confirm"} onClick={saveDraft}>{saved?"草稿已保存":"保存草稿"}</Button><Button variant="primary" disabled={importing||saving||draftLoading||inProgress||!!blocked} onClick={confirmGeneration}>生成数字人口播<ArrowRight size={17}/></Button></ActionBar></div>
     <input hidden type="file" ref={textUpload} accept=".txt,.docx" onChange={importText} aria-label="文案文件"/><input hidden type="file" ref={audioUpload} accept=".wav,.mp3,.m4a,.ogg" onChange={importAudio} aria-label="音频文件"/><input hidden type="file" ref={portraitUpload} accept="image/jpeg,image/png" onChange={importPortrait} aria-label="人物图片文件"/>
     <audio ref={audio} src={input.soundMode==="voice"?assetPath("narration.wav"):audioUrl} onEnded={()=>setPlaying(false)} onError={()=>setPlaying(false)}/>
@@ -230,6 +235,7 @@ function BasicAvatar() {
     {modal==="confirm"&&quote&&<Modal title="生成确认与费用" description="核对模板、素材与本次调用上限。" busy={saving} onClose={()=>setModal(null)} footer={<><Button disabled={saving} onClick={()=>setModal(null)}>返回修改</Button><Button variant="primary" loading={saving} onClick={saveRequest} disabled={Number(budget)<=0||!Number.isFinite(Number(budget))}>确认费用并生成<ArrowRight size={17}/></Button></>}>
       <dl className="summary-list"><div><dt>模板</dt><dd>{template.name} · {template.ratio}</dd></div><div><dt>声音</dt><dd>{input.soundMode==="audio"?input.audio.name:voices.find(v=>v.id===input.voiceId)?.name}</dd></div><div><dt>人物</dt><dd>{input.portrait.name}</dd></div>{quote.items.map(q=><div key={q.stage}><dt>{({tts:'配音',avatar:'数字人',asr:'字幕识别'})[q.stage]}</dt><dd>上限 ¥{(q.max_charge_micros/1000000).toFixed(4)}<p className="helper">{q.model}</p></dd></div>)}</dl>
       {quote.needs_audio_quote&&<p className="helper">数字人与字幕按配音实际时长报价，超出剩余上限即停止，保留已完成配音。</p>}
+      {quote.ai_trial&&<p className="helper">AI理解与插画当前免费试用，不扣用户额度。素材检索沿用统一网关；本次最多补齐{input.ai.max_images||2}张插画，最终成片需观看审核。</p>}
       <Field label="本次全部调用费用上限（元）"><input type="number" min=".01" max="1000" step=".01" value={budget} disabled={saving} onChange={e=>setBudget(e.target.value)}/></Field><p className="helper">确认后将提交真实收费调用；本地排版不收费。实际费用与冻结额度可到账户中心查看。</p>
     </Modal>}
     {modal==="saved"&&<Modal title="制作任务已提交" onClose={()=>setModal(null)} footer={<Button variant="primary" onClick={()=>setModal(null)}>查看进度<ArrowRight size={17}/></Button>}><div className="success-content"><CheckCircle2 size={36}/><h3>已进入制作队列</h3><p>完成后从我的作品观看并审核成片。中断时恢复原任务，保留已完成的模型调用。</p></div></Modal>}

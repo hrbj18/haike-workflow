@@ -139,7 +139,7 @@ class Studio:
                      "template_version": template["version"], "title": title, "text": text, "layout": layout,
                      "input": data.get("input") or {}, "updated_at": timestamp(), "status": "draft"}
             if not isinstance(value["input"], dict): raise WorkError("制作内容格式无效")
-            allowed = {"headlines", "details", "conclusion", "materials", "bgm"} if template["kind"] == "graphic" else {"soundMode", "voiceId", "rate", "subtitles", "audio", "portrait"}
+            allowed = {"headlines", "details", "conclusion", "materials", "bgm"} if template["kind"] == "graphic" else {"soundMode", "voiceId", "rate", "subtitles", "audio", "portrait", "ai", "motion"}
             if template["id"] == "avatar-motion-adu-v1":
                 allowed = {"source", "motionLayout", "style", "segments", "music", "captions", "face", "subtitleBottom", "texture", "selectionMode"}
             if set(value["input"]) - allowed: raise WorkError("制作内容包含不支持的字段；API Key只能保存在API设置")

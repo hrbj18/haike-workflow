@@ -9,7 +9,7 @@ from backlot.studio_render import media_probe
 from backlot.work_catalog import WorkError
 
 
-def compose_avatar(folder, draft, video, audio, duration, cues):
+def compose_avatar(folder, draft, video, audio, duration, cues, storyboard=None):
     from lib.ffmpeg_locator import resolve_ffmpeg_pair
     from tools.video.video_compose import VideoCompose
     folder = Path(folder)
@@ -24,6 +24,21 @@ def compose_avatar(folder, draft, video, audio, duration, cues):
     shutil.copy2(audio, public / "narration.wav")
     shutil.copy2(Path(__file__).parent / "ui/brand/haike-company-logo.png", public / "haike-logo.png")
     props = {"template": draft["template_id"], "duration": duration, "title": draft["title"], "text": draft["text"], "titleSize": draft["layout"].get("title_size", 60), "accent": draft["layout"].get("accent", "#316dd6"), "captions": cues}
+    if storyboard:
+        from backlot.studio import Studio
+        from backlot.work_catalog import sha
+        studio = Studio(folder.parents[1].parent)
+        scenes = []
+        for scene in storyboard["scenes"]:
+            source = studio.asset(scene["asset"]["id"], draft["id"])
+            if sha(source) != scene["asset_sha256"]: raise WorkError("分镜素材已变化，请恢复原素材")
+            offset=scene["asset"].get("offset",0)
+            if source.suffix.lower() in {".mp4",".mov"} and offset+scene["end"]-scene["start"]>media_probe(source)["duration"]+.05:
+                raise WorkError("分镜视频片段时长不足，请调整素材起点或补充素材；没有循环或拉伸片段")
+            name = scene["id"] + source.suffix; shutil.copy2(source, public / name)
+            scenes.append({"start": scene["start"], "end": scene["end"], "text": scene["text"], "label": scene["label"], "src": name,
+                           "kind": "video" if source.suffix.lower() in {".mp4", ".mov"} else "image", "offset":offset,"generated": scene["asset"].get("provenance", {}).get("generated", False)})
+        props["scenes"] = scenes
     atomic_private(folder / "props.json", props)
     source = Path(__file__).resolve().parents[1] / "templates/studio-avatar-v1/index.tsx"
     shutil.copy2(source, folder / "index.tsx")

@@ -150,12 +150,24 @@
         "priority": "high",
         "subtasks": [],
         "updatedAt": "2026-10-13T12:37:43.937Z"
+      },
+      {
+        "id": "13",
+        "title": "统一口播的AI分镜、素材路由和插画补齐",
+        "description": "接入用户指定中转站的gpt-6-luna与gpt-image-2，理解用户素材，优先用户素材，再MediaCrawler抖音、Pexels，缺失时受预算控制生成插画。",
+        "details": "服务端私有密钥；统一模板入口；严格分镜结构、真实音频时钟、素材来源与授权；区分无结果、登录、网络和未知付费提交；可审核、缓存、恢复；价格未知不可假装计费开通。",
+        "testStrategy": "隔离假供应商与素材源验证顺序、恢复、预算、引用校验；免费模型连接检查；本地浏览器验收，不自动消费付费API。",
+        "status": "review",
+        "dependencies": [],
+        "priority": "high",
+        "subtasks": [],
+        "updatedAt": "2026-10-13T14:40:56.083Z"
       }
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2026-10-13T12:37:43.937Z",
-      "taskCount": 12,
+      "lastModified": "2026-10-13T14:40:56.083Z",
+      "taskCount": 13,
       "completedCount": 12,
       "tags": [
         "master"

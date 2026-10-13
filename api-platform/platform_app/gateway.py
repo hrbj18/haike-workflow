@@ -5,6 +5,7 @@ import io
 import json
 import math
 import wave
+from datetime import datetime, timedelta
 from decimal import ROUND_CEILING, Decimal
 
 from . import adapters, commerce, providers
@@ -71,6 +72,10 @@ def upload(store, user_id, kind, data):
 def clean_input(db, user_id, model, value, info=None):
     capability = (info or providers.MODELS[model])["capability"]
     value = dict(value)
+    if capability == "image":
+        if set(value) != {"prompt"} or not isinstance(value.get("prompt"), str) or not 1 <= len(value["prompt"]) <= 4000:
+            raise Problem(422, "input_invalid", "插画接口仅接收1至4,000字的prompt，一次生成一张竖屏插画")
+        return value, {"input_tokens": len(value["prompt"].encode()) * 2 + 1024, "output_tokens": 32768}
     if capability == "chat":
         if set(value) - {"messages", "max_output_tokens"}:
             raise Problem(
@@ -212,6 +217,7 @@ def create_quote(store, vault, user, model, inputs, project):
                     "base_url",
                     "region",
                     "text_model",
+                    "image_model",
                     "voice",
                     "workflow_id",
                     "workflow_profile",
@@ -255,6 +261,28 @@ def quote_public(row):
         "expires_at": row["expires_at"],
         "simulation": False,
     }
+
+
+def renew_quote(store, vault, user, quote_id):
+    """Extend only the acceptance clock, retaining the exact tariff/provider snapshot.
+
+    An accepted quote returns unchanged so callers recover the original intent.
+    Never clone a quote (quote_id is unique in jobs); never prolong beyond 24h.
+    """
+    with store.write() as db:
+        row = owned(db, "gateway_quotes", quote_id, user["id"])
+        if row["accepted_job_id"]:
+            return quote_public(row)
+        current = next((r for r in providers.catalogue(store, vault) if r["model"] == row["model"]), None)
+        if not current or current["status"] != "available":
+            raise Problem(409, "model_unavailable", "原模型尚未开通，不能续期")
+        deadline = datetime.fromisoformat(row["created_at"]) + timedelta(hours=24)
+        if datetime.fromisoformat(now()) >= deadline:
+            raise Problem(409, "quote_too_old", "原报价超过24小时，请重新确认制作费用，已完成产物保留")
+        expiry = min(datetime.fromisoformat(later(600)), deadline).isoformat(timespec="microseconds")
+        db.execute("UPDATE gateway_quotes SET expires_at=? WHERE id=?", (expiry, quote_id))
+        audit(db, user["id"], "renew_gateway_quote", quote_id)
+        return quote_public(db.execute("SELECT * FROM gateway_quotes WHERE id=?", (quote_id,)).fetchone())
 
 
 def billing_detail(snapshot, usage, job, admin=False):

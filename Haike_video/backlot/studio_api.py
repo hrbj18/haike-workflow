@@ -126,6 +126,109 @@ def motion_project(draft_id: str, revision: int, request: Request):
 def settings(request: Request): return call(studio(request).settings)
 
 
+@router.get("/api/studio/ai/status")
+def ai_status(request: Request):
+    from backlot.studio_storyboard import status
+    return call(status, studio(request))
+
+
+@router.post("/api/studio/drafts/{draft_id}/ai-preview")
+async def ai_preview(draft_id: str, request: Request, data: dict = Body(...)):
+    mutation(request); s = studio(request); d = call(s.draft,draft_id)
+    if data != {"revision":d["revision"],"confirmed":True}: raise HTTPException(409,"草稿已改变，请重新保存后确认AI理解")
+    from backlot.studio_storyboard import preview
+    return await asyncio.to_thread(call,preview,s,d)
+
+
+@router.get("/api/studio/drafts/{draft_id}/ai-preview")
+def ai_preview_saved(draft_id: str, request: Request):
+    import json
+    s=studio(request); d=call(s.draft,draft_id)
+    path=s.projects_root/draft_id/"assets/ai-preview"/str(d["revision"])/"preview.json"
+    return {"plan":json.loads(path.read_text()) if path.is_file() else None}
+
+
+@router.get("/api/studio/drafts/{draft_id}/storyboard")
+def storyboard(draft_id: str, request: Request, revision: int | None = None):
+    import json
+    s = studio(request); d = call(s.draft, draft_id)
+    if revision is not None and not 1 <= revision <= d["revision"]: raise HTTPException(422,"分镜版本无效")
+    path = s.projects_root / draft_id / "renders" / ("studio-" + str(revision or d["revision"])) / "storyboard.json"
+    return {"plan": json.loads(path.read_text()) if path.is_file() else None}
+
+
+@router.get("/api/studio/drafts/{draft_id}/avatar-job")
+def avatar_job(draft_id: str, request: Request):
+    call(studio(request).draft, draft_id)
+    from backlot.server import _ensure_production_queue
+    result = call(_ensure_production_queue(request.app).list, project_id=draft_id, limit=200)
+    jobs = [j for j in result["tasks"] if j["kind"] == "studio_avatar"]
+    return {"job": max(jobs, key=lambda j:j["created_at"]) if jobs else None}
+
+
+@router.post("/api/studio/ai/jobs/{job_id}/skip-douyin")
+def skip_douyin(job_id: str, request: Request, data: dict = Body(...)):
+    mutation(request)
+    if data != {"confirmed": True}: raise HTTPException(422, "请明确确认跳过抖音")
+    from backlot.server import _ensure_production_queue
+    from backlot.studio import atomic_private, timestamp
+    q = _ensure_production_queue(request.app); job = call(q.get, job_id, include_private=True)
+    if job["kind"] != "studio_avatar" or job["status"] != "failed": raise HTTPException(409, "只能恢复暂停的口播任务")
+    d = job["frozen_request"]["draft"]
+    path = studio(request).projects_root / d["id"] / "renders" / ("studio-" + str(d["revision"])) / "source-decisions.json"
+    atomic_private(path, {"skip_douyin": True, "confirmed_at": timestamp(), "reason": "用户明确跳过抖音，恢复原任务"})
+    return call(q.retry, job_id)
+
+
+@router.post("/api/studio/ai/douyin/login")
+async def douyin_login(request: Request, data: dict = Body(...)):
+    mutation(request)
+    if data != {"confirmed": True}: raise HTTPException(422,"请确认打开抖音登录窗口")
+    from backlot.studio_storyboard import login_prepare
+    return await asyncio.to_thread(call,login_prepare,studio(request))
+
+
+@router.post("/api/studio/ai/douyin/login-confirmed")
+def douyin_login_confirmed(request: Request, data: dict = Body(...)):
+    mutation(request)
+    if data != {"confirmed": True}: raise HTTPException(422,"请完成抖音登录后再确认")
+    from backlot.studio_storyboard import configuration, status
+    from backlot.studio import atomic_private
+    s=studio(request); c=configuration(s); c["douyin_login_confirmed"]=True
+    atomic_private(s.private / "studio-ai/relay.json",c)
+    return call(status,s)
+
+
+@router.get("/api/studio/ai/jobs/{job_id}/douyin-candidates")
+def douyin_candidates(job_id: str, request: Request):
+    import json
+    from backlot.server import _ensure_production_queue
+    q=_ensure_production_queue(request.app); job=call(q.get,job_id,include_private=True)
+    if job["kind"]!="studio_avatar": raise HTTPException(422,"请选择口播任务")
+    d=job["frozen_request"]["draft"]
+    folder=studio(request).projects_root/d["id"]/"renders"/("studio-"+str(d["revision"]))/"ai-requests"
+    items=[x for p in folder.glob("scene-*-candidates.json") for x in json.loads(p.read_text()).get("items",[])]
+    return {"items":items}
+
+
+@router.post("/api/studio/ai/jobs/{job_id}/authorize-douyin")
+def authorize_douyin(job_id: str, request: Request, data: dict = Body(...)):
+    import json
+    from backlot.studio import atomic_private, timestamp
+    mutation(request)
+    if set(data)!={"video_id","rights_confirmed"} or data["rights_confirmed"] is not True: raise HTTPException(422,"请确认拥有此视频的使用权")
+    candidates=douyin_candidates(job_id,request)["items"]
+    if data["video_id"] not in {c["id"] for c in candidates}: raise HTTPException(422,"视频不在本次候选中")
+    from backlot.server import _ensure_production_queue
+    q=_ensure_production_queue(request.app);job=call(q.get,job_id,include_private=True)
+    if job["status"]!="failed": raise HTTPException(409,"只能恢复暂停的任务")
+    d=job["frozen_request"]["draft"];path=studio(request).projects_root/d["id"]/"renders"/("studio-"+str(d["revision"]))/"source-decisions.json"
+    value=json.loads(path.read_text()) if path.exists() else {}
+    value.update(authorized_video_ids=sorted(set(value.get("authorized_video_ids",[])+[data["video_id"]])),confirmed_at=timestamp())
+    atomic_private(path,value)
+    return call(q.retry,job_id)
+
+
 @router.post("/api/studio/settings")
 async def connect(request: Request, data: dict = Body(...)):
     mutation(request)

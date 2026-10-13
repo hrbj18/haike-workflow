@@ -1,3 +1,4 @@
-export function AvatarModeBar({motion=false}) {
-  return <nav className="avatar-mode-bar" aria-label="口播制作方式"><a className={!motion?'active':''} aria-current={!motion?'page':undefined} href="/avatar">海客口播 <small>3种版式</small></a><a className={motion?'active':''} aria-current={motion?'page':undefined} href="/avatar?mode=motion">动效口播 <small>ADu 模板库</small></a></nav>;
+import {AvatarTemplatePicker} from './AvatarTemplatePicker.jsx';
+export function AvatarModeBar() {
+  return <AvatarTemplatePicker templateId="avatar-template3-card-3x4-v001" onChoose={c=>{const q=new URLSearchParams(c.motion?{style:c.motion.style,layout:c.motion.layout}:{template:c.templateId});location.assign('/avatar?'+q.toString());}}/>;
 }

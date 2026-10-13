@@ -26,6 +26,16 @@ def key_identity(studio):
     return hashlib.sha256(json.dumps([c.get("base_url"), c.get("api_key")]).encode()).hexdigest()
 
 
+def renew_if_expired(sdk, quote):
+    expiry=quote.get("expires_at")
+    if not expiry or datetime.fromisoformat(expiry.replace("Z","+00:00"))>datetime.now(timezone.utc): return quote
+    try: renewed=sdk.request("/quotes/"+quote["id"]+"/renew",{"confirmed":True})
+    except Exception: raise WorkError("原报价已过期，已完成声音和素材保留；请管理员核对报价续期服务后恢复原任务", "unavailable") from None
+    if any(renewed.get(k)!=quote.get(k) for k in ("id","model","price","quoted_usage","max_charge_micros")):
+        raise WorkError("报价续期改变了原费用或模型快照，请重新确认；未提交新付费调用")
+    return renewed
+
+
 def prepare_audio(source, target, rate=1):
     from lib.ffmpeg_locator import resolve_ffmpeg_pair
     ffmpeg, _ = resolve_ffmpeg_pair()
@@ -49,6 +59,9 @@ def prepare_image(source, target):
 def validate(studio, draft):
     if studio.template(draft["template_id"])["kind"] != "avatar": raise WorkError("请选择数字人口播模板")
     value = draft["input"]
+    from backlot.studio_storyboard import options, motion_options
+    options(studio, draft)
+    motion_options(draft)
     if not draft["text"].strip() or len(draft["text"]) > 5000: raise WorkError("口播文案需要1至5,000字")
     image = value.get("portrait") or {}
     studio.asset(image.get("id"), draft["id"])
@@ -60,7 +73,7 @@ def validate(studio, draft):
         if value.get("rate", 1) not in {.8, 1, 1.2, 1.5}: raise WorkError("配音语速不支持")
     else: raise WorkError("请选择已有音频或网关配音")
     title = draft["title"]
-    maximum = 36 if draft["template_id"].startswith("avatar-template3") else 16
+    maximum = 120 if value.get("motion") else 36 if draft["template_id"].startswith("avatar-template3") else 16
     if len(title) > maximum: raise WorkError(f"当前版式标题最多{maximum}字，请在排版配置中缩短")
     composer = Path(__file__).resolve().parents[1] / "remotion-composer/node_modules"
     if not composer.is_dir(): raise WorkError("缺少本地Remotion渲染依赖，尚未提交付费调用")
@@ -81,12 +94,12 @@ def quote(studio, draft):
         duration = prepare_audio(studio.asset(draft["input"]["audio"]["id"], draft["id"]), audio)
         prepared.update(audio_path=str(audio), duration=duration, audio_file=sdk.upload(audio, "audio")["id"])
         quotes["avatar"] = sdk.quote("haike/avatar", {"audio_file": prepared["audio_file"], "image_file": prepared["image_file"]}, draft["id"])
-        if draft["input"].get("subtitles", True): quotes["asr"] = sdk.quote("haike/tencent-asr", {"audio_file": prepared["audio_file"]}, draft["id"])
+        if draft["input"].get("subtitles", True) or draft["input"].get("ai", {}).get("enabled"): quotes["asr"] = sdk.quote("haike/tencent-asr", {"audio_file": prepared["audio_file"]}, draft["id"])
     else:
         quotes["tts"] = sdk.quote(draft["input"]["voiceId"], {"text": draft["text"]}, draft["id"])
         # Availability is checked before any TTS charge. Its exact avatar quote needs the real audio.
         models = {m.get("id") or m.get("model") for m in sdk.request("/capabilities").get("items", [])}
-        required = {"haike/avatar"} | ({"haike/tencent-asr"} if draft["input"].get("subtitles", True) else set())
+        required = {"haike/avatar"} | ({"haike/tencent-asr"} if draft["input"].get("subtitles", True) or draft["input"].get("ai", {}).get("enabled") else set())
         if required - models: raise WorkError("数字人或字幕模型尚不可用，请由管理员确认成本费率后再制作")
     data = {"id": identity, "draft": draft, "prepared": prepared, "quotes": quotes, "key_identity": key_identity(studio), "created_at": datetime.now(timezone.utc).isoformat()}
     with studio.db() as db: db.execute("INSERT INTO studio_quotes VALUES(?,?)", (identity, json.dumps(data, ensure_ascii=False)))
@@ -95,7 +108,7 @@ def quote(studio, draft):
 
 def public_quote(data):
     return {"id": data["id"], "revision": data["draft"]["revision"], "known_max_micros": sum(int(q["max_charge_micros"]) for q in data["quotes"].values()),
-            "needs_audio_quote": data["draft"]["input"]["soundMode"] == "voice", "items": [{"stage": k, "model": q["model"], "max_charge_micros": q["max_charge_micros"]} for k, q in data["quotes"].items()]}
+            "needs_audio_quote": data["draft"]["input"]["soundMode"] == "voice", "ai_trial": data["draft"]["input"].get("ai", {}).get("enabled", False), "items": [{"stage": k, "model": q["model"], "max_charge_micros": q["max_charge_micros"]} for k, q in data["quotes"].items()]}
 
 
 def frozen_request(studio, draft, quote_id, maximum):
@@ -109,7 +122,7 @@ def frozen_request(studio, draft, quote_id, maximum):
     return {**data, "max_charge_micros": maximum, "render_id": "studio-" + str(draft["revision"])}
 
 
-def download_result(url, path):
+def download_result(url, path, referer=None):
     # Gateway results contain supplier media only. Follow validated HTTPS redirects, with no Key headers.
     class NoRedirect(HTTPRedirectHandler):
         def redirect_request(self, req, fp, code, msg, headers, newurl): return None
@@ -121,7 +134,7 @@ def download_result(url, path):
         addresses = socket.getaddrinfo(p.hostname, p.port or 443, type=socket.SOCK_STREAM)
         if any(not ipaddress.ip_address(a[4][0]).is_global for a in addresses): raise WorkError("供应商媒体地址不能指向本地网络")
         try:
-            with opener.open(Request(url), timeout=90) as response:
+            with opener.open(Request(url, headers={"Referer": referer} if referer else {}), timeout=90) as response:
                 temporary = path.with_suffix(path.suffix + ".part")
                 count = 0
                 with temporary.open("wb") as out:
@@ -138,7 +151,7 @@ def download_result(url, path):
     raise WorkError("供应商媒体跳转过多")
 
 
-def captions(result, duration):
+def captions(result, duration, split=True):
     """Sentence timing comes from ASR, never from input text/duration guesses."""
     values = result.get("segments") or result.get("sentences") or []
     if not values:
@@ -149,7 +162,7 @@ def captions(result, duration):
         start, end, text = float(s["start"]), min(float(s["end"]), duration), str(s["text"]).strip()
         if not (math.isfinite(start) and math.isfinite(end) and 0 <= start < end and text): continue
         # Short groups inside each recognised sentence; this is sentence-aligned, not word-level karaoke.
-        groups = [text[i:i+18] for i in range(0, len(text), 18)]
+        groups = [text[i:i+18] for i in range(0, len(text), 18)] if split else [text]
         for i, group in enumerate(groups):
             out.append({"text": group, "startMs": (start+(end-start)*i/len(groups))*1000, "endMs": (start+(end-start)*(i+1)/len(groups))*1000, "timestampMs": None, "confidence": None})
     if not out: raise WorkError("语音识别没有返回可用句级时间轴，保留音频和数字人，请检查字幕阶段")
@@ -173,6 +186,8 @@ def run_avatar(project_dir, request, sdk=None):
                 raise WorkError("后续报价超过本次总费用上限，已完成产物保留；未提交这一步")
             state["stages"][stage] = {"quote": q}; save()
         s = state["stages"][stage]
+        if not s.get("job"):
+            s["quote"]=renew_if_expired(sdk,s["quote"]);save()
         if not s.get("intent"):
             identity = "call_" + hashlib.sha256((request["id"] + ":" + stage).encode()).hexdigest()[:32]
             s["intent"] = sdk.confirm(s["quote"], int(s["quote"]["max_charge_micros"]), identity); save()
@@ -193,16 +208,23 @@ def run_avatar(project_dir, request, sdk=None):
             audio = output_dir / "narration.wav"
             duration = prepare_audio(raw, audio, draft["input"].get("rate", 1))
             p.update(audio_path=str(audio), duration=duration, audio_file=sdk.upload(audio, "audio")["id"]); save()
+        cues = []
+        clock_cues = []
+        if draft["input"].get("subtitles", True) or draft["input"].get("ai", {}).get("enabled"):
+            result = paid("asr", "haike/tencent-asr", {"audio_file": p["audio_file"]})
+            cues = captions(result, p["duration"])
+            clock_cues = captions(result, p["duration"], split=False)
+        from backlot.studio_storyboard import produce
+        storyboard = produce(studio, draft, output_dir, clock_cues, p["duration"], paid)
         video = output_dir / "avatar-source.mp4"
         if not video.exists():
             result = paid("avatar", "haike/avatar", {"audio_file": p["audio_file"], "image_file": p["image_file"]})
             download_result(result["video_url"], video)
-        cues = []
-        if draft["input"].get("subtitles", True):
-            result = paid("asr", "haike/tencent-asr", {"audio_file": p["audio_file"]})
-            cues = captions(result, p["duration"])
         from backlot.studio_composition import compose_avatar
-        output = compose_avatar(output_dir, draft, video, Path(p["audio_path"]), p["duration"], cues)
+        if draft["input"].get("motion"):
+            from backlot.studio_storyboard import compose_motion
+            return compose_motion(studio, draft, output_dir, video, Path(p["audio_path"]), clock_cues, storyboard)
+        output = compose_avatar(output_dir, draft, video, Path(p["audio_path"]), p["duration"], cues if draft["input"].get("subtitles", True) else [], storyboard=storyboard) if storyboard else compose_avatar(output_dir, draft, video, Path(p["audio_path"]), p["duration"], cues)
         report = {"template_id": draft["template_id"], "adapter_version": 1, "sources": [{"path": str(video), "sha256": sha(video)}, {"path": p["audio_path"], "sha256": sha(p["audio_path"])}],
                   "caption_timing": "ASR sentence-level" if cues else "off", "provider_jobs": [s["job"]["id"] for s in state["stages"].values()], "human_review": "pending"}
         atomic_private(output_dir / "qa.json", report)

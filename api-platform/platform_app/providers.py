@@ -64,7 +64,7 @@ MODELS = {
     "haike/text": {
         "name": "文本与视觉 · GPT",
         "provider": "openai",
-        "target_model": "gpt-5.6-terra",
+        "target_model": "gpt-6-luna",
         "capability": "chat",
         "meters": {"input_tokens": 1000000, "output_tokens": 1000000},
     },
@@ -102,6 +102,13 @@ MODELS = {
         "target_model": "pexels-search",
         "capability": "assets",
         "meters": {"requests": 1},
+    },
+    "haike/illustration": {
+        "name": "AI 插画 · GPT Image",
+        "provider": "openai",
+        "target_model": "gpt-image-2",
+        "capability": "image",
+        "meters": {"input_tokens": 1000000, "output_tokens": 1000000},
     },
 }
 UNITS = {
@@ -252,7 +259,7 @@ class Vault:
         allowed = (
             (set(definitions[provider]) - {"secrets"})
             | set(definitions[provider]["secrets"])
-            | {"voice", "enabled", "text_model", "workflow_profile"}
+            | {"voice", "enabled", "text_model", "image_model", "workflow_profile"}
         )
         if set(config) - allowed or any(
             type(v) is not bool if k == "enabled" else not isinstance(v, str)
