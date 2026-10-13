@@ -145,18 +145,18 @@
         "description": "保留现有上游历史，整理源码、忽略私有密钥和运行数据，建立可审阅提交、Git工作流文档及CI，并推送到用户账号的私有仓库。",
         "details": "核验现有Git状态及授权账号；不影响运行副本或云端数据库；防止密钥/账单/素材/缓存进入Git；确保新clone可构建和测试；配置origin及上游，建立迭代分支工作流。",
         "testStrategy": "索引及可达历史敏感数据扫描；Git排除规则验证；源码完整性与CI命令验证；新clone回归；私有仓库权限和远端提交一致性验证。",
-        "status": "in-progress",
+        "status": "done",
         "dependencies": [],
         "priority": "high",
         "subtasks": [],
-        "updatedAt": "2026-10-13T12:07:10.064Z"
+        "updatedAt": "2026-10-13T12:37:43.937Z"
       }
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2026-10-13T12:07:10.064Z",
+      "lastModified": "2026-10-13T12:37:43.937Z",
       "taskCount": 12,
-      "completedCount": 11,
+      "completedCount": 12,
       "tags": [
         "master"
       ]
