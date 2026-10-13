@@ -6,7 +6,7 @@ import pytest
 from PIL import Image
 
 from backlot.studio import Studio, atomic_private
-from backlot.studio_storyboard import TrialRelay, options, resolve_scene, status, validate_plan, produce
+from backlot.studio_storyboard import TrialRelay, options, resolve_scene, status, validate_plan, produce, verify_spoken_script, motion_clock_segments
 from backlot.work_catalog import WorkError
 
 
@@ -36,6 +36,20 @@ def test_storyboard_uses_asr_sentence_clock_not_caption_wrap_interpolation():
     assert len(captions(result,5))>1
     exact=captions(result,5,split=False)
     assert len(exact)==1 and exact[0]['startMs']==250 and exact[0]['endMs']==4900
+
+
+def test_real_audio_and_script_must_describe_same_speech():
+    verify_spoken_script('海客科技，让创作更简单。',[{'text':'海客科技让创作更简单'}])
+    with pytest.raises(WorkError,match='不一致'):
+        verify_spoken_script('今天讲工业生产流程',[{'text':'用户素材优先缺少素材再补充示意插画'}])
+
+
+def test_25fps_drive_is_mapped_to_observed_60fps_tail():
+    segments=[{'text':'一','end':1.73},{'text':'二','end':5.12}]
+    result=motion_clock_segments(segments,308)
+    assert result[0]['end']==104/60 and result[-1]['end']==308/60
+    assert ''.join(s['text'] for s in result)=='一二'
+    with pytest.raises(WorkError,match='过短'):motion_clock_segments([{'end':.001},{'end':5.12}],308)
 
 
 @pytest.mark.parametrize('change',[{'from_cue':1},{'to_cue':9},{'script_start':2},{'asset_id':'foreign'},{'path':'../../etc/passwd'},{'from_cue':False}])

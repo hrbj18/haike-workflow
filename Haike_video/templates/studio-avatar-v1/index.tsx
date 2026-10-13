@@ -11,11 +11,12 @@ const Video: React.FC<Props> = p => {
   const {fps,height}=useVideoConfig(); const frame=useCurrentFrame(), ms=frame/fps*1000;
   const cue=p.captions.find(c=>ms>=c.startMs&&ms<c.endMs);
   const scene=p.scenes?.find(s=>ms>=s.start*1000&&ms<s.end*1000);
-  const visual=scene&&<><Sequence from={Math.round(scene.start*fps)} durationInFrames={Math.max(1,Math.round((scene.end-scene.start)*fps))} layout="none">{scene.kind==='video'?<OffthreadVideo muted startFrom={Math.round((scene.offset||0)*fps)} src={staticFile(scene.src)} style={{width:'100%',height:'100%',objectFit:'contain',position:'absolute',inset:0}}/>:<Img src={staticFile(scene.src)} style={{width:'100%',height:'100%',objectFit:'contain',position:'absolute',inset:0}}/>}</Sequence>{scene.generated&&<span style={{position:'absolute',right:16,bottom:16,fontSize:20,color:'#fff',background:'#000a',padding:'4px 10px'}}>AI 示意插画</span>}</>;
+  const visual=scene&&<><Sequence from={Math.round(scene.start*fps)} durationInFrames={Math.max(1,Math.round((scene.end-scene.start)*fps))} layout="none">{scene.kind==='video'?<OffthreadVideo muted trimBefore={Math.round((scene.offset||0)*fps)} src={staticFile(scene.src)} style={{width:'100%',height:'100%',objectFit:'contain',position:'absolute',inset:0}}/>:<Img src={staticFile(scene.src)} style={{width:'100%',height:'100%',objectFit:'contain',position:'absolute',inset:0}}/>}</Sequence>{scene.generated&&<span style={{position:'absolute',right:16,bottom:16,fontSize:20,color:'#fff',background:'#000a',padding:'4px 10px'}}>AI 示意插画</span>}</>;
   const points=p.text.split(/[。！？\n]/).map(s=>s.trim()).filter(Boolean);
-  const count=Math.max(1,points.length), current=Math.min(count-1,Math.floor(frame/(p.duration*fps)*count));
+  const count=Math.max(1,p.scenes?.length||points.length), sceneIndex=scene?p.scenes!.indexOf(scene):-1;
+  const current=sceneIndex>=0?sceneIndex:Math.min(count-1,Math.floor(frame/(p.duration*fps)*count));
   const card=p.template.startsWith('avatar-template3'), full=p.template==='avatar-full-width-v2';
-  const currentText=points[current]||p.text;
+  const currentText=scene?.text||points[current]||p.text;
   const pageText=currentText.length>90?currentText.slice(0,90)+'…':currentText;
   return <AbsoluteFill style={{fontFamily:'"PingFang SC","Microsoft YaHei",sans-serif',color:card?'#242c3b':'#fff',background:card?'linear-gradient(135deg,#cde1fb 0%,#f9edd0 48%,#bea6e0 77%,#f9ded6 100%)':'#081629'}}>
     {card?<div style={{position:'absolute',inset:'72px 64px 70px',borderRadius:42,background:'#fff',padding:44,boxShadow:'0 10px 40px #55608022'}}>

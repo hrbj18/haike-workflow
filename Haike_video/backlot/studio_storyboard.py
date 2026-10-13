@@ -7,6 +7,7 @@ Write submitting BEFORE the request; an ambiguous response is never retried.
 from __future__ import annotations
 
 import base64
+import difflib
 import hashlib
 import json
 import math
@@ -186,9 +187,27 @@ def validate_plan(body, draft, cues, duration):
     return out
 
 
+def verify_spoken_script(text, cues):
+    written=re.sub(r"[^\w\u4e00-\u9fff]","",text).casefold()
+    spoken=re.sub(r"[^\w\u4e00-\u9fff]","","".join(c["text"] for c in cues)).casefold()
+    if not written or not spoken or difflib.SequenceMatcher(None,written,spoken,autojunk=False).ratio()<.7:
+        raise WorkError("音频识别内容与文案不一致，请核对录音和文案；声音与字幕已保留，未提交数字人生成")
+
+
+def motion_clock_segments(segments, frames):
+    """Snap visual boundaries to the observed 60fps mother, never stretch speech."""
+    out=[];cursor=0
+    for i,s in enumerate(segments):
+        end=frames if i==len(segments)-1 else round(s["end"]*60)
+        if not cursor<end<=frames: raise WorkError("分镜过短，无法映射到真实60fps时钟，请合并或调整分镜")
+        out.append({**s,"end":end/60});cursor=end
+    return out
+
+
 def make_plan(studio, draft, cues, duration, relay):
     ai = options(studio, draft)
     if not cues: raise WorkError("AI分镜需要真实字幕时间轴，请开通语音识别")
+    if duration is not None: verify_spoken_script(draft["text"],cues)
     content = [{"type": "text", "text": json.dumps({"script": draft["text"], "brief": ai.get("brief", ""),"source_policy":{"skip_douyin":ai.get("skip_douyin",False),"allow_illustrations":ai.get("allow_images",False)},
                 "cues": [{"id": i, "text": c["text"]} for i, c in enumerate(cues)],
                 "materials": [{k: m.get(k) for k in ("id", "name", "mode", "note", "offset")} for m in ai.get("materials", [])]}, ensure_ascii=False)}]
@@ -342,7 +361,8 @@ def produce(studio, draft, folder, cues, duration, paid):
 
 def compose_motion(studio, draft, folder, video, audio, cues, storyboard):
     """Compile AI choices into the existing pinned ADu contract, then revalidate it."""
-    from backlot.studio_motion import plan, freeze, run_motion
+    from backlot.studio_motion import plan, freeze, run_motion, narration_clock
+    from backlot.studio_render import media_probe
     from lib.ffmpeg_locator import resolve_ffmpeg_pair
     style = motion_options(draft); folder = Path(folder)
     relay = TrialRelay(studio, folder / "ai-requests")
@@ -375,8 +395,10 @@ def compose_motion(studio, draft, folder, video, audio, cues, storyboard):
                 anchors[role] = max(0,cues[index]["startMs"]/1000-scene["start"])
             normalized.append({"id":scene["id"],"group":s["group"],"text":scene["text"],"end":scene["end"],"values":values,"anchors":anchors})
         ffmpeg,_ = resolve_ffmpeg_pair(); mother = folder / "ai-motion-mother.mp4"
-        r = subprocess.run([ffmpeg,"-v","error","-y","-i",str(video),"-i",str(audio),"-map","0:v","-map","1:a","-vf","fps=60,tpad=stop_mode=clone:stop_duration=1","-t",str(storyboard["duration"]),"-c:v","libx264","-c:a","aac",str(mother)],capture_output=True,timeout=180)
+        frames=math.ceil(storyboard["duration"]*60-1e-7)
+        r = subprocess.run([ffmpeg,"-v","error","-y","-i",str(video),"-i",str(audio),"-map","0:v","-map","1:a","-vf","fps=60,tpad=stop_mode=clone:stop_duration=1","-af","apad","-frames:v",str(frames),"-t",str(frames/60),"-c:v","libx264","-c:a","aac",str(mother)],capture_output=True,timeout=180)
         if r.returncode: raise WorkError("动效口播母版无法对齐，数字人与音频已保留")
+        normalized=motion_clock_segments(normalized,narration_clock(media_probe(mother))["frames"])
         source = studio.save_asset(draft["id"],mother.name,"video",mother.read_bytes())
         compiled = {**draft,"template_id":"avatar-motion-adu-v1","input":{"source":source,"motionLayout":draft["input"]["motion"]["layout"],"style":style["id"],"segments":normalized,"music":{"mode":"none"},"captions":[{"start":c["startMs"]/1000,"end":c["endMs"]/1000,"text":c["text"]} for c in cues],"face":{"mode":"auto"},"subtitleBottom":.18,"selectionMode":"fixed"}}
         atomic_private(compiled_path,compiled)
