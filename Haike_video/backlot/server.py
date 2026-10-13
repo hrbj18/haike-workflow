@@ -1354,7 +1354,16 @@ def create_app() -> FastAPI:
     app.include_router(published_remix_router)
     app.include_router(commentary_router)
     app.state.works_projects_root = PROJECTS_DIR
+    from backlot.studio_api import REMOVED_ENTRIES
+    @app.middleware("http")
+    async def redirect_removed_entries(request, call_next):
+        destination = REMOVED_ENTRIES.get(request.url.path.rstrip("/"))
+        if request.method == "GET" and destination:
+            return RedirectResponse(destination, status_code=307)
+        return await call_next(request)
     app.include_router(work_router)
+    from backlot.studio_api import router as studio_router
+    app.include_router(studio_router)
 
     # ---- API ----------------------------------------------------------
 
@@ -4269,6 +4278,10 @@ def create_app() -> FastAPI:
 
     @app.get("/")
     async def library_page() -> HTMLResponse:
+        return _ui_html("avatar-generator/index.html", ())
+
+    @app.get("/legacy/projects")
+    async def legacy_library_page() -> HTMLResponse:
         return _ui_html("index.html", ("board.css", "library.js"))
 
     @app.get("/automation")

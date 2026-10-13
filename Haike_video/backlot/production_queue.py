@@ -19,7 +19,7 @@ from typing import Any, Iterator
 
 QUEUE_SCHEMA_VERSION = 1
 DEFAULT_DB_NAME = "production-queue.sqlite3"
-QUEUE_KINDS = {"review_preview", "avatar_review_preview", "full_preview", "material_selection", "published_remix", "material_commentary", "commentary_presenter"}
+QUEUE_KINDS = {"review_preview", "avatar_review_preview", "full_preview", "material_selection", "published_remix", "material_commentary", "commentary_presenter", "studio_graphic", "studio_avatar", "studio_motion"}
 QUEUE_SOURCES = {"workbench", "codex", "scheduler", "recovery"}
 PRIORITIES = {"priority": 300, "normal": 200, "background": 100}
 ACTIVE_STATUSES = {"queued", "running", "paused"}

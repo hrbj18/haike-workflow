@@ -53,7 +53,22 @@ class ProductionQueueWorker:
             "published_remix": self._run_published_remix,
             "material_commentary": self._run_material_commentary,
             "commentary_presenter": self._run_commentary_presenter,
+            "studio_graphic": self._run_studio_graphic,
+            "studio_avatar": self._run_studio_avatar,
+            "studio_motion": self._run_studio_motion,
         }
+
+    def _run_studio_graphic(self, job):
+        from backlot.studio_render import run_graphic
+        return run_graphic(self._project_dir(job), job["frozen_request"])
+
+    def _run_studio_avatar(self, job):
+        from backlot.studio_avatar import run_avatar
+        return run_avatar(self._project_dir(job), job["frozen_request"])
+
+    def _run_studio_motion(self, job):
+        from backlot.studio_motion import run_motion
+        return run_motion(self._project_dir(job), job["frozen_request"])
 
     def _project_dir(self, job: dict[str, Any]) -> Path:
         project_dir = (self.projects_root / str(job["project_id"])).resolve()
@@ -185,6 +200,13 @@ class ProductionQueueWorker:
 
     def inspect_parent(self, job: dict[str, Any]) -> dict[str, Any]:
         project_dir = self._project_dir(job)
+        if job["kind"] in {"studio_graphic", "studio_avatar", "studio_motion"}:
+            filename = {"studio_graphic": "graphic-preview.mp4", "studio_avatar": "avatar-preview.mp4", "studio_motion": "motion-preview.mp4"}[job["kind"]]
+            output = project_dir / "renders" / job["frozen_request"]["render_id"] / filename
+            report = output.parent / "qa.json"
+            if output.is_file() and report.is_file():
+                return {"status": "completed", "stage": "合成完成，等待人工审核", "result": {"output_path": str(output), "qa_status": "pending"}}
+            return {"status": "failed", "stage": "制作中断，原调用与产物保留，可恢复此任务", "retryable": True, "safe_resume_point": job["kind"]}
         if job["kind"] == "commentary_presenter":
             from backlot.commentary_presenter_job import inspect
             return inspect(project_dir, str(job["parent_job_id"]))

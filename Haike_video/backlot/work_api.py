@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 
 from fastapi import APIRouter, Body, HTTPException, Query, Request
-from fastapi.responses import HTMLResponse, FileResponse
+from fastapi.responses import HTMLResponse, FileResponse, RedirectResponse
 
 from backlot.work_catalog import WorkCatalog, WorkError
 from backlot import work_ingest, work_publish, work_storage
@@ -34,7 +34,7 @@ def call(fn, *args, **kwargs):
 
 @router.get("/works", response_class=HTMLResponse)
 def page():
-    return HTMLResponse((UI / "works.html").read_text(encoding="utf-8"), headers={"Cache-Control": "no-cache"})
+    return RedirectResponse("/projects", status_code=307)
 
 
 @router.get("/api/works")

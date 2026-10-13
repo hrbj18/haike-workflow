@@ -9387,6 +9387,22 @@ async def del_publish(tid: int):
     return {"ok": True}
 
 
+@app.post("/api/publish/{tid}/cancel")
+async def cancel_scheduled_publish(tid: int):
+    """Cancel an unstarted schedule without deleting its frozen package/receipt."""
+    with get_session() as s:
+        t = s.get(PublishTask, tid)
+        if not t: raise HTTPException(404, "发布任务不存在")
+        if t.status == "canceled": return _publish_dict(t)
+        if t.status not in ("draft", "pending", "failed"):
+            raise HTTPException(409, "任务正在发布、结果待核对或已发布，无法撤销排期")
+        result = s.execute(update(PublishTask).where(PublishTask.id == tid, PublishTask.status.in_(["draft", "pending", "failed"])).values(status="canceled", error="用户取消排期；发布包和回执保留"))
+        if result.rowcount != 1:
+            s.rollback(); raise HTTPException(409, "任务状态已改变，请刷新后核对")
+        s.commit(); s.refresh(t)
+        return _publish_dict(t)
+
+
 def _first_val(d: dict, *keys, default=""):
     for k in keys:
         v = d.get(k)

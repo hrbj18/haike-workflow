@@ -1,14 +1,12 @@
-# 启用 GitHub Actions
+# GitHub Actions
 
-source.yml 为可用的工作流模板，目前没有放入自动执行目录。首次上传凭据缺少 GitHub workflow scope，GitHub 明确拒绝了工作流写入。
+工作流已启用，位于 `.github/workflows/`，提交、Pull Request 和手动运行都会触发：
 
-取得具备工作流写入权限的凭据后，在仓库根执行：
+- `source.yml`：Windows/Python3.12源码边界、迁移测试、PowerShell解析、固定版本Gitleaks凭据扫描。
+- `components.yml`：API账户/账本/网关假供应商测试、视频工作台/队列回归、Node22前端测试与生产构建。
 
-```powershell
-New-Item -ItemType Directory -Force .github/workflows
-git mv ci/source.yml .github/workflows/source.yml
-git commit -m "Enable source delivery checks"
-git push
-```
+Actions仅有源码读取权限，没有供应商密钥、平台Key或服务器SSH凭据。检查不启动真实收费调用或发布任务，也不自动部署、复制账本或修改生产数据。
 
-当前可在本地运行同一组检查：python scripts/check.py、python -m unittest discover -s tests -v，以及 powershell.exe -File scripts/scan-secrets.ps1。
+每个检查有超时；同分支的新提交取消旧检查。第三方Action固定到已核验的官方提交，依赖使用项目锁文件或声明的测试环境。新增外部部署工作流需单独明确目标和数据迁移步骤。
+
+分支及迭代流程见 [Git管理](../docs/GIT_WORKFLOW.md)。

@@ -15,10 +15,12 @@ gcp-*.json
 .venv/
 venv/
 node_modules/
+/Haike_video/remotion-composer/node_modules
 __pycache__/
 *.py[cod]
 *.egg-info/
 .pytest_cache/
+.playwright-cli/
 .p/
 .backlot/
 .workbuddy/
@@ -53,5 +55,12 @@ models/
 private-transfer/
 test_artifacts/
 .DS_Store
+.firecrawl/
 Thumbs.db
-
+# Private exports, archives and generated embedded frontend
+backups/
+.haike-archives/
+*api-keys*.txt
+*.p12
+*.pfx
+/Haike_video/backlot/ui/avatar-generator/

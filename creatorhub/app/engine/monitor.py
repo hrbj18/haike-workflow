@@ -14,7 +14,7 @@ from pathlib import Path
 from typing import Optional
 
 from sqlmodel import select
-from sqlalchemy import or_
+from sqlalchemy import or_, update
 
 from ..browser import (BrowserManager, fetch_videos, fetch_comments,
                        fetch_creator_comments, fetch_danmaku, fetch_creator_danmaku,
@@ -3443,6 +3443,9 @@ class MonitorEngine:
                     t.error = f"发布前校验失败: {exc}"
                     s.add(t); s.commit()
                     return {"ok": False, "error": t.error}
+            claimed = s.execute(update(PublishTask).where(PublishTask.id == task_id, PublishTask.status.in_(["pending", "failed"])).values(status="publishing", error=""))
+            if claimed.rowcount != 1:
+                s.rollback(); return {"ok": False, "error": "任务已取消或被其他执行器接管"}
             t.status = "publishing"; t.error = ""
             self._clear_row_block(t)
             s.add(t); s.commit()

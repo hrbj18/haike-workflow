@@ -11,6 +11,12 @@ REQUIRED = [
     'AGENTS.md', 'README.md', 'SOURCE-PROVENANCE.json',
     'Haike_video/config.yaml', 'Haike_video/.env.example',
     'Haike_video/backlot/server.py', 'Haike_video/backlot/work_catalog.py',
+    'Haike_video/backlot/studio.py', 'Haike_video/backlot/studio_api.py',
+    'Haike_video/backlot/studio_avatar.py', 'Haike_video/backlot/studio_render.py',
+    'Haike_video/backlot/studio_motion.py', 'Haike_video/backlot/studio_motion_quick.py',
+    'prototypes/haike-avatar-generator/src/Motion.jsx',
+    'prototypes/haike-avatar-generator/src/motion-model.js',
+    'prototypes/haike-avatar-generator/src/StudioApp.jsx',
     'Haike_video/backlot/material_commentary.py', 'Haike_video/backlot/material_library.py',
     'Haike_video/remotion-composer/package-lock.json',
     'Haike_video/content/templates/project.yaml',
@@ -51,7 +57,11 @@ def check_paths(root, names):
 def source_names(root):
     result = subprocess.run(['git', 'ls-files', '--cached', '--others', '--exclude-standard', '-z'], cwd=root, capture_output=True, timeout=30)
     if result.returncode == 0:
-        return sorted(set(x for x in result.stdout.decode('utf-8').split('\0') if x))
+        deleted = subprocess.run(['git', 'ls-files', '--deleted', '-z'], cwd=root, capture_output=True, timeout=30)
+        if deleted.returncode: raise RuntimeError('Cannot read working-tree deletions')
+        # The source checker inspects the current checkout; the packager separately requires a clean HEAD.
+        removed = set(x for x in deleted.stdout.decode('utf-8').split('\0') if x)
+        return sorted(set(x for x in result.stdout.decode('utf-8').split('\0') if x) - removed)
     # Source ZIP has no .git; check its files before setup creates ignored state.
     return sorted(p.relative_to(root).as_posix() for p in root.rglob('*') if p.is_file()
                   and not any(x in FORBIDDEN_PARTS or x in {'data','cache','temp','models','third_party','output','projects','renders','.p','.pytest_cache'} for x in p.relative_to(root).parts)

@@ -1,4 +1,5 @@
 import { el, fmtDuration, mediaURL, subscribe } from "/ui/lib.js";
+import { getGlobalSidebar } from "/ui/navigation.js";
 
 const RUNNINGHUB_EXACT_WORKFLOW_ID = "2094449979141218305";
 const RUNNINGHUB_EXACT_WORKFLOW_PROFILE = "infinitetalk_448x560_exact_clock_v2";
@@ -4290,7 +4291,7 @@ function pageHeader(eyebrow, title, description, action = null) {
   return el("header", { class: "page-header" }, heading, action);
 }
 
-function renderSidebar() {
+function renderProjectNavigation() {
   const navItems = [
     ["overview", "总览"], ["review", "片段工作台"], ["assets", "素材库"], ["quality", "成片与版本"],
   ];
@@ -4301,25 +4302,9 @@ function renderSidebar() {
   for (const [id, label] of navItems) {
     nav.append(el("button", { class: activeView === id ? "active" : "", type: "button", onclick: () => { activeView = id; render(); } }, label));
   }
-  const globalNav = el("nav", { class: "global-nav", "aria-label": "全局工作区" },
-    el("div", { class: "global-nav-group" },
-      el("p", {}, "项目"),
-      el("a", { class: "global-nav-link", href: "/" }, "项目库"),
-    ),
-    el("div", { class: "global-nav-group" },
-      el("p", {}, "当前项目"),
-      nav,
-    ),
-    el("div", { class: "global-nav-group" },
-      el("p", {}, "通用工具"),
-      el("a", { class: "global-nav-link", href: `/audio?return=${encodeURIComponent(`/p/${projectId}`)}` }, "配音中心"),
-      el("a", { class: "global-nav-link", href: "/automation" }, "自动生产中心"),
-    ),
-  );
-  return el("aside", { class: "sidebar global-sidebar" },
-    el("a", { class: "global-brand", href: "/" }, el("span", {}, "HAIKE VIDEO / 导演台"), el("strong", {}, "海客导演台"), el("small", {}, "当前项目：", state.project.title || "未命名项目")),
-    globalNav,
-    el("div", { class: "sidebar-foot" }, el("strong", {}, "当前原则"), el("br"), "按片段审核画面、字幕和配音；采用后只合成目标片段。"),
+  return el("section", { class: "project-navigation", "aria-label": "当前项目" },
+    nav,
+    el("p", { class: "project-navigation-hint" }, "当前原则：按片段审核画面、字幕和配音；采用后只合成目标片段。"),
   );
 }
 
@@ -10140,7 +10125,7 @@ function render() {
   releaseCaptionCanvasObservers();
   releaseTextOverlayCanvasObservers();
   captureReviewInteractionState();
-  app.replaceChildren(renderSidebar(), el("main", { class: "workspace", id: "main-content", tabindex: "-1" }, renderTopbar(), content()));
+  app.replaceChildren(getGlobalSidebar({ audioReturn: `/p/${projectId}` }), el("main", { class: "workspace", id: "main-content", tabindex: "-1" }, renderTopbar(), renderProjectNavigation(), content()));
   restoreReviewInteractionState();
 }
 

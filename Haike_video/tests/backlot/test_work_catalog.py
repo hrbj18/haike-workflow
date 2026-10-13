@@ -269,7 +269,8 @@ def test_http_and_cli_share_catalog_revision_and_handoff(env,monkeypatch):
     from backlot.work_api import router
     c,p=env;w=confirm(c,version(c,p));app=FastAPI();app.state.work_catalog=c;app.include_router(router)
     with TestClient(app) as client:
-        assert client.get("/works").status_code==200
+        redirected=client.get("/works",follow_redirects=False)
+        assert redirected.status_code==307 and redirected.headers["location"]=="/projects"
         assert client.get("/api/works").json()[0]["work_id"]==w["work_id"]
         response=client.post(f"/api/works/{w['work_id']}/handoff",json={"revision":w["revision"],"data":{"next_step":"WorkBuddy读此记录"}})
         assert response.status_code==200

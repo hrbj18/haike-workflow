@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>海客科技 · 统一 API 接入</title>
+    <link rel="stylesheet" href="/static/style.css" />
+    <link rel="icon" href="/static/brand/haike-logo.png" type="image/png" />
+  <link rel="stylesheet" href="/static/brand-theme.css">
+</head>
+  <body>
+    <section class="card">
+      <img class="brand-logo" src="/static/brand/haike-company-logo.png" alt="HAIKE 海客科技" />
+      <h1>海客科技 · 统一 API 接入</h1>
+      <p>
+        一个平台 Key 接入已开通的文本、视觉、配音、识别、数字人和素材检索。完整协议由
+        <a href="/openapi.json">OpenAPI JSON</a> 自动生成。
+      </p>
+      <p><a href="/">返回账户中心 →</a></p>
+      <div class="notice">
+        网页登录使用 HttpOnly 会话 Cookie，写操作需要同源 Origin 和 me
+        接口返回的 X-CSRF-Token。模型接口使用 Bearer Key，不能管理账户或充值。
+      </div>
+      <pre class="code-block">
+Authorization: Bearer &lt;你的平台 Key&gt;
+GET  /v2/account/summary
+GET  /v2/capabilities
+GET  /v2/account/usage
+POST /v2/files?kind=audio   原始 WAV 文件体；image 支持 PNG/JPEG
+POST /v2/quotes
+POST /v2/jobs               需要 Idempotency-Key
+GET  /v2/jobs/{job_id}
+GET  /v2/requests/{key}     恢复同一请求
+POST /v2/jobs/{job_id}/cancel
+
+报价请求：
+{"model":"haike/cosyvoice", "input":{"text":"你好海客"}, "project_ref":"示例项目"}
+
+接受报价：
+{"quote_id":"&lt;报价 ID&gt;", "max_charge_micros":"&lt;报价上限&gt;", "call_intent_id":"&lt;持久化随机 ID&gt;", "currency":"CNY", "confirmed":true}
+</pre>
+      <p class="tiny muted">
+        余额、冻结和实扣金额均为整数微元字符串（1 元 = 1,000,000
+        微元）。单价可含小数微元，合计只舍入一次。报价有效 10
+        分钟；文本按输入/输出 Token 分别计价，配音按字符，识别按秒，数字人按工作流任务。
+        模型目录 status=available 才能调用。已确认报价固定版本；未知提交不会重复执行。
+      </p>
+      <h2>项目与 Agent 接入</h2>
+      <p>只配置 HAIKE_API_BASE_URL 和 HAIKE_API_KEY。运行项目内的 scripts/haike_api.py configure 隐藏输入 Key；供应商密钥由海客后台管理。</p>
+      <pre class="code-block">python scripts/haike_api.py models
+python scripts/haike_api.py summary
+python scripts/haike_api.py call --model haike/cosyvoice --input-json 文案参数.json --max-yuan 1
+# 核对报价后，明确确认本次费用上限：
+python scripts/haike_api.py call --model haike/cosyvoice --input-json 文案参数.json --max-yuan 1 --confirm
+# 响应丢失时恢复已保存的原编号，避免重建付费任务：
+python scripts/haike_api.py resume call_原持久编号</pre>
+      <p class="tiny muted">字典输入示例：文本 {messages:[{role:"user",content:"你好"}],max_output_tokens:512}；识别 {audio_file:"上传编号"}；数字人 {audio_file:"音频编号",image_file:"形象编号"}；素材 {query:"technology",media:"videos",per_page:5}。完整字段以 OpenAPI 及模型目录为准。在线支付尚未接入，通过管理员充值或兑换码取得商业额度。</p>
+    </section>
+  </body>
+</html>

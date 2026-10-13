@@ -1,0 +1,53 @@
+{
+  "status": "design-example-only",
+  "note": "全部金额为定价算法示例，不是已经核准的供应商价格或客户正式报价。金额字符串使用CNY微元；1元=1000000微元。",
+  "rules": [
+    {
+      "price_version_id": "demo-cosyvoice-p004",
+      "capability": "audio.tts",
+      "provider": "bailian",
+      "model": "cosyvoice-v3.5-flash",
+      "strategy": "cost_markup",
+      "currency": "CNY",
+      "components": [{"usage_key": "characters", "unit_quantity": "10000", "cost_basis_micros": "800000", "markup_decimal": "1.3", "customer_unit_price_micros": "1040000"}],
+      "fixed_service_fee_micros": "0",
+      "rounding": "half_up_to_micros_after_job_total",
+      "example": {"characters": "1200", "customer_charge_micros": "124800", "display_yuan": "0.124800"}
+    },
+    {
+      "price_version_id": "demo-token-tts-p004",
+      "capability": "audio.tts",
+      "provider": "bailian",
+      "model": "qwen-audio-3.1-tts-flash",
+      "availability": "planned-until-bounded-billing-verified",
+      "strategy": "cost_markup",
+      "currency": "CNY",
+      "components": [
+        {"usage_key": "input_tokens", "unit_quantity": "1000000", "cost_basis_micros": "2000000", "markup_decimal": "1.3", "customer_unit_price_micros": "2600000"},
+        {"usage_key": "output_tokens", "unit_quantity": "1000000", "cost_basis_micros": "10000000", "markup_decimal": "1.3", "customer_unit_price_micros": "13000000"}
+      ],
+      "fixed_service_fee_micros": "0",
+      "rounding": "half_up_to_micros_after_job_total",
+      "example": {"input_tokens": "1000", "output_tokens": "2000", "customer_charge_micros": "28600", "display_yuan": "0.028600"}
+    },
+    {
+      "price_version_id": "demo-avatar-fixed-p004",
+      "capability": "avatar.generate",
+      "provider": "runninghub",
+      "model": "infinitetalk",
+      "service_profile": "runninghub-infinitetalk-exact-v2",
+      "workflow_id": "2094449979141218305",
+      "workflow_profile": "infinitetalk_448x560_exact_clock_v2",
+      "instance_type": "plus",
+      "resolution": "448x560",
+      "fps": 25,
+      "strategy": "fixed_customer_price",
+      "currency": "CNY",
+      "components": [{"usage_key": "role_count", "unit_quantity": "1", "customer_unit_price_micros": "5000000"}],
+      "fixed_service_fee_micros": "0",
+      "supplier_cost_meter": "actual_provider_receipt_not_audio_duration",
+      "complete_delivery_required": true,
+      "example": {"role_count": "2", "customer_charge_micros": "10000000", "display_yuan": "10.000000"}
+    }
+  ]
+}

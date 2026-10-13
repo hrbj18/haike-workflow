@@ -1,0 +1,13 @@
+[Unit]
+Description=Haike API private data backup
+[Service]
+Type=oneshot
+User=haike-api
+Group=haike-api
+ExecStart=/opt/haike-api-platform/current/.venv/bin/python /opt/haike-api-platform/current/deploy/backup.py
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=strict
+ReadWritePaths=/var/backups/haike-api-platform /var/lib/haike-api-platform
