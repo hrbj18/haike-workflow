@@ -5,7 +5,7 @@ import sys
 import pytest
 from backlot.studio import Studio, atomic_private
 from backlot import studio_asr
-from backlot.studio_avatar import captions, public_quote, run_avatar, key_identity
+from backlot.studio_avatar import captions, clock_captions, public_quote, run_avatar, key_identity
 from backlot.work_catalog import WorkError, sha
 
 
@@ -30,6 +30,9 @@ def test_word_clock_preserves_pause_and_rejects_fake_or_invalid_timing():
     words = data["segments"][0]["words"]
     assert words[1]["start"] - words[0]["end"] == pytest.approx(1.8)
     assert captions(data, 3)[0]["startMs"] == 100
+    # One recognized segment still exposes two distinct real storyboard anchors.
+    assert [c["startMs"] for c in clock_captions(data, 3)] == [100, 2200]
+    assert len(captions(data, 3)) == 1
     bad = result(); bad["segments"][0]["words"][1]["start"] = float("nan")
     with pytest.raises(WorkError): studio_asr.validate_result(bad, 3)
     with pytest.raises(WorkError): studio_asr.validate_result({"segments": []}, 3)

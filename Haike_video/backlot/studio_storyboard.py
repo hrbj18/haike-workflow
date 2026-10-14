@@ -390,7 +390,7 @@ def produce(studio, draft, folder, cues, duration, paid):
     return plan
 
 
-def compose_motion(studio, draft, folder, video, audio, cues, storyboard):
+def compose_motion(studio, draft, folder, video, audio, cues, storyboard, caption_cues=None):
     """Compile AI choices into the existing pinned ADu contract, then revalidate it."""
     from backlot.studio_motion import plan, freeze, run_motion, narration_clock
     from backlot.studio_render import media_probe
@@ -431,7 +431,8 @@ def compose_motion(studio, draft, folder, video, audio, cues, storyboard):
         if r.returncode: raise WorkError("动效口播母版无法对齐，数字人与音频已保留")
         normalized=motion_clock_segments(normalized,narration_clock(media_probe(mother))["frames"])
         source = studio.save_asset(draft["id"],mother.name,"video",mother.read_bytes())
-        compiled = {**draft,"template_id":"avatar-motion-adu-v1","input":{"source":source,"motionLayout":draft["input"]["motion"]["layout"],"style":style["id"],"segments":normalized,"music":{"mode":"none"},"captions":[{"start":c["startMs"]/1000,"end":c["endMs"]/1000,"text":c["text"]} for c in cues],"face":{"mode":"auto"},"subtitleBottom":.18,"selectionMode":"fixed"}}
+        display_cues = cues if caption_cues is None else caption_cues
+        compiled = {**draft,"template_id":"avatar-motion-adu-v1","input":{"source":source,"motionLayout":draft["input"]["motion"]["layout"],"style":style["id"],"segments":normalized,"music":{"mode":"none"},"captions":[{"start":c["startMs"]/1000,"end":c["endMs"]/1000,"text":c["text"]} for c in display_cues],"face":{"mode":"auto"},"subtitleBottom":.18,"selectionMode":"fixed"}}
         atomic_private(compiled_path,compiled)
     native_plan = folder / "ai-motion-plan.json"
     p = json.loads(native_plan.read_text()) if native_plan.exists() else plan(studio,compiled)

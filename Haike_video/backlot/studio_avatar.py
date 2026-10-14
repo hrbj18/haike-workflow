@@ -237,6 +237,15 @@ def captions(result, duration, split=True):
     return out
 
 
+def clock_captions(result, duration):
+    # GPT can select observed word boundaries even if Whisper returns a single
+    # long segment. Display wrapping must not determine storyboard timing.
+    if result.get("provider") != "local-whisper": return captions(result, duration, split=False)
+    return [{"text": w["text"].strip(), "startMs": w["start"]*1000, "endMs": min(w["end"], duration)*1000,
+             "timestampMs": None, "confidence": w.get("probability")}
+            for s in result["segments"] for w in s["words"]]
+
+
 def run_avatar(project_dir, request, sdk=None):
     studio = Studio(Path(project_dir).parent)
     if request["key_identity"] != key_identity(studio): raise WorkError("API Key已改变；恢复付费任务前请恢复原账户连接")
@@ -290,7 +299,7 @@ def run_avatar(project_dir, request, sdk=None):
             else:
                 result = paid("asr", "haike/tencent-asr", {"audio_file": p["audio_file"]})
             cues = captions(result, p["duration"])
-            clock_cues = captions(result, p["duration"], split=False)
+            clock_cues = clock_captions(result, p["duration"])
         from backlot.studio_storyboard import produce
         storyboard = produce(studio, draft, output_dir, clock_cues, p["duration"], paid)
         video = output_dir / "avatar-source.mp4"
@@ -300,7 +309,7 @@ def run_avatar(project_dir, request, sdk=None):
         from backlot.studio_composition import compose_avatar
         if draft["input"].get("motion"):
             from backlot.studio_storyboard import compose_motion
-            return compose_motion(studio, draft, output_dir, video, Path(p["audio_path"]), clock_cues, storyboard)
+            return compose_motion(studio, draft, output_dir, video, Path(p["audio_path"]), clock_cues, storyboard, caption_cues=cues)
         output = compose_avatar(output_dir, draft, video, Path(p["audio_path"]), p["duration"], cues if draft["input"].get("subtitles", True) else [], storyboard=storyboard) if storyboard else compose_avatar(output_dir, draft, video, Path(p["audio_path"]), p["duration"], cues)
         report = {"template_id": draft["template_id"], "adapter_version": 1, "sources": [{"path": str(video), "sha256": sha(video)}, {"path": p["audio_path"], "sha256": sha(p["audio_path"])}],
                   "caption_timing": "Whisper word-level" if cues and asr["provider"] == "local-whisper" else "ASR sentence-level" if cues else "off", "provider_jobs": [s["job"]["id"] for s in state["stages"].values()], "human_review": "pending"}
