@@ -9,7 +9,7 @@
 - 口播：三套参数化版式studio-avatar-v1；上传文案、音频或CosyVoice、人物图，真实报价/预算/持久意图/恢复/原生队列。腾讯TTS已移除新入口/报价，旧账单与原任务保留。原模板3基线不修改。已有音频不触发TTS，字幕用ASR句级时钟。
 - 动效口播：/avatar?mode=motion，ADu固定f52490bd/3.14.0-rc.1；11风格/54竖屏组、10风格/47横屏组、九个横屏TPL。素材/实际时钟/分镜/字幕/音乐/构图→不可变计划→studio_motion父队列→作品待审+工程下载。专业方法与49历史包保留真实范围；候选组未逐组人工验收。
 - 统一口播：/avatar一个模板弹窗共用基础/动效模板；用户素材must/prefer/reference，gpt-6-luna内容建议→原ASR句级时钟→素材路由→原生父队列。本机后台赞助AI试用（用户费用0、采购价未知），记录Token与请求数量上限；未知提交不重提，素材SHA冻结。抖音登录/使用权/明确跳过与恢复入口已实现。详见根docs/PRODUCT_AI_STORYBOARD.md。
-- Key：云端/v2后台0600。CosyVoice实扣0.0012、下载成功；腾讯历史未知冻0.001729。RunningHub新Key鉴权/云端保存通过，数字人仍缺采购价；Pexels API403，新Key发放暂停；text未开通、illustration未部署。原费率/账本保留。根docs/tasks/2026-10-14-relay-live-verification.md记录金额/卡点。
+- Key：云端/v2后台0600。CosyVoice实扣0.0012、下载成功；腾讯历史未知冻0.001729。RunningHub Key鉴权/云端保存通过，用户要求先接入不定价；Pexels新Key已存，零费检索仍失败；text未开通、illustration未部署。原费率/账本保留。根docs/tasks/2026-10-14-relay-live-verification.md记录金额/卡点。
 - 日历：未来北京时间、单条或不同作品每天/每周排期、CAS/重复阻断/批量原子保存、最终版+资料+授权+账号门、未知提交恢复原键、回执取消。CreatorHub调度器真实执行；本机休眠/关服务影响执行。
 - 清理：源码/安装副本各23个过期工具页面及旧构建已归档移除，旧GET入口跳转新页；历史素材/成片/账号库/凭据和内部制作依赖保留。恢复清单在工作区.haike-archives/studio-v2-20261013/manifest.json。
 

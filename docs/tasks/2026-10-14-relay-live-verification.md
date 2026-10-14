@@ -60,4 +60,8 @@ GPT识别实测：供应商模型列表包含gpt-6.1-sol，无专用whisper-1、
 
 云端管理员已保存该Key到RunningHub供应商加密配置，地址`https://www.runninghub.cn`，工作流`2094449979141218305`，档案`infinitetalk_448x560_exact_clock_v2`，开关开启。保存后的供应商页显示已保存/开启。`haike/avatar`仍为cost_pending：缺实际采购计价，没有擅自填零或将旧双主持费用上限当采购成本。已向用户询问单次成本或计价方式，计划按既定1.5倍率发布售价。
 
+用户随后明确“先接入”：本阶段只完成RunningHub配置，采购计价后续处理，数字人生成暂不开放；不再重复询问价格，不将未知成本设为零。
+
 [Pexels官方API页面](https://www.pexels.com/api/)现在明确显示“New API key issuance is currently paused”，Get Started禁用。Chrome已打开并保留Pexels登录窗口，等待用户登录核对现有Key；没有提交注册条款或操作密码。原上传文件含Pexels Key，本机一次带Key的视频检索HTTP403；无Key的公开诊断请求也403，text/plain，不能据此宣称Key无效。未替换云端Pexels配置、未下载素材。可先验证已有Key和访问限制；无已有Key则需等待或联系Pexels官方，不能保证登录后马上获发新Key。
+
+用户后续提供了不同于原附件的新Pexels Key（56字符，仅私有文件保存）。已在云端Pexels供应商配置加密保存并保持开启，地址`https://api.pexels.com`；保存回执正常。通过工作台现有海客Key执行一次新意图的`haike/assets`零价视频检索：query=office desk、per_page=1，报价与确认上限均0，任务`gj_8588db938e85944072af1d90`结果failed、返回素材0、实扣0、冻结0并释放。没有重跑原失败任务，也没有提交任何数字人生成。后台明细只提供“供应商确认失败，冻结额度已释放”，未暴露原始上游错误；不能判断新Key失效或宣称Pexels已可用。后续需云端原始HTTP错误/网络访问日志定位，不必再索要Key或让用户重新登录。
