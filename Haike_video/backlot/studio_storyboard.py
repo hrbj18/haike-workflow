@@ -260,7 +260,7 @@ def make_plan(studio, draft, cues, duration, relay):
         scenes = validate_plan(body, draft, cues, duration)
     except (ValueError, KeyError, TypeError, IndexError): raise WorkError("AI未返回可用分镜JSON，原结果已保留，不重复调用") from None
     return {"schema": "haike-storyboard/1", "model": CHAT_MODEL, "scenes": scenes, "duration": duration,
-            "timing": "ASR sentence-level" if duration is not None else "pending-audio", "customer_charge_micros": "0", "usage": result.get("usage"), "human_review": "pending"}
+            "timing": ("ASR word-level" if all(c.get("clock") == "word" for c in cues) else "ASR sentence-level") if duration is not None else "pending-audio", "customer_charge_micros": "0", "usage": result.get("usage"), "human_review": "pending"}
 
 
 def preview(studio, draft):

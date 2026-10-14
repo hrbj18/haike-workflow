@@ -195,18 +195,18 @@
         "description": "读取既有工作流供应商回执核实 RH 币消耗，按所选充值包换算成本并保留成本乘 1.5 的售价；评估并接入真实音频时间戳的替代识别方案；复验已配置 Pexels 和 GPT 图片能力。",
         "details": "不重提结果未知的付费任务，不将余额差额当作单任务成本；保留旧价格和历史请求。素材源故障与无匹配分开，GPT 不猜时间轴。",
         "testStrategy": "供应商既有回执、安全真实探针、计价单测、字幕音频时钟回归、素材链路错误分类与当前模板回归。",
-        "status": "review",
+        "status": "done",
         "dependencies": [],
         "priority": "high",
         "subtasks": [],
-        "updatedAt": "2026-10-14T07:59:27.868Z"
+        "updatedAt": "2026-10-14T08:39:22.778Z"
       }
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2026-10-14T07:59:27.868Z",
+      "lastModified": "2026-10-14T08:39:22.782Z",
       "taskCount": 16,
-      "completedCount": 13,
+      "completedCount": 14,
       "tags": [
         "master"
       ]

@@ -143,7 +143,7 @@ def public_media_address(host, port):
     if ips and all(ip.is_global for ip in ips): return str(ips[0])
     # A local TUN fake-DNS address is not an origin address. For known public
     # media hosts only, verify public DNS over HTTPS and pin the actual socket.
-    known = re.fullmatch(r"dashscope-result-[a-z0-9-]+\.oss-[a-z0-9-]+\.aliyuncs\.com", host) or host in {"videos.pexels.com", "images.pexels.com"}
+    known = re.fullmatch(r"dashscope-result-[a-z0-9-]+\.oss-[a-z0-9-]+\.aliyuncs\.com", host) or host in {"videos.pexels.com", "images.pexels.com", "rh-comfyui01.tos-cn-beijing.volces.com"}
     benchmark = ipaddress.ip_network("198.18.0.0/15")
     if not known or not ips or not all(ip.version == 4 and ip in benchmark for ip in ips):
         raise WorkError("供应商媒体地址不能指向本地网络")
@@ -242,7 +242,7 @@ def clock_captions(result, duration):
     # long segment. Display wrapping must not determine storyboard timing.
     if result.get("provider") != "local-whisper": return captions(result, duration, split=False)
     return [{"text": w["text"].strip(), "startMs": w["start"]*1000, "endMs": min(w["end"], duration)*1000,
-             "timestampMs": None, "confidence": w.get("probability")}
+             "timestampMs": None, "confidence": w.get("probability"), "clock": "word"}
             for s in result["segments"] for w in s["words"]]
 
 
@@ -309,7 +309,7 @@ def run_avatar(project_dir, request, sdk=None):
         from backlot.studio_composition import compose_avatar
         if draft["input"].get("motion"):
             from backlot.studio_storyboard import compose_motion
-            return compose_motion(studio, draft, output_dir, video, Path(p["audio_path"]), clock_cues, storyboard, caption_cues=cues)
+            return compose_motion(studio, draft, output_dir, video, Path(p["audio_path"]), clock_cues, storyboard, caption_cues=cues if asr["provider"] == "local-whisper" else None)
         output = compose_avatar(output_dir, draft, video, Path(p["audio_path"]), p["duration"], cues if draft["input"].get("subtitles", True) else [], storyboard=storyboard) if storyboard else compose_avatar(output_dir, draft, video, Path(p["audio_path"]), p["duration"], cues)
         report = {"template_id": draft["template_id"], "adapter_version": 1, "sources": [{"path": str(video), "sha256": sha(video)}, {"path": p["audio_path"], "sha256": sha(p["audio_path"])}],
                   "caption_timing": "Whisper word-level" if cues and asr["provider"] == "local-whisper" else "ASR sentence-level" if cues else "off", "provider_jobs": [s["job"]["id"] for s in state["stages"].values()], "human_review": "pending"}

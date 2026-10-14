@@ -66,3 +66,18 @@ def test_media_socket_uses_checked_ip_and_original_tls_hostname(monkeypatch):
     handler.do_open=open_connection
     handler.https_open(studio_avatar.Request('https://videos.pexels.com/file.mp4'))
     assert connected==[('8.8.8.8',443)] and wrapped==[(sock,'videos.pexels.com')]
+
+
+def test_runninghub_verified_bucket_resolves_fake_dns_without_trusting_other_hosts(monkeypatch):
+    monkeypatch.setattr(studio_avatar.socket,'getaddrinfo',lambda *_args,**_kw:[(2,1,6,'',('198.18.0.9',443))])
+    requests=[]
+    class Opener:
+        def open(self,request,timeout):
+            requests.append(request)
+            return io.BytesIO(b'{"Status":0,"Answer":[{"type":1,"data":"8.8.8.8"}]}')
+    monkeypatch.setattr(studio_avatar,'build_opener',lambda *_:Opener())
+    assert studio_avatar.public_media_address('rh-comfyui01.tos-cn-beijing.volces.com',443)=='8.8.8.8'
+    assert not requests[0].has_header('Authorization')
+    with pytest.raises(WorkError,match='本地网络'):
+        studio_avatar.public_media_address('rh-comfyui01.tos-cn-beijing.volces.com.evil.example',443)
+    assert len(requests)==1
