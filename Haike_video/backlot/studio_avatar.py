@@ -57,9 +57,17 @@ def prepare_image(source, target):
         image.save(target, quality=94)
 
 
+def validate_voice(value):
+    if value.get("soundMode") == "voice" and value.get("voiceId") == "haike/tencent-tts":
+        raise WorkError("腾讯精品配音已移除，请重新选择 CosyVoice，或上传已有音频")
+    if value.get("soundMode") == "voice" and value.get("voiceId") != "haike/cosyvoice":
+        raise WorkError("请选择网关提供的 CosyVoice 配音，或上传已有音频")
+
+
 def validate(studio, draft):
     if studio.template(draft["template_id"])["kind"] != "avatar": raise WorkError("请选择数字人口播模板")
     value = draft["input"]
+    validate_voice(value)
     from backlot.studio_storyboard import options, motion_options
     options(studio, draft)
     motion_options(draft)
@@ -70,7 +78,6 @@ def validate(studio, draft):
         audio = studio.asset((value.get("audio") or {}).get("id"), draft["id"])
         if media_probe(audio)["duration"] > 120: raise WorkError("数字人口播音频最长120秒")
     elif value.get("soundMode") == "voice":
-        if value.get("voiceId") not in {"haike/cosyvoice", "haike/tencent-tts"}: raise WorkError("请选择网关提供的配音模型")
         if value.get("rate", 1) not in {.8, 1, 1.2, 1.5}: raise WorkError("配音语速不支持")
     else: raise WorkError("请选择已有音频或网关配音")
     title = draft["title"]
@@ -113,6 +120,9 @@ def public_quote(data):
 
 
 def frozen_request(studio, draft, quote_id, maximum):
+    # New submissions cannot reuse a retired-model quote. Already queued requests
+    # keep their original execution state and resume through the native queue.
+    validate_voice(draft["input"])
     with studio.db() as db: row = db.execute("SELECT data FROM studio_quotes WHERE id=?", (quote_id,)).fetchone()
     if not row: raise WorkError("请先读取本次制作报价")
     data = json.loads(row[0])

@@ -81,10 +81,9 @@ export function EmptyState({title, children, action, icon: Icon = FileText}) {
 
 export const CAPABILITIES = [
   {model:'haike/cosyvoice',name:'海客配音',detail:'CosyVoice Flash'},
-  {model:'haike/tencent-tts',name:'腾讯配音',detail:'精品音色'},
   {model:'haike/tencent-asr',name:'字幕识别',detail:'录音转文字'},
   {model:'haike/avatar',name:'数字人口播',detail:'人物视频生成'},
   {model:'haike/text',name:'文本与视觉',detail:'文案与图片理解'},
   {model:'haike/assets',name:'素材检索',detail:'图片与视频素材'},
 ];
-export function availableModels(data) {return new Set((data?.capabilities?.items || []).map(x => x.model));}
+export function availableModels(data) {return new Set((data?.capabilities?.items || []).filter(x=>CAPABILITIES.some(c=>c.model===x.model)).map(x => x.model));}

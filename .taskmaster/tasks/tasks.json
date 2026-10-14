@@ -162,13 +162,27 @@
         "priority": "high",
         "subtasks": [],
         "updatedAt": "2026-10-14T02:33:14.459Z"
+      },
+      {
+        "id": "14",
+        "title": "移除腾讯配音并验证GPT替代识别和生图路由",
+        "description": "项目只使用CosyVoice配音；验证用户指定GPT中转的gpt-6.1-sol音频与时间戳能力，以及image2/1.5/1的受控选择。",
+        "details": "腾讯TTS新入口/报价/旧报价新提交已阻断；旧草稿需明确重选，历史任务和账单保留。6.1-sol官方仅文字/图片输入，供应商目录无转写型号；1.44秒音频端点断连、无回执，原意图不重提。ASR需专用转写/真实对齐及统一Key适配后才能替换。生图2→1.5→1受控选择和验收门保留，均未得到有效图片。Key仅后台私有配置。",
+        "testStrategy": "44项后台与14项前端回归、嵌入构建、源码/交接预算检查通过；实际14754仅CosyVoice，API设置3/5计数正确。GPT音频一次实测无回执，不能把断连当明确拒绝或成功；文档记录剩余链路。",
+        "status": "done",
+        "dependencies": [
+          "13"
+        ],
+        "priority": "high",
+        "subtasks": [],
+        "updatedAt": "2026-10-14T03:40:00.272Z"
       }
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2026-10-14T02:33:14.459Z",
-      "taskCount": 13,
-      "completedCount": 12,
+      "lastModified": "2026-10-14T03:40:00.272Z",
+      "taskCount": 14,
+      "completedCount": 13,
       "tags": [
         "master"
       ]

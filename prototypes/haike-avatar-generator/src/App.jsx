@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Check, ChevronDown, Info, Music2, Pause, Play, Settings2, Upload, X, FileText, AlertCircle, CheckCircle2 } from "lucide-react";
-import { EXAMPLE_TEXT, TEMPLATES, validateInputs } from "./generator-model.js";
+import { EXAMPLE_TEXT, TEMPLATES, validateInputs, availableVoicesFromAccount, defaultVoiceId } from "./generator-model.js";
 import { readDraft, writeDraft } from "./draft-store.js";
 import { api, upload } from "./studio-api.js";
 import { ActionBar, Button, Dialog as Modal, Field, Heading, Notice, PreviewPanel, availableModels } from './ui.jsx';
@@ -61,9 +61,9 @@ function BasicAvatar() {
     const controller = new AbortController();
     fetch("/api/studio/account", { signal: controller.signal }).then(r => { if (!r.ok) throw new Error(); return r.json(); }).then(data => {
       setAccountState(data);
-      const available = (data.capabilities?.items || []).filter(v => v.capability === 'tts').map(v => ({ id: v.model, name: v.name, model: v.model, rate: 1 }));
+      const available = availableVoicesFromAccount(data);
       setVoices(available); setVoiceStatus(available.length ? "ready" : "empty");
-      setInput(old=>({...old,voiceId:available.some(v=>v.id===old.voiceId)?old.voiceId:available[0]?.id||old.voiceId}));
+      setInput(old=>({...old,voiceId:defaultVoiceId(old.voiceId,available)}));
     }).catch(e => { if (e.name !== "AbortError") {setVoiceStatus("offline");setAccountState({error:true});} });
     return () => controller.abort();
   }, []);
@@ -212,7 +212,7 @@ function BasicAvatar() {
         <Step number="2" title="声音" helper="使用已有音频，或选择海客音色配音" className="sound-step">
           <div className="sound-tabs" role="group" aria-label="声音来源"><button aria-pressed={input.soundMode==="audio"} className={input.soundMode==="audio"?"active":""} onClick={()=>update({soundMode:"audio"})}>使用音频</button><button aria-pressed={input.soundMode==="voice"} className={input.soundMode==="voice"?"active":""} onClick={()=>update({soundMode:"voice"})}>选择音色配音</button></div>
           {input.soundMode==="audio" ? <><div className="audio-row"><div className="audio-file"><Music2 size={20}/><div><strong>{input.audio?.name||"尚未选择音频"}</strong><small>{audioTime}</small></div></div><Button onClick={playAudio} disabled={!input.audio} aria-label={playing?"暂停音频":"播放音频"}>{playing?<Pause size={16}/>:<Play size={16}/>}</Button><Button onClick={()=>setModal("audio")}>选择 / 上传音频</Button></div><p className="helper after-input">已有音频直接用于制作，不重复生成配音。最长120秒。</p></> :
-          <><Field label="配音模型"><select value={input.voiceId} onChange={e=>update({voiceId:e.target.value})} disabled={voiceStatus!=="ready"}>{voices.length?voices.map(v=><option key={v.id} value={v.id}>{v.name} · 平台预设音色</option>):<option value={input.voiceId}>{voiceStatus==="loading"?"正在读取配音模型…":"当前没有可用配音模型"}</option>}</select></Field><p className="helper after-input">使用网关预设音色，生成前核对报价。已有音频不产生配音费。</p></>}
+          <><Field label="配音模型"><select value={input.voiceId} onChange={e=>update({voiceId:e.target.value})} disabled={voiceStatus!=="ready"}>{voices.length?<>{!voices.some(v=>v.id===input.voiceId)&&<option value={input.voiceId} disabled>{input.voiceId==='haike/tencent-tts'?'腾讯精品配音已移除 · 请重新选择':'请选择 CosyVoice 配音'}</option>}{voices.map(v=><option key={v.id} value={v.id}>{v.name} · 平台预设音色</option>)}</>:<option value={input.voiceId}>{voiceStatus==="loading"?"正在读取配音模型…":"当前没有可用的 CosyVoice 配音"}</option>}</select></Field>{input.voiceId==='haike/tencent-tts'&&<Notice message="此草稿原用腾讯精品配音。请选择 CosyVoice，或切换到上传音频后继续。"/>}<p className="helper after-input">使用 CosyVoice 预设音色，生成前核对报价。已有音频不产生配音费。</p></>}
         </Step>
         <Step number="3" title="人物图片" helper="人物正面清晰，JPG / PNG" className="portrait-step">
           <div className="portrait-row"><img src={portraitUrl} alt="已选择的人物图片"/><div className="portrait-description"><strong>{input.portrait?.name||"尚未上传图片"}</strong><small>至少256 × 256像素</small></div><Button onClick={()=>portraitUpload.current.click()}><Upload size={16}/>上传 / 更换图片</Button></div>

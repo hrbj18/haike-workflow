@@ -108,6 +108,25 @@ def test_caption_clock_requires_asr_evidence():
     with pytest.raises(WorkError):captions({'text':'没有时间轴'},7)
 
 
+def test_retired_tencent_voice_is_blocked_before_gateway_upload_or_quote(studio, monkeypatch):
+    from backlot.studio_avatar import quote
+    d = studio.save_draft({"template_id":"avatar-template3-card-3x4-v001","title":"测试","text":"测试",
+                           "input":{"soundMode":"voice","voiceId":"haike/tencent-tts"}})
+    def unexpected(*args): raise AssertionError("must reject before external calls")
+    monkeypatch.setattr(studio, "client", unexpected)
+    monkeypatch.setattr(studio, "asset", unexpected)
+    with pytest.raises(WorkError, match="腾讯精品配音已移除"):
+        quote(studio, d)
+    data = {"id":"old-tts-quote","draft":d,"key_identity":key_identity(studio),
+            "quotes":{"tts":{"model":"haike/tencent-tts","max_charge_micros":"270"}},"prepared":{}}
+    with studio.db() as db:
+        db.execute("INSERT INTO studio_quotes VALUES(?,?)", (data["id"], json.dumps(data)))
+    with pytest.raises(WorkError, match="腾讯精品配音已移除"):
+        frozen_request(studio, d, data["id"], 1000)
+    with studio.db() as db:
+        assert json.loads(db.execute("SELECT data FROM studio_quotes WHERE id=?",(data["id"],)).fetchone()[0]) == data
+
+
 def test_calendar_tracks_real_publishing_and_partial_failure(studio,work,monkeypatch):
     c,w=work;p=studio.save_calendar(plan_data(w),c)
     studio.update_calendar(p['id'],{'status':'scheduled','publish_plan_id':'plan1'})
