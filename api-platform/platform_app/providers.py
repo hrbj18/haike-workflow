@@ -75,6 +75,13 @@ MODELS = {
         "capability": "tts",
         "meters": {"characters": 10000},
     },
+    "haike/voice-clone": {
+        "name": "CosyVoice 音色克隆",
+        "provider": "bailian",
+        "target_model": "cosyvoice-v3.5-flash",
+        "capability": "voice_clone",
+        "meters": {"requests": 1},
+    },
     "haike/tencent-tts": {
         "name": "腾讯精品配音",
         "provider": "tencent",
@@ -121,6 +128,10 @@ UNITS = {
     "requests": "次",
 }
 SOURCES = {
+    "haike/voice-clone": (
+        "0",
+        "https://help.aliyun.com/zh/model-studio/voice-cloning-user-guide",
+    ),
     "haike/cosyvoice": (
         "800000",
         "https://help.aliyun.com/zh/model-studio/cosyvoice-v3-5-flash",

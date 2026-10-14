@@ -30,7 +30,7 @@ def mutation(request):
     if origin and origin != str(request.base_url).rstrip("/"):
         raise HTTPException(403, "请从本地海客工作台提交")
     content = request.headers.get("content-type", "")
-    if "application/json" not in content and request.url.path != "/api/studio/assets" and not request.url.path.endswith("/cover-upload"):
+    if "application/json" not in content and request.url.path not in {"/api/studio/assets", "/api/studio/voices/samples"} and not request.url.path.endswith("/cover-upload"):
         raise HTTPException(415, "请求需要JSON格式")
 
 
@@ -39,6 +39,7 @@ def mutation(request):
 @router.get("/calendar", response_class=HTMLResponse)
 @router.get("/settings", response_class=HTMLResponse)
 @router.get("/projects", response_class=HTMLResponse)
+@router.get("/resources", response_class=HTMLResponse)
 def page():
     path = Path(__file__).parent / "ui/avatar-generator/index.html"
     return HTMLResponse(path.read_text(encoding="utf-8"), headers={"Cache-Control": "no-cache"})
@@ -46,6 +47,70 @@ def page():
 
 @router.get("/api/studio/templates")
 def templates(): return {"templates": TEMPLATES}
+
+
+@router.get("/api/studio/voices")
+async def voice_library(request: Request):
+    from backlot import studio_voices
+    return await asyncio.to_thread(call, studio_voices.catalogue, studio(request))
+
+
+@router.get("/api/studio/voices/{voice_id}/sample")
+async def voice_sample(voice_id: str, request: Request):
+    from backlot import studio_voices
+    path = await asyncio.to_thread(call, studio_voices.sample, studio(request), voice_id)
+    return FileResponse(path, media_type="audio/wav")
+
+
+@router.post("/api/studio/voices/samples")
+async def voice_upload(request: Request, filename: str):
+    mutation(request)
+    from backlot import studio_voices
+    content = await request.body()
+    if len(content) > 10 * 1024 * 1024:
+        raise HTTPException(413, "录音不能超过10MB")
+    return await asyncio.to_thread(call, studio_voices.upload_sample, studio(request), filename, content)
+
+
+@router.post("/api/studio/voices/clone-quotes")
+async def voice_clone_quote(request: Request, data: dict = Body(...)):
+    mutation(request)
+    from backlot import studio_voices
+    return await asyncio.to_thread(call, studio_voices.quote_clone, studio(request), data)
+
+
+@router.post("/api/studio/voices/preview-quotes")
+async def voice_preview_quote(request: Request, data: dict = Body(...)):
+    mutation(request)
+    from backlot import studio_voices
+    return await asyncio.to_thread(call, studio_voices.quote_preview, studio(request), data.get("voice_id"))
+
+
+@router.get("/api/studio/voice-operations")
+async def voice_operations(request: Request):
+    from backlot import studio_voices
+    return {"items": await asyncio.to_thread(call, studio_voices.operations, studio(request))}
+
+
+@router.post("/api/studio/voice-operations/{operation_id}/confirm")
+async def voice_confirm(operation_id: str, request: Request, data: dict = Body(...)):
+    mutation(request)
+    from backlot import studio_voices
+    return await asyncio.to_thread(call, studio_voices.confirm, studio(request), operation_id, data.get("confirmed"))
+
+
+@router.post("/api/studio/voice-operations/{operation_id}/query")
+async def voice_query(operation_id: str, request: Request, data: dict = Body(...)):
+    mutation(request)
+    from backlot import studio_voices
+    return await asyncio.to_thread(call, studio_voices.query, studio(request), operation_id)
+
+
+@router.post("/api/studio/voices/{voice_id}/rename")
+async def voice_rename(voice_id: str, request: Request, data: dict = Body(...)):
+    mutation(request)
+    from backlot import studio_voices
+    return await asyncio.to_thread(call, studio_voices.rename, studio(request), voice_id, data.get("name"))
 
 
 @router.get("/api/studio/motion/catalog")

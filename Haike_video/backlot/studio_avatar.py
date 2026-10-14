@@ -62,6 +62,15 @@ def validate_voice(value):
         raise WorkError("腾讯精品配音已移除，请重新选择 CosyVoice，或上传已有音频")
     if value.get("soundMode") == "voice" and value.get("voiceId") != "haike/cosyvoice":
         raise WorkError("请选择网关提供的 CosyVoice 配音，或上传已有音频")
+    if value.get("soundMode") == "voice" and value.get("toneId") is not None and (not isinstance(value["toneId"], str) or not re.fullmatch(r"voice_[a-z0-9_]{1,64}", value["toneId"])):
+        raise WorkError("请选择音色库中的有效音色")
+
+
+def tts_input(draft):
+    value = {"text": draft["text"]}
+    if draft["input"].get("toneId"):
+        value["voice_id"] = draft["input"]["toneId"]
+    return value
 
 
 def validate(studio, draft):
@@ -107,7 +116,7 @@ def quote(studio, draft):
         quotes["avatar"] = sdk.quote("haike/avatar", {"audio_file": prepared["audio_file"], "image_file": prepared["image_file"]}, draft["id"])
         if (draft["input"].get("subtitles", True) or draft["input"].get("ai", {}).get("enabled")) and asr["provider"] == "gateway": quotes["asr"] = sdk.quote("haike/tencent-asr", {"audio_file": prepared["audio_file"]}, draft["id"])
     else:
-        quotes["tts"] = sdk.quote(draft["input"]["voiceId"], {"text": draft["text"]}, draft["id"])
+        quotes["tts"] = sdk.quote(draft["input"]["voiceId"], tts_input(draft), draft["id"])
         # Availability is checked before any TTS charge. Its exact avatar quote needs the real audio.
         models = {m.get("id") or m.get("model") for m in sdk.request("/capabilities").get("items", [])}
         needs_asr = draft["input"].get("subtitles", True) or draft["input"].get("ai", {}).get("enabled")
@@ -284,7 +293,7 @@ def run_avatar(project_dir, request, sdk=None):
         if not p.get("audio_path"):
             raw = output_dir / "tts-source.wav"
             if not raw.exists():
-                result = paid("tts", draft["input"]["voiceId"], {"text": draft["text"]})
+                result = paid("tts", draft["input"]["voiceId"], tts_input(draft))
                 if result.get("audio_base64"): raw.write_bytes(base64.b64decode(result["audio_base64"], validate=True))
                 else: download_result(result["audio_url"], raw)
             audio = output_dir / "narration.wav"

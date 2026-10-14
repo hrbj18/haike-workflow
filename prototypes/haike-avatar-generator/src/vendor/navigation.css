@@ -38,6 +38,7 @@
 .global-nav-link[data-route="/automation"] { --nav-icon: url("/ui/brand/icons/workflow.svg"); }
 .global-nav-link[data-route="/published-clips"] { --nav-icon: url("/ui/brand/icons/film.svg"); }
 .global-nav-link[data-route="/material-library"] { --nav-icon: url("/ui/brand/icons/library.svg"); }
+.global-nav-link[data-route="/resources"] { --nav-icon: url("/ui/brand/icons/library.svg"); }
 .global-nav-link[data-route="/material-commentary"] { --nav-icon: url("/ui/brand/icons/scan-text.svg"); }
 .global-nav-link[data-route="/graphic"] { --nav-icon: url("/ui/brand/icons/scan-text.svg"); }
 .global-nav-link[data-route="/avatar"] { --nav-icon: url("/ui/brand/icons/film.svg"); }

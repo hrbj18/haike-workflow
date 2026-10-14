@@ -8,11 +8,13 @@ import {Motion} from './Motion.jsx';
 import {AvatarTemplatePicker} from './AvatarTemplatePicker.jsx';
 import {AiMaterials,AI_DEFAULTS} from './AiMaterials.jsx';
 import {DouyinRecovery} from './DouyinRecovery.jsx';
+import { VoiceLibrary, useVoiceLibrary } from './VoiceLibrary.jsx';
+import { Mic2 } from 'lucide-react';
 
 const sampleAudio = { name: "海客介绍口播.wav", duration: 6.56, type: "audio/wav" };
 const samplePortrait = { name: "人物示例.png", type: "image/png" };
 const assetPath = name => `${import.meta.env.BASE_URL}assets/${name}`;
-const initial = () => {const q=new URLSearchParams(location.search),style=q.get('style');return { templateId: TEMPLATES.some(t=>t.id===q.get('template'))?q.get('template'):TEMPLATES[2].id, text: EXAMPLE_TEXT, soundMode: "audio", audio: sampleAudio, portrait: samplePortrait, voiceId: '', rate: 1, title: "", subtitles: true,ai:{...AI_DEFAULTS,enabled:!!style},motion:style?{style,layout:q.get('layout')==='landscape'?'landscape':'portrait'}:null };};
+const initial = () => {const q=new URLSearchParams(location.search),style=q.get('style');return { templateId: TEMPLATES.some(t=>t.id===q.get('template'))?q.get('template'):TEMPLATES[2].id, text: EXAMPLE_TEXT, soundMode: q.has('tone')?'voice':'audio', audio: sampleAudio, portrait: samplePortrait, voiceId: q.has('tone')?'haike/cosyvoice':'', toneId:q.get('tone')||'', rate: 1, title: "", subtitles: true,ai:{...AI_DEFAULTS,enabled:!!style},motion:style?{style,layout:q.get('layout')==='landscape'?'landscape':'portrait'}:null };};
 function useAssetUrl(asset, fallback) {
   const [url, setUrl] = useState(fallback);
   useEffect(() => {
@@ -30,6 +32,8 @@ export function App() {
   return new URLSearchParams(location.search).get('mode') === 'motion' ? <Motion/> : <BasicAvatar/>;
 }
 function BasicAvatar() {
+  const voiceLibrary = useVoiceLibrary();
+  const [auditionTone, setAuditionTone] = useState('');
   const [serverDraft, setServerDraft] = useState(null);
   const [storyboard,setStoryboard]=useState(null),[motionPreview,setMotionPreview]=useState(null);
   const [quote, setQuote] = useState(null), [budget, setBudget] = useState('10.00'), [job, setJob] = useState(null);
@@ -53,10 +57,16 @@ function BasicAvatar() {
   const audioTicket = useRef(0), imageTicket = useRef(0), textTicket = useRef(0);
   const templateGrid = useRef(null);
   const template = TEMPLATES.find(t => t.id === input.templateId) || TEMPLATES[2];
+  const selectedTone = input.voiceId === 'haike/cosyvoice' ? voiceLibrary.data?.items.find(v => v.id === input.toneId) : null;
   const audioUrl = useAssetUrl(input.audio, assetPath("narration.wav"));
   const portraitUrl = useAssetUrl(input.portrait, assetPath("presenter.png"));
   const update = patch => { setInput(previous => ({ ...previous, ...patch })); setSaved(false); setError(null); setQuote(null); };
   const updateLayout = patch => {setLayout(old=>({...old,...patch}));setSaved(false);setQuote(null);setError(null);};
+  useEffect(() => {
+    if (!voiceLibrary.data) return;
+    const defaultTone = voiceLibrary.data.items.find(v => v.id === voiceLibrary.data.default_voice_id && v.status === 'ready');
+    if (defaultTone) setInput(old => old.toneId ? old : { ...old, toneId: defaultTone.id });
+  }, [voiceLibrary.data]);
   useEffect(() => {
     const controller = new AbortController();
     fetch("/api/studio/account", { signal: controller.signal }).then(r => { if (!r.ok) throw new Error(); return r.json(); }).then(data => {
@@ -76,7 +86,8 @@ function BasicAvatar() {
     restore.then(draft => {
       if (!live || !draft) return;
       if (draft.version !== 1 || !draft.input || typeof draft.input.text !== "string" || !TEMPLATES.some(t => t.id === draft.input.templateId)) throw new Error();
-      setInput(old=>({ ...initial(), ...draft.input, voiceId: draft.input.voiceId?.startsWith('haike/')?draft.input.voiceId:old.voiceId })); setSaved(true); setToast("已恢复保存的制作项目。");
+      const tone = new URLSearchParams(location.search).get('tone');
+      setInput(old=>({ ...initial(), ...draft.input, voiceId: tone?'haike/cosyvoice':draft.input.voiceId?.startsWith('haike/')?draft.input.voiceId:old.voiceId, toneId:tone||draft.input.toneId||old.toneId, soundMode:tone?'voice':draft.input.soundMode })); setSaved(!tone); setToast(tone?"已载入所选音色，原文案和图片已保留。":"已恢复保存的制作项目。");
     }).catch(() => { if (live) setToast("未能读取本地草稿，你可以继续填写并重新保存。"); }).finally(() => { if (live) setDraftLoading(false); });
     return () => { live = false; };
   }, []);
@@ -161,7 +172,7 @@ function BasicAvatar() {
   }
   async function persistServer() {
     await writeDraft(input, serverDraft?.id);
-    let d=await api('/api/studio/drafts',{id:serverDraft?.id,revision:serverDraft?.revision,template_id:input.templateId,title:input.title||input.text.split(/[。！？\n]/)[0].slice(0,16),text:input.text,layout,input:{soundMode:input.soundMode,voiceId:input.voiceId,rate:input.rate,subtitles:input.subtitles,ai:input.ai||AI_DEFAULTS,motion:input.motion||null}});
+    let d=await api('/api/studio/drafts',{id:serverDraft?.id,revision:serverDraft?.revision,template_id:input.templateId,title:input.title||input.text.split(/[。！？\n]/)[0].slice(0,16),text:input.text,layout,input:{soundMode:input.soundMode,voiceId:input.voiceId,...(input.toneId?{toneId:input.toneId}:{}),rate:input.rate,subtitles:input.subtitles,ai:input.ai||AI_DEFAULTS,motion:input.motion||null}});
     setServerDraft(d);
     const assets={};
     for (const [name,kind,sample] of [['audio','audio','narration.wav'],['portrait','image','presenter.png']]) {
@@ -180,7 +191,7 @@ function BasicAvatar() {
   async function importMaterial(file){if(!/\.(jpg|jpeg|png|mp4|mov)$/i.test(file.name)||file.size>80*1024*1024)throw new Error('素材支持JPG、PNG、MP4、MOV，最多80MB');setSaving(true);try{const d=await persistServer(),a=await upload(d.id,file,/\.(mp4|mov)$/i.test(file.name)?'video':'image'),ai={...AI_DEFAULTS,...input.ai,materials:[...(input.ai?.materials||[]),{id:a.id,name:a.name,kind:a.kind,url:a.url,offset:0,mode:'prefer',note:'',rights_confirmed:false}]},savedDraft=await api('/api/studio/drafts',{...d,input:{...d.input,ai}});setServerDraft(savedDraft);update({ai});setStoryboard(null);setToast('素材已上传，请填写说明并确认使用权。');}finally{setSaving(false);}}
   async function planPreview(){setSaving(true);setError(null);try{const d=await persistServer();const r=await api(`/api/studio/drafts/${d.id}/ai-preview`,{revision:d.revision,confirmed:true});setStoryboard(r.plan);setToast('AI分镜建议已生成；实际时间将在声音就绪后对齐。');}catch(e){setError({field:'ai',message:e.message});}finally{setSaving(false);}}
   async function confirmGeneration() {
-    const problem = validateInputs(input, voices);
+    const problem = validateInputs(input, voices, voiceLibrary.data?.items || []);
     if (problem) { setError(problem); if (problem.field === "text") textArea.current.focus(); return; }
     audio.current?.pause(); setPlaying(false); setSaving(true);setError(null);
     try{const d=await persistServer();const q=await api(`/api/studio/drafts/${d.id}/quote`,{revision:d.revision});setQuote(q);setBudget((Math.max(q.known_max_micros/1000000,q.needs_audio_quote?10:1)).toFixed(2));setModal('confirm');}
@@ -212,7 +223,7 @@ function BasicAvatar() {
         <Step number="2" title="声音" helper="使用已有音频，或选择海客音色配音" className="sound-step">
           <div className="sound-tabs" role="group" aria-label="声音来源"><button aria-pressed={input.soundMode==="audio"} className={input.soundMode==="audio"?"active":""} onClick={()=>update({soundMode:"audio"})}>使用音频</button><button aria-pressed={input.soundMode==="voice"} className={input.soundMode==="voice"?"active":""} onClick={()=>update({soundMode:"voice"})}>选择音色配音</button></div>
           {input.soundMode==="audio" ? <><div className="audio-row"><div className="audio-file"><Music2 size={20}/><div><strong>{input.audio?.name||"尚未选择音频"}</strong><small>{audioTime}</small></div></div><Button onClick={playAudio} disabled={!input.audio} aria-label={playing?"暂停音频":"播放音频"}>{playing?<Pause size={16}/>:<Play size={16}/>}</Button><Button onClick={()=>setModal("audio")}>选择 / 上传音频</Button></div><p className="helper after-input">已有音频直接用于制作，不重复生成配音。最长120秒。</p></> :
-          <><Field label="配音模型"><select value={input.voiceId} onChange={e=>update({voiceId:e.target.value})} disabled={voiceStatus!=="ready"}>{voices.length?<>{!voices.some(v=>v.id===input.voiceId)&&<option value={input.voiceId} disabled>{input.voiceId==='haike/tencent-tts'?'腾讯精品配音已移除 · 请重新选择':'请选择 CosyVoice 配音'}</option>}{voices.map(v=><option key={v.id} value={v.id}>{v.name} · 平台预设音色</option>)}</>:<option value={input.voiceId}>{voiceStatus==="loading"?"正在读取配音模型…":"当前没有可用的 CosyVoice 配音"}</option>}</select></Field>{input.voiceId==='haike/tencent-tts'&&<Notice message="此草稿原用腾讯精品配音。请选择 CosyVoice，或切换到上传音频后继续。"/>}<p className="helper after-input">使用 CosyVoice 预设音色，生成前核对报价。已有音频不产生配音费。</p></>}
+          <><div className="selected-voice"><span className="voice-mark"><Mic2 size={22}/></span><div><strong>{selectedTone?.name||'请选择配音音色'}</strong><small>{selectedTone?`${selectedTone.scope==='personal'?'个人音色库':'系统音色'} · 阿里百炼 CosyVoice`:'从系统音色或个人库选择，可先试听'}</small></div><Button disabled={!selectedTone} onClick={()=>{setAuditionTone(selectedTone.id);setModal('voices');}}><Play size={15}/>试听</Button><Button disabled={voiceLibrary.loading} onClick={()=>{setAuditionTone('');setModal('voices');}}>选择 / 更换音色</Button></div>{input.voiceId==='haike/tencent-tts'&&<Notice message="此草稿原用腾讯精品配音。请选择 CosyVoice 音色，或切换到上传音频后继续。"/>}{voiceLibrary.error&&<Notice message={voiceLibrary.error} error/>}{input.toneId&&voiceLibrary.data&&(!selectedTone||selectedTone.status!=='ready')&&<Notice message="原音色在当前账户或配置中不可用，请重新选择；不会自动替换你的声音。" error/>}<p className="helper after-input selected-voice-hint">系统音色与个人音色均可试听；也可以在选音面板克隆你的声音。生成前核对配音费用。</p></>}
         </Step>
         <Step number="3" title="人物图片" helper="人物正面清晰，JPG / PNG" className="portrait-step">
           <div className="portrait-row"><img src={portraitUrl} alt="已选择的人物图片"/><div className="portrait-description"><strong>{input.portrait?.name||"尚未上传图片"}</strong><small>至少256 × 256像素</small></div><Button onClick={()=>portraitUpload.current.click()}><Upload size={16}/>上传 / 更换图片</Button></div>
@@ -228,12 +239,13 @@ function BasicAvatar() {
     </section><PreviewPanel label="模板效果预览" metadata={input.motion?(input.motion.layout==='portrait'?'9:16':'16:9'):template.ratio}><div className="poster-frame"><img src={motionPreview||assetPath(template.poster)} alt={`${input.motion?.style||template.name} · 版式参考`}/></div><p className="preview-note">{input.motion?'上游风格参考；AI按本期原文、素材与实际时钟安排动作。':template.sample?"现有真实样片，生成后使用你的内容。":"模板布局示意，生成后使用你的内容。"}</p>{!input.motion&&template.sample&&<Button className="preview-play" onClick={()=>{setModal("sample");setSamplePlaying(true);}}><Play size={16}/>播放样片</Button>}{input.motion&&<Button href="/avatar?mode=motion">进入专业分镜编辑</Button>}</PreviewPanel>
     <ActionBar note={<span><Info size={16}/> {blocked||'生成前确认本次调用费用'}</span>}><Button disabled={saving||draftLoading||importing} loading={saving&&modal!=="confirm"} onClick={saveDraft}>{saved?"草稿已保存":"保存草稿"}</Button><Button variant="primary" disabled={importing||saving||draftLoading||inProgress||!!blocked} onClick={confirmGeneration}>生成数字人口播<ArrowRight size={17}/></Button></ActionBar></div>
     <input hidden type="file" ref={textUpload} accept=".txt,.docx" onChange={importText} aria-label="文案文件"/><input hidden type="file" ref={audioUpload} accept=".wav,.mp3,.m4a,.ogg" onChange={importAudio} aria-label="音频文件"/><input hidden type="file" ref={portraitUpload} accept="image/jpeg,image/png" onChange={importPortrait} aria-label="人物图片文件"/>
-    <audio ref={audio} src={input.soundMode==="voice"?assetPath("narration.wav"):audioUrl} onEnded={()=>setPlaying(false)} onError={()=>setPlaying(false)}/>
+    <audio ref={audio} src={audioUrl} onEnded={()=>setPlaying(false)} onError={()=>setPlaying(false)}/>
     <div className={`toast ${toast?"visible":""}`} role="status">{toast&&<><CheckCircle2 size={18}/>{toast}</>}</div>
     {modal==="sample"&&<Modal title={`${template.name} · 真实样片`} wide onClose={()=>{setModal(null);setSamplePlaying(false);}} footer={<Button href={assetPath(template.sample)} download="海客科技-模板3-现有样片.mp4">下载现有样片</Button>}><video className="sample-video" controls autoPlay={samplePlaying} poster={assetPath(template.poster)} src={assetPath(template.sample)}/><p className="helper">项目现有7秒样片，用于查看版式。</p></Modal>}
     {modal==="audio"&&<Modal title="选择音频" description="使用已有口播录音，无需重复生成配音。" onClose={()=>setModal(null)} footer={<><Button onClick={()=>setModal(null)}>取消</Button><Button variant="primary" onClick={()=>audioUpload.current.click()}><Upload size={17}/>上传音频</Button></>}><button className="library-audio" onClick={()=>{update({audio:sampleAudio,soundMode:"audio"});setModal(null);}}><Music2 size={24}/><span><strong>海客介绍口播.wav</strong><small>项目现有样音 · 6.56秒</small></span><span>选择</span></button><p className="helper">支持WAV、MP3、M4A、OGG；50 MB以内，最长120秒。</p></Modal>}
+    {modal==='voices'&&<VoiceLibrary picker library={voiceLibrary} selectedId={input.toneId} initialAudition={auditionTone} onClose={()=>setModal(null)} onChoose={voice=>{update({voiceId:'haike/cosyvoice',toneId:voice.id,soundMode:'voice'});setModal(null);setToast(`已选择「${voice.name}」，文案和人物图片保持原样。`);}}/>}
     {modal==="confirm"&&quote&&<Modal title="生成确认与费用" description="核对模板、素材与本次调用上限。" busy={saving} onClose={()=>setModal(null)} footer={<><Button disabled={saving} onClick={()=>setModal(null)}>返回修改</Button><Button variant="primary" loading={saving} onClick={saveRequest} disabled={Number(budget)<=0||!Number.isFinite(Number(budget))}>确认费用并生成<ArrowRight size={17}/></Button></>}>
-      <dl className="summary-list"><div><dt>模板</dt><dd>{template.name} · {template.ratio}</dd></div><div><dt>声音</dt><dd>{input.soundMode==="audio"?input.audio.name:voices.find(v=>v.id===input.voiceId)?.name}</dd></div><div><dt>人物</dt><dd>{input.portrait.name}</dd></div>{quote.items.map(q=><div key={q.stage}><dt>{({tts:'配音',avatar:'数字人',asr:'字幕识别'})[q.stage]}</dt><dd>上限 ¥{(q.max_charge_micros/1000000).toFixed(4)}<p className="helper">{q.model}</p></dd></div>)}</dl>
+      <dl className="summary-list"><div><dt>模板</dt><dd>{template.name} · {template.ratio}</dd></div><div><dt>声音</dt><dd>{input.soundMode==="audio"?input.audio.name:selectedTone?.name||voices.find(v=>v.id===input.voiceId)?.name}</dd></div><div><dt>人物</dt><dd>{input.portrait.name}</dd></div>{quote.items.map(q=><div key={q.stage}><dt>{({tts:'配音',avatar:'数字人',asr:'字幕识别'})[q.stage]}</dt><dd>上限 ¥{(q.max_charge_micros/1000000).toFixed(4)}<p className="helper">{q.model}</p></dd></div>)}</dl>
       {quote.needs_audio_quote&&<p className="helper">数字人与字幕按配音实际时长报价，超出剩余上限即停止，保留已完成配音。</p>}
       {quote.ai_trial&&<p className="helper">AI理解与插画当前免费试用，不扣用户额度。素材检索沿用统一网关；本次最多补齐{input.ai.max_images||2}张插画，最终成片需观看审核。</p>}
       <Field label="本次全部调用费用上限（元）"><input type="number" min=".01" max="1000" step=".01" value={budget} disabled={saving} onChange={e=>setBudget(e.target.value)}/></Field><p className="helper">确认后将提交真实收费调用；本地排版不收费。实际费用与冻结额度可到账户中心查看。</p>

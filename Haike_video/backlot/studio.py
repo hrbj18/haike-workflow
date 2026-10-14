@@ -70,6 +70,7 @@ class Studio:
             CREATE TABLE IF NOT EXISTS studio_assets(id TEXT PRIMARY KEY, draft_id TEXT, name TEXT, kind TEXT, path TEXT);
             CREATE TABLE IF NOT EXISTS studio_calendar(id TEXT PRIMARY KEY, revision INTEGER, data TEXT);
             CREATE TABLE IF NOT EXISTS studio_quotes(id TEXT PRIMARY KEY, data TEXT);
+            CREATE TABLE IF NOT EXISTS studio_voice_operations(id TEXT PRIMARY KEY, identity TEXT, data TEXT);
             """)
 
     @contextmanager
@@ -140,7 +141,7 @@ class Studio:
                      "template_version": template["version"], "title": title, "text": text, "layout": layout,
                      "input": data.get("input") or {}, "updated_at": timestamp(), "status": "draft"}
             if not isinstance(value["input"], dict): raise WorkError("制作内容格式无效")
-            allowed = {"headlines", "details", "conclusion", "materials", "bgm"} if template["kind"] == "graphic" else {"soundMode", "voiceId", "rate", "subtitles", "audio", "portrait", "ai", "motion"}
+            allowed = {"headlines", "details", "conclusion", "materials", "bgm"} if template["kind"] == "graphic" else {"soundMode", "voiceId", "toneId", "rate", "subtitles", "audio", "portrait", "ai", "motion"}
             if template["id"] == "avatar-motion-adu-v1":
                 allowed = {"source", "motionLayout", "style", "segments", "music", "captions", "face", "subtitleBottom", "texture", "selectionMode"}
             if set(value["input"]) - allowed: raise WorkError("制作内容包含不支持的字段；API Key只能保存在API设置")

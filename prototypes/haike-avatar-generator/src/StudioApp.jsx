@@ -4,6 +4,7 @@ import { Sidebar } from './Sidebar.jsx';
 import { App as Avatar } from './App.jsx';
 import { Graphic } from './Graphic.jsx';
 import { Settings } from './Settings.jsx';
+import { Resources } from './VoiceLibrary.jsx';
 import { Button, Dialog, EmptyState, Heading, Notice } from './ui.jsx';
 import { api, upload } from './studio-api.js';
 import './studio.css';
@@ -67,4 +68,4 @@ function Calendar() {
   </main>;
 }
 
-export function StudioApp(){const view=location.pathname;return <><Sidebar/>{view==='/settings'?<Settings/>:view==='/calendar'?<Calendar/>:view==='/projects'?<Projects/>:view==='/avatar'||view.startsWith('/ui/avatar-generator/')?<Avatar/>:<Graphic/>}</>;}
+export function StudioApp(){const view=location.pathname;return <><Sidebar/>{view==='/resources'?<Resources/>:view==='/settings'?<Settings/>:view==='/calendar'?<Calendar/>:view==='/projects'?<Projects/>:view==='/avatar'||view.startsWith('/ui/avatar-generator/')?<Avatar/>:<Graphic/>}</>;}

@@ -1,7 +1,7 @@
 // The global rail has one definition. Project controls stay in the workspace.
 const groups = [
   { label: "创作", items: [["/graphic", "图文视频"], ["/avatar", "数字人口播"]] },
-  { label: "管理", items: [["/projects", "我的作品"], ["/calendar", "发布日历"]] },
+  { label: "管理", items: [["/resources", "资源库"], ["/projects", "我的作品"], ["/calendar", "发布日历"]] },
   { label: "设置", items: [["/settings", "API 设置"]] },
 ];
 let sidebar;

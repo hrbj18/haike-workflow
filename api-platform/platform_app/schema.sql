@@ -155,3 +155,16 @@ CREATE TRIGGER IF NOT EXISTS immutable_funding_update BEFORE UPDATE ON funding_r
  BEGIN SELECT RAISE(ABORT,'immutable funding receipt'); END;
 CREATE TRIGGER IF NOT EXISTS immutable_funding_delete BEFORE DELETE ON funding_receipts
  BEGIN SELECT RAISE(ABORT,'immutable funding receipt'); END;
+
+CREATE TABLE IF NOT EXISTS gateway_voices (
+ id TEXT PRIMARY KEY, user_id TEXT REFERENCES users(id), name TEXT NOT NULL,
+ provider_voice_id TEXT NOT NULL, target_model TEXT NOT NULL, provider_scope TEXT NOT NULL,
+ language TEXT NOT NULL, tags_json TEXT NOT NULL, status TEXT NOT NULL,
+ clone_job_id TEXT UNIQUE REFERENCES gateway_jobs(id), sample_job_id TEXT REFERENCES gateway_jobs(id), sample_file TEXT,
+ created_at TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS voices_owner ON gateway_voices(user_id,status);
+CREATE TABLE IF NOT EXISTS gateway_voice_tickets (
+ token_hash TEXT PRIMARY KEY, file_id TEXT NOT NULL REFERENCES gateway_files(id),
+ user_id TEXT NOT NULL REFERENCES users(id), expires_at TEXT NOT NULL
+);
