@@ -27,6 +27,7 @@ export function Settings() {
     <section className="surface capabilities-panel"><header className="section-title"><div><h2>模型能力</h2><p className="helper">同一个 Key 使用所有已开通能力，共享账户额度。</p></div>{verified&&<span className="status-pill">{models.size} / {CAPABILITIES.length} 项已开通</span>}</header>
       <div className="capability-list">{CAPABILITIES.map(c=>{const ready=verified&&models.has(c.model), data=result?.capabilities?.items?.find(x=>x.model===c.model);return <article key={c.model}><div className={`capability-icon ${ready?'ready':''}`}>{ready?<CheckCircle2 size={20}/>:<CircleHelp size={20}/>}</div><div><strong>{c.name}</strong><p>{c.detail}</p></div><div className="capability-status"><span className={`status-pill ${ready?'ready':verified?'pending':''}`}>{ready?'已开通':verified?'未开通':'待连接验证'}</span>{ready&&data?.rates?.[0]&&<small>{ratePrice(data.rates[0].price_micros)} / {data.rates[0].included_units} {data.rates[0].unit}</small>}</div></article>;})}</div>
       {verified&&models.size<CAPABILITIES.length&&<Notice error message={`${CAPABILITIES.filter(c=>!models.has(c.model)).map(c=>c.name).join('、')}尚未开通。请联系管理员确认对应采购价与模型配置，开通后才能使用这些功能。`}/>}
+      {result?.local_asr?.ready&&<Notice message="字幕和分镜时间轴使用已验收的本地 Whisper，按音频取得词级时间戳，无识别 API 费用。新任务使用此引擎，旧任务保留原模型。"/>}
       <p className="helper">连接验证仅核对 Key、额度和开通状态；真实生成与扣费以调用结果及账单为准。本地图文合成不收费。</p>
     </section>
   </main>;

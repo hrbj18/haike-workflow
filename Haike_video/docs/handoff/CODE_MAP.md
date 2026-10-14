@@ -15,6 +15,7 @@
 - 作品：work_catalog.py、work_api.py、work_publish.py；版本选择、人工确认、资料/封面/授权、冻结发布包和幂等提交。
 - 发布：CreatorHub app/main.py中POST /api/publish/{id}/cancel，engine/monitor.py条件状态更新；日历同步/取消/提交互斥。
 - 统一网关：根api-platform/、Haike_video/scripts/haike_api.py；Key私有配置.backlot/haike-api/client-config.json（不读取或提交秘密）。
+- 新字幕：studio_asr.py/脚本studio_asr_worker.py，configure_studio_asr.py验收已有离线模型，冻结引擎/音频SHA并保留原网关任务；test_studio_asr.py。网关runninghub_billing.py区分钱包/币回执，wallet_receipt按实扣×1.5。
 - 产品/清理/边界：根docs/PRODUCT_STUDIO_V2.md；视觉QA：prototypes/haike-avatar-generator/design-qa.md及qa/studio-v2。
 
 ## 保留的原制作依赖

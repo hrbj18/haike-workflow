@@ -109,7 +109,8 @@ class Studio:
         except Exception:
             raise WorkError("连接失败：请核对网关地址、Key和服务状态；原配置保持不变") from None
         c["checked_at"] = timestamp(); atomic_private(self.config_path, c)
-        return {"settings": self.settings(), "summary": summary, "capabilities": capabilities}
+        from backlot.studio_asr import status
+        return {"settings": self.settings(), "summary": summary, "capabilities": capabilities, "local_asr": status(self)}
 
     def template(self, template_id):
         item = next((t for t in TEMPLATES if t["id"] == template_id), None)

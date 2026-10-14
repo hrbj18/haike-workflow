@@ -199,6 +199,11 @@ def create_quote(store, vault, user, model, inputs, project):
         raise Problem(409, "model_unavailable", "模型尚未开通或成本价格尚未确认")
     with store.write() as db:
         inputs, usage = clean_input(db, user["id"], model, inputs, info)
+        if info.get("billing_mode") == "wallet_receipt":
+            config = vault.load()[info["provider"]]
+            limit = int(config["quote_cost_limit_micros"])
+            rate = int(config.get("quote_cost_per_audio_second_micros") or 0)
+            usage = {"supplier_micros": min(limit, rate * inputs["seconds"]) if rate else limit}
         price = providers.latest(db, model)
         _, amount = providers.calculate(model, json.loads(price["rule"]), usage, info)
         if amount > 10**12:
@@ -221,6 +226,9 @@ def create_quote(store, vault, user, model, inputs, project):
                     "voice",
                     "workflow_id",
                     "workflow_profile",
+                    "billing_mode",
+                    "quote_cost_limit_micros",
+                    "quote_cost_per_audio_second_micros",
                 }
             },
         }
@@ -383,7 +391,7 @@ def public_job(db, job, admin=False):
         "result": json.loads(job["result_json"]) if job["result_json"] else None,
         "error": job["error"],
         "simulation": False,
-        "cost_status": "estimated",
+        "cost_status": "receipt_confirmed" if job["status"] == "succeeded" and info.get("billing_mode") == "wallet_receipt" else "estimated",
         "media_artifact_available": bool(job["result_json"])
         and info["capability"] in {"tts", "avatar"},
     }

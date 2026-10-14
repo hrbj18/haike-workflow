@@ -65,3 +65,19 @@ GPT识别实测：供应商模型列表包含gpt-6.1-sol，无专用whisper-1、
 [Pexels官方API页面](https://www.pexels.com/api/)现在明确显示“New API key issuance is currently paused”，Get Started禁用。Chrome已打开并保留Pexels登录窗口，等待用户登录核对现有Key；没有提交注册条款或操作密码。原上传文件含Pexels Key，本机一次带Key的视频检索HTTP403；无Key的公开诊断请求也403，text/plain，不能据此宣称Key无效。未替换云端Pexels配置、未下载素材。可先验证已有Key和访问限制；无已有Key则需等待或联系Pexels官方，不能保证登录后马上获发新Key。
 
 用户后续提供了不同于原附件的新Pexels Key（56字符，仅私有文件保存）。已在云端Pexels供应商配置加密保存并保持开启，地址`https://api.pexels.com`；保存回执正常。通过工作台现有海客Key执行一次新意图的`haike/assets`零价视频检索：query=office desk、per_page=1，报价与确认上限均0，任务`gj_8588db938e85944072af1d90`结果failed、返回素材0、实扣0、冻结0并释放。没有重跑原失败任务，也没有提交任何数字人生成。后台明细只提供“供应商确认失败，冻结额度已释放”，未暴露原始上游错误；不能判断新Key失效或宣称Pexels已可用。后续需云端原始HTTP错误/网络访问日志定位，不必再索要Key或让用户重新登录。
+
+## 本轮：实扣计价、离线字幕与 Pexels 修复
+
+用户要求按 RunningHub 实耗换算、替代字幕识别、补齐网络素材。只读查询原任务`2109593299928178689`：SUCCESS，taskCostTime=158，consumeMoney=0.264，consumeCoins=null，thirdPartyConsumeMoney=null。数字人这一步成本¥0.264，成本×1.5售价¥0.396，毛利¥0.132；这是原样片回执，不是新生成任务或固定每条视频价格。
+
+[RunningHub RH币说明](https://www.runninghub.cn/vip-rights/1)明确 RH 币用于平台任务、不含共享/独占API。因此本项目新计价使用 API 钱包人民币回执；只有实际扣币的回执才可按真实采购包换算。¥50/18000币例：100币成本¥0.277778、售价¥0.416667。未替用户购买充值包，也不以账户余额差推算任务成本。
+
+源码新增wallet_receipt模式及版本费率：以supplier_micros记录供应商实扣微元，费率固定每¥1采购成本售¥1.5。报价按管理员采购预留上限及可选音频秒数预估冻结，成功只收真实回执×1.5并释放余款；供应商超出报价由平台承担。旧报价冻结原计量方式/费率，不能被配置切换重解释；缺失、混合币/钱包或未核清的额外供应商费用进入ReceiptMissing，不记零、不再提交。
+
+本地Whisper small CPU/int8已用既有口播真音频验证，完整识别「海客科技让创作更简单，一个接口连接配音数字人和创作工作流」，返回词级起止时间。新报价冻结local-whisper引擎身份和模型SHA；字幕及GPT分镜引用真实音频时钟，缓存绑定音频SHA。旧未包含新ASR快照的任务继续原腾讯ASR，原未知账单不重提。本机无识别API费用，计算资源成本未假定为零；正式客户包需预装`requirements-asr.txt`与模型，任务运行时禁止自动下载。
+
+Pexels新Key已验证可用。控制变量：默认Python请求403；仅增加Accept仍403；增加User-Agent: HaikeVideo/1.0返回200和视频结果；不带Key返回401。网关检索及后台媒体下载器均加User-Agent，保持裸Authorization Key仅发送Pexels检索端点，下载不带Key且仍校验公网IP/TLS。检索结果8631874已实际下载并解码，H264、426×240、7.28秒；该低清文件仅用于省流验收，正式素材仍按项目选择规则取分辨率。
+
+本轮新的gpt-image-1.5单图验收仍502，未得到图片；原意图保留。中转站日志请求`3a9d30d5-8ad7-4333-837d-06accac53843`显示唯一图片账号被排除，没有可用的匹配账号。用户随后明确「生图能力暂时跳过」：image_paused阻断新补图及验收，不再探测/切换重提。
+
+85项完整网关回归、72项制作回归、6项前端基础测试、嵌入构建及源码检查通过。后续调整的计价/下载/暂停规则也通过定向回归。云端命令助手预检确认服务active、生产调用active=0，历史2个submission_unknown保留；已找到可用运维入口，正在准备备份和独立版本更新。更新完成前不能宣称云端Pexels/RHub已开放。

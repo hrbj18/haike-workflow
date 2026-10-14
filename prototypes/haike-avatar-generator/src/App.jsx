@@ -199,7 +199,7 @@ function BasicAvatar() {
   const seconds = Math.round(input.audio?.duration || 0);
   const audioTime = `${String(Math.floor(seconds / 60)).padStart(2, "0")}:${String(seconds % 60).padStart(2, "0")}`;
   const models = availableModels(accountState);
-  const blocked = accountState === null ? '正在读取模型能力…' : accountState.error ? '暂时无法验证模型能力' : !models.has('haike/avatar') ? '数字人模型尚未开通' : (input.subtitles||input.ai?.enabled) && !models.has('haike/tencent-asr') ? '字幕识别尚未开通' : '';
+  const blocked = accountState === null ? '正在读取模型能力…' : accountState.error ? '暂时无法验证模型能力' : !models.has('haike/avatar') ? '数字人模型尚未开通' : (input.subtitles||input.ai?.enabled) && !accountState.local_asr?.ready && !models.has('haike/tencent-asr') ? '字幕识别尚未开通' : '';
   const inProgress = ['queued','running'].includes(job?.status);
   return <main className="workspace creation-workspace">
     <Heading title="数字人口播" helper="选择模板，放入文案、声音和人物图片。"/>

@@ -89,6 +89,9 @@ def validate(studio, draft):
 
 def quote(studio, draft):
     validate(studio, draft)
+    from backlot.studio_asr import snapshot
+    needs_clock = draft["input"].get("subtitles", True) or draft["input"].get("ai", {}).get("enabled")
+    asr = snapshot(studio) if needs_clock else {"provider": "gateway"}
     sdk = studio.client()
     identity = "studioquote-" + uuid4().hex
     folder = studio.projects_root / draft["id"] / "assets/studio-quotes" / identity
@@ -102,21 +105,22 @@ def quote(studio, draft):
         duration = prepare_audio(studio.asset(draft["input"]["audio"]["id"], draft["id"]), audio)
         prepared.update(audio_path=str(audio), duration=duration, audio_file=sdk.upload(audio, "audio")["id"])
         quotes["avatar"] = sdk.quote("haike/avatar", {"audio_file": prepared["audio_file"], "image_file": prepared["image_file"]}, draft["id"])
-        if draft["input"].get("subtitles", True) or draft["input"].get("ai", {}).get("enabled"): quotes["asr"] = sdk.quote("haike/tencent-asr", {"audio_file": prepared["audio_file"]}, draft["id"])
+        if (draft["input"].get("subtitles", True) or draft["input"].get("ai", {}).get("enabled")) and asr["provider"] == "gateway": quotes["asr"] = sdk.quote("haike/tencent-asr", {"audio_file": prepared["audio_file"]}, draft["id"])
     else:
         quotes["tts"] = sdk.quote(draft["input"]["voiceId"], {"text": draft["text"]}, draft["id"])
         # Availability is checked before any TTS charge. Its exact avatar quote needs the real audio.
         models = {m.get("id") or m.get("model") for m in sdk.request("/capabilities").get("items", [])}
-        required = {"haike/avatar"} | ({"haike/tencent-asr"} if draft["input"].get("subtitles", True) or draft["input"].get("ai", {}).get("enabled") else set())
+        needs_asr = draft["input"].get("subtitles", True) or draft["input"].get("ai", {}).get("enabled")
+        required = {"haike/avatar"} | ({"haike/tencent-asr"} if needs_asr and asr["provider"] == "gateway" else set())
         if required - models: raise WorkError("数字人或字幕模型尚不可用，请由管理员确认成本费率后再制作")
-    data = {"id": identity, "draft": draft, "prepared": prepared, "quotes": quotes, "key_identity": key_identity(studio), "created_at": datetime.now(timezone.utc).isoformat()}
+    data = {"id": identity, "draft": draft, "prepared": prepared, "quotes": quotes, "asr": asr, "key_identity": key_identity(studio), "created_at": datetime.now(timezone.utc).isoformat()}
     with studio.db() as db: db.execute("INSERT INTO studio_quotes VALUES(?,?)", (identity, json.dumps(data, ensure_ascii=False)))
     return public_quote(data)
 
 
 def public_quote(data):
     return {"id": data["id"], "revision": data["draft"]["revision"], "known_max_micros": sum(int(q["max_charge_micros"]) for q in data["quotes"].values()),
-            "needs_audio_quote": data["draft"]["input"]["soundMode"] == "voice", "ai_trial": data["draft"]["input"].get("ai", {}).get("enabled", False), "items": [{"stage": k, "model": q["model"], "max_charge_micros": q["max_charge_micros"]} for k, q in data["quotes"].items()]}
+            "needs_audio_quote": data["draft"]["input"]["soundMode"] == "voice", "ai_trial": data["draft"]["input"].get("ai", {}).get("enabled", False), "items": [{"stage": k, "model": q["model"], "max_charge_micros": q["max_charge_micros"]} for k, q in data["quotes"].items()] + ([{"stage": "asr", "model": "local/whisper", "max_charge_micros": "0"}] if data.get("asr", {}).get("provider") == "local-whisper" else [])}
 
 
 def frozen_request(studio, draft, quote_id, maximum):
@@ -185,7 +189,8 @@ def download_result(url, path, referer=None):
         address = public_media_address(p.hostname, p.port or 443)
         opener = build_opener(ProxyHandler({}), NoRedirect(), media_https_handler(address))
         try:
-            with opener.open(Request(url, headers={"Referer": referer} if referer else {}), timeout=90) as response:
+            headers = {"User-Agent": "HaikeVideo/1.0", **({"Referer": referer} if referer else {})}
+            with opener.open(Request(url, headers=headers), timeout=90) as response:
                 temporary = path.with_suffix(path.suffix + ".part")
                 count = 0
                 with temporary.open("wb") as out:
@@ -212,6 +217,18 @@ def captions(result, duration, split=True):
     for s in values:
         start, end, text = float(s["start"]), min(float(s["end"]), duration), str(s["text"]).strip()
         if not (math.isfinite(start) and math.isfinite(end) and 0 <= start < end and text): continue
+        if split and s.get("words"):
+            group = []
+            for word in s["words"]:
+                if group and len("".join(w["text"] for w in group)) + len(word["text"]) > 18:
+                    out.append({"text": "".join(w["text"] for w in group).strip(), "startMs": group[0]["start"]*1000,
+                                "endMs": group[-1]["end"]*1000, "timestampMs": None, "confidence": None})
+                    group = []
+                group.append(word)
+            if group:
+                out.append({"text": "".join(w["text"] for w in group).strip(), "startMs": group[0]["start"]*1000,
+                            "endMs": group[-1]["end"]*1000, "timestampMs": None, "confidence": None})
+            continue
         # Short groups inside each recognised sentence; this is sentence-aligned, not word-level karaoke.
         groups = [text[i:i+18] for i in range(0, len(text), 18)] if split else [text]
         for i, group in enumerate(groups):
@@ -250,6 +267,11 @@ def run_avatar(project_dir, request, sdk=None):
         return job["result"]
     try:
         p = state["prepared"]; draft = request["draft"]
+        asr = request.get("asr", {"provider": "gateway"})
+        if asr["provider"] == "local-whisper":
+            from backlot.studio_asr import configuration, identity
+            if identity(configuration(studio)) != asr["identity"]:
+                raise WorkError("字幕引擎已改变，请恢复原配置后继续原任务")
         if not p.get("audio_path"):
             raw = output_dir / "tts-source.wav"
             if not raw.exists():
@@ -262,7 +284,11 @@ def run_avatar(project_dir, request, sdk=None):
         cues = []
         clock_cues = []
         if draft["input"].get("subtitles", True) or draft["input"].get("ai", {}).get("enabled"):
-            result = paid("asr", "haike/tencent-asr", {"audio_file": p["audio_file"]})
+            if asr["provider"] == "local-whisper":
+                from backlot.studio_asr import transcribe
+                result = transcribe(studio, asr, Path(p["audio_path"]), output_dir, p["duration"])
+            else:
+                result = paid("asr", "haike/tencent-asr", {"audio_file": p["audio_file"]})
             cues = captions(result, p["duration"])
             clock_cues = captions(result, p["duration"], split=False)
         from backlot.studio_storyboard import produce
@@ -277,7 +303,7 @@ def run_avatar(project_dir, request, sdk=None):
             return compose_motion(studio, draft, output_dir, video, Path(p["audio_path"]), clock_cues, storyboard)
         output = compose_avatar(output_dir, draft, video, Path(p["audio_path"]), p["duration"], cues if draft["input"].get("subtitles", True) else [], storyboard=storyboard) if storyboard else compose_avatar(output_dir, draft, video, Path(p["audio_path"]), p["duration"], cues)
         report = {"template_id": draft["template_id"], "adapter_version": 1, "sources": [{"path": str(video), "sha256": sha(video)}, {"path": p["audio_path"], "sha256": sha(p["audio_path"])}],
-                  "caption_timing": "ASR sentence-level" if cues else "off", "provider_jobs": [s["job"]["id"] for s in state["stages"].values()], "human_review": "pending"}
+                  "caption_timing": "Whisper word-level" if cues and asr["provider"] == "local-whisper" else "ASR sentence-level" if cues else "off", "provider_jobs": [s["job"]["id"] for s in state["stages"].values()], "human_review": "pending"}
         atomic_private(output_dir / "qa.json", report)
         return {"status": "completed", "stage": "数字人口播已合成，等待观看审核", "result": {"output_path": str(output), "qa_status": "pending", "provider_jobs": report["provider_jobs"]}}
     except WorkError as exc:

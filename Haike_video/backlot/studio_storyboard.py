@@ -47,12 +47,12 @@ def selected_image_model(studio):
 def status(studio):
     c = configuration(studio)
     model = c.get("image_model", IMAGE_MODEL)
-    verified = c.get("image_verified") is True and model in IMAGE_MODELS and c.get("image_verified_for") == image_identity(c)
+    verified = not c.get("image_paused", False) and c.get("image_verified") is True and model in IMAGE_MODELS and c.get("image_verified_for") == image_identity(c)
     return {"configured": bool(c.get("api_key")), "chat_model": CHAT_MODEL, "image_model": model,
             "billing": "sponsored", "customer_charge_micros": "0", "procurement_price": None,
             "douyin_authorized": c.get("douyin_commercial_authorized") is True,
             "douyin_login_confirmed": c.get("douyin_login_confirmed") is True,
-            "image_verified": verified, "max_images": 2, "max_requests_per_job": 12}
+            "image_verified": verified, "image_paused": c.get("image_paused", False), "max_images": 2, "max_requests_per_job": 12}
 
 
 def options(studio, draft):

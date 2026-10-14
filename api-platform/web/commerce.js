@@ -197,9 +197,10 @@ async function commerceAction(button) {
   if (action === "commerce-provider") {
     const p = commerceState.providers.find(p => p.id === id);
     modal('<h2>' + esc(p.name) + '</h2><form id="commerce-provider" method="post" data-id="' + esc(id) + '">' +
-      Object.keys(p.config).filter(k => k !== "enabled").map(k => field(k, k, p.config[k])).join("") +
+      Object.keys(p.config).filter(k => k !== "enabled" && !(id === "runninghub" && ["billing_mode", "quote_cost_limit_micros", "quote_cost_per_audio_second_micros"].includes(k))).map(k => field(k, k, p.config[k])).join("") +
       p.secret_fields.map(k => field(k + "（留空保留）", k, "", 'type="password" autocomplete="off" maxlength="500"')).join("") +
       (id === "bailian" && !("voice" in p.config) ? field("复刻音色 ID", "voice") : "") +
+      (id === "runninghub" ? '<label>数字人计价方式<select name="billing_mode"><option value="task">保留原固定任务档位</option><option value="wallet_receipt"' + (p.config.billing_mode === "wallet_receipt" ? ' selected' : '') + '>实际 API 钱包回执 × 1.5</option></select></label>' + field("任务报价采购上限（整数微元，1元=1000000）", "quote_cost_limit_micros", p.config.quote_cost_limit_micros || "") + field("每秒音频采购预估（整数微元，可留空预留全额）", "quote_cost_per_audio_second_micros", p.config.quote_cost_per_audio_second_micros || "") + '<p class="tiny muted">预估只决定冻结上限，成功按供应商实扣 × 1.5 结算并释放余款。供应商超出报价的成本由平台承担；变更计量方式需发布新费率。</p>' : "") +
       '<label>供应商调用开关<select name="enabled"><option value="false">关闭</option><option value="true"' + (p.config.enabled ? " selected" : "") + '>开启</option></select></label>' + submitButton + '</form><p class="tiny muted">开启后，具备已发布价格的模型会接受真实调用。</p>');
   }
   if (action === "commerce-tariff") {

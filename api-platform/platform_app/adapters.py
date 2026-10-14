@@ -291,7 +291,7 @@ class Adapter:
             path = "/videos/search" if inputs["media"] == "videos" else "/v1/search"
             response = http(
                 "https://api.pexels.com" + path + "?" + query,
-                {"Authorization": config["api_key"]},
+                {"Authorization": config["api_key"], "User-Agent": "HaikeVideo/1.0", "Accept": "application/json"},
             )
             records = response.get(
                 "videos" if inputs["media"] == "videos" else "photos", []
@@ -405,10 +405,16 @@ class Adapter:
             ]
             if not videos:
                 raise Uncertain()
+            receipt = None
+            if info.get("billing_mode") == "wallet_receipt":
+                from .runninghub_billing import receipt_cost
+                try: receipt = receipt_cost(data.get("usage"))
+                except (ValueError, TypeError):
+                    raise ReceiptMissing(upstream_id, {"video_url": safe_url(videos[0])}) from None
             return {
-                "usage": {"tasks": 1},
-                "result": {"video_url": safe_url(videos[0])},
+                "usage": {"supplier_micros": int(receipt["cost_micros"])} if receipt else {"tasks": 1},
+                "result": {"video_url": safe_url(videos[0]), **({"supplier_billing": receipt} if receipt else {})},
                 "upstream_id": upstream_id,
-                "meter_basis": "每个成功工作流任务；供应商实际费用待核对",
+                "meter_basis": "RunningHub实际钱包人民币回执 × 1.5；报价余额释放" if receipt else "每个成功工作流任务；供应商实际费用待核对",
             }
         raise Rejected()

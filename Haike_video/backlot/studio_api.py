@@ -242,7 +242,8 @@ async def account(request: Request):
     def read():
         try:
             sdk = studio(request).client()
-            return {"summary": sdk.request("/account/summary"), "capabilities": sdk.request("/capabilities")}
+            from backlot.studio_asr import status
+            return {"summary": sdk.request("/account/summary"), "capabilities": sdk.request("/capabilities"), "local_asr": status(studio(request))}
         except Exception: raise WorkError("无法读取账户，请到API设置检查连接") from None
     return await asyncio.to_thread(call, read)
 

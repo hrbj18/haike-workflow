@@ -19,6 +19,7 @@ def test_saved_cosyvoice_http_receipt_downloads_over_verified_https(tmp_path, mo
     assert target.read_bytes() == b'original-paid-audio'
     assert requests[0].full_url == 'https://dashscope-result-bj.oss-cn-beijing.aliyuncs.com/audio.wav?signature=fixture'
     assert not requests[0].has_header('Authorization')
+    assert requests[0].get_header('User-agent') == 'HaikeVideo/1.0'
 
 
 @pytest.mark.parametrize('url',[

@@ -49,6 +49,9 @@ def main():
     p.add_argument("--authorize-video", action="append", default=[], help="已取得使用权的抖音视频ID")
     p.add_argument("--crawler-root", type=Path)
     p.add_argument("--image-model", choices=IMAGE_MODELS, help="只为新插画意图选择模型；旧意图保留原模型")
+    pause = p.add_mutually_exclusive_group()
+    pause.add_argument("--pause-images", action="store_true", help="暂缓生图，新任务不能补图；旧回执保留")
+    pause.add_argument("--resume-images", action="store_true", help="操作人明确恢复生图验收；仍需成功图片证明")
     p.add_argument("--verify-image", action="store_true", help="明确发送一次竖屏单图验收，通过后才开放插画补齐")
     p.add_argument("--verification-id", help="验收意图编号；失败后沿用编号不会重新提交")
     p.add_argument("--confirm", action="store_true", help="确认供应商单张验收消耗；客户试用费为零，采购成本未知")
@@ -65,6 +68,9 @@ def main():
     if args.crawler_root: c["crawler_root"] = str(args.crawler_root.resolve())
     if args.image_model and args.image_model != c.get("image_model", IMAGE_MODELS[0]):
         c.update(image_model=args.image_model, image_verified=False)
+    if args.pause_images: c["image_paused"] = True
+    if args.resume_images: c["image_paused"] = False
+    if args.verify_image and c.get("image_paused"): p.error("生图已暂缓，请先明确--resume-images，旧请求不会重提")
     if args.verify_image and (not args.confirm or not re.fullmatch(r"[a-zA-Z0-9_-]{1,64}", args.verification_id or "")):
         p.error("单张验收需要--confirm及1至64字符--verification-id；不自动重提原失败请求")
     if args.verify_image:
