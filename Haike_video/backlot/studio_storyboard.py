@@ -24,6 +24,7 @@ from backlot.work_catalog import WorkError, sha
 _LOCK = threading.RLock()
 CHAT_MODEL = "gpt-6-luna"
 IMAGE_MODEL = "gpt-image-2"
+IMAGE_MODELS = ("gpt-image-2", "gpt-image-1.5", "gpt-image-1")
 
 
 def configuration(studio):
@@ -31,13 +32,27 @@ def configuration(studio):
     return json.loads(path.read_text()) if path.is_file() else {}
 
 
+def image_identity(config):
+    """A successful probe belongs to one model, endpoint and credential."""
+    value = [config.get("base_url", "").rstrip("/"), config.get("api_key", ""), config.get("image_model", IMAGE_MODEL)]
+    return hashlib.sha256(json.dumps(value).encode()).hexdigest()
+
+
+def selected_image_model(studio):
+    model = configuration(studio).get("image_model", IMAGE_MODEL)
+    if model not in IMAGE_MODELS: raise WorkError("插画模型配置无效，请由管理员选择已支持的模型")
+    return model
+
+
 def status(studio):
     c = configuration(studio)
-    return {"configured": bool(c.get("api_key")), "chat_model": CHAT_MODEL, "image_model": IMAGE_MODEL,
+    model = c.get("image_model", IMAGE_MODEL)
+    verified = c.get("image_verified") is True and model in IMAGE_MODELS and c.get("image_verified_for") == image_identity(c)
+    return {"configured": bool(c.get("api_key")), "chat_model": CHAT_MODEL, "image_model": model,
             "billing": "sponsored", "customer_charge_micros": "0", "procurement_price": None,
             "douyin_authorized": c.get("douyin_commercial_authorized") is True,
             "douyin_login_confirmed": c.get("douyin_login_confirmed") is True,
-            "image_verified": c.get("image_verified") is True, "max_images": 2, "max_requests_per_job": 12}
+            "image_verified": verified, "max_images": 2, "max_requests_per_job": 12}
 
 
 def options(studio, draft):
@@ -48,7 +63,7 @@ def options(studio, draft):
     if any(type(ai.get(k, False)) is not bool for k in ("enabled", "allow_images", "skip_douyin")):
         raise WorkError("AI制作开关无效")
     if not status(studio)["configured"]: raise WorkError("AI理解中转尚未配置，请联系管理员")
-    if ai.get("allow_images") and configuration(studio).get("image_verified") is not True:
+    if ai.get("allow_images") and not status(studio)["image_verified"]:
         raise WorkError("插画接口尚未验收通过，请先关闭插画补齐并使用用户素材或Pexels")
     if type(ai.get("max_images", 2)) is not int or not 0 <= ai.get("max_images", 2) <= 2:
         raise WorkError("单条视频最多补齐两张插画")
@@ -92,6 +107,20 @@ class TrialRelay:
         self.folder.mkdir(parents=True, exist_ok=True)
         self.transport = transport
 
+    def image_model_for_stage(self, stage):
+        # Freeze across every scene, so an operator switch affects new jobs only.
+        route = self.folder / "image-routing.safe"
+        with _LOCK:
+            if route.exists(): model = json.loads(route.read_text())["model"]
+            else:
+                old = [json.loads(p.read_text()) for p in self.folder.glob("*.json")]
+                models = {r.get("model") or IMAGE_MODEL for r in old if r.get("image")}
+                if len(models) > 1: raise WorkError("原插画任务包含多种模型，请由管理员核对原请求")
+                model = next(iter(models)) if models else selected_image_model(self.studio)
+                atomic_private(route, {"model": model})
+            if model not in IMAGE_MODELS: raise WorkError("原插画请求模型记录无效，请核对原请求")
+            return model
+
     def call(self, stage, payload, image=False):
         from urllib.request import Request, build_opener, ProxyHandler, HTTPRedirectHandler
         from urllib.error import HTTPError
@@ -112,7 +141,7 @@ class TrialRelay:
             day = timestamp()[:10]; counter = counter if counter.get("day") == day else {"day": day, "requests": 0, "images": 0}
             if counter["requests"] >= 50 or (image and counter["images"] >= 10): raise WorkError("今日试用上限已到，请明日继续或由管理员调整方案")
             counter["requests"] += 1; counter["images"] += int(image); atomic_private(counter_path, counter)
-            receipt = {"stage": stage, "fingerprint": fingerprint, "status": "submitting", "image": image,
+            receipt = {"stage": stage, "model": payload.get("model"), "fingerprint": fingerprint, "status": "submitting", "image": image,
                        "customer_charge_micros": "0", "procurement_amount": None, "created_at": timestamp()}
             atomic_private(path, receipt)
         c = configuration(self.studio)
@@ -309,7 +338,9 @@ class Sources:
 
     def illustration(self, scene):
         from backlot.studio_avatar import download_result
-        result = self.relay.call("illustration-" + scene["id"], {"model": IMAGE_MODEL, "prompt": scene["illustration_prompt"], "n": 1, "size": "1024x1536", "quality": "medium"}, image=True)
+        stage = "illustration-" + scene["id"]
+        model = self.relay.image_model_for_stage(stage)
+        result = self.relay.call(stage, {"model": model, "prompt": scene["illustration_prompt"], "n": 1, "size": "1024x1536", "quality": "medium"}, image=True)
         item = result["data"][0]; path = self.relay.folder / (scene["id"] + "-illustration.png")
         if item.get("b64_json"):
             raw = base64.b64decode(item["b64_json"], validate=True)
@@ -317,7 +348,7 @@ class Sources:
             path.write_bytes(raw)
         elif item.get("url"): download_result(item["url"], path)
         else: raise WorkError("生图模型没有返回图片，原响应已保留")
-        return self.own(path, "image", {"source": "ai-generated", "model": IMAGE_MODEL, "prompt": scene["illustration_prompt"], "usage": result.get("usage"), "rights": "generated-illustration", "generated": True})
+        return self.own(path, "image", {"source": "ai-generated", "model": model, "prompt": scene["illustration_prompt"], "usage": result.get("usage"), "rights": "generated-illustration", "generated": True})
 
 
 def resolve_scene(scene, ai, sources, image_count=0):

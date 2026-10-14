@@ -6,14 +6,16 @@ import pytest
 from PIL import Image
 
 from backlot.studio import Studio, atomic_private
-from backlot.studio_storyboard import TrialRelay, options, resolve_scene, status, validate_plan, produce, verify_spoken_script, motion_clock_segments
+from backlot.studio_storyboard import TrialRelay, options, resolve_scene, status, validate_plan, produce, verify_spoken_script, motion_clock_segments, image_identity
 from backlot.work_catalog import WorkError
 
 
 @pytest.fixture
 def data(tmp_path):
     s = Studio(tmp_path / 'projects')
-    atomic_private(s.private / 'studio-ai/relay.json', {'base_url':'https://supplier.example/v1','api_key':'test-private-value','image_verified':True})
+    config={'base_url':'https://supplier.example/v1','api_key':'test-private-value','image_verified':True}
+    config['image_verified_for']=image_identity(config)
+    atomic_private(s.private / 'studio-ai/relay.json', config)
     d = s.save_draft({'template_id':'avatar-safe-circle-v1','title':'测试','text':'第一句。第二句。','input':{'ai':{'enabled':True,'materials':[],'allow_images':True,'max_images':2}}})
     cues = [{'text':'第一句。','startMs':20,'endMs':1500},{'text':'第二句。','startMs':1700,'endMs':3100}]
     raw = {'scenes':[{'from_cue':0,'to_cue':0,'script_start':0,'script_end':4,'label':'第一镜','asset_id':'','query':'technology','illustration_prompt':'示意插画','reason':'缺少可用用户素材'},
@@ -130,6 +132,53 @@ def test_trial_daily_limits_are_durable(data,tmp_path):
     r=TrialRelay(s,tmp_path/'calls',lambda *_:(_ for _ in ()).throw(AssertionError()))
     with pytest.raises(WorkError,match='今日'):r.call('over-limit',{'model':'gpt-6-luna'})
     assert not list(r.folder.glob('*.json'))
+
+
+@pytest.mark.parametrize('change',[{'image_model':'gpt-image-1.5'}, {'api_key':'another-private-value'}, {'base_url':'https://another.example/v1'}])
+def test_probe_cannot_enable_a_different_model_or_destination(data,change):
+    s,d,_,_=data
+    assert status(s)['image_verified']
+    path=s.private/'studio-ai/relay.json'; c=json.loads(path.read_text()); c.update(change); atomic_private(path,c)
+    assert not status(s)['image_verified']
+    with pytest.raises(WorkError,match='尚未验收'):options(s,d)
+
+
+def test_fallback_model_never_resubmits_an_unknown_original_request(data,tmp_path):
+    s,_,_,_=data;calls=[]
+    def failed(payload,image):calls.append(payload['model']);raise TimeoutError()
+    relay=TrialRelay(s,tmp_path/'calls',failed);stage='illustration-scene-1'
+    payload={'model':'gpt-image-2','prompt':'test'}
+    with pytest.raises(WorkError):relay.call(stage,payload,image=True)
+    path=s.private/'studio-ai/relay.json';c=json.loads(path.read_text());c.update(image_model='gpt-image-1.5');atomic_private(path,c)
+    assert relay.image_model_for_stage(stage)=='gpt-image-2'
+    assert relay.image_model_for_stage('illustration-scene-2')=='gpt-image-2'
+    assert TrialRelay(s,tmp_path/'new-job').image_model_for_stage('illustration-scene-1')=='gpt-image-1.5'
+    with pytest.raises(WorkError,match='未重复'):relay.call(stage,payload,image=True)
+    assert calls==['gpt-image-2']
+
+
+def test_switching_image_model_preserves_successful_receipt_identity(data,tmp_path):
+    s,_,_,_=data
+    relay=TrialRelay(s,tmp_path/'calls',lambda *_:{'data':[{'b64_json':'fixture'}]})
+    stage='illustration-scene-1'
+    relay.call(stage,{'model':'gpt-image-1.5'},image=True)
+    assert relay.image_model_for_stage(stage)=='gpt-image-1.5'
+
+
+def test_only_a_valid_probe_can_enable_the_configured_image_model(data,monkeypatch):
+    from scripts.configure_studio_ai import verify_image
+    s,_,_,_=data;path=s.private/'studio-ai/relay.json';c=json.loads(path.read_text())
+    c.update(image_model='gpt-image-1.5',image_verified=False);atomic_private(path,c)
+    image=io.BytesIO();Image.new('RGB',(1024,1536)).save(image,format='PNG')
+    import base64
+    def fake(self,stage,payload,image=False):
+        assert payload['model']=='gpt-image-1.5' and image
+        return {'data':[{'b64_json':base64.b64encode(image_bytes).decode()}],'usage':{'input_tokens':1,'output_tokens':2}}
+    image_bytes=image.getvalue();monkeypatch.setattr(TrialRelay,'call',fake)
+    verify_image(s,'one-explicit-test')
+    assert status(s)['image_verified'] and status(s)['image_model']=='gpt-image-1.5'
+    c=json.loads(path.read_text());c.update(image_model='gpt-image-1');atomic_private(path,c)
+    with pytest.raises(ValueError,match='绑定'):verify_image(s,'one-explicit-test')
 
 
 def test_unified_avatar_motion_result_is_recovered_after_restart(tmp_path):

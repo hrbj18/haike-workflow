@@ -10,10 +10,11 @@ import re
 import shutil
 import socket
 import subprocess
+from http.client import HTTPSConnection
 from datetime import datetime, timezone
 from pathlib import Path
-from urllib.parse import urlsplit
-from urllib.request import Request, build_opener, HTTPRedirectHandler, ProxyHandler
+from urllib.parse import urlsplit, urlencode
+from urllib.request import Request, build_opener, HTTPRedirectHandler, HTTPSHandler, ProxyHandler
 from uuid import uuid4
 
 from backlot.studio import Studio, atomic_private
@@ -122,17 +123,57 @@ def frozen_request(studio, draft, quote_id, maximum):
     return {**data, "max_charge_micros": maximum, "render_id": "studio-" + str(draft["revision"])}
 
 
+def public_media_address(host, port):
+    addresses = socket.getaddrinfo(host, port, type=socket.SOCK_STREAM)
+    ips = [ipaddress.ip_address(a[4][0]) for a in addresses]
+    if ips and all(ip.is_global for ip in ips): return str(ips[0])
+    # A local TUN fake-DNS address is not an origin address. For known public
+    # media hosts only, verify public DNS over HTTPS and pin the actual socket.
+    known = re.fullmatch(r"dashscope-result-[a-z0-9-]+\.oss-[a-z0-9-]+\.aliyuncs\.com", host) or host in {"videos.pexels.com", "images.pexels.com"}
+    benchmark = ipaddress.ip_network("198.18.0.0/15")
+    if not known or not ips or not all(ip.version == 4 and ip in benchmark for ip in ips):
+        raise WorkError("供应商媒体地址不能指向本地网络")
+    class NoRedirect(HTTPRedirectHandler):
+        def redirect_request(self, req, fp, code, msg, headers, newurl): return None
+    try:
+        dns = "https://1.1.1.1/dns-query?" + urlencode({"name": host, "type": "A"})
+        with build_opener(ProxyHandler({}), NoRedirect()).open(Request(dns, headers={"Accept": "application/dns-json"}), timeout=10) as response:
+            raw = response.read(65537)
+        if len(raw) > 65536: raise ValueError()
+        data = json.loads(raw)
+        answers = [ipaddress.ip_address(a["data"]) for a in data.get("Answer", []) if a.get("type") == 1]
+        if data.get("Status") != 0 or not answers or not all(a.is_global for a in answers): raise ValueError()
+        return str(answers[0])
+    except Exception: raise WorkError("代理DNS未能核对真实公网媒体地址，请核对代理DNS后恢复原任务") from None
+
+
+def media_https_handler(address):
+    class PinnedConnection(HTTPSConnection):
+        def connect(self):
+            if self._tunnel_host: raise WorkError("媒体下载不允许额外代理隧道")
+            self.sock = socket.create_connection((address, self.port), self.timeout, self.source_address)
+            self.sock = self._context.wrap_socket(self.sock, server_hostname=self.host)
+    class Handler(HTTPSHandler):
+        def https_open(self, request):
+            return self.do_open(PinnedConnection, request, context=self._context)
+    return Handler()
+
+
 def download_result(url, path, referer=None):
     # Gateway results contain supplier media only. Follow validated HTTPS redirects, with no Key headers.
     class NoRedirect(HTTPRedirectHandler):
         def redirect_request(self, req, fp, code, msg, headers, newurl): return None
     from urllib.error import HTTPError
-    opener = build_opener(ProxyHandler({}), NoRedirect())
     for _ in range(5):
         p = urlsplit(url)
+        # Some CosyVoice receipts use HTTP OSS links. Upgrade only the known
+        # output hosts; preserve signatures and keep TLS/DNS checks below.
+        if p.scheme == "http" and not p.username and not p.password and p.port in {None, 80} and re.fullmatch(r"dashscope-result-[a-z0-9-]+\.oss-[a-z0-9-]+\.aliyuncs\.com", p.hostname or ""):
+            url = p._replace(scheme="https", netloc=p.hostname).geturl()
+            p = urlsplit(url)
         if p.scheme != "https" or p.username or p.password or not p.hostname: raise WorkError("供应商媒体地址无效")
-        addresses = socket.getaddrinfo(p.hostname, p.port or 443, type=socket.SOCK_STREAM)
-        if any(not ipaddress.ip_address(a[4][0]).is_global for a in addresses): raise WorkError("供应商媒体地址不能指向本地网络")
+        address = public_media_address(p.hostname, p.port or 443)
+        opener = build_opener(ProxyHandler({}), NoRedirect(), media_https_handler(address))
         try:
             with opener.open(Request(url, headers={"Referer": referer} if referer else {}), timeout=90) as response:
                 temporary = path.with_suffix(path.suffix + ".part")

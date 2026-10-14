@@ -108,7 +108,7 @@ class Adapter:
                     raise Uncertain()
                 item = images[0]
                 media = {"image_base64": item["b64_json"]} if isinstance(item.get("b64_json"), str) else {"image_url": safe_url(item.get("url"))}
-                media.update(generated=True, source="gpt-image-2", size="1024x1536", quality="medium")
+                media.update(generated=True, source=config.get("image_model", info["target_model"]), size="1024x1536", quality="medium")
                 if any(type(usage.get(k)) is not int or usage[k] < 0 for k in ("input_tokens", "output_tokens")):
                     raise ReceiptMissing(str(result.get("id", "")), media)
                 return {"usage": {k: usage[k] for k in ("input_tokens", "output_tokens")}, "result": media,
