@@ -176,12 +176,24 @@
         "priority": "high",
         "subtasks": [],
         "updatedAt": "2026-10-14T03:40:00.272Z"
+      },
+      {
+        "id": "15",
+        "title": "配置RunningHub数字人并协助取得Pexels API",
+        "description": "按用户提供Key配置数字人后台并做非生成鉴权，打开Pexels官方申请入口供用户登录获取Key。",
+        "details": "RunningHub官方账户鉴权HTTP200/code0且有额度，云端已加密保存新Key并启用；工作流2094449979141218305/profile已核对。缺数字人实际采购计价，未填零或提交收费任务。Pexels官方暂停发放新Key，Chrome登录窗口已交给用户；原Key及无鉴权请求均403，不能据此断定Key失效。等待用户登录和RunningHub成本/计价方式，历史未知账单不变。",
+        "testStrategy": "RunningHub官方账户查询、云端保存回执与供应商已保存/开启状态通过；Pexels官网禁用申请按钮已截图，现有Key与无Key各一次只读诊断均403。私有凭据不进入Git，交接文档预算通过。",
+        "status": "review",
+        "dependencies": [],
+        "priority": "high",
+        "subtasks": [],
+        "updatedAt": "2026-10-14T04:09:47.111Z"
       }
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2026-10-14T03:40:00.272Z",
-      "taskCount": 14,
+      "lastModified": "2026-10-14T04:09:47.112Z",
+      "taskCount": 15,
       "completedCount": 13,
       "tags": [
         "master"

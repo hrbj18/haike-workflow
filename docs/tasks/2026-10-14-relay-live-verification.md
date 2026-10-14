@@ -53,3 +53,11 @@ GPT识别实测：供应商模型列表包含gpt-6.1-sol，无专用whisper-1、
 落地尚需：上游提供真实转写接口和模型、句级/词级时间戳或强制对齐、云端统一Key适配及赞助配额/后续账单策略、真实音频验收。当前继续保留ASR门，云端数字人未开通和Pexels失败仍是原有阻塞。
 
 本轮44项后台和14项前端测试通过；构建、源码检查及交接文档预算通过。实际14754页面仅列CosyVoice，API设置去除腾讯TTS后为3/5项配置开通；配置开通不代表所有供应商真实交付通过。源码/安装副本/嵌入前端已同步，发布服务正常，未修改用户草稿。
+
+## 后续配置：RunningHub 与 Pexels
+
+用户新提供的RunningHub Key只在私有文件保存，并通过官方`POST https://www.runninghub.cn/uc/openapi/accountStatus`验证：HTTP200、code0、NORMAL账户、有可用额度。未上传人物/声音，未创建收费任务。参考[官方账户接口](https://www.runninghub.cn/runninghub-api-doc-cn/api-425748943)。
+
+云端管理员已保存该Key到RunningHub供应商加密配置，地址`https://www.runninghub.cn`，工作流`2094449979141218305`，档案`infinitetalk_448x560_exact_clock_v2`，开关开启。保存后的供应商页显示已保存/开启。`haike/avatar`仍为cost_pending：缺实际采购计价，没有擅自填零或将旧双主持费用上限当采购成本。已向用户询问单次成本或计价方式，计划按既定1.5倍率发布售价。
+
+[Pexels官方API页面](https://www.pexels.com/api/)现在明确显示“New API key issuance is currently paused”，Get Started禁用。Chrome已打开并保留Pexels登录窗口，等待用户登录核对现有Key；没有提交注册条款或操作密码。原上传文件含Pexels Key，本机一次带Key的视频检索HTTP403；无Key的公开诊断请求也403，text/plain，不能据此宣称Key无效。未替换云端Pexels配置、未下载素材。可先验证已有Key和访问限制；无已有Key则需等待或联系Pexels官方，不能保证登录后马上获发新Key。
