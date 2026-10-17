@@ -69,7 +69,9 @@ def resolve_spec_defaults(raw, *, root=None, api=None):
         if "avatar_defaults_snapshot" in item:
             continue
         explicit_portrait = "portrait_path" in item
-        overrides = {key: item[key] for key in PARAMETERS if key in item}
+        audio_mode = "audio_path" in item
+        parameters = tuple(key for key in PARAMETERS if not audio_mode or key not in {"voice_id", "speech_rate"})
+        overrides = {key: item[key] for key in parameters if key in item}
         if explicit_portrait:
             overrides["portrait_file_id"] = None
         resolved = api.call("/api/studio/audio-center/avatar-defaults/resolve", {"overrides": overrides})
@@ -77,13 +79,17 @@ def resolve_spec_defaults(raw, *, root=None, api=None):
             raise BatchError("当前海客账号发生变化，请重新解析新规格")
         scope = resolved.get("scope_id")
         missing = set(resolved.get("missing_fields", [])) - ({"portrait_file_id"} if explicit_portrait else set())
+        if audio_mode:
+            missing -= {"voice_id", "speech_rate"}
         if missing:
             raise BatchError("请先补全口播默认设置：" + "、".join(sorted(missing)))
         values = resolved["values"]
-        for key in PARAMETERS:
+        for key in parameters:
             if key not in item:
                 item[key] = values[key]
-        if "model_id" not in item:
+        if audio_mode:
+            pass  # Uploaded narration needs no TTS model, voice or rate.
+        elif "model_id" not in item:
             item["model_id"] = resolved["voice_model"]
         elif item["model_id"] != resolved["voice_model"]:
             raise BatchError("明确指定的配音模型与所选音色不符，未自动换源")
@@ -94,7 +100,8 @@ def resolve_spec_defaults(raw, *, root=None, api=None):
             if file_id not in portraits:
                 portraits[file_id] = _portrait(api.portrait(file_id), root)
             item["portrait_path"] = portraits[file_id]
-        item["avatar_defaults_snapshot"] = resolved["snapshot"]
+        if not audio_mode:
+            item["avatar_defaults_snapshot"] = resolved["snapshot"]
     if "limit_micros" not in spec:
         spec["limit_micros"] = sum(item["max_charge_micros"] for item in spec["items"])
     return validate_spec(spec)

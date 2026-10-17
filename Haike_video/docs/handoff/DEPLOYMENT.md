@@ -5,7 +5,7 @@
 ## 权威入口
 
 - 用户确认单仓为`https://github.com/hrbj18/haike-workflow`，保留公开可见性。根README及 `docs/GIT_WORKFLOW.md` 是安装、分支、CI和迭代入口。
-- 新版仅上传`feat/retain-capabilities-ui`；旧main `0518367`以`legacy-before-v2-20261017`标签保留，main不合并，本次不打包。`dev-ybw`为现有集成分支。
+- 新版仅上传`feat/retain-capabilities-ui`；旧main `0518367`以`legacy-before-v2-20261017`标签保留，main不合并。当前已授权另交便携ZIP及独立多Key配置文档；`dev-ybw`为现有集成分支。
 - 旧单模块仓库、旧标签和便携包不代表新版已发布能力；共享分支通过PR审阅，保留原历史。
 - Windows完整安装：根 `scripts/setup.ps1`，Python3.12、Node22+、Git/uv；默认跳过本地Qwen TTS。安装新增前端构建，不继承账号、任务或素材。
 - 工作台静态文件由根 `scripts/build-studio.py`生成；源码目录为 `prototypes/haike-avatar-generator`。Mac源码checkout与14754安装副本分离，更新须明确同步目标。
@@ -21,5 +21,9 @@
 ## 新机器验收
 
 克隆当前仓库后运行根源码检查及安装；配置自己的平台Key和发布账号，私下导入自有素材。模型和运行依赖按对应模块安装，完成环境检查、无付费测试及短样本审核后再接受生产任务。
+
+便携包使用根`01-setup.cmd -ConfigDocument <私有文档>`，按`docs/API_KEY_SETUP.md`唯一JSON块一次导入多个供应商Key、地址、预算及预设；默认保留本机已有配置。真实文档单独交付，ZIP/Git只有空模板。导入离线、不搬Cookie或伪造验证记录。全直连可复用现有配音、腾讯识别、数字人及文本/素材服务，无需等待云端音色接口；仍须扫码、核验服务、按授权验收。
+
+批次入口支持完整音轨`audio_path`，保持原音频并跳过TTS；`advance`推进原队列、质量门与发布计划，支持既有平台排期，`report_path`落Markdown汇报。宿主负责定时唤醒，未质检或未确认的发布不标完成。明确配置Pexels素材来源时无需代填抖音使用授权；仍执行实时登录检查，无合适画面暂停。隔离CLI/HTTP/队列/发布器假供应商联测与真实平台回执分别记录。
 
 Git仅保存源码、测试、公开配置模板、可分发品牌资源与设计文档。凭据、账本、主密钥、Cookie、项目素材、成片及备份被忽略，另行加密备份。新机静态测试通过不代表真实供应商、付费结算或账号发布已经验收。

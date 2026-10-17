@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import importlib.util
 import json
 import os
 from pathlib import Path, PurePosixPath
@@ -264,6 +265,18 @@ def archive(args):
     doc = out / 'API_Key配置说明.md'
     if archive_path.exists() or doc.exists():
         raise ValueError('Delivery already exists; refusing to overwrite')
+    external = getattr(args, 'config_document', None)
+    if external is not None:
+        external = external.resolve(strict=True)
+        if external.is_relative_to(root):
+            raise ValueError('Private configuration must be outside the portable stage')
+        spec = importlib.util.spec_from_file_location('user_configuration', ROOT / 'scripts/configure-user.py')
+        configuration = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(configuration)
+        configuration.read_document(external)
+        document_text = external.read_text(encoding='utf-8-sig')
+    else:
+        document_text = (root / 'docs/API_KEY_SETUP.md').read_text(encoding='utf-8')
     files = json.loads((root / 'PACKAGE-MANIFEST.json').read_text(encoding='utf-8'))['files']
     expected = {entry['path'] for entry in files}
     actual = {file.relative_to(root).as_posix() for file in root.rglob('*') if file.is_file()
@@ -278,7 +291,7 @@ def archive(args):
             package.write(root / entry['path'], 'Haike_videoflow/' + entry['path'])
         package.write(root / 'PACKAGE-MANIFEST.json', 'Haike_videoflow/PACKAGE-MANIFEST.json')
     digest = sha256(archive_path)
-    text = (root / 'docs/API_KEY_SETUP.md').read_text(encoding='utf-8')
+    text = document_text
     text += '\n## 本次交付校验\n\n- ZIP SHA256：`' + digest + '`\n'
     text += '- 源码提交：`' + json.loads((root / 'RELEASE.json').read_text(encoding='utf-8'))['source_commit'] + '`\n'
     doc.write_text(text, encoding='utf-8-sig')
@@ -294,6 +307,8 @@ def main():
     parser.add_argument('--include-crawler', action='store_true')
     parser.add_argument('--chromium', type=Path, help='Clean Playwright Chromium application directory; no browser profile')
     parser.add_argument('--destination', type=Path, default=ROOT / 'dist/portable')
+    parser.add_argument('--config-document', type=Path,
+                        help='Optional private configuration document delivered separately; never added to the ZIP')
     args = parser.parse_args()
     if args.action == 'stage':
         if not args.runtime_archive or not args.runtime_archive.is_file():

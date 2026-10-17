@@ -2,7 +2,7 @@
 
 海客科技视频工作台与统一API收费中转站的源码仓库。用户确认的仓库为 [hrbj18/haike-workflow](https://github.com/hrbj18/haike-workflow)，保留公开可见性和原提交历史；后续迭代、分支和提交见 [Git管理](docs/GIT_WORKFLOW.md)。本次新版位于 `feat/retain-capabilities-ui`，`main` 保留旧基线；当前另行制作干净便携 ZIP。
 
-**解压便携包后，根目录有 `PACKAGE-MANIFEST.json`：先读[便携包初始化](docs/PORTABLE.md)，依次运行 `01-setup.cmd`、`02-start.cmd`，用 `03-check.cmd` 诊断。** 包内已有运行时，使用这条入口。海客 Key、三平台扫码和新账户能力边界见[首次配置说明](docs/API_KEY_SETUP.md)。源码 checkout 按下文“Windows 源码安装”准备环境。保留以下布局：
+**解压便携包后，根目录有 `PACKAGE-MANIFEST.json`：先读[便携包初始化](docs/PORTABLE.md)，用 `01-setup.cmd -ConfigDocument '私有文档绝对路径' -Full` 一次初始化并导入，再运行 `02-start.cmd`。** 包内已有运行时，使用这条入口；后续可用 `03-check.cmd` 诊断。把实际需要的 Keys、服务地址、音色和预设集中到单独的私有配置文档，步骤与三平台扫码见[首次配置说明](docs/API_KEY_SETUP.md)。源码 checkout 按下文“Windows 源码安装”准备环境。保留以下布局：
 
 Codex / Agent 首次接入请读[基础教程](START_HERE.md)：Codex 总控、首次配置、单条制作、夜间三条与发布汇报、原任务恢复；接口详情继续由各模块文档维护。
 
@@ -43,7 +43,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/start-publisher.
 
 ## 按能力配置
 
-- 新工作台云端模型、配音、数字人：在“API设置”填写海客Key及网关地址，默认通过统一网关调用。明确启用的内部配音备用使用私有供应商配置；私人音色映射仍在本机，不能仅凭Key在新机恢复。当前能力与云端音色发布边界见[交付回归](docs/RELEASE_READINESS_20261016.md)。
+- 新工作台模型、配音、数字人：按[一次导入说明](docs/API_KEY_SETUP.md) 选择已开通的海客网关或自己的现有直连服务，集中导入实际所需配置。设置页也可填写海客 Key 与网关地址。私人音色映射与所选服务/账号绑定，实际可用性须检查；当前能力与云端音色发布边界见[交付回归](docs/RELEASE_READINESS_20261016.md)。
 - 发布：安装时从 `creatorhub/config.example.yaml` 生成忽略的 `config.yaml`。
 - 采集：公开默认配置为 `copy_skill/copy_skill-main/config/content_intelligence.json`；本机覆写写到同目录 `content_intelligence.local.json`（递归合并对象，列表整体替换）。显式传配置路径时不加载覆写。
 - 抖音采集：MediaCrawler 为独立可选依赖；按 `Haike-Videohub/deps/B-external.md` 配置，先核对其许可。没有将第三方源码复制进本仓库。

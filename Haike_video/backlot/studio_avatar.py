@@ -301,7 +301,8 @@ def captions(result, duration, split=True, max_chars=18):
 def clock_captions(result, duration):
     # GPT can select observed word boundaries even if Whisper returns a single
     # long segment. Display wrapping must not determine storyboard timing.
-    if not all(s.get("words") for s in result.get("segments", []) if s.get("text", "").strip()):
+    segments = result.get("segments") or []
+    if not segments or not all(s.get("words") for s in segments if s.get("text", "").strip()):
         return captions(result, duration, split=False)
     return [{"text": w["text"].strip(), "startMs": w["start"]*1000, "endMs": min(w["end"], duration)*1000,
              "timestampMs": None, "confidence": w.get("probability"), "clock": "word"}

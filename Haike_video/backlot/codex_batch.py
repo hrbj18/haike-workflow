@@ -92,12 +92,19 @@ def validate_spec(raw):
     _money(spec["limit_micros"])
     if not isinstance(spec["items"], list) or not 1 <= len(spec["items"]) <= 20:
         raise BatchError("一个批次需要1至20个明确槽位")
-    required = {"slot_id", "topic_key", "sources", "title", "text", "template_id", "portrait_path", "voice_id", "model_id",
-                "speech_rate", "target_duration_seconds", "max_charge_micros", "allow_graphic_fallback", "publishing"}
+    required = {"slot_id", "topic_key", "sources", "title", "text", "template_id", "portrait_path",
+                "target_duration_seconds", "max_charge_micros", "allow_graphic_fallback", "publishing"}
+    voice_fields = {"voice_id", "model_id", "speech_rate"}
     slots, topics = set(), set()
     for item in spec["items"]:
-        if not isinstance(item, dict) or not required <= set(item) or set(item) - required - {"n1", "avatar_defaults_snapshot", "network_materials_enabled"}:
+        if not isinstance(item, dict) or not required <= set(item) or set(item) - required - voice_fields - {"audio_path", "n1", "avatar_defaults_snapshot", "network_materials_enabled"}:
             raise BatchError("制作槽位规格字段不完整或包含未知字段")
+        audio_mode = "audio_path" in item
+        if audio_mode:
+            if not isinstance(item["audio_path"], str) or not item["audio_path"].strip():
+                raise BatchError("完整音轨需要明确本机音频路径")
+        elif not voice_fields <= set(item):
+            raise BatchError("配音路线需要明确音色、模型和语速；完整音轨请提供audio_path")
         if "network_materials_enabled" in item and type(item["network_materials_enabled"]) is not bool:
             raise BatchError("联网素材开关须为布尔值")
         if "avatar_defaults_snapshot" in item:
@@ -118,9 +125,13 @@ def validate_spec(raw):
         if not isinstance(item["text"], str) or not 1 <= len(item["text"].strip()) <= 5000:
             raise BatchError("口播稿需要1至5,000字")
         for key in ("voice_id", "model_id"):
+            if audio_mode and key not in item:
+                continue
             if not isinstance(item[key], str) or not re.fullmatch(r"[A-Za-z0-9_./:-]{1,160}", item[key]):
                 raise BatchError("模型或音色编号无效")
         for key, lower, upper in (("speech_rate", .5, 2), ("target_duration_seconds", 1, 120)):
+            if audio_mode and key not in item:
+                continue
             if type(item[key]) not in {int, float} or not math.isfinite(item[key]) or not lower <= item[key] <= upper:
                 raise BatchError("语速或目标时长无效")
         if type(item["allow_graphic_fallback"]) is not bool:
@@ -130,8 +141,12 @@ def validate_spec(raw):
             raise BatchError("必须明确本机人物图片路径")
         sources = item["sources"]
         if not isinstance(sources, list) or not sources:
-            raise BatchError("每条需要明确来源；语义与事实由总控查证")
+            raise BatchError("每条需要明确来源；可记录公开网页或用户提供的素材")
         for source in sources:
+            if isinstance(source, dict) and source.get("kind") == "user_provided":
+                if set(source) != {"kind", "label"} or not isinstance(source.get("label"), str) or not 1 <= len(source["label"].strip()) <= 200:
+                    raise BatchError("用户提供的素材来源需要简短说明，不记录私人路径或凭据")
+                continue
             if not isinstance(source, dict) or not isinstance(source.get("url"), str):
                 raise BatchError("来源需要公开URL对象")
             url = urllib.parse.urlsplit(source["url"])
@@ -148,12 +163,19 @@ def validate_spec(raw):
         if pub["source_rights_status"] not in {"owned", "confirmed", "unknown"}:
             raise BatchError("来源权利状态无效")
         targets = pub["targets"]
-        if not isinstance(targets, list) or not targets:
-            raise BatchError("发布目标不能为空")
+        if not isinstance(targets, list):
+            raise BatchError("发布目标应为列表；仅制作时可明确设为空列表")
         identities = set()
         for target in targets:
-            if not isinstance(target, dict) or set(target) != {"platform", "account_id"} or target["platform"] not in PLATFORMS or type(target["account_id"]) is not int or target["account_id"] < 1:
+            if not isinstance(target, dict) or not {"platform", "account_id"} <= set(target) or set(target) - {"platform", "account_id", "scheduled_at"} or target["platform"] not in PLATFORMS or type(target["account_id"]) is not int or target["account_id"] < 1:
                 raise BatchError("发布目标必须明确平台及账号")
+            if "scheduled_at" in target:
+                try:
+                    when = datetime.fromisoformat(target["scheduled_at"].replace("Z", "+00:00"))
+                    if when.tzinfo is None:
+                        raise ValueError()
+                except (ValueError, TypeError, AttributeError):
+                    raise BatchError("发布时间scheduled_at必须包含时区") from None
             identity = (target["platform"], target["account_id"])
             if identity in identities:
                 raise BatchError("发布目标重复")
@@ -244,7 +266,7 @@ class CodexBatch:
         return path
 
     def _public_item(self, item):
-        return {k: copy.deepcopy(v) for k, v in item.items() if k != "portrait_path"}
+        return {k: copy.deepcopy(v) for k, v in item.items() if k not in {"portrait_path", "audio_path"}}
 
     def _all_tasks(self):
         cursor, tasks = 0, []
@@ -296,17 +318,20 @@ class CodexBatch:
 
     def resolve(self):
         self._guard()
-        voices = self.api.call("/api/studio/audio-center").get("items", [])
-        publishing = self.api.call("/api/studio/publishing")
+        voices = self.api.call("/api/studio/audio-center").get("items", []) if any("audio_path" not in i for i in self.spec["items"]) else []
+        publishing = self.api.call("/api/studio/publishing") if any(i["publishing"]["targets"] for i in self.spec["items"]) else {}
         accounts = publishing.get("accounts", [])
         result = []
         for item in self.spec["items"]:
             portrait = Path(item["portrait_path"])
             if not portrait.is_file() or portrait.is_symlink():
                 raise BatchError("明确指定的人物图片不存在或不是普通文件")
-            voice = next((v for v in voices if v.get("id") == item["voice_id"] and v.get("model") == item["model_id"]), None)
-            if voice is None:
+            voice = next((v for v in voices if v.get("id") == item.get("voice_id") and v.get("model") == item.get("model_id")), None)
+            if voice is None and "audio_path" not in item:
                 raise BatchError("本账号未提供规格指定的音色/模型，未换源")
+            if "audio_path" in item and (not Path(item["audio_path"]).is_file() or Path(item["audio_path"]).is_symlink()):
+                raise BatchError("明确指定的完整音轨不存在或不是普通文件")
+            voice = voice or {}
             target_states = []
             for target in item["publishing"]["targets"]:
                 account = next((a for a in accounts if a.get("id") == target["account_id"] and a.get("platform") == target["platform"]), None)
@@ -314,9 +339,11 @@ class CodexBatch:
                     raise BatchError("指定发布账号不存在或平台不符")
                 target_states.append({**target, "status": account.get("status"),
                     "needs_recovery": account.get("status") != "active"})
-            result.append({"slot_id": item["slot_id"], "draft_id": self._draft_id(item), "voice_id": voice["id"],
-                           "voice_name": voice.get("name"), "model_id": item["model_id"], "template_id": item["template_id"],
-                           "speech_rate": item["speech_rate"], "portrait_name": Path(item["portrait_path"]).name,
+            result.append({"slot_id": item["slot_id"], "draft_id": self._draft_id(item), "voice_id": voice.get("id"),
+                           "voice_name": voice.get("name"), "model_id": item.get("model_id"), "template_id": item["template_id"],
+                           "sound_mode": "audio" if "audio_path" in item else "voice", "speech_rate": None if "audio_path" in item else item["speech_rate"],
+                           "audio_sha256": file_sha(item["audio_path"]) if "audio_path" in item else None,
+                           "portrait_name": Path(item["portrait_path"]).name,
                            "portrait_source": "account_preset" if item.get("avatar_defaults_snapshot", {}).get("values", {}).get("portrait_file_id") else "explicit_local_override", "portrait_sha256": file_sha(portrait),
                            "cloud_portrait_image_id": (voice.get("preferences") or {}).get("image_file_id"), "targets": target_states})
         return {"batch_id": self.spec["batch_id"], "spec_sha256": self.spec_hash, "items": result}
@@ -350,6 +377,11 @@ class CodexBatch:
             raise BatchError("本批人物原图已缺失，请恢复原图后准备，不换人物")
         record = {"spec_sha256": self.spec_hash, "spec": self.spec,
                   "portrait_sha256": file_sha(item["portrait_path"])}
+        if "audio_path" in item:
+            audio = Path(item["audio_path"])
+            if not audio.is_file() or audio.is_symlink():
+                raise BatchError("本批完整音轨缺失，请恢复原音频，不自动改配音")
+            record["audio_sha256"] = file_sha(audio)
         path = folder / "spec.json"
         with operation_lock(folder / "spec-lock"):
             old = read_record(path)
@@ -359,9 +391,13 @@ class CodexBatch:
                 write_record(path, record)
         return path
 
-    def _input(self, item, portrait=None):
-        value = {"soundMode": "voice", "modelId": item["model_id"], "voiceId": item["voice_id"],
-                 "rate": item["speech_rate"], "subtitles": True, "portrait": portrait or {}, "ai": {"enabled": False}}
+    def _input(self, item, portrait=None, audio=None):
+        value = {"soundMode": "audio" if "audio_path" in item else "voice", "subtitles": True,
+                 "portrait": portrait or {}, "ai": {"enabled": False}}
+        if "audio_path" in item:
+            value["audio"] = audio or {}
+        else:
+            value.update(modelId=item["model_id"], voiceId=item["voice_id"], rate=item["speech_rate"])
         if "network_materials_enabled" in item:
             value["network_materials_enabled"] = item["network_materials_enabled"]
         if "n1" in item:
@@ -389,7 +425,8 @@ class CodexBatch:
                 "facts": {"spec_sha256": self.spec_hash, "spec_ref": path.relative_to(self.projects / draft_id).as_posix(),
                     "topic_key": item["topic_key"], "topic_key_normalized": normalized(item["topic_key"]),
                     "snapshot": self._public_item(item), "portrait": {"source": "explicit_local_override",
-                        "sha256": file_sha(item["portrait_path"]), "name": Path(item["portrait_path"]).name}, "execution": {}}}
+                        "sha256": file_sha(item["portrait_path"]), "name": Path(item["portrait_path"]).name},
+                    **({"audio": {"source": "user_provided_complete_track", "sha256": file_sha(item["audio_path"])}} if "audio_path" in item else {}), "execution": {}}}
             task = self.api.call("/api/task-center/tasks", payload)
             self._task_ids[self._client_id(item)] = task["id"]
             try:
@@ -410,7 +447,7 @@ class CodexBatch:
             task = self._task(item)
             execution = task["facts"].get("execution", {})
             draft = self.api.call("/api/studio/drafts/" + self._draft_id(item))
-            expected = self._input(item, draft.get("input", {}).get("portrait"))
+            expected = self._input(item, draft.get("input", {}).get("portrait"), draft.get("input", {}).get("audio"))
             if any(draft.get(k) != item[k] for k in ("template_id", "title", "text")) or draft.get("input") != expected:
                 raise BatchError("草稿内容与冻结规格不同，不能沿用本批制作")
             if execution.get("quote_id"):
@@ -418,12 +455,21 @@ class CodexBatch:
                     raise BatchError("已报价草稿版本改变，不能替换原报价")
                 continue
             portrait = draft["input"].get("portrait") or {}
+            audio = draft["input"].get("audio") or {}
+            changed = False
             if not portrait.get("id"):
                 raw = Path(item["portrait_path"]).read_bytes()
                 query = urllib.parse.urlencode({"draft_id": draft["id"], "kind": "image", "filename": Path(item["portrait_path"]).name})
                 portrait = self.api.call("/api/studio/assets?" + query, raw=raw, content_type="application/octet-stream")
+                changed = True
+            if "audio_path" in item and not audio.get("id"):
+                raw = Path(item["audio_path"]).read_bytes()
+                query = urllib.parse.urlencode({"draft_id": draft["id"], "kind": "audio", "filename": Path(item["audio_path"]).name})
+                audio = self.api.call("/api/studio/assets?" + query, raw=raw, content_type="application/octet-stream")
+                changed = True
+            if changed:
                 draft = self.api.call("/api/studio/drafts", {"id": draft["id"], "revision": draft["revision"],
-                    "template_id": item["template_id"], "title": item["title"], "text": item["text"], "input": self._input(item, portrait)})
+                    "template_id": item["template_id"], "title": item["title"], "text": item["text"], "input": self._input(item, portrait, audio)})
             quote = self.api.call(f"/api/studio/drafts/{draft['id']}/quote", {"revision": draft["revision"]})
             if int(quote["known_max_micros"]) > item["max_charge_micros"]:
                 raise BatchError("已知报价超过本条预算，未提交生成")
@@ -494,6 +540,8 @@ class CodexBatch:
                 "status": task["status"], "stage": task["stage"], "queue": queue,
                 "work_id": task.get("links", {}).get("work_id") or ((job or {}).get("result") or {}).get("work_id"), "quote_id": execution.get("quote_id"),
                 "submission_state": execution.get("submission_state"), "max_charge_micros": item["max_charge_micros"],
+                "summary": task.get("summary", ""), "publication_receipts": copy.deepcopy(execution.get("publication_receipts", [])),
+                "audio_sha256": task.get("facts", {}).get("audio", {}).get("sha256"),
                 "budget": {k: task.get("budget", {}).get(k) for k in ("actual_micros", "reserved_micros", "estimated_micros")}})
         def total(key):
             values = [row["budget"][key] for row in items]
@@ -650,11 +698,20 @@ class CodexBatch:
             state = task["status"]
             if queue:
                 state = {"completed": "running", "running": "running", "queued": "queued", "failed": "failed",
-                         "ambiguous": "uncertain", "awaiting_human": "awaiting_human"}.get(queue["status"], state)
+                         "ambiguous": "uncertain", "awaiting_human": "awaiting_human",
+                         "paused": "paused", "cancelled": "cancelled"}.get(queue["status"], state)
                 if queue["status"] == "completed":
                     stage = "成片已生成，等待Codex质量检查"
+                    if not item["publishing"]["targets"]:
+                        approval = task["facts"].get("execution", {})
+                        video = self.projects / self._draft_id(item) / "renders" / f"studio-{approval.get('draft_revision')}" / "avatar-preview.mp4"
+                        approved = (bool(approval.get("production_approval_sha256"))
+                                    and video.is_file() and not video.is_symlink()
+                                    and file_sha(video) == approval.get("approved_video_sha256"))
+                        state = "completed" if approved else "awaiting_human"
+                        stage = "成片已审核完成，仅制作未发布" if approved else stage
             receipts, source_error = [], None
-            if row.get("work_id"):
+            if row.get("work_id") and item["publishing"]["targets"]:
                 try:
                     work = self.api.call(f"/api/works/{row['work_id']}/sync", {})
                     if work.get("project_id") != self._draft_id(item):
@@ -687,15 +744,116 @@ class CodexBatch:
                     self.api.call("/api/task-center/tasks/" + task["id"] + "/events", {
                         "client_id": "batch-report:" + fingerprint(command["id"])[:40], "kind": "report", "stage": stage, "message": message})
                     self.api.call("/api/task-center/commands/" + command["id"] + "/ack", {"status": "acknowledged", "result": message})
-        return self.status(slot)
+        result = self.status(slot)
+        from backlot.codex_batch_report import write_report
+        result["report_path"] = str(write_report(self, result, slot=slot))
+        return result
+
+    def advance(self, evidence=None, slot=None):
+        """One host wake-up: advance original operations, then persist a report.
+
+        There is no timer, content reasoning, or fabricated review here. The
+        existing queue and publisher continue their own durable operations.
+        """
+        if evidence is not None and (not isinstance(evidence, dict)
+                or evidence.get("spec_sha256") != self.spec_hash or evidence.get("batch_id") != self.spec["batch_id"]
+                or not isinstance(evidence.get("items"), list) or any(not isinstance(e, dict) for e in evidence["items"])):
+            raise BatchError("推进证据必须是本批冻结规格的对象和items列表，未启动制作或发布")
+        self._guard()
+        known = {t.get("client_id") for t in self._all_tasks()}
+        if any(self._client_id(item) not in known for item in self.spec["items"]):
+            self.init()
+        errors = []
+        for item in self._items(slot):
+            identity = item["slot_id"]
+            try:
+                task = self._task(item)
+                if task.get("status") == "completed":
+                    continue
+                execution = task["facts"].get("execution", {})
+                if not execution.get("quote_id"):
+                    self.prepare(identity)
+                self.submit(identity)
+                task = self._task(item)
+                job = self._queue(item, task)
+                if job and job.get("status") == "completed" and evidence is not None:
+                    if item["publishing"]["targets"]:
+                        self.publish(evidence, identity)
+                    else:
+                        self.approve(evidence, identity)
+                elif job and job.get("status") in {"failed", "ambiguous", "awaiting_human", "cancelled"}:
+                    errors.append({"slot_id": identity, "message": "原制作任务需要处理，请核对status后按原编号resume", "unknown_result": job.get("status") == "ambiguous"})
+            except BatchError as exc:
+                errors.append({"slot_id": identity, "message": str(exc), "unknown_result": exc.unknown})
+        result = self.report(slot)
+        for row in result["items"]:
+            blocked = [r for r in row.get("publication_receipts", []) if r.get("state") in {"unknown", "failed", "blocked", "login_blocked"}]
+            if blocked and not any(e["slot_id"] == row["slot_id"] for e in errors):
+                errors.append({"slot_id": row["slot_id"], "message": "部分发布平台失败或阻塞，请核对文档并恢复原计划", "unknown_result": any(r["state"] == "unknown" for r in blocked)})
+        result.update(ok=not errors, errors=errors)
+        from backlot.codex_batch_report import write_report
+        result["report_path"] = str(write_report(self, result, slot=slot))
+        return result
+
+    def approve(self, evidence, slot=None):
+        """Confirm a reviewed production-only work; never create a publish plan."""
+        self._guard()
+        if (not isinstance(evidence, dict) or evidence.get("spec_sha256") != self.spec_hash
+                or evidence.get("batch_id") != self.spec["batch_id"] or not isinstance(evidence.get("items"), list)):
+            raise BatchError("审核证据不属于本批冻结规格")
+        for item in self._items(slot):
+            if item["publishing"]["targets"]:
+                raise BatchError("此槽位有发布目标，请按原公开发布证据流程处理")
+            check = next((e for e in evidence["items"] if isinstance(e, dict) and e.get("slot_id") == item["slot_id"]), None)
+            if not check or any(check.get(k) is not True for k in ("technical_checks_passed", "frame_review_passed", "source_claims_verified")):
+                raise BatchError("仅制作验收仍需要技术、画面与事实检查证据")
+            task = self._task(item)
+            job = self._queue(item, task)
+            if not job or job.get("status") != "completed":
+                raise BatchError("原制作队列尚未完成")
+            project = self.projects / self._draft_id(item)
+            if not isinstance(check.get("quality_report"), str):
+                raise BatchError("请提供本项目技术报告")
+            quality_path = Path(check["quality_report"]).resolve()
+            if not quality_path.is_relative_to(project.resolve()) or not quality_path.is_file():
+                raise BatchError("技术报告必须是本项目内文件")
+            quality = json.loads(quality_path.read_text(encoding="utf-8"))
+            revision = task["facts"]["execution"]["draft_revision"]
+            video = project / "renders" / f"studio-{revision}" / "avatar-preview.mp4"
+            digest = file_sha(video)
+            if (quality.get("status") != "technical_checks_passed"
+                    or quality.get("video", {}).get("sha256_after") != digest or check.get("video_sha256") != digest):
+                raise BatchError("审核证据未绑定当前成片")
+            work_id = (job.get("result") or {}).get("work_id") or task.get("links", {}).get("work_id")
+            if not work_id:
+                raise BatchError("完成作品尚未登记，请先恢复原作品入库")
+            work = self.api.call("/api/works/" + work_id)
+            if work.get("project_id") != self._draft_id(item):
+                raise BatchError("作品不属于本槽位")
+            if task["facts"]["execution"].get("production_approval_sha256") != fingerprint(check):
+                mode = work.get("mode", "manual")
+                work = self.api.call("/api/works/register", {"project_id": self._draft_id(item), "path": str(video),
+                    "work_key": "main", "mode": mode, "event_id": "codex-quality:" + digest,
+                    "quality_passed": mode == "automatic", "actor": "codex-batch"})
+                version = next(v for v in work["versions"] if v["sha256"] == digest)
+                if work.get("final_version_id") != version["version_id"]:
+                    self.api.call(f"/api/works/{work_id}/confirm", {"revision": work["revision"], "version_id": version["version_id"],
+                        "evidence": "production-only reviewed evidence " + fingerprint(check), "actor": "codex-batch"})
+                self._patch(item, execution={"production_approval_sha256": fingerprint(check), "approved_video_sha256": digest},
+                            links={"work_id": work_id}, status="completed", stage="成片已审核完成，仅制作未发布")
+        return self.report(slot)
 
     def publish(self, evidence, slot=None):
         """Explicit second boundary: verified local evidence, then original plans."""
         self._guard()
-        if evidence.get("spec_sha256") != self.spec_hash or evidence.get("batch_id") != self.spec["batch_id"]:
+        if (not isinstance(evidence, dict) or evidence.get("spec_sha256") != self.spec_hash
+                or evidence.get("batch_id") != self.spec["batch_id"] or not isinstance(evidence.get("items"), list)
+                or any(not isinstance(e, dict) for e in evidence["items"])):
             raise BatchError("发布证据不属于本批冻结规格")
         entries = evidence.get("items", [])
         for item in self._items(slot):
+            if not item["publishing"]["targets"]:
+                raise BatchError("本槽位仅制作，未授权发布目标")
             check = next((e for e in entries if e.get("slot_id") == item["slot_id"]), None)
             if not check or any(check.get(k) is not True for k in ("technical_checks_passed", "frame_review_passed", "source_claims_verified", "authorized_publication", "cover_reviewed")):
                 raise BatchError("技术/画面/事实/封面或公开发布授权证据不完整")

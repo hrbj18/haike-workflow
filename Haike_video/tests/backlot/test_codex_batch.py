@@ -77,9 +77,9 @@ class API:
             self.drafts[value["id"]] = value
             return copy.deepcopy(value)
         if path.startswith("/api/studio/assets?"):
-            assert raw == b"private portrait fixture"
+            assert raw in (b"private portrait fixture", b"complete audio fixture")
             self.uploads += 1
-            return {"id": f"asset-{self.uploads}", "name": "portrait.png", "kind": "image"}
+            return {"id": f"asset-{self.uploads}", "name": "audio.wav" if "kind=audio" in path else "portrait.png", "kind": "audio" if "kind=audio" in path else "image"}
         if path.startswith("/api/studio/drafts/"):
             parts = path.split("/")
             key = parts[4]
@@ -95,7 +95,7 @@ class API:
             if parts[-1] == "generate":
                 self.submissions += 1
                 assert data["revision"] == self.drafts[key]["revision"]
-                job = {"job_id": "PQ-1", "project_id": key, "kind": "studio_avatar", "parent_job_id": f"studio-{data['revision']}",
+                job = {"job_id": "PQ-" + str(len(self.jobs) + 1), "project_id": key, "kind": "studio_avatar", "parent_job_id": f"studio-{data['revision']}",
                        "status": "queued", "stage": "排队", "result": {}}
                 self.jobs[job["job_id"]] = job
                 if self.lose_submit_response:
@@ -241,6 +241,64 @@ def test_legacy_batch_does_not_gain_new_network_field_and_invalid_switch_is_reje
     spec['items'][0]['network_materials_enabled'] = 'true'
     with pytest.raises(BatchError, match='联网素材'):
         validate_spec(spec)
+
+
+def test_audio_defaults_do_not_require_a_tts_voice_or_model(preset_setup):
+    from backlot.codex_batch_defaults import resolve_spec_defaults
+    spec, root, api, preset = preset_setup
+    item = spec['items'][0]
+    audio = root / 'original.wav'; audio.write_bytes(b'complete audio fixture')
+    item['audio_path'] = str(audio)
+    for name in ('voice_id', 'model_id', 'speech_rate'):
+        item.pop(name)
+    preset.center.voices = lambda: {'items': []}
+    resolved = resolve_spec_defaults(spec, root=root, api=api)
+    assert all(name not in resolved['items'][0] for name in ('voice_id', 'model_id', 'speech_rate', 'avatar_defaults_snapshot'))
+    assert api.quotes == api.submissions == 0
+
+
+def test_user_provided_source_needs_no_fabricated_web_url(setup):
+    spec, root, api = setup
+    source = {'kind': 'user_provided', 'label': '用户授权提供的人物图和稿件'}
+    spec['items'][0]['sources'] = [source]
+    assert validate_spec(spec)['items'][0]['sources'] == [source]
+    source['label'] = ''
+    with pytest.raises(BatchError, match='简短说明'):
+        validate_spec(spec)
+    assert api.calls == []
+
+
+def test_report_writes_real_document_and_slot_report_does_not_replace_batch(setup):
+    spec, root, api = setup
+    batch = CodexBatch(spec, root=root, api=api)
+    batch.init(); batch.prepare(); batch.submit()
+    result = batch.report()
+    path = Path(result['report_path'])
+    contents = path.read_text(encoding='utf-8')
+    assert spec['batch_id'] in contents and spec['items'][0]['title'] in contents and '未知' in contents
+    assert spec['items'][0]['portrait_path'] not in contents
+    partial = batch.report(slot='n1')
+    assert partial['report_path'] != result['report_path']
+    assert path.read_text(encoding='utf-8') == contents
+
+
+def test_advance_records_failed_queue_and_never_retries_without_resume(setup):
+    spec, root, api = setup
+    batch = CodexBatch(spec, root=root, api=api)
+    batch.advance()
+    api.jobs['PQ-1'].update(status='failed', retryable=True)
+    result = CodexBatch(spec, root=root, api=api).advance()
+    assert result['ok'] is False and result['errors']
+    assert api.submissions == 1 and not any(c[1].endswith('/retry') for c in api.calls)
+    assert '待处理事项' in Path(result['report_path']).read_text(encoding='utf-8')
+
+
+@pytest.mark.parametrize('evidence', [[], {'batch_id': 'other', 'items': []}])
+def test_advance_rejects_malformed_or_foreign_evidence_before_starting_work(setup, evidence):
+    spec, root, api = setup
+    with pytest.raises(BatchError, match='推进证据'):
+        CodexBatch(spec, root=root, api=api).advance(evidence)
+    assert api.calls == [] and api.submissions == api.quotes == 0
 
 
 def test_invalid_or_foreign_preset_cannot_silently_start_work(preset_setup):

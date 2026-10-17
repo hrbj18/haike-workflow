@@ -273,6 +273,38 @@ class PortablePackageTests(unittest.TestCase):
                 package.archive(SimpleNamespace(stage=stage, destination=output))
             self.assertEqual(sentinel.read_bytes(), b'existing user delivery')
 
+    def test_private_multi_key_document_is_only_written_beside_zip(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            stage = root / 'stage'
+            self.make_stage(stage)
+            payload = {'schema_version': 1, 'providers': {
+                'bailian': {'api_key': 'synthetic-bailian-credential'},
+                'pexels': {'api_key': 'synthetic-pexels-credential'}}}
+            document = self.write(root, 'private.md', ('```haike-config\n' + json.dumps(payload) + '\n```\n').encode())
+            output = root / 'delivery'
+            package.archive(SimpleNamespace(stage=stage, destination=output, config_document=document))
+            delivered = (output / 'API_Key配置说明.md').read_text(encoding='utf-8-sig')
+            self.assertIn('synthetic-bailian-credential', delivered)
+            self.assertIn('synthetic-pexels-credential', delivered)
+            with zipfile.ZipFile(output / 'Haike_videoflow.zip') as handle:
+                for name in handle.namelist():
+                    content = handle.read(name)
+                    self.assertNotIn(b'synthetic-bailian-credential', content)
+                    self.assertNotIn(b'synthetic-pexels-credential', content)
+
+    def test_private_document_inside_stage_is_rejected_before_archive(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            stage = root / 'stage'
+            self.make_stage(stage)
+            document = self.write(stage, 'private.md', b'```haike-config\n{"schema_version":1}\n```')
+            package.manifest(stage)
+            output = root / 'delivery'
+            with self.assertRaisesRegex(ValueError, 'outside'):
+                package.archive(SimpleNamespace(stage=stage, destination=output, config_document=document))
+            self.assertFalse((output / 'Haike_videoflow.zip').exists())
+
 
 if __name__ == '__main__':
     unittest.main()

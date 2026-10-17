@@ -15,10 +15,10 @@ from backlot.codex_batch import BatchError, CodexBatch, LocalAPI
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("command", choices=("defaults", "resolve", "init", "prepare", "submit", "status", "resume", "report", "publish"))
+    parser.add_argument("command", choices=("defaults", "resolve", "init", "prepare", "submit", "status", "resume", "report", "approve", "publish", "advance"))
     parser.add_argument("--spec", required=True, type=Path)
     parser.add_argument("--slot", help="只处理一个明确槽位；省略则依规格顺序")
-    parser.add_argument("--evidence", type=Path, help="publish专用，本批每条已实际审查的证据JSON")
+    parser.add_argument("--evidence", type=Path, help="approve/publish必需，advance可选：本批已实际审查的证据JSON")
     parser.add_argument("--base", default="http://127.0.0.1:14756")
     parser.add_argument("--output", type=Path, help="defaults专用：写入补全后的新规格文件；已有文件不覆盖")
     args = parser.parse_args(argv)
@@ -39,10 +39,13 @@ def main(argv=None):
                               "limit_micros": resolved["limit_micros"], "production_started": False}, ensure_ascii=False))
             return 0
         batch = CodexBatch(spec, api=LocalAPI(args.base))
-        if args.command == "publish":
+        if args.command == "advance":
+            evidence = json.loads(args.evidence.read_text(encoding="utf-8")) if args.evidence else None
+            result = batch.advance(evidence, args.slot)
+        elif args.command in {"approve", "publish"}:
             if args.evidence is None:
-                raise BatchError("publish必须提供明确审批证据，不从技术解码推定人工观看")
-            result = batch.publish(json.loads(args.evidence.read_text(encoding="utf-8")), args.slot)
+                raise BatchError("approve/publish必须提供明确审批证据，不从技术解码推定人工观看")
+            result = getattr(batch, args.command)(json.loads(args.evidence.read_text(encoding="utf-8")), args.slot)
         elif args.command in {"resolve", "init"}:
             if args.slot:
                 raise BatchError("resolve/init核对整个批次，不接受单槽位")
@@ -50,7 +53,7 @@ def main(argv=None):
         else:
             result = getattr(batch, args.command)(args.slot)
         print(json.dumps(result, ensure_ascii=False, indent=2))
-        return 0
+        return 2 if result.get("ok") is False else 0
     except BatchError as exc:
         print(json.dumps({"ok": False, "error": str(exc), "unknown_result": exc.unknown,
                           "action": "保留规格与原任务；先status/report核对，禁止换编号重复提交"}, ensure_ascii=False), file=sys.stderr)
