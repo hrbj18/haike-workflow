@@ -308,6 +308,25 @@ class UserConfigurationTests(unittest.TestCase):
             result = configuration.report(configuration.prepare(root, data, root), 'check')
             self.assertIn('internal_budget', result['missing'])
 
+    def test_default_task_budget_must_leave_room_after_avatar_and_selected_asr(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            data = self.full()
+            del data['avatar_defaults']['portrait_path']
+            data['budget']['per_call_micros'] = {'haike/avatar': '5000000', 'haike/tencent-asr': '1000000'}
+            configuration.apply(configuration.prepare(root, data, root))
+            result = configuration.report(configuration.prepare(root, data, root), 'check')
+            self.assertFalse(result['configuration_complete'])
+            self.assertIn('default_task_budget', result['missing'])
+            data['budget']['per_call_micros'] = {'haike/avatar': '4900000', 'haike/tencent-asr': '100000'}
+            configuration.apply(configuration.prepare(root, data, root, replace=True))
+            result = configuration.report(configuration.prepare(root, data, root), 'check')
+            self.assertIn('default_task_budget', result['missing'])
+            data['budget']['per_call_micros']['haike/avatar'] = '4000000'
+            configuration.apply(configuration.prepare(root, data, root, replace=True))
+            result = configuration.report(configuration.prepare(root, data, root), 'check')
+            self.assertTrue(result['configuration_complete'], result)
+
 
 if __name__ == '__main__':
     unittest.main()

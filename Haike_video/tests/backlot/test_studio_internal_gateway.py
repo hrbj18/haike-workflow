@@ -255,6 +255,51 @@ def test_capabilities_and_quotes_require_daily_budget_and_keep_names_generic(loc
         client.quote("haike/text", {"messages": [{"role": "user", "content": "test"}]})
 
 
+def test_configured_http_text_relay_is_available_and_quotable_without_execution(local, monkeypatch):
+    studio, audio = local
+    monkeypatch.setenv("OPENAI_BASE_URL", "http://relay.example.test/v1")
+
+    class NoExecution:
+        def execute(self, *args):
+            pytest.fail("A capability or quote must not execute a supplier request")
+
+    client = InternalClient(studio, adapter=NoExecution(), audio_center=audio)
+    capability = next(item for item in client.request("/capabilities")["items"] if item["model"] == "haike/text")
+    assert capability["status"] == "available"
+    quote = client.quote("haike/text", {"messages": [{"role": "user", "content": "fixture"}]})
+    assert quote["model"] == "haike/text" and quote["max_charge_micros"] == "10000"
+    assert "fake-internal-provider-secret" not in json.dumps({"capability": capability, "quote": quote})
+
+
+@pytest.mark.parametrize("endpoint", [
+    "http://user:fake-private@relay.example.test/v1",
+    "http://relay.example.test/v1?key=fake-private",
+    "http://relay.example.test/v1#fake-private",
+    "http://relay.example.test:invalid/v1",
+    "ftp://relay.example.test/v1",
+])
+def test_invalid_text_relay_is_unconfigured_and_cannot_quote(local, monkeypatch, endpoint):
+    studio, audio = local
+    monkeypatch.setenv("OPENAI_BASE_URL", endpoint)
+    client = InternalClient(studio, audio_center=audio)
+    capability = next(item for item in client.request("/capabilities")["items"] if item["model"] == "haike/text")
+    assert capability["status"] == "unconfigured"
+    with pytest.raises(WorkError) as error:
+        client.quote("haike/text", {"messages": [{"role": "user", "content": "fixture"}]})
+    assert "fake-private" not in str(error.value)
+    assert not list((client.directory / "quotes").glob("*.json"))
+
+
+def test_avatar_does_not_inherit_text_relay_http_permission(local, monkeypatch):
+    studio, audio = local
+    monkeypatch.setenv("RUNNINGHUB_BASE_URL", "http://supplier.example.test")
+    client = InternalClient(studio, audio_center=audio)
+    capability = next(item for item in client.request("/capabilities")["items"] if item["model"] == "haike/avatar")
+    assert capability["status"] == "unconfigured"
+    with pytest.raises(WorkError, match="HTTPS"):
+        client.quote("haike/avatar", {})
+
+
 def test_clone_sdk_rejects_traversal_before_reading_any_file(local):
     studio, audio = local
     client = InternalClient(studio, audio_center=audio)

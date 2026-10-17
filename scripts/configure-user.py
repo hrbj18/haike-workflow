@@ -510,6 +510,16 @@ def report(plan, command, written=0):
     missing = []
     if mode == 'internal':
         required = ['tts_credentials', 'runninghub_key', 'internal_budget']
+        task_budget = preset.get('max_charge_micros')
+        requested_budget = plan['preset'].get('max_charge_micros')
+        if requested_budget is not None and (plan['replace'] or task_budget is None):
+            task_budget = requested_budget
+        if task_budget is not None:
+            checks['default_task_budget'] = (
+                type(task_budget) is int and checks['internal_budget']
+                and sum(int(per_call[k]) for k in required_budget_models) < task_budget
+            )
+            required.append('default_task_budget')
         if asr_provider == 'bailian':
             checks['bailian_asr_verified'] = plan['asr'].get('verified') is True
             required += ['bailian_key', 'bailian_asr_verified']

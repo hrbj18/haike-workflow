@@ -359,24 +359,32 @@ def _validate(values, provider_id):
         if name.endswith("base_url") or name in {"base_url", "oss_endpoint"}:
             if not value:
                 continue
-            parsed = urlsplit(value)
-            if (
-                not parsed.hostname
-                or parsed.username
-                or parsed.password
-                or parsed.query
-                or parsed.fragment
-                or (
-                    parsed.scheme != "https"
-                    and not (
-                        parsed.scheme == "http"
-                        and parsed.hostname in {"127.0.0.1", "localhost", "::1"}
+            try:
+                parsed = urlsplit(value)
+                valid = bool(
+                    parsed.hostname
+                    and parsed.username is None
+                    and parsed.password is None
+                    and not parsed.query
+                    and not parsed.fragment
+                    and (
+                        parsed.scheme == "https"
+                        or (
+                            parsed.scheme == "http"
+                            and (provider_id == "text-ai" or parsed.hostname in {"127.0.0.1", "localhost", "::1"})
+                        )
                     )
                 )
-            ):
-                raise WorkError(
-                    "接口地址需要 HTTPS；本机模型可使用回环 HTTP，地址中不能包含凭据"
+                _ = parsed.port
+            except ValueError:
+                valid = False
+            if not valid:
+                message = (
+                    "文本中转接口需要 HTTP(S)，地址中不能包含凭据、查询参数或片段"
+                    if provider_id == "text-ai" else
+                    "接口地址需要 HTTPS；本机模型可使用回环 HTTP，地址中不能包含凭据、查询参数或片段"
                 )
+                raise WorkError(message)
     if provider_id == "doubao-asr" and (
         values["mode"] not in {"flash", "standard_url"}
         or values["flash_resource_id"] != "volc.bigasr.auc_turbo"

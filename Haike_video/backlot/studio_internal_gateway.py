@@ -391,7 +391,8 @@ class InternalClient:
         if model == "haike/text":
             info["target_model"] = config["text_model"]
         if config.get("base_url"):
-            services._validate({"base_url": config["base_url"]}, "text-ai")
+            provider_id = "text-ai" if info["provider"] == "openai" else info["provider"]
+            services._validate({"base_url": config["base_url"]}, provider_id)
         if model == "haike/avatar" and (
             config["workflow_id"] != "2094449979141218305"
             or config["workflow_profile"] != "infinitetalk_448x560_exact_clock_v2"

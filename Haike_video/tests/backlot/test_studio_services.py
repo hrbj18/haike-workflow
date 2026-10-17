@@ -162,11 +162,32 @@ def test_unknown_fields_invalid_endpoint_and_env_injection_are_rejected(
         {"api_key": "fake", "clear_api_key": True},
         {"api_key": "fake\nINJECT=bad"},
         {"api_key": "fake", "base_url": "https://user:secret@example.test"},
-        {"api_key": "fake", "base_url": "http://example.test/v1"},
+        {"api_key": "fake", "base_url": "http://example.test/v1?key=fake-private"},
+        {"api_key": "fake", "base_url": "http://example.test/v1#fake-private"},
+        {"api_key": "fake", "base_url": "http://@example.test/v1"},
+        {"api_key": "fake", "base_url": "http://example.test:invalid/v1"},
+        {"api_key": "fake", "base_url": "ftp://example.test/v1"},
     ):
         with pytest.raises(WorkError):
             services.update_provider(internal_studio, "text-ai", payload)
     assert not ai_text._secrets_path().is_file()
+
+
+def test_explicit_text_http_relay_can_be_saved_without_exposing_key(internal_studio):
+    saved = services.update_provider(internal_studio, "text-ai", {
+        "api_key": "fake-http-private", "base_url": "http://relay.example.test/v1", "model": "test-model",
+    })
+    assert saved["has_key"] and saved["configured"]
+    assert "fake-http-private" not in json.dumps(saved)
+    _, values = ai_text._read_env_file(ai_text._secrets_path())
+    assert values["OPENAI_BASE_URL"] == "http://relay.example.test/v1"
+
+
+@pytest.mark.parametrize("provider", ["runninghub", "doubao-text", "bailian"])
+def test_text_http_support_does_not_relax_other_suppliers(provider):
+    field = "oss_endpoint" if provider == "bailian" else "base_url"
+    with pytest.raises(WorkError, match="HTTPS"):
+        services._validate({field: "http://supplier.example.test/v1"}, provider)
 
 
 def test_budget_policy_is_explicit_nonfree_and_supplier_specific(internal_studio):
