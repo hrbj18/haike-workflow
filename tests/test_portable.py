@@ -129,6 +129,13 @@ class PortableTests(unittest.TestCase):
             self.assertEqual(env[name], "1")
         self.assertEqual(env["FFMPEG_BINARY"], str(self.root / "runtime/ffmpeg/bin/ffmpeg.exe"))
 
+    def test_existing_windows_npm_setting_does_not_create_case_duplicate(self):
+        with patch.dict(os.environ, {"NPM_CONFIG_OFFLINE": "false"}):
+            env = portable.environment()
+        names = [name for name in env if name.casefold() == "npm_config_offline"]
+        self.assertEqual(names, ["NPM_CONFIG_OFFLINE"])
+        self.assertEqual(env["NPM_CONFIG_OFFLINE"], "true")
+
     def test_identity_requires_current_workspace(self):
         with patch.object(portable, "http_json", return_value={"ok": True, "app": "backlot", "edition": "haike-workflow-2", "workspace": str(self.root.parent)}):
             self.assertFalse(portable.own_service(14756, "backlot"))

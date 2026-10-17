@@ -113,7 +113,7 @@ def environment() -> dict[str, str]:
                PLAYWRIGHT_BROWSERS_PATH=str(ROOT / "runtime/playwright"),
                HF_HUB_OFFLINE="1", TRANSFORMERS_OFFLINE="1", TOKENIZERS_PARALLELISM="false",
                PIP_NO_INDEX="1", UV_OFFLINE="1", UV_PYTHON_DOWNLOADS="never",
-               npm_config_offline="true", BACKLOT_DETACHED="1")
+               NPM_CONFIG_OFFLINE="true", BACKLOT_DETACHED="1")
     env["NO_PROXY"] = ",".join(filter(None, (env.get("NO_PROXY", ""), "localhost,127.0.0.1,::1")))
     return env
 

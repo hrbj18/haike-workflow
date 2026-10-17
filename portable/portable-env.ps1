@@ -12,7 +12,7 @@ if (Test-Path -LiteralPath $bundlePython -PathType Leaf) {
     $env:PIP_NO_INDEX = '1'
     $env:UV_OFFLINE = '1'
     $env:UV_PYTHON_DOWNLOADS = 'never'
-    $env:npm_config_offline = 'true'
+    $env:NPM_CONFIG_OFFLINE = 'true'
     $env:PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD = '1'
     $env:PLAYWRIGHT_BROWSERS_PATH = Join-Path $bundleRoot 'runtime\playwright'
     $env:HF_HUB_OFFLINE = '1'
