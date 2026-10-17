@@ -144,6 +144,20 @@ def clean_delivery(root):
         raise ValueError('Private/state files in delivery: ' + ', '.join(errors[:20]))
 
 
+def copy_browser_tree(source, destination):
+    """Copy browser application resources, excluding existing diagnostic/state files."""
+    source = source.resolve()
+    for file in source.rglob('*'):
+        if file.is_symlink() or not file.resolve().is_relative_to(source):
+            raise ValueError('Browser application contains a link')
+        rel = file.relative_to(source)
+        if not file.is_file() or private_path(rel) or file.name == 'First Run':
+            continue
+        target = destination / rel
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(file, target)
+
+
 def stage(args):
     destination = args.stage.resolve()
     if destination.exists():
@@ -170,14 +184,11 @@ def stage(args):
     if args.chromium:
         if not (args.chromium / 'chrome.exe').is_file():
             raise ValueError('Chromium directory has no chrome.exe')
-        shutil.copytree(args.chromium, destination / 'runtime/playwright' / args.chromium.parent.name / args.chromium.name,
-                        ignore=shutil.ignore_patterns('First Run', '__pycache__'))
+        copy_browser_tree(args.chromium, destination / 'runtime/playwright' / args.chromium.parent.name / args.chromium.name)
         for sibling in sorted(args.chromium.parent.parent.glob('chromium_headless_shell-*')):
-            shutil.copytree(sibling, destination / 'runtime/playwright' / sibling.name,
-                            ignore=shutil.ignore_patterns('__pycache__'))
+            copy_browser_tree(sibling, destination / 'runtime/playwright' / sibling.name)
         for sibling in sorted(args.chromium.parent.parent.glob('ffmpeg-*')):
-            shutil.copytree(sibling, destination / 'runtime/playwright' / sibling.name,
-                            ignore=shutil.ignore_patterns('__pycache__'))
+            copy_browser_tree(sibling, destination / 'runtime/playwright' / sibling.name)
     print('Copied selected runtime dependencies; no legacy application code/configuration.', flush=True)
     environments = [copy_environment(ROOT, destination, module) for module in MODULES]
     if args.include_crawler:
