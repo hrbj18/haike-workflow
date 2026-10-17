@@ -1,6 +1,8 @@
 # Haike Workflow
 
-海客科技视频工作台与统一API收费中转站的源码仓库。用户确认的仓库为 [hrbj18/haike-workflow](https://github.com/hrbj18/haike-workflow)，保留公开可见性和原提交历史；后续迭代、分支和提交见 [Git管理](docs/GIT_WORKFLOW.md)。本次新版位于 `feat/retain-capabilities-ui`，`main` 保留旧基线，暂不打包。安装时保留以下布局：
+海客科技视频工作台与统一API收费中转站的源码仓库。用户确认的仓库为 [hrbj18/haike-workflow](https://github.com/hrbj18/haike-workflow)，保留公开可见性和原提交历史；后续迭代、分支和提交见 [Git管理](docs/GIT_WORKFLOW.md)。本次新版位于 `feat/retain-capabilities-ui`，`main` 保留旧基线；当前另行制作干净便携 ZIP。
+
+**解压便携包后，根目录有 `PACKAGE-MANIFEST.json`：先读[便携包初始化](docs/PORTABLE.md)，依次运行 `01-setup.cmd`、`02-start.cmd`，用 `03-check.cmd` 诊断。** 包内已有运行时，使用这条入口。海客 Key、三平台扫码和新账户能力边界见[首次配置说明](docs/API_KEY_SETUP.md)。源码 checkout 按下文“Windows 源码安装”准备环境。保留以下布局：
 
 Codex / Agent 首次接入请读[基础教程](START_HERE.md)：Codex 总控、首次配置、单条制作、夜间三条与发布汇报、原任务恢复；接口详情继续由各模块文档维护。
 
@@ -61,7 +63,7 @@ python scripts/package-source.py
 
 GitHub Actions已启用，自动执行源码边界、迁移测试、PowerShell解析、凭据扫描，以及收费中转站、视频工作台和前端组件检查。配置见 `.github/workflows/`；没有生产密钥，不自动部署或执行真实收费与发布任务。
 
-源码打包仅导出已提交 HEAD，工作区有源码改动时拒绝打包；ZIP 与 SHA256 写入忽略的 dist。源码 ZIP 不包含虚拟环境和运行时，不是离线安装包。
+源码打包仅导出已提交 HEAD，工作区有源码改动时拒绝打包；ZIP 与 SHA256 写入忽略的 dist。源码 ZIP 不包含虚拟环境和运行时。便携 ZIP 单独包含经清单核对的运行环境与干净前端产物，初始化方法和实际验证范围见[便携包说明](docs/PORTABLE.md)。
 
 项目内页的可选浏览器回归使用独立列出的开发依赖，不影响基础运行配置。首次运行前准备对应的 Chromium；已有匹配缓存时安装器会复用：
 

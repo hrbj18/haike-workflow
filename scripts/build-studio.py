@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PRIVATE_PREVIEWS = (
     'n1-cover.jpg', 'n1-presenter.jpg', 'n1-material.jpg',
     'n1-screenshot.jpg', 'n1-data.jpg', 'n1-sample.mp4',
-    'template3-poster.png',
+    'template3-poster.png', 'presenter.png',
 )
 
 

@@ -1,6 +1,6 @@
 # Agent 接入教程
 
-适用于本单仓库。所有命令从包含本文件的仓库根目录执行，路径使用本次 checkout 的实际位置。
+适用于本单仓库和新版便携包。所有命令从包含本文件的根目录执行，路径使用本次副本的实际位置。根目录存在 `PACKAGE-MANIFEST.json` 时，先按 [PORTABLE.md](docs/PORTABLE.md) 使用包内运行时初始化，再继续本文。
 
 本产品采用 **Agent 总控＋项目执行工具**：Agent 理解一句话要求、整理稿件、推进任务、检查结果并写汇报；项目负责素材、配音、数字人、渲染、持久记录和平台发布。通过 Codex 完成连续三条制作、排队发布和晨报已有本机实跑记录；其他 Agent 按下述条件接入，尚未完成 WorkBuddy 等产品的实跑验证。
 
@@ -18,7 +18,7 @@
 
 ## 1. 读取入口并确认任务
 
-先读根 [AGENTS.md](AGENTS.md)，再读 [Haike_video/AGENTS.md](Haike_video/AGENTS.md) 及其要求的文档。制作流程和当前状态以该入口为准，安装以根 [README.md](README.md) 为准。
+先读根 [AGENTS.md](AGENTS.md)，再读 [Haike_video/AGENTS.md](Haike_video/AGENTS.md) 及其要求的文档。制作流程和当前状态以该入口为准；便携包安装读 [PORTABLE.md](docs/PORTABLE.md)，源码安装读根 [README.md](README.md)。
 
 | 用户任务 | 进入方式 | 本步完成条件 |
 | --- | --- | --- |
@@ -32,14 +32,14 @@
 
 ## 2. 安装、启动和只读检查
 
-新环境按根 [README.md](README.md) 准备依赖并运行 `scripts/setup.ps1`。源码包需要安装环境；是否已有可用运行时，以本机检查结果为准。
+先判断分发类型：有 `PACKAGE-MANIFEST.json` 时，运行 `01-setup.cmd`，再运行 `03-check.cmd` 和 `02-start.cmd`，详见 [PORTABLE.md](docs/PORTABLE.md)。便携包使用 `runtime/python/python.exe`，保留其运行时布局。没有该清单的源码 checkout 按根 [README.md](README.md) 准备依赖并运行 `scripts/setup.ps1`；已安装源码环境的启动入口如下。
 
 ```powershell
 # 已安装环境的启动入口；启动器会核对并启动本副本账号服务。
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\start-workbench.ps1 -NoBrowser
 ```
 
-默认工作台 `http://127.0.0.1:14756/avatar`、账号服务 `http://127.0.0.1:8000`，以启动器结果为准。发现端口已被其他副本占用时，确认目标副本及实际端口；保留其他副本运行。
+默认工作台 `http://127.0.0.1:14756/avatar`、账号服务 `http://127.0.0.1:8000`，以启动器结果为准。便携启动器在端口占用时选择空闲端口；将下面的 `$taskBase` 和后续 CLI 的 `--base` 改为实际工作台根地址。保留其他副本运行。
 
 ```powershell
 # 只读检查：这里不创建制作、付费或发布任务。
@@ -69,7 +69,7 @@ $taskHealth | Select-Object ok, edition, workspace
 
 ## 3. 新用户的一次性配置
 
-1. 在工作台“API设置”配置用户自己的海客 Key 和网关，检查本次所需模型是否可用。凭据经本机私有配置保存，教程、规格和汇报只记录配置状态。
+1. 按 [API Key 与首次配置](docs/API_KEY_SETUP.md) 在工作台“API设置”配置用户自己的海客 Key 和网关，检查本次所需模型是否可用。凭据经本机私有配置保存，教程、规格和汇报只记录配置状态。
 2. 上传用户授权的人物图；按需要上传完整录音，或克隆/选择当前账号可用的音色。私人音色和内部备用服务不会随源码自动迁移；接口缺失时说明实际服务错误，由管理员补部署或开通。
 3. 在“平台账号”中分别扫码登录本次需要的平台，检查素材与发布两项。绿色表示最近 8 小时检查正常，执行前仍验证实时登录；用户无需手工复制 Cookie。
 4. 需要复用时保存默认形象、音色、模板、预算和联网素材选择；执行本次明确参数时只覆盖本次任务。历史任务使用已冻结参数。
@@ -107,7 +107,7 @@ Agent 先把主题要求整理成实际口播稿。需要声音克隆时，通�
 
 详细规格、命令副作用、审核证据和发布幂等以 [CODEX_VIDEO_BATCH.md](Haike_video/docs/CODEX_VIDEO_BATCH.md) 为唯一接口说明。Agent 为三条分别整理选题、来源、稿件与目标，读取账号预设，生成本批 `request.json`；明确字段优先。
 
-把本批请求、冻结规格和汇报放在忽略目录 `.local/codex-runs/<batch_id>/`；保存真实批次 ID 和规格位置，供下一次唤醒或上下文交接读取。JSON 写为 UTF-8 无 BOM；Windows PowerShell 5.1 的默认重定向编码不能直接用于这些文件。使用本 checkout 的 `Haike_video/.venv/Scripts/python.exe` 调用 `Haike_video/scripts/codex_video_batch.py`，非默认端口通过 `--base` 指定本机工作台根地址。
+把本批请求、冻结规格和汇报放在忽略目录 `.local/codex-runs/<batch_id>/`；保存真实批次 ID 和规格位置，供下一次唤醒或上下文交接读取。JSON 写为 UTF-8 无 BOM；Windows PowerShell 5.1 的默认重定向编码不能直接用于这些文件。使用本副本的 `Haike_video/.venv/Scripts/python.exe` 调用 `Haike_video/scripts/codex_video_batch.py`；便携包先完成初始化并载入 [PORTABLE.md](docs/PORTABLE.md) 的命令环境，非默认端口通过 `--base` 指定本机工作台根地址。
 
 | 阶段 | 命令 | 完成条件 |
 | --- | --- | --- |

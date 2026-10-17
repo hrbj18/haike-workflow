@@ -57,6 +57,18 @@ class DistributionTests(unittest.TestCase):
             self.assertTrue(retained.is_file())
             self.assertFalse(any((assets / name).exists() for name in studio_build.PRIVATE_PREVIEWS))
 
+    def test_build_rejects_private_portrait_before_running_toolchain(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            portrait = root / 'prototypes/haike-avatar-generator/public/assets/presenter.png'
+            portrait.parent.mkdir(parents=True)
+            portrait.write_bytes(b'private portrait fixture')
+            with patch.object(studio_build, 'ROOT', root), patch.object(studio_build.subprocess, 'run') as run:
+                with self.assertRaisesRegex(SystemExit, 'Private preview found'):
+                    studio_build.main()
+                run.assert_not_called()
+            self.assertEqual(portrait.read_bytes(), b'private portrait fixture')
+
     def test_retired_previews_cleanup_rejects_directories_and_symlinks(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
