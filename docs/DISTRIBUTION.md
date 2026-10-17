@@ -2,7 +2,7 @@
 
 ## 上传内容
 
-四模块当前源码、正式测试、配置模板、通用布局与视频模板、技能文档、跨模块契约和正式手册。根目录管理统一安装、检查、源码打包与 CI。Git 源码和便携 ZIP 分别交付；根目录含 `PACKAGE-MANIFEST.json` 的便携包以 [PORTABLE.md](PORTABLE.md) 为初始化入口，海客 Key 与扫码说明以 [API_KEY_SETUP.md](API_KEY_SETUP.md) 为单独交付源文件。
+四模块当前源码、正式测试、配置模板、通用布局与视频模板、技能文档、跨模块契约和正式手册。根目录管理统一安装、检查、源码打包与 CI。Git 源码和便携 ZIP 分别交付；根目录含 `PACKAGE-MANIFEST.json` 的便携包以 [PORTABLE.md](PORTABLE.md) 为初始化入口，多 Key 配置与扫码说明以 [API_KEY_SETUP.md](API_KEY_SETUP.md) 为单独交付源文件。
 
 初次导入含源工作区未提交改动，SOURCE-PROVENANCE.json 保存原 HEAD、分支以及原始文件哈希。它是导入追溯记录，不用于断言后续文件仍与原工作区相同。后续版本以单仓库 Git 提交为准。
 

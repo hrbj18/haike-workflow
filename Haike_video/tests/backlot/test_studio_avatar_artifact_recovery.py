@@ -66,7 +66,7 @@ def recovery(tmp_path, monkeypatch):
     monkeypatch.setattr("backlot.studio_avatar.download_result", download)
     monkeypatch.setattr("backlot.studio_avatar.media_probe", lambda path: {
         "duration": 3.0, "video": {"width": 448, "height": 560, "codec_type": "video"}, "audio": None})
-    monkeypatch.setattr("backlot.studio_storyboard.produce", lambda *args: None)
+    monkeypatch.setattr("backlot.studio_storyboard.produce", lambda *args, **kwargs: None)
     monkeypatch.setattr("backlot.studio_composition.compose_avatar", compose)
     return {"project": project, "folder": folder, "request": request, "state": state,
             "state_path": state_path, "stage": stage, "job": job, "downloads": downloads, "compositions": compositions}

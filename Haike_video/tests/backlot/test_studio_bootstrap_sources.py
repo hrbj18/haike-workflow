@@ -19,7 +19,7 @@ from backlot.work_catalog import WorkError
 @pytest.fixture
 def case(tmp_path):
     studio = Studio(tmp_path / 'projects')
-    config = {'api_key': 'synthetic-private-test-value', 'base_url': 'https://provider.example/v1',
+    config = {'analysis_mode': 'relay', 'api_key': 'synthetic-private-test-value', 'base_url': 'https://provider.example/v1',
               'chat_model': 'configured-vision-model', 'network_sources': ['pexels']}
     atomic_private(studio.private / 'studio-ai/relay.json', config)
     draft = studio.save_draft({'template_id': 'avatar-deepblue-n1-v1', 'title': '配置验收',

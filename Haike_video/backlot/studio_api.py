@@ -139,6 +139,31 @@ def ai_status(request: Request):
     return call(status, studio(request))
 
 
+@router.get('/api/studio/drafts/{draft_id}/agent-materials')
+def agent_materials(draft_id: str, request: Request, revision: int | None = None):
+    from backlot.studio_agent_materials import context
+    s = studio(request)
+    draft = call(s.draft, draft_id)
+    if revision is not None and revision != draft['revision']:
+        raise HTTPException(409, '草稿版本已更新，请重新读取原任务分析待办')
+    return call(context, s, draft)
+
+
+@router.post('/api/studio/drafts/{draft_id}/agent-materials')
+def apply_agent_materials(draft_id: str, request: Request, data: dict = Body(...)):
+    mutation(request)
+    from backlot.studio_agent_materials import apply
+    s = studio(request)
+    return call(apply, s, call(s.draft, draft_id), data)
+
+
+@router.get('/api/studio/drafts/{draft_id}/agent-materials/frames/{candidate_id}/{index}')
+def agent_material_frame(draft_id: str, candidate_id: str, index: int, request: Request):
+    from backlot.studio_agent_materials import frame
+    s = studio(request)
+    return FileResponse(call(frame, s, call(s.draft, draft_id), candidate_id, index), media_type='image/jpeg')
+
+
 @router.post("/api/studio/drafts/{draft_id}/ai-preview")
 async def ai_preview(draft_id: str, request: Request, data: dict = Body(...)):
     mutation(request); s = studio(request); d = call(s.draft,draft_id)

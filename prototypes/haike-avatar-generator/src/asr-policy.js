@@ -9,8 +9,8 @@ export function asrPolicy(account) {
   const items=account?.capabilities?.items||[];
   const capability=items.find(item=>isAsrCapability(item)&&!UNAVAILABLE.has(item.status));
   const provider=primary.provider||'gateway';
-  // An explicitly selected primary must be verified itself. A ready fallback
-  // or an unrelated old gateway capability cannot approve an untested primary.
+  // The selected primary owns readiness. A ready fallback or unrelated old
+  // gateway capability cannot approve it; readiness is separate from evidence.
   const explicitPrimary=provider==='bailian'||provider==='local-whisper';
   const ready=explicitPrimary?primary.ready===true:primary.ready===true||!!capability;
   const fallbackOn=[...new Set(Array.isArray(primary.fallback_on)?primary.fallback_on:[])]
@@ -19,6 +19,7 @@ export function asrPolicy(account) {
 
   if(provider==='bailian') {
     const direct=primary.backend==='internal_asr';
+    const firstRun=ready&&primary.verified===false;
     const condition=fallbackOn.map(reason=>FALLBACK_REASONS[reason]).join('或');
     let fallback=fallbackReady?'海客备用识别已就绪，当前未配置自动备用条件。'
       :primary.fallback==='local-whisper'?'海客备用识别尚未就绪。':'尚未配置海客备用识别。';
@@ -29,8 +30,8 @@ export function asrPolicy(account) {
     return {provider,ready,capability,fallbackReady,fallbackOn,
       name:'海客ASR',detail:'音频识别与字幕提取',
       billing:direct?'费用预估 · 按报价确认':'按当次报价确认',
-      readyLabel:'已就绪',unreadyLabel:'待验收',
-      notice:`${ready?'海客ASR为音频识别、字幕提取和分镜提供时间轴。':'海客ASR尚未就绪，请联系管理员检查识别服务。'}费用预估将在执行前展示。${fallback}`};
+      readyLabel:firstRun?'可开始识别':'已就绪',unreadyLabel:'未就绪',
+      notice:`${firstRun?'海客ASR可开始识别，尚未记录首次成功结果。':ready?'海客ASR为音频识别、字幕提取和分镜提供时间轴。':'海客ASR尚未就绪，请联系管理员检查识别服务。'}费用预估将在执行前展示。${fallback}`};
   }
   if(provider==='local-whisper') {
     return {provider,ready,capability,fallbackReady:false,fallbackOn:[],

@@ -17,7 +17,7 @@ from backlot.work_catalog import WorkError, sha
 @pytest.fixture
 def case(tmp_path):
     studio = Studio(tmp_path / "projects")
-    atomic_private(studio.private / "studio-ai/relay.json", {"api_key": "private-test-key", "base_url": "https://example.invalid"})
+    atomic_private(studio.private / "studio-ai/relay.json", {"analysis_mode": "relay", "api_key": "private-test-key", "base_url": "https://example.invalid"})
     draft = studio.save_draft({"template_id": "avatar-deepblue-n1-v1", "title": "联网画面测试", "text": "第一句。第二句。",
                                "input": {"network_materials_enabled": True, "soundMode": "audio", "subtitles": False}})
     image = io.BytesIO()

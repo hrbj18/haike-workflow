@@ -14,11 +14,15 @@
 
 网关音色/克隆等接口未部署时，可明确使用已有直连路线；按实际选择配置和验收。直连费用是供应商成本估算，不是海客账户账单，供应商也不会替本应用强制执行预算。导入的限额用于本机报价与调用约束，实际费用以服务商结果和账单为准。
 
+视觉分析默认由正在工作的 Agent 自身模型完成，`ai_relay.analysis_mode` 为 `agent`，无需配置文本或视觉中转 Key。Agent 必须实际查看素材代表帧和成片，再提交分镜与审核依据；离线配置检查不能证明这一步已经完成。配音、识别、数字人和素材下载仍使用对应服务。
+
+实际制作时先由原任务取得音轨与真实 ASR，再读取草稿的 agent-materials 上下文。Agent 按实际转录、cue 编号和候选代表帧提交分镜及素材判断，收到 `resume_original_job` 后恢复原队列，复用已完成的配音和识别。操作顺序见[接入教程第 6 节](../START_HERE.md#6-恢复和联网素材)，字段及 `material-context`、`material-apply` 命令见[制作端规范](../Haike_video/docs/CODEX_VIDEO_BATCH.md)。
+
 ## 2. 填写一个私有 Markdown 文档
 
 复制本说明为用户指定私有目录中的文件，例如 .local/user-setup/用户配置.private.md，填写下面唯一的 haike-config 块。它是 JSON，保留字段名、双引号及布尔值格式。可选项直接省略；空字符串视为未提供，保留已有非空值。
 
-下面是全直连的模板：百炼配音、腾讯字幕识别、RunningHub 数字人、兼容中转分镜及 Pexels 素材。把空凭据和示例地址改为自己的值；人物图可到制作任务时再提供。**示例预算为每日 15 元、每条 5 元，仅说明微元格式；执行前由用户确定本次预算和发布授权。** douyin_commercial_authorized 只有在用户实际具备对应使用授权时才设为 true。
+下面是默认全直连模板：当前 Agent 分析，百炼提供配音、克隆与字幕识别，RunningHub 制作数字人。核心只需自己的百炼与 RunningHub 凭据；腾讯、GPT 中转和海客网关 Key 均非默认必需。Pexels 是可选备用素材源，空 Key 可跳过，Agent 也可提交已授权且实际查看过的素材。把空凭据和服务设置改为自己的值；人物图可到制作任务时再提供。**示例预算为每日 15 元、每条 5 元，仅说明微元格式；执行前由用户确定本次预算和发布授权。** douyin_commercial_authorized 只有在用户实际具备对应使用授权时才设为 true。
 
 ```haike-config
 {
@@ -26,11 +30,6 @@
   "services": {"mode": "internal", "audio_mode": "internal"},
   "providers": {
     "bailian": {"api_key": ""},
-    "tencent": {
-      "secret_id": "",
-      "secret_key": "",
-      "asr_region": "ap-guangzhou"
-    },
     "runninghub": {
       "api_key": "",
       "base_url": "https://www.runninghub.cn",
@@ -38,21 +37,15 @@
       "workflow_profile": "infinitetalk_448x560_exact_clock_v2",
       "workflow_template": "config/runninghub/workflow-2094449979141218305.api.json"
     },
-    "text-ai": {
-      "api_key": "",
-      "base_url": "https://api.example.com/v1",
-      "model": "gpt-6-luna"
-    },
     "pexels": {"api_key": ""}
   },
-  "ai_relay": {"use_text_ai": true, "network_sources": ["pexels"]},
+  "ai_relay": {"analysis_mode": "agent", "network_sources": ["pexels"]},
   "crawler": {"douyin_commercial_authorized": false},
-  "asr": {"provider": "gateway"},
+  "asr": {"provider": "bailian"},
   "budget": {
     "per_call_micros": {
-      "haike/text": "1000000",
       "haike/avatar": "4000000",
-      "haike/tencent-asr": "100000"
+      "haike/bailian-asr": "100000"
     },
     "daily_limit_micros": "15000000"
   },
@@ -69,11 +62,9 @@
 }
 ```
 
-asr.provider: gateway 表示沿当前服务路由执行：全直连模式下使用已配置的腾讯识别，海客网关模式下使用网关识别。另选 bailian 时，导入不会伪造真实验收记录；按该引擎原有验证流程通过后才作为默认。导入不将所有错误自动切到其他识别服务。
+默认 asr.provider: bailian 明确选择百炼识别。导入只记录已选择、已启用与配置齐全，不伪造真实验收；首次授权任务可在 Key 和采购预算齐全后执行，verified 仍保留真实状态。兼容选项 gateway 沿当前服务路由执行：全直连时使用腾讯识别，网关模式使用网关识别，只有选择这一路线才需要对应配置。已有任务保留冻结引擎；失败仅按既有明确拒绝规则选择已冻结的本地备用，不自动换服务重发未知任务。
 
 单条预算要覆盖各阶段合计。上例给数字人预留 4 元、字幕识别预留 0.1 元，单条 5 元中仍有配音余量；这些是本机预算，不是供应商实价。离线检查会拒绝阶段预留已经占满或超过单条上限的默认组合。
-
-示例为数字人预留 4 元、腾讯识别预留 0.1 元，低于整条 5 元上限，为配音保留余量。离线检查会拒绝两项采购预算合计已占满整条上限的配置；实际执行仍按完整报价核对全部步骤。
 
 按实际需要补充同一个块中的以下配置，完整可用字段以 scripts/configure-user.py 的校验为准：
 
@@ -81,17 +72,17 @@ asr.provider: gateway 表示沿当前服务路由执行：全直连模式下使�
 | --- | --- |
 | haike | base_url、api_key；默认网关 https://8.138.207.71:17894/v2。只在所选路线需要时填写 |
 | providers.bailian | api_key，可选 workspace_id；识别音频存储需要时配置 asr_storage、oss_endpoint、oss_bucket、oss_access_key_id、oss_access_key_secret |
-| providers.tencent | secret_id、secret_key，可选 asr_region、tts_region |
+| providers.tencent | 兼容选填：secret_id、secret_key，可选 asr_region、tts_region；默认百炼路线无需填写 |
 | providers.runninghub | api_key、base_url、workflow_id、workflow_profile、workflow_template；工作流与源码模板需匹配 |
-| providers.text-ai | api_key、兼容 /v1 的 base_url、model，可选 vision_model；使用中转实际支持的文本与视觉模型 |
+| providers.text-ai | 可选兼容路线：api_key、兼容 /v1 的 base_url、model，可选 vision_model；仅明确使用中转时填写，沿用服务实际地址。Agent 分析无需此配置 |
 | providers.doubao-text | api_key、base_url、model，按用户已开通的文本服务填写 |
 | providers.doubao-speech | api_key、voice_type、resource_id，按上游实际音色/资源填写 |
 | providers.doubao-asr | api_key、mode、flash_resource_id、standard_resource_id；需公开音频地址的模式另填 public_base_url、media_signing_secret |
-| providers.pexels / providers.pixabay | 各自 api_key；所用素材仍须符合对应使用条款 |
-| ai_relay | use_text_ai: true 复用上面的文本 Key、地址和模型；或单独填 base_url、api_key、chat_model，可选 image_model。network_sources 推荐 ["pexels"]；已有合法采集环境/授权可用 ["douyin", "pexels"]。图片补齐仍需独立验收 |
+| providers.pexels / providers.pixabay | 备用素材来源的可选 api_key；Agent 模式缺少 Pexels Key 不阻断基础配置。实际选用该源搜索时须补齐 Key，否则提示补 Key 或自备素材，不降为纯图文 |
+| ai_relay | analysis_mode 缺省为 agent；network_sources 推荐 ["pexels"]，已有合法采集环境/授权可用 ["douyin", "pexels"]。来源配置独立于分析服务。仅明确选 relay 兼容路线时，填 base_url、api_key、chat_model，或 use_text_ai: true 复用可选文本配置；image_model 与图片生成需另行配置、验收 |
 | crawler | 可选 chrome_path、crawler_root、douyin_commercial_authorized、authorized_video_ids（视频 ID 的数字字符串数组）。授权与实际扫码登录分别检查 |
 | voices | 已有私有音色映射数组，每项包含 alias、name、provider、voice_id，按上游需要填 model_id、resource_id、speech_rate。百炼私有音色需绑定其实际 model_id；腾讯 voice_id 使用数字字符串。alias 可供预设的 voice 引用；音色必须确实属于用户可用账户 |
-| budget | per_call_micros 与 daily_limit_micros 使用正整数字符串；audio_pricing 可按具体供应商/型号记录克隆、配音估价。1 元为 1,000,000 微元 |
+| budget | per_call_micros 与 daily_limit_micros 使用正整数字符串；audio_pricing 可按具体供应商/型号记录克隆、配音估价。1 元为 1,000,000 微元。haike/text 预算仅供明确选用的旧文本调用，Agent 分析无需配置它 |
 | avatar_defaults | voice 引用映射别名或公共音色 ID；可选 portrait_path 导入默认人物图，也可在制作时提供图片。其余字段如上，这里的 max_charge_micros 使用 JSON 整数 |
 
 已有音色映射、图片导入和预设的离线初始化只适用于全直连 mode: internal。网关及混合模式要在实际账户身份核验后经现有音色中心配置，避免把私有音色写到错误账号。公共音色无需创建 voices 映射；导入映射只登记用户已有音色，不会购买或创建新音色。
@@ -121,7 +112,7 @@ asr.provider: gateway 表示沿当前服务路由执行：全直连模式下使�
 
 依次检查退出码和状态。默认保留本机已有非空值；要替换文档明确给出的字段，在先核对 plan 后为本次命令加 --replace。指定其他解压根目录时使用 --root；先核对目标目录，避免配置到正在使用的另一副本。输出仅记录字段路径和状态，报告只保存这些脱敏结果。
 
-plan/apply/check 都是离线操作。check 用 configuration_complete 和 missing 报告配置缺项，配置完整时退出码为 0；未设默认人物图可显示 default_portrait: false，制作时再提供即可。execution_verified 仍为 false，因为这里不验证 Key 的云端有效性、不伪造音色/ASR 验证或平台登录，也不发起制作发布。导入后启动或重启本副本，再从现有接口读取本次服务能力、音色和预设；根据结果推进下面的真实验收。
+plan/apply/check 都是离线操作。check 用 configuration_complete 和 missing 报告配置缺项，配置完整时退出码为 0，并输出当前 analysis_mode。默认 Agent＋百炼路线下，ai_relay、tencent_asr、haike_key、pexels_key 或 bailian_asr_verified 为 false 均不表示基础配置缺项；百炼 Key、启用状态和预算仍须齐全。未设默认人物图可显示 default_portrait: false，制作时再提供即可。execution_verified 仍为 false，因为这里不验证 Key 的云端有效性、不伪造音色/ASR 验证、Agent 视觉审核或平台登录，也不发起制作发布。导入后启动或重启本副本，再从现有接口读取本次服务能力、音色和预设；根据结果推进下面的真实验收。
 
 仍可在工作台“API 设置”→“统一 API 接入”手动录入海客网关与 Key，点击“保存并测试连接”。这一步查询 Key、额度和已开通能力，不产生制作费用；直连路线使用导入的现有服务配置，不要求先部署海客云端音色接口。
 

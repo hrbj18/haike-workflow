@@ -44,6 +44,13 @@ test('历史任务未知联网策略不冒充关闭，只有实际采用与待�
   const ready=render(TaskMaterialResult,{task:{sources:{material_result:{enabled:true,status:'ready',used_count:0,selected_count:2,items:[{name:'已选片段',source:'用户素材'}]}}}});
   assert.match(ready,/已选 2 段待合成/);assert.match(ready,/查看已选画面与来源/);assert.ok(!ready.includes('已采用'));
 });
+
+test('联网素材等待Agent分析时不误导用户扫码或补登录',()=>{
+  const html=render(TaskMaterialResult,{task:{sources:{material_result:{enabled:true,status:'awaiting_agent',used_count:0}}}});
+  assert.match(html,/待当前Agent分析/);
+  assert.match(html,/素材与音轨已保留/);
+  assert.doesNotMatch(html,/等待账号登录|检查登录|扫码|等待补充素材|已采用 0/);
+});
 test('任务卡区分最后进展、运行心跳、制作记录更新，费用精确且没有虚构百分比',()=>{
   let actions=0;const html=render(TaskCard,{task:base,onOpen:()=>actions++});
   for(const phrase of ['机器人科技新闻','总控阶段：','实际制作队列','正在合成第1段','最后进展','运行心跳','制作记录更新','10:00:00','10:05:00','10:04:00','¥0.002','尚未确认'])assert.ok(html.includes(phrase),phrase);

@@ -301,6 +301,79 @@ def test_advance_rejects_malformed_or_foreign_evidence_before_starting_work(setu
     assert api.calls == [] and api.submissions == api.quotes == 0
 
 
+@pytest.fixture
+def material_setup(setup):
+    spec, root, api = setup
+    batch = CodexBatch(spec, root=root, api=api)
+    batch.init(); batch.prepare(); batch.submit()
+    api.jobs['PQ-1'].update(status='failed', retryable=True)
+    draft = next(iter(api.drafts.values()))
+    context = {'draft_id': draft['id'], 'draft_revision': draft['revision'], 'clock_sha256': 'a' * 64,
+               'status': 'needs_plan', 'script': '本期内容。', 'cues': [], 'candidates': []}
+    response = {'ok': True, 'draft_revision': draft['revision'], 'analysis_sha256': 'b' * 64, 'next': 'resume_original_job'}
+    previous = api.call
+    def call(path, data=None, **kw):
+        if '/agent-materials' in path:
+            api.calls.append(('POST' if data is not None else 'GET', path, copy.deepcopy(data)))
+            return copy.deepcopy(response if data is not None else context)
+        return previous(path, data, **kw)
+    api.call = call
+    return batch, api, context, response
+
+
+def test_material_context_binds_frozen_revision_and_is_read_only(material_setup):
+    batch, api, context, response = material_setup
+    before = (copy.deepcopy(api.tasks), api.uploads, api.quotes, api.submissions)
+    observed = batch.material_context('n1')
+    assert observed['clock_sha256'] == context['clock_sha256'] and observed['slot_id'] == 'n1'
+    assert api.calls[-1][1].endswith('/agent-materials?revision=2')
+    assert (api.tasks, api.uploads, api.quotes, api.submissions) == before
+
+
+def test_material_apply_only_records_safe_receipt_without_resuming_or_changing_draft(material_setup):
+    batch, api, context, response = material_setup
+    before = copy.deepcopy(api.drafts), api.quotes, api.submissions, batch.spec_hash
+    analysis = {'draft_revision': context['draft_revision'], 'clock_sha256': context['clock_sha256'], 'decisions': []}
+    result = batch.material_apply(analysis, 'n1')
+    assert result['queue_resumed'] is False and result['analysis_sha256'] == 'b' * 64
+    assert api.jobs['PQ-1']['status'] == 'failed'
+    assert (api.drafts, api.quotes, api.submissions, batch.spec_hash) == before
+    execution = next(iter(api.tasks.values()))['facts']['execution']
+    assert execution['agent_analysis_sha256'] == 'b' * 64 and execution['agent_analysis_revision'] == 2
+    assert 'scenes' not in execution and 'decisions' not in execution
+    assert not any(c[1].endswith('/retry') for c in api.calls)
+
+
+@pytest.mark.parametrize('change', [{'draft_revision': 9}, {'clock_sha256': 'c' * 64}])
+def test_material_apply_rejects_stale_analysis_before_post(material_setup, change):
+    batch, api, context, response = material_setup
+    analysis = {'draft_revision': context['draft_revision'], 'clock_sha256': context['clock_sha256'], 'decisions': [], **change}
+    with pytest.raises(BatchError, match='时钟或草稿版本'):
+        batch.material_apply(analysis, 'n1')
+    assert not any(method == 'POST' and '/agent-materials' in path for method, path, _ in api.calls)
+    assert api.jobs['PQ-1']['status'] == 'failed'
+
+
+def test_material_commands_require_explicit_slot_and_reject_secrets_without_http(setup):
+    spec, root, api = setup
+    batch = CodexBatch(spec, root=root, api=api)
+    for action in (lambda: batch.material_context(), lambda: batch.material_apply({}),
+                   lambda: batch.material_apply({'api_key': 'fixture-secret'}, 'n1')):
+        with pytest.raises(BatchError):
+            action()
+    assert not api.calls
+
+
+def test_material_apply_does_not_assume_a_malformed_post_receipt_means_success(material_setup):
+    batch, api, context, response = material_setup
+    response['analysis_sha256'] = 'invalid'
+    with pytest.raises(BatchError) as error:
+        batch.material_apply({'draft_revision': 2, 'clock_sha256': context['clock_sha256'], 'decisions': []}, 'n1')
+    assert error.value.unknown is True
+    assert 'agent_analysis_sha256' not in next(iter(api.tasks.values()))['facts']['execution']
+    assert api.jobs['PQ-1']['status'] == 'failed'
+
+
 def test_invalid_or_foreign_preset_cannot_silently_start_work(preset_setup):
     from backlot.codex_batch_defaults import resolve_spec_defaults
     spec, root, api, preset = preset_setup

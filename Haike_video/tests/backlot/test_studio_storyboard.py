@@ -13,7 +13,7 @@ from backlot.work_catalog import WorkError
 @pytest.fixture
 def data(tmp_path):
     s = Studio(tmp_path / 'projects')
-    config={'base_url':'https://supplier.example/v1','api_key':'test-private-value','image_verified':True}
+    config={'analysis_mode':'relay','base_url':'https://supplier.example/v1','api_key':'test-private-value','image_verified':True}
     config['image_verified_for']=image_identity(config)
     atomic_private(s.private / 'studio-ai/relay.json', config)
     d = s.save_draft({'template_id':'avatar-safe-circle-v1','title':'测试','text':'第一句。第二句。','input':{'ai':{'enabled':True,'materials':[],'allow_images':True,'max_images':2}}})

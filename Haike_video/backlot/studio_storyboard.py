@@ -32,6 +32,13 @@ def configuration(studio):
     return json.loads(path.read_text(encoding="utf-8")) if path.is_file() else {}
 
 
+def analysis_mode(studio):
+    mode = configuration(studio).get('analysis_mode', 'agent')
+    if mode not in {'agent', 'relay'}:
+        raise WorkError('素材分析方式无效，请选择当前Agent或明确的兼容中转')
+    return mode
+
+
 def selected_chat_model(studio):
     model = configuration(studio).get("chat_model", CHAT_MODEL)
     if not isinstance(model, str) or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._:/-]{0,127}", model):
@@ -97,7 +104,8 @@ def status(studio):
         download_id, _, download_meta = download_account(studio)
     except Exception:
         download_id, download_meta = None, {"status": "unavailable"}
-    return {"configured": bool(c.get("api_key")), "chat_model": selected_chat_model(studio), "image_model": model,
+    mode = analysis_mode(studio)
+    return {"configured": bool(c.get("api_key")), "analysis_mode": mode, "chat_model": 'current-agent' if mode == 'agent' else selected_chat_model(studio), "image_model": model,
             "network_sources": network_sources(studio),
             "billing": "sponsored", "customer_charge_micros": "0", "procurement_price": None,
             "douyin_authorized": c.get("douyin_commercial_authorized") is True,
@@ -107,7 +115,7 @@ def status(studio):
             "image_verified": verified, "image_paused": c.get("image_paused", False), "max_images": 2, "max_requests_per_job": 12}
 
 
-def options(studio, draft):
+def options(studio, draft, *, mode=None):
     from backlot.studio_network_materials import enabled
     network = enabled(draft)
     ai = draft["input"].get("ai") or {}
@@ -123,7 +131,13 @@ def options(studio, draft):
               "max_images": 0, "_network_materials": True, "_network_sources": selected_sources}
     elif "network_materials_enabled" in draft["input"]:
         ai = {**ai, "allow_images": False, "max_images": 0, "_network_disabled": True}
-    if not status(studio)["configured"]: raise WorkError("AI理解中转尚未配置，请联系管理员")
+    mode = mode or analysis_mode(studio)
+    ai = {**ai, '_analysis_mode': mode}
+    if mode == 'agent':
+        ai = {**ai, 'allow_images': False, 'max_images': 0}
+        if draft['input'].get('motion'):
+            raise WorkError('当前Agent分析入口请使用N1或基础口播模板；动效布局需先由Agent提供独立可执行方案')
+    elif not status(studio)["configured"]: raise WorkError("AI理解中转尚未配置，请联系管理员")
     if ai.get("allow_images") and not status(studio)["image_verified"]:
         raise WorkError("插画接口尚未验收通过，请先关闭插画补齐并使用用户素材或Pexels")
     if type(ai.get("max_images", 2)) is not int or not 0 <= ai.get("max_images", 2) <= 2:
@@ -183,6 +197,9 @@ class TrialRelay:
             return model
 
     def call(self, stage, payload, image=False):
+        if getattr(self, 'analysis_mode', None) == 'agent' or (
+                not hasattr(self, 'analysis_mode') and analysis_mode(self.studio) == 'agent'):
+            raise WorkError('当前Agent负责分析与选材，请提交原任务分析结果；未调用中转模型')
         from urllib.request import Request, build_opener, ProxyHandler, HTTPRedirectHandler
         from urllib.error import HTTPError
         path = self.folder / (hashlib.sha256(stage.encode()).hexdigest() + ".json")
@@ -326,6 +343,9 @@ def make_plan(studio, draft, cues, duration, relay):
 
 
 def preview(studio, draft):
+    if analysis_mode(studio) == 'agent':
+        from backlot.studio_agent_materials import context
+        return context(studio, draft)
     options(studio,draft)
     if not draft["input"].get("ai",{}).get("enabled"): raise WorkError("请启用AI辅助制作")
     if not 1 <= len(draft["text"].strip()) <= 5000: raise WorkError("请填写1至5,000字的文案")
@@ -367,8 +387,9 @@ class Sources:
                 from backlot.studio_avatar import download_result
                 path = self.relay.folder / (scene["id"] + "-douyin.mp4")
                 download_result(source.resolve_media_url(item), path, referer=source.download_referer)
-                if not self.review(scene,path,"douyin-"+item.video_id): continue
-                return self.own(path, "video", {"source": "douyin", "source_url": item.source_url, "author": item.author, "rights": "operator-authorized"})
+                provenance = {"source": "douyin", "source_url": item.source_url, "author": item.author, "rights": "operator-authorized"}
+                if not self.review(scene,path,"douyin-"+item.video_id,provenance): continue
+                return self.own(path, "video", provenance)
         atomic_private(self.relay.folder / (scene["id"] + "-candidates.json"), {"items": [{"id": i.video_id, "title": i.title, "source_url": i.source_url, "author": i.author} for i in r.candidates[:10]]})
         raise WorkError("已找到抖音候选素材，请确认该视频使用权后继续，或明确跳过抖音", "unavailable")
 
@@ -378,17 +399,25 @@ class Sources:
 
     def pexels(self, scene):
         from backlot.studio_avatar import download_result
-        result = self.paid("assets-" + scene["id"], "haike/assets", {"query": scene["query"].split("|")[-1].strip()[:100], "media": "videos", "per_page": 3})
+        query = scene['query'].split('|')[-1].strip()[:100]
+        stage = 'assets-' + scene['id']
+        if getattr(self, 'analysis_mode', None) == 'agent':
+            stage += '-' + hashlib.sha256(query.encode()).hexdigest()[:12]
+        result = self.paid(stage, "haike/assets", {"query": query, "media": "videos", "per_page": 3})
         for item in result.get("items", []):
             files = [f for f in item.get("video_files", []) if f.get("file_type") == "video/mp4" and 0 < f.get("width", 0) <= 1920 and f.get("link")]
             if not files: continue
             f = max(files, key=lambda f: f.get("width", 0)); path = self.relay.folder / (scene["id"] + "-pexels.mp4")
             download_result(f["link"], path)
-            if not self.review(scene,path,"pexels-"+str(item.get("id"))): continue
-            return self.own(path, "video", {"source": "pexels", "source_url": item.get("url"), "author": (item.get("user") or {}).get("name"), "license": "https://www.pexels.com/license/", "selection": "keyword search, human review required"})
+            provenance = {"source": "pexels", "source_url": item.get("url"), "author": (item.get("user") or {}).get("name"), "license": "https://www.pexels.com/license/", "selection": "keyword search, agent review required"}
+            if not self.review(scene,path,"pexels-"+str(item.get("id")),provenance): continue
+            return self.own(path, "video", provenance)
         return None
 
-    def review(self, scene, path, identity):
+    def review(self, scene, path, identity, provenance=None):
+        if getattr(self, 'analysis_mode', None) == 'agent':
+            from backlot.studio_agent_materials import review
+            return review(self.studio, self.draft, self.relay.folder.parent, scene, path, identity, provenance or {})
         from backlot.studio_render import media_probe
         length=media_probe(path)["duration"]
         content=[{"type":"text","text":json.dumps({"script":scene["text"],"intent":scene["label"],"query":scene["query"]},ensure_ascii=False)}]
@@ -437,11 +466,11 @@ def resolve_scene(scene, ai, sources, image_count=0):
     return sources.illustration(scene)
 
 
-def produce(studio, draft, folder, cues, duration, paid):
+def produce(studio, draft, folder, cues, duration, paid, *, mode=None, audio_sha256=None):
     from backlot.studio_network_materials import enabled, preflight, write_result
     network = enabled(draft)
     try:
-        return _produce(studio, draft, folder, cues, duration, paid, network, preflight, write_result)
+        return _produce(studio, draft, folder, cues, duration, paid, network, preflight, write_result, mode=mode, audio_sha256=audio_sha256)
     except WorkError as exc:
         if network:
             plan_path = Path(folder) / "storyboard.json"
@@ -453,10 +482,11 @@ def produce(studio, draft, folder, cues, duration, paid):
         raise
 
 
-def _produce(studio, draft, folder, cues, duration, paid, network, preflight, write_result):
-    ai = options(studio, draft)
+def _produce(studio, draft, folder, cues, duration, paid, network, preflight, write_result, *, mode=None, audio_sha256=None):
+    ai = options(studio, draft, mode=mode)
     if not ai: return None
     folder = Path(folder); relay = TrialRelay(studio, folder / "ai-requests")
+    relay.analysis_mode = ai['_analysis_mode']
     decision_path = folder / "source-decisions.json"
     if not network and decision_path.exists() and json.loads(decision_path.read_text(encoding="utf-8")).get("skip_douyin") is True:
         ai = {**ai, "skip_douyin": True}
@@ -470,14 +500,32 @@ def _produce(studio, draft, folder, cues, duration, paid, network, preflight, wr
         checked_account = preflight(studio)
         write_result(folder, status="searching", message="正在联网搜索并核验相关画面", plan=plan)
     if plan is None:
-        plan = {**make_plan(studio, draft, cues, duration, relay), "draft_fingerprint": fingerprint}
+        if ai['_analysis_mode'] == 'agent':
+            from backlot.studio_agent_materials import plan as agent_plan
+            planned = agent_plan(studio, draft, folder, cues, duration, audio_sha256=audio_sha256)
+        else:
+            planned = make_plan(studio, draft, cues, duration, relay)
+        plan = {**planned, "draft_fingerprint": fingerprint}
         if network: plan["network_sources"] = ai["_network_sources"]
+    elif plan.get('analysis_mode') == 'agent':
+        from backlot.studio_agent_materials import plan as agent_plan
+        refreshed = agent_plan(studio, draft, folder, cues, duration, audio_sha256=audio_sha256)
+        if len(refreshed['scenes']) != len(plan['scenes']):
+            raise WorkError('原Agent字幕分段已冻结，请核对原任务', 'conflict')
+        for previous, current in zip(plan['scenes'], refreshed['scenes']):
+            if previous.get('asset'):
+                immutable = ('from_cue', 'to_cue', 'script_start', 'script_end', 'asset_id', 'query', 'label', 'reason', 'illustration_prompt', 'start', 'end')
+                if any(previous.get(key) != current.get(key) for key in immutable):
+                    raise WorkError('已采用的Agent画面已冻结，请只补充尚未解决段落', 'conflict')
+                current.update(asset=previous['asset'], asset_sha256=previous['asset_sha256'])
+        plan = {**plan, **refreshed}
     if plan.get("draft_fingerprint") != fingerprint: raise WorkError("AI分镜与当前冻结草稿不一致，不能恢复到另一份内容")
     if network:
         # Old plans keep the original search order; new plans freeze explicit sources.
         ai = {**ai, "_network_sources": validate_network_sources(plan.get("network_sources", ["douyin", "pexels"]))}
     atomic_private(plan_path, plan)
     sources = Sources(studio, draft, relay, paid)
+    sources.analysis_mode = plan.get('analysis_mode', ai['_analysis_mode'])
     if network and isinstance(checked_account, dict): sources.checked_account_id = checked_account["account_id"]
     for scene in plan["scenes"]:
         if scene.get("asset"):
@@ -491,6 +539,14 @@ def _produce(studio, draft, folder, cues, duration, paid, network, preflight, wr
         from backlot.studio_network_materials import MaterialSearchError
         raise MaterialSearchError("联网素材已开启，但尚未采用相关网络画面；请补充素材或调整检索内容后恢复原任务", "no_materials")
     plan["status"] = "ready"; atomic_private(plan_path, plan)
+    if plan.get('analysis_mode') == 'agent':
+        from backlot.studio_agent_materials import fingerprint as analysis_fingerprint
+        plan['agent_analysis_sha256'] = analysis_fingerprint(json.loads((folder / 'agent-analysis.json').read_text(encoding='utf-8')))
+        atomic_private(plan_path, plan)
+        context_path = folder / 'agent-material-context.json'
+        current = json.loads(context_path.read_text(encoding='utf-8'))
+        current.update(status='ready', message='当前Agent已完成素材分析，画面与真实字幕时钟已绑定。')
+        atomic_private(context_path, current)
     if network: write_result(folder, status="ready", message="相关网络画面已核验，等待合成到成片", plan=plan)
     return plan
 

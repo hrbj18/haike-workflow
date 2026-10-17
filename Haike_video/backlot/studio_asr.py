@@ -33,6 +33,25 @@ def bailian_enabled(studio):
     return (policy(studio) or {}).get("bailian_enabled") is True
 
 
+def _bailian_readiness(studio, current):
+    """Configuration readiness is distinct from a completed paid verification."""
+    from backlot import studio_services
+    from lib import bailian_speech
+    studio_services.refresh_private_environment()
+    budget = studio_services.budget_policy(studio)
+    def positive(value):
+        try:
+            return type(value) in {str, int} and str(value).isdigit() and 0 < int(value) <= 10**9
+        except (TypeError, ValueError):
+            return False
+    limits = budget.get("per_call_micros", {})
+    return {"enabled": current.get("bailian_enabled") is True,
+            "configured": bailian_speech.configured(),
+            "budget_ready": isinstance(limits, dict) and positive(limits.get("haike/bailian-asr"))
+                and positive(budget.get("daily_limit_micros")),
+            "verified": current.get("verified") is True}
+
+
 def local_status(studio):
     c = configuration(studio)
     ready = (c.get("provider") == "local-whisper" and c.get("verified") is True
@@ -52,8 +71,10 @@ def status(studio):
         return local
     primary = current.get("default_provider", "gateway")
     if primary == "bailian":
+        readiness = _bailian_readiness(studio, current)
         return {"provider": "bailian", "model": "haike/bailian-asr", "backend": "internal_asr",
-                "ready": bailian_enabled(studio) and current.get("verified") is True,
+                **readiness,
+                "ready": all(readiness[key] for key in ("enabled", "configured", "budget_ready")),
                 "name": "百炼 ASR · 词级时间轴", "customer_charge_micros": None,
                 "clock": "audio-word-timestamps", "fallback": "local-whisper",
                 "fallback_ready": local["ready"],
@@ -69,10 +90,13 @@ def snapshot(studio, *, provider=None):
     current = policy(studio)
     selected = provider or (current or {}).get("default_provider")
     if selected == "bailian":
-        if not bailian_enabled(studio):
+        readiness = _bailian_readiness(studio, current or {})
+        if not readiness["enabled"]:
             raise WorkError("百炼字幕服务尚未由内部管理员启用")
-        if provider is None and current.get("verified") is not True:
-            raise WorkError("百炼字幕引擎尚未实测验收，不能设为默认")
+        if not readiness["configured"]:
+            raise WorkError("百炼字幕服务尚未配置 Key")
+        if not readiness["budget_ready"]:
+            raise WorkError("百炼字幕服务需要每次及每日采购预算")
         fallback = ({"provider": "local-whisper", "identity": identity(configuration(studio))}
                     if local_status(studio)["ready"] else None)
         return {"provider": "bailian", "model": "haike/bailian-asr", "backend": "internal_asr",

@@ -129,12 +129,14 @@ def validate(data):
     if any(value not in {'gateway', 'internal'} for value in mode.values()):
         fail('services 模式只支持 gateway 或 internal')
     for section, suffix in (('haike', '/v2'), ('ai_relay', '/v1')):
-        allowed = {'base_url', 'api_key'} | ({'use_text_ai', 'image_model', 'chat_model', 'network_sources'} if section == 'ai_relay' else set())
+        allowed = {'base_url', 'api_key'} | ({'analysis_mode', 'use_text_ai', 'image_model', 'chat_model', 'network_sources'} if section == 'ai_relay' else set())
         values = data.get(section, {})
         shape(values, allowed, section)
         for name, value in values.items():
             if name == 'use_text_ai':
                 if type(value) is not bool: fail('ai_relay.use_text_ai 需要布尔值')
+            elif name == 'analysis_mode':
+                if value not in {'agent', 'relay'}: fail('ai_relay.analysis_mode 只支持 agent 或 relay')
             elif name == 'network_sources':
                 if value not in [['pexels'], ['douyin', 'pexels']]: fail('network_sources 只支持 pexels 或 douyin 后接 pexels')
             else:
@@ -324,6 +326,8 @@ def prepare(root, data, document_dir, replace=False):
     relay_old = read_json(root, RELAY_PATH)
     protect_endpoint(relay_old, relay_data, replace)
     relay = configure(RELAY_PATH, relay_data, 'ai_relay')
+    if relay.get('analysis_mode', 'agent') not in {'agent', 'relay'}:
+        fail('已有分析方式无效，请明确选择 agent 或 relay')
     if RELAY_PATH in documents and any(relay.get(k) != relay_old.get(k) for k in ('api_key', 'base_url', 'image_model')):
         documents[RELAY_PATH]['image_verified'] = False
         for key in ('image_verified_for', 'image_verification'): documents[RELAY_PATH].pop(key, None)
@@ -485,6 +489,7 @@ def write_private(path, content):
 def report(plan, command, written=0):
     env, root = plan['environment'], plan['root']
     mode, relay = plan['mode'], plan['relay']
+    analysis_mode = relay.get('analysis_mode', 'agent')
     preset = read_json(root, AUDIO_PATH + 'avatar-defaults.json').get('values', {}) if mode == 'internal' else {}
     asr_provider = plan['asr'].get('default_provider', 'gateway')
     required_budget_models = {'haike/avatar', 'haike/bailian-asr' if asr_provider == 'bailian' else 'haike/tencent-asr'}
@@ -522,12 +527,14 @@ def report(plan, command, written=0):
             required.append('default_task_budget')
         if asr_provider == 'bailian':
             checks['bailian_asr_verified'] = plan['asr'].get('verified') is True
-            required += ['bailian_key', 'bailian_asr_verified']
+            checks['bailian_asr_enabled'] = plan['asr'].get('bailian_enabled') is True
+            required += ['bailian_key', 'bailian_asr_enabled']
         else: required.append('tencent_asr')
     else: required = ['haike_key']
     if preset.get('network_materials_enabled') or plan['preset'].get('network_materials_enabled'):
         sources = relay.get('network_sources', ['douyin', 'pexels'])
-        required += ['ai_relay', 'pexels_key'] if mode == 'internal' and 'pexels' in sources else ['ai_relay']
+        if analysis_mode == 'relay': required.append('ai_relay')
+        if analysis_mode == 'relay' and mode == 'internal' and 'pexels' in sources: required.append('pexels_key')
         if 'douyin' in sources:
             crawler = Path(relay.get('crawler_root') or root / 'copy_skill/copy_skill-main/third_party/MediaCrawler')
             checks['crawler_installed'] = (crawler / 'main.py').is_file() and (crawler / '.venv/Scripts/python.exe').is_file()
@@ -538,7 +545,7 @@ def report(plan, command, written=0):
         required.append('default_voice')
         if plan['preset'].get('portrait_path'): required.append('default_portrait')
     missing = [key for key in required if not checks[key]]
-    return {'schema_version': 1, 'command': command, 'mode': mode, 'written_files': written,
+    return {'schema_version': 1, 'command': command, 'mode': mode, 'analysis_mode': analysis_mode, 'written_files': written,
         'configuration_complete': not missing, 'execution_verified': False, 'network_calls': 0,
         'checks': checks, 'missing': missing, 'actions': plan['actions'],
         'next': ['运行本地环境诊断', '扫码并分别检查素材和发布登录', '按授权验证单条及夜间批次，保存原回执']}

@@ -5,6 +5,7 @@ from datetime import datetime, timedelta, timezone
 import importlib.util
 import io
 import json
+import os
 from pathlib import Path
 import shutil
 import wave
@@ -36,8 +37,9 @@ def flow(tmp_path, monkeypatch, capsys):
 
     class Supplier:
         def __init__(self):
-            self.quotes, self.intents = {}, {}
+            self.quotes, self.intents, self.confirm_calls = {}, {}, []
         def upload(self, path, kind): return {"id": kind + "-fixture"}
+        def prepare_asr_audio(self, path): return {"id": "bailian-audio-fixture"}
         def request(self, path): return {"items": [{"id": i} for i in ("haike/avatar", "haike/tencent-asr")]}
         def quote(self, model, inputs, project):
             identity = "q-" + str(len(self.quotes) + 1)
@@ -45,11 +47,16 @@ def flow(tmp_path, monkeypatch, capsys):
             self.quotes[identity] = value
             return value
         def confirm(self, quote, maximum, identity):
+            self.confirm_calls.append((quote['model'], identity))
             self.intents.setdefault(identity, {"id": identity, "model": quote["model"]})
             return self.intents[identity]
         def wait(self, intent, timeout):
             model = intent["model"]
-            result = ({"video_url": "https://supplier.invalid/video"} if model == "haike/avatar" else
+            result = ({"items": [{"id": 123, "url": "https://www.pexels.com/video/computer-123/", "video_files": [
+                          {"file_type": "video/mp4", "width": 1080, "link": "https://videos.pexels.com/fake.mp4"}]}]} if model == "haike/assets" else
+                      {"segments": [{"start": 0, "end": 3.24, "text": "本期经过核实的测试。", "words": [
+                          {"start": 0, "end": 3.24, "text": "本期经过核实的测试。"}]}]} if model == "haike/bailian-asr" else
+                      {"video_url": "https://supplier.invalid/video"} if model == "haike/avatar" else
                       {"text": "[0:0.000,0:3.240] 本期经过核实的测试。"} if model == "haike/tencent-asr" else
                       {"audio_base64": base64.b64encode(source_audio).decode()})
             return {"id": "job-" + intent["id"], "status": "succeeded", "result": result}
@@ -72,13 +79,15 @@ def flow(tmp_path, monkeypatch, capsys):
     monkeypatch.setattr(Studio, "client", lambda self: supplier)
     monkeypatch.setattr("backlot.studio_avatar.prepare_audio", lambda src, dst, rate=1: (shutil.copyfile(src, dst), 3.24)[1])
     monkeypatch.setattr("backlot.studio_avatar.download_result", lambda url, path: path.write_bytes(b"fake-avatar-media"))
+    compositions = []
     def compose(folder, draft, video, narration, duration, cues, **kw):
         assert duration == 3.24 and Path(narration).read_bytes() == source_audio
         path = folder / "avatar-preview.mp4"
         path.write_bytes(b"fake-local-render-" + draft["id"].encode())
+        compositions.append({"draft_id": draft['id'], "storyboard": kw.get('storyboard')})
         return path
     monkeypatch.setattr("backlot.studio_composition.compose_avatar", compose)
-    monkeypatch.setattr("backlot.studio_render.media_probe", lambda path: {"duration": 3.24, "audio": {"codec_name": "pcm_s16le"}})
+    monkeypatch.setattr("backlot.studio_render.media_probe", lambda path: {"duration": 3.24, "audio": {"codec_name": "pcm_s16le"}, "video": {"width": 1080, "height": 1920}})
     monkeypatch.setattr("backlot.studio_avatar.media_probe", lambda path: {"duration": 3.24, "audio": {"codec_name": "pcm_s16le"}})
     monkeypatch.setattr("backlot.work_catalog.probe", lambda path: {"duration": 3.24, "width": 1080, "height": 1920, "has_audio": True})
     studio = Studio(projects)
@@ -93,6 +102,8 @@ def flow(tmp_path, monkeypatch, capsys):
     def voices(): return {"items": [{"id": "test-voice", "model": "haike/cosyvoice", "name": "fixture"}]}
     @app.get("/api/production-queue/jobs/{job_id}")
     def job(job_id: str): return queue.get(job_id)
+    @app.post("/api/production-queue/jobs/{job_id}/retry")
+    def retry(job_id: str): return queue.retry(job_id)
     from backlot.studio_api import router as studio_router
     from backlot.work_api import router as work_router
     from backlot.automation_task_center_api import router as task_router
@@ -118,23 +129,30 @@ def flow(tmp_path, monkeypatch, capsys):
     monkeypatch.setattr(cli, "LocalAPI", lambda base: api)
     monkeypatch.setattr(cli, "CodexBatch", lambda spec, api: CodexBatch(spec, root=root, api=api))
     spec_path = tmp_path / "spec.json"
-    def command(name, spec=None, evidence=None):
+    def command(name, spec=None, evidence=None, *, slot=None, analysis=None):
         if spec is not None: spec_path.write_text(json.dumps(spec), encoding="utf-8")
         arguments = [name, "--spec", str(spec_path)]
         if evidence is not None:
             evidence_path = tmp_path / "evidence.json"
             evidence_path.write_text(json.dumps(evidence), encoding="utf-8")
             arguments += ["--evidence", str(evidence_path)]
+        if slot is not None:
+            arguments += ['--slot', slot]
+        if analysis is not None:
+            analysis_path = tmp_path / 'analysis.json'
+            analysis_path.write_text(json.dumps(analysis), encoding='utf-8')
+            arguments += ['--analysis', str(analysis_path)]
         code = cli.main(arguments)
         output = capsys.readouterr()
         return code, json.loads(output.out or output.err)
-    def produce():
+    def produce(*, expect_complete=True):
         from backlot.studio_avatar import run_avatar
         worker = ProductionQueueWorker(queue, projects, handlers={"studio_avatar": lambda job: run_avatar(
             projects / job["project_id"], job["frozen_request"], supplier)}, worker_id="offline-fixture")
         results = []
         while value := worker.run_once(): results.append(value)
-        assert all(value["status"] == "completed" for value in results), json.dumps(results, ensure_ascii=True)
+        if expect_complete:
+            assert all(value["status"] == "completed" for value in results), json.dumps(results, ensure_ascii=True)
         return results
     def specification(count=1, upload=True, publish=False):
         items = []
@@ -259,6 +277,77 @@ def test_schedule_requires_explicit_timezone_before_any_api(flow):
     spec["items"][0]["publishing"]["targets"][0]["scheduled_at"] = "2026-10-18T08:00:00"
     with pytest.raises(BatchError, match="时区"):
         validate_spec(spec)
+
+
+@pytest.mark.parametrize('name,slot,analysis', [
+    ('material-context', None, None), ('material-apply', 'slot0', None), ('status', None, {})])
+def test_material_cli_requires_slot_and_analysis_only_for_apply(flow, name, slot, analysis):
+    code, result = flow['command'](name, flow['specification'](), slot=slot, analysis=analysis)
+    assert code == 2 and result['ok'] is False
+    assert not flow['queue'].list()['tasks'] and not flow['supplier'].intents
+
+
+def test_agent_cli_plan_candidate_review_resumes_original_bailian_job_without_model_api(flow, monkeypatch):
+    from backlot.studio import atomic_private
+    from backlot.studio_storyboard import TrialRelay
+    studio, supplier = flow['studio'], flow['supplier']
+    monkeypatch.setenv('DASHSCOPE_API_KEY', 'offline-fixture-not-a-real-provider-key')
+    for name in tuple(os.environ):
+        if name.startswith('TENCENT_') or name in {'OPENAI_API_KEY', 'GPT_API_KEY'}:
+            monkeypatch.delenv(name)
+    atomic_private(studio.private / 'studio-asr/policy.json', {'default_provider': 'bailian', 'bailian_enabled': True, 'verified': False})
+    atomic_private(studio.private / 'internal-services/budget-policy.json', {
+        'per_call_micros': {'haike/bailian-asr': '10'}, 'daily_limit_micros': '1000'})
+    atomic_private(studio.private / 'studio-ai/relay.json', {'analysis_mode': 'agent', 'network_sources': ['pexels']})
+    monkeypatch.setattr('backlot.studio_storyboard.download_account', lambda studio: (3, None, {'status': 'ready'}))
+    monkeypatch.setattr('backlot.network_materials.creator_call', lambda path, data=None, **kw: {
+        'ok': True, 'account': {'id': 3, 'platform': 'douyin', 'download_status': 'ready'}})
+    monkeypatch.setattr(supplier, 'request', lambda path: {'items': [{'id': 'haike/avatar'}]})
+    monkeypatch.setattr(TrialRelay, 'call', lambda *a, **kw: pytest.fail('Agent visual analysis must never call the relay'))
+    monkeypatch.setattr('backlot.studio_storyboard.image_preview', lambda source, frame, at=0: Image.new('RGB', (640, 360), 'blue').save(frame))
+    spec = flow['specification'](upload=False)
+    spec['items'][0].update(network_materials_enabled=True, template_id='avatar-deepblue-n1-v1')
+    code, queued = flow['command']('advance', spec)
+    assert code == 0, json.dumps(queued, ensure_ascii=True)
+    job_id = queued['items'][0]['queue']['job_id']
+    initial_draft = studio.draft(queued['items'][0]['draft_id'])
+    stopped = flow['produce'](expect_complete=False)[0]
+    assert stopped['status'] == 'failed' and stopped['retryable'] is True
+    assert stopped['job_id'] == job_id
+    code, context = flow['command']('material-context', slot='slot0')
+    assert code == 0 and context['status'] == 'needs_plan' and context['audio_sha256']
+    script = context['script']
+    analysis = {'draft_revision': context['draft_revision'], 'clock_sha256': context['clock_sha256'], 'materials': [],
+        'scenes': [{'from_cue': 0, 'to_cue': len(context['cues']) - 1, 'script_start': 0, 'script_end': len(script),
+            'label': '与口播相关的电脑画面', 'asset_id': '', 'query': '电脑画面 | computer', 'illustration_prompt': '', 'reason': '当前Agent按真实字幕安排电脑相关画面'}]}
+    code, accepted = flow['command']('material-apply', slot='slot0', analysis=analysis)
+    assert code == 0 and accepted['queue_resumed'] is False
+    assert flow['queue'].get(job_id)['status'] == 'failed'  # Applying observations never retries paid work.
+    assert flow['command']('resume', slot='slot0')[0] == 0
+    stopped = flow['produce'](expect_complete=False)[0]
+    assert stopped['job_id'] == job_id and stopped['status'] == 'failed' and stopped['retryable']
+    code, context = flow['command']('material-context', slot='slot0')
+    assert code == 0 and context['status'] == 'needs_review' and context['analysis']['scenes'] == analysis['scenes']
+    candidate = context['candidates'][0]
+    for frame in candidate['frames']:
+        with Image.open(frame['path']) as pixels:
+            assert pixels.size == (640, 360)
+    decisions = {'draft_revision': context['draft_revision'], 'clock_sha256': context['clock_sha256'],
+        'decisions': [{'candidate_id': candidate['candidate_id'], 'sha256': candidate['sha256'], 'suitable': True,
+            'observed_frames': [frame['at_seconds'] for frame in candidate['frames']], 'reason': '假素材三个代表帧均为电脑画面，本用例仅验证Agent观察回执合同'}]}
+    assert flow['command']('material-apply', slot='slot0', analysis=decisions)[0] == 0
+    assert flow['queue'].get(job_id)['status'] == 'failed'
+    assert flow['command']('resume', slot='slot0')[0] == 0
+    done = flow['produce']()[0]
+    assert done['job_id'] == job_id and done['status'] == 'completed' and done['result']['work_id']
+    assert flow['command']('material-context', slot='slot0')[1]['status'] == 'ready'
+    assert studio.draft(initial_draft['id']) == initial_draft
+    assert len(flow['queue'].list()['tasks']) == 1
+    models = [model for model, _ in supplier.confirm_calls]
+    assert models.count('haike/cosyvoice') == models.count('haike/bailian-asr') == models.count('haike/avatar') == 1
+    assert not {'haike/tencent-asr', 'haike/text'} & set(models)
+    assert flow['compositions'][0]['storyboard']['model'] == 'current-agent'
+    assert flow['compositions'][0]['storyboard']['scenes'][0]['asset_sha256'] == candidate['sha256']
 
 
 @pytest.mark.parametrize('segments', [None, []])

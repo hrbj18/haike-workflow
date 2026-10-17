@@ -96,6 +96,100 @@ def test_n1_props_copy_scoped_asset_with_screenshot_dimensions(studio):
     assert json.loads((folder / "n1-sources.json").read_text())["sources"][0]["asset_id"] == a["id"]
 
 
+@pytest.fixture
+def local_agent_storyboard(studio):
+    from types import SimpleNamespace
+    from backlot.studio import atomic_private
+    from backlot import studio_agent_materials as agent
+    from backlot.studio_network_materials import MaterialSearchError
+    from backlot.studio_storyboard import produce
+    from backlot.work_catalog import sha
+    atomic_private(studio.private / 'studio-ai/relay.json', {'analysis_mode': 'agent'})
+    d = draft(studio)
+    d = studio.save_draft({**d, 'input': {**d['input'], 'network_materials_enabled': False, 'ai': {'enabled': True}}})
+    a = image(studio, d)
+    cues = [{'text': '第一句。', 'startMs': 0, 'endMs': 1400}, {'text': '第二句。', 'startMs': 1600, 'endMs': 3200}]
+    folder = agent.directory(studio, d)
+    def forbidden(*args): pytest.fail('local Agent N1 must not search or invoke another model')
+    with pytest.raises(MaterialSearchError):
+        produce(studio, d, folder, cues, 3.2, forbidden, audio_sha256='a' * 64)
+    context = agent.context(studio, d)
+    assert context['audio_sha256'] == 'a' * 64
+    scenes = [{'from_cue': i, 'to_cue': i, 'script_start': i * 4, 'script_end': (i + 1) * 4,
+               'label': '已审本地图片', 'asset_id': a['id'], 'query': '', 'illustration_prompt': '',
+               'reason': 'Agent已观察本机授权图片，配合本句展示'} for i in range(2)]
+    agent.apply(studio, d, {'draft_revision': d['revision'], 'clock_sha256': context['clock_sha256'], 'scenes': scenes,
+        'materials': [{'asset_id': a['id'], 'sha256': sha(studio.asset(a['id'], d['id'])), 'source': 'user',
+                       'rights_confirmed': True, 'observed_frames': [0], 'reason': '已观察640×480的蓝色图片'}]})
+    plan = produce(studio, d, folder, cues, 3.2, forbidden, audio_sha256='a' * 64)
+    return SimpleNamespace(studio=studio, draft=d, asset=a, cues=cues, folder=folder, plan=plan)
+
+
+def test_n1_local_agent_assets_enter_real_clock_bound_render_props(local_agent_storyboard):
+    from copy import deepcopy
+    from backlot.studio_composition import n1_props
+    from backlot.work_catalog import sha
+    case = local_agent_storyboard
+    before = deepcopy(case.draft)
+    assert settings(case.draft, studio=case.studio)['scenes'] == []
+    assert case.plan['status'] == 'ready' and case.plan['analysis_mode'] == 'agent'
+    (case.folder / 'public').mkdir(exist_ok=True)
+    props = n1_props(case.folder, case.draft, 3.2, case.cues, case.plan)
+    assert [(s['start'], s['end']) for s in props['scenes']] == [(0, 1.6), (1.6, 3.2)]
+    assert props['duration'] == 3.2 and props['captions'] == case.cues
+    source = case.studio.asset(case.asset['id'], case.draft['id'])
+    for scene in props['scenes']:
+        assert scene['mediaKind'] == 'image' and (scene['assetWidth'], scene['assetHeight']) == (640, 480)
+        assert (case.folder / 'public' / scene['src']).read_bytes() == source.read_bytes()
+    receipt = json.loads((case.folder / 'n1-sources.json').read_text(encoding='utf-8'))
+    assert all(s['asset_id'] == case.asset['id'] and s['sha256'] == sha(source) for s in receipt['sources'])
+    assert case.studio.draft(case.draft['id']) == before
+
+
+def test_n1_verified_agent_plan_keeps_frozen_route_after_settings_change(local_agent_storyboard):
+    from copy import deepcopy
+    from backlot.studio import atomic_private
+    from backlot.studio_composition import n1_props
+    case = local_agent_storyboard
+    before = deepcopy(case.draft)
+    atomic_private(case.studio.private / 'studio-ai/relay.json', {'analysis_mode': 'relay'})
+    with pytest.raises(WorkError, match='手工画面'):
+        settings(case.draft, studio=case.studio)
+    (case.folder / 'public').mkdir(exist_ok=True)
+    props = n1_props(case.folder, case.draft, 3.2, case.cues, case.plan)
+    assert [s['assetId'] for s in props['scenes']] == [case.asset['id']] * 2
+    assert [(s['start'], s['end']) for s in props['scenes']] == [(0, 1.6), (1.6, 3.2)]
+    assert case.draft == before and case.studio.draft(case.draft['id']) == before
+
+
+@pytest.mark.parametrize('change', ['sha', 'clock', 'tail', 'pending', 'relay', 'disabled', 'no_studio', 'motion', 'network_only_user'])
+def test_n1_local_agent_cannot_bypass_original_media_clock_or_policy(local_agent_storyboard, change):
+    from copy import deepcopy
+    from backlot.studio_n1 import storyboard_settings
+    case = local_agent_storyboard
+    d, plan, studio = deepcopy(case.draft), deepcopy(case.plan), case.studio
+    if change == 'sha': plan['scenes'][0]['asset_sha256'] = 'f' * 64
+    elif change == 'clock': plan['scenes'][1]['start'] = 1.7
+    elif change == 'tail': plan['scenes'][-1]['end'] = 3.1
+    elif change == 'pending': plan['status'] = 'searching'
+    elif change == 'relay': plan['analysis_mode'] = 'relay'
+    elif change == 'disabled': d['input']['ai']['enabled'] = False
+    elif change == 'no_studio': studio = None
+    elif change == 'motion': d['input']['motion'] = {'style': 'other'}
+    else: d['input']['network_materials_enabled'] = True
+    with pytest.raises(WorkError):
+        storyboard_settings(d, plan, 3.2, studio)
+
+
+def test_n1_local_ai_still_rejects_relay_mode_or_missing_studio(studio):
+    from backlot.studio import atomic_private
+    d = draft(studio)
+    d['input'].update(network_materials_enabled=False, ai={'enabled': True})
+    with pytest.raises(WorkError): settings(d)
+    atomic_private(studio.private / 'studio-ai/relay.json', {'analysis_mode': 'relay'})
+    with pytest.raises(WorkError): settings(d, studio=studio)
+
+
 def test_asset_video_is_not_looped_or_stretched(studio, monkeypatch):
     d = draft(studio)
     source = studio.projects_root / d["id"] / "source.mp4"

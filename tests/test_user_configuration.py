@@ -267,6 +267,13 @@ class UserConfigurationTests(unittest.TestCase):
             for key in configuration.SECRET_FIELDS:
                 if key in provider: self.assertEqual(provider[key], '')
         self.assertEqual(data['ai_relay']['network_sources'], ['pexels'])
+        self.assertEqual(data['ai_relay']['analysis_mode'], 'agent')
+        self.assertNotIn('text-ai', data['providers'])
+        self.assertNotIn('tencent', data['providers'])
+        self.assertNotIn('haike', data)
+        self.assertEqual(data['asr']['provider'], 'bailian')
+        self.assertEqual(data['budget']['per_call_micros']['haike/bailian-asr'], '100000')
+        self.assertNotIn('haike/text', data['budget']['per_call_micros'])
 
     def test_user_supplied_task_portrait_is_not_required_for_base_configuration(self):
         with tempfile.TemporaryDirectory() as temporary:
@@ -326,6 +333,68 @@ class UserConfigurationTests(unittest.TestCase):
             configuration.apply(configuration.prepare(root, data, root, replace=True))
             result = configuration.report(configuration.prepare(root, data, root), 'check')
             self.assertTrue(result['configuration_complete'], result)
+
+    def test_agent_analysis_needs_no_relay_key_and_is_default_when_unspecified(self):
+        for explicit in (True, False):
+            with self.subTest(explicit=explicit), tempfile.TemporaryDirectory() as temporary:
+                root = Path(temporary)
+                data = self.full()
+                del data['providers']['text-ai']
+                del data['avatar_defaults']['portrait_path']
+                data['ai_relay'] = {'network_sources': ['pexels']}
+                if explicit: data['ai_relay']['analysis_mode'] = 'agent'
+                configuration.apply(configuration.prepare(root, data, root))
+                result = configuration.report(configuration.prepare(root, {'schema_version': 1}, root), 'check')
+                self.assertEqual(result['analysis_mode'], 'agent')
+                self.assertFalse(result['checks']['ai_relay'])
+                self.assertTrue(result['configuration_complete'], result)
+                self.assertFalse(result['execution_verified'])
+                self.assertNotIn('OPENAI_API_KEY', (root / configuration.ENV_PATH).read_text())
+
+    def test_explicit_relay_analysis_still_requires_relay_configuration(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            data = self.full()
+            del data['providers']['text-ai']
+            del data['avatar_defaults']['portrait_path']
+            data['ai_relay'] = {'analysis_mode': 'relay', 'network_sources': ['pexels']}
+            configuration.apply(configuration.prepare(root, data, root))
+            result = configuration.report(configuration.prepare(root, data, root), 'check')
+            self.assertFalse(result['configuration_complete'])
+            self.assertIn('ai_relay', result['missing'])
+
+    def test_analysis_mode_update_preserves_existing_keys_and_requires_explicit_replace(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            self.write(root, configuration.RELAY_PATH, json.dumps({'analysis_mode': 'relay',
+                'api_key': FAKE_KEY, 'base_url': 'http://relay.example/v1'}))
+            data = {'schema_version': 1, 'ai_relay': {'analysis_mode': 'agent'}}
+            configuration.apply(configuration.prepare(root, data, root))
+            self.assertEqual(self.json(root, configuration.RELAY_PATH)['analysis_mode'], 'relay')
+            configuration.apply(configuration.prepare(root, data, root, replace=True))
+            saved = self.json(root, configuration.RELAY_PATH)
+            self.assertEqual(saved['analysis_mode'], 'agent')
+            self.assertEqual(saved['api_key'], FAKE_KEY)
+
+    def test_unknown_analysis_mode_does_not_silently_bypass_relay_requirements(self):
+        with self.assertRaises(configuration.ConfigurationError):
+            configuration.validate({'schema_version': 1, 'ai_relay': {'analysis_mode': 'automatic'}})
+
+    def test_default_agent_bailian_runninghub_template_needs_only_core_keys(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            data = configuration.read_document(ROOT / 'docs/API_KEY_SETUP.md')
+            data['providers']['bailian']['api_key'] = FAKE_KEY
+            data['providers']['runninghub']['api_key'] = FAKE_KEY
+            configuration.apply(configuration.prepare(root, data, root))
+            result = configuration.report(configuration.prepare(root, {'schema_version': 1}, root), 'check')
+            self.assertTrue(result['configuration_complete'], result)
+            for check in ('bailian_asr_verified', 'tencent_asr', 'haike_key', 'ai_relay', 'pexels_key'):
+                self.assertFalse(result['checks'][check])
+                self.assertNotIn(check, result['missing'])
+            self.assertTrue(result['checks']['bailian_asr_enabled'])
+            self.assertFalse(self.json(root, configuration.ASR_PATH)['verified'])
+            self.assertFalse(result['execution_verified'])
 
 
 if __name__ == '__main__':

@@ -177,7 +177,9 @@ def frozen_request(studio, draft, quote_id, maximum):
     if type(maximum) is not int or not 1 <= maximum <= 1000000000: raise WorkError("请填写有效费用上限，最高1,000元")
     if maximum < public_quote(data)["known_max_micros"]: raise WorkError("费用上限低于已读取报价，未提交任务")
     # The original gateway quote expires server-side. Do not silently replace it before charging.
-    return {**data, "max_charge_micros": maximum, "render_id": "studio-" + str(draft["revision"])}
+    from backlot.studio_storyboard import analysis_mode
+    return {**data, "max_charge_micros": maximum, "render_id": "studio-" + str(draft["revision"]),
+            "analysis_mode": analysis_mode(studio)}
 
 
 def public_media_address(host, port):
@@ -510,9 +512,15 @@ def run_avatar(project_dir, request, sdk=None, *, progress=None):
         from backlot.studio_storyboard import produce
         from backlot.studio_n1 import TEMPLATE_ID as N1_TEMPLATE, settings as n1_settings
         if draft["template_id"] == N1_TEMPLATE:
-            n1_settings(draft, p["duration"], studio)
+            # The request already froze Agent analysis before charging. Validate
+            # layout here without consulting a subsequently changed AI mode.
+            layout_draft = draft
+            if request.get('analysis_mode') == 'agent' and draft['input'].get('ai', {}).get('enabled'):
+                layout_draft = {**draft, 'input': {**draft['input'], 'ai': {**draft['input']['ai'], 'enabled': False}}}
+            n1_settings(layout_draft, p["duration"], studio)
         report("编排本期画面与字幕")
-        storyboard = produce(studio, draft, output_dir, clock_cues, p["duration"], paid)
+        storyboard = produce(studio, draft, output_dir, clock_cues, p["duration"], paid,
+                             mode=request.get('analysis_mode', 'relay'), audio_sha256=sha(Path(p['audio_path'])))
         video = output_dir / "avatar-source.mp4"
         downloaded_avatar = False
         if not video.exists():

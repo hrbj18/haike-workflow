@@ -43,7 +43,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/start-publisher.
 
 ## 按能力配置
 
-- 新工作台模型、配音、数字人：按[一次导入说明](docs/API_KEY_SETUP.md) 选择已开通的海客网关或自己的现有直连服务，集中导入实际所需配置。设置页也可填写海客 Key 与网关地址。私人音色映射与所选服务/账号绑定，实际可用性须检查；当前能力与云端音色发布边界见[交付回归](docs/RELEASE_READINESS_20261016.md)。
+- 新工作台默认由当前 Agent 自身模型完成文案、视觉分析、选材与审核，百炼负责配音/克隆/ASR，RunningHub 负责数字人，Pexels 是可选备用素材源。按[一次导入说明](docs/API_KEY_SETUP.md) 集中导入配置，无需腾讯、GPT 或海客网关 Key；旧网关路线保留兼容。私人音色映射与服务/账号绑定，实际可用性须检查；历史云端发布边界见[交付回归](docs/RELEASE_READINESS_20261016.md)。
 - 发布：安装时从 `creatorhub/config.example.yaml` 生成忽略的 `config.yaml`。
 - 采集：公开默认配置为 `copy_skill/copy_skill-main/config/content_intelligence.json`；本机覆写写到同目录 `content_intelligence.local.json`（递归合并对象，列表整体替换）。显式传配置路径时不加载覆写。
 - 抖音采集：MediaCrawler 为独立可选依赖；按 `Haike-Videohub/deps/B-external.md` 配置，先核对其许可。没有将第三方源码复制进本仓库。

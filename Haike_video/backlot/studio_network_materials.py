@@ -127,7 +127,7 @@ def public_result(folder, draft=None):
         try:
             raw = json.loads(path.read_text(encoding="utf-8"))
             if not isinstance(raw, dict) or raw.get("enabled") is not True: raise ValueError()
-            allowed = {"pending", "checking_login", "searching", "ready", "used", "login_required", "no_materials", "failed"}
+            allowed = {"pending", "checking_login", "searching", "ready", "used", "login_required", "no_materials", "failed", "awaiting_agent"}
             if raw.get("status") not in allowed: raise ValueError()
             # Rebuild item metadata so a tampered/private file cannot leak fields.
             plan = {"scenes": [{"id": item.get("scene_id"), "label": item.get("label"),

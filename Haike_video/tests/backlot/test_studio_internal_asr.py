@@ -66,6 +66,22 @@ def client_for(setup_asr, adapter):
     return InternalClient(studio, asr_only=True, audio_center=scope, adapter=adapter)
 
 
+def test_unverified_bailian_default_can_quote_first_task_without_faking_verification(setup_asr):
+    from backlot import studio_asr
+    studio, _, audio = setup_asr
+    policy_path = studio.private / "studio-asr/policy.json"
+    policy_path.write_text(json.dumps({"bailian_enabled": True, "default_provider": "bailian", "verified": False}), encoding="utf-8")
+    before = policy_path.read_bytes()
+    snapshot = studio_asr.snapshot(studio)
+    adapter = SimpleNamespace(execute=lambda *a: pytest.fail("Quotation must not execute paid ASR"))
+    client = client_for(setup_asr, adapter)
+    prepared = client.prepare_asr_audio(audio)
+    quote = client.quote(snapshot["model"], {"audio_file": prepared["id"]})
+    assert quote["model"] == "haike/bailian-asr" and quote["max_charge_micros"] == "14584"
+    assert studio_asr.status(studio)["verified"] is False
+    assert policy_path.read_bytes() == before
+
+
 def test_explicit_bailian_asr_route_uses_private_files_intents_and_one_machine_budget(setup_asr):
     studio, scope, audio = setup_asr
     calls = []

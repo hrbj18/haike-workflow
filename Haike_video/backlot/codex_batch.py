@@ -526,6 +526,52 @@ class CodexBatch:
             # observations. Resume never creates another generation request.
         return self.status(slot)
 
+    def material_context(self, slot=None):
+        """Read observations needed by the Agent; never start or resume work."""
+        if slot is None:
+            raise BatchError("素材分析需要明确--slot，不能跨槽位混用素材与音频时钟")
+        item = self._items(slot)[0]
+        self._guard()
+        task = self._task(item)
+        revision = task.get("facts", {}).get("execution", {}).get("draft_revision")
+        path = f"/api/studio/drafts/{self._draft_id(item)}/agent-materials"
+        if revision is not None:
+            if type(revision) is not int or revision < 1:
+                raise BatchError("原草稿版本无效，未读取其他版本的素材分析")
+            path += "?" + urllib.parse.urlencode({"revision": revision})
+        context = self.api.call(path)
+        if (not isinstance(context, dict) or context.get("draft_id") != self._draft_id(item)
+                or type(context.get("draft_revision")) is not int or context["draft_revision"] < 1
+                or revision is not None and context["draft_revision"] != revision):
+            raise BatchError("素材上下文不属于本槽位的原草稿版本")
+        return {**context, "batch_id": self.spec["batch_id"], "slot_id": slot, "task_id": task["id"]}
+
+    def material_apply(self, analysis, slot=None):
+        """Record Agent observations against the frozen task, without retrying it."""
+        if slot is None:
+            raise BatchError("提交素材分析需要明确--slot")
+        _no_secrets(analysis)
+        if (not isinstance(analysis, dict) or set(analysis) - {"draft_revision", "clock_sha256", "scenes", "materials", "decisions"}
+                or type(analysis.get("draft_revision")) is not int or analysis["draft_revision"] < 1
+                or not isinstance(analysis.get("clock_sha256"), str) or not re.fullmatch(r"[a-f0-9]{64}", analysis["clock_sha256"])):
+            raise BatchError("分析文件需要原draft_revision/clock_sha256及分镜或候选审核结果，不得包含路径或凭据")
+        item = self._items(slot)[0]
+        context = self.material_context(slot)
+        task = self._task(item)
+        revision = task.get("facts", {}).get("execution", {}).get("draft_revision")
+        if (revision != analysis["draft_revision"] or context.get("clock_sha256") != analysis["clock_sha256"]
+                or context.get("status") == "pending_audio"):
+            raise BatchError("分析文件与原任务真实音频时钟或草稿版本不符，请重新读取material-context")
+        result = self.api.call(f"/api/studio/drafts/{self._draft_id(item)}/agent-materials", copy.deepcopy(analysis))
+        if (not isinstance(result, dict) or result.get("ok") is not True or result.get("draft_revision") != revision
+                or result.get("next") != "resume_original_job" or not isinstance(result.get("analysis_sha256"), str)
+                or not re.fullmatch(r"[a-f0-9]{64}", result["analysis_sha256"])):
+            raise BatchError("分析提交回执未确认，请读取原material-context核对；未恢复制作", unknown=True)
+        self._patch(item, execution={"agent_analysis_sha256": result["analysis_sha256"], "agent_analysis_revision": revision},
+                    stage="Agent素材分析已记录，等待明确恢复原任务")
+        return {"ok": True, "batch_id": self.spec["batch_id"], "slot_id": slot, "draft_id": self._draft_id(item),
+                "draft_revision": revision, "analysis_sha256": result["analysis_sha256"], "next": result["next"], "queue_resumed": False}
+
     def status(self, slot=None):
         self._guard()
         items = []

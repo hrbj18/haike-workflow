@@ -26,9 +26,12 @@ def policy(studio, **changes):
              "verified": True, "fallback_on": ["invalid_key", "insufficient_balance"]}
     value.update(changes)
     atomic_private(studio.private / "studio-asr/policy.json", value)
+    atomic_private(studio.private / "internal-services/budget-policy.json", {
+        "per_call_micros": {"haike/bailian-asr": "100000"}, "daily_limit_micros": "15000000"})
 
 
-def test_verified_primary_does_not_turn_local_backup_into_primary(tmp_path):
+def test_verified_primary_does_not_turn_local_backup_into_primary(tmp_path, monkeypatch):
+    monkeypatch.setenv("DASHSCOPE_API_KEY", "fake-bailian-fixture")
     studio = Studio(tmp_path / "projects")
     config = local_engine(studio, tmp_path)
     policy(studio)
@@ -42,15 +45,34 @@ def test_verified_primary_does_not_turn_local_backup_into_primary(tmp_path):
     assert "python" not in json.dumps(public) and str(tmp_path) not in json.dumps(public)
 
 
-def test_candidate_can_be_explicitly_tested_without_switching_default(tmp_path):
+def test_candidate_can_be_explicitly_tested_without_switching_default(tmp_path, monkeypatch):
+    monkeypatch.setenv("DASHSCOPE_API_KEY", "fake-bailian-fixture")
     studio = Studio(tmp_path / "projects")
     local_engine(studio, tmp_path)
     policy(studio, default_provider="gateway", verified=False)
     assert studio_asr.snapshot(studio)["provider"] == "gateway"
     assert studio_asr.snapshot(studio, provider="bailian")["provider"] == "bailian"
     policy(studio, verified=False)
-    with pytest.raises(WorkError, match="验收"):
-        studio_asr.snapshot(studio)
+    before = (studio.private / "studio-asr/policy.json").read_bytes()
+    assert studio_asr.snapshot(studio)["provider"] == "bailian"
+    public = studio_asr.status(studio)
+    assert public["ready"] is True and public["configured"] is True
+    assert public["verified"] is False
+    assert (studio.private / "studio-asr/policy.json").read_bytes() == before
+
+
+@pytest.mark.parametrize("missing", ["key", "enabled", "budget"])
+def test_first_bailian_task_still_needs_configuration_and_budget(tmp_path, monkeypatch, missing):
+    studio = Studio(tmp_path / "projects")
+    monkeypatch.setenv("DASHSCOPE_API_KEY", "fake-bailian-fixture")
+    policy(studio, verified=False, bailian_enabled=missing != "enabled")
+    if missing == "key": monkeypatch.delenv("DASHSCOPE_API_KEY")
+    if missing == "budget":
+        atomic_private(studio.private / "internal-services/budget-policy.json", {
+            "per_call_micros": {}, "daily_limit_micros": "15000000"})
+    public = studio_asr.status(studio)
+    assert public["ready"] is False and public["verified"] is False
+    with pytest.raises(WorkError): studio_asr.snapshot(studio)
 
 
 @pytest.mark.parametrize("kind", ["invalid_key", "insufficient_balance"])
@@ -66,7 +88,8 @@ def test_only_definitive_unaccepted_auth_or_credit_rejection_can_fallback(kind):
     assert not studio_asr.should_fallback({**frozen, "fallback": None}, job)
 
 
-def test_missing_local_backup_is_not_advertised_as_available(tmp_path):
+def test_missing_local_backup_is_not_advertised_as_available(tmp_path, monkeypatch):
+    monkeypatch.setenv("DASHSCOPE_API_KEY", "fake-bailian-fixture")
     studio = Studio(tmp_path / "projects")
     policy(studio)
     assert studio_asr.status(studio)["fallback_ready"] is False

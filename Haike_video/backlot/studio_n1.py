@@ -22,6 +22,14 @@ def _number(value, minimum, maximum, label):
     return value
 
 
+def _local_agent(draft, studio):
+    ai = draft.get("input", {}).get("ai") or {}
+    if studio is None or not isinstance(ai, dict) or ai.get("enabled") is not True:
+        return False
+    from backlot.studio_storyboard import analysis_mode
+    return analysis_mode(studio) == "agent"
+
+
 def settings(draft, duration=None, studio=None):
     """Validate before charging; a known audio duration additionally checks scene ends."""
     raw = draft.get("input", {}).get("n1", {})
@@ -53,7 +61,8 @@ def settings(draft, duration=None, studio=None):
     ai = draft.get("input", {}).get("ai") or {}
     if not isinstance(ai, dict): raise WorkError("AI制作设置无效")
     from backlot.studio_network_materials import enabled
-    if ai.get("enabled") and not enabled(draft) or draft.get("input", {}).get("motion"):
+    if (ai.get("enabled") and not enabled(draft) and not _local_agent(draft, studio)
+            or draft.get("input", {}).get("motion")):
         raise WorkError("N1首版请使用手工画面配置，暂不支持AI分镜或其他动效模板")
     previous = 0
     out["scenes"] = []
@@ -120,11 +129,18 @@ def storyboard_settings(draft, storyboard, duration, studio):
     """Compile verified ASR-bound footage without rewriting the saved manual draft."""
     from backlot.studio_network_materials import enabled
     from backlot.work_catalog import sha
-    if not enabled(draft) or storyboard.get("status") != "ready":
+    network = enabled(draft)
+    ai = draft.get("input", {}).get("ai") or {}
+    local_agent = (studio is not None and isinstance(ai, dict) and ai.get("enabled") is True
+                   and storyboard.get("analysis_mode") == "agent")
+    if not (network or local_agent) or storyboard.get("status") != "ready":
         raise WorkError("N1联网画面尚未核验完成，请恢复原素材任务")
     source_scenes = storyboard.get("scenes")
     if not isinstance(source_scenes, list) or not source_scenes:
         raise WorkError("N1联网画面为空，请补充合适素材后恢复原任务", "unavailable")
+    if network and not any((scene.get("asset") or {}).get("provenance", {}).get("source") in {"douyin", "pexels"}
+                           for scene in source_scenes):
+        raise WorkError("联网素材已开启，N1尚未采用已核验的网络画面；请补充原素材任务", "unavailable")
     scenes, cursor = [], 0
     for scene in source_scenes:
         start, end = scene.get("start"), scene.get("end")
@@ -145,4 +161,7 @@ def storyboard_settings(draft, storyboard, duration, studio):
         raise WorkError("N1联网画面未覆盖真实配音结尾，请核对原分镜")
     raw = {**draft["input"].get("n1", {}), "scenes": scenes}
     compiled = {**draft, "input": {**draft["input"], "n1": raw}}
+    if local_agent:
+        # The verified plan freezes its analysis route; later account settings do not change it.
+        compiled["input"]["ai"] = {**ai, "enabled": False}
     return settings(compiled, duration, studio)

@@ -281,13 +281,27 @@ function BasicAvatar() {
     try{const d=await persistServer(),asset=await upload(d.id,file,/\.(mp4|mov)$/i.test(file.name)?'video':'image'),config=n1Value(input.n1),n1={...config,scenes:config.scenes.map((value,i)=>i===index?{...value,assetId:asset.id,asset:{id:asset.id,name:asset.name,kind:asset.kind,url:asset.url}}:value)},savedDraft=await api('/api/studio/drafts',{...d,input:{...d.input,n1:n1ForSave(n1)}});setServerDraft(savedDraft);update({n1});await writeDraft({...input,n1},d.id);setSaved(true);setToast('画面素材已上传并保存，可继续调整时间与内容。');}
     catch(e){setError({field:'n1',message:e.message});}finally{setSaving(false);}
   }
-  async function planPreview(){setSaving(true);setError(null);try{const d=await persistServer();const r=await api(`/api/studio/drafts/${d.id}/ai-preview`,{revision:d.revision,confirmed:true});setStoryboard(r.plan);setToast('AI分镜建议已生成；实际时间将在声音就绪后对齐。');}catch(e){setError({field:'ai',message:e.message});}finally{setSaving(false);}}
+  async function planPreview({analysisMode='agent'}={}) {
+    setSaving(true);setError(null);
+    try {
+      const d=analysisMode==='agent'&&saved&&serverDraft?serverDraft:await persistServer();
+      if(analysisMode==='agent') {
+        const r=await api(`/api/studio/drafts/${d.id}/agent-materials?revision=${d.revision}`);
+        setStoryboard(r.plan||null);
+        setToast(r.message||(r.plan?'当前Agent的分镜结果已读取，请核对内容安排。':'素材已准备，等待当前Agent实际分析并提交结果。'));
+      } else {
+        const r=await api(`/api/studio/drafts/${d.id}/ai-preview`,{revision:d.revision,confirmed:true});
+        setStoryboard(r.plan);setToast('AI分镜建议已生成；实际时间将在声音就绪后对齐。');
+      }
+    } catch(e) {setError({field:'ai',message:e.message});}
+    finally {setSaving(false);}
+  }
   async function confirmGeneration() {
     if(refinementPending){setError({field:'portrait',message:'请先确认采用优化图，或选择使用原图继续。'});return;}
     const problem = validateInputs(input, voices);
     if (problem) { setError(problem); if (problem.field === "text") textArea.current.focus(); return; }
     audio.current?.pause(); setPlaying(false); setSaving(true);setError(null);
-    try{const d=await persistServer();const q=await api(`/api/studio/drafts/${d.id}/quote`,{revision:d.revision});setQuote(q);setBudget(presetBudget(input));setModal('confirm');}
+    try{const d=saved&&serverDraft?serverDraft:await persistServer();const q=await api(`/api/studio/drafts/${d.id}/quote`,{revision:d.revision});setQuote(q);setBudget(presetBudget(input));setModal('confirm');}
     catch(e){setError({field:'api',message:e.message});}finally{setSaving(false);}
   }
   async function saveRequest() {
@@ -352,7 +366,7 @@ function BasicAvatar() {
     {modal==="confirm"&&quote&&<Modal title="生成确认与费用" description="核对模板、素材与本次调用上限。" busy={saving} onClose={()=>setModal(null)} footer={<><Button disabled={saving} onClick={()=>setModal(null)}>返回修改</Button><Button variant="primary" loading={saving} onClick={saveRequest} disabled={Number(budget)<=0||!Number.isFinite(Number(budget))}>确认费用并生成<ArrowRight size={17}/></Button></>}>
       <dl className="summary-list"><div><dt>模板</dt><dd>{template.name} · {template.ratio}</dd></div><div><dt>声音</dt><dd>{input.soundMode==="audio"?input.audio.name:voices.find(v=>v.id===input.voiceId)?.name}</dd></div><div><dt>人物</dt><dd>{input.portrait.name}</dd></div>{quote.items.map(q=><div key={q.stage}><dt>{({tts:'配音',avatar:'数字人',asr:'字幕识别'})[q.stage]}</dt><dd>{internal||q.estimate_only?'采购估算':'上限'} ¥{(q.max_charge_micros/1000000).toFixed(4)}</dd></div>)}</dl>
       {estimateBilling&&quote.items.filter(q=>q.provider||q.provider_model).map(q=><section key={q.stage}><strong>{({tts:'配音',avatar:'数字人',asr:'字幕识别'})[q.stage]}</strong><QuoteBilling quote={q} internal/></section>)}{estimateBilling&&<p className="helper">{quote.billing_note||'费用为供应商采购估算，不代表供应商账单硬封顶。每项调用以当次确认的服务与预算执行。'}</p>}{quote.needs_audio_quote&&<p className="helper">{estimateBilling?'数字人与字幕按配音实际时长再次报价；超出批准预算将停止，保留已完成配音。':'数字人与字幕按配音实际时长报价，超出剩余上限即停止，保留已完成配音。'}</p>}
-      {quote.ai_trial&&<p className="helper">AI理解与插画当前免费试用，不扣用户额度。素材检索沿用统一网关；本次最多补齐{input.ai.max_images||2}张插画，最终成片需观看审核。</p>}
+      {quote.ai_trial&&<p className="helper">制作前核对素材分析与分镜结果，画面素材按本次选择采用；最终成片仍需观看审核。</p>}
       <Field label={estimateBilling?'本次批准采购预算（元）':'本次全部调用费用上限（元）'}><input type="number" min=".01" max="1000" step=".01" value={budget} disabled={saving} onChange={e=>setBudget(e.target.value)}/></Field><p className="helper">{estimateBilling?'确认后将提交真实供应商调用；本地排版不收费，采购估算与实际扣费可能不同。':'确认后将提交真实收费调用；本地排版不收费。实际费用与冻结额度可到账户中心查看。'}</p>
     </Modal>}
     {modal==="saved"&&<Modal title="制作任务已提交" onClose={()=>setModal(null)} footer={<Button variant="primary" onClick={()=>setModal(null)}>查看进度<ArrowRight size={17}/></Button>}><div className="success-content"><CheckCircle2 size={36}/><h3>已进入制作队列</h3><p>完成后从我的作品观看并审核成片。中断时恢复原任务，保留已完成的模型调用。</p></div></Modal>}
