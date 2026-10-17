@@ -254,6 +254,27 @@ def run_probe(name: str, command: list[str], *, cwd=None, timeout=60, env=None) 
     return {"name": name, "ok": True}
 
 
+def run_launcher(command: list[str], *, env, timeout=200) -> None:
+    # Detached services can inherit the launcher's output handles. A capture
+    # pipe would then wait for those services to exit even after PowerShell
+    # has returned. Files let us wait only for this launcher process.
+    out_path = local_path(".portable/logs/launcher.out.log")
+    err_path = local_path(".portable/logs/launcher.err.log")
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    logs = ".portable/logs/launcher.out.log 与 .portable/logs/launcher.err.log"
+    try:
+        with out_path.open("ab") as out, err_path.open("ab") as err:
+            completed = subprocess.run(
+                command, cwd=ROOT, env=env, stdin=subprocess.DEVNULL,
+                stdout=out, stderr=err, timeout=timeout,
+                creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0),
+            )
+    except (OSError, subprocess.TimeoutExpired) as error:
+        raise RuntimeError("启动器未能完成，请查看 " + logs) from error
+    if completed.returncode:
+        raise RuntimeError(f"启动器退出码 {completed.returncode}，请查看 " + logs)
+
+
 def diagnose(full=False) -> dict:
     required = ["runtime/python/python.exe", "runtime/python/pythonw.exe", "runtime/node/node.exe",
                 "runtime/ffmpeg/bin/ffmpeg.exe", "runtime/ffmpeg/bin/ffprobe.exe", BROWSER,
@@ -360,7 +381,7 @@ def start(port=14756, publisher_port=8000, no_browser=False) -> dict:
     env["BACKLOT_NO_BROWSER"] = "1"
     command = ["powershell.exe", "-NoProfile", "-NonInteractive", "-ExecutionPolicy", "Bypass",
                "-File", str(ROOT / "start-workbench.ps1"), "-Port", str(selected), "-NoBrowser"]
-    run_probe("launcher", command, timeout=200, env=env)
+    run_launcher(command, timeout=200, env=env)
     # Use the selected account URL even when the shell inherited another value.
     # The existing launcher rechecks the same workspace identity before reusing.
     if not own_service(selected, "backlot") or not own_service(account_port, "creatorhub"):

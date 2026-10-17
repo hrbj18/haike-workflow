@@ -153,23 +153,45 @@ class PortableTests(unittest.TestCase):
             self.assertEqual(portable.choose_port(14756, "backlot"), (14757, True))
 
     def test_start_passes_chosen_account_port_to_existing_launcher(self):
-        with patch.object(portable, "prepare"), patch.object(portable, "diagnose"), patch.object(portable, "choose_port", side_effect=[(14760, False), (8010, False)]), patch.object(portable, "run_probe") as run, patch.object(portable, "own_service", return_value=True):
+        with patch.object(portable, "prepare"), patch.object(portable, "diagnose"), patch.object(portable, "choose_port", side_effect=[(14760, False), (8010, False)]), patch.object(portable, "run_launcher") as run, patch.object(portable, "own_service", return_value=True):
             result = portable.start(no_browser=True)
         self.assertEqual(run.call_args.kwargs["env"]["HAIKE_CREATORHUB_URL"], "http://127.0.0.1:8010")
-        self.assertIn(str(self.root / "start-workbench.ps1"), run.call_args.args[1])
+        self.assertIn(str(self.root / "start-workbench.ps1"), run.call_args.args[0])
         self.assertEqual(result["services"][0]["url"], "http://127.0.0.1:14760/avatar")
 
     def test_start_never_reports_ready_for_another_workspace(self):
-        with patch.object(portable, "prepare"), patch.object(portable, "diagnose"), patch.object(portable, "choose_port", side_effect=[(14760, False), (8010, False)]), patch.object(portable, "run_probe"), patch.object(portable, "own_service", return_value=False):
+        with patch.object(portable, "prepare"), patch.object(portable, "diagnose"), patch.object(portable, "choose_port", side_effect=[(14760, False), (8010, False)]), patch.object(portable, "run_launcher"), patch.object(portable, "own_service", return_value=False):
             with self.assertRaises(RuntimeError):
                 portable.start(no_browser=True)
         self.assertFalse((self.root / ".portable/services.json").exists())
 
     def test_missing_desktop_browser_does_not_turn_ready_services_into_failure(self):
-        with patch.object(portable, "prepare"), patch.object(portable, "diagnose"), patch.object(portable, "choose_port", side_effect=[(14760, False), (8010, False)]), patch.object(portable, "run_probe"), patch.object(portable, "own_service", return_value=True), patch.object(portable.webbrowser, "open", side_effect=portable.webbrowser.Error("no association")):
+        with patch.object(portable, "prepare"), patch.object(portable, "diagnose"), patch.object(portable, "choose_port", side_effect=[(14760, False), (8010, False)]), patch.object(portable, "run_launcher"), patch.object(portable, "own_service", return_value=True), patch.object(portable.webbrowser, "open", side_effect=portable.webbrowser.Error("no association")):
             result = portable.start()
         self.assertTrue(result["ok"])
         self.assertFalse(result["browser_opened"])
+
+    def test_launcher_uses_files_instead_of_capture_pipes(self):
+        def launched(command, **kwargs):
+            self.assertNotIn("capture_output", kwargs)
+            self.assertNotEqual(kwargs["stdout"], portable.subprocess.PIPE)
+            self.assertNotEqual(kwargs["stderr"], portable.subprocess.PIPE)
+            self.assertEqual(Path(kwargs["stdout"].name).name, "launcher.out.log")
+            self.assertEqual(Path(kwargs["stderr"].name).name, "launcher.err.log")
+            kwargs["stdout"].write(b"ready")
+            kwargs["stderr"].write(b"diagnostic")
+            return portable.subprocess.CompletedProcess(command, 0)
+        with patch.object(portable.subprocess, "run", side_effect=launched):
+            portable.run_launcher(["fake-launcher"], env={})
+        self.assertEqual((self.root / ".portable/logs/launcher.out.log").read_bytes(), b"ready")
+        self.assertEqual((self.root / ".portable/logs/launcher.err.log").read_bytes(), b"diagnostic")
+
+    def test_launcher_nonzero_exit_has_visible_code_and_log_locations(self):
+        with patch.object(portable.subprocess, "run", return_value=portable.subprocess.CompletedProcess([], 7)):
+            with self.assertRaisesRegex(RuntimeError, "退出码 7") as error:
+                portable.run_launcher(["fake-launcher"], env={})
+        self.assertIn("launcher.out.log", str(error.exception))
+        self.assertIn("launcher.err.log", str(error.exception))
 
 
 if __name__ == "__main__":
