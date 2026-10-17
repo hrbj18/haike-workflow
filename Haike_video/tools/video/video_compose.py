@@ -1255,7 +1255,9 @@ class VideoCompose(BaseTool):
         for src in real_project_dir.rglob("*"):
             if not src.is_file():
                 continue
-            if src.suffix.lower() not in self._ATELIER_STAGE_EXTS:
+            # A template's public layout is source configuration. Other JSON
+            # files (props, gateway state, credentials) remain at their origin.
+            if src.suffix.lower() not in self._ATELIER_STAGE_EXTS and src.name != "layout.json":
                 continue
             rel = src.relative_to(real_project_dir)
             dst = staging_dir / rel

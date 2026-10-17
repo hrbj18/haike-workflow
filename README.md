@@ -1,8 +1,12 @@
 # Haike Workflow
 
-海客科技视频工作台与统一API收费中转站的源码仓库。自己的私有仓库为 [vincent841218449/haike-workflow](https://github.com/vincent841218449/haike-workflow)，原上游历史保留；后续迭代、分支和提交见 [Git管理](docs/GIT_WORKFLOW.md)。安装时保留以下布局：
+海客科技视频工作台与统一API收费中转站的源码仓库。用户确认的仓库为 [hrbj18/haike-workflow](https://github.com/hrbj18/haike-workflow)，保留公开可见性和原提交历史；后续迭代、分支和提交见 [Git管理](docs/GIT_WORKFLOW.md)。本次新版位于 `feat/retain-capabilities-ui`，`main` 保留旧基线，暂不打包。安装时保留以下布局：
+
+Codex / Agent 首次接入请读[基础教程](START_HERE.md)：Codex 总控、首次配置、单条制作、夜间三条与发布汇报、原任务恢复；接口详情继续由各模块文档维护。
 
 2026-10-13工作台V2：默认进入图文视频，数字人口播为另一制作入口；共用“我的作品、发布日历、API设置”。界面保持海客科技品牌，旧独立工具页面已归档移除，历史素材、作品及底层生产依赖保留。功能、清理与验证范围见[工作台V2](docs/PRODUCT_STUDIO_V2.md)。
+
+独立新版的当前测试结果与交付范围见[2026-10-16交付回归](docs/RELEASE_READINESS_20261016.md)。本机回归通过不代表云端功能已发布，或新电脑仅填Key即可恢复全部能力。
 
 | 目录 | 用途 |
 | --- | --- |
@@ -15,17 +19,19 @@
 
 ## Windows 源码安装
 
-准备 64 位 Python 3.12、Node.js 22+、Git、uv 和兼容 MSVC 14.4x 的 Visual C++ x64 运行库，确保 `python`、`node`、`npm`、`uv` 在 PATH。安装需要联网获取 Python/npm 依赖、FFmpeg 和渲染浏览器。平台采集/发布另需系统 Chrome。原生 OCR/ASR 若报告 DLL 错误，按采集模块 native_runtime.py 的说明配置匹配的运行库；本源码不捆绑本机 DLL。
+准备 64 位 Python 3.12、Node.js 22+、Git、uv 和兼容 MSVC 14.4x 的 [微软 Visual C++ x64 运行库](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist)，确保 `python`、`node`、`npm`、`uv` 在 PATH。安装需要联网获取 Python/npm 依赖、FFmpeg 和渲染浏览器。平台采集/发布另需系统 Chrome。本源码不捆绑本机 DLL。
 
 ```powershell
-git clone https://github.com/vincent841218449/haike-workflow.git
+git clone --branch feat/retain-capabilities-ui https://github.com/hrbj18/haike-workflow.git
 cd haike-workflow
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/setup.ps1
 ```
 
 私有仓库需要已获授权的 GitHub 身份。安装脚本分别创建三个模块的虚拟环境，保留已有本地配置，不启动发布任务、不调用付费服务。默认不安装本地 Qwen3-TTS；明确需要时传 `-LocalTts install`，会额外下载数 GB 依赖/模型。百炼云端克隆不需要本地 TTS。
 
-基础运行环境安装后，双击「一键启动工作台.cmd」，默认端口 14754。发布面板独立启动：
+安装时会在依赖同步后分别验证制片和采集两个虚拟环境的 ONNX、CTranslate2 和 VAD 能否加载，检查位于隐藏、限时的子进程，失败会停止安装并提示修复。系统运行库冲突时，可提供有合法分发来源的同版本微软 x64 DLL 目录（`vcruntime140.dll`、`vcruntime140_1.dll`、`msvcp140.dll`，14.44 或更新）：`powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/setup.ps1 -MsvcSource 'D:\runtime-source'`。脚本检查架构、签名和版本后只配置 `Haike_video/.venv/msvc`、`copy_skill/copy_skill-main/.venv/msvc` 及各自的 `Lib/site-packages/sitecustomize.py`，保留其他启动钩子；不修改全局系统运行库或发布服务环境。已有环境可单独运行 `python _distribution-tools/setup_msvc.py --source-dir 'D:\runtime-source'`，省略来源则复用已有本地成套运行库并重新验证这两个环境。回退时仅移除对应虚拟环境的这三个本地 DLL 和脚本创建的启动钩子，然后改用有效的系统运行库或重建该虚拟环境；勿删除自行创建的启动钩子。
+
+基础运行环境安装后，双击「一键启动工作台.cmd」。新版统一进入 `/avatar`，默认 `http://127.0.0.1:14756/avatar`；以启动器实际端口为准，旧预览页不会自动升级。口播页可直接查看和编辑默认设置，查看任务进度与结果。启动器先检查本副本账号服务（默认 `http://127.0.0.1:8000`，可用 `HAIKE_CREATORHUB_URL` 指定本机 HTTP 端口）；只复用工作区身份匹配的服务，不停止其他副本。启动日志在忽略的 `.local/launcher/`，不复制登录记录。发布面板也可独立启动：
 
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/start-publisher.ps1
@@ -35,7 +41,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/start-publisher.
 
 ## 按能力配置
 
-- 新工作台云端模型、配音、数字人：在“API设置”填写账户中心生成的海客Key及网关地址。旧项目底层适配器仍可读取`.env.local`，新入口通过统一网关调用。
+- 新工作台云端模型、配音、数字人：在“API设置”填写海客Key及网关地址，默认通过统一网关调用。明确启用的内部配音备用使用私有供应商配置；私人音色映射仍在本机，不能仅凭Key在新机恢复。当前能力与云端音色发布边界见[交付回归](docs/RELEASE_READINESS_20261016.md)。
 - 发布：安装时从 `creatorhub/config.example.yaml` 生成忽略的 `config.yaml`。
 - 采集：公开默认配置为 `copy_skill/copy_skill-main/config/content_intelligence.json`；本机覆写写到同目录 `content_intelligence.local.json`（递归合并对象，列表整体替换）。显式传配置路径时不加载覆写。
 - 抖音采集：MediaCrawler 为独立可选依赖；按 `Haike-Videohub/deps/B-external.md` 配置，先核对其许可。没有将第三方源码复制进本仓库。
@@ -57,12 +63,23 @@ GitHub Actions已启用，自动执行源码边界、迁移测试、PowerShell�
 
 源码打包仅导出已提交 HEAD，工作区有源码改动时拒绝打包；ZIP 与 SHA256 写入忽略的 dist。源码 ZIP 不包含虚拟环境和运行时，不是离线安装包。
 
+项目内页的可选浏览器回归使用独立列出的开发依赖，不影响基础运行配置。首次运行前准备对应的 Chromium；已有匹配缓存时安装器会复用：
+
+```powershell
+uv pip install --python Haike_video/.venv/Scripts/python.exe -r Haike_video/requirements-browser-tests.txt
+& .\Haike_video\.venv\Scripts\python.exe -m playwright install chromium --only-shell
+Push-Location Haike_video
+try { & .\.venv\Scripts\python.exe -m pytest tests/backlot/test_ui_bug_bash.py } finally { Pop-Location }
+```
+
+这些用例创建临时假项目和自有本地服务，结束后回收进程树，不连接真实账号或调用付费供应商。未安装可选依赖时会明确跳过；跳过不代表浏览器行为已验证。
+
 ## 统一 API 商业化设计
 
 充值、客户 Key、模型定价与调用账单见 [商业额度与统一网关](docs/api-platform/商业额度与统一网关.md)。已新增 [api-platform](api-platform/README.md) 的本地账户中心：双击「启动API账户中心-Mac.command」或「启动API账户中心-Windows.cmd」，访问 `http://127.0.0.1:17894/`，首次自行设置管理员，已有账户保留。
 
-包含客户注册/管理员开户、管理员充值、一次性兑换码、统一Key、供应商加密配置、成本×1.5定价、报价与实际调用账单。账户中心已部署于 `https://8.138.207.71:17894/`，工作台已接 `/v2` 云端网关。配音、腾讯配音、识别、素材已开通；缺少采购价的文本/视觉与RunningHub数字人仍不开通。真实收费与在线支付结算未在本轮验收；不包含激活码和防转售功能。
+包含客户注册/管理员开户、管理员充值、一次性兑换码、统一Key、供应商加密配置、成本×1.5定价、报价与实际调用账单。账户中心部署入口为 `https://8.138.207.71:17894/`，工作台接 `/v2` 网关。既有默认配音已完成真实结算；RunningHub数字人样片已生成，该次0.72元仍待对账。新账号的模型权限、报价与实际能力须按账号核验，当前状态见[交付回归](docs/RELEASE_READINESS_20261016.md)；在线支付结算未在本轮验收。不包含激活码和防转售功能。
 
-新增 [动效口播](docs/PRODUCT_AVATAR_MOTION.md) 接入ADu完整目录、九种轻量动画、字幕与可编辑工程；原三套口播版式保留。工作台嵌入静态界面为构建产物，运行 `python scripts/build-studio.py` 生成，不提交生成文件。
+[动效口播](docs/PRODUCT_AVATAR_MOTION.md) 保留ADu目录、九种轻量动画、字幕与可编辑工程的代码适配；当前独立ADu引擎未安装，基础安装不自动获取，真实动效生产尚未验收。原三套口播版式保留。工作台嵌入静态界面为构建产物，运行 `python scripts/build-studio.py` 生成，不提交生成文件。
 
 导入来源见 `SOURCE-PROVENANCE.json`，交付范围、许可边界与验收记录见 `docs/DISTRIBUTION.md`、`THIRD_PARTY_NOTICES.md` 和 `docs/VERIFICATION.md`。本次统一入口优先于模块内历史多仓部署、旧版本和旧便携包说明。

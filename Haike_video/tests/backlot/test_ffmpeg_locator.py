@@ -1,10 +1,8 @@
 """FFmpeg capability resolution.
 
-Motivation: the avatar assembly hands its filter graph to FFmpeg through a file
-(``-filter_complex_script``) to stay under the Windows command-line limit.  The
-master builds currently installed on this machine's ``PATH`` do not implement
-that option, and picking the binary by ``PATH`` order alone meant assembly died
-*after* the paid avatar generation had already run.
+Motivation: avatar assembly keeps its filter graph in a file to stay under the
+Windows command-line limit. Builds can implement the current ``-/filter_complex``
+syntax or the older ``-filter_complex_script`` option.
 """
 
 from __future__ import annotations
@@ -107,6 +105,37 @@ def test_resolution_returns_none_when_no_build_supports_it(tmp_path, monkeypatch
     assert locator.resolve_ffmpeg_with_option("-filter_complex_script") is None
 
 
+@pytest.mark.parametrize(("supported", "expected"), [
+    ({"-/filter_complex", "-filter_complex_script"}, "-/filter_complex"),
+    ({"-/filter_complex"}, "-/filter_complex"),
+    ({"-filter_complex_script"}, "-filter_complex_script"),
+])
+def test_graph_file_resolution_accepts_current_and_legacy_syntax(tmp_path, monkeypatch, supported, expected):
+    binary = _binary(tmp_path)
+    monkeypatch.setattr(locator, "candidate_pairs", lambda: [(binary, "ffprobe")])
+    monkeypatch.setattr(locator, "supports_option", lambda _binary, option: option in supported)
+    assert locator.resolve_ffmpeg_with_graph_file() == (binary, "ffprobe", expected)
+
+
+def test_graph_file_resolution_preserves_runtime_order_and_skips_incapable_builds(tmp_path, monkeypatch):
+    broken = _binary(tmp_path, "broken.exe")
+    legacy = _binary(tmp_path, "legacy.exe")
+    modern = _binary(tmp_path, "modern.exe")
+    monkeypatch.setattr(locator, "candidate_pairs", lambda: [
+        (broken, "broken-probe"), (legacy, "legacy-probe"), (modern, "modern-probe"),
+    ])
+    monkeypatch.setattr(locator, "supports_option", lambda binary, option:
+                        (binary, option) in {(legacy, "-filter_complex_script"), (modern, "-/filter_complex")})
+    assert locator.resolve_ffmpeg_with_graph_file() == (legacy, "legacy-probe", "-filter_complex_script")
+
+
+def test_graph_file_resolution_never_falls_back_to_an_inline_graph(tmp_path, monkeypatch):
+    binary = _binary(tmp_path)
+    monkeypatch.setattr(locator, "candidate_pairs", lambda: [(binary, "ffprobe")])
+    monkeypatch.setattr(locator, "supports_option", lambda _binary, option: option == "-filter_complex")
+    assert locator.resolve_ffmpeg_with_graph_file() is None
+
+
 def test_candidate_pairs_are_existing_and_deduplicated(monkeypatch):
     monkeypatch.setattr(locator, "_from_environment", lambda: ("a", "b"))
     monkeypatch.setattr(locator, "_from_video_compose", lambda: ("a", "b"))
@@ -115,12 +144,28 @@ def test_candidate_pairs_are_existing_and_deduplicated(monkeypatch):
     assert locator.candidate_pairs() == [("a", "b")]
 
 
-def test_the_repository_binary_supports_the_graph_script_option():
-    """The build this project ships must be the one that can run assembly."""
+def test_the_repository_binary_supports_a_graph_file_option():
+    """A bundled build must read a graph file through either supported syntax."""
     pair = locator._from_static_ffmpeg()
     if not pair:
         pytest.skip("static-ffmpeg is not installed in this environment")
-    assert locator.supports_option(pair[0], "-filter_complex_script") is True
-    chosen = locator.resolve_ffmpeg_with_option("-filter_complex_script")
+    assert any(locator.supports_option(pair[0], option) for option in
+               ("-/filter_complex", "-filter_complex_script"))
+    chosen = locator.resolve_ffmpeg_with_graph_file()
     assert chosen is not None
-    assert chosen[0] == pair[0]
+
+
+def test_detected_runtime_reads_a_graph_larger_than_windows_argv_from_file(tmp_path):
+    if not locator.candidate_pairs():
+        pytest.skip("FFmpeg is not installed in this environment")
+    runtime = locator.resolve_ffmpeg_with_graph_file()
+    assert runtime is not None, "Installed FFmpeg must support a file-backed complex graph"
+    binary, _probe, option = runtime
+    graph = tmp_path / "中文滤镜图.txt"
+    graph.write_text("color=c=black:s=16x16:r=1:d=1" + " " * 40_000 + "[out]", encoding="utf-8")
+    command = [binary, "-hide_banner", "-nostdin", "-v", "error", option, str(graph),
+               "-map", "[out]", "-frames:v", "1", "-f", "null", "-"]
+    assert sum(map(len, command)) < 4096
+    result = subprocess.run(command, capture_output=True, text=True,
+                            encoding="utf-8", errors="replace", timeout=30, check=False)
+    assert result.returncode == 0, result.stderr

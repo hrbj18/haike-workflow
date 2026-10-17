@@ -16,6 +16,8 @@ _SCHEDULE_FIELDS = {
     "quiet_hours_enabled",
     "active_hours_start",
     "active_hours_end",
+    "publish_active_hours_start",
+    "publish_active_hours_end",
     "account_check_interval_seconds",
     "douyin_captcha_wait_seconds",
     "scan_jitter", "comment_jitter", "xhs_dm_poll_jitter",
@@ -161,6 +163,17 @@ def apply_risk_settings(cfg: Config, payload: dict[str, Any]) -> dict[str, Any]:
         next_schedule[name] = _bounded_ratio(next_schedule[name], name)
     if next_schedule["active_hours_end"] <= next_schedule["active_hours_start"]:
         raise RiskSettingsError("活跃结束时间必须晚于开始时间")
+    publish_start = next_schedule["publish_active_hours_start"]
+    publish_end = next_schedule["publish_active_hours_end"]
+    if (publish_start is None) != (publish_end is None):
+        raise RiskSettingsError("发布专用活跃时段须成对配置，或同时留空继承原时段")
+    if publish_start is not None:
+        publish_start = _bounded_int(publish_start, "publish_active_hours_start", (0, 23))
+        publish_end = _bounded_int(publish_end, "publish_active_hours_end", (1, 47))
+        if publish_end <= publish_start:
+            raise RiskSettingsError("发布活跃结束时间必须晚于开始时间，跨零点请使用24以上小时")
+        next_schedule["publish_active_hours_start"] = publish_start
+        next_schedule["publish_active_hours_end"] = publish_end
 
     # Build first so a bad payload cannot leave half-applied runtime state.
     new_policy = RiskControlConfig(**merged)

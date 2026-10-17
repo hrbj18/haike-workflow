@@ -27,7 +27,6 @@ STAGE_DIR = REPO_ROOT / ".backlot" / "screenshot-stage"
 SHOTS_DIR = REPO_ROOT / "docs" / "images" / "backlot"
 PORT = 4790
 
-os.environ["OPENMONTAGE_PROJECTS_DIR"] = str(STAGE_DIR)
 sys.path.insert(0, str(REPO_ROOT))
 
 from PIL import Image, ImageDraw, ImageFilter  # noqa: E402
@@ -330,6 +329,7 @@ SHOTS = [
 
 def shoot() -> None:
     env = dict(os.environ)
+    env["OPENMONTAGE_PROJECTS_DIR"] = str(STAGE_DIR)
     server = subprocess.Popen(
         [sys.executable, "-m", "backlot", "serve", "--port", str(PORT)],
         env=env, cwd=REPO_ROOT,

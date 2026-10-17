@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import math
+import json
 import re
 import subprocess
 from pathlib import Path
@@ -18,6 +19,23 @@ def _safe(value: str) -> str:
 
 _CRAWLER_TAIL_LINES = 12
 _CRAWLER_TAIL_CHARS = 1200
+
+
+def _human_verification_status(output: str | None) -> str | None:
+    """Recognize only the owned runner's fixed status; never relay raw output."""
+    prefix = "COPY_SKILL_STATUS "
+    for line in (output or "")[-8192:].splitlines():
+        if not line.startswith(prefix) or len(line) > 1024:
+            continue
+        try:
+            value = json.loads(line[len(prefix):])
+        except (ValueError, TypeError):
+            continue
+        if (isinstance(value, dict) and value.get("status") == "needs_human_verification"
+                and value.get("platform") == "douyin"
+                and value.get("reason") == "login_or_verification_required"):
+            return "抖音登录需要人工确认，请在工作台处理后恢复；未自动处理验证码"
+    return None
 
 
 def _crawler_output_tail(text: str | None) -> str:
@@ -83,14 +101,18 @@ def search_command(
     """
     if not keywords:
         raise ValueError("没有可用搜索词")
+    from .download_credentials_adapter import download_collection_config
+    config = download_collection_config(config)
     crawler = config["media_crawler"]
     per_keyword = max(10, math.ceil(total_budget / len(keywords)))
     runner = Path(__file__).with_name("mediacrawler_runner.py").resolve()
     publish_value = str(_effective_publish_time_type(publish_time_type))
+    from .download_credentials_adapter import crawler_account_args
+    credential_args = crawler_account_args(config)
     return [
         str(resolve_path(crawler["python"])), str(runner), "--crawler-root", str(resolve_path(crawler["root"])),
         "--cdp-port", str(int(crawler["cdp_port"])), "--navigation-timeout", str(int(crawler.get("navigation_timeout_seconds") or 90)),
-        "--publish-time-type", publish_value, "--", "--platform", "dy", "--type", "search", "--lt", "qrcode",
+        "--publish-time-type", publish_value, *credential_args, "--", "--platform", "dy", "--type", "search", "--lt", "qrcode",
         "--save_data_option", "jsonl", "--save_data_path", str(destination), "--crawler_max_notes_count", str(per_keyword),
         "--get_comment", "false", "--get_sub_comment", "false", "--max_concurrency_num", "1", "--headless", "false",
         "--keywords", ",".join(keywords),
@@ -98,6 +120,8 @@ def search_command(
 
 
 def collect_search(config: dict[str, Any], total_budget: int, run_id: str | None = None, *, keywords: list[str] | None = None, hard_max: int | None = None, keep_browser_on_failure: bool = False, before_sanitize: Callable[[list[Path]], None] | None = None, publish_time_type: int | None = None) -> dict[str, Any]:
+    from .download_credentials_adapter import download_collection_config
+    config = download_collection_config(config)
     hard_max = int(hard_max or config["jobs"]["inspiration"].get("hard_max_reference_videos") or 100)
     budget = min(max(1, int(total_budget)), hard_max)
     keywords = keywords or controlled_keywords(config)
@@ -114,6 +138,7 @@ def collect_search(config: dict[str, Any], total_budget: int, run_id: str | None
     command = search_command(config, destination, budget, keywords, publish_time_type=publish_time_type)
     timeout_seconds = max(10, int(config["media_crawler"].get("collection_timeout_seconds") or 120))
     failure = None
+    human_verification = None
     final_status = "failed"
     try:
         try:
@@ -155,8 +180,12 @@ def collect_search(config: dict[str, Any], total_budget: int, run_id: str | None
             final_status = "failed"
             if completed is not None:
                 code = completed.returncode
-                tail = _crawler_output_tail(completed.stderr) or _crawler_output_tail(completed.stdout)
-                if tail:
+                if code == 3:
+                    human_verification = _human_verification_status(completed.stdout)
+                tail = "" if "--download-account-id" in command else (_crawler_output_tail(completed.stderr) or _crawler_output_tail(completed.stdout))
+                if human_verification:
+                    failure = human_verification
+                elif tail:
                     failure = f"crawler exited with code {code}: {tail}"
                 else:
                     failure = (
@@ -180,6 +209,8 @@ def collect_search(config: dict[str, Any], total_budget: int, run_id: str | None
             "sanitization": sanitization,
             "browser": browser,
         }
+        if human_verification:
+            report["needs_human_verification"] = True
         atomic_write_json(run_dir / "search_report.json", report)
         return report
     finally:

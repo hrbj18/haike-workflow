@@ -78,6 +78,39 @@ def test_submit_is_idempotent_and_public_payload_redacts_secrets(tmp_path: Path)
     assert private["frozen_request"] == {"confirmed": True, "nested": {"budget": 5}}
 
 
+def test_private_frozen_request_preserves_execution_paths_and_redacts_credentials(tmp_path: Path) -> None:
+    queue, _ = _queue(tmp_path)
+    audio = r"D:\生产 项目\assets\quote\narration.wav"
+    portrait = r"D:\生产 项目\assets\quote\portrait.jpg"
+    task = queue.submit(
+        project_id="alpha",
+        kind="studio_avatar",
+        source="workbench",
+        priority="normal",
+        parent_job_id="studio-2",
+        frozen_request={
+            "prepared": {"audio_path": audio, "portrait_path": portrait},
+            "assets": [{"path": portrait, "api_key": "nested-secret"}],
+            "api_key": "top-secret",
+            "note": "Authorization: inline-secret",
+        },
+    )
+
+    private = queue.get(task["job_id"], include_private=True)["frozen_request"]
+    assert private["prepared"] == {"audio_path": audio, "portrait_path": portrait}
+    assert private["assets"] == [{"path": portrait}]
+    assert private["note"] == "Authorization: [REDACTED]"
+    assert "secret" not in json.dumps(private)
+    claimed = queue.claim_next("worker")
+    assert claimed["frozen_request"] == private
+    for public in (task, queue.get(task["job_id"]), queue.list()):
+        serialized = json.dumps(public)
+        assert "frozen_request" not in serialized
+        assert "narration.wav" not in serialized
+        assert "portrait.jpg" not in serialized
+        assert "secret" not in serialized
+
+
 def test_priority_then_fifo_and_single_global_execution_lease(tmp_path: Path) -> None:
     queue, _ = _queue(tmp_path)
     normal = _submit(queue, project_id="alpha", parent_job_id="RP-normal", priority="normal")

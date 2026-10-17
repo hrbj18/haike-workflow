@@ -24,7 +24,7 @@ def main():
         if not a.python or not a.model_dir or not a.test_audio: p.error("需要已有Python、Whisper模型目录和真实测试音频；不会自动下载模型")
         c = {"provider": "local-whisper", "python": str(a.python.absolute()),
              "model_dir": str(a.model_dir.resolve()), "model_sha256": sha(a.model_dir / "model.bin"), "verified": True}
-        old = json.loads(path.read_text()) if path.is_file() else {"provider": "gateway"}
+        old = json.loads(path.read_text(encoding="utf-8")) if path.is_file() else {"provider": "gateway"}
         atomic_private(path, c)
         try:
             result = transcribe(s, {"identity": identity(c)}, a.test_audio.resolve(),

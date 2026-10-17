@@ -19,7 +19,7 @@ from typing import Any, Iterator
 
 QUEUE_SCHEMA_VERSION = 1
 DEFAULT_DB_NAME = "production-queue.sqlite3"
-QUEUE_KINDS = {"review_preview", "avatar_review_preview", "full_preview", "material_selection", "published_remix", "material_commentary", "commentary_presenter", "studio_graphic", "studio_avatar", "studio_motion"}
+QUEUE_KINDS = {"review_preview", "avatar_review_preview", "full_preview", "material_selection", "published_remix", "material_commentary", "commentary_presenter", "commentary_presenter_consumer_v1", "studio_graphic", "studio_avatar", "studio_motion"}
 QUEUE_SOURCES = {"workbench", "codex", "scheduler", "recovery"}
 PRIORITIES = {"priority": 300, "normal": 200, "background": 100}
 ACTIVE_STATUSES = {"queued", "running", "paused"}
@@ -64,8 +64,8 @@ def _decode(value: str | None, fallback: Any) -> Any:
         return fallback
 
 
-def _safe_public(value: Any) -> Any:
-    """Remove credentials and implementation-only leases from public payloads."""
+def _sanitize(value: Any, *, redact_local_paths: bool) -> Any:
+    """Remove credentials while retaining paths needed by private execution."""
 
     if isinstance(value, dict):
         clean: dict[str, Any] = {}
@@ -75,14 +75,19 @@ def _safe_public(value: Any) -> Any:
                 continue
             if any(part in lowered for part in PUBLIC_SECRET_PARTS):
                 continue
-            clean[str(key)] = _safe_public(child)
+            clean[str(key)] = _sanitize(child, redact_local_paths=redact_local_paths)
         return clean
     if isinstance(value, list):
-        return [_safe_public(child) for child in value]
+        return [_sanitize(child, redact_local_paths=redact_local_paths) for child in value]
     if isinstance(value, str):
         value = _AUTH_VALUE.sub(lambda match: match.group(1) + "[REDACTED]", value)
-        return _WINDOWS_ABSOLUTE_PATH.sub("[LOCAL_PATH]", value)
+        return _WINDOWS_ABSOLUTE_PATH.sub("[LOCAL_PATH]", value) if redact_local_paths else value
     return value
+
+
+def _safe_public(value: Any) -> Any:
+    """Remove credentials, implementation-only leases and local paths."""
+    return _sanitize(value, redact_local_paths=True)
 
 
 def _validate_identifier(value: Any, label: str, *, maximum: int = 240) -> str:
@@ -255,7 +260,7 @@ class ProductionQueue:
         )
         job_id = self._job_id(key)
         now = _now()
-        request = _safe_public(frozen_request or {})
+        request = _sanitize(frozen_request or {}, redact_local_paths=False)
         with self._connection(immediate=True) as connection:
             existing = connection.execute(
                 "SELECT * FROM production_jobs WHERE idempotency_key=?", (key,)

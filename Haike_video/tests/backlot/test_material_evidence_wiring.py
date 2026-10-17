@@ -20,6 +20,13 @@ from backlot.material_audio_envelope import build_envelope
 SR = 16000
 
 
+@pytest.fixture(autouse=True)
+def deterministic_native_vad_preflight(monkeypatch):
+    # These are evidence/cache wiring tests. Native import containment has its
+    # own process-boundary regressions under tests/lib/test_native_probe.py.
+    monkeypatch.setattr(wb, "_vad_runtime_available", lambda: True)
+
+
 def _boom(*_args, **_kwargs):
     raise AssertionError("a read-only path must not spawn a process")
 
@@ -53,11 +60,14 @@ def test_snapshot_is_read_only_for_a_media_that_has_no_document(tmp_path):
 def test_preflight_snapshot_mode_does_not_probe(tmp_path, monkeypatch):
     monkeypatch.setattr(wb, "_INTERACTION_DEPENDENCY_STATE", {})
     monkeypatch.setattr(wb, "_ffmpeg_available", lambda: True)
+    monkeypatch.setattr(wb, "_module_available", lambda name: name == "numpy")
     payload = wb._interaction_dependency_preflight(None, "", refresh=True)
     assert "audio_envelope" not in {row["key"] for row in payload["checks"]}
     # A mutation path serves the cached snapshot without touching the disk.
     monkeypatch.setattr(subprocess, "run", _boom)
     monkeypatch.setattr(subprocess, "Popen", _boom)
+    monkeypatch.setattr(wb, "_vad_runtime_available", _boom)
+    monkeypatch.setattr(wb, "_module_available", _boom)
     cached = wb._interaction_dependency_preflight(None, "", refresh=False)
     assert cached["checks"] == payload["checks"]
 

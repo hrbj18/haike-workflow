@@ -36,6 +36,7 @@
 .global-nav-link[data-route="/works"] { --nav-icon: url("/ui/brand/icons/clapperboard.svg"); }
 .global-nav-link[data-route="/audio"] { --nav-icon: url("/ui/brand/icons/volume-2.svg"); }
 .global-nav-link[data-route="/automation"] { --nav-icon: url("/ui/brand/icons/workflow.svg"); }
+.global-nav-link[data-route="/task-center"] { --nav-icon: url("/ui/brand/icons/workflow.svg"); }
 .global-nav-link[data-route="/published-clips"] { --nav-icon: url("/ui/brand/icons/film.svg"); }
 .global-nav-link[data-route="/material-library"] { --nav-icon: url("/ui/brand/icons/library.svg"); }
 .global-nav-link[data-route="/material-commentary"] { --nav-icon: url("/ui/brand/icons/scan-text.svg"); }
@@ -44,6 +45,7 @@
 .global-nav-link[data-route="/projects"] { --nav-icon: url("/ui/brand/icons/clapperboard.svg"); }
 .global-nav-link[data-route="/calendar"] { --nav-icon: url("/ui/brand/icons/calendar-days.svg"); }
 .global-nav-link[data-route="/settings"] { --nav-icon: url("/ui/brand/icons/key-round.svg"); }
+.global-more-tools {border-top:1px solid var(--line,#dfdfd9);padding-top:12px}.global-more-tools>summary {padding:8px 12px;cursor:pointer;color:var(--muted,#666);font-size:12px;min-height:36px}.global-more-tools>summary:focus-visible {outline:2px solid var(--text,#191919);outline-offset:2px}.global-nav-link[data-route="/legacy/projects"] {--nav-icon:url("/ui/brand/icons/blocks.svg")}.global-nav-link[data-route="/material-library/manage"] {--nav-icon:url("/ui/brand/icons/library.svg")}
 
 .library-app-frame .library-shell { width: min(100%,1560px); margin: 0 auto; }
 .audio-app-frame .audio-app { width: min(1280px,calc(100% - 56px)); margin: 0 auto; }

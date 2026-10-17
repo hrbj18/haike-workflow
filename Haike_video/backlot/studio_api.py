@@ -14,7 +14,11 @@ from backlot.work_catalog import WorkError
 from backlot import work_publish
 
 router = APIRouter()
-REMOVED_ENTRIES = {"/audio": "/avatar", "/automation": "/calendar", "/material-library": "/graphic", "/material-library/manage": "/graphic", "/material-commentary": "/projects", "/published-clips": "/projects", "/works": "/projects", "/legacy/projects": "/projects"}
+# Professional tools remain reachable. Customer audio uses the account-scoped
+# relay modal; the former global supplier settings are internal only.
+REMOVED_ENTRIES = {"/audio": "/settings?panel=audio", "/settings/audio-center": "/settings?panel=audio",
+                   "/works": "/projects", "/automation": "/calendar", "/material-commentary": "/projects",
+                   "/published-clips": "/projects", "/material-library/manage": "/material-library"}
 
 
 def studio(request):
@@ -37,7 +41,10 @@ def mutation(request):
 @router.get("/graphic", response_class=HTMLResponse)
 @router.get("/avatar", response_class=HTMLResponse)
 @router.get("/calendar", response_class=HTMLResponse)
+@router.get("/task-center", response_class=HTMLResponse)
 @router.get("/settings", response_class=HTMLResponse)
+@router.get("/settings/audio-center", response_class=HTMLResponse)
+@router.get("/settings/audio-center/{voice_id}", response_class=HTMLResponse)
 @router.get("/projects", response_class=HTMLResponse)
 def page():
     path = Path(__file__).parent / "ui/avatar-generator/index.html"
@@ -145,7 +152,7 @@ def ai_preview_saved(draft_id: str, request: Request):
     import json
     s=studio(request); d=call(s.draft,draft_id)
     path=s.projects_root/draft_id/"assets/ai-preview"/str(d["revision"])/"preview.json"
-    return {"plan":json.loads(path.read_text()) if path.is_file() else None}
+    return {"plan":json.loads(path.read_text(encoding="utf-8")) if path.is_file() else None}
 
 
 @router.get("/api/studio/drafts/{draft_id}/storyboard")
@@ -154,7 +161,7 @@ def storyboard(draft_id: str, request: Request, revision: int | None = None):
     s = studio(request); d = call(s.draft, draft_id)
     if revision is not None and not 1 <= revision <= d["revision"]: raise HTTPException(422,"分镜版本无效")
     path = s.projects_root / draft_id / "renders" / ("studio-" + str(revision or d["revision"])) / "storyboard.json"
-    return {"plan": json.loads(path.read_text()) if path.is_file() else None}
+    return {"plan": json.loads(path.read_text(encoding="utf-8")) if path.is_file() else None}
 
 
 @router.get("/api/studio/drafts/{draft_id}/avatar-job")
@@ -184,19 +191,36 @@ def skip_douyin(job_id: str, request: Request, data: dict = Body(...)):
 async def douyin_login(request: Request, data: dict = Body(...)):
     mutation(request)
     if data != {"confirmed": True}: raise HTTPException(422,"请确认打开抖音登录窗口")
-    from backlot.studio_storyboard import login_prepare
-    return await asyncio.to_thread(call,login_prepare,studio(request))
+    from backlot.studio_storyboard import download_account
+    from backlot.network_materials import account_action, login
+    account_id, _, _ = call(download_account, studio(request))
+    if account_id is None:
+        return await login(request, {"platform": "douyin"})
+    return await account_action(account_id, "open-login", request, {})
 
 
 @router.post("/api/studio/ai/douyin/login-confirmed")
-def douyin_login_confirmed(request: Request, data: dict = Body(...)):
+async def douyin_login_confirmed(request: Request, data: dict = Body(...)):
     mutation(request)
     if data != {"confirmed": True}: raise HTTPException(422,"请完成抖音登录后再确认")
-    from backlot.studio_storyboard import configuration, status
-    from backlot.studio import atomic_private
-    s=studio(request); c=configuration(s); c["douyin_login_confirmed"]=True
-    atomic_private(s.private / "studio-ai/relay.json",c)
-    return call(status,s)
+    from backlot.studio_storyboard import download_account, status, configuration, crawler_config
+    from backlot.network_materials import account_action
+    s = studio(request)
+    account_id, _, _ = call(download_account, s)
+    if account_id is None:
+        raise HTTPException(409, "请先在“账号与下载登录”中选择抖音下载账号")
+    result = await account_action(account_id, "check", request, {})
+    account = result.get("account") or {}
+    current = call(status, s)
+    if (result.get("ok") is not True or account.get("id") != account_id
+            or account.get("platform") != "douyin"
+            or account.get("download_status") != "available"
+            or current.get("douyin_login_confirmed") is not True):
+        raise HTTPException(409, "抖音下载登录尚未检查通过，请到“账号与下载登录”完成登录并检查")
+    if configuration(s).get("douyin_commercial_authorized") is not True:
+        raise HTTPException(503, "抖音采集尚未配置MediaCrawler商用授权，可选择跳过抖音")
+    call(crawler_config, s, s.private / "studio-ai/douyin/runs")
+    return {**current, "douyin_collection_ready": True}
 
 
 @router.get("/api/studio/ai/jobs/{job_id}/douyin-candidates")
@@ -207,7 +231,7 @@ def douyin_candidates(job_id: str, request: Request):
     if job["kind"]!="studio_avatar": raise HTTPException(422,"请选择口播任务")
     d=job["frozen_request"]["draft"]
     folder=studio(request).projects_root/d["id"]/"renders"/("studio-"+str(d["revision"]))/"ai-requests"
-    items=[x for p in folder.glob("scene-*-candidates.json") for x in json.loads(p.read_text()).get("items",[])]
+    items=[x for p in folder.glob("scene-*-candidates.json") for x in json.loads(p.read_text(encoding="utf-8")).get("items",[])]
     return {"items":items}
 
 
@@ -223,7 +247,7 @@ def authorize_douyin(job_id: str, request: Request, data: dict = Body(...)):
     q=_ensure_production_queue(request.app);job=call(q.get,job_id,include_private=True)
     if job["status"]!="failed": raise HTTPException(409,"只能恢复暂停的任务")
     d=job["frozen_request"]["draft"];path=studio(request).projects_root/d["id"]/"renders"/("studio-"+str(d["revision"]))/"source-decisions.json"
-    value=json.loads(path.read_text()) if path.exists() else {}
+    value=json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
     value.update(authorized_video_ids=sorted(set(value.get("authorized_video_ids",[])+[data["video_id"]])),confirmed_at=timestamp())
     atomic_private(path,value)
     return call(q.retry,job_id)
@@ -237,14 +261,20 @@ async def connect(request: Request, data: dict = Body(...)):
 
 @router.get("/api/studio/account")
 async def account(request: Request):
-    if not studio(request).settings()["configured"]:
+    internal = studio(request).settings()['service_mode'] == 'internal'
+    if not studio(request).settings()["configured"] and not internal:
         return {"configured": False, "summary": None, "capabilities": {"items": []}}
     def read():
         try:
             sdk = studio(request).client()
             from backlot.studio_asr import status
-            return {"summary": sdk.request("/account/summary"), "capabilities": sdk.request("/capabilities"), "local_asr": status(studio(request))}
-        except Exception: raise WorkError("无法读取账户，请到API设置检查连接") from None
+            return {"summary": sdk.request("/account/summary"), "capabilities": sdk.request("/capabilities"), "local_asr": status(studio(request)),
+                    'mode': 'internal_local' if internal else 'gateway',
+                    'billing_mode': 'provider_direct_estimate' if internal else 'relay_account',
+                    'relay_authenticated': not internal}
+        except Exception as error:
+            from backlot.studio_audio import relay_error
+            raise relay_error(error) from None
     return await asyncio.to_thread(call, read)
 
 
@@ -286,6 +316,7 @@ def asset(asset_id: str, request: Request): return FileResponse(call(studio(requ
 @router.post("/api/studio/drafts/{draft_id}/generate")
 def generate(draft_id: str, request: Request, data: dict = Body(...)):
     mutation(request)
+    if "development_sample" in data: raise HTTPException(422, "开发样片参数不能从普通制作入口提交")
     s = studio(request); d = call(s.draft, draft_id)
     if data.get("revision") != d["revision"]: raise HTTPException(409, "制作内容已更新，请重新确认")
     template = call(s.template, d["template_id"])
@@ -314,6 +345,7 @@ def generate(draft_id: str, request: Request, data: dict = Body(...)):
 @router.post("/api/studio/drafts/{draft_id}/quote")
 async def quote_avatar(draft_id: str, request: Request, data: dict = Body(...)):
     mutation(request)
+    if "development_sample" in data: raise HTTPException(422, "开发样片参数不能从普通制作入口提交")
     s = studio(request); d = call(s.draft, draft_id)
     if data.get("revision") != d["revision"]: raise HTTPException(409, "制作内容已更新，请重新读取报价")
     from backlot.studio_avatar import quote
@@ -389,3 +421,11 @@ async def cancel(plan_id: str, request: Request, data: dict = Body(...)):
 async def sync_calendar(request: Request, data: dict = Body(...)):
     mutation(request)
     return await asyncio.to_thread(call, studio(request).sync_calendar, catalog(request))
+
+
+from backlot.studio_audio_api import router as audio_router
+router.include_router(audio_router)
+from backlot.studio_refinement_api import router as refinement_router
+router.include_router(refinement_router)
+from backlot.automation_task_center_api import router as task_center_router
+router.include_router(task_center_router)

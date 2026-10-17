@@ -58,17 +58,19 @@ export function UploadField({label = '上传图片 / 视频', ariaLabel = label,
     <input hidden ref={input} type="file" accept={accept} onChange={e => {choose(e.target.files[0]); e.target.value = '';}}/>
   </div>;
 }
-export function Dialog({title, description, onClose, children, wide = false, busy = false, footer}) {
+let openDialogs=0,previousBodyOverflow='';
+export function Dialog({title, description, onClose, children, wide = false, busy = false, footer, returnFocus}) {
   const ref = useRef(null), titleId = useId(), descriptionId = useId();
   useEffect(() => {
-    const dialog = ref.current, previous = document.activeElement, oldOverflow = document.body.style.overflow;
-    dialog.showModal(); document.body.style.overflow = 'hidden';
-    return () => {dialog.close(); document.body.style.overflow = oldOverflow; if(previous?.isConnected) previous.focus();};
+    const dialog = ref.current, previous = returnFocus || document.activeElement;
+    if(openDialogs===0)previousBodyOverflow=document.body.style.overflow;
+    openDialogs++;dialog.showModal(); document.body.style.overflow = 'hidden';
+    return () => {dialog.close(); openDialogs=Math.max(0,openDialogs-1);if(openDialogs===0)document.body.style.overflow=previousBodyOverflow;requestAnimationFrame(()=>{if(previous?.isConnected)previous.focus();});};
   }, []);
   const close = () => {if(!busy) onClose();};
   return <dialog ref={ref} className={`modal ${wide ? 'wide' : ''}`} aria-labelledby={titleId}
     aria-describedby={description ? descriptionId : undefined} aria-busy={busy || undefined}
-    onCancel={e => {e.preventDefault(); close();}} onClick={e => {if(e.target === ref.current) close();}}>
+    onCancel={e => {e.preventDefault();e.stopPropagation(); close();}} onClick={e => {if(e.target === ref.current) close();}}>
     <header className="modal-heading"><div><h2 id={titleId}>{title}</h2>{description && <p id={descriptionId} className="helper">{description}</p>}</div>
       <button type="button" className="icon-button" disabled={busy} aria-label="关闭窗口" onClick={close}><X size={20}/></button></header>
     <div className="modal-body">{children}</div>
@@ -80,10 +82,11 @@ export function EmptyState({title, children, action, icon: Icon = FileText}) {
 }
 
 export const CAPABILITIES = [
-  {model:'haike/cosyvoice',name:'海客配音',detail:'CosyVoice Flash'},
+  {model:'haike/cosyvoice',name:'海客配音',detail:'公共音色与专属声音'},
   {model:'haike/tencent-asr',name:'字幕识别',detail:'录音转文字'},
   {model:'haike/avatar',name:'数字人口播',detail:'人物视频生成'},
   {model:'haike/text',name:'文本与视觉',detail:'文案与图片理解'},
   {model:'haike/assets',name:'素材检索',detail:'图片与视频素材'},
 ];
-export function availableModels(data) {return new Set((data?.capabilities?.items || []).filter(x=>CAPABILITIES.some(c=>c.model===x.model)).map(x => x.model));}
+export function availableModels(data) {return new Set((data?.capabilities?.items || []).filter(x=>!['unconfigured','budget_required','blocked','disabled','unavailable'].includes(x.status)).map(x=>x.model||x.id).filter(model=>['haike/cosyvoice-public','haike/internal-tts'].includes(model)||CAPABILITIES.some(c=>c.model===model)));}
+export function hasCapability(models,model){return models.has(model)||(model==='haike/cosyvoice'&&['haike/cosyvoice-public','haike/internal-tts'].some(id=>models.has(id)));}

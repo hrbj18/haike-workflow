@@ -1,14 +1,15 @@
+import { LEGACY_TOOLS, MANAGEMENT_ROUTES } from '../studio-routes.js';
 // The global rail has one definition. Project controls stay in the workspace.
 const groups = [
   { label: "创作", items: [["/graphic", "图文视频"], ["/avatar", "数字人口播"]] },
-  { label: "管理", items: [["/projects", "我的作品"], ["/calendar", "发布日历"]] },
+  { label: "管理", items: MANAGEMENT_ROUTES },
   { label: "设置", items: [["/settings", "API 设置"]] },
 ];
 let sidebar;
 
 function activeRoute(path) {
   if (path.startsWith("/ui/avatar-generator")) return "/avatar";
-  if (path === "/") return "/graphic";
+  if (path === "/") return "/avatar";
   if (path.startsWith("/p/") || path === "/works") return "/projects";
   return groups.flatMap(group => group.items).find(([route]) =>
     route !== "/" && (path === route || path.startsWith(`${route}/`))
@@ -23,7 +24,7 @@ export function getGlobalSidebar({ audioReturn } = {}) {
     sidebar.dataset.haikeNavigation = "";
     const brand = document.createElement("a");
     brand.className = "global-brand";
-    brand.href = "/";
+    brand.href = "/avatar";
     const logo = document.createElement("img");
     logo.src = "/ui/brand/haike-company-logo.png";
     logo.alt = "HAIKE 海客科技";
@@ -54,6 +55,17 @@ export function getGlobalSidebar({ audioReturn } = {}) {
       }
       nav.append(section);
     }
+    const more = document.createElement('details');
+    more.className = 'global-more-tools';
+    const summary = document.createElement('summary');
+    summary.textContent = '更多制作工具';
+    more.append(summary);
+    for (const tool of LEGACY_TOOLS) {
+      const link = document.createElement('a');
+      link.className = 'global-nav-link'; link.href = tool.path; link.dataset.route = tool.path; link.textContent = tool.label;
+      more.append(link);
+    }
+    nav.append(more);
     sidebar.append(brand, nav);
   }
   const active = activeRoute(location.pathname.replace(/\/$/, "") || "/");

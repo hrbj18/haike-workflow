@@ -1616,11 +1616,18 @@ async def publish_channels(mgr: BrowserManager, identity: Identity,
         error = f"发布异常: {e!r}"
     finally:
         try:
-            await ctx.close()
+            checkpoint = getattr(mgr, "snapshot_session", None)
+            if callable(checkpoint):
+                await checkpoint(identity, ctx)
         except Exception:
             pass
-        try:
-            await mgr.stop_minimize_hold(identity)
-        except Exception:
-            pass
+        finally:
+            try:
+                await ctx.close()
+            except Exception:
+                pass
+            try:
+                await mgr.stop_minimize_hold(identity)
+            except Exception:
+                pass
     return ok, result_url, error

@@ -19,6 +19,7 @@ from urllib.parse import urlparse
 from ...browser.identity import Identity
 from ...browser.manager import BrowserManager
 from .cover import set_kuaishou_cover
+from .onboarding import dismiss_known_tour
 
 PUBLISH_URL = "https://cp.kuaishou.com/article/publish/video"
 MANAGE_URL = "https://cp.kuaishou.com/article/manage/video"
@@ -201,6 +202,11 @@ async def _dismiss_overlays(page, rounds: int = 3) -> None:
       而上传其实早已成功、描述框就在页面上。这里只点语义明确的引导按钮,绝不 force、
       绝不点任意祖先。
     """
+    tour = await dismiss_known_tour(page)
+    if tour is not None:
+        if not tour:
+            _log("已识别的新手引导仍遮挡页面，等待明确引导控件；未点击页面其他按钮")
+        return
     buttons = (
         'button:has-text("我知道了")', 'button:has-text("知道了")',
         'button:has-text("跳过")', 'button:has-text("跳过引导")',
@@ -767,11 +773,18 @@ async def publish_kuaishou(mgr: BrowserManager, identity: Identity,
         error = f"发布异常: {exc!r}"
     finally:
         try:
-            await ctx.close()
+            checkpoint = getattr(mgr, "snapshot_session", None)
+            if callable(checkpoint):
+                await checkpoint(identity, ctx)
         except Exception:
             pass
-        try:
-            await mgr.stop_minimize_hold(identity)
-        except Exception:
-            pass
+        finally:
+            try:
+                await ctx.close()
+            except Exception:
+                pass
+            try:
+                await mgr.stop_minimize_hold(identity)
+            except Exception:
+                pass
     return ok, result_url, error

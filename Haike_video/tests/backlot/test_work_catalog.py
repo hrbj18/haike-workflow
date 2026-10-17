@@ -113,6 +113,32 @@ def test_all_accounts_need_actual_acceptance_and_final_binding(env):
     g.rows[1].update(status="done",acceptance_status="not_checked")
     w=work_publish.sync(c,w["work_id"],g)
     assert not work_storage.eligible(w)
+
+
+def test_blocked_target_does_not_prevent_other_frozen_targets_or_duplicate_recovery(env):
+    c, p = env
+    w = prepare_work(c, p)
+    class PartlyUnavailable(FakeGateway):
+        blocked = True
+        def submit(self, payload, key):
+            if payload["account_id"] == 1 and self.blocked:
+                raise WorkError("账号需要恢复登录")
+            return super().submit(payload, key)
+    g = PartlyUnavailable()
+    plan = work_publish.prepare(c, w["work_id"], w["revision"])
+    with pytest.raises(WorkError, match="其他平台已继续"):
+        work_publish.submit(c, plan["plan_id"], True, g)
+    attempts = c.get(w["work_id"])["attempts"]
+    assert attempts[0]["status"] == "blocked" and attempts[0]["task_id"] is None
+    assert attempts[1]["task_id"] is not None and len(g.rows) == 1
+    original_key = attempts[0]["key"]
+    g.blocked = False
+    recovered = work_publish.submit(c, plan["plan_id"], True, g)
+    assert len(g.rows) == 2
+    assert recovered["attempts"][0]["key"] == original_key
+    assert "blocked_reason" not in recovered["attempts"][0]
+    work_publish.submit(c, plan["plan_id"], True, g)
+    assert len(g.rows) == 2
     w=verified(c,w,g);assert work_storage.eligible(w)
     w=confirm(c,version(c,p,"new"));assert not work_storage.eligible(w)
     assert w["attempts"][0]["version_id"]!=w["final_version_id"]

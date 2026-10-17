@@ -14,7 +14,10 @@ load_env()
 
 from tools.video.video_stitch import VideoStitch
 
-OUT = os.path.join(os.path.dirname(__file__), "output")
+_QA_OUTPUT_ROOT = Path(__file__).resolve().parent / "output"
+OUT = str(Path(os.environ.get("HAIKE_QA_OUTPUT_DIR") or _QA_OUTPUT_ROOT).resolve())
+if not Path(OUT).is_relative_to(_QA_OUTPUT_ROOT.resolve()):
+    raise ValueError("QA output override must stay inside tests/qa/output")
 os.makedirs(OUT, exist_ok=True)
 
 # --- Fixture generation ---
@@ -36,7 +39,7 @@ def ensure_video(path, duration=4, width=1280, height=720, fps=30, color="blue")
          "-g", str(fps), "-keyint_min", str(fps),
          "-c:a", "aac", "-ar", "44100", "-ac", "2",
          "-shortest", path],
-        capture_output=True, check=True,
+        capture_output=True, check=True, timeout=120,
     )
 
 # Matching clips (same resolution/fps/codec)
@@ -202,7 +205,7 @@ for name in outputs:
         probe = subprocess.run(
             ["ffprobe", "-v", "quiet", "-print_format", "json",
              "-show_format", "-show_streams", path],
-            capture_output=True, text=True,
+            capture_output=True, text=True, encoding="utf-8", check=True, timeout=30,
         )
         info = json.loads(probe.stdout)
         fmt = info.get("format", {})

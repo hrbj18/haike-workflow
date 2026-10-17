@@ -45,6 +45,16 @@ def client(projects_root, monkeypatch):
         yield c
 
 
+@pytest.fixture
+def internal_client(projects_root, monkeypatch, internal_supplier_mode):
+    async def no_watch():
+        return None
+
+    monkeypatch.setattr(server_mod, "_watch_projects", no_watch)
+    with TestClient(server_mod.create_app()) as c:
+        yield c
+
+
 def _write_json(path: Path, data: dict) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(data), encoding="utf-8")
@@ -100,7 +110,10 @@ class TestBacklotServerApi:
     def test_health(self, client):
         response = client.get("/api/health")
         assert response.status_code == 200
-        assert response.json() == {"ok": True, "app": "backlot"}
+        assert response.json() == {
+            "ok": True, "app": "backlot", "edition": "haike-workflow-2",
+            "workspace": str(Path(server_mod.__file__).resolve().parents[2]),
+        }
 
     def test_source_audio_only_endpoint_forwards_versioned_contract(self, client, projects_root, monkeypatch):
         project = _make_project(projects_root, "source-audio-api")
@@ -124,7 +137,7 @@ class TestBacklotServerApi:
         assert response.json()["automation"]["audio_mode"] == "source_audio_only"
         assert captured["expected_revision"] == 0
 
-    def test_doubao_asr_config_is_masked_and_signed_audio_route_is_project_scoped(self, client, projects_root, monkeypatch):
+    def test_doubao_asr_config_is_masked_and_signed_audio_route_is_project_scoped(self, internal_client, projects_root, monkeypatch):
         project = _make_project(projects_root, "asr-api")
         audio = project / "artifacts" / "asr" / "S-001" / "sample.mp3"
         audio.parent.mkdir(parents=True)
@@ -141,8 +154,8 @@ class TestBacklotServerApi:
             return audio
 
         monkeypatch.setattr(server_mod, "resolve_signed_project_audio", fake_resolve)
-        config = client.get("/api/asr/doubao/config")
-        response = client.get(
+        config = internal_client.get("/api/asr/doubao/config")
+        response = internal_client.get(
             "/api/project/asr-api/workbench/asr-audio",
             params={"path": "artifacts/asr/S-001/sample.mp3", "expires_at": 123, "signature": "signed"},
         )
@@ -493,9 +506,22 @@ class TestBacklotServerApi:
         assert "无数字人口播" in response.json()["detail"]
 
     def test_library_quick_create_page_only_exposes_two_workflows(self, client):
-        library = client.get("/")
+        studio = client.get("/")
+        assert studio.status_code == 200
+        assert '<div id="root"></div>' in studio.text
+        entry = re.search(
+            r'<script\b(?=[^>]*type="module")[^>]*src="(/ui/avatar-generator/assets/[^"]+\.js)"',
+            studio.text,
+        )
+        assert entry, "the customer homepage must boot the new studio"
+        assert client.get(entry.group(1)).status_code == 200
+
+        library = client.get("/legacy/projects")
 
         assert library.status_code == 200
+        assert "/ui/legacy-shell.js" in library.text
+        assert "/ui/legacy-skin.css" in library.text
+        assert "项目工作台" in library.text
         assert library.text.count('name="pipeline_type"') == 1
         assert library.text.count('<option value="animated-explainer"') == 1
         assert library.text.count('<option value="avatar-spokesperson"') == 1
@@ -586,13 +612,15 @@ class TestBacklotServerApi:
         assert response.status_code == 200
         assert calls and calls[0] == "start"
 
-    def test_library_rejects_an_unsafe_or_incomplete_project_request(self, client):
+    def test_library_rejects_an_unsafe_or_incomplete_project_request(self, client, projects_root):
         response = client.post("/api/projects", json={
             "project_id": "../outside", "title": "", "pipeline_type": "not-real",
         })
         assert response.status_code == 422
+        assert not (projects_root.parent / "outside").exists()
+        assert not list(projects_root.iterdir())
 
-        library = client.get("/")
+        library = client.get("/legacy/projects")
         assert library.status_code == 200
         assert "新建视频项目" in library.text
 

@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import os
 import re
+import math
 import subprocess
 import time
 from hashlib import sha256
@@ -52,7 +53,7 @@ def bailian_asr_runtime_identity():
     return f"bailian:{api.ASR_MODEL}:{api.api_base()}:mono16k-v1"
 
 
-def upload_audio(path: Path, mode: str) -> dict:
+def upload_audio(path: Path, mode: str, *, model: str = api.ASR_MODEL) -> dict:
     if path.stat().st_size > 1024 ** 3:
         raise BailianASRError("待识别音轨超过 1 GB，请先分割素材")
     if mode == "oss":
@@ -63,7 +64,7 @@ def upload_audio(path: Path, mode: str) -> dict:
                 "oss_bucket": os.environ.get("BAILIAN_OSS_BUCKET", ""),
                 "oss_endpoint": os.environ.get("BAILIAN_OSS_ENDPOINT", "")}
     policy = api.response_json(requests.get(api.api_base() + "/uploads",
-        params={"action": "getPolicy", "model": api.ASR_MODEL}, headers=api.headers(), timeout=(15, 45)))
+        params={"action": "getPolicy", "model": model}, headers=api.headers(), timeout=(15, 45)))
     policy = policy.get("data") or policy
     host = str(policy.get("upload_host") or "")
     if not re.fullmatch(r"https://[A-Za-z0-9.-]+\.aliyuncs\.com/?", host):
@@ -74,7 +75,7 @@ def upload_audio(path: Path, mode: str) -> dict:
               "x-oss-object-acl": policy.get("x_oss_object_acl", "private"),
               "x-oss-forbid-overwrite": "true"}
     with path.open("rb") as stream:
-        response = requests.post(host, data=fields, files={"file": ("audio" + path.suffix.lower(), stream)}, timeout=(15, 300))
+        response = requests.post(host, data=fields, files={"file": ("audio" + path.suffix.lower(), stream)}, timeout=(15, 300), allow_redirects=False)
     if response.status_code not in {200, 201, 204}:
         raise BailianASRError(f"百炼临时音轨上传失败（HTTP {response.status_code}）")
     return {"file_url": "oss://" + key, "storage": mode}
@@ -97,7 +98,31 @@ def _cleanup_upload(record: dict, record_path: Path):
 
 def transcribe_file(audio: Path, *, artifact_dir: Path, on_accepted=None, on_submitting=None,
                     timeout_seconds=900, poll_seconds=3):
-    assert_bailian_asr_ready()
+    """Preserve the accepted-task boundary on every downstream failure."""
+    accepted_task = None
+
+    def remember(task_id):
+        nonlocal accepted_task
+        accepted_task = task_id
+        if on_accepted:
+            on_accepted(task_id)
+
+    try:
+        return _transcribe_file(audio, artifact_dir=artifact_dir, on_accepted=remember,
+            on_submitting=on_submitting, timeout_seconds=timeout_seconds, poll_seconds=poll_seconds)
+    except BailianASRError as exc:
+        if accepted_task:
+            exc.accepted, exc.task_id, exc.definitive = True, accepted_task, False
+        raise
+    except Exception:
+        raise BailianASRError(
+            "百炼转写未完成，请保留原任务后重试" if not accepted_task else
+            "百炼转写中断，原任务已保存；请恢复查询，不要重新提交",
+            accepted=bool(accepted_task), task_id=accepted_task) from None
+
+
+def _transcribe_file(audio: Path, *, artifact_dir: Path, on_accepted, on_submitting,
+                     timeout_seconds, poll_seconds):
     digest = sha256()
     with audio.open("rb") as stream:
         for block in iter(lambda: stream.read(1024 * 1024), b""):
@@ -107,6 +132,9 @@ def transcribe_file(audio: Path, *, artifact_dir: Path, on_accepted=None, on_sub
     with api.operation_lock(directory):
         record_path, result_path = directory / "task.json", directory / "transcript.json"
         record = api.read_record(record_path)
+        if record.get("task_id"):
+            on_accepted(record["task_id"])
+        assert_bailian_asr_ready()
         if record.get("status") == "submitting":
             raise BailianASRAmbiguous("百炼 ASR 上次提交结果不明，可能已计费；请核对云端记录，系统不会重复提交")
         if not record.get("task_id"):
@@ -127,11 +155,12 @@ def transcribe_file(audio: Path, *, artifact_dir: Path, on_accepted=None, on_sub
             except requests.RequestException as exc:
                 raise BailianASRAmbiguous("百炼 ASR 提交连接中断，受理状态不明；已停止自动重发") from exc
             if response.status_code >= 500:
-                raise BailianASRAmbiguous("百炼 ASR 服务端异常，受理状态不明；请核对云端记录")
+                raise BailianASRAmbiguous("百炼 ASR 服务端异常，受理状态不明；请核对云端记录",
+                                         http_status=response.status_code)
             try:
                 data = api.response_json(response)
-            except BailianASRError:
-                if response.status_code >= 400:
+            except BailianASRError as exc:
+                if exc.definitive:
                     record["status"] = "rejected"
                     api.write_record(record_path, record)
                 raise
@@ -140,7 +169,6 @@ def transcribe_file(audio: Path, *, artifact_dir: Path, on_accepted=None, on_sub
                 raise BailianASRAmbiguous("百炼 ASR 未返回任务 ID，受理状态不明")
             record.update({"status": "accepted", "task_id": task_id, "request_id": data.get("request_id")})
             api.write_record(record_path, record)
-        if on_accepted:
             on_accepted(record["task_id"])
         deadline = time.monotonic() + timeout_seconds
         while not result_path.exists():
@@ -155,14 +183,16 @@ def transcribe_file(audio: Path, *, artifact_dir: Path, on_accepted=None, on_sub
                     record.update({"status": "failed", "error": api.safe_error(output.get("message") or output.get("code"))})
                     api.write_record(record_path, record)
                     _cleanup_upload(record, record_path)
-                    raise BailianASRError("百炼 ASR 云端任务失败：" + record["error"])
+                    raise api.provider_error("百炼 ASR 云端任务失败：" + record["error"],
+                        provider_code=output.get("code"), accepted=True, task_id=record["task_id"])
                 if status != "SUCCEEDED":
                     time.sleep(poll_seconds)
                     continue
                 results = output.get("results") or []
                 item = results[0] if results else {}
                 if item.get("subtask_status") == "FAILED" or not item.get("transcription_url"):
-                    raise BailianASRError("百炼 ASR 任务未返回有效转写结果：" + api.safe_error(item.get("message", "")))
+                    raise api.provider_error("百炼 ASR 任务未返回有效转写结果：" + api.safe_error(item.get("message", "")),
+                        provider_code=item.get("code"), accepted=True, task_id=record["task_id"])
                 record.update({"status": "succeeded", "transcription_url": item["transcription_url"], "usage": data.get("usage", {})})
                 api.write_record(record_path, record)
             api.download(record["transcription_url"], result_path)
@@ -171,14 +201,19 @@ def transcribe_file(audio: Path, *, artifact_dir: Path, on_accepted=None, on_sub
         for transcript in data.get("transcripts", []):
             text_parts.append(str(transcript.get("text") or ""))
             for sentence in transcript.get("sentences", []):
-                start, end = float(sentence.get("begin_time") or 0) / 1000, float(sentence.get("end_time") or 0) / 1000
-                if end < start:
+                start, end = float(sentence["begin_time"]) / 1000, float(sentence["end_time"]) / 1000
+                if not math.isfinite(start) or not math.isfinite(end) or start < 0 or end < start:
                     raise BailianASRError("百炼 ASR 返回的时间戳无效")
-                segments.append({"start": start, "end": end, "text": str(sentence.get("text") or ""),
-                                 **({"speaker_id": sentence["speaker_id"]} if "speaker_id" in sentence else {})})
+                sentence_words = []
                 for word in sentence.get("words") or []:
-                    words.append({"start": float(word.get("begin_time") or 0) / 1000,
-                                  "end": float(word.get("end_time") or 0) / 1000, "text": str(word.get("text") or "")})
+                    a, b = float(word["begin_time"]) / 1000, float(word["end_time"]) / 1000
+                    if not math.isfinite(a) or not math.isfinite(b) or a < 0 or b < a:
+                        raise BailianASRError("百炼 ASR 返回的词级时间戳无效")
+                    sentence_words.append({"start": a, "end": b, "text": str(word.get("text") or "")})
+                words.extend(sentence_words)
+                segments.append({"start": start, "end": end, "text": str(sentence.get("text") or ""),
+                                 "words": sentence_words,
+                                 **({"speaker_id": sentence["speaker_id"]} if "speaker_id" in sentence else {})})
         text = "\n".join(text_parts).strip() or "\n".join(s["text"] for s in segments)
         record["status"] = "completed"
         api.write_record(record_path, record)

@@ -114,9 +114,12 @@ def test_image_cap_and_explicit_opt_in():
 
 def test_trial_cached_success_and_ambiguous_request_never_repeat(data,tmp_path):
     s,_,_,_=data; calls=[]
-    def ok(payload,image):calls.append(payload);return {'choices':[{'message':{'content':'{}'}}],'usage':{'prompt_tokens':2}}
+    content='{"标题":"中文回执🎬"}'
+    def ok(payload,image):calls.append(payload);return {'choices':[{'message':{'content':content}}],'usage':{'prompt_tokens':2}}
     r=TrialRelay(s,tmp_path/'calls',ok); payload={'model':'gpt-6-luna'}
     assert r.call('one',payload)==r.call('one',payload);assert len(calls)==1
+    assert r.call('one',payload)['choices'][0]['message']['content']==content
+    assert len(calls)==1
     with pytest.raises(WorkError,match='冻结'): r.call('one',{'model':'changed'})
     def timeout(payload,image):calls.append(payload);raise TimeoutError()
     r.transport=timeout
@@ -138,7 +141,7 @@ def test_trial_daily_limits_are_durable(data,tmp_path):
 def test_probe_cannot_enable_a_different_model_or_destination(data,change):
     s,d,_,_=data
     assert status(s)['image_verified']
-    path=s.private/'studio-ai/relay.json'; c=json.loads(path.read_text()); c.update(change); atomic_private(path,c)
+    path=s.private/'studio-ai/relay.json'; c=json.loads(path.read_text(encoding='utf-8')); c.update(change); atomic_private(path,c)
     assert not status(s)['image_verified']
     with pytest.raises(WorkError,match='尚未验收'):options(s,d)
 
@@ -149,7 +152,7 @@ def test_fallback_model_never_resubmits_an_unknown_original_request(data,tmp_pat
     relay=TrialRelay(s,tmp_path/'calls',failed);stage='illustration-scene-1'
     payload={'model':'gpt-image-2','prompt':'test'}
     with pytest.raises(WorkError):relay.call(stage,payload,image=True)
-    path=s.private/'studio-ai/relay.json';c=json.loads(path.read_text());c.update(image_model='gpt-image-1.5');atomic_private(path,c)
+    path=s.private/'studio-ai/relay.json';c=json.loads(path.read_text(encoding='utf-8'));c.update(image_model='gpt-image-1.5');atomic_private(path,c)
     assert relay.image_model_for_stage(stage)=='gpt-image-2'
     assert relay.image_model_for_stage('illustration-scene-2')=='gpt-image-2'
     assert TrialRelay(s,tmp_path/'new-job').image_model_for_stage('illustration-scene-1')=='gpt-image-1.5'
@@ -167,7 +170,7 @@ def test_switching_image_model_preserves_successful_receipt_identity(data,tmp_pa
 
 def test_only_a_valid_probe_can_enable_the_configured_image_model(data,monkeypatch):
     from scripts.configure_studio_ai import verify_image
-    s,_,_,_=data;path=s.private/'studio-ai/relay.json';c=json.loads(path.read_text())
+    s,_,_,_=data;path=s.private/'studio-ai/relay.json';c=json.loads(path.read_text(encoding='utf-8'))
     c.update(image_model='gpt-image-1.5',image_verified=False);atomic_private(path,c)
     image=io.BytesIO();Image.new('RGB',(1024,1536)).save(image,format='PNG')
     import base64
@@ -177,14 +180,14 @@ def test_only_a_valid_probe_can_enable_the_configured_image_model(data,monkeypat
     image_bytes=image.getvalue();monkeypatch.setattr(TrialRelay,'call',fake)
     verify_image(s,'one-explicit-test')
     assert status(s)['image_verified'] and status(s)['image_model']=='gpt-image-1.5'
-    c=json.loads(path.read_text());c.update(image_model='gpt-image-1');atomic_private(path,c)
+    c=json.loads(path.read_text(encoding='utf-8'));c.update(image_model='gpt-image-1');atomic_private(path,c)
     with pytest.raises(ValueError,match='绑定'):verify_image(s,'one-explicit-test')
 
 
 def test_unified_avatar_motion_result_is_recovered_after_restart(tmp_path):
     from backlot.production_queue_worker import ProductionQueueWorker
     root=tmp_path/'projects';output=root/'demo/renders/studio-1';output.mkdir(parents=True)
-    (output/'motion-preview.mp4').write_bytes(b'test-render');(output/'qa.json').write_text('{}')
+    (output/'motion-preview.mp4').write_bytes(b'test-render');(output/'qa.json').write_text('{}',encoding='utf-8')
     worker=ProductionQueueWorker(None,root)
     job={'project_id':'demo','kind':'studio_avatar','frozen_request':{'render_id':'studio-1','draft':{'input':{'motion':{'style':'01-D'}}}}}
     result=worker.inspect_parent(job)
@@ -204,10 +207,14 @@ def test_expired_quote_renewal_cannot_change_customer_approval():
 
 def test_pipeline_resumes_completed_scenes_without_researching(data,tmp_path,monkeypatch):
     s,d,cues,body=data
+    d=s.save_draft({**d,'title':'中文断点续作🎬'})
+    body['scenes'][0]['label']='第一镜🎬'
     b=io.BytesIO();Image.new('RGB',(300,300)).save(b,format='PNG')
     a=s.save_asset(d['id'],'test.png','image',b.getvalue())
     plan={'scenes':validate_plan(body,d,cues,3.2),'duration':3.2}
-    monkeypatch.setattr('backlot.studio_storyboard.make_plan',lambda *_:plan)
+    planning=[]
+    def make_plan(*_):planning.append(d['title']);return plan
+    monkeypatch.setattr('backlot.studio_storyboard.make_plan',make_plan)
     calls=[]
     def resolve(scene,*_):
         calls.append(scene['id'])
@@ -215,5 +222,11 @@ def test_pipeline_resumes_completed_scenes_without_researching(data,tmp_path,mon
         return {**a,'provenance':{'source':'user'}}
     monkeypatch.setattr('backlot.studio_storyboard.resolve_scene',resolve)
     with pytest.raises(WorkError):produce(s,d,tmp_path/'render',cues,3.2,None)
+    checkpoint=json.loads((tmp_path/'render/storyboard.json').read_text(encoding='utf-8'))
+    assert checkpoint['scenes'][0]['label']=='第一镜🎬'
+    assert checkpoint['scenes'][0]['asset']['id']==a['id']
+    assert 'asset' not in checkpoint['scenes'][1]
     result=produce(s,d,tmp_path/'render',cues,3.2,None)
     assert result['status']=='ready' and calls==['scene-1','scene-2','scene-2']
+    assert result['scenes'][0]['label']=='第一镜🎬'
+    assert planning==['中文断点续作🎬']

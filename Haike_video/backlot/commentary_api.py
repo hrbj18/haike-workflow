@@ -1,7 +1,7 @@
 """HTTP editor for the source-first commentary template."""
 from pathlib import Path
 from fastapi import APIRouter, Body, HTTPException, Request
-from fastapi.responses import FileResponse, HTMLResponse
+from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse
 
 from backlot import material_commentary as commentary
 from backlot import commentary_audio as audio
@@ -39,7 +39,7 @@ def project(request, identity):
 
 @router.get("/material-commentary", response_class=HTMLResponse)
 def page():
-    return HTMLResponse((Path(__file__).parent / "ui/material_commentary.html").read_text(encoding="utf-8"), headers={"Cache-Control": "no-cache"})
+    return RedirectResponse('/projects', status_code=307)
 
 
 @router.get(BASE)

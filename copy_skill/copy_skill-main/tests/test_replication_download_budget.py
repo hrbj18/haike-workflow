@@ -450,7 +450,7 @@ def test_cache_hit_over_budget_is_not_delivered(tmp_path: Path) -> None:
     assert any(item["stage"] in {"budget_item", "budget_bytes"} for item in block["skipped"])
 
 
-def test_cache_hit_over_total_budget_is_skipped_not_stopped(tmp_path: Path) -> None:
+def test_cache_hit_over_total_budget_is_skipped_not_stopped(tmp_path: Path, monkeypatch) -> None:
     """A cache hit that overflows the *remaining* budget is skipped, not fatal (P1d).
 
     ``max_item_bytes`` is huge, so the 5000-byte cached item is refused only
@@ -462,6 +462,14 @@ def test_cache_hit_over_total_budget_is_skipped_not_stopped(tmp_path: Path) -> N
     config = _config(tmp_path, budget={"enabled": True, "max_count": 12, "max_bytes": 1000, "max_item_bytes": 10 ** 9})
     rows = [_row("v0000", "作者A"), _row("v0001", "作者B")]
     _seed_material_cache(config, "v0000", 5000)
+    attempted = []
+
+    def unavailable_download(request, **kwargs):
+        attempted.append(request.full_url.rsplit("/", 1)[-1])
+        raise OSError("controlled unavailable media fixture")
+
+    # Preserve download_video's real cache/budget checks; replace only network IO.
+    monkeypatch.setattr(materials.urllib.request, "urlopen", unavailable_download)
     deps = ReplicationDeps(collector=_collector(rows), prober=lambda path, config: dict(_VALID_PROBE))
 
     result = run_material_replication(config, "苹果折叠屏手机", business_date="2026-09-12", download_only=True, deps=deps)
@@ -470,6 +478,7 @@ def test_cache_hit_over_total_budget_is_skipped_not_stopped(tmp_path: Path) -> N
     assert block["used"]["bytes"] == 0
     assert block["stopped_by"] == "queue_exhausted"
     assert _source_bytes(output_dir) == 0
+    assert attempted and set(attempted) == {"v0001"}
 
 
 def test_cache_hit_within_budget_is_counted_not_redownloaded(tmp_path: Path) -> None:
@@ -542,9 +551,15 @@ def test_config_budget_disabled_skips_cap_validation(tmp_path: Path) -> None:
 
 def test_shipped_config_budget_still_valid() -> None:
     """The factory config (enabled: true + all three caps) keeps loading and armed."""
-    budget = DownloadBudget.from_config(load_config())
+    shipped = Path(__file__).resolve().parents[1] / "config" / "content_intelligence.json"
+    config = load_config(shipped)  # Explicit paths never merge a machine-local override.
+    budget = DownloadBudget.from_config(config)
     assert budget is not None
-    assert (budget.max_count, budget.max_bytes, budget.max_item_bytes) == (20, 262144000, 83886080)
+    assert (budget.max_count, budget.max_bytes, budget.max_item_bytes) == (24, 188743680, 83886080)
+    material = config["jobs"]["material_replication"]["material_replica"]
+    assert 0 < material["target_count"] <= budget.max_count
+    assert 0 < budget.max_item_bytes <= budget.max_bytes
+    assert material["max_delivered_bytes"] <= budget.max_bytes
 
 
 # --------------------------------------------------------------------------- #

@@ -4,31 +4,39 @@ import { Sidebar } from './Sidebar.jsx';
 import { App as Avatar } from './App.jsx';
 import { Graphic } from './Graphic.jsx';
 import { Settings } from './Settings.jsx';
+import { Materials } from './Materials.jsx';
+import { TaskCenter } from './TaskCenter.jsx';
+import { productionJobs,productionKindLabel,taskCenterHref,taskStatusLabel } from './task-center-model.js';
 import { Button, Dialog, EmptyState, Heading, Notice } from './ui.jsx';
 import { api, upload } from './studio-api.js';
 import './studio.css';
+import { AudioCenterDialog } from './AudioCenter.jsx';
+import { audioRoute,accountsRoute,closePlatformAccounts } from './studio-routes.js';
+import {NetworkMaterials} from './NetworkMaterials.jsx';
+import {forgetAudioOperation} from './audio-operation-store.js';
 
 const asset = name => `${import.meta.env.BASE_URL}assets/${name}`;
 const money = value => `¥${(Number(value || 0) / 1000000).toFixed(2)}`;
 const platform = id => ({douyin:'抖音',kuaishou:'快手',shipinhao:'视频号'})[id] || id;
 const stateName = id => ({draft:'草案',scheduled:'待发布',running:'发布中',done:'已发布 · 待核验',failed:'失败',uncertain:'结果待核对',submitting:'提交中',canceling:'取消中 · 待恢复',canceled:'已取消',completed:'已合成 · 待审核',queued:'排队中'})[id] || id;
-function Projects() {
+function Projects({search=''}) {
   const [drafts,setDrafts]=useState([]),[works,setWorks]=useState([]),[error,setError]=useState(''),[selected,setSelected]=useState(null),[message,setMessage]=useState(''),[tab,setTab]=useState('works');
   const [fields,setFields]=useState({}),[saving,setSaving]=useState(false);const coverInput=useRef();
   const [jobs,setJobs]=useState([]);
   const [viewVersion,setViewVersion]=useState('');
   useEffect(()=>{if(selected){const d=selected.materials.at(-1)?.data||{};setFields({...d,title:d.title||selected.title,desc:d.desc||'',topics:d.topics||'',rights_confirmed:['owned','confirmed'].includes(d.source_rights_status)});}},[selected?.work_id]);
-  async function load(){try{const [d,w,q]=await Promise.all([api('/api/studio/drafts'),api('/api/works?candidates=true'),api('/api/production-queue')]);setDrafts(d);setWorks(Array.isArray(w)?w:(w.works||[]));setJobs(q.tasks.filter(j=>j.kind.startsWith('studio_')));}catch(e){setError(e.message);}}
+  async function load(){try{const [d,w,q]=await Promise.all([api('/api/studio/drafts'),api('/api/works?candidates=true'),api('/api/production-queue')]);const allJobs=productionJobs(q);setDrafts(d);setWorks(Array.isArray(w)?w:(w.works||[]));setJobs(allJobs);setError('');}catch(e){setError(e.message);}}
   async function retryJob(j){setSaving(true);try{await api(`/api/production-queue/jobs/${j.job_id}/retry`,{});setMessage('已恢复原任务，会复用已完成的付费调用和本地产物。');load();}catch(e){setError(e.message);}finally{setSaving(false);}}
   useEffect(()=>{load();},[]);
   async function inspect(w){try{const detail=await api(`/api/works/${w.work_id}`);setViewVersion(detail.versions.at(-1)?.version_id||'');setSelected(detail);}catch(e){setError(e.message);}}
+  useEffect(()=>{const workId=new URLSearchParams(search).get('work');if(workId)void inspect({work_id:encodeURIComponent(workId)});},[search]);
   async function confirm(){setSaving(true);setError('');try{const w=await api(`/api/works/${selected.work_id}/confirm`,{revision:selected.revision,version_id:viewVersion,evidence:'用户在海客工作台观看并确认最终成片'});setSelected(w);setMessage('当前观看版本已确认，请准备发布资料后安排日历。');load();}catch(e){setError(e.message);}finally{setSaving(false);}}
   async function chooseCover(e){const f=e.target.files?.[0];e.target.value='';if(!f)return;setSaving(true);setError('');try{const r=await fetch(`/api/studio/works/${selected.work_id}/cover-upload`,{method:'POST',headers:{'Content-Type':'application/octet-stream'},body:f});const v=await r.json();if(!r.ok)throw new Error(v.detail||'封面未能上传');setFields(old=>({...old,cover_path:v.path}));}catch(e){setError(e.message);}finally{setSaving(false);}}
   async function saveMaterials(e){e.preventDefault();setSaving(true);setError('');try{setSelected(await api(`/api/studio/works/${selected.work_id}/materials`,{...fields,revision:selected.revision}));setMessage('发布资料已保存，可以到日历选择账号与时间。');}catch(e){setError(e.message);}finally{setSaving(false);}}
   return <main className="workspace"><Heading title="我的作品" helper="继续制作项目，审核成片，再安排发布"><button className="button compact" onClick={load}><RefreshCw size={16}/>刷新</button></Heading><div className="studio-tabs"><button className={tab==='works'?'active':''} onClick={()=>setTab('works')}>成片与审核 <small>{works.length}</small></button><button className={tab==='drafts'?'active':''} onClick={()=>setTab('drafts')}>制作项目 <small>{drafts.length}</small></button></div><Notice message={error} error/><Notice message={message}/>
     {tab==='drafts'?<div className="work-grid">{drafts.map(d=><article className="surface work-card" key={d.id}><FileText size={25}/><h2>{d.title}</h2><p>{d.kind==='graphic'?'图文视频':d.template_id==='avatar-motion-adu-v1'?'动效口播':'数字人口播'} · {d.template_id}</p><p className="helper">{new Date(d.updated_at).toLocaleString('zh-CN')}</p><a className="button" href={`/${d.kind==='graphic'?'graphic':'avatar'}?draft=${d.id}${d.template_id==='avatar-motion-adu-v1'?'&mode=motion':''}`}>继续编辑<ArrowRight size={16}/></a></article>)}{!drafts.length&&<EmptyState title="开始制作你的第一个视频" action={<Button href="/graphic" variant="primary">制作图文视频<ArrowRight size={16}/></Button>}>也可以选择左侧的数字人口播，上传文案、声音和人物照片。</EmptyState>}</div>:
     <div className="work-grid">{works.map(w=><article className="surface work-card" key={w.work_id}><Film size={25}/><h2>{w.title}</h2><p className="helper">{w.final_version_id?'已确认最终版':'待观看与确认'}</p><div className="work-actions"><button className="button" onClick={()=>inspect(w)}><Play size={16}/>查看与审核</button>{w.final_version_id&&<a className="text-button" href={`/calendar?work=${w.work_id}`}>安排发布</a>}</div></article>)}{!works.length&&<EmptyState title="还没有生成的成片" action={<Button href="/graphic">去创作视频<ArrowRight size={16}/></Button>}>生成完成的作品会显示在这里，观看并审核后即可安排发布。</EmptyState>}</div>}
-    {jobs.length>0&&<section className="surface plan-list"><h2>制作进度</h2>{jobs.map(j=><article key={j.job_id}><div><strong>{j.kind==='studio_graphic'?'图文视频':'数字人口播'} · {stateName(j.status)}</strong><p>{j.stage}</p></div>{j.retryable&&<button className="button" disabled={saving} onClick={()=>retryJob(j)}>恢复原任务</button>}</article>)}</section>}
+    <section className="surface plan-list"><div className="production-list-heading"><h2>制作队列</h2><Button href="/task-center" variant="text">任务总览<ArrowRight size={15}/></Button></div>{jobs.map(j=><article key={j.job_id}><div><strong>{productionKindLabel(j.kind)} · {taskStatusLabel(j.status)}</strong><p>{j.stage||'尚未记录阶段'}</p><small>{j.job_id}</small></div><div className="production-job-actions"><Button href={taskCenterHref({queueJob:j.job_id,projectId:j.project_id})}>查看任务记录</Button>{j.retryable&&<Button disabled={saving} onClick={()=>retryJob(j)}>恢复原任务</Button>}</div></article>)}{!jobs.length&&!error&&<p className="helper">当前没有制作队列记录。</p>}</section>
     {selected&&<Dialog title={selected.title} wide busy={saving} onClose={()=>setSelected(null)} footer={<><Button disabled={saving} onClick={()=>setSelected(null)}>关闭</Button>{selected.final_version_id!==viewVersion?<Button variant="primary" loading={saving} disabled={!viewVersion} onClick={confirm}>观看后确认最终成片</Button>:<><Button href={`/api/works/${selected.work_id}/media`} download>下载成片</Button><Button type="submit" form="work-materials-form" loading={saving}>保存发布资料</Button><Button variant="primary" href={`/calendar?work=${selected.work_id}`}>安排日历<ArrowRight size={18}/></Button></>}</>}><label>观看版本<select value={viewVersion} onChange={e=>setViewVersion(e.target.value)}>{selected.versions.map(v=><option key={v.version_id} value={v.version_id}>{v.version_id}{v.version_id===selected.final_version_id?" · 当前最终版":""}</option>)}</select></label><video key={viewVersion} className="sample-video" controls src={`/api/works/${selected.work_id}/media?version=${viewVersion}`}/><p className="helper">请完整观看并核对声音、文字、画面及素材来源。合成完成后需要你确认最终成片。</p><Notice message={error} error/><Notice message={message}/>{selected.final_version_id===viewVersion&&<form id="work-materials-form" className="studio-form" onSubmit={saveMaterials}><h3>发布资料</h3><label>发布标题<input required maxLength={80} value={fields.title||''} onChange={e=>setFields({...fields,title:e.target.value})}/></label><label>详情<textarea required value={fields.desc||''} maxLength={2000} rows={3} onChange={e=>setFields({...fields,desc:e.target.value})}/></label><label>话题<input value={fields.topics||''} onChange={e=>setFields({...fields,topics:e.target.value})}/></label><button type="button" className="button" disabled={saving} onClick={()=>coverInput.current.click()}><Upload size={17}/>{fields.cover_path?'更换封面（已上传）':'上传3:4发布封面（600×800以上）'}</button><input hidden type="file" ref={coverInput} accept="image/png,image/jpeg" onChange={chooseCover}/><label className="checkbox-row"><input type="checkbox" checked={!!fields.rights_confirmed} onChange={e=>setFields({...fields,rights_confirmed:e.target.checked})}/>已确认人物、声音和素材的使用范围</label></form>}</Dialog>}
   </main>;
 }
@@ -67,4 +75,9 @@ function Calendar() {
   </main>;
 }
 
-export function StudioApp(){const view=location.pathname;return <><Sidebar/>{view==='/settings'?<Settings/>:view==='/calendar'?<Calendar/>:view==='/projects'?<Projects/>:view==='/avatar'||view.startsWith('/ui/avatar-generator/')?<Avatar/>:<Graphic/>}</>;}
+export function StudioApp(){
+  const [current,setCurrent]=useState(()=>({pathname:location.pathname,search:location.search}));
+  useEffect(()=>{const update=()=>setCurrent({pathname:location.pathname,search:location.search});window.addEventListener('popstate',update);window.addEventListener('haike:navigate',update);window.addEventListener('haike:gateway-changed',forgetAudioOperation);return()=>{window.removeEventListener('popstate',update);window.removeEventListener('haike:navigate',update);window.removeEventListener('haike:gateway-changed',forgetAudioOperation);};},[]);
+  const view=current.pathname==='/'?'/avatar':current.pathname, audio=audioRoute(current),accounts=accountsRoute(current);
+  return <><Sidebar/>{view==='/settings'?<Settings/>:view==='/task-center'?<TaskCenter search={current.search}/>:view==='/material-library'?<Materials/>:view==='/calendar'?<Calendar/>:view==='/projects'?<Projects search={current.search}/>:view==='/avatar'||view.startsWith('/ui/avatar-generator/')?<Avatar/>:<Graphic/>}{audio.open&&<AudioCenterDialog route={audio}/>} {accounts.open&&<NetworkMaterials key={accounts.platform} initialPanel="accounts" initialPlatform={accounts.platform} hideActions onClose={closePlatformAccounts}/>}</>;
+}

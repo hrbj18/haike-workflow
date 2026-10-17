@@ -278,6 +278,8 @@ typing-inspection==0.4.4
     # via
     #   fastapi
     #   pydantic
+tzdata==2026.5
+    # via Haike_video/requirements.txt (Windows ZoneInfo for collection timestamps)
 urllib3==2.8.0
     # via
     #   id
@@ -289,3 +291,17 @@ watchfiles==1.3.0
     # via -r dist/haike-workflow-windows-x64-20261009/Haike_video/requirements.txt
 websockets==16.1.1
     # via google-genai
+
+# Internal Bailian voice HTTP runtime (resolved with all existing ASR pins).
+aiohappyeyeballs==2.7.1
+aiohttp==3.14.5
+aiosignal==1.4.0
+dashscope==1.27.7
+frozenlist==1.8.0
+httpx-sse==0.4.3
+multidict==7.1.0
+propcache==0.5.4
+shellingham==1.5.4
+typer==0.27.3
+websocket-client==1.9.2
+yarl==1.25.1

@@ -405,6 +405,26 @@ def test_theme_keywords_replace_the_derived_lanes() -> None:
     assert not any(_is_intent(keyword) for keyword in keywords), keywords
 
 
+def test_theme_keywords_keep_explicit_intent_without_adding_derived_lanes() -> None:
+    theme = "量子计算"
+    terms = ["量子计算 实测", "量子计算 上手"]
+    config = _material_config(theme_keywords={theme: terms})
+
+    # An operator may deliberately request an intent query. The override's
+    # promise is to suppress automatic lanes, not to censor the supplied words.
+    assert expand_keywords(theme, config) == [theme, *terms]
+
+
+def test_theme_keywords_preserve_priority_within_the_query_budget() -> None:
+    theme = "量子计算"
+    terms = ["量子处理器", "量子计算 上手", "量子计算 实测"]
+    config = _material_config(max_keywords=3, theme_keywords={theme: terms})
+
+    # The theme keeps its leading slot. Explicit queries retain their order,
+    # but supplying an override must not bypass the same finite query budget.
+    assert expand_keywords(theme, config) == [theme, *terms[:2]]
+
+
 def test_theme_keywords_absent_is_byte_identical() -> None:
     baseline = expand_keywords(_TREND_THEME, _material_config())
     assert any(_is_intent(keyword) for keyword in baseline), baseline  # lanes did run
@@ -446,6 +466,27 @@ def test_theme_subject_terms_are_added_not_substituted() -> None:
     assert len(after) == len({term.casefold() for term in after})
 
 
+def test_theme_subject_overrides_deduplicate_by_casefold_and_keep_first_spelling() -> None:
+    theme = "量子计算"
+    config = _material_config(theme_subject_terms={theme: [
+        "Atlas", "atlas", "ATLAS", "Straße", "STRASSE", " Logo ", "logo",
+    ]})
+
+    # Equality follows Unicode casefold, including ß -> ss, while the public
+    # vocabulary retains the first spelling rather than rewriting user text.
+    assert subject_terms(theme, config) == [theme, "Atlas", "Straße", "Logo"]
+
+
+def test_theme_subject_overrides_do_not_add_generic_split_fragments() -> None:
+    theme = "量子计算"
+    terms = ["华为P70", "产品演示950涨价"]
+    config = _material_config(theme_subject_terms={theme: terms})
+
+    # Explicit terms remain available whole. Their optional split pass still
+    # rejects a bare-brand split and never adds a standalone event word.
+    assert subject_terms(theme, config) == [theme, *terms, "产品演示", "950"]
+
+
 def test_theme_subject_terms_absent_is_byte_identical() -> None:
     baseline = subject_terms(_TREND_THEME, _material_config())
 
@@ -477,25 +518,66 @@ def test_the_two_override_tables_are_independent() -> None:
 
 
 def test_shipped_override_tables_are_effective() -> None:
-    """Whatever the delivered tables name, each entry must actually take effect.
+    """Each shipped override is reachable within the bounded query contract.
 
     Self-consistency rather than a hard-coded expectation, on purpose: this is
     the shape of guard that would have caught the 9.14 ``theme=theme`` defect,
     where the feature was committed and unit-tested while the pipeline never
     passed the argument that switched it on.
     """
-    config = load_config()
+    shipped = Path(__file__).resolve().parents[1] / "config" / "content_intelligence.json"
+    config = load_config(shipped)
     material = config["jobs"]["material_replication"]
 
     for theme, terms in (material.get("theme_keywords") or {}).items():
         assert terms, theme
         keywords = expand_keywords(theme, config)
-        assert set(terms) <= set(keywords), theme
-        assert not any(_is_intent(keyword) for keyword in keywords), (theme, keywords)
+        assert keywords, theme
+        assert len(keywords) <= max(
+            int(material["min_keywords"]), min(10, int(material["max_keywords"]))
+        ), (theme, keywords)
+        explicit = {term.strip().casefold() for term in terms}
+        assert not any(
+            _is_intent(keyword) and keyword.casefold() not in explicit
+            for keyword in keywords
+        ), (theme, keywords)
+        # The theme/head consumes slots too: a ten-word override is allowed
+        # to overflow a ten-query budget. Verify every word is recognised in
+        # isolation, rather than falsely requiring an unbounded final list.
+        for term in terms:
+            single_override = {
+                "jobs": {
+                    "material_replication": {
+                        **material,
+                        "theme_keywords": {theme: [term]},
+                    }
+                }
+            }
+            assert term.strip().casefold() in {
+                keyword.casefold() for keyword in expand_keywords(theme, single_override)
+            }, (theme, term)
 
     for theme, terms in (material.get("theme_subject_terms") or {}).items():
         assert terms, theme
-        assert set(terms) <= set(subject_terms(theme, config)), theme
+        vocabulary = subject_terms(theme, config)
+        folded_vocabulary = {term.casefold() for term in vocabulary}
+        # Head/aliases and explicit terms share first-seen casefold dedup.
+        # Alternate spellings in a table must remain semantically reachable,
+        # rather than each becoming another relevance-gate entry.
+        assert {term.strip().casefold() for term in terms} <= folded_vocabulary, theme
+        assert len(vocabulary) == len(folded_vocabulary), theme
+        for term in terms:
+            single_override = {
+                "jobs": {
+                    "material_replication": {
+                        **material,
+                        "theme_subject_terms": {theme: [term]},
+                    }
+                }
+            }
+            assert term.strip().casefold() in {
+                value.casefold() for value in subject_terms(theme, single_override)
+            }, (theme, term)
 
 
 # --------------------------------------------------------------------------- #

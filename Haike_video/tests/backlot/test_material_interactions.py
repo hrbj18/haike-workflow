@@ -909,10 +909,18 @@ def test_ui_has_unified_upload_analysis_and_guarded_ambiguous_retry():
     assert "/assets/media-index/interaction-batch" in js
     assert "识别音频（云端语音转文字）" in card
     assert "每条素材最多 3 个本地预览" in card
-    # The transcript engine is chosen by the backend, so the UI must both render
-    # the reported default and offer 腾讯云 alongside 豆包 / 本地 Whisper.
+    # The backend supplies the default and display labels. Customer wording can
+    # change without removing any of the retained internal transcript engines.
     assert "/workbench/transcript-providers" in js
-    assert "tencent（腾讯云 ASR）" in js
+    provider_label = js.split("function transcriptProviderLabel(", 1)[1].split("function defaultTranscriptProvider(", 1)[0]
+    assert "((transcriptProviders || {}).providers || {})[id]" in provider_label
+    assert "return (entry && entry.label) || id;" in provider_label
+    cloud_engines = js.split("function isCloudTranscriptProvider(", 1)[1].split("async function startAssetMediaCoarseIndex(", 1)[0]
+    assert 'return id === "doubao" || id === "tencent" || id === "bailian";' in cloud_engines
+    cloud_consent = js.split("async function startAssetCloudTranscript(", 1)[1].split("async function startAssetMediaFineIndex(", 1)[0]
+    assert "window.confirm(" in cloud_consent and "transcriptProviderLabel(provider)" in cloud_consent
+    assert "if (!confirmed) return;" in cloud_consent
+    assert "只上传音轨。提交结果不明时不会自动重复提交。确认开始吗？" in cloud_consent
     assert "defaultTranscriptProvider()" in js
     assert "uploadedIds.length !== selectedFileCount" in js
     assert "/media-index/interactions/candidates" in js
@@ -1076,12 +1084,14 @@ def test_confirming_one_engine_does_not_authorise_another(project, monkeypatch):
     assert queued["automation"]["media_index"]["request"]["transcript_provider"] == "tencent"
 
 
-def test_cloud_engine_without_audio_consent_is_rejected(project, monkeypatch):
+@pytest.mark.parametrize("provider", ["tencent", "doubao", "bailian"])
+def test_cloud_engine_without_audio_consent_is_rejected(project, monkeypatch, provider):
     p, asset_id = project
-    _use_tencent_asr(monkeypatch)
+    available = _stub_transcript_provider_readiness(monkeypatch)
+    available[provider] = True
     with pytest.raises(wb.WorkbenchError, match="确认"):
         wb.start_asset_media_index(p, asset_id, {
-            "stage": "coarse", "transcribe": True, "transcript_provider": "tencent",
+            "stage": "coarse", "transcribe": True, "transcript_provider": provider,
             "remote_asr_confirmed": False,
         })
 
@@ -1128,47 +1138,77 @@ def test_cached_interaction_index_is_invalidated_when_the_engine_changes(project
     )
 
 
-def test_transcript_provider_catalog_reflects_local_readiness(monkeypatch):
+def _stub_transcript_provider_readiness(monkeypatch):
+    """All readiness is explicit; never inspect this computer's keys or models."""
     from backlot import avatar_import
 
-    monkeypatch.setattr(wb, "assert_tencent_asr_ready", lambda: None)
+    available = {"tencent": False, "doubao": False, "local": False, "bailian": False}
+
+    def require(provider, error, label):
+        if not available[provider]:
+            raise error(f"未配置{label} ASR")
+
+    monkeypatch.setattr(wb, "assert_tencent_asr_ready", lambda: require("tencent", wb.TencentASRError, "腾讯云"))
+    monkeypatch.setattr(wb, "assert_doubao_asr_media_ready", lambda: require("doubao", wb.DoubaoASRError, "豆包"))
+    monkeypatch.setattr(wb, "assert_bailian_asr_ready", lambda: require("bailian", wb.BailianASRError, "百炼"))
     monkeypatch.setattr(wb, "tencent_asr_runtime_identity", lambda: "tencent-asr-test")
+    monkeypatch.setattr(wb, "doubao_asr_runtime_identity", lambda: "doubao-asr-test")
+    monkeypatch.setattr(wb, "bailian_asr_runtime_identity", lambda: "bailian-asr-test")
+    monkeypatch.setattr(avatar_import, "list_local_whisper_models", lambda: [{"id": "snapshot"}] if available["local"] else [])
+    return available
 
-    def no_doubao():
-        raise wb.DoubaoASRError("未配置豆包 ASR 密钥")
 
-    monkeypatch.setattr(wb, "assert_doubao_asr_media_ready", no_doubao)
-    monkeypatch.setattr(avatar_import, "list_local_whisper_models", lambda: [])
+@pytest.fixture
+def transcript_provider_readiness(monkeypatch):
+    return _stub_transcript_provider_readiness(monkeypatch)
+
+
+def test_transcript_provider_catalog_reflects_local_readiness(transcript_provider_readiness):
+    available = transcript_provider_readiness
+    available["tencent"] = True
     catalog = wb.transcript_provider_catalog()
-    assert set(catalog) == {"tencent", "doubao", "local"}
+    assert set(catalog) == {"tencent", "doubao", "local", "bailian"}
+    assert {name: item["label"] for name, item in catalog.items()} == {
+        "tencent": "腾讯云 ASR", "doubao": "豆包 ASR",
+        "local": "本地 Whisper", "bailian": "阿里云百炼 ASR",
+    }
     assert catalog["tencent"]["available"] is True
     assert catalog["doubao"]["available"] is False and "豆包" in catalog["doubao"]["detail"]
+    assert catalog["bailian"]["available"] is False and "百炼" in catalog["bailian"]["detail"]
     assert catalog["local"]["available"] is False
     assert wb.default_transcript_provider() == "tencent"
 
-    monkeypatch.setattr(avatar_import, "list_local_whisper_models", lambda: [{"id": "snapshot"}])
-    monkeypatch.setattr(wb, "assert_tencent_asr_ready", lambda: (_ for _ in ()).throw(wb.TencentASRError("未配置")))
+    available.update(tencent=False, local=True)
     catalog = wb.transcript_provider_catalog()
+    assert set(catalog) == {"tencent", "doubao", "local", "bailian"}
     assert catalog["tencent"]["available"] is False and catalog["local"]["available"] is True
-    # 豆包 is still unavailable in this scenario, so the offline engine is next in line.
+    # Both other cloud engines remain unavailable, so the offline engine wins.
+    assert catalog["doubao"]["available"] is False and catalog["bailian"]["available"] is False
     assert wb.default_transcript_provider() == "local"
 
 
-def test_tencent_is_preferred_over_the_offline_engine(monkeypatch):
-    from backlot import avatar_import
-
-    monkeypatch.setattr(wb, "assert_tencent_asr_ready", lambda: None)
-    monkeypatch.setattr(avatar_import, "list_local_whisper_models", lambda: [{"id": "snapshot"}])
-    monkeypatch.setattr(wb, "assert_doubao_asr_media_ready", lambda: None)
+def test_tencent_is_preferred_over_the_offline_engine(transcript_provider_readiness):
+    transcript_provider_readiness.update(tencent=True, doubao=True, local=True, bailian=True)
     assert wb.default_transcript_provider() == "tencent"
 
 
-def test_transcript_provider_catalog_defaults_to_none_when_nothing_is_runnable(monkeypatch):
-    from backlot import avatar_import
+@pytest.mark.parametrize("ready,expected", [
+    ({"doubao": True, "local": True, "bailian": True}, "doubao"),
+    ({"local": True, "bailian": True}, "local"),
+    ({"bailian": True}, "bailian"),
+])
+def test_transcript_provider_default_keeps_all_fallback_engines(transcript_provider_readiness, ready, expected):
+    transcript_provider_readiness.update(ready)
+    catalog = wb.transcript_provider_catalog()
+    assert set(catalog) == {"tencent", "doubao", "local", "bailian"}
+    assert {name: item["available"] for name, item in catalog.items()} == transcript_provider_readiness
+    assert wb.default_transcript_provider() == expected
 
-    monkeypatch.setattr(wb, "assert_tencent_asr_ready", lambda: (_ for _ in ()).throw(wb.TencentASRError("未配置")))
-    monkeypatch.setattr(wb, "assert_doubao_asr_media_ready", lambda: (_ for _ in ()).throw(wb.DoubaoASRError("未配置")))
-    monkeypatch.setattr(avatar_import, "list_local_whisper_models", lambda: [])
+
+def test_transcript_provider_catalog_defaults_to_none_when_nothing_is_runnable(transcript_provider_readiness):
+    catalog = wb.transcript_provider_catalog()
+    assert set(catalog) == {"tencent", "doubao", "local", "bailian"}
+    assert {name: item["available"] for name, item in catalog.items()} == transcript_provider_readiness
     assert wb.default_transcript_provider() == "none"
     with pytest.raises(wb.WorkbenchError, match="没有可用的语音识别服务"):
         wb._assert_any_transcript_provider_ready()
@@ -1176,15 +1216,23 @@ def test_transcript_provider_catalog_defaults_to_none_when_nothing_is_runnable(m
 
 def test_transcript_provider_endpoint_lists_engines_and_default(project, monkeypatch):
     p, asset_id = project
+    # Install after project() pins its own doubao defaults, keeping this catalog
+    # independent of both fixture ordering and the machine's other providers.
+    available = _stub_transcript_provider_readiness(monkeypatch)
     _use_tencent_asr(monkeypatch)
+    available["tencent"] = True
     with TestClient(server.create_app()) as client:
         response = client.get(f"/api/project/{p.name}/workbench/transcript-providers")
         assert response.status_code == 200
         body = response.json()
         assert body["default"] == "tencent"
-        assert set(body["providers"]) == {"tencent", "doubao", "local"}
+        assert set(body["providers"]) == {"tencent", "doubao", "local", "bailian"}
+        assert {name: item["available"] for name, item in body["providers"].items()} == available
         assert body["providers"]["tencent"]["available"] is True
-        assert body["providers"]["tencent"]["label"] == "腾讯云 ASR"
+        assert {name: item["label"] for name, item in body["providers"].items()} == {
+            "tencent": "腾讯云 ASR", "doubao": "豆包 ASR",
+            "local": "本地 Whisper", "bailian": "阿里云百炼 ASR",
+        }
 
 
 def test_interaction_preflight_endpoint_accepts_an_explicit_engine(project, monkeypatch):

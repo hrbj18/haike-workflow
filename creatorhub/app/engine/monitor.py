@@ -1303,7 +1303,9 @@ class MonitorEngine:
                       and account.status != "invalid"
                       and self._keepalive_due(account.last_active_at, account_id=account.id)]
         for probe in probes:
-            await self._probe_account_health(probe)
+            result = await self._probe_account_health(probe)
+            from ..session_observability import record_background_health
+            record_background_health(probe, result, trigger="keepalive")
 
     async def _check_invalid_accounts(self):
         """给被判「登录失效」的账号一条低频自愈复检通道。
@@ -1347,6 +1349,8 @@ class MonitorEngine:
                 # 被风控冷却挡回(典型是 auth_probe_gap:上一次 AUTH 事件后 15
                 # 分钟),这不算探测过,交给下面的 probed==0 分支重排下次时间。
                 continue
+            from ..session_observability import record_background_health
+            record_background_health(probe, result, trigger="auth_recheck")
             probed += 1
             if result.get("ok"):
                 woken = self._wake_deferred_tasks(probe[0])
@@ -3394,7 +3398,7 @@ class MonitorEngine:
                                 signal=decision.signal)
                 s.add(t); s.commit()
                 return {"ok": False, "error": pause_error}
-            if not self._in_active_window(t.account_id):
+            if not self._in_active_window(t.account_id, OperationKind.PUBLISH):
                 self._defer_row(t, "当前处于非活跃时段，发布任务已保留在队列")
                 s.add(t); s.commit()
                 return {"ok": False, "error": t.error}
@@ -3617,15 +3621,16 @@ class MonitorEngine:
         return {"ok": ok, "url": url, "error": err}
 
     # ── 活跃时段(夜间静默)──
-    def _in_active_window(self, account_id=None) -> bool:
+    def _in_active_window(self, account_id=None, kind: OperationKind | None = None) -> bool:
         """Check active hours in the bound account's persisted timezone."""
         if not self.cfg.engine.quiet_hours_enabled:
             return True
         account = self._load_account(account_id)
         if account is not None:
-            return self.risk._in_active_window(account, datetime.utcnow())
-        start = self.cfg.engine.active_hours_start
-        end = self.cfg.engine.active_hours_end
+            if kind is None:
+                return self.risk._in_active_window(account, datetime.utcnow())
+            return self.risk._in_active_window(account, datetime.utcnow(), kind)
+        start, end = self.risk._active_hours(kind)
         if end <= start:
             return True
         h = (datetime.utcnow() + timedelta(hours=8)).hour   # 东八区(账号默认时区)

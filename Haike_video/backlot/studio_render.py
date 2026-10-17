@@ -124,7 +124,8 @@ def run_graphic(project_dir, request):
     if bgm:
         music = studio.asset(bgm["id"], draft["id"])
         sources.append({"id": bgm["id"], "role": "music", "sha256": hashlib.sha256(music.read_bytes()).hexdigest()})
-        args += ["-stream_loop", "-1", "-i", str(studio.asset(bgm["id"], draft["id"])), "-af", "atrim=0:9,afade=t=out:st=7.8:d=1.2,loudnorm=I=-11:TP=-1.5:LRA=11"]
+        # Leave headroom for AAC reconstruction peaks; verify the encoded file.
+        args += ["-stream_loop", "-1", "-i", str(studio.asset(bgm["id"], draft["id"])), "-af", "atrim=0:9,afade=t=out:st=7.8:d=1.2,loudnorm=I=-11:TP=-2.5:LRA=11"]
     else: args += ["-f", "lavfi", "-i", "anullsrc=r=48000:cl=stereo"]
     args += ["-map", "0:v", "-map", "1:a", "-t", "9", "-c:v", "copy", "-c:a", "aac", str(output)]
     result = subprocess.run(args, capture_output=True, timeout=120)

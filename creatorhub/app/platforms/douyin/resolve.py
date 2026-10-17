@@ -5,8 +5,10 @@ import re
 from typing import Optional
 
 from curl_cffi.requests import AsyncSession
+from curl_cffi.curl import CurlError
 
 from ...netfp import impersonate_for_ua
+from ...tls_runtime import CertificateBundleError, curl_verify_path
 
 _SEC_UID_RE = re.compile(r"sec_uid=([\w\-]+)")
 _USER_PATH_RE = re.compile(r"/user/([\w\-]+)")
@@ -31,7 +33,7 @@ async def resolve_sec_uid(text: str, user_agent: str) -> Optional[str]:
     short = _SHORT_RE.search(text)
     if short:
         try:
-            async with AsyncSession(impersonate=impersonate_for_ua(user_agent)) as cli:
+            async with AsyncSession(impersonate=impersonate_for_ua(user_agent), verify=curl_verify_path()) as cli:
                 r = await cli.get(short.group(0), headers={"User-Agent": user_agent},
                                   timeout=15)
                 final = str(r.url)
@@ -54,13 +56,17 @@ async def resolve_aweme_id(text: str, user_agent: str) -> Optional[str]:
     short = _SHORT_RE.search(text)
     if short:
         try:
-            async with AsyncSession(impersonate=impersonate_for_ua(user_agent)) as cli:
+            async with AsyncSession(impersonate=impersonate_for_ua(user_agent), verify=curl_verify_path()) as cli:
                 r = await cli.get(short.group(0), headers={"User-Agent": user_agent},
                                   timeout=15)
                 final = str(r.url)
                 m = _AWEME_RE.search(final) or _MODAL_RE.search(final)
                 if m:
                     return m.group(1)
+        except (CurlError, CertificateBundleError):
+            # A transport/trust failure is not evidence of an unsupported URL.
+            # The native share boundary reports it without trying another route.
+            raise
         except Exception:
             return None
     return None

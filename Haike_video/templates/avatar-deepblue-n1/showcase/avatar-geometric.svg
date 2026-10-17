@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="624" height="782" viewBox="0 0 624 782">
+<!-- Original geometric character for a silent layout demonstration; no real likeness. -->
+<rect width="624" height="782" fill="#173b58"/><circle cx="485" cy="120" r="180" fill="#255575"/><circle cx="75" cy="650" r="220" fill="#204b69"/>
+<path d="M120 710V554c0-99 84-152 192-152s192 53 192 152v156" fill="#7198bb"/><path d="M270 388h84v95l-42 44-42-44" fill="#c6d4df"/>
+<ellipse cx="312" cy="260" rx="113" ry="139" fill="#d3dfe6"/><path d="M199 253c-2-110 36-177 117-177 83 0 120 68 111 177l-48-113-146 28z" fill="#13283a"/>
+<g fill="#35506a"><circle cx="272" cy="258" r="8"/><circle cx="352" cy="258" r="8"/></g><path d="M287 323q25 12 50 0" fill="none" stroke="#8f7270" stroke-width="6" stroke-linecap="round"/>
+<path d="M269 459l43 68-64 72-30-146M355 459l-43 68 64 72 30-146" fill="#dce8ef"/>
+<g font-family="Microsoft YaHei,sans-serif" text-anchor="middle"><text x="312" y="711" font-size="29" fill="#e6edf3">通用几何人物</text><text x="312" y="753" font-size="21" fill="#b5cadb">无声版式演示 · 非真实口播</text></g>
+</svg>

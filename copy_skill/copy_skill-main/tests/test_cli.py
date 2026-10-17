@@ -1,10 +1,14 @@
 from __future__ import annotations
 
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
 
+import pytest
+
+from douyin_intelligence._stdio import configure_utf8_stdio, is_cli_process
 from douyin_intelligence.cli import _run_crawl_command, build_parser
 from douyin_intelligence.config import load_config
 
@@ -19,6 +23,7 @@ def _run(*args: str) -> subprocess.CompletedProcess[str]:
         text=True,
         encoding="utf-8",
         check=False,
+        timeout=30,
     )
 
 
@@ -46,6 +51,90 @@ def test_new_collection_commands_refuse_browser_without_explicit_flag() -> None:
         result = _run(command)
         assert result.returncode == 2
         assert "--allow-browser" in result.stderr
+
+
+@pytest.fixture
+def controlled_native_bootstrap_warning(tmp_path: Path) -> Path:
+    # Deterministically force the optional runtime warning *before* cli.main;
+    # installing a complete MSVC runtime on a release machine must not make
+    # this regression vacuous. No native DLL or browser is loaded by this hook.
+    (tmp_path / "sitecustomize.py").write_text(
+        "import builtins\n"
+        "_original_import = builtins.__import__\n"
+        "def _controlled_native(name, globals=None, locals=None, fromlist=(), level=0):\n"
+        "    module = _original_import(name, globals, locals, fromlist, level)\n"
+        "    if level == 1 and name == 'native_runtime' and (globals or {}).get('__package__') == 'douyin_intelligence':\n"
+        "        module.runtime_dir_candidates = lambda: []\n"
+        "        builtins.__import__ = _original_import\n"
+        "    return module\n"
+        "builtins.__import__ = _controlled_native\n",
+        encoding="utf-8",
+    )
+    return tmp_path
+
+
+@pytest.mark.skipif(sys.platform != "win32", reason="Windows legacy code-page bootstrap")
+def test_cli_bootstrap_warning_and_argument_error_are_both_utf8(controlled_native_bootstrap_warning: Path) -> None:
+    bootstrap = controlled_native_bootstrap_warning
+    result = subprocess.run(
+        [sys.executable, "-m", "douyin_intelligence.cli", "crawl", "--mode", "creator"],
+        cwd=ROOT,
+        capture_output=True,
+        env={
+            **os.environ,
+            "PYTHONPATH": str(bootstrap) + os.pathsep + os.environ.get("PYTHONPATH", ""),
+            "PYTHONIOENCODING": "gbk",
+            "PYTHONUTF8": "0",
+        },
+        timeout=30,
+        check=False,
+    )
+    assert result.returncode == 2
+    # Decode bytes here so a failure is an explicit UnicodeDecodeError rather
+    # than a Windows subprocess reader thread silently yielding stderr=None.
+    diagnostic = result.stderr.decode("utf-8")
+    assert "MSVC runtime" in diagnostic
+    assert "crawl 必须显式提供 --allow-browser" in diagnostic
+
+
+def test_library_import_preserves_host_stream_encoding() -> None:
+    result = subprocess.run(
+        [sys.executable, "-c", "import sys; before=sys.stderr.encoding; import douyin_intelligence; print(before == sys.stderr.encoding)"],
+        cwd=ROOT,
+        capture_output=True,
+        env={**os.environ, "PYTHONIOENCODING": "gbk", "PYTHONUTF8": "0"},
+        timeout=30,
+        check=False,
+    )
+    assert result.returncode == 0
+    assert result.stdout.strip() == b"True"
+
+
+@pytest.mark.parametrize(
+    ("original_args", "entry_point", "expected"),
+    [
+        (["python", "-X", "dev", "-m", "douyin_intelligence.cli"], "-m", True),
+        (["python", "-m", "other", "douyin_intelligence.cli"], "other.py", False),
+        (["python", "-c", "douyin_intelligence.cli"], "-c", False),
+        (["python"], "douyin-intelligence.exe", True),
+        (["python"], "douyin-intelligence", True),
+        (["python"], "other-douyin-intelligence.exe", False),
+    ],
+)
+def test_only_declared_cli_entry_points_own_stdio(monkeypatch, original_args, entry_point, expected) -> None:
+    monkeypatch.setattr(sys, "orig_argv", original_args)
+    monkeypatch.setattr(sys, "argv", [entry_point])
+    assert is_cli_process() is expected
+
+
+def test_cli_stream_configuration_tolerates_captured_and_closed_streams(monkeypatch) -> None:
+    class ClosedStream:
+        def reconfigure(self, **_kwargs):
+            raise ValueError("closed")
+
+    monkeypatch.setattr(sys, "stdout", object())
+    monkeypatch.setattr(sys, "stderr", ClosedStream())
+    configure_utf8_stdio()
 
 
 def test_normalize_cli_writes_standard_file(tmp_path: Path) -> None:

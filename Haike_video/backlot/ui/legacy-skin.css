@@ -1,0 +1,36 @@
+/* The same white/gray, orange/yellow visual language as the new studio. */
+:root[data-haike-brand] { --radius: 12px; }
+.global-nav-link[data-route="/legacy/projects"] { --nav-icon:url('/ui/brand/icons/folder.svg'); }
+:root[data-haike-brand] body.haike-legacy-tool { min-width: 320px; }
+.haike-legacy-tool [hidden] { display: none !important; }
+.haike-legacy-tool :is(main,.shell,.wrap,.workspace,.library-shell,.works-shell) { min-width: 0; max-width: 100%; box-sizing: border-box; }
+.haike-legacy-tool :is(.topbar,.panel,.card,.work-card,.project-card,.automation-card,.library-filter-panel,.project-dialog) { border-radius: 12px; }
+.haike-legacy-tool :is(h1,h2,h3,.slate,.eyebrow) { font-family: var(--brand-font); }
+.haike-legacy-tool :is(button,input,textarea,select) { font-family: inherit; }
+.haike-legacy-tool :is(button,.button) { border-radius: 8px; }
+.haike-legacy-tool :is(.primary-action,.button.primary,button.primary) { color: white; background: #f64b00; border-color: #f64b00; }
+.haike-legacy-tool :is(.primary-action,.button.primary,button.primary):hover { background: #dc4300; color: white; }
+.haike-legacy-tool :is(.main-content,.workspace-main,.workbench-content,.project-content) { min-width: 0; overflow-x: auto; }
+.haike-legacy-tool .global-nav-group > summary { cursor: pointer; padding: 8px 12px; color: var(--subtle); font-size: 12px; }
+.haike-legacy-tool .global-nav-group[open] > summary { margin-bottom: 5px; }
+:root:root .haike-legacy-tool .haike-navigation { gap:24px; padding:24px 16px; }
+:root:root .haike-legacy-tool .haike-navigation .global-brand { padding:0 10px; border-bottom:0; gap:10px; }
+:root:root .haike-legacy-tool .haike-navigation .global-brand img { margin:0; width:234px; height:52px; }
+:root:root .haike-legacy-tool .haike-navigation .global-brand strong { font-size:21px; }
+:root:root .haike-legacy-tool .haike-navigation .global-brand :is(span,small) { display:none; }
+:root:root .haike-legacy-tool .haike-navigation .global-nav { gap:38px; }
+:root:root .haike-legacy-tool .haike-navigation .global-nav-group { gap:7px; }
+:root:root .haike-legacy-tool .haike-navigation .global-nav-group > p { font-size:12px; margin-bottom:2px; }
+:root:root .haike-legacy-tool .haike-navigation .global-nav-link { font-size:14px; min-height:44px; gap:12px; }
+@media (max-width: 860px) {
+  .haike-legacy-tool :is(main,.shell,.wrap,.workspace,.library-shell,.works-shell) { width: 100%; margin-inline: 0; }
+  .haike-legacy-tool :is(.topbar,.toolbar,.filters,.form-row) { flex-wrap: wrap; }
+  :root:root .haike-legacy-tool .haike-navigation { padding:16px; gap:16px; }
+  :root:root .haike-legacy-tool .haike-navigation .global-brand { display:flex; align-items:center; justify-content:space-between; padding:0; }
+  :root:root .haike-legacy-tool .haike-navigation .global-brand img { height:34px; width:164px; }
+  :root:root .haike-legacy-tool .haike-navigation .global-brand strong { font-size:17px; }
+  :root:root .haike-legacy-tool .haike-navigation .global-nav { display:flex; gap:6px; overflow-x:auto; margin-inline:-6px; }
+  :root:root .haike-legacy-tool .haike-navigation .global-nav-group { display:flex; gap:6px; }
+  :root:root .haike-legacy-tool .haike-navigation .global-nav-group > p { display:none; }
+  :root:root .haike-legacy-tool .haike-navigation .global-nav-link { min-height:42px; font-size:12px; gap:6px; padding:8px; }
+}

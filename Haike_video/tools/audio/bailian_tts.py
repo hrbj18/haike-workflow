@@ -92,10 +92,10 @@ class BailianTTS(BaseTool):
                         response = requests.post(api.api_base() + "/services/audio/tts/SpeechSynthesizer",
                             headers=request_headers, json={"model": model, "input": {
                                 "text": chunk, "voice": voice, "rate": rate, "format": "wav", "sample_rate": 24000}},
-                            timeout=(15, 180))
+                            timeout=(15, 180), allow_redirects=False)
                     except requests.RequestException as exc:
                         raise api.BailianAmbiguous("百炼配音提交连接中断，受理状态不明；已保留记录，禁止自动重复提交") from exc
-                    if response.status_code >= 500:
+                    if response.status_code >= 500 or 300 <= response.status_code < 400:
                         raise api.BailianAmbiguous("百炼服务端异常，配音受理状态不明；请核对控制台后处理")
                     try:
                         data = api.response_json(response)

@@ -68,7 +68,21 @@ def test_warm_paper_editor_and_fixed_desktop_director_rail_are_scoped() -> None:
     assert ":root[data-theme=\"light\"] .review-anchor" in CSS
     assert ":root[data-theme=\"light\"] .light-review-player" in CSS
     assert ":root[data-theme=\"light\"] .light-review-canvas > video { background: transparent; }" in CSS
-    assert "@media (min-width: 861px)" in NAVIGATION_CSS
-    assert ".shell .global-sidebar" in NAVIGATION_CSS
-    assert "position: fixed;" in NAVIGATION_CSS
-    assert "@media (max-width: 860px)" in NAVIGATION_CSS
+    # The shared company rail now owns desktop layout by default, including
+    # legacy project editors; the narrow layout overrides that same scope.
+    desktop, mobile = NAVIGATION_CSS.split("@media (max-width: 860px)", 1)
+    rail = re.search(
+        r":root:root \.haike-global-layout \.haike-navigation\s*\{([^}]+)\}", desktop,
+    )
+    assert rail, "desktop rail must be scoped to the shared workbench layout"
+    assert "position: fixed;" in rail.group(1)
+    width = re.search(r"\bwidth:\s*(\d+)px", rail.group(1))
+    assert width, "desktop rail must reserve a concrete width"
+    body = re.search(r":root:root body\.haike-global-layout\s*\{([^}]+)\}", desktop)
+    assert body and f"padding-left: {width.group(1)}px" in body.group(1)
+    narrow_rail = re.search(
+        r":root:root \.haike-global-layout \.haike-navigation\s*\{([^}]+)\}", mobile,
+    )
+    assert narrow_rail and "position: static;" in narrow_rail.group(1)
+    assert "width: 100%;" in narrow_rail.group(1)
+    assert "padding-left: 0;" in mobile

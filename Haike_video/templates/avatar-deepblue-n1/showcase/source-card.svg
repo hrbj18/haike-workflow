@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="780" viewBox="0 0 1080 780">
+<!-- Original mock source card; not a screenshot of a real publication. -->
+<rect width="1080" height="780" fill="#edf2f7"/><rect x="30" y="28" width="1020" height="724" rx="22" fill="white"/>
+<g font-family="Microsoft YaHei,sans-serif"><text x="75" y="110" fill="#56718d" font-size="28">海客模板说明 · 合成示例内容</text><text x="75" y="202" fill="#19385c" font-size="53" font-weight="bold">来源截图与重点标注</text>
+<text x="75" y="305" fill="#3c526e" font-size="38">完整展示本期来源内容</text><text x="75" y="410" fill="#3c526e" font-size="38">重点标注绑定原图位置</text><text x="75" y="515" fill="#3c526e" font-size="38">人物圆框与字幕分别保留</text>
+<text x="75" y="665" fill="#7890a8" font-size="25">此卡为源码生成示例，不是新闻引用或事实证据。</text></g>
+</svg>

@@ -148,6 +148,30 @@ def test_published_remix_failed_version_can_retry_via_shared_api(queue_client):
     assert response.json()["parent_job_id"] == "a" * 64
 
 
+def test_studio_avatar_retries_same_frozen_paid_intent(queue_client):
+    from backlot.production_queue_worker import ProductionQueueWorker
+
+    client, projects = queue_client
+    queue = client.app.state.production_queue
+    frozen = {"id": "studioquote-original", "render_id": "studio-2",
+              "prepared": {"audio_file": "file-audio", "image_file": "file-image"},
+              "quotes": {"avatar": {"id": "gquote-original"}}}
+    task = queue.submit(project_id="avatar", kind="studio_avatar", source="workbench",
+                        priority="normal", parent_job_id="studio-2", frozen_request=frozen)
+    worker = ProductionQueueWorker(queue, projects, handlers={"studio_avatar": lambda _: {
+        "status": "failed", "stage": "原云任务仍在处理", "retryable": True,
+        "safe_resume_point": "studio_avatar"}})
+    assert worker.run_once()["status"] == "failed"
+
+    response = client.post(f"/api/production-queue/jobs/{task['job_id']}/retry", json={})
+
+    assert response.status_code == 200, response.text
+    assert response.json()["status"] == "queued"
+    assert response.json()["job_id"] == task["job_id"]
+    assert response.json()["parent_job_id"] == "studio-2"
+    assert queue.get(task["job_id"], include_private=True)["frozen_request"] == frozen
+
+
 def test_workbench_full_preview_is_registered_without_direct_render(
     queue_client,
     monkeypatch: pytest.MonkeyPatch,

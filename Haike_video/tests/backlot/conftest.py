@@ -31,6 +31,30 @@ LOCAL_TTS_CATALOG = (
 )
 
 
+@pytest.fixture(autouse=True)
+def unavailable_optional_local_tts(monkeypatch):
+    """Backlot contracts have no dependency on a developer's running TTS host.
+
+    Local-voice scenarios explicitly override availability and the catalog.
+    Transport/status protocol tests live under tests/tools and retain the real
+    method because this function-scoped fixture applies only to this subtree.
+    """
+    from tools.audio.voicebox_tts import VoiceboxTTS
+    from tools.base_tool import ToolStatus
+
+    monkeypatch.setattr(VoiceboxTTS, "get_status", classmethod(lambda cls: ToolStatus.UNAVAILABLE))
+
+
+@pytest.fixture
+def internal_supplier_mode(monkeypatch):
+    """Opt a specific supplier API test into the retained internal service.
+
+    Ordinary TestClient applications keep the customer boundary. This fixture
+    must run before create_app(), which freezes the internal-mode decision.
+    """
+    monkeypatch.setenv("HAIKE_INTERNAL_TESTING", "1")
+
+
 @pytest.fixture
 def local_tts_catalog(monkeypatch):
     """Serve the local TTS profile list without a running service."""

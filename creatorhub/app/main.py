@@ -236,11 +236,13 @@ async def _reuse_or_reject_interactive_login(
 class _OpenBrowserLease:
     """Keep the unified account/network guard until a headed context closes."""
 
-    def __init__(self, context, guard, close_callback=None, page=None):
+    def __init__(self, context, guard, close_callback=None, page=None,
+                 snapshot_callback=None):
         self.context = context
         self.guard = guard
         self.close_callback = close_callback
         self.page = page
+        self.snapshot_callback = snapshot_callback
         self._released = False
         self._closed = False
         self._release_lock = asyncio.Lock()
@@ -263,10 +265,18 @@ class _OpenBrowserLease:
                 return
             self._closed = True
             try:
-                if self.close_callback is not None:
-                    await self.close_callback()
-                else:
-                    await self.context.close()
+                try:
+                    if self.snapshot_callback is not None:
+                        try:
+                            await self.snapshot_callback()
+                        except Exception:
+                            # Saving must not strand the account/profile lock.
+                            pass
+                finally:
+                    if self.close_callback is not None:
+                        await self.close_callback()
+                    else:
+                        await self.context.close()
             finally:
                 await self.release()
 
@@ -290,6 +300,35 @@ def _persist_native_ua(account_id: int, ua: str) -> None:
             account.ua = value
             session.add(account)
             session.commit()
+
+
+def _persist_account_session_state(identity, state: dict) -> bool:
+    """Save rotated sessions for the same owned profile; this is not login proof."""
+    if identity.platform not in {"kuaishou", "shipinhao"} or not identity.account_id:
+        return False
+    if not isinstance(state, dict) or not (state.get("cookies") or state.get("origins")):
+        return False
+    with get_session() as session:
+        account = session.get(DouyinAccount, identity.account_id)
+        if (not account or account.platform != identity.platform
+                or not account.profile_dir
+                or Path(account.profile_dir).resolve() != Path(identity.profile_dir).resolve()):
+            return False
+        serialized = json.dumps(state, ensure_ascii=False, separators=(",", ":"))
+        if account.storage_state != serialized or account.creator_storage_state != serialized:
+            account.storage_state = serialized
+            account.creator_storage_state = serialized
+            session.add(account)
+        from .session_observability import record_checkpoint
+        record_checkpoint(session, account)
+        session.commit()
+    try:
+        from .download_sessions import capture_enabled_download_snapshot
+        capture_enabled_download_snapshot(identity, state)
+    except Exception:
+        # Download snapshots are optional; failure must not discard login state.
+        pass
+    return True
 
 
 def _browser_backend_status(requested: str, runtime_id: str = "") -> dict:
@@ -526,7 +565,8 @@ async def lifespan(app: FastAPI):
         fingerprint_chromium_platform=(
             cfg.engine.fingerprint_chromium_platform),
         fingerprint_chromium_runtimes=runtime_specs,
-        fingerprint_default_runtime_id=default_runtime_id)
+        fingerprint_default_runtime_id=default_runtime_id,
+        session_state_callback=_persist_account_session_state)
     await browser.start()
     engine = MonitorEngine(cfg, browser)
     startup_now = datetime.utcnow()
@@ -553,6 +593,8 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="CreatorHub", lifespan=lifespan)
 app.add_middleware(LocalAccessMiddleware)
+from .download_session_api import router as download_session_router
+app.include_router(download_session_router)
 WEB_DIR = Path(__file__).parent / "web"
 
 
@@ -940,6 +982,8 @@ async def _run_login(task_id: str, creator: bool = False, account_id: int | None
     import os
     import shutil
     from .browser import Identity, generate_identity_fields
+    ui_timeout = login_tasks.get(task_id, {}).get("ui_timeout_seconds")
+    timeout_options = ({"timeout_seconds": 600} if ui_timeout == 600 else {})
     login_tasks[task_id] = _login_task_state(
         status="waiting", platform=platform, creator=creator,
         account_id=account_id)
@@ -1070,7 +1114,7 @@ async def _run_login(task_id: str, creator: bool = False, account_id: int | None
                 reauth_options = {"force_reauth": True} if account_id else {}
                 if creator:
                     ok, state_json, nickname = await interactive_xhs_creator_login(
-                        browser, identity, **reauth_options)
+                        browser, identity, **timeout_options, **reauth_options)
                 else:
                     async def _xhs_verification_status(url: str) -> None:
                         verification = (
@@ -1090,28 +1134,28 @@ async def _run_login(task_id: str, creator: bool = False, account_id: int | None
                         )
                     reauth_options["status_callback"] = _xhs_verification_status
                     ok, state_json, nickname = await interactive_xhs_login(
-                        browser, identity, timeout_seconds=300,
+                        browser, identity, timeout_seconds=(600 if ui_timeout == 600 else 300),
                         **reauth_options)
             elif platform == "kuaishou":
                 reauth_options = {"force_reauth": True} if account_id else {}
                 if creator:
                     ok, state_json, nickname = await interactive_ks_creator_login(
-                        browser, identity, **reauth_options)
+                        browser, identity, **timeout_options, **reauth_options)
                 else:
                     ok, state_json, nickname = await interactive_ks_login(
-                        browser, identity, **reauth_options)
+                        browser, identity, **timeout_options, **reauth_options)
             elif platform == "shipinhao":
                 reauth_options = {"force_reauth": True} if account_id else {}
                 ok, state_json, nickname = await interactive_channels_login(
-                    browser, identity, **reauth_options)
+                    browser, identity, **timeout_options, **reauth_options)
             elif creator:
                 reauth_options = {"force_reauth": True} if account_id else {}
                 ok, state_json, nickname = await interactive_creator_login(
-                    browser, identity, **reauth_options)
+                    browser, identity, **timeout_options, **reauth_options)
             else:
                 reauth_options = {"force_reauth": True} if account_id else {}
                 ok, state_json, nickname = await interactive_login(
-                    browser, identity, **reauth_options)
+                    browser, identity, **timeout_options, **reauth_options)
 
         # 浏览器已经完成实际后端选择；此时快照能反映系统 Chrome 或真实回退。
         login_environment = browser.environment_snapshot(identity, headless=False)
@@ -4370,7 +4414,8 @@ async def _opened_page_login_state(page, platform: str,
 
 @app.post("/api/accounts/{account_id}/open-browser")
 async def open_account_browser(
-        account_id: int, url: str = "", environment_check: bool = False):
+        account_id: int, url: str = "", environment_check: bool = False,
+        preserve_publish_status: bool = False):
     """用该账号登录态弹出一个真实浏览器窗口。默认停在平台首页;传 url 则停在该地址
     (仅允许本平台域名,用于「查看」视频号作品/管理页等需登录态才能打开的页面)。
     留给用户手动操作(查看/收发私信、F12 抓接口、手动维护等)。关闭窗口即落盘 Cookie。
@@ -4393,13 +4438,12 @@ async def open_account_browser(
             "creator" if platform == "xhs" and not has_read_login
             and has_creator_login else "read"
         )
-        states = [acc.storage_state or "", acc.creator_storage_state or ""]
     home = {"xhs": ("https://creator.xiaohongshu.com/"
                      if open_scope == "creator"
                      # /user/profile/me 不再稳定触发 user/me，可能把有效登录态
                      # 显示成“未确认”。首页会加载权威的当前用户接口。
                      else "https://www.xiaohongshu.com/"),
-            "kuaishou": "https://www.kuaishou.com/",
+            "kuaishou": "https://www.kuaishou.com/new-reco",
             "shipinhao": "https://channels.weixin.qq.com/platform"}.get(
                 platform, "https://www.douyin.com/")
     # 传了 url 且属于本平台域名 -> 停在该地址(否则回首页,防被当跳转开任意站)
@@ -4455,17 +4499,6 @@ async def open_account_browser(
             await old.close()
         except Exception:
             pass
-    # 持久 profile 只在"首次空目录"才注入登录态;为防 profile 里 Cookie 缺失/过期导致
-    # 打开后未登录,这里用 DB 里已知的登录态 Cookie 再注入一次(覆盖刷新)。
-    from .browser.manager import _sanitize_cookies
-    cookies = []
-    for st in states:
-        if st:
-            try:
-                cookies.extend(json.loads(st).get("cookies") or [])
-            except Exception:
-                pass
-
     @asynccontextmanager
     async def _open_guard():
         # A manually-opened window must reserve only its own account Profile.
@@ -4513,11 +4546,10 @@ async def open_account_browser(
         await startup_guard.__aenter__()
         startup_entered = True
         ctx = await browser.open_headed(identity)
-        if cookies:
-            try:
-                await ctx.add_cookies(_sanitize_cookies(cookies))
-            except Exception as e:
-                print(f"[open-browser] 注入 Cookie 失败: {e!r}")
+        # The live Profile may contain tokens rotated after the last DB
+        # snapshot. Restore missing session cookies without rolling those
+        # tokens back or injecting already-expired snapshot entries.
+        await BrowserManager._bridge_identity_cookies(ctx, identity)
         check_opener = getattr(browser, "open_environment_check", None)
         if environment_check:
             if not callable(check_opener):
@@ -4562,7 +4594,8 @@ async def open_account_browser(
                        and open_scope == "creator" else platform), xhs_evidence,
                 ch_evidence)
             logged_out = login_state == "logged_out"
-            if logged_out or (platform == "xhs" and login_state == "authenticated"):
+            if not preserve_publish_status and (
+                    logged_out or (platform == "xhs" and login_state == "authenticated")):
                 with get_session() as s:
                     opened_account = s.get(DouyinAccount, account_id)
                     if opened_account:
@@ -4598,8 +4631,13 @@ async def open_account_browser(
         (lambda: browser.close_context(identity.key))
         if platform == "xhs" else None
     )
+    snapshotter = getattr(browser, "snapshot_session", None)
+    async def checkpoint_session():
+        if callable(snapshotter):
+            await snapshotter(identity, ctx)
     lease = _OpenBrowserLease(
-        ctx, guard, close_callback=close_callback, page=page)
+        ctx, guard, close_callback=close_callback, page=page,
+        snapshot_callback=checkpoint_session)
     open_browsers[account_id] = lease
     try:                       # 用户手动关窗后,从登记表移除
         ctx.on("close", lambda *_: asyncio.create_task(
@@ -4609,6 +4647,16 @@ async def open_account_browser(
                 _release_open_browser(account_id, lease)))
     except Exception:
         pass
+    # Register ownership before this cancellable await so a disconnected HTTP
+    # caller cannot leave a browser running with an unreleasable profile lock.
+    try:
+        await checkpoint_session()
+    except BaseException:
+        try:
+            await _release_open_browser(account_id, lease)
+        except BaseException:
+            pass
+        raise
     check_status = None
     status_reader = getattr(browser, "environment_check_status", None)
     if callable(status_reader):
@@ -5617,6 +5665,61 @@ def _native_aweme_metadata(aweme, source_url: str) -> dict:
     }
 
 
+async def _douyin_browser_share_detail(account_id, aweme_id, download_record, proxy):
+    """Read only through the checked account's guarded, owned browser profile."""
+    if browser is None or engine is None:
+        raise ShareDownloadError("账号浏览器服务尚未就绪，暂时无法读取抖音网页详情")
+    from copy import copy
+    from .browser.douyin_detail import DetailReadError, fetch_douyin_video_detail
+    from .browser.manager import normalize_proxy
+    from .download_credentials import profile_identity, sanitize_download_cookies
+
+    async def read_detail():
+        # Re-read after taking the account guard: a queue wait must not bind a
+        # deleted/reconfigured account to a previously verified snapshot.
+        with get_session() as session:
+            account = session.get(DouyinAccount, account_id)
+            if (account is None or account.platform != "douyin"
+                    or download_record.get("status") != "ready"
+                    or download_record.get("account_id") != account_id
+                    or download_record.get("platform") != "douyin"
+                    or download_record.get("profile_identity") != profile_identity(account.profile_dir)):
+                return {}, "account_changed"
+            identity = copy(browser.identity_for(account))
+        if (normalize_proxy(proxy) != normalize_proxy(identity.proxy)
+                or normalize_proxy(download_record.get("proxy", "")) != normalize_proxy(identity.proxy)
+                or download_record.get("user_agent") and download_record["user_agent"] != identity.ua):
+            return {}, "account_changed"
+        checked_cookies = sanitize_download_cookies("douyin", download_record.get("cookies", []))
+        if not checked_cookies:
+            return {}, "account_changed"
+        identity.bridge_states = (json.dumps({"cookies": checked_cookies, "origins": []}),)
+        raw, error = await fetch_douyin_video_detail(browser, identity, aweme_id)
+        return {"raw": raw}, DetailReadError(error) if error else ""
+
+    payload, outcome = await _run_account_read(
+        account_id, OperationKind.READ_HEAVY, f"share-douyin-detail:{account_id}:{aweme_id}",
+        read_detail, empty_result={"raw": None}, allow_invalid_probe=True)
+    if isinstance(outcome, dict):
+        raise ShareDownloadError("抖音账号网页读取正在冷却，请稍后再试")
+    messages = {
+        "verification_required": "抖音页面要求人工完成安全验证；请打开该账号浏览器处理后再试",
+        "login_required": "抖音作品页要求登录；请打开该账号浏览器确认后重新检查下载登录",
+        "account_changed": "下载账号的浏览器环境已变化，请重新检查该账号的下载登录",
+        "network_error": "抖音网页详情读取遇到网络错误，请检查网络后再试",
+    }
+    if outcome:
+        if str(outcome).startswith("http_"):
+            raise ShareDownloadError("抖音作品页的请求未获通过，本次网页详情读取已停止")
+        raise ShareDownloadError(messages.get(outcome,
+            "本次抖音网页没有返回可确认的目标视频详情；请稍后再试"))
+    raw = payload.get("raw") if isinstance(payload, dict) else None
+    if (not isinstance(raw, dict) or str(raw.get("aweme_id")) != aweme_id
+            or not isinstance(raw.get("video"), dict) or not raw["video"] or raw.get("images")):
+        raise ShareDownloadError("本次抖音网页没有返回可确认的目标视频详情；请稍后再试")
+    return raw
+
+
 async def _douyin_native_share(
     source_url: str,
     *,
@@ -5628,6 +5731,7 @@ async def _douyin_native_share(
     save_thumbnail: bool,
     proxy: str,
     user_agent: str,
+    download_record: dict | None = None,
 ) -> dict | None:
     """用 CreatorHub 自带抖音接口兜底 yt-dlp 尚未支持的 /note/、/slides/。
 
@@ -5635,27 +5739,46 @@ async def _douyin_native_share(
     """
     if account_id is None:
         return None
-    aweme_id = await resolve_aweme_id(source_url, user_agent)
-    if not aweme_id:
-        return None
-
     with get_session() as s:
         account = s.get(DouyinAccount, account_id)
         if not account or account.platform != "douyin":
+            raise ShareDownloadError("下载账号已变更，请重新选择并检查抖音下载登录")
+    from .download_credentials import profile_identity, sanitize_download_cookies
+    if (not isinstance(download_record, dict)
+            or download_record.get("status") != "ready"
+            or type(download_record.get("account_id")) is not int
+            or download_record["account_id"] != account_id
+            or download_record.get("platform") != "douyin"
+            or download_record.get("profile_identity") != profile_identity(account.profile_dir)):
+        raise ShareDownloadError("抖音下载需要本次检查通过的账号凭据，请重新检查下载登录")
+    # The caller passes the exact record verified for this download. Publishing
+    # snapshots/raw cookies may predate a platform rotation and are not fallback
+    # credentials. Restrict the header to the actual www.douyin.com API host.
+    cookies = [cookie for cookie in sanitize_download_cookies(
+        "douyin", download_record.get("cookies", []))
+        if cookie["domain"].lstrip(".").lower() in {"douyin.com", "www.douyin.com"}]
+    cookie = douyin_cookie_from_state(json.dumps({"cookies": cookies}))
+    if not cookie:
+        raise ShareDownloadError("抖音下载凭据不可用，请重新检查下载登录")
+    from curl_cffi.curl import CurlError
+    from .tls_runtime import CertificateBundleError, native_request_message
+    try:
+        aweme_id = await resolve_aweme_id(source_url, user_agent)
+        if not aweme_id:
             return None
-        state = account.storage_state or account.creator_storage_state or ""
-        raw_cookie = account.cookie or ""
-    cookie = douyin_cookie_from_state(state) or raw_cookie
-    client = DouyinClient(cookie, user_agent,
-                          timeout=cfg.engine.request_timeout_seconds,
-                          proxy=proxy,
-                          **douyin_client_environment(account))
-    raw = await client.fetch_video_detail(aweme_id)
+        client = DouyinClient(cookie, user_agent,
+                              timeout=cfg.engine.request_timeout_seconds,
+                              proxy=proxy,
+                              **douyin_client_environment(account))
+        raw = await client.fetch_video_detail(aweme_id)
+    except (CurlError, CertificateBundleError) as exc:
+        raise ShareDownloadError(native_request_message(exc)) from None
+    detail_source = "direct_api"
     if not raw:
-        raise ShareDownloadError(
-            "已识别到抖音作品 ID，但所选账号未能读取作品详情；"
-            "请检查账号登录态或更换抖音账号"
-        )
+        if getattr(client, "last_error", "") != "http_403":
+            raise ShareDownloadError("本次抖音详情请求未取得可确认的视频数据，请稍后再试")
+        raw = await _douyin_browser_share_detail(account_id, aweme_id, download_record, proxy)
+        detail_source = "browser_network"
     aweme = parse_aweme(raw, quality if quality != "audio" else "highest")
     if not aweme:
         raise ShareDownloadError("抖音作品详情已读取，但没有找到可下载的视频或图片")
@@ -5665,6 +5788,7 @@ async def _douyin_native_share(
         return None
 
     metadata = _native_aweme_metadata(aweme, source_url)
+    metadata["detail_source"] = detail_source
     if not should_download:
         return {
             "ok": True,
@@ -5755,6 +5879,7 @@ async def _xhs_native_share(
     save_metadata: bool,
     save_thumbnail: bool,
     proxy: str,
+    download_record: dict | None = None,
 ) -> dict | None:
     """Read XHS note metadata in the selected account browser, then fetch CDN media."""
     if account_id is None or not _xhs_browser_reads_enabled():
@@ -5764,6 +5889,26 @@ async def _xhs_native_share(
         if not account or account.platform != "xhs":
             return None
         identity = browser.identity_for(account)
+
+    if download_record is not None:
+        from copy import copy
+        from .download_credentials import profile_identity, sanitize_download_cookies
+        if (download_record.get("status") != "ready"
+                or type(download_record.get("account_id")) is not int
+                or download_record["account_id"] != account_id
+                or download_record.get("platform") != "xhs"
+                or download_record.get("profile_identity") != profile_identity(account.profile_dir)):
+            raise ShareDownloadError("小红书下载账号已变更，请重新检查下载登录")
+        cookies = sanitize_download_cookies("xhs", download_record.get("cookies", []))
+        if not cookies:
+            raise ShareDownloadError("小红书下载凭据不可用，请重新检查下载登录")
+        identity = copy(identity)
+        # The verified browser is normally still alive. If it is cold-started
+        # after a queue wait, bridge only this download's current scope rather
+        # than an older publishing snapshot; live profile cookies still win.
+        identity.bridge_states = (json.dumps({"cookies": cookies, "origins": []}),)
+        if download_record.get("user_agent"):
+            identity.ua = download_record["user_agent"]
 
     from .browser.manager import normalize_proxy
     if normalize_proxy(proxy) != normalize_proxy(identity.proxy):
@@ -5806,6 +5951,9 @@ async def _xhs_native_share(
         f"share-xhs:{account_id}",
         _read_note,
         empty_result={"card": {}, "note_id": "", "final_url": source_url},
+        # A verified download scope is independent of a stale publishing
+        # status. Keep all other account risk and rate-limit guards active.
+        allow_invalid_probe=download_record is not None,
     )
     if isinstance(outcome, dict):
         raise ShareDownloadError(
@@ -5947,9 +6095,32 @@ async def share_download(body: ShareDownloadIn):
     except Exception as exc:
         raise HTTPException(400, f"下载目录不可用：{exc}")
 
+    from contextlib import ExitStack
+    from .download_sessions import refresh_download_session, credential_store
     cookie_file = ""
+    cookie_stack = ExitStack()
     try:
-        cookie_file, account_proxy, account_ua = _write_account_cookie_file(body.account_id)
+        account_proxy = account_ua = ""
+        download_record = None
+        if body.account_id is not None:
+            with get_session() as session:
+                download_account = session.get(DouyinAccount, body.account_id)
+                if not download_account:
+                    raise HTTPException(404, "下载账号不存在")
+                download_platform = download_account.platform
+                download_profile = download_account.profile_dir
+            if any(link.platform != download_platform for link in selected):
+                raise HTTPException(422, "分享链接与下载账号的平台不一致，请选择对应平台账号")
+            checked = await refresh_download_session(body.account_id)
+            if checked["download_status"] != "ready":
+                raise HTTPException(409, checked.get("message") or "请重新检查下载登录")
+            store = credential_store()
+            download_record = store.read_record(download_platform, body.account_id, profile_dir=download_profile)
+            cookie_file = str(cookie_stack.enter_context(store.cookie_file(
+                download_platform, body.account_id, profile_dir=download_profile)))
+            account_proxy, account_ua = download_record.get("proxy", ""), download_record.get("user_agent", "")
+            if body.proxy.strip() and body.proxy.strip() != account_proxy:
+                raise HTTPException(422, "账号下载需使用该账号保存的网络设置")
         proxy = body.proxy.strip() or account_proxy
         user_agent = account_ua or cfg.engine.user_agent
         downloader = ShareDownloader(
@@ -5973,6 +6144,7 @@ async def share_download(body: ShareDownloadIn):
                             save_thumbnail=body.save_thumbnail,
                             proxy=proxy,
                             user_agent=user_agent,
+                            download_record=download_record,
                         )
                     elif link.platform == "xhs":
                         item = await _xhs_native_share(
@@ -5984,6 +6156,7 @@ async def share_download(body: ShareDownloadIn):
                             save_metadata=body.save_metadata,
                             save_thumbnail=body.save_thumbnail,
                             proxy=proxy,
+                            download_record=download_record,
                         )
                     if item is not None:
                         pass
@@ -6024,6 +6197,7 @@ async def share_download(body: ShareDownloadIn):
                         )
                 results.append(item)
     finally:
+        cookie_stack.close()
         if cookie_file:
             try:
                 Path(cookie_file).unlink(missing_ok=True)

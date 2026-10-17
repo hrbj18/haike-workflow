@@ -75,6 +75,20 @@ MODELS = {
         "capability": "tts",
         "meters": {"characters": 10000},
     },
+    "haike/cosyvoice-public": {
+        "name": "CosyVoice V3 公共音色配音",
+        "provider": "bailian",
+        "target_model": "cosyvoice-v3-flash",
+        "capability": "tts",
+        "meters": {"characters": 10000},
+    },
+    "haike/voice-clone": {
+        "name": "CosyVoice 私人音色克隆",
+        "provider": "bailian",
+        "target_model": "cosyvoice-v3.5-flash",
+        "capability": "voice_clone",
+        "meters": {"voices": 1},
+    },
     "haike/tencent-tts": {
         "name": "腾讯精品配音",
         "provider": "tencent",
@@ -110,8 +124,18 @@ MODELS = {
         "capability": "image",
         "meters": {"input_tokens": 1000000, "output_tokens": 1000000},
     },
+    "haike/image-refinement": {
+        "name": "人物图片精修 · GPT Image 2",
+        "provider": "openai",
+        "target_model": "gpt-image-2",
+        "capability": "image_edit",
+        # The operator must explicitly price an all-in completed edit (driver
+        # plus image tool). Unknown procurement cost never enables this model.
+        "meters": {"tasks": 1},
+    },
 }
 UNITS = {
+    "voices": "音色",
     "supplier_micros": "采购微元",
     "characters": "字符",
     "seconds": "秒",
@@ -135,6 +159,11 @@ SOURCES = {
     ),
     "haike/assets": ("0", "https://www.pexels.com/api/"),
 }
+
+# Optional OSS credentials are never public configuration and never prerequisites
+# for TTS. Cloning additionally requires these private server-side credentials.
+BAILIAN_OSS_SECRETS = {"oss_access_key_id", "oss_access_key_secret"}
+BAILIAN_OSS_FIELDS = BAILIAN_OSS_SECRETS | {"oss_endpoint", "oss_bucket"}
 
 
 class Vault:
@@ -175,10 +204,10 @@ class Vault:
                 "config": {
                     a: b
                     for a, b in data.get(k, v).items()
-                    if a not in v["secrets"]
+                    if a not in set(v["secrets"]) | BAILIAN_OSS_SECRETS
                     and a not in {"secrets", "name", "protocol"}
                 },
-                "secret_fields": v["secrets"],
+                "secret_fields": v["secrets"] + (sorted(BAILIAN_OSS_SECRETS) if k == "bailian" else []),
             }
             for k, v in self.definitions(data).items()
         ]
@@ -265,8 +294,11 @@ class Vault:
         allowed = (
             (set(definitions[provider]) - {"secrets"})
             | set(definitions[provider]["secrets"])
-            | {"voice", "enabled", "text_model", "image_model", "workflow_profile"}
+            | {"voice", "enabled", "text_model", "image_model", "workflow_profile",
+               "refinement_text_model", "refinement_image_model"}
         )
+        if provider == "bailian":
+            allowed |= BAILIAN_OSS_FIELDS | {"clone_staging"}
         if provider == "runninghub": allowed |= {"billing_mode", "quote_cost_limit_micros", "quote_cost_per_audio_second_micros"}
         if set(config) - allowed or any(
             type(v) is not bool if k == "enabled" else not isinstance(v, str)
@@ -275,6 +307,11 @@ class Vault:
             raise Problem(422, "config_invalid", "配置字段不正确")
         if "base_url" in config:
             self.validate_url(config["base_url"])
+        if provider == "bailian" and config.get("clone_staging", "auto") not in {"auto", "signed_source", "oss"}:
+            raise Problem(422, "config_invalid", "克隆样音暂存模式需为 auto、signed_source 或 oss")
+        if provider == "bailian" and (config.get("oss_endpoint") or config.get("oss_bucket")):
+            from .bailian_voices import validate_storage
+            validate_storage({**self.load().get(provider, {}), **config}, partial=True)
         if provider == "runninghub":
             if config.get("billing_mode", "task") not in {"task", "wallet_receipt"}:
                 raise Problem(422, "config_invalid", "数字人计价方式无效")
@@ -471,8 +508,10 @@ def catalogue(store, vault, admin=False):
                 provider.get(k)
                 for k in vault.definitions(config)[info["provider"]]["secrets"]
             )
-            if model == "haike/cosyvoice":
-                configured = configured and bool(provider.get("voice"))
+            if model == "haike/voice-clone":
+                staging = provider.get("clone_staging", "auto")
+                signed = bool(getattr(store, "public_origin", None)) and staging != "oss"
+                configured = configured and (signed or (staging != "signed_source" and all(provider.get(k) for k in BAILIAN_OSS_FIELDS)))
             if info.get("billing_mode") == "wallet_receipt":
                 configured = configured and bool(re.fullmatch(r"[1-9][0-9]{0,8}", provider.get("quote_cost_limit_micros", "")))
             status = (

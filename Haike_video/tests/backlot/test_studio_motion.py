@@ -61,10 +61,14 @@ def test_incomplete_inputs_block_before_renderer(setup,tmp_path,patch,message):
 
 
 def test_review_freezes_content_clock_and_source(setup):
-    s,d,video=setup;p=m.plan(s,d)
+    s,d,video=setup
+    d=s.save_draft({**d,'title':'中文动效验收🎬'})
+    p=m.plan(s,d)
     assert p['report']['ready'] and p['cost_micros']==0
     frozen=m.freeze(s,d,p['id'],True)
     assert frozen['draft']==d
+    assert frozen['snapshot']['draft']==d
+    assert frozen['snapshot']['draft']['title']=='中文动效验收🎬'
     with pytest.raises(WorkError,match='确认'):m.freeze(s,d,p['id'],False)
     with pytest.raises(WorkError,match='已改变'):m.freeze(s,{**d,'title':'改标题'},p['id'],True)
     video.write_bytes(b'changed-source')
@@ -74,16 +78,20 @@ def test_review_freezes_content_clock_and_source(setup):
 def test_plan_tampering_is_blocked(setup):
     s,d,_=setup;p=m.plan(s,d)
     plan=s.projects_root/d['id']/'assets/motion-plans'/p['id']/'planning/auto_plan.json'
-    saved=json.loads(plan.read_text());saved['quickScenes'][0]['options']['lines'][0][0]='tampered'
-    plan.write_text(json.dumps(saved))
+    saved=json.loads(plan.read_text(encoding='utf-8'));saved['quickScenes'][0]['options']['lines'][0][0]='tampered'
+    plan.write_text(json.dumps(saved,ensure_ascii=False),encoding='utf-8')
     with pytest.raises(WorkError,match='计划已改变'):m.freeze(s,d,p['id'],True)
 
 
 def test_subtitles_preserve_half_open_clock_and_reject_overlap(setup,tmp_path):
     s,d,_=setup
-    cues=[{'start':0,'end':1.4,'text':'本期','en':'This episode'},{'start':1.4,'end':391/60,'text':'完整口播','en':''}]
+    cues=[{'start':0,'end':1.4,'text':'本期🎙️','en':'This episode'},{'start':1.4,'end':391/60,'text':'完整口播','en':''}]
     m.brief(s,{**d,'input':{**d['input'],'captions':cues}},tmp_path)
-    assert 'This episode' in (tmp_path/'subs.js').read_text()
+    subtitles=(tmp_path/'subs.js').read_text(encoding='utf-8')
+    assert 'This episode' in subtitles
+    persisted=json.loads(subtitles.removeprefix('const SUBS=').removesuffix(';\n'))
+    assert persisted[0]['zh']=='本期🎙️'
+    assert [(cue['t0'],cue['t1']) for cue in persisted]==[(0,1.4),(1.4,391/60)]
     cues[1]['start']=1.3
     with pytest.raises(WorkError,match='不能重叠'):
         m.brief(s,{**d,'input':{**d['input'],'captions':cues}},tmp_path)

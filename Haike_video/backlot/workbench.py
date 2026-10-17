@@ -5910,20 +5910,20 @@ def _validated_visual_composition(project_dir: Path, state: dict, scene: dict, p
         })
 
     normalized.sort(key=lambda item: (item["start_seconds"], item["end_seconds"], item["id"]))
-    for previous, current in zip(normalized, normalized[1:]):
-        # Concurrent still images are useful for intentional collages (for
-        # example, a four-panel meme beat). The layered renderer already
-        # supports these as independent positioned image overlays. Keep video
-        # hero clips mutually exclusive so concurrent motion clips cannot
-        # obscure one another by accident.
-        previous_asset = assets.get(str(previous.get("asset_id") or ""), {})
-        current_asset = assets.get(str(current.get("asset_id") or ""), {})
-        both_stills = (
-            str(previous_asset.get("type") or "").lower() == "image"
-            and str(current_asset.get("type") or "").lower() == "image"
-        )
-        if previous["end_seconds"] > current["start_seconds"] + .012 and not both_stills:
-            raise WorkbenchError("重点素材的显示区间不能互相重叠")
+    # At most eight overlays means no more than 28 pairs. Adjacent comparisons
+    # alone miss a long still that spans another still and a later video.
+    for index, current in enumerate(normalized):
+        for previous in normalized[:index]:
+            # Concurrent stills intentionally form collages in the layered
+            # renderer; any overlapping pair containing a video is invalid.
+            previous_asset = assets.get(str(previous.get("asset_id") or ""), {})
+            current_asset = assets.get(str(current.get("asset_id") or ""), {})
+            both_stills = (
+                str(previous_asset.get("type") or "").lower() == "image"
+                and str(current_asset.get("type") or "").lower() == "image"
+            )
+            if previous["end_seconds"] > current["start_seconds"] + .012 and not both_stills:
+                raise WorkbenchError("重点素材的显示区间不能互相重叠")
 
     old = _ensure_scene_visual_composition(scene)
     old_locked = {
@@ -18062,15 +18062,14 @@ def _module_available(name: str) -> bool:
 def _vad_runtime_available() -> bool:
     """Presence is not enough: on this machine the native DLLs can be unusable.
 
-    Importing is the only honest test, and a broken VC++ runtime raises
-    ``OSError`` (WinError 1114) rather than ``ImportError``, so both are caught.
+    A native DLL can terminate the interpreter rather than raise an exception.
+    Import in a bounded, independent child; never load that DLL in the server.
     """
-    try:
-        import onnxruntime  # noqa: F401
-        from faster_whisper.vad import get_speech_timestamps  # noqa: F401
-    except (ImportError, OSError, RuntimeError, ValueError):
-        return False
-    return True
+    from lib.native_probe import native_imports_available
+
+    return native_imports_available(
+        ("onnxruntime",), symbols={"faster_whisper.vad": ("get_speech_timestamps",)},
+    )
 
 
 def _interaction_pause_evidence(media: Path | None, ranges: list[dict[str, Any]], *, ffmpeg: str,

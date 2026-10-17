@@ -71,6 +71,7 @@ const providerFieldLabels = {
   api_key: "平台 API 密钥", secret_id: "腾讯云 SecretId", secret_key: "腾讯云 SecretKey",
   region: "地域", voice: "音色 ID", text_model: "上游模型 ID", workflow_id: "工作流 ID",
   workflow_profile: "工作流配置", base_url: "平台 API 地址",
+  refinement_text_model: "修图驱动模型（Responses）", refinement_image_model: "修图图像模型",
 };
 function connectionPrices(model) {
   if (!model.rule) return '<div class="notice"><strong>价格待确认</strong><p>这个模型尚未填写采购单价，保存平台密钥后仍需设置价格才能开通。售价按采购成本 × 1.5 计算。</p><button type="button" data-action="commerce-tariff" data-id="' + esc(model.model) + '">设置对应价格</button></div>';
@@ -91,6 +92,11 @@ async function connectModel(modelId) {
   const advanced = Object.keys(provider.config).filter(k => !["base_url", "enabled"].includes(k));
   if (provider.id === "bailian" && !advanced.includes("voice")) advanced.push("voice");
   if (model.model === "haike/text" && !advanced.includes("text_model")) advanced.push("text_model");
+  if (model.model === "haike/image-refinement") {
+    for (const field of ["refinement_text_model", "refinement_image_model"]) {
+      if (!advanced.includes(field)) advanced.push(field);
+    }
+  }
   modal('<h2>接入 ' + esc(model.name) + '</h2><p class="muted">' + esc(provider.name) + ' · ' + esc(model.model) + '</p>' +
     connectionPrices(model) + '<form id="commerce-connect" method="post" data-id="' + esc(provider.id) + '" data-model="' + esc(model.model) + '">' +
     (provider.config.base_url ? field("平台 API 地址", "base_url", provider.config.base_url, 'type="url" required maxlength="300"') : '<p class="tiny muted">腾讯云使用官方 SDK 地址，通过 SecretId 和 SecretKey 接入。</p>') +

@@ -1,12 +1,12 @@
 # GitHub 与跨电脑部署
 
-更新时间：2026-10-13
+更新时间：2026-10-17
 
 ## 权威入口
 
-- 当前私有单仓：`https://github.com/vincent841218449/haike-workflow`。根README及 `docs/GIT_WORKFLOW.md` 是安装、分支、CI和迭代入口；工作台、前端和收费中转站同仓管理。
-- 原整合来源 `hrbj18/haike-workflow` 仅为upstream；旧单模块仓库、main/v0.1.1提交50352aaa及便携包不代表当前单仓已发布功能。
-- `main`交付，`dev`集成，feature/fix分支通过PR审阅。基线 `baseline-2026-10-13` 保留本轮验收范围；禁止强推共享分支。
+- 用户确认单仓为`https://github.com/hrbj18/haike-workflow`，保留公开可见性。根README及 `docs/GIT_WORKFLOW.md` 是安装、分支、CI和迭代入口。
+- 新版仅上传`feat/retain-capabilities-ui`；旧main `0518367`以`legacy-before-v2-20261017`标签保留，main不合并，本次不打包。`dev-ybw`为现有集成分支。
+- 旧单模块仓库、旧标签和便携包不代表新版已发布能力；共享分支通过PR审阅，保留原历史。
 - Windows完整安装：根 `scripts/setup.ps1`，Python3.12、Node22+、Git/uv；默认跳过本地Qwen TTS。安装新增前端构建，不继承账号、任务或素材。
 - 工作台静态文件由根 `scripts/build-studio.py`生成；源码目录为 `prototypes/haike-avatar-generator`。Mac源码checkout与14754安装副本分离，更新须明确同步目标。
 - ADu仍需安装固定的同级引擎与媒体依赖；详见根 `docs/PRODUCT_AVATAR_MOTION.md`，未声称Windows实机已验。
@@ -14,7 +14,7 @@
 ## 云端与状态
 
 - 收费中转站当前入口 `https://8.138.207.71:17894/`，网关 `/v2`；部署在独立版本目录，通过current切换，私有账本与主密钥在代码目录之外。根 `api-platform/deploy/README.md` 是更新、备份、恢复入口。
-- 工作台已按用户确认切云端；¥20/冻结0/月实扣0，4项开通，数字人与文本/视觉采购价待确认。不得重启本机旧账本形成双重余额。
+- 工作台默认走统一网关，明确启用的内部配音备用使用私有供应商配置。既有默认配音已真实结算；RunningHub样片已生成，该次0.72元仍待对账。新账号的能力、权限与报价须逐项核验；当前状态见`CURRENT_STATUS.md`及根`docs/RELEASE_READINESS_20261016.md`。不得重启本机旧账本形成双重余额。
 - CI只有读取源码权限、隔离数据及假供应商，不自动部署、真实收费或发布。代码回退不能自动回退账本。
 - 旧Linux视频工作流、旧便携包及其他服务的运行证据保留于既有任务/部署文档；此次Git初始化未修改它们，也不把本机验收称为另一台机器验收。
 

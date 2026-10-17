@@ -1,4 +1,5 @@
 import io
+import os
 import wave
 from types import SimpleNamespace
 
@@ -143,4 +144,7 @@ def test_sdk_lost_submission_response_recovers_original_job(env, tmp_path):
     job = sdk.resume(intent)
     assert sdk.resume(intent)["id"] == job["id"]
     assert len(gateway.list_jobs(store, user)) == 1
-    assert (tmp_path / (intent + ".json")).stat().st_mode & 0o777 == 0o600
+    journal_path = tmp_path / (intent + ".json")
+    assert journal_path.is_file()
+    if os.name != "nt":  # Windows stat exposes read-only flags, not POSIX permissions/ACLs.
+        assert journal_path.stat().st_mode & 0o777 == 0o600

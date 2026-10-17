@@ -1,0 +1,11 @@
+.avatar-defaults-fields{border:0;padding:0;margin:0;min-width:0;display:grid;gap:20px}
+.avatar-defaults-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 20px}
+.avatar-defaults-portrait{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:16px;border:1px solid var(--line);border-radius:10px;background:#fafaf7}
+.avatar-defaults-portrait img{width:84px;height:112px;object-fit:cover;border-radius:8px;flex-shrink:0}
+.avatar-defaults-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.avatar-preset-summary{padding:18px 20px;margin:0 0 20px;display:grid;gap:10px}
+.avatar-preset-heading{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.avatar-preset-heading h2{display:flex;align-items:center;gap:7px;font-size:17px;margin:0 0 7px}
+.avatar-preset-heading .avatar-defaults-actions{margin:0}
+.avatar-preset-values{margin:0;line-height:1.8;font-size:14px;overflow-wrap:anywhere}
+@media(max-width:600px){.avatar-defaults-grid{grid-template-columns:1fr}.avatar-defaults-portrait{align-items:flex-start;gap:10px}.avatar-defaults-portrait img{width:64px;height:86px}}

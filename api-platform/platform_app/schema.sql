@@ -155,3 +155,26 @@ CREATE TRIGGER IF NOT EXISTS immutable_funding_update BEFORE UPDATE ON funding_r
  BEGIN SELECT RAISE(ABORT,'immutable funding receipt'); END;
 CREATE TRIGGER IF NOT EXISTS immutable_funding_delete BEFORE DELETE ON funding_receipts
  BEGIN SELECT RAISE(ABORT,'immutable funding receipt'); END;
+
+-- Account-owned voices. Public definitions live in code; preferences never do.
+CREATE TABLE IF NOT EXISTS account_voices (
+ id TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id), name TEXT NOT NULL,
+ upstream_voice_id TEXT NOT NULL, target_model TEXT NOT NULL,
+ source_job_id TEXT UNIQUE NOT NULL REFERENCES gateway_jobs(id),
+ created_at TEXT NOT NULL, disabled_at TEXT,
+ UNIQUE(user_id,upstream_voice_id,target_model)
+);
+CREATE INDEX IF NOT EXISTS account_voices_user ON account_voices(user_id,created_at);
+CREATE TABLE IF NOT EXISTS account_voice_preferences (
+ user_id TEXT NOT NULL REFERENCES users(id), voice_id TEXT NOT NULL,
+ speech_rate REAL NOT NULL DEFAULT 1 CHECK(speech_rate>=0.5 AND speech_rate<=2),
+ image_file_id TEXT REFERENCES gateway_files(id), updated_at TEXT NOT NULL,
+ PRIMARY KEY(user_id,voice_id)
+);
+CREATE TABLE IF NOT EXISTS account_voice_defaults (
+ user_id TEXT PRIMARY KEY REFERENCES users(id), voice_id TEXT, updated_at TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS voice_receipt_evidence (
+ job_id TEXT PRIMARY KEY REFERENCES gateway_jobs(id), actor_id TEXT NOT NULL REFERENCES users(id),
+ evidence TEXT NOT NULL, created_at TEXT NOT NULL
+);

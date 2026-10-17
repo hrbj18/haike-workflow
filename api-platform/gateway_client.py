@@ -2,6 +2,7 @@
 
 import json
 import secrets
+import ssl
 import time
 import urllib.error
 import urllib.request
@@ -9,6 +10,12 @@ from pathlib import Path
 from urllib.parse import urlsplit
 
 from client import save_private
+
+
+class GatewayError(ValueError):
+    def __init__(self, message, *, status=None, code="gateway_error"):
+        self.status, self.code = status, code
+        super().__init__(message)
 
 
 class HaikeClient:
@@ -29,7 +36,14 @@ class HaikeClient:
         self.base_url, self.api_key = base_url.rstrip("/"), api_key
         self.state_dir = Path(state_dir)
 
-    def request(self, path, body=None, idem=None, raw=None):
+    def request(self, path, body=None, idem=None, raw=None, *, method=None, response_bytes=False):
+        if not isinstance(path, str) or not path.startswith("/") or path.startswith("//") or "\\" in path:
+            raise GatewayError("API 路径必须是站内相对路径", code="path_invalid")
+        parsed_path = urlsplit(path)
+        if parsed_path.scheme or parsed_path.netloc or parsed_path.fragment:
+            raise GatewayError("API 路径必须是站内相对路径", code="path_invalid")
+        if method is not None and method not in {"GET", "POST", "PUT", "DELETE"}:
+            raise GatewayError("不支持的 API 请求方式", code="method_invalid")
         headers = {"Authorization": "Bearer " + self.api_key}
         data = None
         if body is not None:
@@ -41,7 +55,7 @@ class HaikeClient:
         if idem:
             headers["Idempotency-Key"] = idem
         request = urllib.request.Request(
-            self.base_url + path, data=data, headers=headers
+            self.base_url + path, data=data, headers=headers, method=method
         )
 
         class NoRedirect(urllib.request.HTTPRedirectHandler):
@@ -53,14 +67,31 @@ class HaikeClient:
         )
         try:
             with opener.open(request, timeout=30) as response:
+                if response_bytes:
+                    value = response.read(5 * 1024 * 1024 + 1)
+                    if len(value) > 5 * 1024 * 1024:
+                        raise GatewayError("返回文件超过 5MB", code="response_too_large")
+                    return value
                 return json.load(response)
         except urllib.error.HTTPError as error:
             try:
                 value = json.load(error)
-                message = value.get("error", {}).get("message", "海客 API 请求失败")
-            except ValueError:
+                problem = value.get("error", {})
+                message = problem.get("message", "海客 API 请求失败")
+                code = problem.get("code", "gateway_error")
+            except (ValueError, AttributeError):
                 message = "海客 API 请求失败"
-            raise ValueError(message) from None
+                code = "gateway_error"
+            message = str(message).replace(self.api_key, "[已隐藏]") if self.api_key else str(message)
+            raise GatewayError(message[:500], status=error.code, code=str(code)[:100]) from None
+        except urllib.error.URLError as error:
+            if isinstance(error.reason, ssl.SSLCertVerificationError):
+                raise GatewayError("中转站 HTTPS 证书无法验证，请联系管理员续期证书或修复证书链后重试", code="tls_certificate_invalid") from None
+            raise GatewayError("海客 API 连接失败，请检查网络后恢复原任务", code="connection_failed") from None
+        except ssl.SSLCertVerificationError:
+            raise GatewayError("中转站 HTTPS 证书无法验证，请联系管理员续期证书或修复证书链后重试", code="tls_certificate_invalid") from None
+        except (TimeoutError, OSError):
+            raise GatewayError("海客 API 连接失败，请检查网络后恢复原任务", code="connection_failed") from None
 
     def upload(self, path, kind):
         if kind not in {"audio", "image"}:

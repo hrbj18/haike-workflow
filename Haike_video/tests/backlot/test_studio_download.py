@@ -22,6 +22,25 @@ def test_saved_cosyvoice_http_receipt_downloads_over_verified_https(tmp_path, mo
     assert requests[0].get_header('User-agent') == 'HaikeVideo/1.0'
 
 
+def test_explicit_download_cap_rejects_large_response_and_removes_partial(tmp_path, monkeypatch):
+    class Opener:
+        def open(self, request, timeout):
+            return io.BytesIO(b'over-budget')
+    monkeypatch.setattr(studio_avatar, 'build_opener', lambda *_: Opener())
+    monkeypatch.setattr(studio_avatar, 'public_media_address', lambda *_: '8.8.8.8')
+    target = tmp_path / 'sample.mp4'
+    with pytest.raises(WorkError, match='大小上限'):
+        studio_avatar.download_result('https://cdn.example/file.mp4', target, max_bytes=3)
+    assert not target.exists() and not target.with_suffix('.mp4.part').exists()
+
+
+@pytest.mark.parametrize('maximum', [True, 0, -1, 100 * 1024 * 1024 + 1])
+def test_invalid_download_cap_cannot_expand_default_budget(tmp_path, monkeypatch, maximum):
+    monkeypatch.setattr(studio_avatar, 'build_opener', lambda *_: pytest.fail('must fail before network'))
+    with pytest.raises(WorkError, match='上限无效'):
+        studio_avatar.download_result('https://cdn.example/file.mp4', tmp_path / 'sample.mp4', max_bytes=maximum)
+
+
 @pytest.mark.parametrize('url',[
     'http://example.com/audio.wav',
     'http://dashscope-result-bj.oss-cn-beijing.aliyuncs.com.evil.example/audio.wav',
@@ -81,3 +100,58 @@ def test_runninghub_verified_bucket_resolves_fake_dns_without_trusting_other_hos
     with pytest.raises(WorkError,match='本地网络'):
         studio_avatar.public_media_address('rh-comfyui01.tos-cn-beijing.volces.com.evil.example',443)
     assert len(requests)==1
+
+
+def test_fake_dns_uses_verified_secondary_resolver_after_tls_failure(monkeypatch):
+    import ssl
+    from urllib.error import URLError
+    monkeypatch.setattr(studio_avatar.socket,'getaddrinfo',lambda *_args,**_kw:[(2,1,6,'',('198.18.1.230',443))])
+    requests=[]
+    class Opener:
+        def open(self,request,timeout):
+            requests.append(request)
+            if request.full_url.startswith('https://1.1.1.1/'):
+                raise URLError(ssl.SSLCertVerificationError('fixture chain unavailable'))
+            return io.BytesIO(b'{"Status":0,"Answer":[{"type":1,"data":"8.141.181.163"}]}')
+    monkeypatch.setattr(studio_avatar,'build_opener',lambda *_:Opener())
+    assert studio_avatar.public_media_address('dashscope-result-bj.oss-cn-beijing.aliyuncs.com',443)=='8.141.181.163'
+    assert len(requests)==2 and requests[1].full_url.startswith('https://dns.alidns.com/resolve?')
+    assert all(not request.has_header('Authorization') for request in requests)
+
+
+def test_secondary_resolver_still_rejects_private_addresses(monkeypatch):
+    from urllib.error import URLError
+    monkeypatch.setattr(studio_avatar.socket,'getaddrinfo',lambda *_args,**_kw:[(2,1,6,'',('198.18.1.230',443))])
+    class Opener:
+        def open(self,request,timeout):
+            if request.full_url.startswith('https://1.1.1.1/'):
+                raise URLError('fixture unavailable')
+            return io.BytesIO(b'{"Status":0,"Answer":[{"type":1,"data":"127.0.0.1"}]}')
+    monkeypatch.setattr(studio_avatar,'build_opener',lambda *_:Opener())
+    with pytest.raises(WorkError,match='真实公网'):
+        studio_avatar.public_media_address('dashscope-result-bj.oss-cn-beijing.aliyuncs.com',443)
+
+
+@pytest.mark.parametrize('host', ['www.douyin.com', 'v3-web.douyinvod.com', 'v26-web.douyinvod.com'])
+def test_douyin_play_redirect_hosts_require_verified_public_dns(monkeypatch, host):
+    monkeypatch.setattr(studio_avatar.socket, 'getaddrinfo',
+                        lambda *_args, **_kw: [(2, 1, 6, '', ('198.18.0.9', 443))])
+    requests = []
+    class Opener:
+        def open(self, request, timeout):
+            requests.append(request)
+            return io.BytesIO(b'{"Status":0,"Answer":[{"type":1,"data":"8.8.8.8"}]}')
+    monkeypatch.setattr(studio_avatar, 'build_opener', lambda *_: Opener())
+    assert studio_avatar.public_media_address(host, 443) == '8.8.8.8'
+    assert len(requests) == 1 and not requests[0].has_header('Authorization')
+
+
+@pytest.mark.parametrize('host', ['www.douyin.com.evil.example',
+                                 'v3-web.douyinvod.com.evil.example',
+                                 'v-foo.douyinvod.com'])
+def test_similar_douyin_names_do_not_gain_fake_dns_fallback(monkeypatch, host):
+    monkeypatch.setattr(studio_avatar.socket, 'getaddrinfo',
+                        lambda *_args, **_kw: [(2, 1, 6, '', ('198.18.0.9', 443))])
+    monkeypatch.setattr(studio_avatar, 'build_opener', lambda *_: pytest.fail('untrusted host'))
+    with pytest.raises(WorkError, match='本地网络'):
+        studio_avatar.public_media_address(host, 443)

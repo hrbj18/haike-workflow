@@ -37,7 +37,7 @@ from backlot.tencent_asr import (  # noqa: E402
     assert_tencent_asr_ready,
     transcribe_file,
 )
-from lib.ffmpeg_locator import resolve_ffmpeg_with_option  # noqa: E402
+from lib.ffmpeg_locator import resolve_ffmpeg_pair  # noqa: E402
 
 
 def now() -> str:
@@ -50,7 +50,7 @@ def write_json(path: Path, value: dict) -> None:
 
 
 def ffmpeg_bin() -> str:
-    pair = resolve_ffmpeg_with_option("-filter_complex_script")
+    pair = resolve_ffmpeg_pair()
     if not pair:
         raise SystemExit("未找到可用的 ffmpeg")
     return pair[0]

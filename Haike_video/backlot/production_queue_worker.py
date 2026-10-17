@@ -53,6 +53,9 @@ class ProductionQueueWorker:
             "published_remix": self._run_published_remix,
             "material_commentary": self._run_material_commentary,
             "commentary_presenter": self._run_commentary_presenter,
+            # Versioned kind prevents already-running legacy workers from
+            # silently executing a consumer contract with their shared key.
+            "commentary_presenter_consumer_v1": self._run_commentary_presenter,
             "studio_graphic": self._run_studio_graphic,
             "studio_avatar": self._run_studio_avatar,
             "studio_motion": self._run_studio_motion,
@@ -64,7 +67,9 @@ class ProductionQueueWorker:
 
     def _run_studio_avatar(self, job):
         from backlot.studio_avatar import run_avatar
-        return run_avatar(self._project_dir(job), job["frozen_request"])
+        return run_avatar(self._project_dir(job), job["frozen_request"],
+                          progress=lambda stage: self.queue.update_stage(
+                              job["job_id"], self.worker_id, stage))
 
     def _run_studio_motion(self, job):
         from backlot.studio_motion import run_motion
@@ -209,7 +214,7 @@ class ProductionQueueWorker:
             if output.is_file() and report.is_file():
                 return {"status": "completed", "stage": "合成完成，等待人工审核", "result": {"output_path": str(output), "qa_status": "pending"}}
             return {"status": "failed", "stage": "制作中断，原调用与产物保留，可恢复此任务", "retryable": True, "safe_resume_point": job["kind"]}
-        if job["kind"] == "commentary_presenter":
+        if job["kind"] in {"commentary_presenter", "commentary_presenter_consumer_v1"}:
             from backlot.commentary_presenter_job import inspect
             return inspect(project_dir, str(job["parent_job_id"]))
         if job["kind"] == "material_commentary":

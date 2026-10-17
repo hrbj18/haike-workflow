@@ -50,7 +50,7 @@ REPO = Path(__file__).resolve().parents[1]
 if str(REPO) not in sys.path:
     sys.path.insert(0, str(REPO))
 
-from lib.ffmpeg_locator import resolve_ffmpeg_with_option  # noqa: E402
+from lib.ffmpeg_locator import resolve_ffmpeg_pair  # noqa: E402
 
 
 SAMPLE_FPS = 2.0
@@ -64,11 +64,12 @@ SMALL_FACE_MIN_AREA = 0.0035      # 复核扫描：背景小脸 / 屏内人像
 
 
 def resolve_ffmpeg() -> tuple[Path, Path]:
-    """返回 (ffmpeg, ffprobe)。必须挑支持 -filter_complex_script 的那一对——
-    PATH 上的某些 master 构建不支持它，数字人母版合成会直接失败。"""
-    pair = resolve_ffmpeg_with_option("-filter_complex_script")
+    """返回抽帧与检查所需的 (ffmpeg, ffprobe)，不要求母版图文件选项。"""
+    pair = resolve_ffmpeg_pair()
     if not pair:
-        raise SystemExit("未找到可用的 ffmpeg（需要支持 -filter_complex_script）")
+        raise SystemExit("未找到可用的 ffmpeg")
+    if not Path(pair[1]).is_file():
+        raise SystemExit("未找到与 ffmpeg 配套的 ffprobe，无法检查素材")
     return Path(pair[0]), Path(pair[1])
 
 

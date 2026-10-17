@@ -11,6 +11,7 @@ import string
 from curl_cffi.requests import AsyncSession
 
 from ....netfp import impersonate_for_ua
+from ....tls_runtime import curl_verify_path
 
 _CHARSET = string.ascii_letters + string.digits + "=_-"
 
@@ -34,7 +35,7 @@ async def gen_real_ms_token(user_agent: str, timeout: float = 10.0,
     }
     try:
         # 用 session 读 cookie jar(curl_cffi 的响应级 cookies 不可靠,set-cookie 进 session jar)
-        async with AsyncSession(impersonate=impersonate_for_ua(user_agent)) as cli:
+        async with AsyncSession(impersonate=impersonate_for_ua(user_agent), verify=curl_verify_path()) as cli:
             await cli.post(
                 _REAL_URL,
                 params={"msToken": gen_false_ms_token()},

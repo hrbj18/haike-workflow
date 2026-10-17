@@ -2,7 +2,7 @@
 
 ## Primary entrypoints
 
-- `scripts/download_douyin_mediacrawler.py`: MediaCrawler single-video download; workspace Cookie / `--cookies`, offline `--check`. Task: `docs/tasks/2026-09-24-single-douyin-download.md`. Existing HTTP entry `scripts/download_douyin_video.py` remains supported.
+- `scripts/download_douyin_mediacrawler.py`: `--account-id`/selected account, `--cookies`/legacy compatible; offline `--check`. `download_credentials_adapter.py` consumes the shared store. Task: `docs/tasks/2026-10-15-unified-download-credentials.md`.
 
 - `src/douyin_intelligence/cli.py`: CLI router.
 - `daily_hot_candidate_pool.py`: V2.4 producer, source-first official events, semantic routing, immutable READY publish and non-regressing promotion.

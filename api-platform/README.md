@@ -86,7 +86,33 @@ uvx ruff check platform_app client.py gateway_client.py import_providers.py run.
 
 测试与浏览器验收使用独立数据库和假供应商，不消耗真实API。旧的两个demo模型及其后台定价保留用于回归。实际本地数据库在data/platform.sqlite3，升级前备份在同一私有目录；测试数据位于忽略的output/。
 
-公网销售前需要部署独立HTTPS服务并完成生产限流、并发worker租约、账户验证、自助邮件找回、监控、备份恢复与真实供应商验收。当前不含在线支付收款回调、现金退款、发票、批量长配音、声音克隆及自动替换整个视频生产队列。
+公网销售前需要部署独立HTTPS服务并完成生产限流、并发worker租约、账户验证、自助邮件找回、监控、备份恢复与真实供应商验收。当前不含在线支付收款回调、现金退款、发票、批量长配音及自动替换整个视频生产队列。账号音色与克隆的源码契约见下节；尚未部署到既有云端。
+
+## 账号音色与私人克隆（源码，未做付费验收）
+
+音色按账户隔离，同账户的不同平台 Key 共享私人音色、默认音色及每音色的语速/人物图。另一账户无法读取、修改或调用私人音色、参考录音和人物图。供应商密钥、OSS密钥和私人上游音色编号只保留在服务端。账户摘要新增稳定 `account_id`，客户端不能用 Key 编号代替账户身份。
+
+- `GET /v2/voices`：`items` 中包含 `id/name/gender/kind/model/compatible_models/available/status/verification/preferences`，顶层 `preferences.voice_id` 是账户默认值。
+- `PUT /v2/voices/{id}/preferences`：`{"speech_rate":1.1,"image_file_id":"file_..."}`。倍率范围0.5–2.0；图片必须是本人通过 `/v2/files?kind=image` 上传的文件，传null清除图片。每个音色独立保存。
+- `PUT /v2/voice-preferences`：`{"voice_id":"pub_longanyang"}`，只切换默认音色，保留各音色设置；null清除默认。
+- `DELETE /v2/voices/{id}`：仅本人私人音色可逻辑停用；不调用上游物理删除，原报价/已确认任务沿冻结音色恢复。停用音色不可用于新报价。
+- `GET /v2/files/{id}`：本人图片/录音的二进制预览，禁止缓存；不公开文件路径、供应商签名URL或其他账户媒体。
+
+公共候选为男声龙安洋(`pub_longanyang`)、龙安朗(`pub_longanlang_v3`)、龙硕(`pub_longshuo_v3`)，女声龙安欢(`pub_longanhuan_v3`)、龙安温(`pub_longanwen_v3`)、龙悦(`pub_longyue_v3`)。这些仅绑定 `haike/cosyvoice-public` → `cosyvoice-v3-flash`；**v3.5不支持系统音色**，原 `haike/cosyvoice` → `cosyvoice-v3.5-flash` 保持不变。`verification=candidate_unverified` 表示官方兼容候选、尚未经本平台付费试听；`available` 只表示管理员已启用兼容模型并确认价格。
+
+配音继续使用 `/v2/quotes` → `/v2/jobs`，`input={"text":"你好","voice_id":"pub_longanyang","speech_rate":1.1}`，`model` 使用音色条目返回的档位。倍率可省略以采用该账户该音色的偏好；报价返回 `voice_selection`，冻结音色、倍率、人物图编号、兼容上游型号及价格。后续改设置/价格不改变旧任务。没有选音色的旧客户端仍可使用管理员提供的平台默认音色，但该音色不会自动成为用户私人音色。
+
+克隆同样经报价和受理链：`model=haike/voice-clone`，`input={"name":"我的声音","audio_file":"file_...","consent":true}`。参考音频须为本人上传的5–60秒单声道16位PCM WAV，推荐10–20秒清晰单人朗读；用户端可先规范化MP3/M4A。确认报价后冻结商业余额/Key预算，任务返回私人 `voice_*` 并在同一事务登记与结算；有上游编号只查询该编号，受理结果未知则保留冻结、禁止自动重发。此路径没有额外的直调克隆入口。
+
+公网HTTPS部署默认采用短期签名样音源，无需OSS账号：`--public-origin`固定部署地址生成链接，不信任请求Host。服务端自动生成私有持久化 `data/voice_source.master.key`，签名绑定已受理克隆任务、该任务所属账户录音及10分钟有效期。供应商不带平台Key即可抓取该段录音；终态立即失效，无任意fileId/路径读取入口，URL不返回用户、不写入报价/任务，访问日志脱敏，代理样音路径不记录访问/错误URL。备份须包含该签名密钥；现有备份器已覆盖数据目录文件。`/v2/files/{id}`仍始终要求本账户平台Key。
+
+本地没有公网HTTPS入口时，可改用服务端私有OSS：百炼供应商配置 `oss_endpoint/oss_bucket/oss_access_key_id/oss_access_key_secret`；可选 `clone_staging=oss` 强制OSS，`signed_source`强制HTTPS签名源，默认`auto`优先使用固定公网入口。OSS对象使用私有ACL和1小时签名URL，正常终态自动清理；为 `haike-api-voice-clones/` 配置短期生命周期，处理中断或清理失败。OSS密钥不返回用户或管理页；配置通过现有 `POST /admin/v1/providers/bailian` 的 `config` 保存。仅TTS不需要样音暂存配置。
+
+如果创建请求响应丢失且没有上游编号，管理员核对供应商原创建凭证后，可 `POST /admin/v1/gateway-jobs/{job_id}/voice-receipt` 提供 `{upstream_voice_id,evidence}`：只允许未知克隆任务补录与冻结型号匹配的原音色编号，保持原冻结并恢复查询，不发起第二次创建。普通用户无权补录；未经上游确认部署成功不登记为可用私人音色。
+
+新增公共配音和克隆档位均**不自动发布价格**，缺已确认采购价时返回blocked/price_pending。管理员核对官方当前计费及实际采购后，通过原定价接口发布版本：公共配音计量 `characters`（每万字符），克隆计量 `voices`（每音色）。官方当前复刻专页称CosyVoice创建音色免费；即使管理员确认采购为0，仍须保存明确的0采购价、报价/确认任务和账本凭证，不能直接调用绕过审计。OSS存储/传输费用另核对，不能凭免费创建说明推断全部采购成本为0。
+
+核对来源：[CosyVoice音色](https://help.aliyun.com/zh/model-studio/cosyvoice-voice-list)、[HTTP配音参数与rate](https://help.aliyun.com/zh/model-studio/cosyvoice-tts-http-api)、[v3 Flash价格](https://help.aliyun.com/zh/model-studio/cosyvoice-v3-flash)、[声音复刻契约](https://help.aliyun.com/zh/model-studio/cosyvoice-clone-design-api)。
 
 ## 统一中转与用户端简化（2026-10-13）
 
@@ -114,6 +140,14 @@ uvx ruff check platform_app client.py gateway_client.py import_providers.py run.
 新增表采用 `CREATE TABLE IF NOT EXISTS`，不重写原账户或资金账本；已有用户默认为正常状态，不强制重设密码。此次自动测试 51 项通过，另验证管理员手动入账、绑定码签发、用户确认兑换及充值明细、账户手机布局。测试未涉及真实付款或收费调用。
 
 登录、注册和管理员开户接受 `{ "username": "用户名", "password": "密码" }`。旧客户端的 `email` 和可选 `name` 字段继续兼容；响应新增 `username`，内部历史 `email` 字段仍保留用于旧接口。用户名重复返回 409 / `username_exists`。用户名最多 120 字符、密码最多 128 字符仅用于限制输入体积，界面不要求邮箱、显示名称或确认密码。
+
+## 人物图片精修（本地源码，待云端开通验收）
+
+新增 `haike/image-refinement`，`input={"prompt":"预设提示词","image_file":"file_本人图片"}`，通过原 `/v2/files`、`/v2/quotes`、`/v2/jobs` 和调用意图恢复链使用。上游只调用一次 `/responses`，驱动模型默认 `gpt-5.6`、图像工具默认 `gpt-image-2`，参考图作为 `input_image` 传入；不回退至 `/images/generations`。管理员在 OpenAI 兼容中转配置中填写 `base_url/api_key`，高级字段 `refinement_text_model/refinement_image_model` 可指定已获权限的型号；报价冻结这两个字段及地址，后续改配置不改变旧任务。
+
+本能力按完成一张参考图编辑任务计价（`tasks=1`），必须先确认每次编辑的完整采购成本，包含驱动模型与图像工具，再按成本×1.5发布价格；不是沿用插画Token单价。真实成本未知时保持未开通，不自动发价格或赠送额度。只有恰好一个完成的图像工具调用且Responses整体完成才结算，多次调用、超时或结果未知保留冻结供管理员核对，禁止自动重发。供应商按Token计费时，应先确定包含全部费用的每次编辑采购额度及超额承担方案，不能凭一次工具记录推断成本。
+
+工作台人物上传后自动保存原图、准备固定 `avatar-seated-v1` 提示词的报价，确认费用后修图。候选归一为1024×1280 RGB PNG，原图和供应商原始结果保留，明确采用后才更新视频输入。各海客账号的报价、操作和结果分离，重新上传不会被旧结果覆盖。此功能仅完成假供应商测试，不代表云端已部署、供应商已开通或真实修图已验收。
 
 ## 广州云端入口
 

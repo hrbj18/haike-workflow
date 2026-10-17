@@ -22,6 +22,7 @@
 ```
 
 **专项按需读（至多一个）**：
+- 分发视频模板标准依赖后，在本仓根运行 `python verify/check_template_standards.py --workspace`，按输出核对规范文件与工作区路由；静态检查不代表媒体或生产验收通过。
 - 要接发布 → `contracts/publish-v1.md`
 - 要执行日常跨仓操作 → `agent-runbooks/README.md`（先核对实时状态与用户授权）
 - 要读研究包 → `contracts/research-pack-v1.md`

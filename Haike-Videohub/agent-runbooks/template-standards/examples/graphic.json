@@ -1,0 +1,391 @@
+{
+  "schema_version": 1,
+  "standard_version": "video-template-v1",
+  "template_id": "example_graphic",
+  "template_version": "v001",
+  "template_type": "graphic",
+  "spec_kind": "reference",
+  "stage": "specification",
+  "authority": {
+    "runbook": "../../视频模板Runbook骨架.md",
+    "implementation_paths": [],
+    "parameter_source": "self"
+  },
+  "canvas": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "duration_seconds": 6,
+    "clock": "本期最终音轨；无音轨时使用明确的场景帧时钟",
+    "coordinate_system": "top_left_pixels"
+  },
+  "narrative": {
+    "purpose": "演示规范字段填写方式，未声明可生产",
+    "information_hierarchy": [
+      "标题",
+      "主信息",
+      "辅助信息"
+    ],
+    "structure": [
+      "主题",
+      "证据或解释",
+      "收束"
+    ]
+  },
+  "scenes": [
+    {
+      "id": "scene_1",
+      "start": 0,
+      "end": 6,
+      "purpose": "覆盖此教学布局的稳定状态",
+      "element_ids": [
+        "background",
+        "headline",
+        "main_card",
+        "detail"
+      ],
+      "variant": "main"
+    }
+  ],
+  "assets": [],
+  "elements": [
+    {
+      "id": "background",
+      "type": "background",
+      "role": "全画布底色",
+      "parent_id": null,
+      "z_index": 0,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "全画布底色"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1080,
+          1920
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "fill": "#101828"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 6
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "当前场景稳定显示"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "example_design"
+      ],
+      "acceptance": [
+        {
+          "check": "layout_readability",
+          "method": "实际查看稳定态和最长内容帧",
+          "pass_condition": "全部相关内容可读且符合名义框与避让关系"
+        }
+      ]
+    },
+    {
+      "id": "headline",
+      "type": "text",
+      "role": "本期标题",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "editable",
+        "binding": "headline_slot",
+        "asset_id": null,
+        "description": "本期标题"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          72,
+          120,
+          936,
+          180
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "font": "项目登记的中文字体文件",
+          "font_size": 48,
+          "max_lines": 2,
+          "overflow": "rewrite_then_split"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 6
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "当前场景稳定显示"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "example_design"
+      ],
+      "acceptance": [
+        {
+          "check": "layout_readability",
+          "method": "实际查看稳定态和最长内容帧",
+          "pass_condition": "全部相关内容可读且符合名义框与避让关系"
+        }
+      ]
+    },
+    {
+      "id": "main_card",
+      "type": "card",
+      "role": "素材卡容器",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "素材卡容器"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          72,
+          460,
+          936,
+          780
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {}
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 6
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "当前场景稳定显示"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "example_design"
+      ],
+      "acceptance": [
+        {
+          "check": "layout_readability",
+          "method": "实际查看稳定态和最长内容帧",
+          "pass_condition": "全部相关内容可读且符合名义框与避让关系"
+        }
+      ]
+    },
+    {
+      "id": "detail",
+      "type": "text",
+      "role": "卡内信息",
+      "parent_id": "main_card",
+      "z_index": 10,
+      "content": {
+        "mode": "editable",
+        "binding": "detail_slot",
+        "asset_id": null,
+        "description": "卡内信息"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          28,
+          60,
+          880,
+          240
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "font": "项目登记的中文字体文件",
+          "font_size": 48,
+          "max_lines": 2,
+          "overflow": "rewrite_then_split"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 6
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "当前场景稳定显示"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "avoid",
+          "target_id": "headline",
+          "rule": "主卡与顶部标题分别占区，不遮挡标题"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "example_design"
+      ],
+      "acceptance": [
+        {
+          "check": "layout_readability",
+          "method": "实际查看稳定态和最长内容帧",
+          "pass_condition": "全部相关内容可读且符合名义框与避让关系"
+        }
+      ]
+    }
+  ],
+  "slots": [
+    {
+      "id": "headline_slot",
+      "element_id": "headline",
+      "property": "content",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "max_lines": 2,
+        "width_pixels": 936,
+        "measure_with_actual_font": true
+      },
+      "missing": "停在输入检查并补齐本期文本",
+      "overflow": "先改写或拆句，再按主时钟核对，保持已锁定版式"
+    },
+    {
+      "id": "detail_slot",
+      "element_id": "detail",
+      "property": "content",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "max_lines": 2,
+        "width_pixels": 880,
+        "measure_with_actual_font": true
+      },
+      "missing": "停在输入检查并补齐本期文本",
+      "overflow": "先改写或拆句，再按主时钟核对，保持已锁定版式"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "example_design",
+      "source_kind": "illustrative",
+      "source": "本标准的教学设计",
+      "locator": "当前示例 JSON",
+      "method": "人工定义名义值，未观察参考片或渲染",
+      "file": null,
+      "sha256": null
+    }
+  ],
+  "unknowns": [],
+  "validation": {
+    "structure": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "教学规格，尚未实现、渲染或验收"
+    },
+    "technical": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "教学规格，尚未实现、渲染或验收"
+    },
+    "visual": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "教学规格，尚未实现、渲染或验收"
+    },
+    "audio": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "教学规格，尚未实现、渲染或验收"
+    },
+    "platform": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "教学规格，尚未实现、渲染或验收"
+    },
+    "user_review": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "教学规格，尚未实现、渲染或验收"
+    },
+    "production": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "教学规格，尚未实现、渲染或验收"
+    }
+  },
+  "extensions": {
+    "graphic": {
+      "text_policy": "标题提炼主题，说明承载要点，实际测宽后拆句",
+      "asset_fit": "保留信息主体，素材等比适配；内嵌文字明确登记"
+    }
+  },
+  "operations": [
+    {
+      "id": "preflight",
+      "input": "本期规格和所有必需替换槽",
+      "action": "检查输入、参数、实现入口和当前授权",
+      "output": "缺失项及明确的可继续范围",
+      "completion": "每个缺失项有补齐方案；没有把教学规格当成生产入口",
+      "recovery": "复用已完成素材，补齐对应输入后重新检查",
+      "entrypoint": null
+    }
+  ]
+}

@@ -29,7 +29,7 @@ IMAGE_MODELS = ("gpt-image-2", "gpt-image-1.5", "gpt-image-1")
 
 def configuration(studio):
     path = studio.private / "studio-ai/relay.json"
-    return json.loads(path.read_text()) if path.is_file() else {}
+    return json.loads(path.read_text(encoding="utf-8")) if path.is_file() else {}
 
 
 def image_identity(config):
@@ -44,24 +44,47 @@ def selected_image_model(studio):
     return model
 
 
+def download_account(studio):
+    root = Path(__file__).resolve().parents[2] / "copy_skill/copy_skill-main"
+    if str(root / "src") not in sys.path: sys.path.insert(0, str(root / "src"))
+    from douyin_intelligence.download_credentials_adapter import credential_store, selected_account_id
+    store = credential_store()
+    account_id = selected_account_id(configuration(studio).get("douyin_download_account_id"))
+    metadata = store.metadata("douyin", account_id) if account_id is not None else {"status": "not_selected"}
+    return account_id, store, metadata
+
+
 def status(studio):
     c = configuration(studio)
     model = c.get("image_model", IMAGE_MODEL)
     verified = not c.get("image_paused", False) and c.get("image_verified") is True and model in IMAGE_MODELS and c.get("image_verified_for") == image_identity(c)
+    try:
+        download_id, _, download_meta = download_account(studio)
+    except Exception:
+        download_id, download_meta = None, {"status": "unavailable"}
     return {"configured": bool(c.get("api_key")), "chat_model": CHAT_MODEL, "image_model": model,
             "billing": "sponsored", "customer_charge_micros": "0", "procurement_price": None,
             "douyin_authorized": c.get("douyin_commercial_authorized") is True,
-            "douyin_login_confirmed": c.get("douyin_login_confirmed") is True,
+            "douyin_login_confirmed": download_meta.get("status") == "ready",
+            "douyin_download_account_id": download_id,
+            "douyin_download_status": download_meta.get("status", "unavailable"),
             "image_verified": verified, "image_paused": c.get("image_paused", False), "max_images": 2, "max_requests_per_job": 12}
 
 
 def options(studio, draft):
+    from backlot.studio_network_materials import enabled
+    network = enabled(draft)
     ai = draft["input"].get("ai") or {}
     if not isinstance(ai, dict) or set(ai) - {"enabled", "materials", "brief", "allow_images", "skip_douyin", "max_images"}:
         raise WorkError("AI制作设置无效")
-    if not ai.get("enabled"): return None
+    if not ai.get("enabled") and not network: return None
     if any(type(ai.get(k, False)) is not bool for k in ("enabled", "allow_images", "skip_douyin")):
         raise WorkError("AI制作开关无效")
+    if network:
+        # This opt-in uses the existing planner/searchers, with no image fallback.
+        ai = {**ai, "enabled": True, "allow_images": False, "skip_douyin": False, "max_images": 0, "_network_materials": True}
+    elif "network_materials_enabled" in draft["input"]:
+        ai = {**ai, "allow_images": False, "max_images": 0, "_network_disabled": True}
     if not status(studio)["configured"]: raise WorkError("AI理解中转尚未配置，请联系管理员")
     if ai.get("allow_images") and not status(studio)["image_verified"]:
         raise WorkError("插画接口尚未验收通过，请先关闭插画补齐并使用用户素材或Pexels")
@@ -111,9 +134,9 @@ class TrialRelay:
         # Freeze across every scene, so an operator switch affects new jobs only.
         route = self.folder / "image-routing.safe"
         with _LOCK:
-            if route.exists(): model = json.loads(route.read_text())["model"]
+            if route.exists(): model = json.loads(route.read_text(encoding="utf-8"))["model"]
             else:
-                old = [json.loads(p.read_text()) for p in self.folder.glob("*.json")]
+                old = [json.loads(p.read_text(encoding="utf-8")) for p in self.folder.glob("*.json")]
                 models = {r.get("model") or IMAGE_MODEL for r in old if r.get("image")}
                 if len(models) > 1: raise WorkError("原插画任务包含多种模型，请由管理员核对原请求")
                 model = next(iter(models)) if models else selected_image_model(self.studio)
@@ -128,16 +151,16 @@ class TrialRelay:
         fingerprint = hashlib.sha256(json.dumps(payload, sort_keys=True).encode()).hexdigest()
         with _LOCK:
             if path.exists():
-                receipt = json.loads(path.read_text())
+                receipt = json.loads(path.read_text(encoding="utf-8"))
                 if receipt["fingerprint"] != fingerprint: raise WorkError("原AI任务内容已冻结，不能在恢复时替换参数")
                 if receipt["status"] == "succeeded": return receipt["result"]
                 raise WorkError("AI原请求结果待核对，未重复提交。请由管理员核对中转记录", "unavailable")
             if len(list(self.folder.glob("*.json"))) >= 12: raise WorkError("本次AI调用已达12次上限，已完成素材保留")
-            if image and sum(json.loads(p.read_text()).get("image", False) for p in self.folder.glob("*.json")) >= 2:
+            if image and sum(json.loads(p.read_text(encoding="utf-8")).get("image", False) for p in self.folder.glob("*.json")) >= 2:
                 raise WorkError("本次插画生成已达两张上限")
             # A private daily counter is persisted before submission, including uncertain calls.
             counter_path = self.studio.private / "studio-ai/trial-budget.json"
-            counter = json.loads(counter_path.read_text()) if counter_path.exists() else {}
+            counter = json.loads(counter_path.read_text(encoding="utf-8")) if counter_path.exists() else {}
             day = timestamp()[:10]; counter = counter if counter.get("day") == day else {"day": day, "requests": 0, "images": 0}
             if counter["requests"] >= 50 or (image and counter["images"] >= 10): raise WorkError("今日试用上限已到，请明日继续或由管理员调整方案")
             counter["requests"] += 1; counter["images"] += int(image); atomic_private(counter_path, counter)
@@ -188,7 +211,7 @@ def validate_plan(body, draft, cues, duration):
     if not isinstance(body, dict) or set(body) != {"scenes"}: raise WorkError("AI分镜结构不正确，结果保留待复核")
     raw = body["scenes"]
     if not isinstance(raw, list) or not 1 <= len(raw) <= 12: raise WorkError("AI需要安排1至12个分镜")
-    materials = {m["id"]: m for m in draft["input"]["ai"].get("materials", [])}
+    materials = {m["id"]: m for m in (draft["input"].get("ai") or {}).get("materials", [])}
     out = []; cursor = 0; char = 0; used = set()
     for i, s in enumerate(raw):
         fields = {"from_cue", "to_cue", "script_start", "script_end", "label", "asset_id", "query", "illustration_prompt", "reason"}
@@ -281,12 +304,15 @@ def preview(studio, draft):
 class Sources:
     def __init__(self, studio, draft, relay, paid):
         self.studio, self.draft, self.relay, self.paid = studio, draft, relay, paid
+        self.checked_account_id = None
 
     def douyin(self, scene):
         c = configuration(self.studio)
         if not c.get("douyin_commercial_authorized"): raise WorkError("抖音采集需要MediaCrawler商用授权，可在素材设置中明确跳过")
-        if not c.get("douyin_login_confirmed"): raise WorkError("需要登录抖音后继续素材采集；可明确选择跳过抖音使用Pexels", "unavailable")
         config = crawler_config(self.studio, self.relay.folder / "douyin")
+        if (self.checked_account_id is not None
+                and config["media_crawler"].get("download_account_id") != self.checked_account_id):
+            raise WorkError("素材账号选择已变化，请重新检查登录后恢复原任务", "unavailable")
         from douyin_intelligence.sources.douyin import DouyinSource
         source = DouyinSource()
         r = source.search([scene["query"].split("|")[0].strip()], 10, config=config, run_id=scene["id"])
@@ -296,7 +322,7 @@ class Sources:
         # Discovery is not a content license. Do not silently copy third-party videos.
         authorized = set(c.get("douyin_authorized_video_ids", []))
         decision_path = self.relay.folder.parent / "source-decisions.json"
-        if decision_path.exists(): authorized.update(json.loads(decision_path.read_text()).get("authorized_video_ids", []))
+        if decision_path.exists(): authorized.update(json.loads(decision_path.read_text(encoding="utf-8")).get("authorized_video_ids", []))
         for item in r.candidates:
             if item.video_id in authorized and source.resolve_media_url(item):
                 from backlot.studio_avatar import download_result
@@ -355,11 +381,16 @@ def resolve_scene(scene, ai, sources, image_count=0):
     if scene.get("asset_id"):
         material = next(m for m in ai.get("materials", []) if m["id"] == scene["asset_id"])
         return {**material, "provenance": {"source": "user", "rights": "user-confirmed"}}
+    if ai.get("_network_disabled"):
+        raise WorkError("联网素材已关闭，本段尚无已上传画面；请补充素材或明确开启联网素材后再制作", "unavailable")
     if not ai.get("skip_douyin", False):
         asset = sources.douyin(scene)
         if asset: return asset
     asset = sources.pexels(scene)
     if asset: return asset
+    if ai.get("_network_materials"):
+        from backlot.studio_network_materials import MaterialSearchError
+        raise MaterialSearchError("联网未找到适合本段内容的画面，请补充素材或调整检索内容后恢复原任务；未改用纯图文或插画", "no_materials")
     if not ai.get("allow_images") or image_count >= ai.get("max_images", 2):
         raise WorkError("网络未找到合适素材；请上传素材或允许在数量上限内生成插画")
     if not scene.get("illustration_prompt", "").strip(): raise WorkError("缺少插画提示词，请复核分镜")
@@ -367,18 +398,42 @@ def resolve_scene(scene, ai, sources, image_count=0):
 
 
 def produce(studio, draft, folder, cues, duration, paid):
+    from backlot.studio_network_materials import enabled, preflight, write_result
+    network = enabled(draft)
+    try:
+        return _produce(studio, draft, folder, cues, duration, paid, network, preflight, write_result)
+    except WorkError as exc:
+        if network:
+            plan_path = Path(folder) / "storyboard.json"
+            plan = json.loads(plan_path.read_text(encoding="utf-8")) if plan_path.is_file() else None
+            write_result(folder, status=getattr(exc, "status", "failed"), message=str(exc), plan=plan)
+        raise
+    except Exception:
+        if network: write_result(folder, status="failed", message="联网素材处理未完成，请检查连接后恢复原任务；已有素材已保留")
+        raise
+
+
+def _produce(studio, draft, folder, cues, duration, paid, network, preflight, write_result):
     ai = options(studio, draft)
     if not ai: return None
     folder = Path(folder); relay = TrialRelay(studio, folder / "ai-requests")
     decision_path = folder / "source-decisions.json"
-    if decision_path.exists() and json.loads(decision_path.read_text()).get("skip_douyin") is True:
+    if not network and decision_path.exists() and json.loads(decision_path.read_text(encoding="utf-8")).get("skip_douyin") is True:
         ai = {**ai, "skip_douyin": True}
     plan_path = folder / "storyboard.json"
     fingerprint = hashlib.sha256(json.dumps(draft,sort_keys=True).encode()).hexdigest()
-    plan = json.loads(plan_path.read_text()) if plan_path.exists() else {**make_plan(studio, draft, cues, duration, relay),"draft_fingerprint":fingerprint}
+    plan = json.loads(plan_path.read_text(encoding="utf-8")) if plan_path.exists() else None
+    if plan is not None and plan.get("draft_fingerprint") != fingerprint: raise WorkError("AI分镜与当前冻结草稿不一致，不能恢复到另一份内容")
+    checked_account = None
+    if network and (plan is None or any(not s.get("asset") and not s.get("asset_id") for s in plan["scenes"])):
+        write_result(folder, status="checking_login", message="正在检查素材账号登录", plan=plan)
+        checked_account = preflight(studio)
+        write_result(folder, status="searching", message="正在联网搜索并核验相关画面", plan=plan)
+    if plan is None: plan = {**make_plan(studio, draft, cues, duration, relay), "draft_fingerprint": fingerprint}
     if plan.get("draft_fingerprint") != fingerprint: raise WorkError("AI分镜与当前冻结草稿不一致，不能恢复到另一份内容")
     atomic_private(plan_path, plan)
     sources = Sources(studio, draft, relay, paid)
+    if network and isinstance(checked_account, dict): sources.checked_account_id = checked_account["account_id"]
     for scene in plan["scenes"]:
         if scene.get("asset"):
             if sha(studio.asset(scene["asset"]["id"], draft["id"])) != scene["asset_sha256"]: raise WorkError("已确认分镜素材发生变化，请恢复原素材")
@@ -386,7 +441,12 @@ def produce(studio, draft, folder, cues, duration, paid):
         count = sum(s.get("asset", {}).get("provenance", {}).get("generated", False) for s in plan["scenes"])
         scene["asset"] = resolve_scene(scene, ai, sources, count); scene["asset_sha256"] = sha(studio.asset(scene["asset"]["id"], draft["id"]))
         atomic_private(plan_path, plan)
+        if network: write_result(folder, status="searching", message="正在联网搜索并核验相关画面", plan=plan)
+    if network and not any(s.get("asset", {}).get("provenance", {}).get("source") in {"douyin", "pexels"} for s in plan["scenes"]):
+        from backlot.studio_network_materials import MaterialSearchError
+        raise MaterialSearchError("联网素材已开启，但尚未采用相关网络画面；请补充素材或调整检索内容后恢复原任务", "no_materials")
     plan["status"] = "ready"; atomic_private(plan_path, plan)
+    if network: write_result(folder, status="ready", message="相关网络画面已核验，等待合成到成片", plan=plan)
     return plan
 
 
@@ -399,7 +459,7 @@ def compose_motion(studio, draft, folder, video, audio, cues, storyboard, captio
     relay = TrialRelay(studio, folder / "ai-requests")
     compiled_path = folder / "ai-motion-draft.json"
     if compiled_path.exists():
-        compiled = json.loads(compiled_path.read_text())
+        compiled = json.loads(compiled_path.read_text(encoding="utf-8"))
     else:
         contract = {"groups": style["groups"], "scenes": [{"id": s["id"], "text": s["text"], "label": s["label"], "duration": s["end"]-s["start"], "asset_id": s["asset"]["id"], "kind": s["asset"]["kind"],
                     "cue_anchors": [{"index": i, "at": c["startMs"]/1000-s["start"]} for i,c in enumerate(cues) if s["start"] <= c["startMs"]/1000 < s["end"]]} for s in storyboard["scenes"]]}
@@ -435,7 +495,7 @@ def compose_motion(studio, draft, folder, video, audio, cues, storyboard, captio
         compiled = {**draft,"template_id":"avatar-motion-adu-v1","input":{"source":source,"motionLayout":draft["input"]["motion"]["layout"],"style":style["id"],"segments":normalized,"music":{"mode":"none"},"captions":[{"start":c["startMs"]/1000,"end":c["endMs"]/1000,"text":c["text"]} for c in display_cues],"face":{"mode":"auto"},"subtitleBottom":.18,"selectionMode":"fixed"}}
         atomic_private(compiled_path,compiled)
     native_plan = folder / "ai-motion-plan.json"
-    p = json.loads(native_plan.read_text()) if native_plan.exists() else plan(studio,compiled)
+    p = json.loads(native_plan.read_text(encoding="utf-8")) if native_plan.exists() else plan(studio,compiled)
     atomic_private(native_plan,p)
     if not p["report"]["ready"]: raise WorkError("动效模板动作或素材绑定未通过，原分镜/母版已保留，请复核制作报告")
     return run_motion(studio.projects_root/draft["id"], freeze(studio,compiled,p["id"],True))
@@ -446,6 +506,13 @@ def crawler_config(studio, output):
     if str(root / "src") not in sys.path: sys.path.insert(0,str(root / "src"))
     from douyin_intelligence.config import load_config
     c = configuration(studio); config = load_config()
+    try:
+        account_id, credential_store, _ = download_account(studio)
+        if account_id is None:
+            raise ValueError("no selected download account")
+        credential_store.read_cookies("douyin", account_id)
+    except Exception:
+        raise WorkError("请先在素材下载账号中选择已验证的抖音账号，再继续采集；也可明确跳过抖音", "unavailable") from None
     crawler = Path(c.get("crawler_root",root / "third_party/MediaCrawler"))
     python = crawler / ".venv" / ("Scripts/python.exe" if os.name == "nt" else "bin/python")
     if not (crawler / "main.py").is_file() or not python.is_file(): raise WorkError("MediaCrawler或其独立环境尚未安装，请联系管理员或明确跳过抖音", "unavailable")
@@ -456,6 +523,12 @@ def crawler_config(studio, output):
     config["media_crawler"].update(root=str(crawler),python=str(python),chrome_path=chrome,runs_output=str(output),
         user_data_dir=str(private/"browser-profile"),browser_lease_root=str(private/"leases"),browser_state_path=str(private/"browser-status.json"),
         cdp_port=9923,collection_timeout_seconds=90)
+    config["media_crawler"]["download_account_id"] = account_id
+    from douyin_intelligence.download_credentials_adapter import download_collection_config
+    try:
+        config = download_collection_config(config)
+    except Exception:
+        raise WorkError("该下载账号的浏览器或代理配置暂不受素材采集器支持，请使用其他已验证账号", "unavailable") from None
     config["jobs"]["material_replication"]["search"]["publish_time_type"]=0
     return config
 

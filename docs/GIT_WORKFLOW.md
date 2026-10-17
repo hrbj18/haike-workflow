@@ -1,6 +1,6 @@
 # 海客科技 · Git项目管理
 
-2026-10-13。视频工作台和收费中转站统一在私有仓库 [vincent841218449/haike-workflow](https://github.com/vincent841218449/haike-workflow) 管理，原上游导入提交保留。
+2026-10-17。用户确认视频工作台和收费中转站在 [hrbj18/haike-workflow](https://github.com/hrbj18/haike-workflow) 管理，保留仓库公开可见性和原提交历史。本次只上传新版独立分支，保留旧版标签，不合并 `main`、不打包。
 
 | 目录 | 管理对象 |
 |---|---|
@@ -10,18 +10,19 @@
 | `creatorhub/` | 发布、账号连接及调度 |
 | `docs/`、`.taskmaster/tasks/` | 设计、验收、部署及迭代任务 |
 
-本机 `origin` 是自己的私有仓库；`upstream` 是原 `hrbj18/haike-workflow`。新克隆默认只有origin，需要时用 `git remote add upstream https://github.com/hrbj18/haike-workflow.git` 添加上游。只在明确需要同步时读取上游，不把自己的中转站代码推送到上游。ADu引擎仍是独立第三方依赖，固定版本见 `PRODUCT_AVATAR_MOTION.md`，不嵌套复制Git元数据。
+本机 `origin` 指向上述仓库；已有 `reference` 是本机参考目录，保留但不作为 GitHub 上传目标。安装和新分支均从明确提交读取，运行时、账号数据与代码分离。ADu引擎仍是独立第三方依赖，固定版本见 `PRODUCT_AVATAR_MOTION.md`，不嵌套复制Git元数据。
 
 ## 分支与提交
 
-- `main`：经过检查的交付基线。
-- `dev`：后续功能集成。
-- `feat/<功能>`、`fix/<问题>`：从dev创建，每个独立修改单独提交，Pull Request合回dev；检查通过、人工验收后将dev合回main并打版本标签。
-- 本次基线标签 `baseline-2026-10-13` 代表已记录的功能及验收范围，不表示所有候选模板和未开通API已商用验收。
+- `main`：本次保留原旧版提交 `05183670edca40483f4d2d212282e4c05c94cc84`。
+- `legacy-before-v2-20261017`：固定上述旧版源码的保留标签。
+- `dev-ybw`：现有集成分支；后续 feature/fix 经 PR 审阅后再合入。
+- `feat/retain-capabilities-ui`：本次新版源码与通用 Agent 教程，不因上传就宣称正式稳定版或新机验收完成。
+- 后续从集成分支建立 `feat/<功能>`、`fix/<问题>`；更新 `main` 和正式版本标签另行授权。
 
 ```sh
-git switch dev
-git pull --ff-only origin dev
+git switch dev-ybw
+git pull --ff-only origin dev-ybw
 git switch -c feat/new-template
 # 修改、运行所属模块检查，再暂存明确的文件
 git add 路径
@@ -30,12 +31,12 @@ git commit -m "Add new avatar template"
 git push -u origin feat/new-template
 ```
 
-通过Pull Request审阅代码和检查结果。不要用force push改写共享main/dev，不把更新上游等同于覆盖本地定制。需要回退功能时用 `git revert <提交>` 产生可追踪的反向提交；资金数据库回退必须按独立备份恢复流程执行，不能跟随代码自动回退。
+通过Pull Request审阅代码和检查结果。不要用force push改写共享分支。需要回退功能时用 `git revert <提交>` 产生可追踪的反向提交；资金数据库回退必须按独立备份恢复流程执行，不能跟随代码自动回退。
 
 ## 新克隆与构建
 
 ```sh
-git clone https://github.com/vincent841218449/haike-workflow.git
+git clone --branch feat/retain-capabilities-ui https://github.com/hrbj18/haike-workflow.git
 cd haike-workflow
 python scripts/check.py
 python scripts/build-studio.py

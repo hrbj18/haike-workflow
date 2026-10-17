@@ -8,7 +8,7 @@ import wave
 from datetime import datetime, timedelta
 from decimal import ROUND_CEILING, Decimal
 
-from . import adapters, commerce, providers
+from . import adapters, commerce, providers, voice_sources, voices
 from .auth import require_key
 from .domain import period_now
 from .store import Problem, audit, canonical, digest, later, now, owned, post, uid
@@ -72,6 +72,20 @@ def upload(store, user_id, kind, data):
 def clean_input(db, user_id, model, value, info=None):
     capability = (info or providers.MODELS[model])["capability"]
     value = dict(value)
+    if capability == "voice_clone":
+        return voices.clean_clone(db, user_id, value)
+    if capability == "image_edit":
+        if (set(value) != {"prompt", "image_file"}
+            or not isinstance(value.get("prompt"), str)
+            or not 1 <= len(value["prompt"]) <= 4000
+            or not isinstance(value.get("image_file"), str)):
+            raise Problem(422, "input_invalid", "精修需要1至4,000字提示词和本人上传的图片编号")
+        if not db.execute(
+            "SELECT id FROM gateway_files WHERE id=? AND user_id=? AND kind='image'",
+            (value["image_file"], user_id),
+        ).fetchone():
+            raise Problem(404, "file_missing", "图片不存在或不属于当前账户")
+        return value, {"tasks": 1}
     if capability == "image":
         if set(value) != {"prompt"} or not isinstance(value.get("prompt"), str) or not 1 <= len(value["prompt"]) <= 4000:
             raise Problem(422, "input_invalid", "插画接口仅接收1至4,000字的prompt，一次生成一张竖屏插画")
@@ -141,7 +155,7 @@ def clean_input(db, user_id, model, value, info=None):
         text = value.get("text")
         maximum = 150 if model == "haike/tencent-tts" else 5000
         if (
-            set(value) != {"text"}
+            (set(value) - ({"text", "voice_id", "speech_rate"} if model in {voices.PRIVATE_MODEL, voices.PUBLIC_MODEL} else {"text"}))
             or not isinstance(text, str)
             or not text.strip()
             or len(text) > maximum
@@ -149,9 +163,11 @@ def clean_input(db, user_id, model, value, info=None):
             raise Problem(422, "input_invalid", f"请输入 1–{maximum} 个字符的配音文本")
         characters = (
             providers.bailian_tts_characters(text)
-            if model == "haike/cosyvoice"
+            if model in {voices.PRIVATE_MODEL, voices.PUBLIC_MODEL}
             else len(text)
         )
+        if model in {voices.PRIVATE_MODEL, voices.PUBLIC_MODEL}:
+            value = voices.clean_tts(db, user_id, model, value, info or providers.MODELS[model])
         return value, {"characters": characters}
     if capability == "assets":
         if (
@@ -223,6 +239,8 @@ def create_quote(store, vault, user, model, inputs, project):
                     "region",
                     "text_model",
                     "image_model",
+                    "refinement_text_model",
+                    "refinement_image_model",
                     "voice",
                     "workflow_id",
                     "workflow_profile",
@@ -234,6 +252,24 @@ def create_quote(store, vault, user, model, inputs, project):
         }
         if model not in providers.MODELS:
             snapshot["provider_config"]["text_model"] = info["target_model"]
+        if info["capability"] == "image_edit":
+            snapshot["provider_config"].setdefault("refinement_text_model", "gpt-5.6")
+            snapshot["provider_config"].setdefault("refinement_image_model", "gpt-image-2")
+        if info["provider"] == "bailian":
+            snapshot["provider_config"]["tts_model"] = info["target_model"]
+        if info["capability"] == "tts" and info["provider"] == "bailian":
+            snapshot["provider_config"]["speech_rate"] = inputs["speech_rate"]
+            if "_voice_upstream" in inputs:
+                snapshot["provider_config"]["voice"] = inputs.pop("_voice_upstream")
+                snapshot["voice_selection"] = inputs.pop("_voice_selection")
+            elif not snapshot["provider_config"].get("voice"):
+                raise Problem(409, "voice_required", "请先选择本账户的私人音色，或切换到公共音色配音")
+        if info["capability"] == "voice_clone":
+            config = vault.load()[info["provider"]]
+            if getattr(store, "public_origin", None) and config.get("clone_staging", "auto") != "oss":
+                snapshot["provider_config"].update(clone_staging="signed_source", source_origin=store.public_origin)
+            else:
+                snapshot["provider_config"].update(clone_staging="oss", **{k: config[k] for k in ("oss_endpoint", "oss_bucket")})
         db.execute(
             "INSERT INTO gateway_quotes VALUES(?,?,?,?,?,?,?,?,?,?,?)",
             (
@@ -268,6 +304,7 @@ def quote_public(row):
         "max_charge_micros": str(row["amount"]),
         "expires_at": row["expires_at"],
         "simulation": False,
+        **({"voice_selection": snapshot["voice_selection"]} if "voice_selection" in snapshot else {}),
     }
 
 
@@ -396,6 +433,10 @@ def public_job(db, job, admin=False):
         and info["capability"] in {"tts", "avatar"},
     }
     item["billing"] = billing_detail(snapshot, usage, job, admin)
+    if "voice_selection" in snapshot:
+        item["voice_selection"] = snapshot["voice_selection"]
+    if info["capability"] == "voice_clone" and not admin:
+        item["upstream_id"] = None
     item["ledger"] = [
         {
             "id": row["id"],
@@ -596,6 +637,8 @@ def finish(db, job, response):
     )
     # Provider overrun is the merchant's risk: customer cannot exceed their frozen quote.
     charge = min(charge, job["hold"])
+    if not failed and info["capability"] == "voice_clone":
+        response = {**response, "result": voices.register_result(db, job, quote, response)}
     post(
         db,
         job["user_id"],
@@ -672,6 +715,7 @@ def execute_one(store, adapter):
         snapshot = json.loads(quote["snapshot"])
         inputs["_model_info"] = snapshot.get("model_info") or providers.MODELS[model]
         inputs["_provider_config"] = snapshot.get("provider_config", {})
+        inputs["_job_id"] = job["id"]
         db.execute(
             "UPDATE gateway_jobs SET status=?,updated_at=? WHERE id=?",
             ("polling" if job["upstream_id"] else "submitting", now(), job["id"]),
@@ -685,6 +729,8 @@ def execute_one(store, adapter):
             )
 
     try:
+        if inputs["_model_info"]["capability"] == "voice_clone" and inputs["_provider_config"].get("clone_staging") == "signed_source" and not job["upstream_id"]:
+            inputs["_source_url"] = voice_sources.issue_url(store, job["id"], inputs["_provider_config"]["source_origin"])
         response = adapter.execute(model, inputs, checkpoint, job["upstream_id"])
         with store.write() as db:
             current = db.execute(

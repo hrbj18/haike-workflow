@@ -83,22 +83,21 @@ async def fetch_channels_self_profile(mgr: BrowserManager, identity: Identity,
 
     返回 (finder info dict, error)。error 语义:
       - ""               已登录(正常拿到资料);
-      - "logged_out"     明确失效(URL 落登录页且没有任何 errCode==0 的业务成功响应);
-      - "unconfirmed"    URL 与业务证据冲突/不足以定案,调用方**不得据此判死**;
-      - "no_profile_data" 逻辑上已登录但没解析出资料。
+      - "unconfirmed"    业务证据冲突/不足以定案,调用方**不得据此判死**。
 
-    判活以业务接口 auth/* 的 errCode 为准:errCode==0 是唯一强证据;URL 落登录页
-    只有在**没有**任何成功响应时才判 logged_out;两条证据冲突时返回 unconfirmed,
-    下游只有 ``logged_out`` 才会把账号写成 ``status=invalid``。"""
+    只有成功 HTTP 响应中明确的业务成功码才允许返回资料。登录页 URL、未知业务
+    错误或没有响应均不足以证明登录态已失效；冲突时返回空资料和 unconfirmed，
+    避免调用方仅凭昵称把账号置为 active，或仅凭瞬时跳转置为 invalid。"""
     result: dict = {}
     error = ""
     api_seen: list = []
     auth_ok = False
+    auth_conflict = False
     auth_last_code = None
     page = await mgr.new_page(identity, block_media)
 
     async def on_response(resp):
-        nonlocal result, auth_ok, auth_last_code
+        nonlocal result, auth_ok, auth_conflict, auth_last_code
         url = resp.url
         is_finder = "mmfinderassistant-bin" in url
         is_auth = AUTH_API in url
@@ -116,10 +115,19 @@ async def fetch_channels_self_profile(mgr: BrowserManager, identity: Identity,
             api_seen.append(f"{resp.status}{code_txt} {p}")
         if not is_auth:
             return
+        if not 200 <= int(resp.status) < 300:
+            auth_conflict = True
+            return
         if code is not None:
             auth_last_code = code
             if channels_auth_code_ok(code):
                 auth_ok = True
+            else:
+                # 非 0 只说明这次业务响应未成功，不能在没有已校准错误码语义时
+                # 将网络/风控/其他业务错误统一当作“账号已登出”。
+                auth_conflict = True
+        if not channels_auth_code_ok(code):
+            return
         d = _dig_data(payload) if isinstance(payload, dict) else {}
         # finder 信息可能在 data.finderUser / data.finder / data 本身
         finder = _rf(d, "finderUser", "finder", "finderInfo", default=None) or d
@@ -141,6 +149,14 @@ async def fetch_channels_self_profile(mgr: BrowserManager, identity: Identity,
     except Exception as e:
         error = f"{e!r}"
     finally:
+        # The health page can close before the 30-second periodic checkpoint.
+        # Capture its tab-scoped session state while the page still exists.
+        checkpoint = getattr(mgr, "snapshot_session", None)
+        if callable(checkpoint) and getattr(page, "context", None) is not None:
+            try:
+                await checkpoint(identity, page.context)
+            except Exception:
+                pass
         try:
             await page.close()
         except Exception:
@@ -148,26 +164,12 @@ async def fetch_channels_self_profile(mgr: BrowserManager, identity: Identity,
 
     if not error:
         login_url = "/login" in final_url or "login.html" in final_url
-        # ⚠️ 方向性说明(R5,只记录不修):下面 `if result:` 优先于 auth_last_code,
-        # 方向是「误活」——极端情况下把未登录当成已登录;它不会造成「掉登录」,
-        # 且改动判定顺序有把健康探针误判成 unconfirmed 的风险,故保持不变。
-        if result:
-            # 拿到资料 ⇒ 业务层必已 errCode==0,视为已登录;URL 被瞬时弹回登录页
-            # 不算数,但证据冲突时不武断判死(unconfirmed 不写 invalid)。
-            error = "unconfirmed" if login_url else ""
-        elif auth_ok:
-            # 见过 errCode==0 但没解析出资料:证据不足以判死。
+        if auth_conflict or login_url or not (auth_ok and result):
             error = "unconfirmed"
-        elif login_url:
-            # URL 落登录页且没有任何 errCode==0 成功响应 ⇒ 明确失效。
-            error = "logged_out"
-        elif has_login_btn is True:
-            # F2:「页面上看得见『登录』」是**弱证据**(SSR 骨架/vue hydrate 前也会
-            # 渲染),单独据此判死会把健康会话写成 status=invalid。降级为
-            # unconfirmed,把结论交给账号体检(auth/* errCode 才是权威)。
-            error = "unconfirmed"
-        else:
-            error = "no_profile_data"
+
+    # 调用方以非空资料作为成功判据，因此任何未确认/异常路径都不能夹带昵称。
+    if error:
+        result = {}
 
     if not result:
         print(f"[channels_self_profile] err={error} final_url={final_url} "
@@ -423,7 +425,14 @@ async def post_channels_comment(mgr: BrowserManager, identity: Identity, object_
     finally:
         try:
             if ctx is not None:
-                await ctx.close()
+                try:
+                    checkpoint = getattr(mgr, "snapshot_session", None)
+                    if callable(checkpoint):
+                        await checkpoint(identity, ctx)
+                except Exception:
+                    pass
+                finally:
+                    await ctx.close()
             else:
                 await page.close()
         except Exception:

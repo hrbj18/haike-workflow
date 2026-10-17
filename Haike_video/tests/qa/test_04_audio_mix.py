@@ -14,7 +14,10 @@ load_env()
 
 from tools.audio.audio_mixer import AudioMixer
 
-OUT = os.path.join(os.path.dirname(__file__), "output")
+_QA_OUTPUT_ROOT = Path(__file__).resolve().parent / "output"
+OUT = str(Path(os.environ.get("HAIKE_QA_OUTPUT_DIR") or _QA_OUTPUT_ROOT).resolve())
+if not Path(OUT).is_relative_to(_QA_OUTPUT_ROOT.resolve()):
+    raise ValueError("QA output override must stay inside tests/qa/output")
 os.makedirs(OUT, exist_ok=True)
 
 # --- Fixture generation (if test_01/test_03 outputs don't exist) ---
@@ -35,7 +38,7 @@ def generate_fixture(path, description, duration=5):
         src = f"anoisesrc=d={duration}:c=pink"
     subprocess.run(
         ["ffmpeg", "-y", "-f", "lavfi", "-i", src, "-ar", "44100", "-ac", "1", path],
-        capture_output=True, check=True,
+        capture_output=True, check=True, timeout=120,
     )
 
 generate_fixture(SPEECH_FILE, "speech/tts fixture", duration=8)
@@ -118,7 +121,7 @@ for name in ["mix_basic.wav", "mix_fades.wav", "mix_ducked.wav", "mix_delayed.wa
     if os.path.exists(path):
         probe = subprocess.run(
             ["ffprobe", "-v", "quiet", "-print_format", "json", "-show_format", "-show_streams", path],
-            capture_output=True, text=True,
+            capture_output=True, text=True, encoding="utf-8", check=True, timeout=30,
         )
         info = json.loads(probe.stdout)
         fmt = info.get("format", {})
@@ -133,7 +136,7 @@ for name in ["mix_basic.wav", "mix_fades.wav", "mix_ducked.wav", "mix_delayed.wa
         # Check for clipping via loudnorm stats
         loud = subprocess.run(
             ["ffmpeg", "-i", path, "-af", "loudnorm=print_format=json", "-f", "null", "-"],
-            capture_output=True, text=True,
+            capture_output=True, text=True, encoding="utf-8", check=True, timeout=120,
         )
         # Parse loudnorm JSON from stderr (ffmpeg writes it there)
         stderr = loud.stderr

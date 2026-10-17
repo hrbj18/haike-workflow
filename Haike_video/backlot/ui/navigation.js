@@ -3,13 +3,14 @@ const groups = [
   { label: "创作", items: [["/graphic", "图文视频"], ["/avatar", "数字人口播"]] },
   { label: "管理", items: [["/projects", "我的作品"], ["/calendar", "发布日历"]] },
   { label: "设置", items: [["/settings", "API 设置"]] },
+  { label: "更多制作工具", collapsible: true, items: [["/legacy/projects", "项目工作台"], ["/material-library", "素材库"]] },
 ];
 let sidebar;
 
 function activeRoute(path) {
   if (path.startsWith("/ui/avatar-generator")) return "/avatar";
   if (path === "/") return "/graphic";
-  if (path.startsWith("/p/") || path === "/works") return "/projects";
+  if (path.startsWith("/p/")) return "/legacy/projects";
   return groups.flatMap(group => group.items).find(([route]) =>
     route !== "/" && (path === route || path.startsWith(`${route}/`))
   )?.[0];
@@ -39,11 +40,12 @@ export function getGlobalSidebar({ audioReturn } = {}) {
     nav.className = "global-nav";
     nav.setAttribute("aria-label", "全局工作区");
     for (const group of groups) {
-      const section = document.createElement("div");
+      const section = document.createElement(group.collapsible ? "details" : "div");
       section.className = "global-nav-group";
-      const heading = document.createElement("p");
+      const heading = document.createElement(group.collapsible ? "summary" : "p");
       heading.textContent = group.label;
       section.append(heading);
+      if (group.collapsible && group.items.some(([route]) => location.pathname.startsWith(route))) section.open = true;
       for (const [route, label] of group.items) {
         const link = document.createElement("a");
         link.className = "global-nav-link";

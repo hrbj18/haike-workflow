@@ -16,6 +16,12 @@ from backlot.work_catalog import WorkError, WorkCatalog
 _CALENDAR_LOCK = threading.RLock()
 
 TEMPLATES = [
+    {"id": "avatar-deepblue-n1-v1", "kind": "avatar", "name": "深蓝视窗 N1", "ratio": "9:16", "width": 1080, "height": 1920,
+     "description": "深蓝资讯 · 四种主窗 · 黄白三行标题", "poster": "n1-public-presenter.png",
+     "gallery": [{"src": "n1-public-presenter.png", "label": "主持人模式示例"}, {"src": "n1-public-material.png", "label": "素材模式示例"},
+                 {"src": "n1-public-screenshot.png", "label": "截图模式示例"}, {"src": "n1-public-data.png", "label": "数据模式示例"}],
+     "sample": "n1-public-sample-v1.mp4",
+     "version": 1, "render_ready": True, "adapter_version": "avatar-deepblue-n1-v1", "layout": {"title_size": 81, "accent": "#ffd602"}},
     {"id": "avatar-motion-adu-v1", "kind": "avatar", "name": "ADu 动效口播", "ratio": "9:16 / 16:9", "width": 1080, "height": 1920,
      "description": "11种风格 · 完整镜头组 · 精确口播时钟", "version": 1, "render_ready": True, "adapter_version": "adu-3.14.0-rc.1", "layout": {"title_size": 60, "accent": "#316dd6"}},
     {"id": "graphic-news-v2", "kind": "graphic", "name": "资讯三景", "ratio": "9:16", "width": 1080, "height": 1920, "duration": 9,
@@ -28,7 +34,7 @@ TEMPLATES = [
      "description": "圆框人物 · 全宽素材带", "poster": "template2-layout.png", "version": 2, "render_ready": True, "adapter_version": "studio-avatar-v1",
      "layout": {"title_size": 60, "accent": "#316dd6"}},
     {"id": "avatar-template3-card-3x4-v001", "kind": "avatar", "name": "模板3 · 卡片讲解", "ratio": "3:4", "width": 1080, "height": 1440,
-     "description": "白色卡片 · 章节讲解", "poster": "template3-poster.png", "sample": "template3-sample.mp4", "version": 1, "render_ready": True, "adapter_version": "studio-avatar-v1",
+     "description": "白色卡片 · 章节讲解", "poster": "template3-layout.svg", "version": 1, "render_ready": True, "adapter_version": "studio-avatar-v1",
      "layout": {"title_size": 60, "accent": "#316dd6"}},
 ]
 
@@ -87,13 +93,26 @@ class Studio:
 
     def settings(self):
         c = self.configuration(); key = c.get("api_key", "")
+        from backlot.studio_services import audio_mode, service_mode
+        mode = service_mode(self)
         return {"base_url": c.get("base_url", "https://8.138.207.71:17894/v2"), "configured": bool(key),
-                "key_hint": "••••" + key[-4:] if key else "", "checked_at": c.get("checked_at")}
+                "key_hint": "••••" + key[-4:] if key else "", "checked_at": c.get("checked_at"),
+                "service_mode": mode, "audio_service_mode": audio_mode(self),
+                "mode": "internal_local" if mode == "internal" else "gateway"}
 
     def client(self, config=None):
-        c = config or self.configuration()
+        if config is None:
+            from backlot.studio_services import service_mode
+            if service_mode(self) == 'internal':
+                from backlot.studio_internal_gateway import InternalClient
+                return InternalClient(self)
+        c = config if config is not None else self.configuration()
         if not c.get("api_key"): raise WorkError("请先在API设置填写统一海客Key")
-        return sdk_type()(c["base_url"], c["api_key"], self.private / "haike-api/intents")
+        gateway = sdk_type()(c["base_url"], c["api_key"], self.private / "haike-api/intents")
+        if config is not None:
+            return gateway
+        from backlot.studio_gateway_routing import GatewayRoutingClient
+        return GatewayRoutingClient(self, gateway)
 
     def connect(self, data):
         previous = self.configuration()
@@ -106,7 +125,9 @@ class Studio:
         try:
             summary = self.client(c).request("/account/summary")
             capabilities = self.client(c).request("/capabilities")
-        except Exception:
+        except Exception as error:
+            if getattr(error, 'code', '') == 'tls_certificate_invalid':
+                raise WorkError("中转站HTTPS证书校验失败，请管理员续期证书或修复证书链；原配置保持不变") from None
             raise WorkError("连接失败：请核对网关地址、Key和服务状态；原配置保持不变") from None
         c["checked_at"] = timestamp(); atomic_private(self.config_path, c)
         from backlot.studio_asr import status
@@ -118,6 +139,7 @@ class Studio:
         return item
 
     def save_draft(self, data):
+        if "development_sample" in data: raise WorkError("开发样片参数不能从普通制作入口提交")
         template = self.template(data.get("template_id"))
         title = str(data.get("title") or "未命名视频").strip()
         if not 1 <= len(title) <= 120: raise WorkError("标题需要1至120个字")
@@ -140,9 +162,17 @@ class Studio:
                      "template_version": template["version"], "title": title, "text": text, "layout": layout,
                      "input": data.get("input") or {}, "updated_at": timestamp(), "status": "draft"}
             if not isinstance(value["input"], dict): raise WorkError("制作内容格式无效")
-            allowed = {"headlines", "details", "conclusion", "materials", "bgm"} if template["kind"] == "graphic" else {"soundMode", "voiceId", "rate", "subtitles", "audio", "portrait", "ai", "motion"}
+            allowed = {"headlines", "details", "conclusion", "materials", "bgm"} if template["kind"] == "graphic" else {"soundMode", "modelId", "voiceId", "rate", "subtitles", "audio", "portrait", "ai", "motion"}
+            if template["id"] == "avatar-deepblue-n1-v1": allowed |= {"n1"}
             if template["id"] == "avatar-motion-adu-v1":
                 allowed = {"source", "motionLayout", "style", "segments", "music", "captions", "face", "subtitleBottom", "texture", "selectionMode"}
+            if template["kind"] == "avatar":
+                allowed |= {"avatar_defaults_snapshot", "network_materials_enabled"}
+                if "network_materials_enabled" in value["input"] and type(value["input"]["network_materials_enabled"]) is not bool:
+                    raise WorkError("联网素材开关需要明确开启或关闭")
+                if "avatar_defaults_snapshot" in value["input"]:
+                    from backlot.studio_avatar_defaults import validate_snapshot
+                    value["input"]["avatar_defaults_snapshot"] = validate_snapshot(value["input"]["avatar_defaults_snapshot"])
             if set(value["input"]) - allowed: raise WorkError("制作内容包含不支持的字段；API Key只能保存在API设置")
             if len(json.dumps(value)) > (300000 if template["id"] == "avatar-motion-adu-v1" else 60000): raise WorkError("制作内容过大")
             db.execute("INSERT INTO studio_drafts VALUES(?,?,?) ON CONFLICT(id) DO UPDATE SET revision=excluded.revision,data=excluded.data",

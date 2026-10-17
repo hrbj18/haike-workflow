@@ -1,0 +1,24 @@
+{
+  "upstream_protocol_live_test": {
+    "date": "2026-10-16",
+    "engine_version": "1.0.0",
+    "endpoint": "POST /v1/responses",
+    "driver_model": "gpt-5.6",
+    "image_model": "gpt-image-2",
+    "preset_version": "avatar-seated-v1",
+    "result": "succeeded",
+    "action": "edit",
+    "http_submissions": 1,
+    "image_tool_calls": 1,
+    "provider_image_size": [1122, 1402],
+    "normalized_image_size": [1024, 1280],
+    "image_mode": "RGB",
+    "actual_supplier_charge": null,
+    "charge_note": "Supplier did not return a monetary receipt; this does not mean free."
+  },
+  "kit_version": "1.1.0",
+  "kit_changes": "Embedding adapters, explicit confirmation, preset injection, credential change guard, redirect refusal.",
+  "validation_scope": "Offline fake-provider regression plus extracted-archive verification; no repeated paid test.",
+  "private_media_included": false,
+  "credentials_included": false
+}

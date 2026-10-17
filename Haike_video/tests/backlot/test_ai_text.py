@@ -73,7 +73,7 @@ def test_default_text_model_is_gpt_5_6_terra(isolated_ai_config):
     assert config["model"] == "gpt-5.6-luna"
 
 
-def test_ai_config_api_never_returns_plaintext_secret(isolated_ai_config, monkeypatch):
+def test_ai_config_api_never_returns_plaintext_secret(isolated_ai_config, monkeypatch, internal_supplier_mode):
     async def no_watch():
         return None
 
@@ -152,7 +152,7 @@ def test_chat_json_uses_doubao_endpoint_and_model(monkeypatch, isolated_ai_confi
     assert seen["max_tokens"] == 4096
 
 
-def test_doubao_config_api_masks_secret_and_exposes_provider_role(isolated_ai_config, monkeypatch):
+def test_doubao_config_api_masks_secret_and_exposes_provider_role(isolated_ai_config, monkeypatch, internal_supplier_mode):
     async def no_watch():
         return None
 

@@ -61,12 +61,11 @@ search-path change.
 Portability caveat
 ------------------
 
-The 14.4x trio is expected to sit next to the wheels
-(``site-packages/onnxruntime/capi`` and ``site-packages/ctranslate2``).  Where it
-came from a **manual copy it is not recorded in the wheel ``RECORD``**, so a
-reinstall or upgrade of ``onnxruntime`` / ``ctranslate2`` silently wipes it and
-re-introduces the crash.  Set ``DOUYIN_MSVC_RUNTIME_DIR`` to a directory holding
-a complete 14.4x trio to make the preload portable; otherwise
+The managed app-local runtime lives in ``<current venv>/msvc`` so a wheel
+reinstall cannot remove it. ``DOUYIN_MSVC_RUNTIME_DIR`` overrides that location;
+wheel-local copies (``onnxruntime/capi`` and ``ctranslate2``) remain fallbacks.
+A manually copied DLL beside a wheel is not recorded in its ``RECORD``, so a
+reinstall can remove that fallback. Without any complete trio,
 :func:`preload_msvc_runtime` warns (see below) but never fails.
 
 ``douyin_intelligence/__init__.py`` calls :func:`preload_msvc_runtime`, so every
@@ -144,8 +143,9 @@ def runtime_dir_candidates() -> list[Path]:
     Priority:
 
     1. ``DOUYIN_MSVC_RUNTIME_DIR`` -- explicit operator override;
-    2. ``<site-packages>/onnxruntime/capi`` -- the wheel's own directory;
-    3. ``<site-packages>/ctranslate2`` -- the ASR engine's directory.
+    2. ``<current venv>/msvc`` -- managed separately from wheel installations;
+    3. ``<site-packages>/onnxruntime/capi`` -- the wheel's own directory;
+    4. ``<site-packages>/ctranslate2`` -- the ASR engine's directory.
 
     :func:`preload_msvc_runtime` picks the first entry that contains the whole
     ``_RUNTIME_DLLS`` set, so a partial copy in one directory is skipped in
@@ -156,6 +156,8 @@ def runtime_dir_candidates() -> list[Path]:
     override = os.environ.get(_RUNTIME_DIR_ENV)
     if override and override.strip():
         candidates.append(Path(override.strip()))
+
+    candidates.append(Path(sys.prefix) / "msvc")
 
     onnx_dir = _module_dir("onnxruntime")
     if onnx_dir is not None:
@@ -225,8 +227,8 @@ def preload_msvc_runtime(*, force: bool = False) -> bool:
             "若随后 onnxruntime/ctranslate2 报 WinError 1114"
             "（DLL 初始化例程失败）或 native access violation 崩溃，"
             f"请设置环境变量 {_RUNTIME_DIR_ENV} 指向含这三个 DLL 的目录后重试。"
-            "注意：这三个 DLL 通常为手工拷入、不在 wheel RECORD 中，"
-            "重装/升级依赖即会失效，需重新拷入或改用该环境变量。",
+            "wheel 目录中的手工副本可能随依赖重装失效；"
+            "优先安装到当前虚拟环境的 msvc 目录，或使用上述环境变量指定完整运行时。",
             UserWarning,
             stacklevel=2,
         )

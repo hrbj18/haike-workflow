@@ -1,24 +1,19 @@
 # Current status
 
-Updated: 2026-10-12.
+Updated: 2026-10-17.
 
 ## Current task
 
-- `docs/tasks/2026-10-12-monorepo.md`: default config merges ignored local overrides; explicit paths stay isolated. Install/release from workspace root; verification in root docs/VERIFICATION.md.
-- Report delivery remains opt-in/default true across five publish paths; report_doc.py owns format and scripts/build_report_doc.py is its wrapper.
-- Gate: `--check <交付目录>` exits 2 until 二/三/六 lose the TODO marker; batch audit
-  `--all --root output/复刻视频 --since 2026-09-19` exits 2 while any in-scope delivery is short.
-  Effective date 2026-09-19; 34 earlier folders report `legacy`.
-- `_inventory` dedups by `(st_dev, st_ino)`: under `direct_delivery` the `04-原片` entries are hard links
-  to `02/03`, so summing `st_size` double-counted them (`9.19AI巨头冲刺IPO` read 200.1 MiB, not 100.2).
-- 9.19 five are gate-green: 74.2 / 100.2 / 96.0 / 83.5 / 76.8 MiB. Their manifests predate the wiring
-  (no `report_doc` block); confirm it on the next batch.
-- Command: `material-replication run --theme <T> --pool-size <N> --business-date <YYYY-MM-DD>`;
-  disable the host bulk-delete guard first (`src/` never reads it).
+- Guide: 2026-10-17-upload-readiness.md. Test-only network stub preserves cache checks; only second candidate attempted. Offline295 passed; production unchanged.
+- Prior full1259 passed/1 optional artifact skip; see release guide.
+- Verified snapshots feed runner/single download; ID-only argv, per-account profile/port and UA, unsupported proxy blocked. Runtime duration bridge preserves milliseconds without upstream edits; auto media downloads disabled. Cookie login requires fresh self-profile response; CAPTCHA automation blocked. Single script supports current/legacy extractors and size/duration bounds.
+- Default config merges local overrides; explicit paths stay isolated. Root installation/verification: docs/VERIFICATION.md.
+- Delivery reports default on; report_doc.py owns format. `--check` exits2 while 二/三/六 have TODO. Audit output/复刻视频 since2026-09-19; older folders legacy. Manifests include report_doc.
+- `_inventory` counts unique inodes; direct_delivery's 04 hardlinks duplicate 02/03 bytes. Run material-replication with explicit theme/pool-size/business-date; host delete guard is separate from src.
 
 ## Capabilities
 
-- `scripts/download_douyin_mediacrawler.py`: 2026-09-24 real 1080p download/decode passed; workspace Cookie or `--cookies`. Videohub runbook: 下载抖音视频.md.
+- `scripts/download_douyin_mediacrawler.py`: selected verified account/`--account-id`; explicit `--cookies` fallback retained. Account route downloaded/decoded30s and registered through formal library API on2026-10-16.
 
 - Collect Douyin/Bilibili account and keyword metadata; expose heat and delivery rankings on preserved
   raw interaction evidence.
@@ -33,11 +28,7 @@ Updated: 2026-10-12.
 
 - Autonomous daily-news discovery is not a reliable product (2026-09-03: zero strict cards).
 - Douyin is attention evidence, not factual evidence.
-- Script-reference picking ignores freshness: `script_candidate_pool()` filters on heat top 10% and
-  30-300 s only; `replication_script.py` never reads `published_at`. Three 9.19 references were off-topic
-  (a 2023 English song, a 2025 cabin-SoC explainer).
-- The 2026-09-14 batch proved `status=done` + `degraded=false` + correct volume can still mean
-  off-topic or stale content.
+- Script references filter heat top 10%/30–300s, not published_at. Completed/nondegraded volume does not prove relevance or freshness.
 
 ### Residual defects
 
@@ -50,11 +41,9 @@ Updated: 2026-10-12.
 ## Repository evidence
 
 - `third_party/MediaCrawler` is declared in `.gitmodules` but not recorded as a gitlink.
-- Full suite 2026-09-20: 1128 tests, 0 failures.
-- Repo-root data loss (LF-only launchers, 10 files, 3x) is fixed and guarded:
+- Repo-root data loss (LF-only launchers) is fixed and guarded:
   `0341c0e`/`aedcdad`/`47143aa` (RUNTIME_SAFETY).
 
 ## Next direction
 
-- Confirm the next batch's `清单.json` carries a `report_doc` block, then settle defect 4's three open
-  items. Keep news discovery frozen.
+- MC8f583999/Python3.12.8/90 dependencies verified. Robot3 decoded downloads/2 SHA assets: account3,Studio10 candidates/21.85s,legacy/share30s; samples recycled. Gates unchanged, no paid calls/publishing. Evidence: root .local/mediacrawler-live-20261016 and release-regression-20261016; docs/RELEASE_READINESS_20261016.md.

@@ -31,16 +31,20 @@ from tools.cost_tracker import CostTracker, BudgetMode
 from schemas.artifacts import validate_artifact, list_schemas
 from styles.playbook_loader import load_playbook, validate_accessibility
 
-OUT = os.path.join(os.path.dirname(__file__), "output")
+_QA_OUTPUT_ROOT = Path(__file__).resolve().parent / "output"
+OUT = str(Path(os.environ.get("HAIKE_QA_OUTPUT_DIR") or _QA_OUTPUT_ROOT).resolve())
+if not Path(OUT).is_relative_to(_QA_OUTPUT_ROOT.resolve()):
+    raise ValueError("QA output override must stay inside tests/qa/output")
 PIPELINE_DIR = Path(OUT) / "e2e_pipeline"
 PROJECT_ID = "qa_e2e_test"
 ASSETS_DIR = Path(OUT) / "e2e_assets"
 
-# Clean previous run
-if PIPELINE_DIR.exists():
-    shutil.rmtree(PIPELINE_DIR)
-if ASSETS_DIR.exists():
-    shutil.rmtree(ASSETS_DIR)
+# Clean only the two known directories inside this run's verified output root.
+for previous in (PIPELINE_DIR, ASSETS_DIR):
+    if previous.is_symlink() or previous.resolve().parent != Path(OUT):
+        raise ValueError("QA cleanup target escapes this run's output directory")
+    if previous.exists():
+        shutil.rmtree(previous)
 ASSETS_DIR.mkdir(parents=True, exist_ok=True)
 
 PASS = 0
@@ -62,7 +66,7 @@ def ensure_audio(path, duration=5):
         ["ffmpeg", "-y", "-f", "lavfi", "-i",
          f"sine=frequency=440:duration={duration}",
          "-ar", "44100", "-ac", "1", path],
-        capture_output=True, check=True,
+        capture_output=True, check=True, timeout=120,
     )
 
 def ensure_video(path, duration=5, width=1280, height=720, color="blue"):
@@ -75,7 +79,7 @@ def ensure_video(path, duration=5, width=1280, height=720, color="blue"):
          "-c:v", "libx264", "-crf", "23", "-pix_fmt", "yuv420p",
          "-g", "30", "-keyint_min", "30",
          "-c:a", "aac", "-shortest", path],
-        capture_output=True, check=True,
+        capture_output=True, check=True, timeout=120,
     )
 
 # ===================================================================
@@ -359,7 +363,7 @@ for i, (sid, label, start, end, _) in enumerate(SECTIONS):
     subprocess.run(
         ["ffmpeg", "-y", "-f", "lavfi", "-i",
          f"color=c=darkblue:s=1280x720:d=1", "-frames:v", "1", img_path],
-        capture_output=True, check=True,
+        capture_output=True, check=True, timeout=120,
     )
     clean_assets.append({
         "id": f"a_img_{scene_id}",
@@ -476,15 +480,15 @@ mix_output = str(ASSETS_DIR / "final_mix.wav")
 # Combine all narration into one track first
 concat_narration = str(ASSETS_DIR / "narration_concat.wav")
 narration_list = str(ASSETS_DIR / "narration_list.txt")
-with open(narration_list, "w") as f:
+with open(narration_list, "w", encoding="utf-8", newline="\n") as f:
     for sid, _, _, _, _ in SECTIONS:
-        safe = tts_files[sid].replace("\\", "/")
+        safe = tts_files[sid].replace("\\", "/").replace("'", "'\\''")
         f.write(f"file '{safe}'\n")
 
 subprocess.run(
     ["ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", narration_list,
      "-c", "copy", concat_narration],
-    capture_output=True, check=True,
+    capture_output=True, check=True, timeout=120,
 )
 
 mix_result = mixer.execute({
@@ -528,7 +532,7 @@ if os.path.exists(final_video):
     probe = subprocess.run(
         ["ffprobe", "-v", "quiet", "-print_format", "json",
          "-show_format", "-show_streams", final_video],
-        capture_output=True, text=True,
+        capture_output=True, text=True, encoding="utf-8", check=True, timeout=30,
     )
     info = json.loads(probe.stdout)
     fmt = info.get("format", {})

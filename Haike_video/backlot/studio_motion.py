@@ -167,7 +167,7 @@ def owned_value(studio, draft, value, kind):
     path = studio.asset((value.get("asset") or {}).get("id"), draft["id"])
     if kind in {"sequence", "wall-sprites"}:
         if path.name != "bundle.json": raise WorkError("该镜头需要上传序列帧ZIP")
-        path = Path(json.loads(path.read_text())["directory"])
+        path = Path(json.loads(path.read_text(encoding="utf-8"))["directory"])
         if not path.resolve().is_relative_to((studio.projects_root / draft["id"] / "assets/studio").resolve()): raise WorkError("序列素材路径越界")
     elif kind == "image" and path.suffix.lower() not in {".jpg", ".png", ".jpeg"}: raise WorkError("请为图片槽上传图片")
     elif kind == "video" and path.suffix.lower() not in {".mp4", ".mov"}: raise WorkError("请为视频槽上传视频")
@@ -191,7 +191,7 @@ def source_video(studio, draft):
             audio = path.parent / "narration.wav"
             if not audio.is_file():
                 state = path.parent / "gateway-state.json"
-                if state.is_file(): audio = Path(json.loads(state.read_text())["prepared"]["audio_path"])
+                if state.is_file(): audio = Path(json.loads(state.read_text(encoding="utf-8"))["prepared"]["audio_path"])
             return raw, audio if audio.is_file() and audio.resolve().is_relative_to(studio.projects_root.resolve()) else None
         return path, None
     return studio.asset(source.get("id"), draft["id"]), None
@@ -352,9 +352,9 @@ def freeze(studio, draft, plan_id, confirmed):
     if not isinstance(plan_id, str) or not re.fullmatch(r"[a-f0-9]{32}", plan_id): raise WorkError("请先运行生成前检查")
     folder = studio.projects_root / draft["id"] / "assets/motion-plans" / plan_id
     if not (folder / "snapshot.json").is_file(): raise WorkError("检查计划不存在，请重新检查")
-    snapshot = json.loads((folder / "snapshot.json").read_text())
+    snapshot = json.loads((folder / "snapshot.json").read_text(encoding="utf-8"))
     if snapshot["draft"] != draft or sha(folder / "planning/auto_plan.json") != snapshot["plan_sha256"]: raise WorkError("制作内容或计划已改变，请重新检查")
-    saved = json.loads((folder / "planning/auto_plan.json").read_text())
+    saved = json.loads((folder / "planning/auto_plan.json").read_text(encoding="utf-8"))
     if not saved["report"]["ready"]: raise WorkError("分镜仍缺少绑定或受阻，请补齐后重新检查")
     if sha(Path(snapshot["video"])) != snapshot["video_sha256"] or (snapshot["audio"] and sha(Path(snapshot["audio"])) != snapshot["audio_sha256"]): raise WorkError("口播来源已改变，请重新检查")
     return {"draft": draft, "plan_id": plan_id, "plan_folder": str(folder), "snapshot": snapshot, "render_id": "studio-" + str(draft["revision"])}
@@ -378,7 +378,7 @@ def run_motion(project_dir, request):
             args = [ffmpeg, "-v", "error", "-i", str(video), "-i", checked["snapshot"]["audio"], "-map", "0:v:0", "-map", "1:a:0", "-c:v", "copy", "-c:a", "aac", str(aligned)]
             subprocess.run(args, check=True, capture_output=True, timeout=90); video = aligned
         engineering = attempt / "engineering"
-        saved=json.loads((folder / "planning/auto_plan.json").read_text())
+        saved=json.loads((folder / "planning/auto_plan.json").read_text(encoding="utf-8"))
         if saved['schema']=='haike-adu-quick-plan/1':
             from backlot.studio_motion_quick import build
             # Recompute adapter output, so flags in an edited plan are never authority.
@@ -393,7 +393,7 @@ def run_motion(project_dir, request):
         candidate = attempt / "motion-preview.mp4"
         command("render", engineering, candidate, "2", timeout=3600, log=attempt / "render.log")
         command("check", candidate, timeout=300, log=attempt / "check.log")
-        info = media_probe(candidate); desired = json.loads((folder / "planning/auto_plan.json").read_text())["report"]["durationFrames"] / 60
+        info = media_probe(candidate); desired = json.loads((folder / "planning/auto_plan.json").read_text(encoding="utf-8"))["report"]["durationFrames"] / 60
         if not info["video"] or not info["audio"] or abs(info["duration"] - desired) > .05: raise WorkError("导出视频与口播时钟不一致，保留工程待处理")
         command("preview", engineering, candidate, attempt / "delivery-preview", timeout=90, log=attempt / "preview.log")
         # A complete editable project: no private Key, queue database or supplier configuration.

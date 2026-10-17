@@ -1,7 +1,10 @@
 """Studio regressions: real local ownership, fake external gateways, no paid calls."""
 import io
+import os
 import json
 from datetime import datetime, timedelta, timezone
+from pathlib import Path
+from types import SimpleNamespace
 from unittest.mock import patch
 import pytest
 from PIL import Image
@@ -42,13 +45,16 @@ def test_key_is_masked_private_and_never_sent_to_changed_host(studio):
     assert 'test-secret' not in str(err.value)
     c=studio.configuration();c['checked_at']='new-time';atomic_private(studio.config_path,c)
     assert key_identity(studio)==original
-    assert studio.config_path.stat().st_mode & 0o777 == 0o600
+    if os.name != 'nt':
+        assert studio.config_path.stat().st_mode & 0o777 == 0o600
+    else:
+        assert studio.config_path.is_file()  # POSIX mode bits are not Windows ACLs.
 
 
 @pytest.fixture
 def work(studio,monkeypatch):
     p=studio.projects_root/'film';p.mkdir(parents=True)
-    (p/'project.json').write_text('{"title":"测试成片"}')
+    (p/'project.json').write_text('{"title":"测试成片"}', encoding='utf-8')
     (p/'video.mp4').write_bytes(b'unit-test-media')
     monkeypatch.setattr('backlot.work_catalog.probe',lambda p:{'duration':9,'width':1080,'height':1920,'has_audio':True})
     c=WorkCatalog(studio.projects_root);w=c.register('film',p/'video.mp4',title='测试成片')
@@ -150,6 +156,7 @@ def test_avatar_lost_confirmation_and_pending_resume_never_create_new_intent(stu
     request={'id':'quote-one','draft':d,'key_identity':key_identity(studio),'render_id':'retry-one',
              'prepared':{'audio_path':str(audio),'audio_file':'audio1','image_file':'image1','duration':3},
              'quotes':{'avatar':{'model':'haike/avatar','max_charge_micros':150}},'max_charge_micros':150}
+    stages=[]
     class Gateway:
         def __init__(self):self.intents={};self.confirm_calls=[];self.polls=0
         def confirm(self,q,maximum,identity):
@@ -159,6 +166,7 @@ def test_avatar_lost_confirmation_and_pending_resume_never_create_new_intent(stu
                 raise TimeoutError('response lost after reservation')
             return self.intents[identity]
         def wait(self,intent,timeout):
+            assert stages[-1] == '生成数字人口播：等待供应商结果'
             self.polls+=1
             return {'id':'job1','status':'pending' if self.polls==1 else 'succeeded','result':{'video_url':'https://supplier.example/video'}}
     gateway=Gateway()
@@ -166,14 +174,16 @@ def test_avatar_lost_confirmation_and_pending_resume_never_create_new_intent(stu
     def compose(out,*args):
         result=out/'avatar-preview.mp4';result.write_bytes(b'test-render');return result
     monkeypatch.setattr('backlot.studio_composition.compose_avatar',compose)
-    assert run_avatar(folder,request,gateway)['retryable']
-    assert run_avatar(folder,request,gateway)['retryable']
-    result=run_avatar(folder,request,gateway)
+    assert run_avatar(folder,request,gateway,progress=stages.append)['retryable']
+    assert run_avatar(folder,request,gateway,progress=stages.append)['retryable']
+    result=run_avatar(folder,request,gateway,progress=stages.append)
     assert result['status']=='completed' and len(gateway.intents)==1
     assert len(set(gateway.confirm_calls))==1 and len(gateway.confirm_calls)==2
     # A further local retry reuses the output source and does not touch paid endpoints.
-    assert run_avatar(folder,request,gateway)['status']=='completed'
+    assert run_avatar(folder,request,gateway,progress=stages.append)['status']=='completed'
     assert gateway.polls==2 and len(gateway.confirm_calls)==2
+    assert stages[-1] == '本地合成成片'
+    assert json.loads((folder/'renders/retry-one/gateway-state.json').read_text(encoding='utf-8'))['progress']['stage'] == stages[-1]
 
 
 def test_quote_budget_and_content_are_frozen(studio):
@@ -194,3 +204,92 @@ def test_api_origin_guard_and_persistent_drafts(studio):
     d=client.post('/api/studio/drafts',json=payload).json()
     assert client.get('/api/studio/drafts/'+d['id']).json()['title']=='测试'
     assert client.post('/api/studio/drafts',json={**d,'revision':0}).status_code==409
+
+
+@pytest.fixture
+def gbk_checkpoint_reads(monkeypatch):
+    """Emulate Windows' legacy default only for this test's checkpoint files."""
+    targets = set()
+    original = Path.read_text
+
+    def read(path, encoding=None, errors=None):
+        if encoding is None and path.resolve() in targets:
+            encoding = "gbk"
+        return original(path, encoding=encoding, errors=errors)
+
+    monkeypatch.setattr(Path, "read_text", read)
+    return targets
+
+
+@pytest.mark.parametrize("route,relative", [
+    ("ai-preview", "assets/ai-preview/{revision}/preview.json"),
+    ("storyboard", "renders/studio-{revision}/storyboard.json"),
+])
+def test_saved_ai_plan_api_reuses_exact_utf8_checkpoint(studio, monkeypatch, gbk_checkpoint_reads, route, relative):
+    draft = make_draft(studio)
+    path = studio.projects_root / draft["id"] / relative.format(revision=draft["revision"])
+    saved = {"status": "ready", "title": "机器人🤖分镜", "scenes": [{"text": "复用原结果，不再生成🚦"}]}
+    atomic_private(path, saved)
+    before = path.read_bytes()
+    gbk_checkpoint_reads.add(path.resolve())
+    monkeypatch.setattr(studio, "client", lambda: pytest.fail("Reading a saved plan must not call a gateway"))
+    app = FastAPI(); app.state.studio = studio; app.include_router(router)
+    with TestClient(app) as client:
+        for _ in range(2):
+            response = client.get(f"/api/studio/drafts/{draft['id']}/{route}")
+            assert response.status_code == 200
+            assert response.json() == {"plan": saved}
+    assert path.read_bytes() == before
+
+
+def test_douyin_candidate_and_skip_authorization_reuse_utf8_checkpoint(studio, monkeypatch, gbk_checkpoint_reads):
+    draft = make_draft(studio)
+    folder = studio.projects_root / draft["id"] / "renders" / f"studio-{draft['revision']}"
+    candidates = folder / "ai-requests/scene-1-candidates.json"
+    item = {"id": "fixture-video", "title": "机器人🤖演示", "author": "中文作者🚦", "source_url": "https://www.douyin.com/video/fixture-video"}
+    atomic_private(candidates, {"items": [item]})
+    before = candidates.read_bytes()
+    decision = folder / "source-decisions.json"
+    gbk_checkpoint_reads.update({candidates.resolve(), decision.resolve()})
+    job = {"id": "original-job", "kind": "studio_avatar", "status": "failed", "frozen_request": {"draft": draft}}
+    retries = []
+
+    def get(identity, *, include_private):
+        assert identity == job["id"] and include_private is True
+        return job
+
+    def retry(identity):
+        assert identity == job["id"]
+        retries.append(identity)
+        job["status"] = "queued"
+        return {"id": identity, "status": "queued"}
+
+    monkeypatch.setattr("backlot.server._ensure_production_queue", lambda _app: SimpleNamespace(get=get, retry=retry))
+    monkeypatch.setattr(studio, "client", lambda: pytest.fail("Local authorization must not call a gateway"))
+    app = FastAPI(); app.state.studio = studio; app.include_router(router)
+    base = f"/api/studio/ai/jobs/{job['id']}"
+    with TestClient(app) as client:
+        for _ in range(2):
+            response = client.get(base + "/douyin-candidates")
+            assert response.status_code == 200 and response.json() == {"items": [item]}
+        assert retries == [] and candidates.read_bytes() == before
+        skipped = client.post(base + "/skip-douyin", json={"confirmed": True})
+        assert skipped.status_code == 200 and skipped.json() == {"id": job["id"], "status": "queued"}
+        saved = json.loads(decision.read_text(encoding="utf-8"))
+        assert saved["skip_douyin"] is True and saved["reason"] == "用户明确跳过抖音，恢复原任务"
+        # Simulate that the same worker paused again, with a Unicode operator note.
+        job["status"] = "failed"
+        saved.update(note="保留原决定🤖", authorized_video_ids=["earlier-video"])
+        atomic_private(decision, saved)
+        unchanged = decision.read_bytes()
+        assert client.post(base + "/authorize-douyin", json={"video_id": item["id"], "rights_confirmed": False}).status_code == 422
+        assert client.post(base + "/authorize-douyin", json={"video_id": "not-a-candidate", "rights_confirmed": True}).status_code == 422
+        assert decision.read_bytes() == unchanged and retries == [job["id"]]
+        authorized = client.post(base + "/authorize-douyin", json={"video_id": item["id"], "rights_confirmed": True})
+        assert authorized.status_code == 200 and authorized.json() == {"id": job["id"], "status": "queued"}
+        updated = json.loads(decision.read_text(encoding="utf-8"))
+        assert updated["authorized_video_ids"] == ["earlier-video", item["id"]]
+        assert updated["note"] == saved["note"] and updated["reason"] == saved["reason"]
+        assert updated["skip_douyin"] is True and updated["confirmed_at"]
+        assert client.post(base + "/authorize-douyin", json={"video_id": item["id"], "rights_confirmed": True}).status_code == 409
+    assert retries == [job["id"], job["id"]] and candidates.read_bytes() == before

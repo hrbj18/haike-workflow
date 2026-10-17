@@ -14,12 +14,6 @@ const assetDialog = document.getElementById("assetDialog");
 const assetForm = document.getElementById("assetForm");
 const imageDialog = document.getElementById("imageDialog");
 const imageForm = document.getElementById("imageForm");
-const aiConfigDialog = document.getElementById("aiConfigDialog");
-const aiConfigForm = document.getElementById("aiConfigForm");
-const aiConfigStatus = document.getElementById("aiConfigStatus");
-const aiConfigTest = document.getElementById("aiConfigTest");
-const doubaoConfigStatus = document.getElementById("doubaoConfigStatus");
-const doubaoConfigTest = document.getElementById("doubaoConfigTest");
 const THEME_KEY = "backlot.theme";
 let currentTheme = document.documentElement.dataset.theme === "light" ? "light" : "dark";
 let uiRevisionStale = false;
@@ -503,47 +497,6 @@ async function globalApi(path, options = {}) {
   const payload = await response.json().catch(() => ({}));
   if (!response.ok) throw new Error(payload.detail || "请求失败");
   return payload;
-}
-
-function paintAIConfigStatus(config, message = "") {
-  aiConfigStatus.className = `ai-config-status${config && config.configured ? " configured" : ""}`;
-  aiConfigStatus.textContent = message || (config && config.configured
-    ? `已配置 · ${config.api_key_masked || "密钥已保存"} · ${config.model}`
-    : "尚未配置文本 AI");
-}
-
-function paintDoubaoConfigStatus(config, message = "") {
-  doubaoConfigStatus.className = `ai-config-status${config && config.configured ? " configured" : ""}`;
-  doubaoConfigStatus.textContent = message || (config && config.configured
-    ? `已配置快报主编 · ${config.api_key_masked || "密钥已保存"} · ${config.model}`
-    : "豆包未配置，选题、写稿与冷审将使用主模型降级");
-}
-
-async function openAIConfig() {
-  aiConfigForm.reset();
-  paintAIConfigStatus(null, "正在读取配置…");
-  paintDoubaoConfigStatus(null, "正在读取配置…");
-  aiConfigDialog.showModal();
-  try {
-    const [config, doubao] = await Promise.all([
-      globalApi("/ai-text/config"), globalApi("/ai-text/doubao/config"),
-    ]);
-    aiConfigForm.elements.base_url.value = config.base_url || "";
-    aiConfigForm.elements.model.value = config.model || "gpt-5.6-luna";
-    aiConfigForm.elements.api_key.placeholder = config.configured
-      ? `已保存 ${config.api_key_masked || "密钥"}，留空不修改`
-      : "请输入 API 密钥";
-    paintAIConfigStatus(config);
-    aiConfigForm.elements.doubao_base_url.value = doubao.base_url || "https://ark.cn-beijing.volces.com/api/v3";
-    aiConfigForm.elements.doubao_model.value = doubao.model || "doubao-seed-2-1-pro-260628";
-    aiConfigForm.elements.doubao_api_key.placeholder = doubao.configured
-      ? `已保存 ${doubao.api_key_masked || "密钥"}，留空不修改`
-      : "请输入豆包 API 密钥；留空则由主模型降级完成选题、写稿与冷审";
-    paintDoubaoConfigStatus(doubao);
-  } catch (error) {
-    paintAIConfigStatus(null, error.message || "读取配置失败");
-    paintDoubaoConfigStatus(null, error.message || "读取配置失败");
-  }
 }
 
 function status(value) {
@@ -3680,7 +3633,7 @@ async function refreshCurrentSceneNetworkAsset(scene, instruction = "") {
 }
 
 function openAudioCenter() {
-  location.assign(`/audio?return=${encodeURIComponent(`/p/${projectId}`)}`);
+  location.assign(`/settings?panel=audio&return=${encodeURIComponent(`/p/${projectId}`)}`);
 }
 
 async function startProjectNarration() {
@@ -4314,15 +4267,15 @@ function renderTopbar() {
   const taskCenterButton = button(taskCenterButtonLabel(), "quiet", () => { taskCenterOpen = !taskCenterOpen; if (taskCenterOpen) trackTaskCenter(); render(); });
   taskCenterButton.dataset.taskCenterButton = "";
   return el("div", { class: "topbar-wrap" }, el("header", { class: "topbar" },
-    el("div", { class: "project-heading" }, el("p", { class: "eyebrow" }, "项目总览 / 中文 AI 视频审核台"), el("h2", {}, project.title)),
+    el("div", { class: "project-heading" }, el("p", { class: "eyebrow" }, "项目工作台"), el("h2", {}, project.title)),
     el("div", { class: "top-actions" },
       el("span", { class: "status editable" }, stateText),
-      renderThemeToggle(),
+
       !state.persisted ? button("初始化并保存", "primary", () => mutate("/bootstrap", { method: "POST" }, "工作台已初始化")) : null,
       taskCenterButton,
-      button("AI 配置", "quiet", openAIConfig),
+      el("a", { class: "button quiet", href: "/settings" }, "API 设置"),
       button("刷新", "quiet", refresh),
-      el("a", { class: "button quiet", href: `/p/${encodedProjectId}/board` }, "旧版看板"),
+      renderThemeToggle(),
     ),
   ), taskCenterOpen ? renderTaskCenterIsland() : null);
 }
@@ -5142,7 +5095,7 @@ function renderLocalMaterialPreparationCard() {
 function renderProjectLaunchpad() {
   const intake = state.project.intake || {};
   const action = state.persisted
-    ? el("a", { class: "button quiet", href: "/" }, "返回项目库")
+    ? el("a", { class: "button quiet", href: "/legacy/projects" }, "返回项目工作台")
     : button("确认并保存工作台", "primary", () => mutate("/bootstrap", { method: "POST" }, "项目工作台已保存"));
   return el("section", { class: "page script-launchpad" },
     pageHeader("脚本工作台", "从一句想法，到可审核脚本", "输入标题和内容，再选择内置大模型的处理方式。", action),
@@ -10157,7 +10110,7 @@ assetForm.addEventListener("submit", async (event) => {
 imageForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   const values = Object.fromEntries(new FormData(imageForm).entries());
-  const summary = `将使用 OpenAI 兼容服务的 gpt-image-2 生成 ${values.n} 张${values.quality === "high" ? "高质量" : values.quality === "low" ? "低质量试样" : "中质量"}图片。该操作可能产生费用，是否继续？`;
+  const summary = `将使用海客图片服务生成 ${values.n} 张${values.quality === "high" ? "高质量" : values.quality === "low" ? "低质量试样" : "中质量"}图片。该操作可能产生费用，是否继续？`;
   if (!window.confirm(summary)) return;
   try {
     state = await api("/openai-images", { method: "POST", body: Object.assign(values, { confirmed: true }) });
@@ -10168,66 +10121,6 @@ imageForm.addEventListener("submit", async (event) => {
     render();
     showToast("AI 图片已生成并登记为稳定素材；请审核后再分配到场景");
   } catch (error) { showToast(error.message || "AI 生图失败", true); }
-});
-
-aiConfigForm.addEventListener("submit", async (event) => {
-  event.preventDefault();
-  const values = Object.fromEntries(new FormData(aiConfigForm).entries());
-  try {
-    // Both providers share one local secret file. Save sequentially so two
-    // concurrent atomic replacements can never race and drop one provider.
-    const config = await globalApi("/ai-text/config", { method: "PUT", body: {
-      base_url: values.base_url, model: values.model, api_key: values.api_key,
-    } });
-    const doubao = await globalApi("/ai-text/doubao/config", { method: "PUT", body: {
-      base_url: values.doubao_base_url, model: values.doubao_model, api_key: values.doubao_api_key,
-    } });
-    aiConfigForm.elements.api_key.value = "";
-    aiConfigForm.elements.api_key.placeholder = `已保存 ${config.api_key_masked || "密钥"}，留空不修改`;
-    paintAIConfigStatus(config, "配置已安全保存；无需重启工作台");
-    aiConfigForm.elements.doubao_api_key.value = "";
-    aiConfigForm.elements.doubao_api_key.placeholder = doubao.configured
-      ? `已保存 ${doubao.api_key_masked || "密钥"}，留空不修改`
-      : "请输入豆包 API 密钥；留空则由主模型降级完成选题、写稿与冷审";
-    paintDoubaoConfigStatus(doubao, doubao.configured ? "豆包快报主编配置已安全保存" : "豆包未配置，将使用主模型降级");
-    showToast("主模型与豆包配置已保存");
-  } catch (error) {
-    paintAIConfigStatus(null, error.message || "保存配置失败");
-    paintDoubaoConfigStatus(null, error.message || "保存配置失败");
-    showToast(error.message || "保存配置失败", true);
-  }
-});
-
-aiConfigTest.addEventListener("click", async () => {
-  aiConfigTest.disabled = true;
-  aiConfigTest.textContent = "正在测试…";
-  try {
-    const result = await globalApi("/ai-text/test", { method: "POST", body: {} });
-    paintAIConfigStatus({ configured: true }, `${result.message} · ${result.model}`);
-    showToast("AI 连接测试通过");
-  } catch (error) {
-    paintAIConfigStatus(null, error.message || "连接测试失败");
-    showToast(error.message || "连接测试失败", true);
-  } finally {
-    aiConfigTest.disabled = false;
-    aiConfigTest.textContent = "测试主模型";
-  }
-});
-
-doubaoConfigTest.addEventListener("click", async () => {
-  doubaoConfigTest.disabled = true;
-  doubaoConfigTest.textContent = "正在测试…";
-  try {
-    const result = await globalApi("/ai-text/doubao/test", { method: "POST", body: {} });
-    paintDoubaoConfigStatus({ configured: true }, `${result.message} · ${result.model}`);
-    showToast("豆包连接测试通过");
-  } catch (error) {
-    paintDoubaoConfigStatus(null, error.message || "豆包连接测试失败");
-    showToast(error.message || "豆包连接测试失败", true);
-  } finally {
-    doubaoConfigTest.disabled = false;
-    doubaoConfigTest.textContent = "测试豆包";
-  }
 });
 
 subscribe(`/api/project/${encodedProjectId}/events`, () => {

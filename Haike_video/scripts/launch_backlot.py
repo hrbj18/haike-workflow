@@ -52,7 +52,7 @@ def _server_interpreter() -> str:
 
 
 def main() -> int:
-    port = os.environ.get("BACKLOT_PORT", "4754")
+    port = os.environ.get("BACKLOT_PORT", "14756")
     log_dir = ROOT / ".backlot" / "logs"
     log_dir.mkdir(parents=True, exist_ok=True)
 

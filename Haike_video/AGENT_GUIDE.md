@@ -1,6 +1,6 @@
 # OpenMontage Agent Fast Router
 
-Read this file first for every request. Scan the repository as needed.
+Read first for every request; scan only as needed.
 
 ## 1. Context routing
 
@@ -13,8 +13,8 @@ Read this file first for every request. Scan the repository as needed.
   - daily technology brief: `docs/handoff/DAILY_TECH_BRIEF.md`
   - GitHub release and cross-machine setup: `docs/handoff/DEPLOYMENT.md`
 - Read `PROJECT_CONTEXT.md` only when deeper architecture or repository conventions are needed.
-- Old task guides and PRDs are historical evidence. Do not treat them as current rules when they conflict with `docs/handoff/`.
-- Do not default-scan `projects/`, `.backlot/daily-runs/`, logs, media, old guides, full Git history, or the whole dirty diff. Inspect only paths needed to answer or change the requested behavior.
+- Old guides/PRDs are historical; current `docs/handoff/` wins conflicts.
+- Inspect only task-relevant paths; do not default-scan projects, logs, media, old guides, full Git history or the whole dirty diff.
 
 After material implementation/state/decision/blocker/next-step changes, update the smallest applicable handoff file and run:
 
@@ -26,6 +26,7 @@ Do not update handoff files for ordinary questions, acknowledgements, or repeate
 
 - Exact call sign **「模板图文视频」** maps to `../Haike-Videohub/agent-runbooks/模板图文视频.md` before type inference; never substitute another production line.
 - 模板3读 `skills/INDEX.md`；其他口播读 `../Haike-Videohub/agent-runbooks/数字人口播视频.md`。
+- Agent 制片（含模糊指令）或续做：读 `docs/CODEX_VIDEO_BATCH.md`；新任务用账号预设、明确参数优先，旧任务复用冻结规格与回执。
 - 素材解说/电影解说/直播切片解说：读 `../Haike-Videohub/agent-runbooks/素材解说视频.md`；素材决定结构，走统一队列。
 - Video analysis: read `../Haike-Videohub/agent-runbooks/视频快速理解与分层分析.md`; start with local overview, deepen by goal. Analysis does not authorize production.
 - Answer, explain, review, or report status: inspect read-only evidence and respond. Do not mutate external state.
@@ -48,11 +49,11 @@ Before a production run:
 5. Use idempotent job identifiers and durable state so retries do not duplicate paid work.
 6. Submit supported parent production through the unified queue (`python -m backlot queue submit ...` or `/api/production-queue/jobs`). Do not call the registered review-preview or full-preview runners directly; the queue is the cross-project execution authority.
 
-Typical stages are: script/source verification, narration or source audio, avatar/video generation, media planning, material acquisition, composition, subtitles, background music, QA, then human review. Audio duration is the master clock; visuals follow audio. Do not stretch speech to fit a visual slot.
+Stages: source/script, audio, avatar, media, composition, captions/music, QA and review. Audio duration is the master clock; visuals follow it. Never stretch speech to fit a slot.
 
 Every used asset must have provenance and a stable ID. Avatar media and main visual media are separate layers: an avatar does not mean a scene has a main visual. Locked or frozen slots must not be overwritten by batch operations. Local replacement must not invalidate unrelated segments.
 
-Preview and final render must share the same timeline, subtitle, avatar geometry, crop, and asset contract. Never publish a formal video automatically; automation may stop at a review-ready preview.
+Preview and final render must share the same timeline, subtitle, avatar geometry, crop, and asset contract. Formal publication requires explicit user authorization for the current accounts, content scope and budget. An authorized agent batch may complete quality checks and publish within that scope without repeated confirmations; otherwise stop at a review-ready preview.
 
 ## 4. Providers, cost, and failures
 

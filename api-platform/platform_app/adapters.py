@@ -47,7 +47,7 @@ class NoRedirect(urllib.request.HTTPRedirectHandler):
         return None
 
 
-def http(url, headers, body=None, raw=None, method=None):
+def http(url, headers, body=None, raw=None, method=None, timeout=120):
     request = urllib.request.Request(
         url,
         data=raw
@@ -60,7 +60,7 @@ def http(url, headers, body=None, raw=None, method=None):
     )
     opener = urllib.request.build_opener(urllib.request.ProxyHandler({}), NoRedirect())
     try:
-        with opener.open(request, timeout=120) as response:
+        with opener.open(request, timeout=timeout) as response:
             value = response.read(16 * 1024 * 1024 + 1)
         if len(value) > 16 * 1024 * 1024:
             raise Uncertain()
@@ -95,6 +95,9 @@ class Adapter:
             raise Rejected()
         config.update(inputs.get("_provider_config", {}))
         if provider == "openai" or provider.startswith("channel/"):
+            if info["capability"] == "image_edit":
+                from .image_refinement import execute
+                return execute(config, inputs, self.file_dir, upstream_id)
             if info["capability"] == "image":
                 result = http(
                     config["base_url"].rstrip("/") + "/images/generations",
@@ -175,12 +178,15 @@ class Adapter:
                 "upstream_id": str(result.get("id", "")),
             }
         if provider == "bailian":
+            if info["capability"] == "voice_clone":
+                from .bailian_voices import execute
+                return execute(config, info, inputs, self.file_dir, checkpoint, upstream_id)
             from dashscope.audio.http_tts.http_speech_synthesizer import (
                 HttpSpeechSynthesizer,
             )
 
             result = HttpSpeechSynthesizer.call(
-                model="cosyvoice-v3.5-flash",
+                model=config.get("tts_model", info["target_model"]),
                 text=inputs["text"],
                 voice=config["voice"],
                 audio_format="wav",
@@ -188,9 +194,13 @@ class Adapter:
                 api_key=config["api_key"],
                 url=config["base_url"],
                 stream=False,
+                rate=config.get("speech_rate", 1.0),
+                enable_ssml=False,
             )
             if result.status_code in {400, 401, 403, 404, 422, 429}:
                 raise Rejected()
+            if result.status_code != 200:
+                raise Uncertain()
             usage = result.usage or {}
             if type(usage.get("characters")) is not int:
                 raise ReceiptMissing(

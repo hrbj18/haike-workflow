@@ -24,6 +24,8 @@ from . import (
     gateway,
     pricing,
     providers,
+    voice_routes,
+    voice_sources,
 )
 from .exports import csv_response
 from .store import Problem, Store, audit, digest, now, owned
@@ -124,11 +126,15 @@ class Reconcile(Input):
 def create_app(db_path=None, worker_enabled=True, testing=False, public_origin=None):
     public_origin = deployment.public_origin(public_origin)
     store = Store(db_path or ROOT / "data" / "platform.sqlite3")
+    store.public_origin = public_origin
+    voice_sources.configure_logging()
     vault = providers.Vault(store.path.parent)
 
     @asynccontextmanager
     async def lifespan(app):
         store.initialize()
+        if public_origin:
+            voice_sources.secret(store)
         if public_origin:
             with store.read() as db:
                 if not db.execute("SELECT id FROM users WHERE role='admin'").fetchone():
@@ -584,6 +590,7 @@ def create_app(db_path=None, worker_enabled=True, testing=False, public_origin=N
     @app.get("/v2/account/summary")
     def summary(user=Depends(api_user)):
         return {
+            "account_id": user["id"],
             "account_name": user["name"],
             "key_id": user["key_id"],
             **domain.wallet(store, user["id"]),
@@ -725,6 +732,7 @@ def create_app(db_path=None, worker_enabled=True, testing=False, public_origin=N
             store, vault, portal_user, admin_user, api_user, idem_key, Registration
         )
     )
+    app.include_router(voice_routes.router(store, vault, api_user, admin_user))
     app.mount("/static", StaticFiles(directory=ROOT / "web"), name="static")
 
     @app.get("/docs", include_in_schema=False)

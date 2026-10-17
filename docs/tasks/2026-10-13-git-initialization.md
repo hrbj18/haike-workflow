@@ -1,5 +1,7 @@
 # Git项目初始化与验收
 
+> 历史记录。用户于2026-10-17确认当前账号为hrbj18，沿用公开仓库hrbj18/haike-workflow；本页旧账号与私有仓库描述不作为当前上传依据，现行入口见根README及docs/GIT_WORKFLOW.md。
+
 2026-10-13，Task Master #12。用户授权将视频工作台与收费中转站纳入Git/GitHub管理。
 
 ## 仓库与范围

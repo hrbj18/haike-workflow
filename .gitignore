@@ -64,3 +64,12 @@ backups/
 *.p12
 *.pfx
 /Haike_video/backlot/ui/avatar-generator/
+# Private N1 previews stay on this machine; public geometry demo is hash-checked.
+!/prototypes/haike-avatar-generator/public/assets/n1-public-sample-v1.mp4
+/prototypes/haike-avatar-generator/public/assets/n1-cover.jpg
+/prototypes/haike-avatar-generator/public/assets/n1-presenter.jpg
+/prototypes/haike-avatar-generator/public/assets/n1-material.jpg
+/prototypes/haike-avatar-generator/public/assets/n1-screenshot.jpg
+/prototypes/haike-avatar-generator/public/assets/n1-data.jpg
+# Unreferenced legacy portrait has no distributable provenance; retain locally.
+/prototypes/haike-avatar-generator/public/assets/presenter.png

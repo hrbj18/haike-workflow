@@ -1,4 +1,5 @@
 import importlib.util
+import hashlib
 import json
 from pathlib import Path
 import subprocess
@@ -17,10 +18,67 @@ def load(name, rel):
 
 check = load('distribution_check', 'scripts/check.py')
 configure = load('distribution_configure', 'scripts/configure.py')
+studio_build = load('distribution_studio_build', 'scripts/build-studio.py')
 sys.path.insert(0, str(ROOT / 'copy_skill/copy_skill-main/src'))
 from douyin_intelligence import config
 
 class DistributionTests(unittest.TestCase):
+    def test_public_demo_exception_requires_exact_path_and_content(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            name = next(iter(check.PUBLIC_MEDIA_SHA256))
+            demo = root / name
+            demo.parent.mkdir(parents=True)
+            content = b'synthetic public geometry fixture'
+            demo.write_bytes(content)
+            with patch.dict(check.PUBLIC_MEDIA_SHA256, {name: hashlib.sha256(content).hexdigest()}, clear=True):
+                self.assertEqual(check.check_paths(root, [name]), [])
+                demo.write_bytes(content + b'changed')
+                self.assertTrue(any('hash mismatch' in item for item in check.check_paths(root, [name])))
+                other = demo.with_name('private-sample.mp4')
+                other.write_bytes(content)
+                self.assertTrue(any('Private/generated' in item for item in check.check_paths(root, [other.relative_to(root).as_posix()])))
+
+    def test_retired_previews_cleanup_is_exact_and_stays_in_checkout(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            destination = root / 'embedded'
+            assets = destination / 'assets'
+            assets.mkdir(parents=True)
+            for name in studio_build.PRIVATE_PREVIEWS:
+                (assets / name).write_bytes(b'private test fixture')
+            retained = assets / 'n1-presenter.svg'
+            retained.write_text('<svg/>', encoding='utf-8')
+            with patch.object(studio_build, 'ROOT', root):
+                studio_build.remove_private_previews(destination)
+                studio_build.remove_private_previews(destination)
+                with self.assertRaises(ValueError):
+                    studio_build.remove_private_previews(root.parent / 'outside-checkout')
+            self.assertTrue(retained.is_file())
+            self.assertFalse(any((assets / name).exists() for name in studio_build.PRIVATE_PREVIEWS))
+
+    def test_retired_previews_cleanup_rejects_directories_and_symlinks(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            assets = root / 'embedded' / 'assets'
+            assets.mkdir(parents=True)
+            target = assets / studio_build.PRIVATE_PREVIEWS[0]
+            target.mkdir()
+            with patch.object(studio_build, 'ROOT', root):
+                with self.assertRaises(ValueError):
+                    studio_build.remove_private_previews(assets.parent)
+            target.rmdir()
+            retained = root / 'retained.txt'
+            retained.write_text('keep', encoding='utf-8')
+            try:
+                target.symlink_to(retained)
+            except OSError as error:
+                self.skipTest(f'Symlink creation unavailable: {error.winerror}')
+            with patch.object(studio_build, 'ROOT', root):
+                with self.assertRaises(ValueError):
+                    studio_build.remove_private_previews(assets.parent)
+            self.assertEqual(retained.read_text(encoding='utf-8'), 'keep')
+
     def test_credentials_and_git_state_are_rejected(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
