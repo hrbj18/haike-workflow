@@ -6,6 +6,7 @@
 - 安装、升级、打包：先读 README.md、docs/DISTRIBUTION.md；便携包按 docs/PORTABLE.md 运行诊断，源码改动完成后运行 scripts/check.py。版本由根 Git 提交统一管理。
 - 一次导入 Keys/服务地址/音色/预设、三平台扫码或判断新账户能力：读 docs/API_KEY_SETUP.md；实际私有配置文档独立留在本机，配置检查与制作发布验收分别记录。
 - 生产端开发、视频生产或理解：先读 Haike_video/AGENTS.md，再按其路由。
+- 新建、修改或审查视频模板：先读 Haike-Videohub/agent-runbooks/视频模板编写标准.md；「数字人口播模板6-招商A」按同名 runbook 执行。
 - 采集端开发：先读 copy_skill/copy_skill-main/AGENTS.md。
 - 发布端开发：先读 creatorhub/AGENTS.md。
 - API收费中转站：先读api-platform/README.md；部署另读api-platform/deploy/README.md，测试使用隔离数据库和假供应商。
@@ -21,4 +22,3 @@
 用户确认的仓库为hrbj18/haike-workflow，保留公开可见性，origin指向它。main为旧交付基线，dev-ybw为现有集成分支；新版上传feat/retain-capabilities-ui并给旧main打保留标签，不合并main。先前源码上传阶段的“不打包”范围已结束，当前另行授权制作干净便携ZIP，交付边界见docs/DISTRIBUTION.md。后续修改从集成分支建立feat/fix分支，通过检查、PR审阅和已授权推送管理迭代。流程见docs/GIT_WORKFLOW.md。
 
 实际14754安装副本与Git源码checkout分离：优先修改版本管理的源码，验收后向明确安装目标同步，不把安装副本的运行数据当作源码。前端用scripts/build-studio.py构建，编译目录被忽略。Git提交与生产部署分开；云端账本和主密钥独立备份，代码回退不自动恢复资金数据库。
-

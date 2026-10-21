@@ -65,7 +65,11 @@ Agent收到“做三条科技视频”等模糊指令时，先读当前账号
 
 N1可另有 `n1` 对象，沿用 `studio_n1.settings`；模板2/3不得携带它。
 支持 `avatar-safe-circle-v1`、`avatar-deepblue-n1-v1`、`avatar-full-width-v2`、
-`avatar-template3-card-3x4-v001`。语速传入供应商；目标时长只是验收目标，
+`avatar-template3-card-3x4-v001`、`avatar-investment-a-v6`（数字人口播模板6-招商A）。招商A可填
+`investment`，字段由 `backlot/studio_investment.py:settings` 校验，包含项目牌、封面、CTA、
+开尾开关及按真实ASR触发的贴纸/信息卡；不得把它传入其他模板。使用前读
+[招商A手册](../../Haike-Videohub/agent-runbooks/数字人口播模板6-招商A.md)的当前验收范围。
+语速传入供应商；目标时长只是验收目标，
 不能据此拉伸声音或添加停顿。模板2标题最多16字、模板3最多36字；N1三行按现有校验。
 `allow_graphic_fallback` 仅记录授权，当前CLI不会自行换图文或绕过结果未知的原付费任务。
 
@@ -164,6 +168,13 @@ Haike_video/.venv/Scripts/python.exe Haike_video/scripts/codex_video_batch.py ad
 `advance` 返回 `ok=false/errors` 且退出码2，不把失败当作完成。已排队等待不是失败。
 可恢复的制作失败需显式 `resume` 原槽位；`advance` 不自行反复 retry。
 暂停和取消继续使用队列原状态；已取消任务不会被假报为正常等待。
+
+用户明确提高预算后，原数字人任务若仅因“后续报价超过总费用上限”停止且尚无数字人调用记录，
+可执行 `budget-amend --spec 原spec.json --evidence 预算授权.json`。授权需包含原batch_id/spec_sha256、
+authorized=true、reason、整批limit_micros与全部items；每项明确slot_id、previous_max_charge_micros、
+max_charge_micros、prior_exposure_micros、authorized_item_limit_micros，含历史敞口后不得超单条/整批授权。
+命令先预检全批，再保存独立授权收据，仅上调原队列顶层上限并续做；原内容规格、音轨、字幕、
+素材和已付费意图保持，同授权重入不会重排运行中任务。已有数字人记录或未知受理则拒绝此路线。
 
 ## 当前 Agent 分析素材与分镜
 

@@ -17,6 +17,21 @@ spec.loader.exec_module(package)
 
 
 class PortablePackageTests(unittest.TestCase):
+    def test_original_template_sounds_require_matching_provenance(self):
+        relative = Path('Haike_video/templates/avatar-investment-a-v6-art-v5/assets/sound')
+        with tempfile.TemporaryDirectory() as folder:
+            source, delivery = Path(folder) / 'source', Path(folder) / 'delivery'
+            sound = self.write(source, str(relative / 'dong.wav'), b'original synthetic fixture')
+            catalog = {'external_samples': [], 'contains_user_portrait_or_voice': False,
+                       'assets': [{'relative_path': 'dong.wav', 'sha256': package.sha256(sound)}]}
+            self.write(delivery, str(relative / 'PROVENANCE.json'), json.dumps(catalog).encode())
+            with patch.object(package, 'ROOT', source):
+                self.assertEqual(package.copy_template_sounds(delivery), 1)
+                self.assertEqual((delivery / relative / 'dong.wav').read_bytes(), sound.read_bytes())
+                sound.write_bytes(b'changed media')
+                with self.assertRaisesRegex(ValueError, 'mismatched'):
+                    package.copy_template_sounds(delivery)
+
     def write(self, root, name, content=b'synthetic fixture'):
         path = root / name
         path.parent.mkdir(parents=True, exist_ok=True)

@@ -32,6 +32,9 @@ def queue_client(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
     _project(projects, "avatar", pipeline_type="avatar-spokesperson")
     monkeypatch.setattr(server_mod, "PROJECTS_DIR", projects)
     monkeypatch.setattr(server_mod, "_summary_cache", {})
+    # Windows can reuse a PID whose old per-test SQLite file still exists.
+    # Bind this fixture's queue to its fresh project sandbox, not that cache.
+    monkeypatch.setattr(server_mod, "_production_queue_db_path", lambda: tmp_path / "production-queue.sqlite3")
 
     async def no_watch() -> None:
         await asyncio.Event().wait()
@@ -257,3 +260,28 @@ def test_pytest_queue_database_never_uses_repository_runtime_state(
 
     assert "openmontage-production-queue-tests" in str(path)
     assert path != server_mod.PROJECTS_DIR.parent / ".backlot" / server_mod.PRODUCTION_QUEUE_DB_NAME
+
+
+def test_budget_amend_api_dispatches_validation_without_retry(queue_client, monkeypatch):
+    from backlot.production_queue import ProductionQueue
+    client, _ = queue_client
+    calls = []
+    payload = {"expected_revision": 9, "previous_max_charge_micros": 4_860_000,
+               "max_charge_micros": 5_860_000, "authorization_evidence": "explicit fixture authorization",
+               "validate_only": True}
+    def amend(self, job_id, **kw):
+        calls.append((job_id, kw))
+        return {"job_id": job_id, "status": "failed", "budget_amendment": {"validated": True}}
+    monkeypatch.setattr(ProductionQueue, "amend_studio_avatar_budget", amend)
+    monkeypatch.setattr(ProductionQueue, "retry", lambda *a: pytest.fail("budget amendment is not a generic retry"))
+    response = client.post("/api/production-queue/jobs/PQ-fixture/budget-amend", json=payload)
+    assert response.status_code == 200
+    assert calls == [("PQ-fixture", payload)]
+
+
+def test_budget_amend_api_rejects_unknown_fields_before_operation(queue_client, monkeypatch):
+    from backlot.production_queue import ProductionQueue
+    client, _ = queue_client
+    monkeypatch.setattr(ProductionQueue, "amend_studio_avatar_budget", lambda *a, **kw: pytest.fail("invalid amendment"))
+    response = client.post("/api/production-queue/jobs/PQ-fixture/budget-amend", json={"max_charge_micros": 6_000_000, "draft": {}})
+    assert response.status_code == 422

@@ -210,16 +210,31 @@ class GatewayRoutingClient:
     def request(
         self, path, body=None, idem=None, raw=None, *, method=None, response_bytes=False
     ):
-        match = re.fullmatch(r"/quotes/((?:iq|ibq)_[a-f0-9]{32})/renew", path)
+        match = re.fullmatch(r"/quotes/([A-Za-z0-9_-]{1,256})/renew", path)
         if match:
-            backend = "internal_asr" if match.group(1).startswith("ibq_") else "internal_audio"
-            route_path = self._quote_path(match.group(1), self._private_backend(backend))
+            identifier = match.group(1)
+            backend = "internal_asr" if identifier.startswith("ibq_") else "internal_audio" if identifier.startswith("iq_") else "gateway"
+            route_path = self._quote_path(identifier, self._private_backend(backend))
             route = records.read_record(route_path)
+            if not route and backend == "gateway":
+                # A gateway quote predating this wrapper has no local route.
+                # Keep that legacy SDK path; do not infer an internal provider.
+                return self.gateway.request(path, body, idem, raw, method=method, response_bytes=response_bytes)
             if not route or route.get("backend") != backend:
                 raise WorkError("没有该报价的原配音服务记录", "missing")
+            frozen = route["quote"]
+            if frozen.get("id") != identifier or frozen.get("backend") != backend or self._backend(frozen.get("model")) != backend:
+                raise WorkError("原报价或服务来源记录不一致，未提交新调用", "conflict")
             value = self._routed_client(backend).request(
                 path, body, idem, raw, method=method, response_bytes=response_bytes
             )
+            # backend is wrapper-owned metadata. Restore it from the original
+            # local route only after the renewed public quote keeps its identity
+            # and frozen cost. Never trust a response to switch providers.
+            if (not isinstance(value, dict) or value.get("backend") not in {None, backend}
+                    or any(value.get(k) != frozen.get(k) for k in (
+                        "id", "model", "operation_id", "price", "quoted_usage", "max_charge_micros"))):
+                raise WorkError("报价续期改变了原费用、模型或服务来源，未提交新调用", "conflict")
             value = {**value, "backend": backend}
             records.write_record(
                 route_path, {"backend": backend, "quote": value}

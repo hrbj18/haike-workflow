@@ -16,6 +16,9 @@ from backlot.work_catalog import WorkError, WorkCatalog
 _CALENDAR_LOCK = threading.RLock()
 
 TEMPLATES = [
+    {"id": "avatar-investment-a-v6", "kind": "avatar", "name": "模板6 · 招商A", "ratio": "9:16", "width": 1080, "height": 1920,
+     "description": "紫蓝霓虹招商 · 全景口播 · 语义重点卡", "poster": "investment-a-v6-layout.svg",
+     "version": 1, "render_ready": True, "adapter_version": "avatar-investment-a-v6", "layout": {"title_size": 80, "accent": "#6924df"}},
     {"id": "avatar-deepblue-n1-v1", "kind": "avatar", "name": "深蓝视窗 N1", "ratio": "9:16", "width": 1080, "height": 1920,
      "description": "深蓝资讯 · 四种主窗 · 黄白三行标题", "poster": "n1-public-presenter.png",
      "gallery": [{"src": "n1-public-presenter.png", "label": "主持人模式示例"}, {"src": "n1-public-material.png", "label": "素材模式示例"},
@@ -164,6 +167,7 @@ class Studio:
             if not isinstance(value["input"], dict): raise WorkError("制作内容格式无效")
             allowed = {"headlines", "details", "conclusion", "materials", "bgm"} if template["kind"] == "graphic" else {"soundMode", "modelId", "voiceId", "rate", "subtitles", "audio", "portrait", "ai", "motion"}
             if template["id"] == "avatar-deepblue-n1-v1": allowed |= {"n1"}
+            if template["id"] == "avatar-investment-a-v6": allowed |= {"investment"}
             if template["id"] == "avatar-motion-adu-v1":
                 allowed = {"source", "motionLayout", "style", "segments", "music", "captions", "face", "subtitleBottom", "texture", "selectionMode"}
             if template["kind"] == "avatar":

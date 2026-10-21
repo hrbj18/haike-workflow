@@ -11,9 +11,11 @@
 
 ## 当前任务入口
 
+- 高质量数字人工作流：读[固定规则](../高质量数字人工作流.md)，本地默认绑定在根 `.local/high-quality-avatar/defaults.json`；本次登记不代表Studio生产切换。
 - 本机继续开发：先读 `CURRENT_STATUS.md`，再按任务选至多一个专题。
 - GitHub 稳定版、分支和跨电脑安装：读 `DEPLOYMENT.md`；克隆后的同事从根目录 `START_HERE.md` 开始。
 - 本机后续功能不得被误报为 GitHub 已发布能力。
+- 数字人模板7的19秒本地开发短样、布局真值与验证范围见[同名手册](../../../Haike-Videohub/agent-runbooks/数字人模板7.md)；工作台全片接入待验证。
 
 ## 更新规则
 

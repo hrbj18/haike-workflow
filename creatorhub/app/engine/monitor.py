@@ -408,13 +408,16 @@ class MonitorEngine:
     @asynccontextmanager
     async def _operation_guard(self, account_id, kind: OperationKind,
                                fallback_key: str = "", operation_target=None):
-        """Serialize by global limit, network exit, then account profile."""
+        """Reserve the account before consuming shared operation capacity."""
         account = operation_target or self._load_account(account_id)
         key = f"acc:{account_id}" if account_id else (fallback_key or "anon")
         lock = self.browser.lock_for(key)
-        async with self._active_sem:
-            async with self.risk.network_guard(account):
-                async with lock:
+        # A manual account window can hold this lock for its whole lifetime.
+        # Waiting for it must not monopolize the network exit or global slots
+        # needed by operations on other accounts.
+        async with lock:
+            async with self._active_sem:
+                async with self.risk.network_guard(account):
                     if account_id and self._load_account(account_id) is None:
                         raise AccountUnavailableError("绑定账号已删除，操作已停止")
                     yield account

@@ -39,7 +39,7 @@ PROVIDERS = {
         'oss_access_key_secret': 'BAILIAN_OSS_ACCESS_KEY_SECRET'},
     'tencent': {'secret_id': 'TENCENT_SECRET_ID', 'secret_key': 'TENCENT_SECRET_KEY',
         'tts_region': 'TENCENT_TTS_REGION', 'asr_region': 'TENCENT_ASR_REGION'},
-    'runninghub': {'api_key': 'RUNNINGHUB_API_KEY', 'base_url': 'RUNNINGHUB_BASE_URL',
+    'runninghub': {'api_key': 'RUNNINGHUB_API_KEY', 'consumer_api_key': 'RUNNINGHUB_CONSUMER_API_KEY', 'base_url': 'RUNNINGHUB_BASE_URL',
         'workflow_id': 'RUNNINGHUB_WORKFLOW_ID', 'workflow_profile': 'RUNNINGHUB_WORKFLOW_PROFILE',
         'workflow_template': 'RUNNINGHUB_WORKFLOW_TEMPLATE'},
     'text-ai': {'api_key': 'OPENAI_API_KEY', 'base_url': 'OPENAI_BASE_URL',
@@ -52,7 +52,7 @@ PROVIDERS = {
         'public_base_url': 'BACKLOT_PUBLIC_BASE_URL', 'media_signing_secret': 'DOUBAO_ASR_MEDIA_SIGNING_SECRET'},
     'pexels': {'api_key': 'PEXELS_API_KEY'}, 'pixabay': {'api_key': 'PIXABAY_API_KEY'},
 }
-SECRET_FIELDS = {'api_key', 'secret_id', 'secret_key', 'oss_access_key_id',
+SECRET_FIELDS = {'api_key', 'consumer_api_key', 'secret_id', 'secret_key', 'oss_access_key_id',
                  'oss_access_key_secret', 'media_signing_secret'}
 TOP = {'schema_version', 'services', 'haike', 'providers', 'ai_relay', 'crawler',
        'asr', 'budget', 'voices', 'avatar_defaults'}

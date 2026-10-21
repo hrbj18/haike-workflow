@@ -1,9 +1,11 @@
 import {N1_TEMPLATE_ID, n1ForSave, validateN1} from './n1-model.js';
+import {INVESTMENT_TEMPLATE_ID, investmentForSave, validateInvestment} from './investment-model.js';
 export const EXAMPLE_TEXT = "海客科技，让创作更简单。一个接口，连接配音、数字人和创作工作流。";
 export const TEMPLATES = [
   { id: "avatar-safe-circle-v1", name: "模板1 · 圆框口播", ratio: "9:16", description: "素材卡片", poster: "template1-layout.png", kind: "布局示意" },
   { id: "avatar-full-width-v2", name: "模板2 · 全宽讲解", ratio: "9:16", description: "全宽素材带", poster: "template2-layout.png", kind: "布局示意" },
   { id: "avatar-template3-card-3x4-v001", name: "模板3 · 卡片讲解", ratio: "3:4", description: "白卡与章节", poster: "template3-layout.svg", kind: "版式示意", previewNote: "白卡与章节版式示意；上传你的人物和声音后生成。" },
+  { id: INVESTMENT_TEMPLATE_ID, name: "模板6 · 招商A", ratio: "9:16", description: "紫蓝霓虹 · 全景口播 · 语义重点卡", poster: "investment-a-v6-layout.svg", kind: "版式示意", previewNote: "紫蓝招商封面、玻璃项目牌、红金贴纸和紫边白字幕。此图是版式示意；生成后使用本期人物、声音与文案。" },
   { id: N1_TEMPLATE_ID, name: "深蓝视窗 N1", ratio: "9:16", description: "深蓝主窗 · 四种画面模式", poster: "n1-public-presenter.png", featured: true, kind: "实际渲染样片 · 无声演示", sample: "n1-public-sample-v1.mp4", sampleNote: "15秒无声开发样片，使用通用几何人物与合成内容，由实际N1组件渲染；不代表口型或有声同步验收。", sampleDownload: "海客科技-深蓝视窗N1-通用无声演示.mp4", previewNote: "四张预览均取自同一实际渲染样片；生成后使用你的人物、声音与内容。", previews: [
     {id: 'presenter', name: '主持人', image: 'n1-public-presenter.png', description: '实际样片帧：通用几何人物在主窗内，下方圆框隐藏。'},
     {id: 'material', name: '素材', image: 'n1-public-material.png', description: '实际样片帧：主窗展示素材，下方圆框保留人物。'},
@@ -13,9 +15,11 @@ export const TEMPLATES = [
 ];
 export function avatarInputForSave(input, aiDefaults = {enabled: false}) {
   const isN1 = input.templateId === N1_TEMPLATE_ID;
+  const investment = input.templateId === INVESTMENT_TEMPLATE_ID;
   return {soundMode: input.soundMode, modelId: input.modelId, voiceId: input.voiceId, rate: input.rate,
     subtitles: input.subtitles, ...(typeof input.network_materials_enabled==='boolean'?{network_materials_enabled:input.network_materials_enabled}:{}), ai: isN1 ? {...aiDefaults, ...input.ai, enabled: false} : input.ai || aiDefaults,
-    motion: isN1 ? null : input.motion || null, ...(isN1 ? {n1: n1ForSave(input.n1)} : {}),
+    motion: isN1 || investment ? null : input.motion || null, ...(isN1 ? {n1: n1ForSave(input.n1)} : {}),
+    ...(investment ? {investment: investmentForSave(input.investment)} : {}),
     ...(input.avatar_defaults_snapshot?{avatar_defaults_snapshot:input.avatar_defaults_snapshot}:{})};
 }
 export const TTS_MODEL_IDS = ['haike/cosyvoice', 'haike/cosyvoice-public', 'haike/internal-tts'];
@@ -60,6 +64,10 @@ export function validateInputs(input, availableVoices) {
   if (input.templateId === N1_TEMPLATE_ID) {
     const issue = validateN1(input.n1, input.soundMode === 'audio' ? Number(input.audio?.duration) : undefined);
     if (issue) return {field: 'n1', message: issue};
+  }
+  if (input.templateId === INVESTMENT_TEMPLATE_ID) {
+    const issue = validateInvestment(input.investment);
+    if (issue) return {field: 'investment', message: issue};
   }
   return null;
 }

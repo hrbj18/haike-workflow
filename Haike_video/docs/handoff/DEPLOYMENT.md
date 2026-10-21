@@ -1,8 +1,11 @@
 # GitHub 与跨电脑部署
 
-更新时间：2026-10-17
+更新时间：2026-10-21
 
 ## 权威入口
+
+- 10/21新增源码交付分支`feat/avatar-template6-zhaoshang-a`，不合并main。便携包从提交导出并重建界面；独立APIKey私有ZIP含海客/原服务两份配置，禁止上传GitHub。简明入口根`使用说明.txt`、`00-install.cmd`；具体交付哈希与诊断保存在本机`.local/release-20261021/`，不把准备过程称为已完成打包。
+- 两条RunningHub路线随源码交付：性价比2094449979141218305仍为默认；V5.3.1高质量2112180419025260546的独立执行器及完整JSON位于`workflows/runninghub-high-quality/`。新任务读取根`scripts/runninghub-workflow.py show`，仅用户明确要求才保存长期Agent偏好；不修改Studio路由/旧任务。普通Studio与高质量统一父队列适配仍待验。公开附件不带私人图/声音/音色。
 
 - 用户确认单仓为`https://github.com/hrbj18/haike-workflow`，保留公开可见性。根README及 `docs/GIT_WORKFLOW.md` 是安装、分支、CI和迭代入口。
 - 新版仅上传`feat/retain-capabilities-ui`；旧main `0518367`以`legacy-before-v2-20261017`标签保留，main不合并。当前已授权另交便携ZIP及独立多Key配置文档；`dev-ybw`为现有集成分支。

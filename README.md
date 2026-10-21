@@ -1,5 +1,7 @@
 # Haike Workflow
 
+最新源码分支：`feat/avatar-template6-zhaoshang-a`（2026-10-21），`main`继续保留旧基线。Windows便携交付按根 `使用说明.txt`：解压安装ZIP与独立私有APIKey ZIP，双击 `00-install.cmd` 选原服务或海客中转站，再双击 `02-start.cmd`。Key包只本地交付，不上传GitHub。两条RunningHub工作流都包含，性价比默认，高质量需明确指定；详情见 `Haike_video/workflows/runninghub-high-quality/README.md`。
+
 海客科技视频工作台与统一API收费中转站的源码仓库。用户确认的仓库为 [hrbj18/haike-workflow](https://github.com/hrbj18/haike-workflow)，保留公开可见性和原提交历史；后续迭代、分支和提交见 [Git管理](docs/GIT_WORKFLOW.md)。本次新版位于 `feat/retain-capabilities-ui`，`main` 保留旧基线；当前另行制作干净便携 ZIP。
 
 **解压便携包后，根目录有 `PACKAGE-MANIFEST.json`：先读[便携包初始化](docs/PORTABLE.md)，用 `01-setup.cmd -ConfigDocument '私有文档绝对路径' -Full` 一次初始化并导入，再运行 `02-start.cmd`。** 包内已有运行时，使用这条入口；后续可用 `03-check.cmd` 诊断。把实际需要的 Keys、服务地址、音色和预设集中到单独的私有配置文档，步骤与三平台扫码见[首次配置说明](docs/API_KEY_SETUP.md)。源码 checkout 按下文“Windows 源码安装”准备环境。保留以下布局：

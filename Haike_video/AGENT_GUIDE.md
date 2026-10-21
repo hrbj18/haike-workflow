@@ -1,10 +1,10 @@
 # OpenMontage Agent Fast Router
 
-Read first for every request; scan only as needed.
+Read first; scan as needed.
 
 ## 1. Context routing
 
-- Ordinary explanation, writing, or advice: this file is enough.
+- Explanation, writing, or advice: this file is enough.
 - Project development, diagnosis, status, planning, or monitoring: additionally read `docs/handoff/README.md` and `docs/handoff/CURRENT_STATUS.md`.
 - Then read at most the relevant topic handoff first:
   - product behavior and invariants: `docs/handoff/PRODUCT_RULES.md`
@@ -12,7 +12,7 @@ Read first for every request; scan only as needed.
   - code and test entrypoints: `docs/handoff/CODE_MAP.md`
   - daily technology brief: `docs/handoff/DAILY_TECH_BRIEF.md`
   - GitHub release and cross-machine setup: `docs/handoff/DEPLOYMENT.md`
-- Read `PROJECT_CONTEXT.md` only when deeper architecture or repository conventions are needed.
+- Read `PROJECT_CONTEXT.md` for deeper architecture or conventions.
 - Old guides/PRDs are historical; current `docs/handoff/` wins conflicts.
 - Inspect only task-relevant paths; do not default-scan projects, logs, media, old guides, full Git history or the whole dirty diff.
 
@@ -24,8 +24,11 @@ Do not update handoff files for ordinary questions, acknowledgements, or repeate
 
 ## 2. Request routing
 
+- 高质量数字人工作流：读 `docs/高质量数字人工作流.md`，优先于通用口播。
+- 新建、修改或审查视频模板：先读 `../Haike-Videohub/agent-runbooks/视频模板编写标准.md`，按骨架、类型扩展与验收量表记录当前范围。
+- 数字人模板7：`../Haike-Videohub/agent-runbooks/数字人模板7.md`。
 - Exact call sign **「模板图文视频」** maps to `../Haike-Videohub/agent-runbooks/模板图文视频.md` before type inference; never substitute another production line.
-- 模板3读 `skills/INDEX.md`；其他口播读 `../Haike-Videohub/agent-runbooks/数字人口播视频.md`。
+- 数字人口播模板6／招商A：读 `../Haike-Videohub/agent-runbooks/数字人口播模板6-招商A.md`；模板3读 `skills/INDEX.md`；其他口播读 `../Haike-Videohub/agent-runbooks/数字人口播视频.md`。
 - Agent 制片（含模糊指令）或续做：读 `docs/CODEX_VIDEO_BATCH.md`；新任务用账号预设、明确参数优先，旧任务复用冻结规格与回执。
 - 素材解说/电影解说/直播切片解说：读 `../Haike-Videohub/agent-runbooks/素材解说视频.md`；素材决定结构，走统一队列。
 - Video analysis: read `../Haike-Videohub/agent-runbooks/视频快速理解与分层分析.md`; start with local overview, deepen by goal. Analysis does not authorize production.
@@ -88,9 +91,9 @@ For daily technology brief rules, always use `docs/handoff/DAILY_TECH_BRIEF.md`.
 - If the user names a skill, or the task clearly matches an available skill, read its `SKILL.md` completely and follow it.
 - Resolve Chinese production call signs through `skills/INDEX.md` before loading a pipeline. Distinguish the two 「复刻」 lines by supplied input; ask only when ambiguous.
 - **「模板图文视频」 is exact:** load its runbook first and require its 9-second/3-scene gate.
-- Route project-specific pipeline, runtime, music, and taste guidance through `skills/INDEX.md`; it points to the authoritative stage and meta skills without expanding this fast router.
+- Use `skills/INDEX.md` for pipeline, runtime, music and taste guidance.
 - For repeated operator tasks such as three-platform publication, start at `../Haike-Videohub/agent-runbooks/README.md`; verify live account and task state before following a recorded procedure.
-- After a real repeated operation, propose evidenced reusable steps, recovery paths, or behavior changes through the Videohub runbook governance. Edit the runbook only when explicitly assigned maintenance; skip proposals when nothing new was learned.
+- Propose new evidence and recovery steps through Videohub governance; edit shared runbooks only with explicit maintenance assignment.
 - Announce skill use and any skill-caused action or pause in commentary.
 - When tools are needed, send a concise commentary update first and keep the user informed during long work.
 - Final responses lead with the outcome, name material files with clickable absolute paths, state what was tested, and call out only genuine remaining risks.

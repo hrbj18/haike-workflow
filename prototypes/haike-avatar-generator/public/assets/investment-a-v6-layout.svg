@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="540" height="960" viewBox="0 0 1080 1920">
+<defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#23104b"/><stop offset=".6" stop-color="#170b38"/><stop offset="1" stop-color="#7b2bb1"/></linearGradient><linearGradient id="gold"><stop stop-color="#ffe76c"/><stop offset="1" stop-color="#ff8e14"/></linearGradient><linearGradient id="title" x2="0" y2="1"><stop stop-color="#fff"/><stop offset=".48" stop-color="#fff"/><stop offset="1" stop-color="#59f8f4"/></linearGradient></defs>
+<rect width="1080" height="1920" fill="url(#bg)"/><circle cx="1000" cy="1000" r="580" fill="#d255f0" opacity=".18"/>
+<g transform="rotate(-5 540 250)"><rect x="68" y="155" width="944" height="130" fill="url(#gold)"/><text x="540" y="243" text-anchor="middle" font-family="Microsoft YaHei,sans-serif" font-size="66" font-weight="900" fill="#291035">海客科技</text></g>
+<g fill="url(#title)" text-anchor="middle" font-family="Microsoft YaHei,sans-serif" font-size="142" font-weight="900"><text x="540" y="525">社区AI新生意</text><text x="540" y="735">全国招商</text></g>
+<rect x="74" y="850" width="932" height="260" fill="#241449" stroke="#59f8f4" stroke-width="3"/><text x="540" y="940" text-anchor="middle" font-family="Microsoft YaHei,sans-serif" font-size="42" fill="#59f8f4">玻璃项目牌 · 语义重点卡</text><text x="540" y="1040" text-anchor="middle" font-family="Microsoft YaHei,sans-serif" font-size="64" font-weight="800" fill="#ffd548">招商合作 · 共创未来</text>
+<g transform="translate(540 1400)"><path d="m0-200 325 155L0 115-325-45Z" fill="#1a246c" stroke="#59f8f4" stroke-width="7"/><path d="M-325-45v85L0 200 325 40v-85L0 115Z" fill="#181545" stroke="#ed63ff" stroke-width="7"/><text y="5" text-anchor="middle" font-family="Arial,sans-serif" font-size="120" font-weight="900" fill="#fff">AI</text></g>
+<text x="540" y="1765" text-anchor="middle" font-family="Microsoft YaHei,sans-serif" font-size="30" fill="#dfc9f7">模板6 · 招商A / 版式示意</text>
+</svg>

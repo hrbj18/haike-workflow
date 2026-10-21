@@ -26,7 +26,8 @@ def enabled(draft):
 
 def needs_clock(draft):
     return (draft["input"].get("subtitles", True)
-            or (draft["input"].get("ai") or {}).get("enabled") or enabled(draft))
+            or (draft["input"].get("ai") or {}).get("enabled") or enabled(draft)
+            or draft.get("template_id") == "avatar-investment-a-v6" and bool((draft["input"].get("investment") or {}).get("emphasis")))
 
 
 def preflight(studio):

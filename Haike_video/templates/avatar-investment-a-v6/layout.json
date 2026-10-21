@@ -1,0 +1,10 @@
+{
+  "canvas": {"width": 1080, "height": 1920, "fps": 30},
+  "palette": {"ink": "#12072d", "purple": "#6924df", "magenta": "#ed63ff", "cyan": "#59f8f4", "gold": "#ffd548", "red": "#ef2b22", "white": "#ffffff"},
+  "portrait": {"left": 0, "top": 240, "width": 1080, "height": 1350, "fit": "contain", "backgroundBlur": 34},
+  "projectBadge": {"left": 568, "top": 96, "width": 448, "height": 136},
+  "emphasis": {"left": 72, "top": 1110, "width": 936, "height": 280, "cardTop": 940, "cardHeight": 490, "fontSize": 106, "maxCards": 3},
+  "caption": {"left": 62, "top": 1470, "width": 956, "fontSize": 61, "lineHeight": 1.36, "maxCharsPerLine": 14, "maxLines": 2, "styleId": "clear-v2", "fontWeight": 700, "color": "#ffffff", "numericColor": "#ffe05a", "strokeWidth": 3, "strokeColor": "#121526", "textShadow": "none"},
+  "cover": {"openingSeconds": 1.2, "closingSeconds": 2.5, "headlineTop": 370, "headlineFontSize": 137},
+  "motion": {"popFrames": 9, "coverFadeFrames": 6, "stickerTiltDegrees": -5}
+}

@@ -37,6 +37,7 @@ media/
 projects/
 renders/
 cache/
+/.cache/
 temp/
 logs/
 dist/
@@ -73,3 +74,5 @@ backups/
 /prototypes/haike-avatar-generator/public/assets/n1-data.jpg
 # Unreferenced legacy portrait has no distributable provenance; retain locally.
 /prototypes/haike-avatar-generator/public/assets/presenter.png
+/Haike_video/workflows/runninghub-high-quality/runs/
+/Haike_video/workflows/runninghub-high-quality/kit.local.json

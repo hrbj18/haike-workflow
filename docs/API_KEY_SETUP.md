@@ -1,5 +1,7 @@
 # API Key 与一次导入配置
 
+简易交付：安装ZIP与APIKey ZIP分别解压，保留并排的 `Haike_videoflow`、`Haike_APIKeys` 文件夹；双击安装目录 `00-install.cmd`，选择原服务或海客中转站，再双击 `02-start.cmd`。APIKey ZIP是用户明确授权的本地私有交付，仅该私有包含实际凭据，禁止上传GitHub；公开源码与安装ZIP继续使用空凭据模板。原服务配置可同时保存海客Key，实际路线由 `services` 决定。
+
 本说明的“一个文档”可以集中填写多个 Key、服务地址和必要设置，由 Agent 一次导入。便携 ZIP 和 Git 中只放空凭据模板；填写真实值后的私有文档单独保存、单独交给用户，在用户本机读取，不放进 ZIP、Git、截图或报告。
 
 完整解压后先准备下面的私有配置文档，再用第 3 节的一条命令初始化并导入。导入只写本机配置、离线检查，不调用付费服务，不克隆音色，不登录或发布平台账号。
@@ -73,7 +75,7 @@
 | haike | base_url、api_key；默认网关 https://8.138.207.71:17894/v2。只在所选路线需要时填写 |
 | providers.bailian | api_key，可选 workspace_id；识别音频存储需要时配置 asr_storage、oss_endpoint、oss_bucket、oss_access_key_id、oss_access_key_secret |
 | providers.tencent | 兼容选填：secret_id、secret_key，可选 asr_region、tts_region；默认百炼路线无需填写 |
-| providers.runninghub | api_key、base_url、workflow_id、workflow_profile、workflow_template；工作流与源码模板需匹配 |
+| providers.runninghub | api_key、可选consumer_api_key、base_url、workflow_id、workflow_profile、workflow_template；默认性价比2094449979141218305，另一消费级Key仅供明确选择的高质量执行器使用，导入不切换默认 |
 | providers.text-ai | 可选兼容路线：api_key、兼容 /v1 的 base_url、model，可选 vision_model；仅明确使用中转时填写，沿用服务实际地址。Agent 分析无需此配置 |
 | providers.doubao-text | api_key、base_url、model，按用户已开通的文本服务填写 |
 | providers.doubao-speech | api_key、voice_type、resource_id，按上游实际音色/资源填写 |

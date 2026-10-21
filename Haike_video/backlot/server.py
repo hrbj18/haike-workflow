@@ -1530,7 +1530,7 @@ def create_app() -> FastAPI:
         action: str,
         payload: dict = Body(default={}),
     ) -> dict:
-        if action not in {"pause", "resume", "cancel", "retry"}:
+        if action not in {"pause", "resume", "cancel", "retry", "budget-amend"}:
             raise HTTPException(status_code=404, detail="未知的生产队列操作")
         queue = _ensure_production_queue(app)
         try:
@@ -1553,8 +1553,13 @@ def create_app() -> FastAPI:
                     )
                 elif job["kind"] not in {"published_remix", "material_commentary", "studio_avatar"}:
                     raise ProductionQueueConflict("全片预览失败请重新建立任务，不能复用旧任务编号")
-            operation = getattr(queue, action)
-            result = await asyncio.to_thread(operation, job_id)
+            if action == "budget-amend":
+                if set(payload) != {"expected_revision", "previous_max_charge_micros", "max_charge_micros", "authorization_evidence", "validate_only"}:
+                    raise ProductionQueueError("预算修订字段不完整或包含未知字段")
+                result = await asyncio.to_thread(queue.amend_studio_avatar_budget, job_id, **payload)
+            else:
+                operation = getattr(queue, action)
+                result = await asyncio.to_thread(operation, job_id)
         except (ReviewPreviewConflict, StaleReviewPreviewWorker, AvatarReviewPreviewConflict, StaleAvatarReviewPreviewWorker, AmbiguousAvatarOperation, ProductionQueueConflict) as exc:
             raise HTTPException(status_code=409, detail=str(exc)) from exc
         except (ReviewPreviewError, AvatarReviewPreviewError, WorkbenchError, ProductionQueueError) as exc:

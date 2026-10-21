@@ -18,7 +18,7 @@ LEGACY_FIELDS = ("portrait_file_id", "voice_id", "speech_rate", "template_id",
                  "target_duration_seconds", "max_charge_micros", "allow_graphic_fallback")
 FIELDS = LEGACY_FIELDS + ("network_materials_enabled",)
 SUPPORTED = tuple(item for item in TEMPLATES if item["kind"] == "avatar"
-                  and item.get("adapter_version") in {"studio-avatar-v1", "avatar-deepblue-n1-v1"})
+                  and item.get("adapter_version") in {"studio-avatar-v1", "avatar-deepblue-n1-v1", "avatar-investment-a-v6"})
 
 
 def _available(voice):

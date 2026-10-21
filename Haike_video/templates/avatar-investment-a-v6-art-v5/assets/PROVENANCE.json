@@ -1,0 +1,15 @@
+{
+  "kind": "generated_decorative_artwork",
+  "created": "2026-10-20",
+  "workflow": "Creative Production advertising directions; configured Responses image-generation relay",
+  "model": "gpt-image-2",
+  "quality": "high",
+  "source_dimensions": [1024, 1536],
+  "rights_scope": "User-authorized project decorative resources; contains no user portrait, voice, account mark or editable Chinese text.",
+  "content_boundary": "Paper architecture and optical materials are illustrative decoration, not photographs of an operating shop or evidence of commercial claims.",
+  "assets": [
+    {"file": "blue-editorial.png", "sha256": "b8eb2b2445435a53e37efc07bef4db3f223600eb0345363aa9b3c7f0012ac7d9"},
+    {"file": "community-showcase.png", "sha256": "b4c180bb73fed6df1b441282678cac84be6d49ca3862967ccbc6d9f4655e1102"},
+    {"file": "optical-cinema.png", "sha256": "8b72be83d6702be6dae1dfee7ab2e30e95c45c828d6abc525c4e678b7e3c7b84"}
+  ]
+}

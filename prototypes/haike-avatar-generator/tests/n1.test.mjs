@@ -37,7 +37,7 @@ test('切回模板1/2/3只保存它们允许的输入，N1配置留在编辑器�
   const n1Payload=avatarInputForSave(current);
   assert.equal(n1Payload.ai.enabled,false);assert.equal(n1Payload.motion,null);
   assert.deepEqual(n1Payload.n1.scenes,n1.scenes);
-  for(const template of TEMPLATES.filter(template=>template.id!==N1_TEMPLATE_ID)){
+  for(const template of TEMPLATES.filter(template=>template.id!==N1_TEMPLATE_ID&&template.id!=='avatar-investment-a-v6')){
     const switched={...current,templateId:template.id,motion:null};
     const payload=JSON.parse(JSON.stringify(avatarInputForSave(switched)));
     assert.ok(!Object.hasOwn(payload,'n1'),template.id);

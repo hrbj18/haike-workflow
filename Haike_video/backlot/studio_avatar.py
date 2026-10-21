@@ -92,6 +92,9 @@ def validate(studio, draft):
     from backlot.studio_n1 import TEMPLATE_ID as N1_TEMPLATE, settings as n1_settings
     if draft["template_id"] == N1_TEMPLATE:
         n1_settings(draft, studio=studio)
+    from backlot.studio_investment import TEMPLATE_ID as INVESTMENT_TEMPLATE, settings as investment_settings
+    if draft["template_id"] == INVESTMENT_TEMPLATE:
+        investment_settings(draft)
     from backlot.studio_storyboard import options, motion_options
     options(studio, draft)
     motion_options(draft)
@@ -110,7 +113,7 @@ def validate(studio, draft):
             raise WorkError("配音语速需要在0.5至2倍之间")
     else: raise WorkError("请选择已有音频或网关配音")
     title = draft["title"]
-    maximum = 120 if value.get("motion") or draft["template_id"] == N1_TEMPLATE else 36 if draft["template_id"].startswith("avatar-template3") else 16
+    maximum = 120 if value.get("motion") or draft["template_id"] in {N1_TEMPLATE, INVESTMENT_TEMPLATE} else 36 if draft["template_id"].startswith("avatar-template3") else 16
     if len(title) > maximum: raise WorkError(f"当前版式标题最多{maximum}字，请在排版配置中缩短")
     composer = Path(__file__).resolve().parents[1] / "remotion-composer/node_modules"
     if not composer.is_dir(): raise WorkError("缺少本地Remotion渲染依赖，尚未提交付费调用")
@@ -312,15 +315,16 @@ def clock_captions(result, duration):
 
 
 def development_captions(request, project_dir, output_dir):
-    """Private queue-only N1 layout sample. Public draft/quote schemas omit this."""
+    """Private queue-only layout sample. Public draft/quote schemas omit this."""
     import wave
     from backlot.studio_n1 import TEMPLATE_ID
+    from backlot.studio_investment import TEMPLATE_ID as INVESTMENT_TEMPLATE
     sample = request["development_sample"]
     draft = request["draft"]
     inputs = draft["input"]
     if (not isinstance(sample, dict) or set(sample) != {"silent", "label", "captions"}
             or sample["silent"] is not True or sample["label"] != "版式与动效演示"
-            or draft["template_id"] != TEMPLATE_ID or inputs.get("soundMode") != "audio"
+            or draft["template_id"] not in {TEMPLATE_ID, INVESTMENT_TEMPLATE} or inputs.get("soundMode") != "audio"
             or inputs.get("subtitles") is not False or inputs.get("ai", {}).get("enabled") or inputs.get("network_materials_enabled")
             or inputs.get("motion") or request.get("quotes") != {}):
         raise WorkError("本地版式样片必须明确无声、禁用AI与识别，并且没有付费报价")
@@ -503,7 +507,7 @@ def run_avatar(project_dir, request, sdk=None, *, progress=None):
                 save()
             else:
                 result = paid("asr", "haike/tencent-asr", {"audio_file": p["audio_file"]})
-            cues = captions(result, p["duration"], max_chars=14 if draft["template_id"] == "avatar-deepblue-n1-v1" else 18)
+            cues = captions(result, p["duration"], max_chars=14 if draft["template_id"] in {"avatar-deepblue-n1-v1", "avatar-investment-a-v6"} else 18)
             clock_cues = clock_captions(result, p["duration"])
             word_clock = any(segment.get("words") for segment in result.get("segments", []))
             caption_timing = ("Whisper word-level" if result.get("provider") == "local-whisper"
@@ -518,6 +522,9 @@ def run_avatar(project_dir, request, sdk=None, *, progress=None):
             if request.get('analysis_mode') == 'agent' and draft['input'].get('ai', {}).get('enabled'):
                 layout_draft = {**draft, 'input': {**draft['input'], 'ai': {**draft['input']['ai'], 'enabled': False}}}
             n1_settings(layout_draft, p["duration"], studio)
+        if draft["template_id"] == "avatar-investment-a-v6":
+            from backlot.studio_investment import settings as investment_settings
+            investment_settings(draft, p["duration"])
         report("编排本期画面与字幕")
         storyboard = produce(studio, draft, output_dir, clock_cues, p["duration"], paid,
                              mode=request.get('analysis_mode', 'relay'), audio_sha256=sha(Path(p['audio_path'])))
@@ -563,7 +570,9 @@ def run_avatar(project_dir, request, sdk=None, *, progress=None):
             if network_enabled(draft) and outcome.get("status") == "completed":
                 outcome.setdefault("result", {})["network_materials"] = write_network_result(output_dir, status="used", message="已将核验通过的网络画面用于成片", plan=storyboard, used=True)
             return outcome
-        output = compose_avatar(output_dir, draft, video, Path(p["audio_path"]), p["duration"], cues if draft["input"].get("subtitles", True) else [], storyboard=storyboard) if storyboard else compose_avatar(output_dir, draft, video, Path(p["audio_path"]), p["duration"], cues)
+        compose_cues = cues if draft["input"].get("subtitles", True) or draft["template_id"] == "avatar-investment-a-v6" else []
+        composition_draft = {**draft, "_illustrative_manual_captions": True} if development else draft
+        output = compose_avatar(output_dir, composition_draft, video, Path(p["audio_path"]), p["duration"], compose_cues, storyboard=storyboard) if storyboard else compose_avatar(output_dir, composition_draft, video, Path(p["audio_path"]), p["duration"], cues)
         report = {"template_id": draft["template_id"], "adapter_version": 1, "sources": [{"path": str(video), "sha256": sha(video)}, {"path": p["audio_path"], "sha256": sha(p["audio_path"])}],
                   "caption_timing": "illustrative_manual" if development else caption_timing, "provider_jobs": [s["job"]["id"] for s in state["stages"].values() if s.get("job")], "human_review": "pending"}
         if development: report["development_sample"] = {"silent": True, "label": "版式与动效演示", "captions": "手工示意，非真实转写", "cloud_calls": 0}

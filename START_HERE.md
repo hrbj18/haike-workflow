@@ -18,6 +18,10 @@
 
 ## 1. 读取入口并确认任务
 
+新数字人任务先运行 `python scripts/runninghub-workflow.py show` 读取Agent工作流偏好。未设置时默认性价比RunningHub `2094449979141218305`；高质量 `2112180419025260546` 的可迁移独立入口见[说明](Haike_video/workflows/runninghub-high-quality/README.md)。本次显式选择只覆盖本次；用户明确要求改长期默认后才运行 `select --workflow economy|high-quality --confirm-default-change`。安装及Key导入不改此偏好，既有任务继续冻结路由。该偏好用于Agent路由，Studio普通口播仍用现有性价比生产入口。
+
+明确说“高质量数字人工作流”时，读取[同名规则](Haike_video/docs/高质量数字人工作流.md)，使用其分段策略和本地侯总默认绑定。
+
 先读根 [AGENTS.md](AGENTS.md)，再读 [Haike_video/AGENTS.md](Haike_video/AGENTS.md) 及其要求的文档。制作流程和当前状态以该入口为准；便携包安装读 [PORTABLE.md](docs/PORTABLE.md)，源码安装读根 [README.md](README.md)。
 
 | 用户任务 | 进入方式 | 本步完成条件 |

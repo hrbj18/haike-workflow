@@ -1,6 +1,6 @@
 # 代码地图
 
-更新时间：2026-10-16
+更新时间：2026-10-19
 
 ## 当前工作台V2
 
@@ -8,7 +8,7 @@
 - 新前端：仓库根prototypes/haike-avatar-generator/src/{StudioApp,App}.jsx；UI构建backlot/ui/avatar-generator；共享navigation.*和haike-brand.css。
 - 路由：/graphic、/avatar、/projects、/calendar、/settings。旧工具GET跳新页；旧独立UI已归档移除。workbench.*保留历史项目维护。
 - 图文：studio_render.py复用scripts/template_video/build_923.py和_paths.py，参数化safe_v2/9秒/三景、资产指纹、文字边界和FFmpeg完整解码。
-- 口播：studio_avatar.py统一Key报价/预算/持久付费意图/ASR时钟；studio_composition.py和templates/studio-avatar-v1参数化三模板。旧模板3基线不修改。
+- 口播：studio_avatar.py/studio_composition.py；招商A：studio_investment*.py、templates/avatar-investment-a-v6*/、scripts/avatar_investment_*.py；v5默认高清，见模板README。
 - AI分镜/素材：studio_storyboard.py赞助中转/严格原文与真实句级时钟/用户→抖音→Pexels→插画/恢复；configure_studio_ai.py后台私有配置。前端AvatarTemplatePicker/AiMaterials/DouyinRecovery共用组件；tests/backlot/test_studio_storyboard.py。
 - 动效：studio_motion.py固定ADu目录/时钟/素材/规划/冻结/导出，studio_motion_quick.py九TPL白名单；Motion.jsx/motion-model.js/motion.css共用ui.jsx和AvatarModeBar。/api/studio/motion/*、drafts/*/motion-{source,plan,job,project}。
 - 原生队列：production_queue.py/production_queue_worker.py；studio_graphic、studio_avatar、studio_motion处理器，所有产物登记作品台账。
@@ -27,7 +27,7 @@
 - 基础媒体：lib/ffmpeg_locator.py、lib/subprocess_window.py；tools/video/{video_compose,hyperframes_compose}.py和tools/audio/audio_mixer.py。
 - 素材管理/证据/互动切割：material_library*.py、material_crop.py、material_interaction*.py；原二剪published_clip_*.py、published_remix*.py，旧独立UI已删除。
 - 外站复刻/研究包：remake_*.py、copy_skill_research_pack.py、research_pack_*.py；每日科技后端daily_*.py保留内部历史依赖。
-- 原完整路径/历史功能地图见LEGACY_CODE_MAP_20261013.md，不把保留后台误认为仍有对应主菜单。
+- 历史入口见LEGACY_CODE_MAP_20261013.md。
 
 ## 验证入口
 

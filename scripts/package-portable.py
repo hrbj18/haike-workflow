@@ -159,6 +159,27 @@ def copy_browser_tree(source, destination):
         shutil.copyfile(file, target)
 
 
+def copy_template_sounds(destination):
+    """Ship only original sounds individually authorized by the tracked provenance."""
+    relative = Path('Haike_video/templates/avatar-investment-a-v6-art-v5/assets/sound')
+    catalog = json.loads((destination / relative / 'PROVENANCE.json').read_text(encoding='utf-8'))
+    if catalog.get('external_samples') or catalog.get('contains_user_portrait_or_voice') is not False:
+        raise ValueError('Template sound provenance is not approved for clean delivery')
+    # Validate the full set before copying anything; never silently ship a partial sound pack.
+    approved = []
+    for asset in catalog['assets']:
+        name = safe_relative(asset['relative_path'])
+        if len(name.parts) != 1 or not str(name).endswith('.wav'):
+            raise ValueError('Invalid template sound path')
+        source = ROOT / relative / str(name)
+        if not source.is_file() or source.is_symlink() or sha256(source) != asset['sha256']:
+            raise ValueError('Missing/mismatched original template sound: ' + str(name))
+        approved.append(source)
+    for source in approved:
+        shutil.copyfile(source, destination / relative / source.name)
+    return len(approved)
+
+
 def stage(args):
     destination = args.stage.resolve()
     if destination.exists():
@@ -173,6 +194,7 @@ def stage(args):
         subprocess.run(['git', 'archive', '--format=zip', '-o', str(archive), 'HEAD'], cwd=ROOT, check=True)
         extract_archive(archive, destination)
     print('Exported committed source: ' + revision, flush=True)
+    copy_template_sounds(destination)
     # Rendering dependencies must match the current source lock exactly.
     with zipfile.ZipFile(args.runtime_archive) as package:
         candidates = [name for name in package.namelist() if name.endswith('/Haike_video/remotion-composer/package-lock.json')]

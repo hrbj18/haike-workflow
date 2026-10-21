@@ -59,6 +59,7 @@ class ProductionQueueWorker:
             "studio_graphic": self._run_studio_graphic,
             "studio_avatar": self._run_studio_avatar,
             "studio_motion": self._run_studio_motion,
+            "studio_investment_recompose": self._run_investment_recompose,
         }
 
     def _run_studio_graphic(self, job):
@@ -74,6 +75,26 @@ class ProductionQueueWorker:
     def _run_studio_motion(self, job):
         from backlot.studio_motion import run_motion
         return run_motion(self._project_dir(job), job["frozen_request"])
+
+    def _run_investment_recompose(self, job):
+        from backlot.studio_investment_style_lab import CONTRACT as STYLE_LAB_CONTRACT
+        if job.get("frozen_request", {}).get("contract") == STYLE_LAB_CONTRACT:
+            from backlot.studio_investment_style_lab import run
+            return run(self.queue, job)
+        from backlot.studio_investment_source_art_v5 import CONTRACT as SOURCE_ART_V5_CONTRACT
+        if job.get("frozen_request", {}).get("contract") == SOURCE_ART_V5_CONTRACT:
+            from backlot.studio_investment_source_art_v5 import run
+            return run(self.queue, job)
+        from backlot.studio_investment_source_art_v4 import CONTRACT as SOURCE_ART_V4_CONTRACT
+        if job.get("frozen_request", {}).get("contract") == SOURCE_ART_V4_CONTRACT:
+            from backlot.studio_investment_source_art_v4 import run
+            return run(self.queue, job)
+        from backlot.studio_investment_source_video import CONTRACT as SOURCE_ART_CONTRACT
+        if job.get("frozen_request", {}).get("contract") == SOURCE_ART_CONTRACT:
+            from backlot.studio_investment_source_video import run
+            return run(self.queue, job)
+        from backlot.studio_investment_recompose import run
+        return run(self.queue, job)
 
     def _project_dir(self, job: dict[str, Any]) -> Path:
         project_dir = (self.projects_root / str(job["project_id"])).resolve()
@@ -205,6 +226,10 @@ class ProductionQueueWorker:
 
     def inspect_parent(self, job: dict[str, Any]) -> dict[str, Any]:
         project_dir = self._project_dir(job)
+        if job["kind"] == "studio_investment_recompose":
+            # Recover through its registered runner so version registration is
+            # completed too; never put this private kind on the generic lane.
+            return {"status": "failed", "stage": "本地重合成中断，保留源素材并恢复原任务", "retryable": True, "safe_resume_point": "local_recompose"}
         if job["kind"] in {"studio_graphic", "studio_avatar", "studio_motion"}:
             filename = {"studio_graphic": "graphic-preview.mp4", "studio_avatar": "avatar-preview.mp4", "studio_motion": "motion-preview.mp4"}[job["kind"]]
             if job["kind"] == "studio_avatar" and job["frozen_request"].get("draft", {}).get("input", {}).get("motion"):
@@ -278,6 +303,13 @@ class ProductionQueueWorker:
         job = self.queue.claim_next(self.worker_id, lease_seconds=self.lease_seconds)
         if job is None:
             return None
+        return self._execute_claimed(job)
+
+    def run_local_recompose(self, job_id: str) -> dict[str, Any]:
+        job = self.queue.claim_local_recompose(job_id, self.worker_id, lease_seconds=self.lease_seconds)
+        return self._execute_claimed(job)
+
+    def _execute_claimed(self, job: dict[str, Any]) -> dict[str, Any]:
         stop = threading.Event()
 
         def renew() -> None:
@@ -303,7 +335,7 @@ class ProductionQueueWorker:
             outcome = handler(job)
             if not isinstance(outcome, dict):
                 raise TypeError("生产执行器没有返回状态合同")
-            if outcome.get("status") == "completed" and (outcome.get("result") or {}).get("output_path"):
+            if job["kind"] != "studio_investment_recompose" and outcome.get("status") == "completed" and (outcome.get("result") or {}).get("output_path"):
                 from backlot.work_ingest import completed
                 try:
                     from backlot.work_catalog import read_json

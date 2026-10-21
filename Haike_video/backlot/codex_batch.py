@@ -17,7 +17,7 @@ import urllib.parse
 import urllib.request
 
 
-TEMPLATES = {"avatar-safe-circle-v1", "avatar-deepblue-n1-v1", "avatar-full-width-v2", "avatar-template3-card-3x4-v001"}
+TEMPLATES = {"avatar-safe-circle-v1", "avatar-deepblue-n1-v1", "avatar-full-width-v2", "avatar-template3-card-3x4-v001", "avatar-investment-a-v6"}
 PLATFORMS = {"douyin", "kuaishou", "shipinhao"}
 SECRET_FIELDS = {"api_key", "apikey", "cookie", "cookies", "authorization", "secret", "secret_key", "access_token", "password", "signed_url"}
 SUBMITTED = {"submitting", "pending", "publishing", "done", "uncertain", "submission_unknown"}
@@ -97,7 +97,7 @@ def validate_spec(raw):
     voice_fields = {"voice_id", "model_id", "speech_rate"}
     slots, topics = set(), set()
     for item in spec["items"]:
-        if not isinstance(item, dict) or not required <= set(item) or set(item) - required - voice_fields - {"audio_path", "n1", "avatar_defaults_snapshot", "network_materials_enabled"}:
+        if not isinstance(item, dict) or not required <= set(item) or set(item) - required - voice_fields - {"audio_path", "n1", "investment", "avatar_defaults_snapshot", "network_materials_enabled"}:
             raise BatchError("制作槽位规格字段不完整或包含未知字段")
         audio_mode = "audio_path" in item
         if audio_mode:
@@ -119,8 +119,8 @@ def validate_spec(raw):
             raise BatchError("槽位或具体事件topic_key重复/为空")
         slots.add(slot); topics.add(topic)
         if item["template_id"] not in TEMPLATES:
-            raise BatchError("本入口仅支持已接入的N1和基础模板1/2/3")
-        if not isinstance(item["title"], str) or not 1 <= len(item["title"].strip()) <= (120 if item["template_id"] == "avatar-deepblue-n1-v1" else 36 if item["template_id"].startswith("avatar-template3") else 16):
+            raise BatchError("本入口仅支持已接入的N1、招商A和基础模板1/2/3")
+        if not isinstance(item["title"], str) or not 1 <= len(item["title"].strip()) <= (120 if item["template_id"] in {"avatar-deepblue-n1-v1", "avatar-investment-a-v6"} else 36 if item["template_id"].startswith("avatar-template3") else 16):
             raise BatchError("标题超过本模板字数限制")
         if not isinstance(item["text"], str) or not 1 <= len(item["text"].strip()) <= 5000:
             raise BatchError("口播稿需要1至5,000字")
@@ -185,6 +185,10 @@ def validate_spec(raw):
                 raise BatchError("n1字段不能进入其他模板")
             from backlot.studio_n1 import settings
             settings({"title": item["title"], "input": {"n1": item["n1"]}})
+        if "investment" in item:
+            if item["template_id"] != "avatar-investment-a-v6": raise BatchError("investment字段不能进入其他模板")
+            from backlot.studio_investment import settings
+            settings({"title": item["title"], "input": {"investment": item["investment"]}})
     if sum(item["max_charge_micros"] for item in spec["items"]) > spec["limit_micros"]:
         raise BatchError("各条保守上限之和超过批次预算；未知/失败不释放额度")
     return spec
@@ -402,6 +406,8 @@ class CodexBatch:
             value["network_materials_enabled"] = item["network_materials_enabled"]
         if "n1" in item:
             value["n1"] = copy.deepcopy(item["n1"])
+        if "investment" in item:
+            value["investment"] = copy.deepcopy(item["investment"])
         if "avatar_defaults_snapshot" in item:
             value["avatar_defaults_snapshot"] = copy.deepcopy(item["avatar_defaults_snapshot"])
         return value
@@ -574,6 +580,9 @@ class CodexBatch:
 
     def status(self, slot=None):
         self._guard()
+        from backlot.codex_batch_budget import effective
+        amendment = effective(self)
+        caps = {r["slot_id"]: r["max_charge_micros"] for r in amendment["items"]} if amendment else {}
         items = []
         for item in self._items(slot):
             task = self._task(item)
@@ -585,16 +594,24 @@ class CodexBatch:
             items.append({"slot_id": item["slot_id"], "task_id": task["id"], "draft_id": self._draft_id(item),
                 "status": task["status"], "stage": task["stage"], "queue": queue,
                 "work_id": task.get("links", {}).get("work_id") or ((job or {}).get("result") or {}).get("work_id"), "quote_id": execution.get("quote_id"),
-                "submission_state": execution.get("submission_state"), "max_charge_micros": item["max_charge_micros"],
+                "submission_state": execution.get("submission_state"), "max_charge_micros": caps.get(item["slot_id"], item["max_charge_micros"]),
                 "summary": task.get("summary", ""), "publication_receipts": copy.deepcopy(execution.get("publication_receipts", [])),
                 "audio_sha256": task.get("facts", {}).get("audio", {}).get("sha256"),
                 "budget": {k: task.get("budget", {}).get(k) for k in ("actual_micros", "reserved_micros", "estimated_micros")}})
         def total(key):
             values = [row["budget"][key] for row in items]
             return sum(values) if len(items) == len(self.spec["items"]) and all(type(v) is int for v in values) else None
-        return {"batch_id": self.spec["batch_id"], "spec_sha256": self.spec_hash, "items": items,
-            "budget": {"limit_micros": self.spec["limit_micros"], "allocated_micros": sum(i["max_charge_micros"] for i in self.spec["items"]),
-                       "actual_micros": total("actual_micros"), "reserved_micros": total("reserved_micros"), "estimated_micros": total("estimated_micros")}}
+        budget = {"limit_micros": amendment["limit_micros"] if amendment else self.spec["limit_micros"],
+                  "allocated_micros": sum(caps.get(i["slot_id"], i["max_charge_micros"]) for i in self.spec["items"]),
+                  "actual_micros": total("actual_micros"), "reserved_micros": total("reserved_micros"), "estimated_micros": total("estimated_micros")}
+        if amendment:
+            budget["prior_exposure_micros"] = sum(r["prior_exposure_micros"] for r in amendment["items"])
+            budget["combined_allocated_micros"] = budget["allocated_micros"] + budget["prior_exposure_micros"]
+        return {"batch_id": self.spec["batch_id"], "spec_sha256": self.spec_hash, "items": items, "budget": budget}
+
+    def amend_budget(self, evidence):
+        from backlot.codex_batch_budget import amend
+        return amend(self, evidence)
 
     def _original_stage_budget(self, item, task):
         """Project only amounts from this slot's frozen render, never raw state.

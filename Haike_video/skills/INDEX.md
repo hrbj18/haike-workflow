@@ -78,6 +78,8 @@ Key capability families to look for in the output:
 
 ## Workflow Call Signs（工作流呼叫名）
 
+新建、修改或审查视频模板时，先读[视频模板编写标准](../../Haike-Videohub/agent-runbooks/视频模板编写标准.md)，再进入对应模板。
+
 A **call sign** is the short name the user says out loud to address an entire production line.
 When the user names one, read the mapped `SKILL.md` **completely and first**, before asking
 clarifying questions or inspecting the repository. Call signs are registered here so both the
@@ -85,6 +87,10 @@ user and the agent resolve the same name to the same line.
 
 | Call sign | User must supply | Engine | Primary instructions | Cost |
 |-----------|------------------|--------|----------------------|------|
+| **高质量数字人工作流** | 本期文案或完整音频；默认侯总图片与侯总音色，可显式覆盖 | InfiniteTalk V5.3.1 独立测试附件；45秒分段续接 | [高质量数字人工作流](../docs/高质量数字人工作流.md) | RunningHub与新增配音按本期授权；正式父视频仍走统一队列 |
+| **数字人模板7 / 数字人口播模板7** | 同钟人物视频、素材、完整音轨、字幕与本期标题/品牌 | 项目原生 Remotion Atelier 开发短样；全片队列适配待验证 | [数字人模板7 runbook](../../Haike-Videohub/agent-runbooks/数字人模板7.md) | 本地复用零新增云调用；新配音/数字人另按报价 |
+| **招商视频模板3至10 / 招商视频模板3…招商视频模板10** | 已测四比例12秒原片、同源真实字幕、四拍标题与声音计划 | 独立 investment-style-lab-v1 合同；原生统一队列、20Mbps，八种视觉系统 | [系列入口及八份runbook](../templates/investment-style-lab-v1/README.md) | 本地复用零云调用；本轮不发布 |
+| **数字人口播模板6 / 数字人口播模板6-招商A / 招商A** | 本期完整口播、授权人物图、已有音色或完整音轨 | Studio 统一队列；全屏人物、霓虹项目牌、重点贴纸和卖点卡 | [招商A runbook](../../Haike-Videohub/agent-runbooks/数字人口播模板6-招商A.md) | 本地版式零；新增配音、ASR、数字人按本期报价与预算 |
 | **数字人口播模板3 / 数字人口播视频模板3 / 数字人口播模板3-卡片式讲解** | 本期口播、人物视频、同源音轨/字幕、章节素材 | 3:4 Remotion Atelier 样片；全片工作台接入待验证 | [卡片式讲解 runbook](../../Haike-Videohub/agent-runbooks/数字人口播模板3-卡片式讲解.md) | 本地复用零新增云调用；新素材生成按供应商计 |
 | **数字人口播视频 / 数字人口播模板** | 本期主题/口播稿、项目人物与配音 | 工作台生产；版本化圆框样板/背景工具 | `../Haike-Videohub/agent-runbooks/数字人口播视频.md` | 本地版式零；新增配音/数字人按供应商计 |
 | **素材解说视频 / 电影解说 / 直播切片解说** (`material-commentary`) | 素材与解说目标；先观察再定叙事 | `/material-commentary`；本地 FFmpeg、统一队列，V1 beta | `../Haike-Videohub/agent-runbooks/素材解说视频.md`；`pipelines/material-commentary/director.md` | 本地取证/合成零；新增 TTS/ASR 按冻结供应商计 |
@@ -99,6 +105,9 @@ Aliases of **窗口复刻** — same line, not a new one: `上下换板` / `夹�
 
 **Disambiguation — resolve by input, never by the word 「复刻」 alone:**
 
+- Explicit **数字人模板7 / 数字人口播模板7** uses its interview-window runbook and local development-sample boundary before generic avatar inference.
+- Explicit **招商视频模板3…10** means the independent investment-style-lab series; do not confuse its numbered styles with the existing avatar-template3 or Template6/招商A contracts. Read its local README and numbered runbook; retain current sample-only gates.
+- Explicit **数字人口播模板6 / 招商A** uses the investment-A runbook and its current validation scope before generic avatar inference.
 - Explicit 「数字人口播模板3」 or 「数字人口播视频模板3」 takes precedence over the generic avatar call sign; use the card-explainer runbook and its verification limits.
 
 - an explicit **模板图文视频** request, with a topic and no reference-video retention requirement → **模板图文视频**; this exact name wins immediately

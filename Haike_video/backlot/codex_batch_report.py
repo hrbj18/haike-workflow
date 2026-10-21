@@ -39,6 +39,9 @@ def write_report(batch, result, *, slot=None):
         queue = row.get("queue") or {}
         lines.append("| " + " | ".join(_text(v) for v in (row["slot_id"], item["title"], row["stage"],
                      f"{queue.get('job_id', '未提交')} / {queue.get('status', '未提交')}", row.get("work_id") or "尚未生成")) + " |")
+    if "prior_exposure_micros" in budget:
+        lines.extend(["", f"历史预留敞口：{_money(budget['prior_exposure_micros'])}；含历史的已分配上限：{_money(budget['combined_allocated_micros'])}。",
+                      "原内容规格保持不变，预算上调依据独立授权收据；历史敞口未释放，以上不是实际结算。"])
     for row in result["items"]:
         item = next(i for i in batch.spec["items"] if i["slot_id"] == row["slot_id"])
         lines.extend(["", "## " + _text(item["title"]), "", _text(row.get("summary") or row["stage"]),
