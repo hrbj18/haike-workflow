@@ -1,0 +1,1231 @@
+{
+  "schema_version": 1,
+  "standard_version": "video-template-v1",
+  "template_id": "store-manager-13",
+  "template_version": "v001",
+  "template_type": "custom",
+  "spec_kind": "implementation",
+  "stage": "ready",
+  "authority": {
+    "runbook": "../../../../../Haike-Videohub/agent-runbooks/店长账号模板13-橙绿双实拍.md",
+    "implementation_paths": [
+      "../../index.tsx",
+      "../../../../backlot/studio_store_manager.py"
+    ],
+    "parameter_source": "../../index.tsx"
+  },
+  "canvas": {
+    "width": 1440,
+    "height": 1800,
+    "fps": 30,
+    "duration_seconds": 32.5,
+    "clock": "已确认配音原速；30fps主时钟；durationFrames=ceil(音频秒数*30)，数字人25fps不变速采样",
+    "coordinate_system": "top_left_pixels"
+  },
+  "narrative": {
+    "purpose": "橙绿双实拍店长账号完整视频",
+    "information_hierarchy": [
+      "主题与店长",
+      "门店实际体验",
+      "同步字幕与门店地址"
+    ],
+    "structure": [
+      "吸引注意",
+      "门店实拍说明",
+      "到店体验邀请"
+    ]
+  },
+  "scenes": [
+    {
+      "id": "chapter_0",
+      "start": 0,
+      "end": 13.08,
+      "purpose": "把AI / 带到身边",
+      "element_ids": [
+        "background",
+        "diagonal",
+        "avatar",
+        "brand",
+        "headline",
+        "left",
+        "right",
+        "caption_plate",
+        "caption",
+        "address",
+        "master_audio"
+      ],
+      "variant": "13"
+    },
+    {
+      "id": "chapter_1",
+      "start": 13.08,
+      "end": 25.73,
+      "purpose": "看得见 / 亲自体验",
+      "element_ids": [
+        "background",
+        "diagonal",
+        "avatar",
+        "brand",
+        "headline",
+        "left",
+        "right",
+        "caption_plate",
+        "caption",
+        "address",
+        "master_audio"
+      ],
+      "variant": "13"
+    },
+    {
+      "id": "chapter_2",
+      "start": 25.73,
+      "end": 32.5,
+      "purpose": "家门口的 / 科技体验",
+      "element_ids": [
+        "background",
+        "diagonal",
+        "avatar",
+        "brand",
+        "headline",
+        "left",
+        "right",
+        "caption_plate",
+        "caption",
+        "address",
+        "master_audio"
+      ],
+      "variant": "13"
+    }
+  ],
+  "assets": [],
+  "elements": [
+    {
+      "id": "background",
+      "type": "background",
+      "role": "background",
+      "parent_id": null,
+      "z_index": 0,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "background按index.tsx对应元素"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "../../index.tsx",
+          "palette": [
+            "#164B34",
+            "#FF8B35",
+            "#F9EACB"
+          ],
+          "font": "Microsoft YaHei",
+          "unit": "px",
+          "overflow": "root hidden; footage contain; circles clip; no automatic shrinking"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 32.5
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "全片显示；11 main/side仅3.6<=t<26.5；caption仅真实cue区间，尾部延长65ms，下个cue优先；素材Sequence按from/frames且offset为源秒"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source_and_layout",
+          "method": "原片SHA核对+稳定/转场/最长字幕抽帧",
+          "pass_condition": "源窗口准确，主体未截断，字幕不越界"
+        }
+      ]
+    },
+    {
+      "id": "diagonal",
+      "type": "background",
+      "role": "diagonal",
+      "parent_id": null,
+      "z_index": 1,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "diagonal按index.tsx对应元素"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          500,
+          1440,
+          1300
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "../../index.tsx",
+          "palette": [
+            "#164B34",
+            "#FF8B35",
+            "#F9EACB"
+          ],
+          "font": "Microsoft YaHei",
+          "unit": "px",
+          "overflow": "root hidden; footage contain; circles clip; no automatic shrinking"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 32.5
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "全片显示；11 main/side仅3.6<=t<26.5；caption仅真实cue区间，尾部延长65ms，下个cue优先；素材Sequence按from/frames且offset为源秒"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source_and_layout",
+          "method": "原片SHA核对+稳定/转场/最长字幕抽帧",
+          "pass_condition": "源窗口准确，主体未截断，字幕不越界"
+        }
+      ]
+    },
+    {
+      "id": "avatar",
+      "type": "video",
+      "role": "avatar",
+      "parent_id": null,
+      "z_index": 2,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "avatar.mp4，指定形象的本期高质量数字人口播；静音取画面，与母带同步"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          62,
+          65,
+          440,
+          550
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "../../index.tsx",
+          "palette": [
+            "#164B34",
+            "#FF8B35",
+            "#F9EACB"
+          ],
+          "font": "Microsoft YaHei",
+          "unit": "px",
+          "overflow": "root hidden; footage contain; circles clip; no automatic shrinking"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 32.5
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "全片显示；11 main/side仅3.6<=t<26.5；caption仅真实cue区间，尾部延长65ms，下个cue优先；素材Sequence按from/frames且offset为源秒"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source_and_layout",
+          "method": "原片SHA核对+稳定/转场/最长字幕抽帧",
+          "pass_condition": "源窗口准确，主体未截断，字幕不越界"
+        }
+      ]
+    },
+    {
+      "id": "brand",
+      "type": "text",
+      "role": "brand",
+      "parent_id": null,
+      "z_index": 3,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "brand按index.tsx对应元素"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          558,
+          74,
+          820,
+          50
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "../../index.tsx",
+          "palette": [
+            "#164B34",
+            "#FF8B35",
+            "#F9EACB"
+          ],
+          "font": "Microsoft YaHei",
+          "unit": "px",
+          "overflow": "root hidden; footage contain; circles clip; no automatic shrinking",
+          "font_size": 36,
+          "max_lines": 1
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 32.5
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "全片显示；11 main/side仅3.6<=t<26.5；caption仅真实cue区间，尾部延长65ms，下个cue优先；素材Sequence按from/frames且offset为源秒"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source_and_layout",
+          "method": "原片SHA核对+稳定/转场/最长字幕抽帧",
+          "pass_condition": "源窗口准确，主体未截断，字幕不越界"
+        }
+      ]
+    },
+    {
+      "id": "headline",
+      "type": "text",
+      "role": "headline",
+      "parent_id": null,
+      "z_index": 4,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "props.chapters的两行标题；按start全片秒数硬切换"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          558,
+          176,
+          820,
+          330
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "../../index.tsx",
+          "palette": [
+            "#164B34",
+            "#FF8B35",
+            "#F9EACB"
+          ],
+          "font": "Microsoft YaHei",
+          "unit": "px",
+          "overflow": "root hidden; footage contain; circles clip; no automatic shrinking",
+          "font_size": 136,
+          "max_lines": 2
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 32.5
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "全片显示；11 main/side仅3.6<=t<26.5；caption仅真实cue区间，尾部延长65ms，下个cue优先；素材Sequence按from/frames且offset为源秒"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source_and_layout",
+          "method": "原片SHA核对+稳定/转场/最长字幕抽帧",
+          "pass_condition": "源窗口准确，主体未截断，字幕不越界"
+        }
+      ]
+    },
+    {
+      "id": "left",
+      "type": "video",
+      "role": "left",
+      "parent_id": null,
+      "z_index": 5,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "props.shots lane=left；全部实拍，禁止文字卡替换"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          58,
+          734,
+          630,
+          730
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "../../index.tsx",
+          "palette": [
+            "#164B34",
+            "#FF8B35",
+            "#F9EACB"
+          ],
+          "font": "Microsoft YaHei",
+          "unit": "px",
+          "overflow": "root hidden; footage contain; circles clip; no automatic shrinking"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 32.5
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "全片显示；11 main/side仅3.6<=t<26.5；caption仅真实cue区间，尾部延长65ms，下个cue优先；素材Sequence按from/frames且offset为源秒"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source_and_layout",
+          "method": "原片SHA核对+稳定/转场/最长字幕抽帧",
+          "pass_condition": "源窗口准确，主体未截断，字幕不越界"
+        }
+      ]
+    },
+    {
+      "id": "right",
+      "type": "video",
+      "role": "right",
+      "parent_id": null,
+      "z_index": 6,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "props.shots lane=right；全部实拍，禁止文字卡替换"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          758,
+          650,
+          620,
+          840
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "../../index.tsx",
+          "palette": [
+            "#164B34",
+            "#FF8B35",
+            "#F9EACB"
+          ],
+          "font": "Microsoft YaHei",
+          "unit": "px",
+          "overflow": "root hidden; footage contain; circles clip; no automatic shrinking"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 32.5
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "全片显示；11 main/side仅3.6<=t<26.5；caption仅真实cue区间，尾部延长65ms，下个cue优先；素材Sequence按from/frames且offset为源秒"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source_and_layout",
+          "method": "原片SHA核对+稳定/转场/最长字幕抽帧",
+          "pass_condition": "源窗口准确，主体未截断，字幕不越界"
+        }
+      ]
+    },
+    {
+      "id": "caption_plate",
+      "type": "background",
+      "role": "caption_plate",
+      "parent_id": null,
+      "z_index": 7,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "caption_plate按index.tsx对应元素"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          65,
+          1570,
+          1310,
+          132
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "../../index.tsx",
+          "palette": [
+            "#164B34",
+            "#FF8B35",
+            "#F9EACB"
+          ],
+          "font": "Microsoft YaHei",
+          "unit": "px",
+          "overflow": "root hidden; footage contain; circles clip; no automatic shrinking"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 32.5
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "全片显示；11 main/side仅3.6<=t<26.5；caption仅真实cue区间，尾部延长65ms，下个cue优先；素材Sequence按from/frames且offset为源秒"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source_and_layout",
+          "method": "原片SHA核对+稳定/转场/最长字幕抽帧",
+          "pass_condition": "源窗口准确，主体未截断，字幕不越界"
+        }
+      ]
+    },
+    {
+      "id": "caption",
+      "type": "text",
+      "role": "caption",
+      "parent_id": null,
+      "z_index": 8,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "props.captions：词级ASR人工按语义分组，不插值造时间；62px900字重"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          65,
+          1570,
+          1310,
+          132
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "../../index.tsx",
+          "palette": [
+            "#164B34",
+            "#FF8B35",
+            "#F9EACB"
+          ],
+          "font": "Microsoft YaHei",
+          "unit": "px",
+          "overflow": "root hidden; footage contain; circles clip; no automatic shrinking",
+          "font_size": 62,
+          "max_lines": 1
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 32.5
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "全片显示；11 main/side仅3.6<=t<26.5；caption仅真实cue区间，尾部延长65ms，下个cue优先；素材Sequence按from/frames且offset为源秒"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source_and_layout",
+          "method": "原片SHA核对+稳定/转场/最长字幕抽帧",
+          "pass_condition": "源窗口准确，主体未截断，字幕不越界"
+        }
+      ]
+    },
+    {
+      "id": "address",
+      "type": "text",
+      "role": "address",
+      "parent_id": null,
+      "z_index": 9,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "广州增城翡翠绿洲 · 海客AI社区服务站"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          65,
+          1725,
+          1310,
+          40
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "../../index.tsx",
+          "palette": [
+            "#164B34",
+            "#FF8B35",
+            "#F9EACB"
+          ],
+          "font": "Microsoft YaHei",
+          "unit": "px",
+          "overflow": "root hidden; footage contain; circles clip; no automatic shrinking",
+          "font_size": 30,
+          "max_lines": 1
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 32.5
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "全片显示；11 main/side仅3.6<=t<26.5；caption仅真实cue区间，尾部延长65ms，下个cue优先；素材Sequence按from/frames且offset为源秒"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source_and_layout",
+          "method": "原片SHA核对+稳定/转场/最长字幕抽帧",
+          "pass_condition": "源窗口准确，主体未截断，字幕不越界"
+        }
+      ]
+    },
+    {
+      "id": "master_audio",
+      "type": "audio",
+      "role": "master_audio",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "master.wav：已确认配音+BGM+动态音效；禁止源视频声音叠加"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "../../index.tsx",
+          "palette": [
+            "#164B34",
+            "#FF8B35",
+            "#F9EACB"
+          ],
+          "font": "Microsoft YaHei",
+          "unit": "px",
+          "overflow": "root hidden; footage contain; circles clip; no automatic shrinking"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 32.5
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "全片显示；11 main/side仅3.6<=t<26.5；caption仅真实cue区间，尾部延长65ms，下个cue优先；素材Sequence按from/frames且offset为源秒"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source_and_layout",
+          "method": "原片SHA核对+稳定/转场/最长字幕抽帧",
+          "pass_condition": "源窗口准确，主体未截断，字幕不越界"
+        }
+      ]
+    }
+  ],
+  "slots": [],
+  "evidence": [
+    {
+      "id": "implementation",
+      "source_kind": "design",
+      "source": "既有风格11/13衍生完整店长口播；本次授权本地实拍",
+      "locator": "index.tsx与冻结request.props",
+      "method": "源码确定参数；本期开发验收后更新状态",
+      "file": "../../index.tsx",
+      "sha256": "ca87520fde0b2b04ff4f197a830f7371ce9d6f5f7b7ba737979753a4589c182a"
+    },
+    {
+      "id": "final_review",
+      "source_kind": "measurement",
+      "source": "本期完整成片编码、原片来源、单声道与实际抽帧检查记录",
+      "locator": "D:\\刘宇钊\\codex_work\\haike-workflow-2\\.local\\codex-runs\\store-manager-production-20261023\\1\\review.json",
+      "method": "本期完整成片编码、原片来源、单声道与实际抽帧检查记录",
+      "file": "../../../../../.local/codex-runs/store-manager-production-20261023/1/review.json",
+      "sha256": "528c6197ec12e662a1ad35f0be2669a73b5c994582262ea122c667e9b453cad3"
+    },
+    {
+      "id": "visual_frames",
+      "source_kind": "observation",
+      "source": "实际查看本期各状态与最长字幕，全部拼图清单见final_review",
+      "locator": "D:\\刘宇钊\\codex_work\\haike-workflow-2\\.local\\codex-runs\\store-manager-production-20261023\\1\\final-frames\\board-0.jpg",
+      "method": "实际查看本期各状态与最长字幕，全部拼图清单见final_review",
+      "file": "../../../../../.local/codex-runs/store-manager-production-20261023/1/final-frames/board-0.jpg",
+      "sha256": "90f054672637d3f92b8c8e38af6d28fd003fcd9c0328c5573da5c32d6fb59f0d"
+    },
+    {
+      "id": "final_video",
+      "source_kind": "measurement",
+      "source": "最终MP4及SHA",
+      "locator": "D:\\刘宇钊\\codex_work\\haike-workflow-2\\deliverables\\店长账号_科技与健康_20261023\\01_科技就在身边_风格13橙绿_4比5_20Mbps.mp4",
+      "method": "最终MP4及SHA",
+      "file": "../../../../../deliverables/店长账号_科技与健康_20261023/01_科技就在身边_风格13橙绿_4比5_20Mbps.mp4",
+      "sha256": "bb6322cd1e05c287d3cf208e18d3e26fb0da98f7af190cc63da55ef3aa72372e"
+    }
+  ],
+  "unknowns": [],
+  "validation": {
+    "structure": {
+      "status": "pass",
+      "evidence_ids": [
+        "final_review",
+        "visual_frames",
+        "final_video"
+      ],
+      "note": "schema静态检查通过；当前绑定本期冻结输入"
+    },
+    "technical": {
+      "status": "pass",
+      "evidence_ids": [
+        "final_review",
+        "visual_frames",
+        "final_video"
+      ],
+      "note": "1440x1800/30fps/H264；视频流实测>=20Mbps；AAC峰值合格；完整解码通过"
+    },
+    "visual": {
+      "status": "pass",
+      "evidence_ids": [
+        "final_review",
+        "visual_frames",
+        "final_video"
+      ],
+      "note": "查看44/36个实际成片时间戳，覆盖全部章节/字幕/实拍切点，未见遮脸或文字溢出"
+    },
+    "audio": {
+      "status": "pending",
+      "evidence_ids": [
+        "final_review"
+      ],
+      "note": "技术响度、AAC真峰值、BGM相对电平与单声道通过；实际设备主观听审待确认，不冒充听验"
+    },
+    "platform": {
+      "status": "pending",
+      "evidence_ids": [
+        "final_review"
+      ],
+      "note": "本地浏览器播放完成；抖音等发布平台与异机未验"
+    },
+    "user_review": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "交付等待用户试听观看"
+    },
+    "production": {
+      "status": "pass",
+      "evidence_ids": [
+        "final_review",
+        "visual_frames",
+        "final_video"
+      ],
+      "note": "仅本机原生统一队列完成两期本地合成；未声明Studio表单、异机或发布通过"
+    }
+  },
+  "extensions": {
+    "custom": {
+      "contract": "store-manager-contrast-v1",
+      "rules": {
+        "palette": [
+          "#164B34",
+          "#FF8B35",
+          "#F9EACB"
+        ],
+        "master": "PNG帧/H264 CRF1 yuv444p高保真中间母版；Remotion拒绝H264 CRF0，不能宣称数学无损",
+        "export": "原素材不预压缩；高保真合成母版再H264 slow 20.2M CBR/AAC192k/1440x1800/30fps；实测视频流>=20M",
+        "props_contract": "本期冻结输入快照；无公开自由替换槽，换配音/章节/素材需重新prepare与验收",
+        "animation": "easeOutCubic：开场12帧；13斜切面上移40px；11标题x=-40→0；字幕5帧y8→0,scale.99→1"
+      }
+    },
+    "avatar": {
+      "face_crop": "13矩形−3deg；11圆形hero与小圆两状态；contain保全人物",
+      "synchronization": "avatar.mp4全片原速静音，master.wav原配音不变速；视频25fps→输出30fps仅帧采样"
+    },
+    "graphic": {
+      "text_policy": "标题136/116(13),112(11)；字幕62单行<=17字；地址30；最长状态人工检验",
+      "asset_fit": "contain保留原始范围，色边作为设计留白；照片源内的字不可编辑"
+    },
+    "material_edit": {
+      "source_ranges": [
+        {
+          "id": "left-0",
+          "lane": "left",
+          "source_id": "S052",
+          "src": "S052.mp4",
+          "path": "C:\\Users\\Administrator\\Videos\\10-23素材\\S052_门头下机器人与机器狗清晰同框.mp4",
+          "source_sha256": "b7de5023354825e0033084a21a9b5dce4eed614e6f00a6086cd2c7cbdb757b7d",
+          "from": 0,
+          "frames": 96,
+          "offset": 0,
+          "fit": "contain",
+          "title": "门头下机器人与机器狗清晰同框"
+        },
+        {
+          "id": "left-1",
+          "lane": "left",
+          "source_id": "S054",
+          "src": "S054.mp4",
+          "path": "C:\\Users\\Administrator\\Videos\\10-23素材\\S054_低机位机器人迎面动作.mp4",
+          "source_sha256": "ec7f2f4ebc0ae4c4739f3d1f75f900b089ab8cb0d8eee56f1ed316dbecce1001",
+          "from": 96,
+          "frames": 96,
+          "offset": 0.2,
+          "fit": "contain",
+          "title": "低机位机器人迎面动作"
+        },
+        {
+          "id": "left-2",
+          "lane": "left",
+          "source_id": "S069",
+          "src": "S069.mp4",
+          "path": "C:\\Users\\Administrator\\Videos\\10-23素材\\S069_门外亲子转入店内产品陈列.mp4",
+          "source_sha256": "d84fdf5631b5ecb029020adc36f73d26e521525de9d3df7f79c9bda0dbe3f2b0",
+          "from": 192,
+          "frames": 96,
+          "offset": 3.2,
+          "fit": "contain",
+          "title": "门外亲子转入店内产品陈列"
+        },
+        {
+          "id": "left-3",
+          "lane": "left",
+          "source_id": "S070",
+          "src": "S070.mp4",
+          "path": "C:\\Users\\Administrator\\Videos\\10-23素材\\S070_桌面机器狗围桌体验与门头.mp4",
+          "source_sha256": "6d8f483c8849db98a75be6316ba46e18ec36a385e3cb8ab0fa8d4e0936bf174a",
+          "from": 288,
+          "frames": 96,
+          "offset": 0,
+          "fit": "contain",
+          "title": "桌面机器狗围桌体验与门头"
+        },
+        {
+          "id": "left-4",
+          "lane": "left",
+          "source_id": "S020",
+          "src": "S020.mp4",
+          "path": "C:\\Users\\Administrator\\Videos\\10-23素材\\S020_门店正面推进店内体验区.mp4",
+          "source_sha256": "19c498c3dc720aa3b3be94ff8ed9430583693126994d84d4b22f5c33cb16a97e",
+          "from": 384,
+          "frames": 96,
+          "offset": 0,
+          "fit": "contain",
+          "title": "门店正面推进店内体验区"
+        },
+        {
+          "id": "left-5",
+          "lane": "left",
+          "source_id": "S066",
+          "src": "S066.mp4",
+          "path": "C:\\Users\\Administrator\\Videos\\10-23素材\\S066_工作人员与机器人及陈列走拍.mp4",
+          "source_sha256": "0ddecb3c6017234311ea93e23effe6628f3a55bd1ff58f8df4743da4996a80e7",
+          "from": 480,
+          "frames": 96,
+          "offset": 3,
+          "fit": "contain",
+          "title": "工作人员与机器人及陈列走拍"
+        },
+        {
+          "id": "left-6",
+          "lane": "left",
+          "source_id": "S067",
+          "src": "S067.mp4",
+          "path": "C:\\Users\\Administrator\\Videos\\10-23素材\\S067_店内工作人员接待与产品体验.mp4",
+          "source_sha256": "3bbafab42484160720c1205f60e64e05db5edbfa81d290f8867b96ff27ec038b",
+          "from": 576,
+          "frames": 96,
+          "offset": 0,
+          "fit": "contain",
+          "title": "店内工作人员接待与产品体验"
+        },
+        {
+          "id": "left-7",
+          "lane": "left",
+          "source_id": "S063",
+          "src": "S063.mp4",
+          "path": "C:\\Users\\Administrator\\Videos\\10-23素材\\S063_儿童近距离围绕人形机器人.mp4",
+          "source_sha256": "9e71a19e251bae9b79187743c1151ef072acacf6c1a8fbcdee3fccddea085cf0",
+          "from": 672,
+          "frames": 96,
+          "offset": 5,
+          "fit": "contain",
+          "title": "儿童近距离围绕人形机器人"
+        },
+        {
+          "id": "left-8",
+          "lane": "left",
+          "source_id": "S064",
+          "src": "S064.mp4",
+          "path": "C:\\Users\\Administrator\\Videos\\10-23素材\\S064_桌面机器狗前景与门店入口.mp4",
+          "source_sha256": "2e514b0e552f9a2c1be8db26ff26a0dee4be9544f82af28982466b94375405b8",
+          "from": 768,
+          "frames": 96,
+          "offset": 2,
+          "fit": "contain",
+          "title": "桌面机器狗前景与门店入口"
+        },
+        {
+          "id": "left-9",
+          "lane": "left",
+          "source_id": "S077",
+          "src": "S077.mp4",
+          "path": "C:\\Users\\Administrator\\Videos\\10-23素材\\S077_双机器狗与人形机器人门前同框.mp4",
+          "source_sha256": "549b018083d9ed0a56d343f58a8eb5763ccd2c2a7fcb4d1cf3fb354187632f71",
+          "from": 864,
+          "frames": 111,
+          "offset": 0,
+          "fit": "contain",
+          "title": "双机器狗与人形机器人门前同框"
+        },
+        {
+          "id": "right-0",
+          "lane": "right",
+          "source_id": "S032",
+          "src": "S032.mp4",
+          "path": "C:\\Users\\Administrator\\Videos\\10-23素材\\S032_人形机器人正面与品牌门头.mp4",
+          "source_sha256": "b618a60e5563410fa351e0404a0d60b35d5ec18d979e2f45b6f00955914b3526",
+          "from": 0,
+          "frames": 96,
+          "offset": 0,
+          "fit": "contain",
+          "title": "人形机器人正面与品牌门头"
+        },
+        {
+          "id": "right-1",
+          "lane": "right",
+          "source_id": "S029",
+          "src": "S029.mp4",
+          "path": "C:\\Users\\Administrator\\Videos\\10-23素材\\S029_儿童围观机器狗趴下再起身.mp4",
+          "source_sha256": "8da10b76c5986286ffddecbda137385c58207521d6c1189fed44ed404a70901f",
+          "from": 96,
+          "frames": 96,
+          "offset": 3,
+          "fit": "contain",
+          "title": "儿童围观机器狗趴下再起身"
+        },
+        {
+          "id": "right-2",
+          "lane": "right",
+          "source_id": "S030",
+          "src": "S030.mp4",
+          "path": "C:\\Users\\Administrator\\Videos\\10-23素材\\S030_桌面机器狗与亲子互动.mp4",
+          "source_sha256": "df849886ae1a70c7a25dc8dc7084c2dc7f89fed8dd2801806e07c7e3c086ab6e",
+          "from": 192,
+          "frames": 96,
+          "offset": 7,
+          "fit": "contain",
+          "title": "桌面机器狗与亲子互动"
+        },
+        {
+          "id": "right-3",
+          "lane": "right",
+          "source_id": "S018",
+          "src": "S018.mp4",
+          "path": "C:\\Users\\Administrator\\Videos\\10-23素材\\S018_店内工作人员指向产品陈列.mp4",
+          "source_sha256": "fc3385635f11659a00e6494460e06403ca578b5eb7cac2ef9a1e5182ebc4ff8d",
+          "from": 288,
+          "frames": 96,
+          "offset": 2,
+          "fit": "contain",
+          "title": "店内工作人员指向产品陈列"
+        },
+        {
+          "id": "right-4",
+          "lane": "right",
+          "source_id": "S049",
+          "src": "S049.mp4",
+          "path": "C:\\Users\\Administrator\\Videos\\10-23素材\\S049_门头摇向机器人及围观家庭.mp4",
+          "source_sha256": "76b31611ccb74f53e8a6a59ac9fbf8237b8c0e2ce4ba8bc4751762e6bcf3d37e",
+          "from": 384,
+          "frames": 96,
+          "offset": 0,
+          "fit": "contain",
+          "title": "门头摇向机器人及围观家庭"
+        },
+        {
+          "id": "right-5",
+          "lane": "right",
+          "source_id": "S001",
+          "src": "S001.mp4",
+          "path": "C:\\Users\\Administrator\\Videos\\10-23素材\\S001_桌面机器狗与儿童近景.mp4",
+          "source_sha256": "34399da209e4d3d15575dde51b6737d87f0b0fee2dedacb02a02b4881fb28f3b",
+          "from": 480,
+          "frames": 96,
+          "offset": 0.2,
+          "fit": "contain",
+          "title": "桌面机器狗与儿童近景"
+        },
+        {
+          "id": "right-6",
+          "lane": "right",
+          "source_id": "S044",
+          "src": "S044.mp4",
+          "path": "C:\\Users\\Administrator\\Videos\\10-23素材\\S044_工作人员向儿童演示飞行球.mp4",
+          "source_sha256": "06b64b9488f3b290b107a7d19e3a104a7643b6d6a50987898b86a0bc9b3dc9da",
+          "from": 576,
+          "frames": 78,
+          "offset": 0,
+          "fit": "contain",
+          "title": "工作人员向儿童演示飞行球"
+        },
+        {
+          "id": "right-7",
+          "lane": "right",
+          "source_id": "S068",
+          "src": "S068.mp4",
+          "path": "C:\\Users\\Administrator\\Videos\\10-23素材\\S068_亲子近距离观看机器人.mp4",
+          "source_sha256": "187d2c62a5d832a47635c9923ae06eac61270b8a7a7b647a44c714b171746c32",
+          "from": 654,
+          "frames": 114,
+          "offset": 0,
+          "fit": "contain",
+          "title": "亲子近距离观看机器人"
+        },
+        {
+          "id": "right-8",
+          "lane": "right",
+          "source_id": "S023",
+          "src": "S023.mp4",
+          "path": "C:\\Users\\Administrator\\Videos\\10-23素材\\S023_长者持麦与机器狗互动.mp4",
+          "source_sha256": "4c275d78bf94d67ec8319538370f0c873f98725d79fd98833b045681b1e2316f",
+          "from": 768,
+          "frames": 96,
+          "offset": 0,
+          "fit": "contain",
+          "title": "长者持麦与机器狗互动"
+        },
+        {
+          "id": "right-9",
+          "lane": "right",
+          "source_id": "S002",
+          "src": "S002.mp4",
+          "path": "C:\\Users\\Administrator\\Videos\\10-23素材\\S002_门头下顾客入店.mp4",
+          "source_sha256": "4b8bf5d17d8465d68f5e76959209c8b3dcbeb6b5ac694d9739c30c29f1af6fbe",
+          "from": 864,
+          "frames": 111,
+          "offset": 0.1,
+          "fit": "contain",
+          "title": "门头下顾客入店"
+        }
+      ],
+      "cut_policy": "单次源片播放<=4秒；每条片中每个源只出现一次；不使用精剪低清代理"
+    },
+    "audio": {
+      "contract": "store-manager-audio-v1",
+      "rules": {
+        "mix": "人声−2.5dB；配乐按认可外放参考匹配（本期−5dB），说话侧链约4.5–5.2dB，dong−15/whoosh−19；单独PCM母带",
+        "timing": "开场cue起点dong；章节起点whoosh；音乐首尾淡入淡出",
+        "acceptance": "AAC真峰值<=−1.5dBTP，单声道折叠与相对电平实测；不冒充设备听审"
+      }
+    }
+  },
+  "operations": [
+    {
+      "id": "native_queue",
+      "input": "完整props和原片sources（avatar/master/audio-receipt/asr/全部S编号原片）",
+      "action": "prepare冻结哈希→submit paused→ProductionQueueWorker.run_local_recompose；native VideoCompose CRF1母版→同任务最终CBR编码",
+      "output": "原生作品MP4、quality.json、result.json与冻结request",
+      "completion": "先静态schema，完成后尺寸时长码率真峰值和完整解码，实际抽帧核对；听审/用户确认独立记录",
+      "recovery": "先查原job；已完成结果校验SHA复用；队列忙等待；变更源码或输入创建新request，不重复提交云端数字人",
+      "entrypoint": "../../../../backlot/studio_store_manager.py"
+    }
+  ]
+}

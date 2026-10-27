@@ -1,0 +1,1950 @@
+{
+  "schema_version": 1,
+  "standard_version": "video-template-v1",
+  "template_id": "avatar-interview-v7",
+  "template_version": "v001",
+  "template_type": "avatar",
+  "spec_kind": "implementation",
+  "stage": "specification",
+  "authority": {
+    "runbook": "../../../Haike-Videohub/agent-runbooks/数字人模板7.md",
+    "implementation_paths": [
+      "layout.json",
+      "Composition.tsx",
+      "Captions.tsx",
+      "Root.tsx",
+      "index.tsx",
+      "../../scripts/avatar_template7_sample.py"
+    ],
+    "parameter_source": "layout.json"
+  },
+  "canvas": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "duration_seconds": 19,
+    "clock": "本规格对应本次19.0秒/570帧开发短样；同钟来源区间17.2..36.2秒，manifest.duration_seconds与独立audio为主时钟。scene/cue边界来自冻结manifest，全片秒、左闭右开；源局部时间使用source_in/avatar_in/pip_in。输出帧数round(duration_seconds*layout.canvas.fps)，不拉伸语音适配画面。",
+    "coordinate_system": "top_left_pixels"
+  },
+  "narrative": {
+    "purpose": "从用户本地参考访谈片拆解视觉结构，重建可编辑的数字人模板7，并制作范围明确的本地开发测试短片",
+    "information_hierarchy": [
+      "顶部两行主题标题",
+      "主窗素材与当前字幕",
+      "顶部双胶囊、圆人物与编号/红黄关键词",
+      "底部本期品牌、开发说明与结构副标题",
+      "顶部开发样片标记"
+    ],
+    "structure": [
+      "固定黑色星点顶部标题区",
+      "蓝青细线与主窗顶部双胶囊",
+      "主窗支持全幅人物和素材+圆人物两模式；本次只覆盖素材模式",
+      "本期主窗前景contain完整保留素材内文字，底层同源cover经模糊/降亮填满主窗；只在fit=contain启用背景层",
+      "按scene出现大号半透明编号及描边关键词；本期只启用编号1/2与yellow，red及summary本次未覆盖",
+      "固定深紫色品牌底区；独立原声与字幕贯穿"
+    ]
+  },
+  "scenes": [
+    {
+      "id": "development_sample",
+      "start": 0,
+      "end": 19,
+      "purpose": "本次19秒开发复合场景：四段broll均fit=contain，完整前景加同源模糊背景、独立圆人物、双胶囊、人工核对字幕，以及编号1/2和黄色关键词；切点来自冻结manifest.scenes。红色关键词、presenter全幅人物和可选summary仅实现，本次未覆盖。",
+      "element_ids": [
+        "header_background",
+        "header_stars",
+        "header_title",
+        "top_divider",
+        "main_backdrop",
+        "main_visual",
+        "source_pill",
+        "summary_pill",
+        "presenter_pip",
+        "captions",
+        "focus_number",
+        "focus_keyword",
+        "bottom_divider",
+        "footer_background",
+        "brand",
+        "tagline",
+        "development_label",
+        "context_pill",
+        "footer_note",
+        "master_audio"
+      ],
+      "variant": "manifest_driven_development_sample"
+    }
+  ],
+  "assets": [
+    {
+      "id": "sample_visual_media",
+      "kind": "video",
+      "path": null,
+      "source": "本次manifest.media.avatar和broll：用户提供参考片的本地裁切/选段，身份及源SHA留在忽略的本次媒体记录中",
+      "embedded_content": [
+        "选段内人物、场景、动作及源画面固化信息；不是模板可编辑文字"
+      ],
+      "rights_status": "仅按用户本次本地分析及短样测试范围复用；不作为公开发布或转授予素材权利"
+    },
+    {
+      "id": "sample_presenter_media",
+      "kind": "video",
+      "path": null,
+      "source": "本次manifest.media.avatar_pip；缺省时按实现复用avatar，来源与局部时间需冻结",
+      "embedded_content": [
+        "圆人物来源中的面部、服装和场景"
+      ],
+      "rights_status": "仅本次本地开发样片；新人物、新品牌和正式生产另核对来源/授权"
+    },
+    {
+      "id": "sample_audio",
+      "kind": "audio",
+      "path": null,
+      "source": "本次manifest.media.audio，复用同一参考片连续原声片段，不新生成或克隆声音",
+      "embedded_content": [
+        "原片局部语音及其现有背景声音"
+      ],
+      "rights_status": "仅用户本次本地短样测试；不代表已有公开发布授权"
+    },
+    {
+      "id": "local_font",
+      "kind": "font",
+      "path": null,
+      "source": "layout.json /fonts声明的本机Microsoft YaHei粗体字体；CLI默认本机Windows Fonts/msyhbd.ttc，也可显式提供相同字体身份的font_path",
+      "embedded_content": [],
+      "rights_status": "使用本机已安装字体渲染；模板源码不附带该系统字体文件，换字体须复验字宽和视觉"
+    }
+  ],
+  "elements": [
+    {
+      "id": "header_background",
+      "type": "background",
+      "role": "黑色顶部主题区",
+      "parent_id": null,
+      "z_index": 0,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "程序绘制的顶部背景，不复制参考作者原底板"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1080,
+          470
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "layout_ref": "layout.json /regions/header 与 /palette"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 19
+      },
+      "states": [
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "在完整样片区间内可见；内部细节由引用的当前layout与Composition计算"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本box是当前画布中的名义验收包络；实际布局、配色、字体与动画由layout_ref和Composition.tsx唯一控制。修改真值后同步本规格包络并重新验收，不把本规格当第二份渲染配置。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_contract",
+        "reference_observation"
+      ],
+      "acceptance": [
+        {
+          "check": "当前元素视觉与内容合同",
+          "method": "实际查看最终样片中此元素各适用状态的代表帧，并核对冻结manifest/layout及时间边界",
+          "pass_condition": "布局在声明包络内，内容无意外裁切/遮挡，未开放属性保持当前实现规则"
+        }
+      ]
+    },
+    {
+      "id": "header_stars",
+      "type": "decoration",
+      "role": "顶部稀疏星点",
+      "parent_id": null,
+      "z_index": 1,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "确定性程序星点；无随机外部素材"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1080,
+          470
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "layout_ref": "layout.json /stars 与 /motion"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 19
+      },
+      "states": [
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "在完整样片区间内可见；内部细节由引用的当前layout与Composition计算"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本box是当前画布中的名义验收包络；实际布局、配色、字体与动画由layout_ref和Composition.tsx唯一控制。修改真值后同步本规格包络并重新验收，不把本规格当第二份渲染配置。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_contract"
+      ],
+      "acceptance": [
+        {
+          "check": "当前元素视觉与内容合同",
+          "method": "实际查看最终样片中此元素各适用状态的代表帧，并核对冻结manifest/layout及时间边界",
+          "pass_condition": "布局在声明包络内，内容无意外裁切/遮挡，未开放属性保持当前实现规则"
+        }
+      ]
+    },
+    {
+      "id": "header_title",
+      "type": "text",
+      "role": "两行主题标题",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "editable",
+        "binding": "title_lines",
+        "asset_id": null,
+        "description": "manifest.title_lines两行独立可编辑主题文本；参考标题仅作视觉结构证据"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          46,
+          215,
+          988,
+          215
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "font": "layout.json /fonts/family 与 /fonts/fallback（当前Microsoft YaHei/sans-serif）；字重/fonts/weight",
+          "font_size": 88,
+          "max_lines": 2,
+          "overflow": "预检拒绝或按layout声明的最小字号适配；不裁掉必需文本",
+          "layout_ref": "layout.json /title"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 19
+      },
+      "states": [
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "在完整样片区间内可见；内部细节由引用的当前layout与Composition计算"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本box是当前画布中的名义验收包络；实际布局、配色、字体与动画由layout_ref和Composition.tsx唯一控制。修改真值后同步本规格包络并重新验收，不把本规格当第二份渲染配置。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation_contract",
+        "reference_observation"
+      ],
+      "acceptance": [
+        {
+          "check": "当前元素视觉与内容合同",
+          "method": "实际查看最终样片中此元素各适用状态的代表帧，并核对冻结manifest/layout及时间边界",
+          "pass_condition": "布局在声明包络内，内容无意外裁切/遮挡，未开放属性保持当前实现规则"
+        }
+      ]
+    },
+    {
+      "id": "top_divider",
+      "type": "decoration",
+      "role": "顶部蓝青分割线",
+      "parent_id": null,
+      "z_index": 20,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "顶部蓝青分割线"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          468,
+          1080,
+          2
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "layout_ref": "layout.json /dividers"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 19
+      },
+      "states": [
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "在完整样片区间内可见；内部细节由引用的当前layout与Composition计算"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本box是当前画布中的名义验收包络；实际布局、配色、字体与动画由layout_ref和Composition.tsx唯一控制。修改真值后同步本规格包络并重新验收，不把本规格当第二份渲染配置。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_contract",
+        "reference_observation"
+      ],
+      "acceptance": [
+        {
+          "check": "当前元素视觉与内容合同",
+          "method": "实际查看最终样片中此元素各适用状态的代表帧，并核对冻结manifest/layout及时间边界",
+          "pass_condition": "布局在声明包络内，内容无意外裁切/遮挡，未开放属性保持当前实现规则"
+        }
+      ]
+    },
+    {
+      "id": "main_backdrop",
+      "type": "video",
+      "role": "contain主窗同源模糊背景",
+      "parent_id": null,
+      "z_index": 1,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "sample_visual_media",
+        "description": "独立于前景main_visual的同源静音视频图层；仅scene.fit=contain显示，同一主源选择与源局部起点，不单独替换媒体。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          470,
+          1080,
+          970
+        ],
+        "fit": "cover",
+        "clip": "self",
+        "style": {
+          "layout_ref": "layout.json /regions/main 与 /main_contain_background；Composition.tsx /SceneWindow",
+          "blur_px": 28,
+          "brightness": 0.45,
+          "scale": 1.08,
+          "parameter_rule": "以上为当前布局包络快照；运行值只读layout.main_contain_background。同源cover先填满，再模糊/降亮/放大，裁切在主窗内，不改变前景contain。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 19
+      },
+      "states": [
+        {
+          "id": "hidden",
+          "visible": false,
+          "description": "scene.fit=cover时不创建背景视频层"
+        },
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "scene.fit=contain时显示同源模糊背景，在完整前景下方"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "dependency",
+          "target_id": "main_visual",
+          "rule": "先由当前scene求值主源与primaryIn；前景和背景使用同一文件、同一round(primaryIn*fps)起点与同一scene持续时间。背景不得独立错时、循环或补片。"
+        },
+        {
+          "kind": "clipping",
+          "target_id": "main_visual",
+          "rule": "blur和scale可在内部超出主窗，SceneWindow overflow:hidden裁回/regions/main；只作为氛围填充，不承担证据文字可读性。"
+        }
+      ],
+      "fixed": [
+        "content",
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_contract"
+      ],
+      "acceptance": [
+        {
+          "check": "contain双层组合",
+          "method": "实际查看各scene及切换帧，对照冻结fit、主源/起点和布局；分别核对前景完整文字与背景柔化",
+          "pass_condition": "前景完整contain，背景同源cover且不遮盖前景；仅contain时启用；本期源过渡保留，背景不伪造独立新素材"
+        }
+      ]
+    },
+    {
+      "id": "main_visual",
+      "type": "video",
+      "role": "主窗全幅人物或素材",
+      "parent_id": null,
+      "z_index": 2,
+      "content": {
+        "mode": "editable",
+        "binding": "media",
+        "asset_id": "sample_visual_media",
+        "description": "manifest.media.avatar/broll；逐scene按mode选择前景视觉源，fit=contain|cover，source_in/avatar_in为源局部秒。本期四段均broll+contain，保留978×550有效源区内文字与完整构图；同源模糊背景为独立main_backdrop层。视觉源静音，独立音轨在CLI最终master_wav_v1封装统一播放。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          470,
+          1080,
+          970
+        ],
+        "fit": "contain",
+        "clip": "self",
+        "style": {
+          "layout_ref": "layout.json /regions/main；manifest.scenes",
+          "fit_rule": "scene.fit；本期四scene均contain，背景层按同源同入点cover模糊填充；cover模式不启用背景层。presenter模式本期未验。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 19
+      },
+      "states": [
+        {
+          "id": "presenter",
+          "visible": true,
+          "description": "mode=presenter时主窗显示人物视频"
+        },
+        {
+          "id": "broll",
+          "visible": true,
+          "description": "mode=broll时主窗显示素材；人物由独立圆窗显示"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本box是当前画布中的名义验收包络；实际布局、配色、字体与动画由layout_ref和Composition.tsx唯一控制。修改真值后同步本规格包络并重新验收，不把本规格当第二份渲染配置。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation_contract",
+        "reference_observation"
+      ],
+      "acceptance": [
+        {
+          "check": "当前元素视觉与内容合同",
+          "method": "实际查看最终样片中此元素各适用状态的代表帧，并核对冻结manifest/layout及时间边界",
+          "pass_condition": "本期四段contain前景完整保留有效源区固化文字，背景同源同钟且只在contain启用；圆人和字幕避让。样片约9.2秒源短黑场按原过渡保留，不以源画面黑帧推定render缺素材；全幅人物模式未覆盖。"
+        }
+      ]
+    },
+    {
+      "id": "source_pill",
+      "type": "text",
+      "role": "主窗顶部右侧来源胶囊",
+      "parent_id": null,
+      "z_index": 40,
+      "content": {
+        "mode": "editable",
+        "binding": "source_pill",
+        "asset_id": null,
+        "description": "manifest.source_pill可编辑来源说明；只能准确描述本次实际素材，不宣称未核验身份或出处"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          680,
+          494,
+          360,
+          44
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "font": "layout.json /fonts/family 与 /fonts/fallback（当前Microsoft YaHei/sans-serif）；字重/fonts/weight",
+          "font_size": 24,
+          "max_lines": 1,
+          "overflow": "预检拒绝或按layout声明的最小字号适配；不裁掉必需文本",
+          "layout_ref": "layout.json /source_pill"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 19
+      },
+      "states": [
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "在完整样片区间内可见；内部细节由引用的当前layout与Composition计算"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本box是当前画布中的名义验收包络；实际布局、配色、字体与动画由layout_ref和Composition.tsx唯一控制。修改真值后同步本规格包络并重新验收，不把本规格当第二份渲染配置。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation_contract",
+        "reference_observation"
+      ],
+      "acceptance": [
+        {
+          "check": "当前元素视觉与内容合同",
+          "method": "实际查看最终样片中此元素各适用状态的代表帧，并核对冻结manifest/layout及时间边界",
+          "pass_condition": "布局在声明包络内，内容无意外裁切/遮挡，未开放属性保持当前实现规则"
+        }
+      ]
+    },
+    {
+      "id": "summary_pill",
+      "type": "text",
+      "role": "可选主窗摘要卡（本次未启用）",
+      "parent_id": null,
+      "z_index": 15,
+      "content": {
+        "mode": "editable",
+        "binding": "scene_summaries",
+        "asset_id": null,
+        "description": "manifest.scenes[].summary的kicker/title/body可编辑；不存在时隐藏"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          42,
+          515,
+          660,
+          256
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "font": "layout.json /fonts/family 与 /fonts/fallback（当前Microsoft YaHei/sans-serif）；字重/fonts/weight",
+          "font_size": "layout.summary.kicker_size/title_size/body_size",
+          "max_lines": 3,
+          "overflow": "预检拒绝或按layout声明的最小字号适配；不裁掉必需文本",
+          "layout_ref": "layout.json /summary",
+          "animation_ref": "layout.json /motion；每个scene局部帧0..card_enter_seconds*fps淡入，offset_y→0，cubic-bezier见ease_out_cubic；显隐按manifest对应scene左闭右开"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 19
+      },
+      "states": [
+        {
+          "id": "hidden",
+          "visible": false,
+          "description": "当前scene未提供summary时隐藏"
+        },
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "当前scene提供summary时按当前实现显示"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本box是当前画布中的名义验收包络；实际布局、配色、字体与动画由layout_ref和Composition.tsx唯一控制。修改真值后同步本规格包络并重新验收，不把本规格当第二份渲染配置。"
+        },
+        {
+          "kind": "time_mapping",
+          "target_id": null,
+          "rule": "当前scene序列局部frame驱动进场，非全片起点；scene每次开始独立重置。此行为从当前Composition/布局读取，不额外造全片动画切点。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation_contract",
+        "reference_observation"
+      ],
+      "acceptance": [
+        {
+          "check": "当前元素视觉与内容合同",
+          "method": "实际查看最终样片中此元素各适用状态的代表帧，并核对冻结manifest/layout及时间边界",
+          "pass_condition": "布局在声明包络内，内容无意外裁切/遮挡，未开放属性保持当前实现规则"
+        }
+      ]
+    },
+    {
+      "id": "presenter_pip",
+      "type": "avatar",
+      "role": "素材模式圆形人物",
+      "parent_id": null,
+      "z_index": 18,
+      "content": {
+        "mode": "editable",
+        "binding": "avatar_pip",
+        "asset_id": "sample_presenter_media",
+        "description": "优先manifest.media.avatar_pip独立方形人物源，缺省按当前实现复用avatar；圆形遮罩与人物保留范围由layout/Composition处理"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          770,
+          1090,
+          260,
+          260
+        ],
+        "fit": "cover",
+        "clip": "self",
+        "style": {
+          "layout_ref": "layout.json /presenter_pip"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 19
+      },
+      "states": [
+        {
+          "id": "hidden",
+          "visible": false,
+          "description": "presenter主窗模式不显示叠加圆人"
+        },
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "broll模式显示独立圆人物；独立圆源不重复描边"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本box是当前画布中的名义验收包络；实际布局、配色、字体与动画由layout_ref和Composition.tsx唯一控制。修改真值后同步本规格包络并重新验收，不把本规格当第二份渲染配置。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation_contract",
+        "reference_observation"
+      ],
+      "acceptance": [
+        {
+          "check": "当前元素视觉与内容合同",
+          "method": "实际查看最终样片中此元素各适用状态的代表帧，并核对冻结manifest/layout及时间边界",
+          "pass_condition": "圆内人物头部和面部可辨，底边不侵占字幕；没有参考作者固化底部身份区，换源须复验裁切"
+        }
+      ]
+    },
+    {
+      "id": "captions",
+      "type": "subtitle",
+      "role": "按音轨时间出现的字幕",
+      "parent_id": null,
+      "z_index": 50,
+      "content": {
+        "mode": "editable",
+        "binding": "cues",
+        "asset_id": null,
+        "description": "manifest.cues为全片秒与人工核对文本；CLI规范化为Caption毫秒，Captions按frame/fps*1000显示。本期不调用ASR，不声称音素口型验收。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          40,
+          1355,
+          1000,
+          70
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "font": "layout.json /fonts/family 与 /fonts/fallback（当前Microsoft YaHei/sans-serif）；字重/fonts/weight",
+          "font_size": 56,
+          "max_lines": 1,
+          "overflow": "预检拒绝或按layout声明的最小字号适配；不裁掉必需文本",
+          "layout_ref": "layout.json /captions"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 19
+      },
+      "states": [
+        {
+          "id": "hidden",
+          "visible": false,
+          "description": "当前时间不在任何cue内时隐藏"
+        },
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "start <= t < end的当前cue显示"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本box是当前画布中的名义验收包络；实际布局、配色、字体与动画由layout_ref和Composition.tsx唯一控制。修改真值后同步本规格包络并重新验收，不把本规格当第二份渲染配置。"
+        },
+        {
+          "kind": "avoid",
+          "target_id": "presenter_pip",
+          "rule": "当前layout将圆人物底边与字幕上沿分离；更换文本、人物或几何后复验"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation_contract",
+        "reference_observation"
+      ],
+      "acceptance": [
+        {
+          "check": "当前元素视觉与内容合同",
+          "method": "实际查看最终样片中此元素各适用状态的代表帧，并核对冻结manifest/layout及时间边界",
+          "pass_condition": "白字深描边、轻微斜切可辨；全部cue原文和边界可读，最长句无截字，字幕与圆人不重叠；听辨同步单独记录"
+        }
+      ]
+    },
+    {
+      "id": "focus_number",
+      "type": "text",
+      "role": "大编号或关键数字",
+      "parent_id": null,
+      "z_index": 24,
+      "content": {
+        "mode": "editable",
+        "binding": "scene_focus",
+        "asset_id": null,
+        "description": "manifest.scenes[].focus.value；当前layout将编号绘为大号半透明背景数字，无卡片底板。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          50,
+          650,
+          980,
+          650
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "font": "layout.json /fonts/family 与 /fonts/fallback（当前Microsoft YaHei/sans-serif）；字重/fonts/weight",
+          "font_size": 320,
+          "max_lines": 1,
+          "overflow": "预检拒绝或按layout声明的最小字号适配；不裁掉必需文本",
+          "layout_ref": "layout.json /focus",
+          "animation_ref": "layout.json /motion；每个scene局部帧0..card_enter_seconds*fps淡入，offset_y→0，cubic-bezier见ease_out_cubic；显隐按manifest对应scene左闭右开"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 19
+      },
+      "states": [
+        {
+          "id": "hidden",
+          "visible": false,
+          "description": "当前scene无focus"
+        },
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "当前scene有focus时显示value"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本box是当前画布中的名义验收包络；实际布局、配色、字体与动画由layout_ref和Composition.tsx唯一控制。修改真值后同步本规格包络并重新验收，不把本规格当第二份渲染配置。"
+        },
+        {
+          "kind": "time_mapping",
+          "target_id": null,
+          "rule": "当前scene序列局部frame驱动进场，非全片起点；scene每次开始独立重置。此行为从当前Composition/布局读取，不额外造全片动画切点。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation_contract",
+        "reference_observation"
+      ],
+      "acceptance": [
+        {
+          "check": "当前元素视觉与内容合同",
+          "method": "实际查看最终样片中此元素各适用状态的代表帧，并核对冻结manifest/layout及时间边界",
+          "pass_condition": "布局在声明包络内，内容无意外裁切/遮挡，未开放属性保持当前实现规则"
+        }
+      ]
+    },
+    {
+      "id": "focus_keyword",
+      "type": "text",
+      "role": "红黄关键词强调",
+      "parent_id": null,
+      "z_index": 24,
+      "content": {
+        "mode": "editable",
+        "binding": "focus_label",
+        "asset_id": null,
+        "description": "manifest.scenes[].focus.label可编辑关键词；focus.color=yellow|red控制layout色板，深描边且无卡背景。本次只覆盖黄色关键词与编号1/2，red保持未覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          50,
+          650,
+          980,
+          650
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "font": "layout.json /fonts/family 与 /fonts/fallback（当前Microsoft YaHei/sans-serif）；字重/fonts/weight",
+          "font_size": 92,
+          "max_lines": 1,
+          "overflow": "预检拒绝或按layout声明的最小字号适配；不裁掉必需文本",
+          "layout_ref": "layout.json /focus",
+          "animation_ref": "layout.json /motion；每个scene局部帧0..card_enter_seconds*fps淡入，offset_y→0，cubic-bezier见ease_out_cubic；显隐按manifest对应scene左闭右开"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 19
+      },
+      "states": [
+        {
+          "id": "hidden",
+          "visible": false,
+          "description": "当前scene无focus"
+        },
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "当前scene有focus时显示label"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本box是当前画布中的名义验收包络；实际布局、配色、字体与动画由layout_ref和Composition.tsx唯一控制。修改真值后同步本规格包络并重新验收，不把本规格当第二份渲染配置。"
+        },
+        {
+          "kind": "time_mapping",
+          "target_id": null,
+          "rule": "当前scene序列局部frame驱动进场，非全片起点；scene每次开始独立重置。此行为从当前Composition/布局读取，不额外造全片动画切点。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation_contract",
+        "reference_observation"
+      ],
+      "acceptance": [
+        {
+          "check": "当前元素视觉与内容合同",
+          "method": "实际查看最终样片中此元素各适用状态的代表帧，并核对冻结manifest/layout及时间边界",
+          "pass_condition": "布局在声明包络内，内容无意外裁切/遮挡，未开放属性保持当前实现规则"
+        }
+      ]
+    },
+    {
+      "id": "bottom_divider",
+      "type": "decoration",
+      "role": "主窗与底部品牌区分割线",
+      "parent_id": null,
+      "z_index": 25,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "主窗与底部品牌区分割线"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          1440,
+          1080,
+          2
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "layout_ref": "layout.json /dividers"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 19
+      },
+      "states": [
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "在完整样片区间内可见；内部细节由引用的当前layout与Composition计算"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本box是当前画布中的名义验收包络；实际布局、配色、字体与动画由layout_ref和Composition.tsx唯一控制。修改真值后同步本规格包络并重新验收，不把本规格当第二份渲染配置。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_contract",
+        "reference_observation"
+      ],
+      "acceptance": [
+        {
+          "check": "当前元素视觉与内容合同",
+          "method": "实际查看最终样片中此元素各适用状态的代表帧，并核对冻结manifest/layout及时间边界",
+          "pass_condition": "布局在声明包络内，内容无意外裁切/遮挡，未开放属性保持当前实现规则"
+        }
+      ]
+    },
+    {
+      "id": "footer_background",
+      "type": "background",
+      "role": "深紫色底部品牌区",
+      "parent_id": null,
+      "z_index": 3,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "全新程序底板；不复用原作者姓名、形象或账号标识"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          1440,
+          1080,
+          480
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "layout_ref": "layout.json /regions/footer 与 /palette"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 19
+      },
+      "states": [
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "在完整样片区间内可见；内部细节由引用的当前layout与Composition计算"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本box是当前画布中的名义验收包络；实际布局、配色、字体与动画由layout_ref和Composition.tsx唯一控制。修改真值后同步本规格包络并重新验收，不把本规格当第二份渲染配置。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_contract",
+        "reference_observation"
+      ],
+      "acceptance": [
+        {
+          "check": "当前元素视觉与内容合同",
+          "method": "实际查看最终样片中此元素各适用状态的代表帧，并核对冻结manifest/layout及时间边界",
+          "pass_condition": "布局在声明包络内，内容无意外裁切/遮挡，未开放属性保持当前实现规则"
+        }
+      ]
+    },
+    {
+      "id": "brand",
+      "type": "text",
+      "role": "本期品牌或模板名称",
+      "parent_id": null,
+      "z_index": 30,
+      "content": {
+        "mode": "editable",
+        "binding": "brand",
+        "asset_id": null,
+        "description": "manifest.brand独立可编辑；本次使用数字人模板7名称，参考作者品牌不得自动填入"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          48,
+          1480,
+          984,
+          105
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "font": "layout.json /fonts/family 与 /fonts/fallback（当前Microsoft YaHei/sans-serif）；字重/fonts/weight",
+          "font_size": 74,
+          "max_lines": 1,
+          "overflow": "预检拒绝或按layout声明的最小字号适配；不裁掉必需文本",
+          "layout_ref": "layout.json /brand"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 19
+      },
+      "states": [
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "在完整样片区间内可见；内部细节由引用的当前layout与Composition计算"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本box是当前画布中的名义验收包络；实际布局、配色、字体与动画由layout_ref和Composition.tsx唯一控制。修改真值后同步本规格包络并重新验收，不把本规格当第二份渲染配置。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation_contract"
+      ],
+      "acceptance": [
+        {
+          "check": "当前元素视觉与内容合同",
+          "method": "实际查看最终样片中此元素各适用状态的代表帧，并核对冻结manifest/layout及时间边界",
+          "pass_condition": "布局在声明包络内，内容无意外裁切/遮挡，未开放属性保持当前实现规则"
+        }
+      ]
+    },
+    {
+      "id": "tagline",
+      "type": "text",
+      "role": "本期结构或品牌说明",
+      "parent_id": null,
+      "z_index": 30,
+      "content": {
+        "mode": "editable",
+        "binding": "tagline",
+        "asset_id": null,
+        "description": "manifest.tagline独立可编辑说明；不延用参考作者身份宣称"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          48,
+          1705,
+          984,
+          116
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "font": "layout.json /fonts/family 与 /fonts/fallback（当前Microsoft YaHei/sans-serif）；字重/fonts/weight",
+          "font_size": 37,
+          "max_lines": 2,
+          "overflow": "预检拒绝或按layout声明的最小字号适配；不裁掉必需文本",
+          "layout_ref": "layout.json /tagline"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 19
+      },
+      "states": [
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "在完整样片区间内可见；内部细节由引用的当前layout与Composition计算"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本box是当前画布中的名义验收包络；实际布局、配色、字体与动画由layout_ref和Composition.tsx唯一控制。修改真值后同步本规格包络并重新验收，不把本规格当第二份渲染配置。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation_contract"
+      ],
+      "acceptance": [
+        {
+          "check": "当前元素视觉与内容合同",
+          "method": "实际查看最终样片中此元素各适用状态的代表帧，并核对冻结manifest/layout及时间边界",
+          "pass_condition": "布局在声明包络内，内容无意外裁切/遮挡，未开放属性保持当前实现规则"
+        }
+      ]
+    },
+    {
+      "id": "development_label",
+      "type": "text",
+      "role": "顶部本地开发样片说明",
+      "parent_id": null,
+      "z_index": 60,
+      "content": {
+        "mode": "editable",
+        "binding": "development_label",
+        "asset_id": null,
+        "description": "manifest.development_label明确本次是参考视觉结构测试、原声片段复用；不标称新生成数字人或已上线生产"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          24,
+          25,
+          1032,
+          34
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "font": "layout.json /fonts/family 与 /fonts/fallback（当前Microsoft YaHei/sans-serif）；字重/fonts/weight",
+          "font_size": 21,
+          "max_lines": 1,
+          "overflow": "预检拒绝或按layout声明的最小字号适配；不裁掉必需文本",
+          "layout_ref": "layout.json /development_label"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 19
+      },
+      "states": [
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "在完整样片区间内可见；内部细节由引用的当前layout与Composition计算"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本box是当前画布中的名义验收包络；实际布局、配色、字体与动画由layout_ref和Composition.tsx唯一控制。修改真值后同步本规格包络并重新验收，不把本规格当第二份渲染配置。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation_contract"
+      ],
+      "acceptance": [
+        {
+          "check": "当前元素视觉与内容合同",
+          "method": "实际查看最终样片中此元素各适用状态的代表帧，并核对冻结manifest/layout及时间边界",
+          "pass_condition": "布局在声明包络内，内容无意外裁切/遮挡，未开放属性保持当前实现规则"
+        }
+      ]
+    },
+    {
+      "id": "context_pill",
+      "type": "text",
+      "role": "主窗顶部左侧上下文胶囊",
+      "parent_id": null,
+      "z_index": 40,
+      "content": {
+        "mode": "editable",
+        "binding": "context_pill",
+        "asset_id": null,
+        "description": "manifest.context_pill独立可编辑，当前缺省视觉结构测试；不复用原作者身份。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          38,
+          494,
+          360,
+          44
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "font": "layout.json /fonts/family 与 /fonts/fallback（当前Microsoft YaHei/sans-serif）；字重/fonts/weight",
+          "font_size": 24,
+          "max_lines": 1,
+          "overflow": "预检拒绝或按layout声明的最小字号适配；不裁掉必需文本",
+          "layout_ref": "layout.json /context_pill"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 19
+      },
+      "states": [
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "在完整样片区间内可见；内部细节由引用的当前layout与Composition计算"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本box是当前画布中的名义验收包络；实际布局、配色、字体与动画由layout_ref和Composition.tsx唯一控制。修改真值后同步本规格包络并重新验收，不把本规格当第二份渲染配置。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation_contract",
+        "reference_observation"
+      ],
+      "acceptance": [
+        {
+          "check": "当前元素视觉与内容合同",
+          "method": "实际查看最终样片中此元素各适用状态的代表帧，并核对冻结manifest/layout及时间边界",
+          "pass_condition": "布局在声明包络内，内容无意外裁切/遮挡，未开放属性保持当前实现规则"
+        }
+      ]
+    },
+    {
+      "id": "footer_note",
+      "type": "text",
+      "role": "底部本期开发来源说明",
+      "parent_id": null,
+      "z_index": 15,
+      "content": {
+        "mode": "editable",
+        "binding": "footer_note",
+        "asset_id": null,
+        "description": "manifest.footer_note独立可编辑本期说明；当前默认数字人模板7·本地结构验证，不重复源作者底板。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          48,
+          1612,
+          984,
+          49
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "font": "layout.json /fonts/family 与 /fonts/fallback（当前Microsoft YaHei/sans-serif）；字重/fonts/weight",
+          "font_size": 27,
+          "max_lines": 1,
+          "overflow": "预检拒绝或按layout声明的最小字号适配；不裁掉必需文本",
+          "layout_ref": "layout.json /footer_note"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 19
+      },
+      "states": [
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "在完整样片区间内可见；内部细节由引用的当前layout与Composition计算"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本box是当前画布中的名义验收包络；实际布局、配色、字体与动画由layout_ref和Composition.tsx唯一控制。修改真值后同步本规格包络并重新验收，不把本规格当第二份渲染配置。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation_contract",
+        "reference_observation"
+      ],
+      "acceptance": [
+        {
+          "check": "当前元素视觉与内容合同",
+          "method": "实际查看最终样片中此元素各适用状态的代表帧，并核对冻结manifest/layout及时间边界",
+          "pass_condition": "布局在声明包络内，内容无意外裁切/遮挡，未开放属性保持当前实现规则"
+        }
+      ]
+    },
+    {
+      "id": "master_audio",
+      "type": "audio",
+      "role": "全片独立原声音轨与主时钟",
+      "parent_id": null,
+      "z_index": -1,
+      "content": {
+        "mode": "embedded",
+        "binding": "audio_track",
+        "asset_id": "sample_audio",
+        "description": "manifest.media.audio为冻结同钟19秒WAV；所有视频元素muted。Atelier原生输出后，由canonical CLI固定执行master_wav_v1重封装：保留视频字节，使用冻结WAV重新AAC编码，只播放这一条独立音轨，不新增BGM或云配音。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1080,
+          1920
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "audio_only": true,
+          "layout_ref": "Composition.tsx /Audio；无可视图层，box只是画布时钟归属包络"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 19
+      },
+      "states": [
+        {
+          "id": "audible",
+          "visible": false,
+          "description": "无可视输出，音轨在0<=t<19秒按原速播放；无其他视频原声混入"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "synchronization",
+          "target_id": "captions",
+          "rule": "独立audio与manifest.cues共用全片原点，manifest时钟秒由CLI换算Caption毫秒；不加速/减速、不延长封面或尾部静帧填充"
+        },
+        {
+          "kind": "canonical_output",
+          "target_id": null,
+          "rule": "以同钟WAV修复原生Atelier编码音轨2048-sample延迟；-map 0:v:0 -map 1:a:0 -c:v copy -c:a aac -t duration_seconds。本期-t19。先输出同目录临时MP4，完成后原子替换；audio_clock_mux必须master_wav_v1，audio_clock_audio_sha256必须等于冻结WAV SHA。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content.asset_id"
+      ],
+      "evidence_ids": [
+        "implementation_contract"
+      ],
+      "acceptance": [
+        {
+          "check": "独立音轨及声音同步",
+          "method": "完整解码与流探测、与冻结原声数值核对，并单独实际连续听看",
+          "pass_condition": "最终canonical输出经过master_wav_v1；来源WAV SHA绑定正确，19秒/570帧、声画时钟及数值延迟核验分别有证据。实际清晰度、音量与字幕同步需连续听辨；数值相关性和无延迟结果不自动通过audio。"
+        }
+      ]
+    }
+  ],
+  "slots": [
+    {
+      "id": "title_lines",
+      "element_id": "header_title",
+      "property": "content",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "min_items": 1,
+        "max_items": 2,
+        "sample_items": 2,
+        "source": "manifest.title_lines",
+        "text_rule": "1..2条非空单行文本；本期两行，字宽由CLI按当前layout预检"
+      },
+      "missing": "拒绝准备，补齐两行标题",
+      "overflow": "按当前layout最小字号预检；仍不适配则拒绝并压短文本"
+    },
+    {
+      "id": "media",
+      "element_id": "main_visual",
+      "property": "content",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "source": "manifest.media.avatar/audio；broll模式必需media.broll，独立圆人优先media.avatar_pip",
+        "local_files_only": true,
+        "duration_seconds": [
+          15,
+          25
+        ],
+        "source_ranges": "实际文件probe与每scene源局部区间必须覆盖所需播放长度"
+      },
+      "missing": "必需avatar/audio或启用broll时所需broll缺失、不可解码则拒绝准备",
+      "overflow": "源不足拒绝，不暗中循环、拉伸或冻结补时"
+    },
+    {
+      "id": "source_pill",
+      "element_id": "source_pill",
+      "property": "content",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "source": "manifest.source_pill",
+        "content_rule": "准确描述本次实际来源；按layout字宽预检"
+      },
+      "missing": "拒绝准备并补来源说明",
+      "overflow": "压短准确说明；不裁掉关键来源或虚构身份"
+    },
+    {
+      "id": "scene_summaries",
+      "element_id": "summary_pill",
+      "property": "content",
+      "value_type": "array",
+      "required": false,
+      "limits": {
+        "source": "manifest.scenes[].summary",
+        "keys": [
+          "可选kicker",
+          "必需title",
+          "可选body"
+        ],
+        "scene_rule": "可选，当前scene未提供则隐藏；各字段按当前CLI限制预检"
+      },
+      "missing": "可选summary缺失时隐藏；不阻断其他已确定样片元素",
+      "overflow": "超字宽则拒绝或按当前layout已声明适配；不得静默丢字"
+    },
+    {
+      "id": "avatar_pip",
+      "element_id": "presenter_pip",
+      "property": "content",
+      "value_type": "asset",
+      "required": false,
+      "limits": {
+        "source": "manifest.media.avatar_pip或当前实现回退avatar",
+        "shape_rule": "独立方形人像源优先，圆形遮罩；人物保留需实际看帧"
+      },
+      "missing": "可选独立源缺失按实现复用avatar；avatar不可用时拒绝",
+      "overflow": "源裁切不合格时补独立人像源；不改变固定字幕避让"
+    },
+    {
+      "id": "cues",
+      "element_id": "captions",
+      "property": "content",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "source": "manifest.cues",
+        "keys": [
+          "start",
+          "end",
+          "text"
+        ],
+        "clock": "全片秒、左闭右开；非负、end>start、按时间排序、不重叠、不越片尾",
+        "text_rule": "按当前字幕布局预检，手工分句不伪称ASR"
+      },
+      "missing": "拒绝准备；补本次音轨对应的真实文本和确定时间",
+      "overflow": "超出行宽或时长时调整分句/切点并重验，不裁字幕或拉伸音轨"
+    },
+    {
+      "id": "scene_focus",
+      "element_id": "focus_number",
+      "property": "content",
+      "value_type": "array",
+      "required": false,
+      "limits": {
+        "source": "manifest.scenes[].focus.value",
+        "rule": "focus可选；短数字/编号/关键值，按layout预检"
+      },
+      "missing": "无focus的scene隐藏",
+      "overflow": "超宽拒绝，压短为保留语义的短值"
+    },
+    {
+      "id": "focus_label",
+      "element_id": "focus_keyword",
+      "property": "content",
+      "value_type": "array",
+      "required": false,
+      "limits": {
+        "source": "manifest.scenes[].focus.label",
+        "rule": "与focus.value同scene的非空关键词；按layout预检",
+        "color": [
+          "yellow",
+          "red"
+        ]
+      },
+      "missing": "无focus的scene隐藏；focus存在却缺label时补齐或按当前CLI拒绝",
+      "overflow": "压短关键词；不使用源画面固化字卡代替编辑层"
+    },
+    {
+      "id": "brand",
+      "element_id": "brand",
+      "property": "content",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "source": "manifest.brand",
+        "rule": "本期合法品牌或模板名；本次数字人模板7，不自动继承原作者名"
+      },
+      "missing": "拒绝准备",
+      "overflow": "按当前layout字宽预检，超限压短"
+    },
+    {
+      "id": "tagline",
+      "element_id": "tagline",
+      "property": "content",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "source": "manifest.tagline",
+        "max_items": 2,
+        "rule": "1..2行明确编写的本期结构/品牌说明；当前layout字宽预检"
+      },
+      "missing": "拒绝准备",
+      "overflow": "超行数或最小字号仍不适配则拒绝，压短同一输入"
+    },
+    {
+      "id": "development_label",
+      "element_id": "development_label",
+      "property": "content",
+      "value_type": "string",
+      "required": false,
+      "limits": {
+        "source": "manifest.development_label",
+        "rule": "明确本地开发测试、原片局部声画复用及未发布范围",
+        "default": "结构开发样片 · 引用原片音画"
+      },
+      "missing": "采用当前CLI明确默认结构开发/来源说明；不得移除必要声明",
+      "overflow": "压短但保留开发/来源范围，不移除必要说明"
+    },
+    {
+      "id": "timeline",
+      "element_id": "global",
+      "property": "scenes",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "source": "manifest.scenes",
+        "required_keys": [
+          "id",
+          "start",
+          "end",
+          "mode"
+        ],
+        "mode": [
+          "presenter",
+          "broll"
+        ],
+        "optional_keys": [
+          "fit",
+          "source_in",
+          "avatar_in",
+          "pip_in",
+          "summary",
+          "focus"
+        ],
+        "rule": "区间连续无缝铺满duration_seconds；source_in/avatar_in/pip_in为非负源局部秒；fit=contain|cover；不得自动循环/冻结。本期四段均broll+contain，自动启用独立同源模糊背景；presenter/red/summary本期未覆盖。"
+      },
+      "missing": "拒绝准备，补齐完整分镜",
+      "overflow": "拒绝重叠/空档/越界和源不足，修正同一manifest"
+    },
+    {
+      "id": "title_emphasis",
+      "element_id": "header_title",
+      "property": "content.title_emphasis",
+      "value_type": "array",
+      "required": false,
+      "limits": {
+        "source": "manifest.title_emphasis",
+        "rule": "可选标题强调子串；按当前Composition保留原文并应用palette.title_accent，无命中不额外造字"
+      },
+      "missing": "缺失时保持普通标题文字",
+      "overflow": "超出标题原文的词不产生匹配；最终关键文字需看帧核对"
+    },
+    {
+      "id": "context_pill",
+      "element_id": "context_pill",
+      "property": "content",
+      "value_type": "string",
+      "required": false,
+      "limits": {
+        "source": "manifest.context_pill",
+        "default": "视觉结构测试",
+        "rule": "单行可编辑上下文说明"
+      },
+      "missing": "采用当前CLI明确默认值；默认不能掩盖错误来源声明",
+      "overflow": "按当前layout最小字号预检；仍超宽则拒绝并压短文字"
+    },
+    {
+      "id": "footer_note",
+      "element_id": "footer_note",
+      "property": "content",
+      "value_type": "string",
+      "required": false,
+      "limits": {
+        "source": "manifest.footer_note",
+        "default": "数字人模板7 · 本地结构验证",
+        "rule": "单行本地结构测试说明"
+      },
+      "missing": "采用当前CLI明确默认值；默认不能掩盖错误来源声明",
+      "overflow": "按当前layout最小字号预检；仍超宽则拒绝并压短文字"
+    },
+    {
+      "id": "focus_color",
+      "element_id": "focus_keyword",
+      "property": "content.color",
+      "value_type": "string",
+      "required": false,
+      "limits": {
+        "source": "manifest.scenes[].focus.color",
+        "enum": [
+          "yellow",
+          "red"
+        ],
+        "default": "yellow",
+        "sample_coverage": "本期只yellow；red未覆盖"
+      },
+      "missing": "focus存在且缺color时采用yellow",
+      "overflow": "其他值拒绝，不猜测颜色语义"
+    },
+    {
+      "id": "audio_track",
+      "element_id": "master_audio",
+      "property": "content.asset_id",
+      "value_type": "asset",
+      "required": true,
+      "limits": {
+        "source": "manifest.media.audio",
+        "duration_seconds": 19,
+        "rule": "本次19秒连续原声WAV，后续短样15..25且同clock；不截断讲话或拉伸。最终CLI以master_wav_v1同钟重封装视频copy+WAV转AAC，验证音轨源SHA；不能交付仅native_render_completed的原生编码音轨。"
+      },
+      "missing": "拒绝prepare并补本次实际同钟音轨",
+      "overflow": "时长/源区间不符时拒绝；先按明确完整句选段准备同钟源，不自动改语速或截断"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "sample_measurement",
+      "source_kind": "measurement",
+      "source": "v001本期19秒最终开发短样及当前源码/静态检查",
+      "locator": "validation.json；成片SHA eb86e79808bf929d8faf7e4e61842025b3ca83421d62a00e2069cb90812e1cdc；原始媒体与逐次证据位于本机忽略目录",
+      "method": "ffprobe、全片解码、主WAV与成片48kHz PCM零延迟相关/FFT时差、模板schema/路由/源码/严格TS/隔离测试及交接审计；不将数值音频检查当作人工听辨。",
+      "file": "validation.json",
+      "sha256": "08403e32e9c14bbd474672a2478b42bd5f6a5a6a517fbef81e991ea9ec54998b"
+    },
+    {
+      "id": "sample_visual_observation",
+      "source_kind": "observation",
+      "source": "同一最终SHA的12时间点画面与6.6/18.9秒原尺寸帧",
+      "locator": "validation.json /visual_observation；原始帧及联系表位于本机.local/avatar-template7/qa/，媒体不随源码分发",
+      "method": "根Agent实际查看全部多宫格与两个原尺寸帧，检查标题、双pill、人物和字幕避让、最长字幕、contain完整素材、编号关键词、品牌及源短黑场。范围限broll+yellow编号1/2，不推广至red/presenter/summary或连续听看。",
+      "file": "validation.json",
+      "sha256": "08403e32e9c14bbd474672a2478b42bd5f6a5a6a517fbef81e991ea9ec54998b"
+    },
+    {
+      "id": "reference_observation",
+      "source_kind": "observation",
+      "source": "用户提供的本地参考访谈MP4；原尺寸1080×1920、30fps、约261.55秒",
+      "locator": "根任务执行者已实际查看8张多宫格共72抽样帧，覆盖0.033..261.1秒，另查看6.567秒原尺寸帧",
+      "method": "以离散视觉样本识别固定三区结构、双胶囊、白字描黑斜字幕、圆人、大编号与红黄关键词。坐标是估读，约±10~30像素；画面文字仅证明画面作出相应宣称，不证明人物真人/数字人身份、软件、作者事实或连续动作。",
+      "file": null,
+      "sha256": null
+    },
+    {
+      "id": "implementation_contract",
+      "source_kind": "design",
+      "source": "本次数字人模板7重建合同；layout.json、Composition.tsx及本地CLI",
+      "locator": "authority.implementation_paths与parameter_source；参考黑色星点头区、蓝青线、主窗和深紫底区，文字全部重建为编辑层",
+      "method": "运行参数唯一真值为layout.json，镜头/文字/媒体输入为冻结manifest；spec的box用于名义验收包络，不作为渲染器输入。圆窗/字幕避让等是本次重建设计，不伪称像素级测量复刻；源作者固化身份与底板不复制。",
+      "file": null,
+      "sha256": null
+    }
+  ],
+  "unknowns": [],
+  "validation": {
+    "structure": {
+      "status": "pass",
+      "evidence_ids": ["sample_measurement"],
+      "note": "v001规格、全工作区模板路由、源码边界、严格TypeScript、8项隔离合同测试与交接审计通过。通用runbook检查其他文档仍有失败，模板7无错误；本任务不证明整个手册集合通过。"
+    },
+    "technical": {
+      "status": "pass",
+      "evidence_ids": ["sample_measurement"],
+      "note": "本期最终SHA eb86e79808bf929d8faf7e4e61842025b3ca83421d62a00e2069cb90812e1cdc：1080×1920/30fps/570帧，视频、音频与容器均19.000000秒，H.264/AAC完整解码通过；master_wav_v1后与原WAV零偏移相关0.9999977076。仅本地19秒测试范围。"
+    },
+    "visual": {
+      "status": "pass",
+      "evidence_ids": ["sample_visual_observation"],
+      "note": "实际看完最终产物12时间点多宫格，另看6.6/18.9秒原尺寸帧；四段broll、contain前景与模糊背景、独立圆人、最长字幕、双pill、编号1/2黄色重点和品牌板通过本期抽样。9.2秒源黑场有源帧证据；圆人按设计覆盖素材右下区域，独立字幕保持完整。presenter、red、summary及新人物边界未覆盖，保持待验；无连续播放结论。"
+    },
+    "audio": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "等待本次实际连续听看；原声数值检查、手工字幕或抽帧不证明听辨/同步，未新生成语音或数字人口型。"
+    },
+    "platform": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "未在目标平台与真实设备播放核验；本地画布或模拟不能升级本项。"
+    },
+    "user_review": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "用户已授权新runbook与开发短样，尚未确认最终成片版本；授权不等同最终确认。"
+    },
+    "production": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "本地Atelier开发样片，未接通Studio模板目录、统一生产队列、作品登记或正式全片生产。"
+    }
+  },
+  "extensions": {
+    "avatar": {
+      "face_crop": "主窗人物与圆形人物为两层；/regions/main和/presenter_pip是layout真值。优先独立方形人像源，圆形遮罩；本次不复制源作者底部品牌形象，新人物/换源需复验头部与字幕避让。",
+      "synchronization": "独立WAV是主时钟；视觉源静音。scenes/cues为全片秒，CLI规范化cue为Caption毫秒，画面30fps；scene边界帧对齐、左闭右开。source_in/avatar_in/pip_in是各源局部秒；本期原声19秒、570帧，不拉伸。canonical CLI在Atelier后以冻结WAV执行master_wav_v1：映射原视频流和独立音轨、-c:v copy -c:a aac -t19，原子替换最终文件；回执audio_clock_mux和audio_clock_audio_sha256需读回。该流程修复原生编码2048-sample延迟，仍不以数值相关性推定连续听辨或音素口型已验。"
+    },
+    "graphic": {
+      "text_policy": "title_lines/title_emphasis、brand、tagline、context_pill、source_pill、footer_note、development_label、summary、focus及cues均有manifest可编辑槽；字体/字号/行数/颜色/适配下限读取layout/Composition，CLI字宽预检。参考烧入字和原作者身份不是新模板的可编辑或事实已核验内容。",
+      "asset_fit": "星点、蓝青线、深紫底板、pill和强调图形由代码重建；主窗前景按scene.fit，只有contain时增加同源同入点的独立cover模糊背景（layout.main_contain_background），背景不承担证据可读性。本期四scene均contain，完整保留978×550有效源区固化文字；圆人物独立cover裁切。源素材固化内容不误列为可编辑层。"
+    },
+    "material_edit": {
+      "source_ranges": "本次媒体provenance冻结连续来源17.2..36.2秒；人物240×240源裁切(758,1120)，broll为978×550源裁切(50,560)后输出1280×720，具体SHA和probe在本期忽略目录。manifest.scenes映射全片秒至source_in/avatar_in/pip_in源秒，视觉源静音且不加速/拉伸/循环/冻结。本期四段broll均fit=contain，保留有效源区完整构图与固化文字，同源cover仅为背景填充；源是已合成画面，无法无损恢复独立净B-roll，此为本期接受的设计偏离。",
+      "cut_policy": "按明确scene区间切换，无未声明加速/拉伸/循环/尾帧冻结；视觉源静音，独立WAV只播放一次。样片约9.2秒原生素材短黑场已由根任务查看源帧确认，保留原过渡，不误判render缺素材；其精确持续范围以本期源帧记录核对。来源固化内容保持来源身份，不推定事实已核验。"
+    },
+    "interview_v7": {
+      "contract": "avatar-interview-v7/v001：固定头尾、双pill、独立圆人、描边字幕与大编号/可选红黄关键词；implementation+specification仅本地开发短样。本期四scene为broll+contain前景/同源模糊背景，重点仅编号1/2与yellow；presenter/red/summary未覆盖。canonical输出须master_wav_v1。",
+      "rules": [
+        "用户本次明确授权创建数字人模板7 runbook并做短片测试，属于正式新手册编写范围，不停在经验提案。",
+        "当前输入时长15..25秒；本规格对应本次19.0秒/570帧，连续来源区间17.2..36.2秒。最终按同一冻结manifest和成片身份验收。",
+        "本地CLI使用Atelier VideoCompose.execute，只准备/渲染测试产物；不调用TTS、ASR、数字人云服务、不进入发布流程。",
+        "正式生产接入未完成：不能把此入口描述为工作台已支持模板7，也不能用独立脚本绕开现有生产队列。",
+        "本次媒体、声音、manifest与逐次日志放忽略的.local或项目证据目录，不随模板源码分发。",
+        "后续采用新稿件/新人物/正式全片时先完成来源与能力接入、生产gate和对应费用授权，随后按当前统一队列合同实现。",
+        "当前实现是结构重建，未宣称像素级复刻：标题/来源/品牌替换为本期编辑内容，双pill置于主窗顶部，大编号半透明、label采用yellow|red深描边。参考坐标是估读，运行真值始终为layout/Composition；summary是可选新增设计扩展，本次未启用。",
+        "本期接受的设计偏离：参考为已合成画面，无法无损拆出净B-roll；完整保留978×550有效区与其固化文字，前景contain，下层同源cover按layout.main_contain_background blur/brightness/scale填充。双层只有contain启用，不把cover背景当独立证据。",
+        "本期样片约9.2秒为源素材自带短黑场过渡，根任务已核对源帧；保留来源过渡，不以该锚点黑帧判定render素材缺失。",
+        "canonical CLI须在Atelier后完成master_wav_v1原WAV重封装，回执包含audio_clock_mux=master_wav_v1及冻结音轨SHA；native_render_completed不等于最终交付。保留视频字节，数值音轨时钟检查与连续听辨分别记录。"
+      ],
+      "audio_clock_mux": "master_wav_v1"
+    }
+  },
+  "operations": [
+    {
+      "id": "freeze_input",
+      "input": "本规格、当前layout/Composition/Root/index/CLI及本期manifest与本地媒体",
+      "action": "在Haike_video运行python scripts/avatar_template7_sample.py --manifest <本期JSON> --project <本期忽略目录>，默认仅本地预检和准备；读回媒体probe、字宽/时间校验、输入与源码身份。manifest路径相对媒体解析，本次duration=19、source interval=17.2..36.2。",
+      "output": "冻结manifest/媒体身份、准备记录和本地项目路径；失败项明确定位原字段",
+      "completion": "时长15..25秒，必需文字和媒体均可读；scene/cue区间及源长度合法；当前模板和工作区一致；已有产物先核对SHA与输入后复用。",
+      "recovery": "保留原manifest和项目；修复明确缺失项后重新prepare，不自动调用云服务或新建付费意图。",
+      "entrypoint": "../../scripts/avatar_template7_sample.py"
+    },
+    {
+      "id": "development_render",
+      "input": "已通过准备的本期manifest、同一项目目录、确定的layout/实现与本次开发样片授权",
+      "action": "同一CLI参数增加--render，经本地Atelier VideoCompose.execute渲染；随后canonical CLI固定执行master_wav_v1，以原同钟WAV重封装(-map 0:v:0 -map 1:a:0 -c:v copy -c:a aac -t 19)，临时MP4完成后原子替换最终文件。--force仅按当前已有产物保护规则明确更新本地输入，不用于正式生产runner。",
+      "output": "fingerprint本地最终MP4及artifacts/{props,edit_decisions,sample-state,composition-preflight-result,native-render-result,sample-evidence}.json；sample-state/evidence含audio_clock_mux=master_wav_v1及audio_clock_audio_sha256，零新增云调用。",
+      "completion": "最终canonical文件与冻结输入/SHA一致，master_wav_v1及音轨源SHA回执齐备；本期四段broll+contain前景/同源模糊背景、独立圆人、双pill、编号1/2与yellow关键词和字幕。presenter/red/summary未覆盖；原生源9.2秒短黑场保留。退出码与native_render_completed不能代替最终技术/视觉或连续听辨。",
+      "recovery": "先读同一项目状态和已有输出SHA；native_render_completed且输出SHA可核对、尚缺master_wav_v1时只恢复原WAV重封装，不重渲染视频。最终成功缓存须含mux标志与音轨SHA；只修受影响本地布局/文字，复用原媒体，不触发云调用。",
+      "entrypoint": "../../scripts/avatar_template7_sample.py --render；本地Atelier"
+    },
+    {
+      "id": "acceptance",
+      "input": "本次最终MP4、同一manifest/layout/source identity及技术/帧证据",
+      "action": "核对最终master_wav_v1文件、音轨源SHA与完整解码；ffprobe检查19秒/570帧及流，独立做数值声画时钟检查。实际看contain完整文字/同源模糊背景、圆人、双pill、最长字幕、编号1/2与yellow重点、切换和结尾，并对照9.2秒源短黑场。presenter/red/summary未覆盖；连续听看/真机/用户/生产分别记录。",
+      "output": "最终SHA、技术报告、实际帧与七维验证矩阵；可打开的开发短样",
+      "completion": "全部适用项有明确状态与证据，失败项阻断对应声明；技术与视觉只覆盖真实检查范围，未实施的维度保持pending。",
+      "recovery": "按元素/时间段定位，复用原声画仅重做受影响本地合成；最终SHA变化后更新相关证据，不沿用旧批准。",
+      "entrypoint": "../../../Haike-Videohub/agent-runbooks/视频模板验收量表.md；本机ffprobe/ffmpeg与实际看帧"
+    }
+  ]
+}

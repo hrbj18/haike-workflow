@@ -19,7 +19,7 @@ from typing import Any, Iterator
 
 QUEUE_SCHEMA_VERSION = 1
 DEFAULT_DB_NAME = "production-queue.sqlite3"
-QUEUE_KINDS = {"review_preview", "avatar_review_preview", "full_preview", "material_selection", "published_remix", "material_commentary", "commentary_presenter"}
+QUEUE_KINDS = {"review_preview", "avatar_review_preview", "full_preview", "material_selection", "published_remix", "material_commentary", "commentary_presenter", "commentary_presenter_consumer_v1", "studio_graphic", "studio_avatar", "studio_motion", "studio_investment_recompose"}
 QUEUE_SOURCES = {"workbench", "codex", "scheduler", "recovery"}
 PRIORITIES = {"priority": 300, "normal": 200, "background": 100}
 ACTIVE_STATUSES = {"queued", "running", "paused"}
@@ -64,8 +64,8 @@ def _decode(value: str | None, fallback: Any) -> Any:
         return fallback
 
 
-def _safe_public(value: Any) -> Any:
-    """Remove credentials and implementation-only leases from public payloads."""
+def _sanitize(value: Any, *, redact_local_paths: bool) -> Any:
+    """Remove credentials while retaining paths needed by private execution."""
 
     if isinstance(value, dict):
         clean: dict[str, Any] = {}
@@ -75,14 +75,19 @@ def _safe_public(value: Any) -> Any:
                 continue
             if any(part in lowered for part in PUBLIC_SECRET_PARTS):
                 continue
-            clean[str(key)] = _safe_public(child)
+            clean[str(key)] = _sanitize(child, redact_local_paths=redact_local_paths)
         return clean
     if isinstance(value, list):
-        return [_safe_public(child) for child in value]
+        return [_sanitize(child, redact_local_paths=redact_local_paths) for child in value]
     if isinstance(value, str):
         value = _AUTH_VALUE.sub(lambda match: match.group(1) + "[REDACTED]", value)
-        return _WINDOWS_ABSOLUTE_PATH.sub("[LOCAL_PATH]", value)
+        return _WINDOWS_ABSOLUTE_PATH.sub("[LOCAL_PATH]", value) if redact_local_paths else value
     return value
+
+
+def _safe_public(value: Any) -> Any:
+    """Remove credentials, implementation-only leases and local paths."""
+    return _sanitize(value, redact_local_paths=True)
 
 
 def _validate_identifier(value: Any, label: str, *, maximum: int = 240) -> str:
@@ -212,6 +217,7 @@ class ProductionQueue:
         self, *, project_id: str, kind: str, source: str, priority: str,
         parent_job_id: str, frozen_request: dict[str, Any] | None,
         idempotency_key: str | None = None, revive: bool = False,
+        start_paused: bool = False,
     ) -> dict[str, Any]:
         # Admission shares the archival lock; no new producer can enter mid-delete.
         from backlot.work_catalog import WorkCatalog
@@ -222,7 +228,7 @@ class ProductionQueue:
                 raise ProductionQueueConflict("项目正在归档清理，完成或恢复清理后再生产")
             return self._submit(project_id=project_id, kind=kind, source=source, priority=priority,
                                 parent_job_id=parent_job_id, frozen_request=frozen_request,
-                                idempotency_key=idempotency_key, revive=revive)
+                                idempotency_key=idempotency_key, revive=revive, start_paused=start_paused)
 
     def _submit(
         self,
@@ -235,6 +241,7 @@ class ProductionQueue:
         frozen_request: dict[str, Any] | None,
         idempotency_key: str | None = None,
         revive: bool = False,
+        start_paused: bool = False,
     ) -> dict[str, Any]:
         project_id = _validate_identifier(project_id, "项目编号", maximum=80)
         kind = _validate_identifier(kind, "生产类型", maximum=64)
@@ -243,6 +250,8 @@ class ProductionQueue:
         parent_job_id = _validate_identifier(parent_job_id, "底层任务编号")
         if kind not in QUEUE_KINDS:
             raise ProductionQueueError("生产类型不在统一队列白名单中")
+        if type(start_paused) is not bool or (start_paused and kind != "studio_investment_recompose") or (kind == "studio_investment_recompose" and (not start_paused or revive)):
+            raise ProductionQueueError("招商A本地重合成只允许暂停入队，由专属执行器领取")
         if source not in QUEUE_SOURCES:
             raise ProductionQueueError("任务来源无效")
         if priority not in PRIORITIES:
@@ -255,7 +264,7 @@ class ProductionQueue:
         )
         job_id = self._job_id(key)
         now = _now()
-        request = _safe_public(frozen_request or {})
+        request = _sanitize(frozen_request or {}, redact_local_paths=False)
         with self._connection(immediate=True) as connection:
             existing = connection.execute(
                 "SELECT * FROM production_jobs WHERE idempotency_key=?", (key,)
@@ -299,11 +308,11 @@ class ProductionQueue:
                 """,
                 (
                     job_id, key, project_id, project_title, kind, source, priority,
-                    PRIORITIES[priority], "queued", "等待统一调度", parent_job_id,
+                    PRIORITIES[priority], "paused" if start_paused else "queued", "等待本地重合成执行器" if start_paused else "等待统一调度", parent_job_id,
                     _json(request), now, now,
                 ),
             )
-            self._event(connection, job_id, "submitted", None, "queued", {"source": source})
+            self._event(connection, job_id, "submitted", None, "paused" if start_paused else "queued", {"source": source})
             row = connection.execute("SELECT * FROM production_jobs WHERE job_id=?", (job_id,)).fetchone()
         return self._public_row(row)
 
@@ -399,7 +408,7 @@ class ProductionQueue:
             if running is not None:
                 return None
             row = connection.execute(
-                "SELECT * FROM production_jobs WHERE status='queued' "
+                "SELECT * FROM production_jobs WHERE status='queued' AND kind!='studio_investment_recompose' "
                 "ORDER BY priority_rank DESC,created_at ASC,job_id ASC LIMIT 1"
             ).fetchone()
             if row is None:
@@ -417,6 +426,24 @@ class ProductionQueue:
             claimed = connection.execute(
                 "SELECT * FROM production_jobs WHERE job_id=?", (row["job_id"],)
             ).fetchone()
+        return self._private_row(claimed)
+
+    def claim_local_recompose(self, job_id: str, worker_id: str, *, lease_seconds: int = 7200) -> dict[str, Any]:
+        """Atomically take a paused local job without a queued compatibility gap."""
+        worker_id = _validate_identifier(worker_id, "工作者编号", maximum=120)
+        with self._connection(immediate=True) as connection:
+            row = connection.execute("SELECT * FROM production_jobs WHERE job_id=?", (job_id,)).fetchone()
+            if row is None or row["kind"] != "studio_investment_recompose":
+                raise ProductionQueueConflict("专属执行器只能领取招商A本地重合成")
+            recoverable = row["status"] == "paused" or row["status"] == "failed" and row["retryable"]
+            if not recoverable:
+                raise ProductionQueueConflict("本地重合成任务当前不能重复领取")
+            if connection.execute("SELECT 1 FROM production_jobs WHERE status='running' LIMIT 1").fetchone():
+                raise ProductionQueueConflict("统一生产队列已有执行任务，请等待原任务完成")
+            connection.execute("UPDATE production_jobs SET status='running',stage='本地重合成已取得执行权',worker_id=?,lease_expires_at=?,started_at=COALESCE(started_at,?),finished_at=NULL,updated_at=?,attempt_count=attempt_count+1,revision=revision+1 WHERE job_id=?",
+                               (worker_id, _future(lease_seconds), _now(), _now(), job_id))
+            self._event(connection, job_id, "claimed", row["status"], "running", {"worker_id": worker_id})
+            claimed = connection.execute("SELECT * FROM production_jobs WHERE job_id=?", (job_id,)).fetchone()
         return self._private_row(claimed)
 
     def heartbeat(self, job_id: str, worker_id: str, *, lease_seconds: int = 120) -> None:
@@ -533,6 +560,8 @@ class ProductionQueue:
             row = connection.execute("SELECT * FROM production_jobs WHERE job_id=?", (job_id,)).fetchone()
             if row is None:
                 raise ProductionQueueError("生产任务不存在")
+            if row["kind"] == "studio_investment_recompose":
+                raise ProductionQueueConflict("请使用招商A本地重合成执行器恢复原任务")
             if row["status"] == "ambiguous":
                 raise ProductionQueueConflict("供应商受理状态不明确，核对原任务后才能恢复")
             if row["status"] != "failed" or not bool(row["retryable"]):
@@ -547,6 +576,100 @@ class ProductionQueue:
             self._event(connection, job_id, "retried", "failed", "queued")
             updated = connection.execute("SELECT * FROM production_jobs WHERE job_id=?", (job_id,)).fetchone()
         return self._public_row(updated)
+
+    def amend_studio_avatar_budget(
+        self, job_id: str, *, expected_revision: int, previous_max_charge_micros: int,
+        max_charge_micros: int, authorization_evidence: str, validate_only: bool = False,
+    ) -> dict[str, Any]:
+        """Raise only an unsubmitted avatar's cap; preserve its original paid receipts."""
+        if (type(expected_revision) is not int or expected_revision < 1
+                or type(previous_max_charge_micros) is not int or not 0 < previous_max_charge_micros <= 10**9
+                or type(max_charge_micros) is not int or not previous_max_charge_micros < max_charge_micros <= 10**9
+                or type(validate_only) is not bool
+                or not isinstance(authorization_evidence, str) or not authorization_evidence.strip()
+                or len(authorization_evidence) > 2000):
+            raise ProductionQueueError("预算修订需要原版本、明确授权和严格增加的整数微元上限")
+        evidence_sha = hashlib.sha256(authorization_evidence.strip().encode("utf-8")).hexdigest()
+        receipt = {"previous_max_charge_micros": previous_max_charge_micros,
+                   "max_charge_micros": max_charge_micros, "authorization_sha256": evidence_sha}
+
+        def public(row, *, applied, replayed):
+            return {**self._public_row(row), "budget_amendment": {
+                **receipt, "validated": True, "applied": applied, "replayed": replayed}}
+
+        with self._connection(immediate=True) as connection:
+            row = connection.execute("SELECT * FROM production_jobs WHERE job_id=?", (job_id,)).fetchone()
+            if row is None:
+                raise ProductionQueueError("生产任务不存在")
+            request = _decode(row["frozen_request"], {})
+            for event in connection.execute(
+                    "SELECT detail_json FROM production_events WHERE job_id=? AND event_type='budget_amended' ORDER BY event_id",
+                    (job_id,)):
+                previous = _decode(event["detail_json"], {})
+                if previous.get("authorization_sha256") == evidence_sha:
+                    if (any(previous.get(key) != value for key, value in receipt.items())
+                            or not isinstance(request, dict) or request.get("max_charge_micros") != max_charge_micros):
+                        raise ProductionQueueConflict("同一授权的原预算或新预算不一致，不能重复修订")
+                    return public(row, applied=True, replayed=True)
+            error = _decode(row["error_json"], {})
+            budget_stop = "后续报价超过本次总费用上限，已完成产物保留；未提交这一步"
+            if (row["kind"] != "studio_avatar" or row["status"] != "failed" or row["cancel_requested"]
+                    or row["safe_resume_point"] != "studio_avatar" or not isinstance(error, dict)
+                    or error.get("type") != "StudioAvatar" or error.get("message") != budget_stop):
+                raise ProductionQueueConflict("仅允许修订数字人尚未提交的原预算失败任务")
+            if row["revision"] != expected_revision:
+                raise ProductionQueueConflict("原任务版本已变化，请重新核对预算修订")
+            if (not isinstance(request, dict) or type(request.get("max_charge_micros")) is not int
+                    or request["max_charge_micros"] != previous_max_charge_micros):
+                raise ProductionQueueConflict("原任务冻结预算不一致，不能覆盖修订")
+            draft = request.get("draft") or {}
+            render_id = request.get("render_id")
+            if (not isinstance(draft, dict) or draft.get("id") != row["project_id"]
+                    or type(draft.get("revision")) is not int or draft["revision"] < 1
+                    or render_id != "studio-" + str(draft["revision"]) or row["parent_job_id"] != render_id):
+                raise ProductionQueueConflict("原草稿版本或渲染目录不匹配，不能修订预算")
+            project = self.projects_root / row["project_id"]
+            folder = project / "renders" / render_id
+            state_path = folder / "gateway-state.json"
+            if (project.is_symlink() or folder.is_symlink() or state_path.is_symlink()
+                    or not project.resolve().is_relative_to(self.projects_root.resolve())
+                    or not state_path.resolve().is_relative_to(project.resolve()) or not state_path.is_file()):
+                raise ProductionQueueConflict("原制作回执不存在或不属于本项目，不能修订预算")
+            try:
+                state_bytes = state_path.read_bytes()
+                stages = json.loads(state_bytes).get("stages")
+                if not isinstance(stages, dict) or not stages or "avatar" in stages:
+                    raise ValueError()
+                committed = 0
+                for stage in stages.values():
+                    if (not isinstance(stage, dict) or not isinstance(stage.get("job"), dict)
+                            or stage["job"].get("status") != "succeeded"):
+                        raise ValueError()
+                    quote = stage.get("quote") or {}
+                    amount = quote.get("max_charge_micros") if isinstance(quote, dict) else None
+                    if type(amount) not in {str, int} or not re.fullmatch(r"[0-9]{1,10}", str(amount)):
+                        raise ValueError()
+                    committed += int(amount)
+                if max_charge_micros <= committed:
+                    raise ValueError()
+            except (OSError, ValueError, TypeError, AttributeError):
+                raise ProductionQueueConflict("原付费阶段未确认成功或已有数字人记录，不能按预算修订恢复") from None
+            amended = {**request, "max_charge_micros": max_charge_micros}
+            if validate_only:
+                return public(row, applied=False, replayed=False)
+            detail = {**receipt, "previous_revision": row["revision"],
+                      "request_sha256_before": hashlib.sha256(_json(request).encode("utf-8")).hexdigest(),
+                      "request_sha256_after": hashlib.sha256(_json(amended).encode("utf-8")).hexdigest(),
+                      "state_sha256": hashlib.sha256(state_bytes).hexdigest()}
+            connection.execute(
+                "UPDATE production_jobs SET frozen_request=?,status='queued',stage='预算已获新授权，等待原任务继续',"
+                "error_json='{}',retryable=0,cancel_requested=0,worker_id=NULL,lease_expires_at=NULL,finished_at=NULL,"
+                "updated_at=?,revision=revision+1 WHERE job_id=? AND revision=?",
+                (_json(amended), _now(), job_id, expected_revision),
+            )
+            self._event(connection, job_id, "budget_amended", "failed", "queued", detail)
+            updated = connection.execute("SELECT * FROM production_jobs WHERE job_id=?", (job_id,)).fetchone()
+        return public(updated, applied=True, replayed=False)
 
     def expired_running(self) -> list[dict[str, Any]]:
         now = _now()
@@ -577,6 +700,8 @@ class ProductionQueue:
                 raise ProductionQueueError("生产任务不存在")
             if row["status"] != "running":
                 return self._public_row(row)
+            if row["kind"] == "studio_investment_recompose" and status == "queued":
+                status, retryable, safe_resume_point = "failed", True, "local_recompose"
             now = _now()
             connection.execute(
                 "UPDATE production_jobs SET status=?,stage=?,result_json=?,error_json=?,retryable=?,"
@@ -621,6 +746,8 @@ class ProductionQueue:
             row = connection.execute("SELECT * FROM production_jobs WHERE job_id=?", (job_id,)).fetchone()
             if row is None:
                 raise ProductionQueueError("生产任务不存在")
+            if row["kind"] == "studio_investment_recompose" and target == "queued":
+                raise ProductionQueueConflict("请使用招商A本地重合成执行器恢复原任务")
             if row["status"] not in allowed:
                 raise ProductionQueueConflict("当前状态不能执行该操作")
             connection.execute(
@@ -651,6 +778,7 @@ class ProductionQueue:
         private.pop("frozen_request", None)
         private["id"] = private["job_id"]
         private["title"] = {
+            "studio_investment_recompose": "招商A本地脚注修正版",
             "review_preview": "无数字人一键审核预览",
             "avatar_review_preview": "有数字人一键审核预览",
             "full_preview": "合成全片审核预览",

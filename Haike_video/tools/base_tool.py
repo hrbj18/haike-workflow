@@ -31,6 +31,9 @@ def _load_dotenv() -> None:
     even when tools are imported directly without going through the registry.
     Only sets variables that are not already in the environment.
     """
+    # Match python-dotenv's explicit opt-out for isolated tools and test hosts.
+    if os.environ.get("PYTHON_DOTENV_DISABLED", "").casefold() in {"1", "true", "t", "yes", "y"}:
+        return
     import re
     project_root = Path(__file__).resolve().parent.parent
     # Keep credentials in the Git-ignored secrets file.  Load it before the

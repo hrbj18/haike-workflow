@@ -32,6 +32,9 @@ def queue_client(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
     _project(projects, "avatar", pipeline_type="avatar-spokesperson")
     monkeypatch.setattr(server_mod, "PROJECTS_DIR", projects)
     monkeypatch.setattr(server_mod, "_summary_cache", {})
+    # Windows can reuse a PID whose old per-test SQLite file still exists.
+    # Bind this fixture's queue to its fresh project sandbox, not that cache.
+    monkeypatch.setattr(server_mod, "_production_queue_db_path", lambda: tmp_path / "production-queue.sqlite3")
 
     async def no_watch() -> None:
         await asyncio.Event().wait()
@@ -148,6 +151,30 @@ def test_published_remix_failed_version_can_retry_via_shared_api(queue_client):
     assert response.json()["parent_job_id"] == "a" * 64
 
 
+def test_studio_avatar_retries_same_frozen_paid_intent(queue_client):
+    from backlot.production_queue_worker import ProductionQueueWorker
+
+    client, projects = queue_client
+    queue = client.app.state.production_queue
+    frozen = {"id": "studioquote-original", "render_id": "studio-2",
+              "prepared": {"audio_file": "file-audio", "image_file": "file-image"},
+              "quotes": {"avatar": {"id": "gquote-original"}}}
+    task = queue.submit(project_id="avatar", kind="studio_avatar", source="workbench",
+                        priority="normal", parent_job_id="studio-2", frozen_request=frozen)
+    worker = ProductionQueueWorker(queue, projects, handlers={"studio_avatar": lambda _: {
+        "status": "failed", "stage": "原云任务仍在处理", "retryable": True,
+        "safe_resume_point": "studio_avatar"}})
+    assert worker.run_once()["status"] == "failed"
+
+    response = client.post(f"/api/production-queue/jobs/{task['job_id']}/retry", json={})
+
+    assert response.status_code == 200, response.text
+    assert response.json()["status"] == "queued"
+    assert response.json()["job_id"] == task["job_id"]
+    assert response.json()["parent_job_id"] == "studio-2"
+    assert queue.get(task["job_id"], include_private=True)["frozen_request"] == frozen
+
+
 def test_workbench_full_preview_is_registered_without_direct_render(
     queue_client,
     monkeypatch: pytest.MonkeyPatch,
@@ -233,3 +260,28 @@ def test_pytest_queue_database_never_uses_repository_runtime_state(
 
     assert "openmontage-production-queue-tests" in str(path)
     assert path != server_mod.PROJECTS_DIR.parent / ".backlot" / server_mod.PRODUCTION_QUEUE_DB_NAME
+
+
+def test_budget_amend_api_dispatches_validation_without_retry(queue_client, monkeypatch):
+    from backlot.production_queue import ProductionQueue
+    client, _ = queue_client
+    calls = []
+    payload = {"expected_revision": 9, "previous_max_charge_micros": 4_860_000,
+               "max_charge_micros": 5_860_000, "authorization_evidence": "explicit fixture authorization",
+               "validate_only": True}
+    def amend(self, job_id, **kw):
+        calls.append((job_id, kw))
+        return {"job_id": job_id, "status": "failed", "budget_amendment": {"validated": True}}
+    monkeypatch.setattr(ProductionQueue, "amend_studio_avatar_budget", amend)
+    monkeypatch.setattr(ProductionQueue, "retry", lambda *a: pytest.fail("budget amendment is not a generic retry"))
+    response = client.post("/api/production-queue/jobs/PQ-fixture/budget-amend", json=payload)
+    assert response.status_code == 200
+    assert calls == [("PQ-fixture", payload)]
+
+
+def test_budget_amend_api_rejects_unknown_fields_before_operation(queue_client, monkeypatch):
+    from backlot.production_queue import ProductionQueue
+    client, _ = queue_client
+    monkeypatch.setattr(ProductionQueue, "amend_studio_avatar_budget", lambda *a, **kw: pytest.fail("invalid amendment"))
+    response = client.post("/api/production-queue/jobs/PQ-fixture/budget-amend", json={"max_charge_micros": 6_000_000, "draft": {}})
+    assert response.status_code == 422

@@ -118,6 +118,9 @@ class EngineConfig:
     quiet_hours_enabled: bool = True         # 夜间静默总开关
     active_hours_start: int = 8              # 活跃起点小时(含),0-23
     active_hours_end: int = 24               # 活跃止点小时(不含);可 >24 表示跨零点(如 25=次日 1 点)
+    # 仅发布可选独立时段；双None继承上方规则，不改变评论/私信/关注等写操作。
+    publish_active_hours_start: int | None = None
+    publish_active_hours_end: int | None = None
     verify_proxy_region: bool = True         # 体检时探测代理出口国家,与账号时区不一致则告警
     # 新建 native 账号的写操作环境门禁。存量 legacy 账号不受这组开关影响。
     native_write_gate_enabled: bool = True

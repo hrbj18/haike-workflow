@@ -73,6 +73,32 @@ _UPLOAD_BLOCK_KW = ("请等待视频上传完成", "视频上传中", "请先上
 # 发现人工验证弹窗(短信验证码 / 原设备扫码)后额外给的时间:要留够人走到电脑前 + 拿手机收码。
 # 实测抖音对「新登录态首次发布」会弹这个框,300s 常常不够人反应过来。
 _VERIFY_GRACE_SECONDS = 900
+_LOGGED_OUT_ERROR = "logged_out:抖音创作平台未登录,请先在账号页点「创作者登录」"
+
+
+def _login_landing_text(text: str) -> bool:
+    """Recognise the observed login form, not an isolated login word in prose.
+
+    Creator can serve this landing page at the original /content/manage or
+    /content/post URL. Require distinct visible login-method labels together
+    with a login/code control label; navigation alone is not authentication.
+    """
+    text = re.sub(r"[\u200b-\u200d\u2060\ufeff]", "", text or "")
+    labels = {re.sub(r"\s+", "", line) for line in text.splitlines() if line.strip()}
+    methods = labels & {"扫码登录", "二维码登录", "验证码登录", "密码登录",
+                        "手机验证码登录", "短信验证码登录"}
+    return len(methods) >= 2 and bool(labels & {"登录", "获取验证码"})
+
+
+async def _logged_out(page) -> bool:
+    if "passport" in page.url or "/login" in page.url:
+        return True
+    try:
+        text = await asyncio.wait_for(page.inner_text("body"), timeout=2)
+    except Exception:
+        # An unreadable page is unknown, not proof that a login form exists.
+        return False
+    return _login_landing_text(text)
 
 
 def _log(msg: str) -> None:
@@ -314,6 +340,9 @@ async def _verify_on_manage(ctx, title: str, timeout_ms: int = 150000,
     try:
         await page.goto(MANAGE_URL, wait_until="domcontentloaded", timeout=60000)
         await page.wait_for_timeout(6000)
+        if await _logged_out(page):
+            await _dump(page, "manage-loggedout")
+            return False, _LOGGED_OUT_ERROR
         # 每个候选分到的时间片。下限 40s 是给"列表要过几十秒才刷新"留的余量
         # (单候选时就是完整 timeout,与改动前一致)。
         # ★ 抽成模块常量是为了**可测**:测试把它 monkeypatch 成很小的值,
@@ -325,6 +354,9 @@ async def _verify_on_manage(ctx, title: str, timeout_ms: int = 150000,
             deadline = asyncio.get_running_loop().time() + per_probe_ms / 1000
             rounds = 0
             while asyncio.get_running_loop().time() < deadline:
+                if await _logged_out(page):
+                    await _dump(page, "manage-loggedout")
+                    return False, _LOGGED_OUT_ERROR
                 rounds += 1
                 rounds_total += 1
                 found_note = await _manage_search(page, probe)
@@ -538,9 +570,9 @@ async def publish_douyin(mgr: BrowserManager, identity: Identity,
         _log(f"打开发布页 {url} (media_type={media_type}, files={len(files)})")
         await page.goto(url, wait_until="domcontentloaded", timeout=40000)
         await page.wait_for_timeout(3000)
-        if "passport" in page.url or "/login" in page.url:
+        if await _logged_out(page):
             await _dump(page, "loggedout")
-            return False, "", "logged_out:抖音创作平台未登录,请先在账号页点「创作者登录」"
+            return False, "", _LOGGED_OUT_ERROR
 
         # ★ 发布前查重:若作品管理里已经有同名作品,说明上一次其实发成功了(只是没被
         #   我们确认到),这里直接返回成功 —— 既避免重复投稿,也把「假失败」纠回来。
@@ -549,6 +581,8 @@ async def publish_douyin(mgr: BrowserManager, identity: Identity,
             existed, detail = await _verify_on_manage(ctx, title, timeout_ms=25000,
                                                       interval_ms=8000)
             _log(f"发布前查重: found={existed} {detail}")
+            if detail.startswith("logged_out:"):
+                return False, "", detail
             if existed:
                 _log("作品管理里已存在同名作品 → 跳过本次上传(防重复投稿)")
                 return True, MANAGE_URL, ""
@@ -565,7 +599,11 @@ async def publish_douyin(mgr: BrowserManager, identity: Identity,
 
         # 等表单编辑器出现(= 已跳到编辑页;视频转码慢,给足时间)
         edit_timeout = 120000 if media_type == "video" else 45000
-        if not await _wait_editor(page, edit_timeout):
+        editor_ready = await _wait_editor(page, edit_timeout)
+        if await _logged_out(page):
+            await _dump(page, "editor-loggedout")
+            return False, "", _LOGGED_OUT_ERROR
+        if not editor_ready:
             await _dump(page, "noeditor")
             return False, "", ("上传后未进入编辑页(视频可能仍在转码或上传失败)。"
                                "请在弹出的窗口里查看,或到抖音创作平台重试。")
@@ -596,6 +634,9 @@ async def publish_douyin(mgr: BrowserManager, identity: Identity,
         waited_ms, stable, prev_sig = 0, 0, None
         btn = None
         while True:
+            if await _logged_out(page):
+                await _dump(page, "upload-loggedout")
+                return False, "", _LOGGED_OUT_ERROR
             state = await _page_state(page)
             sig = _state_sig(state)
             btn = await _primary_publish_button(page)
@@ -636,6 +677,9 @@ async def publish_douyin(mgr: BrowserManager, identity: Identity,
             except Exception as exc:               # noqa: BLE001
                 cover_note = f"封面步骤异常: {exc!r}"
             if cover_note:
+                if await _logged_out(page):
+                    await _dump(page, "cover-loggedout")
+                    return False, "", _LOGGED_OUT_ERROR
                 _log(f"警告:封面未设置 —— {cover_note}")
                 if cover_required:
                     return False, "", f"必需封面未确认: {cover_note}"
@@ -775,6 +819,10 @@ async def publish_douyin(mgr: BrowserManager, identity: Identity,
             found, detail = await _verify_on_manage(
                 ctx, title, timeout_ms=verify_timeout_ms, interval_ms=10000)
             _log(f"平台核对: found={found} {detail}")
+            if detail.startswith("logged_out:"):
+                # The final click already crossed the write boundary. A login
+                # page cannot prove rejection or make another upload safe.
+                return False, "", "write_uncertain:发表后登录态失效，需恢复同账号核对原作品；禁止重复投稿"
             if found and not ok:
                 ok = True
                 ok_reason = f"平台核对通过({detail})"

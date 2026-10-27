@@ -163,7 +163,7 @@ def test_creates_stable_private_profile_and_returns_public_catalog(local_store, 
         assert (stream.getnchannels(), stream.getframerate(), stream.getsampwidth()) == (1, 24000, 2)
     again = center.add_local_clone_voice("测试自己的声音", text, source)
     assert again["created_local_voice_id"] == profile_id
-    assert len(json.loads((data_dir / "profiles.json").read_text())["profiles"]) == 1
+    assert len(json.loads((data_dir / "profiles.json").read_text(encoding="utf-8"))["profiles"]) == 1
     assert probes == ["http://127.0.0.1:17494/health"] * 2
 
 
@@ -217,7 +217,7 @@ def _app_client():
     return TestClient(server.create_app())
 
 
-def test_multipart_route_uploads_and_cleans_temporary_input(local_store, monkeypatch):
+def test_multipart_route_uploads_and_cleans_temporary_input(local_store, monkeypatch, internal_supplier_mode):
     client = _app_client()
     original = upload.add_local_clone_voice
     saved_paths = []
@@ -235,7 +235,7 @@ def test_multipart_route_uploads_and_cleans_temporary_input(local_store, monkeyp
     assert saved_paths and not saved_paths[0].exists() and not saved_paths[0].parent.exists()
 
 
-def test_route_cleans_temporary_input_on_enrollment_failure(local_store, monkeypatch):
+def test_route_cleans_temporary_input_on_enrollment_failure(local_store, monkeypatch, internal_supplier_mode):
     paths = []
 
     def fail(_name, _text, path):
@@ -254,14 +254,14 @@ def test_route_cleans_temporary_input_on_enrollment_failure(local_store, monkeyp
     {"name": " ", "reference_text": "原文"},
     {"name": "新声音", "reference_text": "原文", "data_dir": "D:/arbitrary"},
 ])
-def test_route_rejects_missing_fields_and_client_directory(local_store, data):
+def test_route_rejects_missing_fields_and_client_directory(local_store, data, internal_supplier_mode):
     response = _app_client().post("/api/audio-center/local-voices", data=data,
                                   files={"audio": ("audio.wav", _wav_bytes(), "audio/wav")})
     assert response.status_code == 422
     assert not local_store[0].exists()
 
 
-def test_route_bounds_audio_during_multipart_parse(local_store, monkeypatch):
+def test_route_bounds_audio_during_multipart_parse(local_store, monkeypatch, internal_supplier_mode):
     # Use a small limit to exercise the exact same streaming guard without
     # allocating a 20 MB fixture. No server-side enrollment must be called.
     monkeypatch.setattr(upload, "MAX_LOCAL_VOICE_UPLOAD_BYTES", 128)
@@ -272,7 +272,7 @@ def test_route_bounds_audio_during_multipart_parse(local_store, monkeypatch):
     assert not local_store[0].exists()
 
 
-def test_route_rejects_large_declared_body_before_parsing(local_store):
+def test_route_rejects_large_declared_body_before_parsing(local_store, internal_supplier_mode):
     response = _app_client().post("/api/audio-center/local-voices", content=b"",
         headers={"Content-Type": "multipart/form-data; boundary=x", "Content-Length": str(21 * 1024 * 1024)})
     assert response.status_code == 413

@@ -5,7 +5,20 @@ from __future__ import annotations
 from pathlib import Path
 
 from backlot import tts_runtime
-from tools.base_tool import ToolResult
+from tools.base_tool import ToolResult, ToolStatus
+
+
+def test_optional_local_provider_status_does_not_probe_the_machine(monkeypatch):
+    calls = []
+
+    def unexpected_request(cls, *args, **kwargs):
+        calls.append((args, kwargs))
+        raise ConnectionError("test host must not be probed")
+
+    monkeypatch.setattr(tts_runtime.VoiceboxTTS, "_request", classmethod(unexpected_request))
+
+    assert tts_runtime.provider_status(tts_runtime.LOCAL_PROVIDER_ID) == ToolStatus.UNAVAILABLE
+    assert calls == []
 
 
 def test_local_profile_keeps_existing_voicebox_contract(tmp_path, monkeypatch):

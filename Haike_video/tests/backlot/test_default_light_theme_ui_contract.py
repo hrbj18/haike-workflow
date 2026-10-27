@@ -7,8 +7,6 @@ ROOT = Path(__file__).resolve().parents[2]
 UI_ROOT = ROOT / "backlot" / "ui"
 THEMED_PAGES = (
     "index.html",
-    "audio_center.html",
-    "automation.html",
     "workbench.html",
     "board.html",
 )
@@ -22,6 +20,18 @@ def test_all_primary_pages_default_to_light_without_overriding_saved_dark_choice
         assert 'if (storedTheme !== theme) localStorage.setItem(themeKey, theme);' in source, name
         assert 'document.documentElement.dataset.theme = theme;' in source, name
         assert "editorial-theme-v1" not in source, name
+        assert "data-haike-brand" in source, name
+        assert 'href="/ui/haike-brand.css"' in source, name
+        assert 'href="/ui/navigation.css"' in source, name
+
+    # Only retained tools share this theme contract. The old audio/automation
+    # documents stay retired rather than silently becoming customer entrypoints.
+    assert not (UI_ROOT / "audio_center.html").exists()
+    assert not (UI_ROOT / "automation.html").exists()
+    brand = (UI_ROOT / "haike-brand.css").read_text(encoding="utf-8")
+    assert "--brand-orange: #f64b00;" in brand
+    assert "--brand-yellow: #ffdc00;" in brand
+    assert ':root[data-haike-brand][data-theme="dark"]' in brand
 
 
 def test_library_and_legacy_board_follow_the_bootstrapped_theme_value():

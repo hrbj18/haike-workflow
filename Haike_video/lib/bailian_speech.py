@@ -33,6 +33,18 @@ def tts_billing_unit(model: str) -> str:
 class BailianSpeechError(RuntimeError):
     required = True
 
+    def __init__(self, message, *, failure_kind="other", provider_code=None,
+                 http_status=None, definitive=False, accepted=False, task_id=None):
+        self.failure_kind = failure_kind if failure_kind in {"invalid_key", "insufficient_balance"} else "other"
+        self.provider_code = provider_code
+        self.http_status = http_status
+        self.accepted = bool(accepted or task_id)
+        self.task_id = task_id
+        # An upstream task may already be chargeable. A later rejection is not
+        # evidence that this operation was never accepted.
+        self.definitive = bool(definitive and not self.accepted)
+        super().__init__(safe_error(message))
+
 
 class BailianAmbiguous(BailianSpeechError):
     status = "ambiguous"
@@ -45,6 +57,7 @@ def safe_error(value: object) -> str:
         if secret:
             message = message.replace(secret, "[已隐藏]")
     message = re.sub(r"https?://[^\s\"']+", "[云端地址已隐藏]", message)
+    message = re.sub(r"data:audio/[^;,\s]+;base64,[A-Za-z0-9+/=]+", "[参考录音已隐藏]", message)
     return message[:800]
 
 
@@ -67,19 +80,37 @@ def headers(**extra) -> dict:
     return {"Authorization": f"Bearer {key}", "Content-Type": "application/json", **extra}
 
 
+def provider_error(message, *, provider_code=None, http_status=None, definitive=False,
+                   accepted=False, task_id=None):
+    """Classify documented codes, never hints mentioning limits or balance."""
+    raw = str(provider_code) if isinstance(provider_code, (str, int)) and not isinstance(provider_code, bool) else None
+    public_code = raw if raw and re.fullmatch(r"[A-Za-z0-9_.-]{1,120}", raw) and safe_error(raw) == raw else None
+    kind = "invalid_key" if http_status == 401 or raw in {"InvalidApiKey", "invalid_api_key"} else (
+        "insufficient_balance" if raw in {"Arrearage", "isv.OUT_OF_SERVICE"} else "other")
+    return BailianSpeechError(message, failure_kind=kind, provider_code=public_code,
+        http_status=http_status, definitive=definitive, accepted=accepted, task_id=task_id)
+
+
 def response_json(response) -> dict:
+    status = response.status_code
     try:
         data = response.json()
     except ValueError as exc:
-        raise BailianSpeechError(f"百炼返回无效响应（HTTP {response.status_code}）") from exc
+        raise provider_error(f"百炼返回无效响应（HTTP {status}）",
+            http_status=status, definitive=status == 401) from exc
+    if not isinstance(data, dict):
+        raise provider_error(f"百炼返回无效响应（HTTP {status}）", http_status=status,
+            definitive=status == 401)
     if not response.ok or data.get("code"):
-        code = str(data.get("code") or response.status_code)
         hint = {
             401: "API Key 无效或与业务空间不匹配，请检查密钥",
             403: "账号没有该模型或音色的调用权限，请在百炼控制台检查授权与余额",
             429: "请求频率超限，请稍后手动重试",
-        }.get(response.status_code, "请检查模型、音色 ID、账号额度及请求参数")
-        raise BailianSpeechError(f"阿里云百炼调用失败：{hint}（{code}）：{safe_error(data.get('message', ''))}")
+        }.get(status, "请检查模型、音色 ID、账号额度及请求参数")
+        error = provider_error(f"阿里云百炼调用失败：{hint}：{safe_error(data.get('message', ''))}",
+            provider_code=data.get("code"), http_status=status, definitive=status < 500)
+        error.args = (f"{error.args[0]}（{error.provider_code or status}）",)
+        raise error
     return data
 
 
@@ -96,7 +127,20 @@ def read_record(path: Path) -> dict:
         raise BailianSpeechError("本地云端调用记录无法读取，已停止以避免重复计费") from exc
 
 
+def _native_path(path: Path) -> Path:
+    """Let Python filesystem calls use long Windows absolute paths."""
+    if os.name == "nt":
+        absolute = str(path.absolute())
+        if not absolute.startswith("\\\\?\\"):
+            absolute = ("\\\\?\\UNC\\" + absolute[2:] if absolute.startswith("\\\\")
+                        else "\\\\?\\" + absolute)
+        return Path(absolute)
+    return path
+
+
 def write_record(path: Path, data: dict) -> None:
+    # Protect the atomic temporary filename before the pre-submit write.
+    path = _native_path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     fd, name = tempfile.mkstemp(prefix=".bailian-", dir=path.parent)
     try:
@@ -144,6 +188,7 @@ def download(url: str, target: Path) -> None:
     response = requests.get(secure_url, timeout=(15, 180), allow_redirects=False)
     if response.status_code != 200 or not response.content:
         raise BailianSpeechError(f"百炼结果下载失败（HTTP {response.status_code}）；已保留调用记录，可恢复下载")
+    target = _native_path(target)
     target.parent.mkdir(parents=True, exist_ok=True)
     temporary = target.with_name(target.name + ".download")
     temporary.write_bytes(response.content)

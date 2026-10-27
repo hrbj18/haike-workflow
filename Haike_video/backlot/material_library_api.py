@@ -18,7 +18,7 @@ def call(function, *args, **kwargs):
 
 @router.get("/material-library", response_class=HTMLResponse)
 def page():
-    return HTMLResponse((Path(__file__).parent / "ui/material_library.html").read_text(encoding="utf-8"))
+    return HTMLResponse((Path(__file__).parent / "ui/avatar-generator/index.html").read_text(encoding="utf-8"), headers={'Cache-Control': 'no-cache'})
 
 
 @router.get("/api/material-library/status")

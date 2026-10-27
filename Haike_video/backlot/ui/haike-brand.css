@@ -1,0 +1,194 @@
+/* HAIKE 2025: shared visual layer. No production, billing or navigation logic.
+   Brand art is extracted unchanged from the user's handbook. */
+:root[data-haike-brand] {
+  --brand-orange: #f64b00;
+  --brand-yellow: #ffdc00;
+  --brand-link: #ba0901;
+  --brand-font: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --sans: var(--brand-font);
+  --display: var(--brand-font);
+  --mono: ui-monospace, SFMono-Regular, Consolas, monospace;
+  --grain-opacity: 0;
+  font-family: var(--brand-font);
+}
+:root:root[data-haike-brand]:not([data-theme="dark"]) {
+  color-scheme: light;
+  color: #191919;
+  background: #f7f7f5;
+  --bg: #f7f7f5; --page: #f7f7f5;
+  --surface: #fff; --panel: #fff; --surface-2: #f5f5f1; --surface-3: #ecece7;
+  --surface-raised: #f5f5f1; --surface-soft: #fafaf7; --raised: #f5f5f1;
+  --border: #dfdfd9; --border-soft: #e8e8e2; --line: #dfdfd9;
+  --line-bright: #bcbcb5; --bright: #bcbcb5;
+  --text: #191919; --text-2: #555; --text-3: #686868; --muted: #666; --subtle: #686868;
+  --amber: #ba0901; --amber-dim: #fff0e8; --cyan: #ba0901; --cyan-deep: #fff0e8;
+  --blue: #ba0901; --accent: #f64b00; --purple: #ba0901;
+  --green: #256346; --green-dim: #e8f5ed; --lime: #256346;
+  --red: #a32432; --red-dim: #ffedf0; --rose: #a32432; --yellow: #795313;
+  --cream: #fff; --cream-shade: #f5f5f1; --cream-ink: #191919; --cream-ink-2: #666;
+  --bg-vignette: none; --shadow: 0 4px 18px #00000008;
+  --scroll-thumb: #ccc; --scroll-thumb-hover: #a7a7a7;
+  --modal-backdrop: #19191966;
+}
+:root[data-haike-brand][data-theme="dark"] {
+  color-scheme: dark; color: #f5f5f1; background: #171717;
+  --bg: #171717; --page: #171717; --surface: #222; --panel: #222;
+  --surface-2: #292929; --surface-3: #333; --surface-raised: #292929; --surface-soft: #222; --raised: #292929;
+  --border: #414141; --border-soft: #333; --line: #414141; --line-bright: #666;
+  --text: #f5f5f1; --text-2: #ccc; --text-3: #b1b1b1; --muted: #ccc; --subtle: #b1b1b1;
+  --amber: #ffdc00; --cyan: #ffdc00; --blue: #ffdc00; --purple: #ffdc00;
+  --amber-dim: #382d1d; --bg-vignette: none;
+}
+:root:root[data-haike-brand] body { min-width: 320px; background: var(--bg); background-image: none; font-family: var(--brand-font); color: var(--text); line-height: 1.6; }
+:root[data-haike-brand] body::after { content: none; }
+:root[data-haike-brand] :is(h1,h2,h3,h4,.global-brand strong,.library-intro strong,.daily-automation-summary strong,.project-row-copy h3) {
+  font-family: var(--brand-font) !important; font-weight: 700; letter-spacing: -.025em;
+}
+:root[data-haike-brand] :is(button,input,select,textarea) { font-family: inherit; }
+:root[data-haike-brand] :is(button,a,input,select,textarea,summary):focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
+:root[data-haike-brand] :is(input[type="checkbox"],input[type="range"],progress) { accent-color: #f64b00; }
+:root[data-haike-brand] .global-brand { padding: 0 12px 20px; gap: 5px; border-color: var(--line); }
+:root[data-haike-brand] .global-brand::before { content: ""; display: block; width: 200px; max-width: 100%; height: 56px; background: url("/ui/brand/haike-company-logo.png") center / contain no-repeat; margin: 0 0 14px -5px; }
+:root[data-haike-brand] .global-brand strong { color: var(--text); font-size: 22px; }
+:root[data-haike-brand] .global-brand span { color: var(--muted); font-size: 10px; }
+:root[data-haike-brand] .global-brand small { color: var(--muted); font-size: 12px; }
+:root:root[data-haike-brand] .global-sidebar { background: var(--surface); border-color: var(--line); gap: 24px; padding-top: 22px; }
+:root[data-haike-brand] .global-nav-group > p { color: var(--subtle); font-family: var(--brand-font); font-size: 11px; letter-spacing: .05em; padding-left: 12px; }
+:root[data-haike-brand] .global-nav-link { color: var(--text-2, var(--muted)); min-height: 44px; border-radius: 8px; border-left-width: 3px; font-size: 13px; gap: 10px; }
+:root[data-haike-brand] .global-nav-link:hover { background: var(--surface-2); border-color: transparent; color: var(--text); }
+:root[data-haike-brand] .global-nav-link[aria-current="page"] { color: #191919; background: #fff7c1; border-color: transparent; border-left-color: #f64b00; font-weight: 700; }
+:root[data-haike-brand] .global-nav-link::before { content: ""; width: 18px; height: 18px; flex-shrink: 0; background: currentColor; mask: var(--nav-icon) center / contain no-repeat; }
+.global-nav-link[href="/"] { --nav-icon: url("/ui/brand/icons/folder.svg"); }
+.global-nav-link[href="/works"] { --nav-icon: url("/ui/brand/icons/clapperboard.svg"); }
+.global-nav-link[href^="/audio"] { --nav-icon: url("/ui/brand/icons/volume-2.svg"); }
+.global-nav-link[href="/automation"] { --nav-icon: url("/ui/brand/icons/workflow.svg"); }
+.global-nav-link[href="/published-clips"] { --nav-icon: url("/ui/brand/icons/film.svg"); }
+.global-nav-link[href="/material-library"] { --nav-icon: url("/ui/brand/icons/library.svg"); }
+.global-nav-link[href="/material-commentary"] { --nav-icon: url("/ui/brand/icons/scan-text.svg"); }
+:root[data-haike-brand] .library-slate { display: grid; border-bottom: 3px solid #f64b00; grid-template-columns: minmax(0,1fr) auto auto; gap: 18px; }
+:root[data-haike-brand] .library-slate .clapper { display: none; }
+:root[data-haike-brand] .library-slate > .spacer { display: none; }
+:root[data-haike-brand] .library-actions { display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: 7px; }
+:root[data-haike-brand] .library-heading { min-width: 0; }
+:root[data-haike-brand] .library-heading h1 { color: var(--text); font-size: 38px; line-height: 1.2; }
+:root[data-haike-brand] :is(.wordmark,.eyebrow,.library-kicker) { color: var(--amber); font-family: var(--brand-font); letter-spacing: .08em; }
+:root[data-haike-brand] .library-slate > .chip { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 6px 12px; color: var(--muted); align-self: center; }
+:root[data-haike-brand] .library-intro { display: flex; justify-content: space-between; gap: 28px; padding: 19px 0 17px; border-bottom: 1px solid var(--line); align-items: center; }
+:root[data-haike-brand] .library-intro strong { font-size: 20px; line-height: 1.6; color: var(--text); }
+:root[data-haike-brand] :is(.daily-automation-panel,.library-filter-panel,.project-dialog,.lib-card,.automation-card,.panel,.service-strip,.default-card,.voice-card,.metric) { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; box-shadow: none; }
+:root[data-haike-brand] .daily-automation-panel { border-left: 4px solid #ffdc00; }
+:root[data-haike-brand] .daily-automation-summary strong { color: var(--text); }
+:root[data-haike-brand] .daily-automation-summary small { color: var(--muted); }
+:root[data-haike-brand] :is(.daily-automation-body,.daily-switch-card,.daily-policy-card,.daily-progress-card,.daily-billing-audit,.automation-fact,.preflight-item,.stage-node,.run-detail,.text-recovery-detail,.combination-card,.history-row,.cloud-rate-control,.voice-facts div,.cloud-voice-form,.voice-card) { background: var(--surface); border-color: var(--line); border-radius: 8px; }
+:root[data-haike-brand] :is(.library-filter-panel,.project-dialog) { padding: 22px; }
+:root[data-haike-brand] :is(.library-filters input,.library-filters select,.form-field input,.form-field select,.form-field textarea,.audition textarea,.cloud-voice-form input,.cloud-voice-form select,.cloud-rate-control select,.library-index-dialog input,.library-index-dialog select) { min-height: 42px; background: var(--surface); border: 1px solid var(--line-bright); border-radius: 7px; color: var(--text); }
+:root[data-haike-brand] :is(.library-create,.primary-action,.button.primary,button.primary) { min-height: 42px; padding: 9px 16px; border: 1px solid #f64b00; border-radius: 8px; background: #f64b00; color: #191919; box-shadow: none; font-weight: 700; }
+:root[data-haike-brand] :is(.library-create,.primary-action,.button.primary,button.primary):hover { background: #ffdc00; border-color: #ffdc00; color: #191919; }
+:root[data-haike-brand] :is(.secondary-action,.button,.project-manage,.publication-badge) { min-height: 40px; border: 1px solid var(--line-bright); border-radius: 8px; color: var(--text); background: var(--surface); }
+:root[data-haike-brand] :is(.button,.secondary-action):hover { background: var(--surface-2); border-color: var(--muted); }
+:root[data-haike-brand] :is(.button.primary,.primary-action,.library-create) { background: #f64b00; border-color: #f64b00; color: #191919; }
+:root[data-haike-brand] .button.danger, :root[data-haike-brand] body > main button.danger { color: #a32432; background: #ffedf0; border-color: #d4aab0; }
+:root[data-haike-brand] .project-dialog-head h2 { font-size: 26px; }
+:root[data-haike-brand] .form-field { align-content: start; }
+:root[data-haike-brand] .form-field :is(input,select) { height: 44px; }
+:root[data-haike-brand] #previewText { background: var(--surface); border: 1px solid var(--line-bright); border-radius: 8px; color: var(--text); }
+:root:root[data-haike-brand]:not([data-theme="dark"]) :is(input,select,textarea) { background: var(--surface); color: var(--text); border-color: var(--line-bright); border-radius: 7px; }
+:root[data-haike-brand] .local-material-preparation-body { grid-template-columns: minmax(0,1fr); }
+:root[data-haike-brand] .local-material-upload-row { min-width: 0; background: var(--surface-soft); border-color: var(--line-bright); border-radius: 8px; }
+:root[data-haike-brand] .local-material-upload-row :is(input,select) { width: 100%; min-width: 0; max-width: 100%; }
+:root[data-haike-brand] .shell .topbar { flex-wrap: wrap; }
+:root[data-haike-brand] .shell .project-heading { flex: 1 1 280px; }
+:root[data-haike-brand] .project-dialog-foot { background: var(--surface); box-shadow: none; border-color: var(--line); }
+:root[data-haike-brand] :is(.library-filter-note,.hint,.project-dialog-head p,.form-field small,.project-dialog-foot > span,.library-date-group,.project-row-copy p,.project-row-copy .project-dates,.form-note) { color: var(--muted); }
+:root[data-haike-brand] :is(.library-heading p,.library-intro p,.library-filter-head strong,.automation-header p,.panel-head p,.service-strip p,.default-card p) { color: var(--muted); }
+:root[data-haike-brand] .library-filter-head strong { color: var(--text); }
+:root[data-haike-brand] .lib-grid { display: grid; grid-template-columns: minmax(0,1fr); gap: 0; margin-top: 20px; padding-top: 0; border-top: 1px solid var(--line); }
+:root[data-haike-brand] .lib-project-row { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; margin-bottom: 10px; }
+:root[data-haike-brand] .lib-project-row:hover { background: var(--surface-2); border-color: var(--line-bright); }
+:root[data-haike-brand] .project-row-copy h3 { color: var(--text); }
+:root[data-haike-brand] .project-row-enter { color: var(--amber); }
+:root[data-haike-brand] .global-sidebar .project-nav button.active { background: #fff7c1; color: #191919; border-color: #f64b00; }
+:root[data-haike-brand] .global-sidebar .project-nav button.active::before { background: #f64b00; border-color: #f64b00; box-shadow: none; }
+:root[data-haike-brand] .automation-header { border-color: #f64b00; }
+:root[data-haike-brand] .automation-header h1 { color: var(--text); font-size: 36px; }
+:root[data-haike-brand] :is(.automation-card-head,.panel-head,.topbar,.voice-facts div,.automation-facts,.sidebar-foot) { border-color: var(--line); }
+:root[data-haike-brand] .automation-facts { background: var(--line); }
+:root[data-haike-brand] .automation-header .wordmark { color: var(--amber); }
+:root[data-haike-brand] .voice-card.selected { border: 2px solid #f64b00; background: var(--surface-soft); box-shadow: none; }
+:root[data-haike-brand] .metric strong { font-variant-numeric: tabular-nums; }
+:root[data-haike-brand]:not([data-theme="dark"]) :is(.status,.badge,.daily-run-badge,.chip) { color: #555; background: #f5f5f1; border-color: #ddd; }
+:root[data-haike-brand]:not([data-theme="dark"]) :is(.status.available,.status.completed,.status.approved,.status.current,.status.ready,.badge.default,.daily-run-badge.succeeded) { color: #256346; background: #e8f5ed; border-color: #adceba; }
+:root[data-haike-brand]:not([data-theme="dark"]) :is(.status.failed,.status.blocked,.status.unavailable,.daily-run-badge.failed) { color: #a32432; background: #ffedf0; border-color: #e8b8bf; }
+:root[data-haike-brand]:not([data-theme="dark"]) :is(.status.pending,.status.planned,.status.generating,.status.queued,.status.rendering) { color: #795313; background: #fff6d1; border-color: #e2cf93; }
+:root[data-haike-brand]:not([data-theme="dark"]) .error { color: #a32432; background: #ffedf0; }
+/* Secondary tools retain their existing navigation and content structure. */
+:root[data-haike-brand]:not([data-theme="dark"]) body > main :is(section,.panel,.stat,.record,.card,.segment,.benchmark-panel,.search-panel,.result-panel,.detail-panel) { color: var(--text); background: #fff; border-color: var(--line); }
+:root[data-haike-brand]:not([data-theme="dark"]) body > main :is(input,select,textarea,button) { color: #191919; background: #fff; border: 1px solid #bcbcb5; }
+:root[data-haike-brand] body > main :is(label,input,select,textarea) { box-sizing: border-box; min-width: 0; max-width: 100%; }
+:root[data-haike-brand]:not([data-theme="dark"]) body > main :is(button.primary,button:not([class])) { background: #f64b00; border-color: #f64b00; color: #191919; }
+:root[data-haike-brand]:not([data-theme="dark"]) body > main :is(a,summary,.eyebrow,.transcript-row time) { color: #ba0901; }
+:root[data-haike-brand]:not([data-theme="dark"]) body > main :is(small,.muted,header p,section > p,.section-heading p,.result span) { color: #666; }
+:root[data-haike-brand]:not([data-theme="dark"]) body > main nav { padding-bottom: 18px; border-bottom: 2px solid #f64b00; }
+:root[data-haike-brand]:not([data-theme="dark"]) body > main nav [aria-current] { color: #191919; border-color: #f64b00; }
+:root[data-haike-brand]:not([data-theme="dark"]) body > main nav::before { content: ""; display: block; width: 200px; height: 56px; background: url("/ui/brand/haike-company-logo.png") center / contain no-repeat; }
+:root[data-haike-brand]:not([data-theme="dark"]) body > header.topbar { background: #fff; color: #191919; border-bottom: 3px solid #f64b00; }
+:root[data-haike-brand]:not([data-theme="dark"]) body > header.topbar :is(a,p) { color: #555; }
+:root[data-haike-brand]:not([data-theme="dark"]) :is(.result,.result:hover,.result.active,.transcript-row:hover,#event-form,#truth-form,.truth-row) { color: #191919; background: #fff9d7; border-color: #e4dfbe; }
+:root[data-haike-brand] dialog { background: var(--surface); color: var(--text); border-color: var(--line); border-radius: 12px; }
+:root[data-haike-brand] dialog::backdrop { background: #19191966; }
+/* Secondary tools also retain readable panels when the shared theme is dark. */
+:root[data-haike-brand][data-theme="dark"] body > main :is(section,.panel,.stat,.record,.card,.segment,.benchmark-panel,.search-panel,.result-panel,.detail-panel) { color: var(--text); background: var(--surface); border-color: var(--line); }
+:root[data-haike-brand][data-theme="dark"] body > main :is(input,select,textarea,button) { color: var(--text); background: var(--surface); border: 1px solid var(--line-bright); }
+:root[data-haike-brand][data-theme="dark"] body > main :is(button.primary,button:not([class])) { color: #191919; background: #f64b00; border-color: #f64b00; }
+:root[data-haike-brand][data-theme="dark"] body > main button.danger { color: #ffb8c0; background: #382025; border-color: #8c4d57; }
+:root[data-haike-brand][data-theme="dark"] body > main :is(small,.muted,header p,section > p,.section-heading p,.result span) { color: var(--muted); }
+:root[data-haike-brand][data-theme="dark"] body > header.topbar { color: var(--text); background: var(--surface); border-color: #f64b00; }
+/* Legacy board retains its own project header below the shared navigation. */
+:root:root[data-haike-brand] .wrap:not(.library-shell) .slate { flex-wrap: wrap; border-bottom: 3px solid #f64b00; }
+:root[data-haike-brand] .wrap:not(.library-shell) .slate::before { content: ""; flex: 1 0 100%; height: 56px; background: url("/ui/brand/haike-company-logo.png") left center / 200px 56px no-repeat; }
+:root:root[data-haike-brand]:not([data-theme="dark"]) .wrap:not(.library-shell) :is(.rail,.drawer,.replay-bar,.approval-review,.scene-card,aside .panel,.script-card) { background: #fff; border-color: var(--line); border-radius: 12px; box-shadow: none; }
+:root:root[data-haike-brand]:not([data-theme="dark"]) .wrap:not(.library-shell) :is(.slate h1,.section-title,.stage .name) { color: var(--text); font-weight: 700; }
+:root:root[data-haike-brand]:not([data-theme="dark"]) .wrap:not(.library-shell) :is(.wordmark,.stage .sub) { color: var(--muted); }
+:root:root[data-haike-brand]:not([data-theme="dark"]) .wrap:not(.library-shell) .stage .node { color: var(--text); border-color: var(--line-bright); background: #f5f5f1; }
+:root:root[data-haike-brand]:not([data-theme="dark"]) .wrap:not(.library-shell) .stage.done .node { color: #256346; border-color: #adceba; background: #e8f5ed; }
+:root:root[data-haike-brand]:not([data-theme="dark"]) .wrap:not(.library-shell) .stage:is(.active,.await,.selected) .node { color: #191919; border-color: #f64b00; background: #ffdc00; }
+@media (max-width: 1000px) {
+  :root[data-haike-brand] .library-slate { grid-template-columns: minmax(0,1fr) auto; }
+  :root[data-haike-brand] .library-actions { grid-column: 1 / -1; justify-content: flex-start; }
+  :root[data-haike-brand] .library-intro { flex-direction: column; align-items: flex-start; gap: 12px; }
+  :root[data-haike-brand] .library-intro p { max-width: none; }
+}
+@media (max-width: 860px) {
+  :root[data-haike-brand] .global-sidebar { padding: 16px; }
+  :root[data-haike-brand] .global-brand { padding: 0 0 10px; grid-template-columns: auto 1fr; column-gap: 14px; align-items: center; }
+  :root[data-haike-brand] .global-brand::before { grid-row: 1 / 3; width: 175px; height: 49px; margin: 0; }
+  :root[data-haike-brand] .global-brand strong { font-size: 20px; }
+  :root[data-haike-brand] .global-brand small { display: none; }
+  :root[data-haike-brand] .global-nav-link { min-height: 44px; }
+  :root[data-haike-brand] .shell { display: block; }
+  :root[data-haike-brand] .workspace { padding: 20px 16px; }
+  :root[data-haike-brand] .metric-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  :root[data-haike-brand] .topbar { flex-wrap: wrap; }
+  :root[data-haike-brand] .top-actions { flex-wrap: wrap; }
+  :root[data-haike-brand] .library-slate { padding-block: 24px; min-height: 0; }
+  :root[data-haike-brand] .library-slate > .chip { grid-column: auto; margin: 0; }
+  :root[data-haike-brand] .library-heading h1 { font-size: 32px; }
+  :root[data-haike-brand] .library-heading p { display: block; }
+}
+@media (max-width: 520px) {
+  :root[data-haike-brand] .global-nav-group { gap: 4px; }
+  :root[data-haike-brand] .global-nav-link { flex: 0 1 auto; font-size: 12px; }
+  :root[data-haike-brand] .library-shell { padding-inline: 16px; }
+  :root[data-haike-brand] .library-intro strong { font-size: 18px; }
+  :root[data-haike-brand] .library-filters { grid-template-columns: 1fr; }
+  :root[data-haike-brand] .project-dialog { padding: 18px; }
+  :root[data-haike-brand] .project-dialog-foot { align-items: stretch; flex-direction: column; }
+  :root[data-haike-brand] .project-dialog-foot > div { display: flex; flex-wrap: wrap; gap: 8px; }
+  :root[data-haike-brand] .project-dialog-foot button { flex: 1 1 auto; }
+  :root[data-haike-brand] .layout { grid-template-columns: 1fr; }
+  :root[data-haike-brand] .voice-grid { grid-template-columns: 1fr; }
+  :root[data-haike-brand] .library-filter-panel { padding: 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  :root[data-haike-brand] *, :root[data-haike-brand] *::before, :root[data-haike-brand] *::after { animation: none !important; transition: none !important; }
+}

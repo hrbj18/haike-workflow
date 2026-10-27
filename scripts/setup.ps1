@@ -1,5 +1,5 @@
 [CmdletBinding()]
-param([ValidateSet('skip','install')][string]$LocalTts = 'skip', [switch]$IncludeExamples, [switch]$CheckOnly)
+param([ValidateSet('skip','install')][string]$LocalTts = 'skip', [switch]$IncludeExamples, [switch]$CheckOnly, [string]$MsvcSource)
 $ErrorActionPreference = 'Stop'
 $workflowRoot = Split-Path $PSScriptRoot -Parent
 function Invoke-Checked {
@@ -29,6 +29,9 @@ try {
     Invoke-Checked uv @('pip','install','--python',(Join-Path $workflowRoot 'Haike_video\.venv\Scripts\python.exe'),'-r',(Join-Path $workflowRoot 'Haike_video\requirements-dev.txt'))
     Push-Location (Join-Path $workflowRoot 'copy_skill\copy_skill-main')
     try { Invoke-Checked uv @('sync','--locked','--dev','--python','3.12') } finally { Pop-Location }
+    $msvcArguments = @((Join-Path $workflowRoot '_distribution-tools\setup_msvc.py'))
+    if ($MsvcSource) { $msvcArguments += @('--source-dir', $MsvcSource) }
+    Invoke-Checked python $msvcArguments
     Invoke-Checked python @((Join-Path $PSScriptRoot 'configure.py'))
     Invoke-Checked python @((Join-Path $workflowRoot '_distribution-tools\portable.py'),'runtime')
     $frontends = @('Haike_video\remotion-composer','creatorhub')
@@ -42,8 +45,10 @@ try {
         } finally { Pop-Location }
     }
     if ($LocalTts -eq 'install') {
+        # Optional local models remain separate from the frontend build.
         Invoke-Checked powershell.exe @('-NoProfile','-ExecutionPolicy','Bypass','-File',(Join-Path $workflowRoot 'Haike_video\scripts\setup_local_tts.ps1'))
     }
+    Invoke-Checked python @((Join-Path $PSScriptRoot 'build-studio.py'))
     Invoke-Checked powershell.exe @('-NoProfile','-ExecutionPolicy','Bypass','-File',(Join-Path $PSScriptRoot 'check.ps1'))
     Write-Output 'Setup completed. Configure your own cloud credentials and platform accounts as needed.'
 } finally { Pop-Location }

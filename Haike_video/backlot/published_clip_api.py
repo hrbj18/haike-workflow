@@ -5,7 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 
 from fastapi import APIRouter, Body, HTTPException, Query
-from fastapi.responses import FileResponse, HTMLResponse
+from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse
 
 from backlot.published_clip_index import (
     ClipIndexError, configured_source, get_video, list_videos, media_path,
@@ -24,8 +24,7 @@ def _invalid(exc: ClipIndexError) -> HTTPException:
 
 @router.get("/published-clips", response_class=HTMLResponse)
 def page() -> HTMLResponse:
-    return HTMLResponse((UI_DIR / "published_clips.html").read_text(encoding="utf-8"),
-                        headers={"Cache-Control": "no-cache"})
+    return RedirectResponse('/projects', status_code=307)
 
 
 @router.get("/api/published-clips/status")

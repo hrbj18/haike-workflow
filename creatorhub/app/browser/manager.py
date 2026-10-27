@@ -16,6 +16,7 @@ import os
 import re
 import time
 from contextlib import asynccontextmanager, suppress
+from dataclasses import replace
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 from patchright.async_api import BrowserContext, async_playwright
@@ -31,6 +32,9 @@ from .backends import (
     FingerprintChromiumBackend,
 )
 from .identity import Identity, fingerprint_script
+from .session_snapshots import (
+    SessionSnapshots, capture_platform_session_state, restore_platform_session_storage,
+)
 from .cdp import (CdpLaunchError, CdpProfileConflictError, CdpProxyError,
                   CdpProxyAuthController, XhsCdpBackend, profile_is_locked)
 from .proxy import ProxyConfigError, ProxyPlan, try_proxy_plan
@@ -224,7 +228,9 @@ class BrowserManager:
                  fingerprint_chromium_allow_headless: bool = False,
                  fingerprint_chromium_platform: str = "auto",
                  fingerprint_chromium_runtimes: list[dict] | None = None,
-                 fingerprint_default_runtime_id: str = ""):
+                 fingerprint_default_runtime_id: str = "",
+                 session_state_callback=None,
+                 session_snapshot_interval_seconds: float = 30.0):
         self.default_ua = default_ua
         self.profiles_root = profiles_root
         self.max_live = max(1, max_live)
@@ -318,6 +324,11 @@ class BrowserManager:
         self._last_used: Dict[Any, float] = {}
         self._locks: Dict[Any, asyncio.Lock] = {}
         self._cv_lock = asyncio.Lock()                   # 保护 context 字典的创建/驱逐
+        self._session_snapshots = SessionSnapshots(
+            session_state_callback, session_snapshot_interval_seconds)
+        # Only contexts explicitly opened for an interactive account action.
+        # Download-login previews must never enumerate personal Chrome tabs.
+        self._interactive_contexts: Dict[int, dict] = {}
         self._chrome_major: Optional[int] = None         # 实际 Chromium 大版本(启动时探测)
         # 优先使用机器上安装的稳定版 Chrome；没有时回退到 Patchright
         # 附带的 Chrome for Testing。登录窗口因此更接近用户日常浏览器环境。
@@ -656,6 +667,8 @@ class BrowserManager:
         async with self._cv_lock:
             for key in list(self._contexts):
                 await self._close_key_unlocked(key)
+        await self._session_snapshots.shutdown()
+        self._interactive_contexts.clear()
         if self._pw:
             await self._pw.stop()
         self._pw = None
@@ -1156,9 +1169,49 @@ class BrowserManager:
         # 2) 非空 profile 也补回“磁盘中缺失”的 Cookie。Chromium 关闭 context
         #    时会丢弃 session cookie，视频号刚扫码成功后从有头切到无头 context
         #    正好会经过这条路径。只补缺失项，不覆盖 profile 中更新过的 Cookie。
+        bridge_identity = identity
+        if identity.platform in {"kuaishou", "shipinhao"}:
+            latest = self._session_snapshots.latest_state(identity)
+            if latest is not None:
+                # The caller may have loaded identity before close_context's
+                # checkpoint. That in-memory identity still contains old DB
+                # cookies, so the just-saved same-account/profile state wins
+                # only for cookies missing from the newly launched profile.
+                bridge_identity = replace(identity, bridge_states=(json.dumps(latest),))
+            # Even a newly-created profile can receive cookies during startup.
+            # Never overwrite a live platform cookie with a DB checkpoint.
+            was_empty = False
         await self._bridge_identity_cookies(
-            ctx, identity, assume_empty=was_empty)
+            ctx, bridge_identity, assume_empty=was_empty)
+        await restore_platform_session_storage(
+            ctx, bridge_identity,
+            lambda: ({} if self._session_snapshots.is_paused(ctx)
+                     else self._session_snapshots.latest_state(identity)))
+        self._session_snapshots.track(identity, ctx)
         return ctx
+
+    async def snapshot_session(self, identity: Identity, ctx: BrowserContext) -> bool:
+        """Checkpoint a live KS/Channels context before a caller closes it.
+
+        The optional constructor callback receives ``(identity, state_dict)``
+        and may be sync or async. This operation never changes login status.
+        Empty state, closed contexts and capture/save failures return False.
+        """
+        return await self._session_snapshots.snapshot(identity, ctx)
+
+    async def pause_session_checkpoints(self, ctx: BrowserContext) -> None:
+        await self._session_snapshots.pause(ctx)
+
+    def resume_session_checkpoints(self, ctx: BrowserContext) -> None:
+        self._session_snapshots.resume(ctx)
+
+    async def capture_session_state(self, identity: Identity, ctx: BrowserContext) -> dict:
+        """Capture a login transaction without publishing its uncommitted state."""
+        return await capture_platform_session_state(identity, ctx)
+
+    def remember_session_state(self, identity: Identity, state: dict) -> bool:
+        """Replace an older cold-handoff cache after confirmed reauthentication."""
+        return self._session_snapshots.remember(identity, state)
 
     @staticmethod
     async def _bridge_identity_cookies(
@@ -1214,6 +1267,8 @@ class BrowserManager:
         hold = self._minimize_holds.pop(key, None)
         if hold is not None:
             hold.cancel()
+            with suppress(asyncio.CancelledError, asyncio.TimeoutError):
+                await asyncio.wait_for(hold, timeout=3)
         ctx = self._contexts.pop(key, None)
         session = self._cdp_sessions.pop(key, None)
         self._task_pages.pop(key, None)
@@ -1228,8 +1283,11 @@ class BrowserManager:
                     await self._cdp_backend.close(session)
                 return
             if ctx is not None:
-                with suppress(Exception):
-                    await ctx.close()
+                try:
+                    await self._session_snapshots.snapshot_context(ctx)
+                finally:
+                    with suppress(Exception):
+                        await ctx.close()
         finally:
             self._release_profile_lock(key)
 
@@ -1323,8 +1381,20 @@ class BrowserManager:
                         self._cdp_sessions[key] = session
                         self._backend_by_key[key] = "cdp"
                 else:
-                    ctx = await self._launch_persistent(
-                        identity, headless=(identity.platform != "xhs"))
+                    # Native KS/Channels use the same headed browser mode for
+                    # login, health and publishing. Keep automatic reads off
+                    # screen instead of changing the site's device surface to
+                    # HeadlessChrome between two uses of the same profile.
+                    native_headed = (
+                        identity.identity_mode == "native"
+                        and identity.platform in {"kuaishou", "shipinhao"}
+                    )
+                    if native_headed:
+                        ctx = await self._launch_persistent(
+                            identity, headless=False, off_screen=True)
+                    else:
+                        ctx = await self._launch_persistent(
+                            identity, headless=(identity.platform != "xhs"))
                     self._backend_by_key[key] = (
                         FINGERPRINT_CHROMIUM_BACKEND
                         if effective_backend == FINGERPRINT_CHROMIUM_BACKEND
@@ -1333,6 +1403,9 @@ class BrowserManager:
                     if effective_backend == FINGERPRINT_CHROMIUM_BACKEND:
                         self._runtime_by_key[key] = runtime_id
                 self._contexts[key] = ctx
+                if (identity.identity_mode == "native"
+                        and identity.platform in {"kuaishou", "shipinhao"}):
+                    await self._start_minimize_hold(identity, ctx)
                 # Native/Fingerprint Chromium may fill ``identity.ua`` while
                 # launching the first context. Store the post-launch signature;
                 # keeping the pre-launch (empty-UA) value makes the very next
@@ -1777,6 +1850,34 @@ class BrowserManager:
         """Backward-compatible alias for the former CDP-only collector."""
         return await self.collect_idle_sessions(now=now)
 
+    def _register_interactive_context(self, identity: Identity, context) -> None:
+        context_id = id(context)
+        registered = context_id in self._interactive_contexts
+        self._interactive_contexts[context_id] = {
+            "context": context, "platform": identity.platform,
+            "account_id": identity.account_id, "opened_at": time.monotonic()}
+        if not registered:
+            try:
+                context.on("close", lambda *_: self._interactive_contexts.pop(context_id, None))
+            except Exception:
+                self._interactive_contexts.pop(context_id, None)
+
+    def interactive_login_context(self, platform: str, account_id=None, *,
+                                  created_after: float = 0):
+        """Return one exact owned interactive context, without launching it.
+
+        A new-account QR flow uses account_id=None. This deliberately excludes
+        headed windows belonging to an already stored account on that platform.
+        The caller must separately prove that its login task is still pending.
+        """
+        candidates = [entry for entry in self._interactive_contexts.values()
+                      if entry["platform"] == platform
+                      and entry["account_id"] == account_id
+                      and entry["opened_at"] >= created_after]
+        if not candidates:
+            return None
+        return max(candidates, key=lambda entry: entry["opened_at"])["context"]
+
     async def open_headed(self, identity: Identity) -> BrowserContext:
         """Return the shared headed XHS context or a temporary legacy one."""
         if identity.platform == "xhs":
@@ -1795,6 +1896,7 @@ class BrowserManager:
                     bounds={"left": ONSCREEN_X, "top": ONSCREEN_Y})
             await asyncio.to_thread(bring_window_to_front, snapshot,
                                     CHROMIUM_WINDOW_CLASSES, "", 1.5)
+            self._register_interactive_context(identity, ctx)
             return ctx
         snapshot = capture_window_snapshot(CHROMIUM_WINDOW_CLASSES)
         await self.close_context(identity.key)
@@ -1817,6 +1919,7 @@ class BrowserManager:
                                 ONSCREEN_X, ONSCREEN_Y, 2.0)
         await asyncio.to_thread(bring_window_to_front, snapshot,
                                 CHROMIUM_WINDOW_CLASSES, "", 1.5)
+        self._register_interactive_context(identity, ctx)
         return ctx
 
     async def open_background(self, identity: Identity) -> BrowserContext:
@@ -1924,7 +2027,8 @@ class BrowserManager:
         ctx = await self.open_headed(identity)
         try:
             await self._bridge_identity_cookies(
-                ctx, identity, overwrite=True)
+                ctx, identity,
+                overwrite=identity.platform not in {"kuaishou", "shipinhao"})
             yield ctx
         finally:
             if identity.platform == "xhs":

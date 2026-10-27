@@ -1,0 +1,80 @@
+{
+  "standard_version": "video-template-v1",
+  "schema_version": 1,
+  "required_files": [
+    "AGENTS.md",
+    "AGENT_SETUP.md",
+    "agent-runbooks/README.md",
+    "agent-runbooks/视频模板编写标准.md",
+    "agent-runbooks/视频模板Runbook骨架.md",
+    "agent-runbooks/视频模板验收量表.md",
+    "agent-runbooks/template-standards/类型扩展.md",
+    "contracts/video-template-spec-v1.schema.json",
+    "contracts/video-template-standard-v1.json",
+    "verify/check_template_standards.py",
+    "verify/test_template_standards.py",
+    "verify/install_workspace_agent_rules.py",
+    "workspace/AGENTS.md",
+    "agent-runbooks/template-standards/examples/avatar.json",
+    "agent-runbooks/template-standards/examples/graphic.json",
+    "agent-runbooks/template-standards/examples/chart.json"
+  ],
+  "reference_documents": {
+    "agent-runbooks/视频模板编写标准.md": "reference",
+    "agent-runbooks/视频模板Runbook骨架.md": "skeleton",
+    "agent-runbooks/视频模板验收量表.md": "reference",
+    "agent-runbooks/template-standards/类型扩展.md": "reference"
+  },
+  "hub_routes": [
+    {
+      "path": "AGENTS.md",
+      "target": "agent-runbooks/视频模板编写标准.md"
+    },
+    {
+      "path": "AGENT_SETUP.md",
+      "target": "verify/check_template_standards.py --workspace"
+    },
+    {
+      "path": "agent-runbooks/README.md",
+      "target": "视频模板编写标准.md"
+    }
+  ],
+  "workspace_root_source": "workspace/AGENTS.md",
+  "workspace_routes": [
+    {
+      "path": "AGENTS.md",
+      "target": "Haike-Videohub/agent-runbooks/视频模板编写标准.md"
+    },
+    {
+      "path": "Haike_video/AGENTS.md",
+      "target": "../Haike-Videohub/agent-runbooks/视频模板编写标准.md"
+    },
+    {
+      "path": "Haike_video/AGENT_GUIDE.md",
+      "target": "../Haike-Videohub/agent-runbooks/视频模板编写标准.md"
+    },
+    {
+      "path": "Haike_video/skills/INDEX.md",
+      "target": "../../Haike-Videohub/agent-runbooks/视频模板编写标准.md"
+    }
+  ],
+  "examples_are_illustrative": true,
+  "legacy_runbooks": [
+    "下载抖音视频.md",
+    "动作迁移与角色替换复刻.md",
+    "基于上下窗口的复刻优化.md",
+    "数字人口播——竖屏模板A1.md",
+    "数字人口播——竖屏模板A2.md",
+    "数字人口播——竖屏模板A3.md",
+    "数字人口播——竖屏模板A4.md",
+    "数字人口播模板——深蓝视窗N1.md",
+    "数字人口播模板2.md",
+    "数字人口播模板3-卡片式讲解.md",
+    "数字人口播模板4-深蓝资讯.md",
+    "数字人口播视频.md",
+    "模板图文视频.md",
+    "短视频三平台发布.md",
+    "素材解说视频.md",
+    "视频快速理解与分层分析.md"
+  ]
+}

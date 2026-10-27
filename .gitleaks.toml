@@ -1,0 +1,9 @@
+[extend]
+useDefault = true
+
+[[rules]]
+id = "haike-platform-key"
+description = "Haike customer API key"
+regex = '''\bhk_[A-Za-z0-9_-]{35,64}\b'''
+entropy = 3
+keywords = ["hk_"]

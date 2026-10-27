@@ -53,7 +53,85 @@ class ProductionQueueWorker:
             "published_remix": self._run_published_remix,
             "material_commentary": self._run_material_commentary,
             "commentary_presenter": self._run_commentary_presenter,
+            # Versioned kind prevents already-running legacy workers from
+            # silently executing a consumer contract with their shared key.
+            "commentary_presenter_consumer_v1": self._run_commentary_presenter,
+            "studio_graphic": self._run_studio_graphic,
+            "studio_avatar": self._run_studio_avatar,
+            "studio_motion": self._run_studio_motion,
+            "studio_investment_recompose": self._run_investment_recompose,
         }
+
+    def _run_studio_graphic(self, job):
+        from backlot.studio_render import run_graphic
+        return run_graphic(self._project_dir(job), job["frozen_request"])
+
+    def _run_studio_avatar(self, job):
+        from backlot.studio_avatar import run_avatar
+        return run_avatar(self._project_dir(job), job["frozen_request"],
+                          progress=lambda stage: self.queue.update_stage(
+                              job["job_id"], self.worker_id, stage))
+
+    def _run_studio_motion(self, job):
+        from backlot.studio_motion import run_motion
+        return run_motion(self._project_dir(job), job["frozen_request"])
+
+    def _run_investment_recompose(self, job):
+        if job.get("frozen_request", {}).get("contract") == "hum-production-v1":
+            from backlot.studio_hum_production import run
+            return run(self.queue, job)
+        if job.get("frozen_request", {}).get("contract") == "motiongit-component-render-v1":
+            from backlot.studio_motiongit_render import run
+            return run(self.queue, job)
+        if job.get("frozen_request", {}).get("contract") == "motiongit-narrated-pilot-v1":
+            from backlot.studio_motiongit_narrated_pilot import run
+            return run(self.queue, job)
+        if job.get("frozen_request", {}).get("contract") == "store-material-wall-v1":
+            from backlot.studio_store_material_wall import run
+            return run(self.queue, job)
+        if job.get("frozen_request", {}).get("contract") == "store-motion-showcase-v1":
+            from backlot.studio_store_motion_showcase import run
+            return run(self.queue, job)
+        if job.get("frozen_request", {}).get("contract") == "store-opening-v1":
+            from backlot.studio_store_opening import run
+            return run(self.queue, job)
+        if job.get("frozen_request", {}).get("contract") == "investment-six-v1":
+            from backlot.studio_investment_six import run
+            return run(self.queue, job)
+        if job.get("frozen_request", {}).get("contract") == "store-footage-contrast-v1":
+            from backlot.studio_store_footage import run
+            return run(self.queue, job)
+        if job.get("frozen_request", {}).get("contract") == "store-manager-lab-v1":
+            from backlot.studio_store_manager_lab import run
+            return run(self.queue, job)
+        if job.get("frozen_request", {}).get("contract") == "store-manager-contrast-v1":
+            from backlot.studio_store_manager import run
+            return run(self.queue, job)
+        if job.get("frozen_request", {}).get("contract") == "investment-contrast-five-v1":
+            from backlot.studio_investment_contrast import run
+            return run(self.queue, job)
+        from backlot.studio_investment_full import CONTRACT as FULL_INVESTMENT_CONTRACT
+        if job.get("frozen_request", {}).get("contract") == FULL_INVESTMENT_CONTRACT:
+            from backlot.studio_investment_full import run
+            return run(self.queue, job)
+        from backlot.studio_investment_style_lab import CONTRACT as STYLE_LAB_CONTRACT
+        if job.get("frozen_request", {}).get("contract") == STYLE_LAB_CONTRACT:
+            from backlot.studio_investment_style_lab import run
+            return run(self.queue, job)
+        from backlot.studio_investment_source_art_v5 import CONTRACT as SOURCE_ART_V5_CONTRACT
+        if job.get("frozen_request", {}).get("contract") == SOURCE_ART_V5_CONTRACT:
+            from backlot.studio_investment_source_art_v5 import run
+            return run(self.queue, job)
+        from backlot.studio_investment_source_art_v4 import CONTRACT as SOURCE_ART_V4_CONTRACT
+        if job.get("frozen_request", {}).get("contract") == SOURCE_ART_V4_CONTRACT:
+            from backlot.studio_investment_source_art_v4 import run
+            return run(self.queue, job)
+        from backlot.studio_investment_source_video import CONTRACT as SOURCE_ART_CONTRACT
+        if job.get("frozen_request", {}).get("contract") == SOURCE_ART_CONTRACT:
+            from backlot.studio_investment_source_video import run
+            return run(self.queue, job)
+        from backlot.studio_investment_recompose import run
+        return run(self.queue, job)
 
     def _project_dir(self, job: dict[str, Any]) -> Path:
         project_dir = (self.projects_root / str(job["project_id"])).resolve()
@@ -185,7 +263,20 @@ class ProductionQueueWorker:
 
     def inspect_parent(self, job: dict[str, Any]) -> dict[str, Any]:
         project_dir = self._project_dir(job)
-        if job["kind"] == "commentary_presenter":
+        if job["kind"] == "studio_investment_recompose":
+            # Recover through its registered runner so version registration is
+            # completed too; never put this private kind on the generic lane.
+            return {"status": "failed", "stage": "本地重合成中断，保留源素材并恢复原任务", "retryable": True, "safe_resume_point": "local_recompose"}
+        if job["kind"] in {"studio_graphic", "studio_avatar", "studio_motion"}:
+            filename = {"studio_graphic": "graphic-preview.mp4", "studio_avatar": "avatar-preview.mp4", "studio_motion": "motion-preview.mp4"}[job["kind"]]
+            if job["kind"] == "studio_avatar" and job["frozen_request"].get("draft", {}).get("input", {}).get("motion"):
+                filename = "motion-preview.mp4"
+            output = project_dir / "renders" / job["frozen_request"]["render_id"] / filename
+            report = output.parent / "qa.json"
+            if output.is_file() and report.is_file():
+                return {"status": "completed", "stage": "合成完成，等待人工审核", "result": {"output_path": str(output), "qa_status": "pending"}}
+            return {"status": "failed", "stage": "制作中断，原调用与产物保留，可恢复此任务", "retryable": True, "safe_resume_point": job["kind"]}
+        if job["kind"] in {"commentary_presenter", "commentary_presenter_consumer_v1"}:
             from backlot.commentary_presenter_job import inspect
             return inspect(project_dir, str(job["parent_job_id"]))
         if job["kind"] == "material_commentary":
@@ -249,6 +340,13 @@ class ProductionQueueWorker:
         job = self.queue.claim_next(self.worker_id, lease_seconds=self.lease_seconds)
         if job is None:
             return None
+        return self._execute_claimed(job)
+
+    def run_local_recompose(self, job_id: str) -> dict[str, Any]:
+        job = self.queue.claim_local_recompose(job_id, self.worker_id, lease_seconds=self.lease_seconds)
+        return self._execute_claimed(job)
+
+    def _execute_claimed(self, job: dict[str, Any]) -> dict[str, Any]:
         stop = threading.Event()
 
         def renew() -> None:
@@ -274,7 +372,7 @@ class ProductionQueueWorker:
             outcome = handler(job)
             if not isinstance(outcome, dict):
                 raise TypeError("生产执行器没有返回状态合同")
-            if outcome.get("status") == "completed" and (outcome.get("result") or {}).get("output_path"):
+            if job["kind"] != "studio_investment_recompose" and outcome.get("status") == "completed" and (outcome.get("result") or {}).get("output_path"):
                 from backlot.work_ingest import completed
                 try:
                     from backlot.work_catalog import read_json

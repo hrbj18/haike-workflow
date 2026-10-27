@@ -1,51 +1,42 @@
 # GitHub 与跨电脑部署
 
-更新时间：2026-10-12
+更新时间：2026-10-27
+
+10/27：用户授权将已验收交付快照21d1ff2发布为main稳定版，旧main保留legacy-main-before-20261027，合入后固定stable-20261027；见根[稳定版说明](../../../docs/releases/20261027-stable.md)。模板[交付说明](../../../docs/TEMPLATE_DELIVERY.md)含40张本地ZIP截图/42目录及备份回退。发布不混入其他窗口新改动；未声称异机/付费/发布验收。
 
 ## 权威入口
 
-- 私有仓库：`https://github.com/hrbj18/Haike_video`
-- 发布状态：`main`/`v0.1.1` 稳定版为 `50352aaa`；`dev` 已于 2026-09-10 纳入 `dae5886c` 源码候选，在既有统一生产队列、豆包 ASR、本地素材理解、户外互动两次剪辑和多标题图层基础上，补充输出响度控制、原音轨精确定时字幕/时间线、单段库存素材同步及数字人尾帧安全规范化。
-- 同事入口：GitHub 根目录 `START_HERE.md`；版本由 `VERSION`、`CHANGELOG.md` 和 `docs/handoff/RELEASE_STATUS.md` 共同定义。
-- Windows 完整步骤：`docs/DEPLOYMENT_WINDOWS_ZH-CN.md`
-- 环境变量模板：`.env.example`
-- 一键安装：`scripts/setup.ps1`
-- 启动与预检：`启动工作台.bat`、`scripts/preflight.ps1`
-- 工作区外层双击`一键启动工作台.cmd`；调用`start-workbench.ps1`。验证Python3.12，迁移失效venv可复用随包Python+已有库；14754优先、端口受限自动避让，默认不启动可选TTS、不下载。原4754在本机4715–4814系统保留范围内。
+- 10/21交付分支`feat/avatar-template6-zhaoshang-a`为历史入口；当前稳定入口main。便携包从提交导出并重建界面；APIKey私有ZIP禁止上传GitHub。初始化见根`使用说明.txt`、`01-setup.cmd`；既有10/21证据在根`.local/release-20261021/`。
+- 两条RunningHub路线随源码交付：性价比2094449979141218305仍为默认；V5.3.1高质量2112180419025260546的独立执行器及完整JSON位于`workflows/runninghub-high-quality/`。新任务读取根`scripts/runninghub-workflow.py show`，仅用户明确要求才保存长期Agent偏好；不修改Studio路由/旧任务。普通Studio与高质量统一父队列适配仍待验。公开附件不带私人图/声音/音色。
 
-## 新电脑顺序
+- 用户确认单仓为`https://github.com/hrbj18/haike-workflow`，保留公开可见性。根README及 `docs/GIT_WORKFLOW.md` 是安装、分支、CI和迭代入口。
+- 原`feat/retain-capabilities-ui`与`legacy-before-v2-20261017`保留；旧main为0518367。`dev-ybw`集成分支不自动移动；后续基线与分支流程以根`docs/GIT_WORKFLOW.md`为准。
+- 旧单模块仓库、旧标签和便携包不代表新版已发布能力；共享分支通过PR审阅，保留原历史。
+- Windows完整安装：根 `scripts/setup.ps1`，Python3.12、Node22+、Git/uv；默认跳过本地Qwen TTS。安装新增前端构建，不继承账号、任务或素材。
+- 工作台静态文件由根 `scripts/build-studio.py`生成；源码目录为 `prototypes/haike-avatar-generator`。Mac源码checkout与14754安装副本分离，更新须明确同步目标。
+- ADu仍需安装固定的同级引擎与媒体依赖；详见根 `docs/PRODUCT_AVATAR_MOTION.md`，未声称Windows实机已验。
 
-离线入口：工作区 `_distribution-tools/offline/README-START-HERE.md`；首启迁移，Qwen可选，封包复位venv并清理私人路径。主包缺数字人Whisper/模板YuNet，须配`dist/haike-offline-models-supplement-20261012.zip`；API与新机逐项验收文档同在dist。中转仅契约/mock，新机/真实云调用另验。
+## 云端与状态
 
-旧精简包：`dist/haike-workflow-windows-x64-slim-20261010.zip`；浏览器/FFmpeg首次下载。新离线包的根说明优先于下列源码安装步骤。
+- 收费中转站当前入口 `https://8.138.207.71:17894/`，网关 `/v2`；部署在独立版本目录，通过current切换，私有账本与主密钥在代码目录之外。根 `api-platform/deploy/README.md` 是更新、备份、恢复入口。
+- 旧统一网关和内部配音保留兼容，历史任务使用冻结路由；新版便携包默认直连路线见下文。既有配音曾真实结算；RunningHub旧样片该次0.72元仍待对账。新账号能力、权限与报价须核验；状态见`CURRENT_STATUS.md`及根`docs/RELEASE_READINESS_20261016.md`。不得重启旧账本形成双重余额。
+- CI只有读取源码权限、隔离数据及假供应商，不自动部署、真实收费或发布。代码回退不能自动回退账本。
+- 旧Linux视频工作流、旧便携包及其他服务的运行证据保留于既有任务/部署文档；此次Git初始化未修改它们，也不把本机验收称为另一台机器验收。
 
-Windows 初始化询问可选本地 Qwen3-TTS；云端克隆不需要它，`-LocalTts skip/install` 依用户选择，回车跳过。已安装环境保留；未安装不阻断工作台。便携项目增量包 `dist/haike-bailian-cloud-clone-update-20261010-v2.zip`：停本工作台、整批预检/备份、未知源码合并，保留默认和项目。支持原/精简/本地v1–3/云端V1；新增录音上传→百炼创建→审核查询→ID登记，需百炼密钥+私有OSS配置，上传依赖multipart/oss2，无本地模型。旧版升级和83项离线回归过；真实OSS/创建、新机权限未验。
+## 新机器验收
 
-1. 安装 Git、64 位 Python 3.12、Node.js 22+。
-2. 克隆 `main` 稳定版，在根目录先读 `START_HERE.md`，再运行 `powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts\setup.ps1`。
-3. 只在 `.env.local` 或 `.env.secrets.local` 写密钥；不要把真实值写回模板。
-4. 私下导入克隆音色、人物参考图和音乐。模型由安装器/官方加载器下载，不从 Git 获取。
-5. 配置 Pexels；有数字人路线再配置 RunningHub key、已发布 workflow ID、两位角色图与音色。
-6. 运行 `scripts/preflight.ps1`、上下文审计，以及 `tests/backlot tests/contracts tests/lib tests/tools tests/unit` 自动套件；pytest 必须带 `--import-mode=importlib --basetemp=.p`，全部通过后才进行短样本真实验收。不要把旧 `tests/qa` 脚本当作默认自动套件。
+克隆当前仓库后运行根源码检查及安装；配置自己的平台Key和发布账号，私下导入自有素材。模型和运行依赖按对应模块安装，完成环境检查、无付费测试及短样本审核后再接受生产任务。
 
-## Linux 轻量版服务器现状
+便携包使用根`01-setup.cmd -ConfigDocument <私有文档>`，按`docs/API_KEY_SETUP.md`唯一JSON块一次导入Key、地址、预算及预设；默认保留本机已有配置。真实文档单独交付，ZIP/Git只有空模板。导入离线、不搬Cookie或伪造验证记录。当前默认由工作Agent自身完成文案/视觉/分镜与审核，百炼负责配音/克隆/ASR，RunningHub负责数字人，Pexels作为可选备用；不要求GPT、腾讯或海客网关Key。三平台在本机扫码，制作发布仍按授权范围执行。
 
-- 2026-09-01 已将本机忽略的核心密钥配置安全同步到服务器仓库，并按变量名合并进 Docker 持久化 `.env.local`；未覆盖既有 Linux 路径、本地 Qwen3-TTS 或 faster-whisper 配置。
-- `haike-video` 容器重启后，只读接口确认 GPT 中转站、豆包文本和 RunningHub 均已配置，RunningHub 配置问题数为 0；本地音频中心仍为 `available`，可见 3 个音色并保留默认音色。
-- HyperFrames 已在 Linux 容器内完成 CPU 基线初始化：CLI `0.8.22`、Chrome Headless Shell、`unzip`、FFmpeg 和 FFprobe 均通过关键预检；容器 `/dev/shm` 已提升到 `512 MB`，npm 与浏览器缓存均挂载到 `/opt/Haike_video/cache` 持久化。项目运行时返回 `runtime_available=true`，本轮未执行视频渲染。
-- 2026-09-02 已在广州 Linux 轻量服务器通过真实浏览器完成无数字人全流程：新建“键盘排序的秘密”项目、Luna 自动写稿、人工审核闸门确认、本地 Qwen3-TTS、Pexels/HyperFrames 配画面、字幕与 FFmpeg 全片合成，最终到达 `preview_ready`。父任务 `RPP-8b51022434c9` 为 16/16、失败 0，预览 `renders/previews/full-preview-v001.mp4`（H.264/AAC、1080×1920、30 FPS、127.5 秒）；没有自动批准或发布。
-- 服务器本地 TTS 的生产默认模型已改为可配置的官方 `Qwen/Qwen3-TTS-12Hz-0.6B-CustomVoice`，通过 `HAIKE_VIDEO_TTS_CUSTOM_MODEL` 选择，并使用 `HF_ENDPOINT=https://hf-mirror.com` 完成模型缓存。1.7B 官方模型缓存仍保留，可通过配置切回；未把云 TTS 写死为唯一实现。0.6B 在该 CPU 服务器上的短句实测冷启动约 112 秒、热调用约 38 秒，完整 16 句流程约 90 分钟，因此“可运行”不等于“高并发实时”。
-- 2026-09-03 服务器已从旧 `main/b29f0f4` 更新至 GitHub `dev/b9a0db4`：`haike-video:b9a0db4` 继承原运行镜像重建，所有原持久化挂载（含 `.env.local`、项目、任务状态、渲染、缓存）原样复用。容器健康、`/api/health` 与首页 HTTP 200 已通过；旧 `haike-video-previous-b29f0f4` 停止保留，可回退，勿清理。
-- 2026-09-03 服务器配置加载已统一修复：容器由 Python dotenv 启动引导读取权限 `600` 的持久化 `.env.local`，不再用 Docker `--env-file` 直接解析。豆包 TTS 与中转站文本配置均可用；健康、地址解析、TCP 连通性及 `gpt-5.6-luna` 固定 JSON 连接测试均通过。该测试不生成脚本、视频或音频，但会产生极少量文本调用用量；豆包实际音色授权仍待人工短试听验证。
-- 本轮没有调用 Pexels、文本模型、RunningHub 或其他付费服务。一次性 SSH 公钥已从服务器撤销，本机临时私钥目录已删除。
-- 服务器密钥文件权限为 `600` 且被 Git 忽略；后续更新不得把 `.env.local` 或 `.env.secrets.local` 纳入提交。
+默认单条5元中为数字人预留4元、百炼字幕0.1元；配置检查核对阶段预算合计并给配音留余量。百炼明确启用、Key与成本预算齐全即可首次执行，历史verified保持真实状态，初始化不伪造实测。旧已冻结任务仍复用其原识别和分析路线。
 
-## 发布边界
+批次入口支持完整音轨`audio_path`，保持原音频并跳过TTS；`advance`推进原队列、质量门与发布计划，支持既有平台排期，`report_path`落Markdown汇报。宿主负责定时唤醒，未质检或未确认的发布不标完成。明确配置Pexels素材来源时无需代填抖音使用授权；仍执行实时登录检查，无合适画面暂停。隔离CLI/HTTP/队列/发布器假供应商联测与真实平台回执分别记录。
 
-Git 只保存源码、测试、公开配置模板、精确帧 RunningHub API 模板和交接文档。禁止提交 `.env*` 实值、`.backlot/`、`projects/`、模型、私有音色、人物图、音乐、渲染、付费任务产物、审计证据、pytest 临时目录或个人黄金样稿。
+Agent素材分析通过Studio的`agent-materials`读写：真实音轨/ASR后提供原版本与clock；Agent按真实cue安排分镜、观看保留候选代表帧并提交SHA绑定结论，再恢复原任务。没有分析结果时可恢复暂停，不后台调用中转模型，不重做已成功的TTS/ASR。已有上传素材也须提供来源/使用权和实际观察依据，最终汇报不包含私人配置。
 
-RunningHub新任务/冻结旧任务规则以 `AGENT_GUIDE.md` 第4节为准；未知状态停止，不得复制提交。
+2026-10-17源码隔离回归：Studio及批次419项、根初始化84项、前端128项通过。N1可在明确关闭联网后使用Agent已审本地素材；开启联网仍要求采用真实网络来源，未找到素材不降级。证据在忽略目录`.local/portable-build/`，本轮未产生费用或真实发布。
 
-## 验收边界
+最终便携包源码固定`53f47b0`，交付`dist/Haike_videoflow_20261017_v2/`仅ZIP和私有配置文档。完整解压77,499项CRC/SHA及凭据扫描通过；新目录一键导入、419项隔离回归、本地渲染、报价、设置页和重复启动/初始化通过，7份配置保持字节一致。未搬账号或伪造云端验证，旧ZIP/main不动；最终证据`.local/portable-build/verification-agent-final.json`。这是本机独立目录验收，不是另一台物理机或真实收费发布验收。
 
-本机已验证无数字人与有数字人审核预览路线；有数字人 4 句双主持真实任务达到 `review_ready`，切点由 V2 精确帧清单自动批准，Whisper 仅诊断。新电脑的安装/静态测试通过不等于云端账号、私有素材或付费工作流已经验收，必须按本机配置重新做短样本验证。
+Git仅保存源码、测试、公开配置模板、可分发品牌资源与设计文档。凭据、账本、主密钥、Cookie、项目素材、成片及备份被忽略，另行加密备份。新机静态测试通过不代表真实供应商、付费结算或账号发布已经验收。

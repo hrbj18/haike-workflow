@@ -1,5 +1,15 @@
 """Douyin technology content intelligence supplier."""
 
+import sys
+
+from ._stdio import configure_utf8_stdio as _configure_utf8_stdio, is_cli_process as _is_cli_process
+
+# Windows may otherwise emit an early CP936 runtime warning before cli.main
+# switches to UTF-8, creating one mixed-encoding stderr pipe. This package is
+# also imported as a library, whose host retains control of its own streams.
+if sys.platform == "win32" and _is_cli_process():
+    _configure_utf8_stdio()
+
 from .native_runtime import preload_msvc_runtime as _preload_msvc_runtime
 
 __version__ = "0.1.0"

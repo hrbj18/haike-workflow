@@ -1,0 +1,8 @@
+[Unit]
+Description=Reload Haike API TLS after existing certificate renewal
+[Timer]
+OnCalendar=*-*-* 00,06,12,18:20:00
+Persistent=true
+Unit=haike-api-tls-reload.service
+[Install]
+WantedBy=timers.target

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+import re
 
 import pytest
 from fastapi import FastAPI
@@ -208,9 +209,29 @@ def test_visual_overview_import_is_reviewable_and_idempotent(archive, tmp_path: 
     assert event["start_seconds"] < 21.2 < event["end_seconds"]
 
 
-def test_main_workbench_mounts_archive_page():
+def test_main_workbench_mounts_archive_page(monkeypatch):
     from backlot.server import create_app
+
+    archived = [{"id": "archive-fixture", "name": "fixture.mp4"}]
+    monkeypatch.setattr(clip_api, "list_videos", lambda: archived)
     client = TestClient(create_app())
-    response = client.get("/published-clips")
+    legacy = client.get("/published-clips", follow_redirects=False)
+    assert legacy.status_code == 307
+    assert legacy.headers["location"] == "/projects"
+    response = client.get(legacy.headers["location"])
     assert response.status_code == 200
-    assert "已发布成片索引" in response.text
+    assert '<div id="root"></div>' in response.text
+    assets = re.findall(r'(?:src|href)="(/ui/avatar-generator/assets/[^\"]+)"', response.text)
+    assert any(path.endswith(".js") for path in assets)
+    assert any(path.endswith(".css") for path in assets)
+    scripts = []
+    for path in assets:
+        asset = client.get(path)
+        assert asset.status_code == 200
+        if path.endswith(".js"):
+            scripts.append(asset.text)
+    bundle = "\n".join(scripts)
+    assert "我的作品" in bundle
+    assert "/api/works?candidates=true" in bundle
+    # Removing the old standalone page must preserve its internal archive API.
+    assert client.get("/api/published-clips/videos").json() == archived

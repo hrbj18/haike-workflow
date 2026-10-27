@@ -1,0 +1,402 @@
+{
+  "schema_version": 1,
+  "standard_version": "video-template-v1",
+  "template_id": "example_avatar",
+  "template_version": "v001",
+  "template_type": "avatar",
+  "spec_kind": "reference",
+  "stage": "specification",
+  "authority": {
+    "runbook": "../../视频模板Runbook骨架.md",
+    "implementation_paths": [],
+    "parameter_source": "self"
+  },
+  "canvas": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "duration_seconds": 6,
+    "clock": "本期最终音轨；无音轨时使用明确的场景帧时钟",
+    "coordinate_system": "top_left_pixels"
+  },
+  "narrative": {
+    "purpose": "演示规范字段填写方式，未声明可生产",
+    "information_hierarchy": [
+      "标题",
+      "主信息",
+      "辅助信息"
+    ],
+    "structure": [
+      "主题",
+      "证据或解释",
+      "收束"
+    ]
+  },
+  "scenes": [
+    {
+      "id": "scene_1",
+      "start": 0,
+      "end": 6,
+      "purpose": "覆盖此教学布局的稳定状态",
+      "element_ids": [
+        "background",
+        "headline",
+        "presenter",
+        "caption"
+      ],
+      "variant": "main"
+    }
+  ],
+  "assets": [],
+  "elements": [
+    {
+      "id": "background",
+      "type": "background",
+      "role": "全画布底色",
+      "parent_id": null,
+      "z_index": 0,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "全画布底色"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1080,
+          1920
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "fill": "#101828"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 6
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "当前场景稳定显示"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "example_design"
+      ],
+      "acceptance": [
+        {
+          "check": "layout_readability",
+          "method": "实际查看稳定态和最长内容帧",
+          "pass_condition": "全部相关内容可读且符合名义框与避让关系"
+        }
+      ]
+    },
+    {
+      "id": "headline",
+      "type": "text",
+      "role": "本期主题",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "editable",
+        "binding": "headline_slot",
+        "asset_id": null,
+        "description": "本期主题"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          72,
+          120,
+          936,
+          180
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "font": "项目登记的中文字体文件",
+          "font_size": 48,
+          "max_lines": 2,
+          "overflow": "rewrite_then_split"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 6
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "当前场景稳定显示"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "example_design"
+      ],
+      "acceptance": [
+        {
+          "check": "layout_readability",
+          "method": "实际查看稳定态和最长内容帧",
+          "pass_condition": "全部相关内容可读且符合名义框与避让关系"
+        }
+      ]
+    },
+    {
+      "id": "presenter",
+      "type": "avatar",
+      "role": "人物窗口，素材按本期授权提供",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "示意人物占位，不表示已生成数字人"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          700,
+          650,
+          280,
+          400
+        ],
+        "fit": "cover",
+        "clip": "self",
+        "style": {
+          "shape": "rounded_rectangle",
+          "radius": 24
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 6
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "当前场景稳定显示"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "example_design"
+      ],
+      "acceptance": [
+        {
+          "check": "layout_readability",
+          "method": "实际查看稳定态和最长内容帧",
+          "pass_condition": "全部相关内容可读且符合名义框与避让关系"
+        }
+      ]
+    },
+    {
+      "id": "caption",
+      "type": "text",
+      "role": "逐句字幕",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "editable",
+        "binding": "caption_slot",
+        "asset_id": null,
+        "description": "逐句字幕"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          72,
+          1300,
+          936,
+          160
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "font": "项目登记的中文字体文件",
+          "font_size": 48,
+          "max_lines": 2,
+          "overflow": "rewrite_then_split"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 6
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "当前场景稳定显示"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "example_design"
+      ],
+      "acceptance": [
+        {
+          "check": "layout_readability",
+          "method": "实际查看稳定态和最长内容帧",
+          "pass_condition": "全部相关内容可读且符合名义框与避让关系"
+        }
+      ]
+    }
+  ],
+  "slots": [
+    {
+      "id": "headline_slot",
+      "element_id": "headline",
+      "property": "content",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "max_lines": 2,
+        "width_pixels": 936,
+        "measure_with_actual_font": true
+      },
+      "missing": "停在输入检查并补齐本期文本",
+      "overflow": "先改写或拆句，再按主时钟核对，保持已锁定版式"
+    },
+    {
+      "id": "caption_slot",
+      "element_id": "caption",
+      "property": "content",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "max_lines": 2,
+        "width_pixels": 936,
+        "measure_with_actual_font": true
+      },
+      "missing": "停在输入检查并补齐本期文本",
+      "overflow": "先改写或拆句，再按主时钟核对，保持已锁定版式"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "example_design",
+      "source_kind": "illustrative",
+      "source": "本标准的教学设计",
+      "locator": "当前示例 JSON",
+      "method": "人工定义名义值，未观察参考片或渲染",
+      "file": null,
+      "sha256": null
+    }
+  ],
+  "unknowns": [
+    {
+      "path": "/extensions/avatar/face_crop",
+      "reason": "教学示例没有本期人物素材，不能预定具体裁切",
+      "evidence_plan": "取得已授权人物母版后测量人脸并检查代表帧",
+      "blocks": [
+        "execution",
+        "visual"
+      ]
+    }
+  ],
+  "validation": {
+    "structure": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "教学规格，尚未实现、渲染或验收"
+    },
+    "technical": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "教学规格，尚未实现、渲染或验收"
+    },
+    "visual": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "教学规格，尚未实现、渲染或验收"
+    },
+    "audio": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "教学规格，尚未实现、渲染或验收"
+    },
+    "platform": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "教学规格，尚未实现、渲染或验收"
+    },
+    "user_review": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "教学规格，尚未实现、渲染或验收"
+    },
+    "production": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "教学规格，尚未实现、渲染或验收"
+    }
+  },
+  "extensions": {
+    "avatar": {
+      "face_crop": {
+        "status": "unknown",
+        "reason": "尚无本期人物母版",
+        "evidence_plan": "以当前素材测量裁切并核对头顶下巴"
+      },
+      "synchronization": "人物与独立音轨同母版同裁切原点，人物视觉层静音"
+    }
+  },
+  "operations": [
+    {
+      "id": "preflight",
+      "input": "本期规格和所有必需替换槽",
+      "action": "检查输入、参数、实现入口和当前授权",
+      "output": "缺失项及明确的可继续范围",
+      "completion": "每个缺失项有补齐方案；没有把教学规格当成生产入口",
+      "recovery": "复用已完成素材，补齐对应输入后重新检查",
+      "entrypoint": null
+    }
+  ]
+}

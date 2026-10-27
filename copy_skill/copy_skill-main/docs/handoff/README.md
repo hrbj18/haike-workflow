@@ -1,6 +1,6 @@
 # Project handoff router
 
-Current task: `docs/tasks/2026-10-12-monorepo.md`.
+Current task: `docs/tasks/2026-10-17-upload-readiness.md`.
 
 Source installation and releases now follow the workspace root README.md. Default config supports ignored content_intelligence.local.json overrides; explicit config paths remain isolated. Migration verification is recorded in the root docs/VERIFICATION.md.
 

@@ -48,6 +48,37 @@ def wav_bytes():
     return bytes(data)
 
 
+def test_inline_audio_is_redacted_from_provider_errors():
+    assert "QUJDRA==" not in api.safe_error("BadAudio data:audio/wav;base64,QUJDRA==")
+
+
+@pytest.mark.parametrize("http_status,provider_code,kind,definitive", [
+    (401,"InvalidApiKey","invalid_key",True),
+    (400,"invalid_api_key","invalid_key",True),
+    (401,None,"invalid_key",True),
+    (400,"Arrearage","insufficient_balance",True),
+    (400,"isv.OUT_OF_SERVICE","insufficient_balance",True),
+    (403,"AccessDenied.Unpurchased","other",True),
+    (403,"Model.AccessDenied","other",True),
+    (429,"Throttling","other",True),
+    (400,"QuotaExceeded","other",True),
+    (500,"InternalError","other",False),
+])
+def test_provider_rejections_have_precise_safe_failure_facts(http_status, provider_code, kind, definitive):
+    payload = {"message":"余额不足配额提示不能覆盖真实错误码 unit-test-secret https://private.example/token"}
+    if provider_code is not None:
+        payload["code"] = provider_code
+    with pytest.raises(api.BailianSpeechError) as caught:
+        api.response_json(Response(payload,status=http_status))
+    error = caught.value
+    assert error.failure_kind == kind
+    assert error.provider_code == provider_code
+    assert error.http_status == http_status
+    assert error.definitive is definitive
+    assert error.accepted is False
+    assert "unit-test-secret" not in str(error) and "private.example" not in str(error)
+
+
 def test_config_preserves_other_keys_and_never_exposes_secrets(tmp_path):
     path = tmp_path / ".env.secrets.local"
     path.write_text("OTHER_SETTING=keep\n", encoding="utf-8")
@@ -174,8 +205,10 @@ def test_asr_poll_failure_resumes_task_and_preserves_word_timestamps(tmp_path, m
     monkeypatch.setattr(requests, "post", post)
     monkeypatch.setattr(requests, "get", get)
     monkeypatch.setattr(api, "download", lambda url, path: path.write_text(json.dumps({"transcripts": [{"text": "你好", "sentences": [{"begin_time": 120, "end_time": 900, "text": "你好", "words": [{"begin_time": 120, "end_time": 400, "text": "你"}]}]}]}), encoding="utf-8"))
-    with pytest.raises(requests.Timeout):
+    with pytest.raises(api.BailianSpeechError) as interrupted:
         bailian_asr.transcribe_file(audio, artifact_dir=tmp_path)
+    assert interrupted.value.accepted is True and interrupted.value.task_id == "task-test"
+    assert interrupted.value.definitive is False
     text, rows, metadata = bailian_asr.transcribe_file(audio, artifact_dir=tmp_path, on_accepted=accepted.append)
     assert text == "你好" and rows[0]["start"] == 0.12
     assert metadata["words"][0]["end"] == 0.4

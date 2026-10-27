@@ -330,11 +330,22 @@ class RiskController:
         local_start = aware.replace(hour=0, minute=0, second=0, microsecond=0)
         return local_start.astimezone(timezone.utc).replace(tzinfo=None)
 
-    def _in_active_window(self, account: DouyinAccount, now: datetime) -> bool:
+    def _active_hours(self, kind: OperationKind | None = None) -> tuple[int, int]:
+        engine = self.cfg.engine
+        if kind == OperationKind.PUBLISH:
+            start = getattr(engine, "publish_active_hours_start", None)
+            end = getattr(engine, "publish_active_hours_end", None)
+            # A partial/invalid file configuration never opens a new window.
+            if type(start) is int and type(end) is int and 0 <= start <= 23 and start < end <= 47:
+                return start, end
+        return engine.active_hours_start, engine.active_hours_end
+
+    def _in_active_window(self, account: DouyinAccount, now: datetime,
+                          kind: OperationKind | None = None) -> bool:
         engine = self.cfg.engine
         if not engine.quiet_hours_enabled:
             return True
-        start, end = engine.active_hours_start, engine.active_hours_end
+        start, end = self._active_hours(kind)
         if end <= start:
             return True
         hour = now.replace(tzinfo=timezone.utc).astimezone(self._timezone(account)).hour
@@ -582,10 +593,11 @@ class RiskController:
                 if next_probe > now:
                     return RiskDecision(False, "恢复探测间隔未到", next_probe, "probe_gap")
 
-            if kind in self._WRITE_KINDS and not self._in_active_window(account, now):
+            if kind in self._WRITE_KINDS and not self._in_active_window(account, now, kind):
                 local = now.replace(tzinfo=timezone.utc).astimezone(self._timezone(account))
+                start, _ = self._active_hours(kind)
                 next_local = local.replace(
-                    hour=max(0, min(23, self.cfg.engine.active_hours_start)),
+                    hour=max(0, min(23, start)),
                     minute=0, second=0, microsecond=0)
                 if next_local <= local:
                     next_local += timedelta(days=1)

@@ -1,0 +1,3412 @@
+{
+  "schema_version": 1,
+  "standard_version": "video-template-v1",
+  "template_type": "avatar",
+  "template_id": "avatar-investment-a-v6-art-v5",
+  "template_version": "v005-footerless-1",
+  "spec_kind": "implementation",
+  "stage": "ready",
+  "authority": {
+    "runbook": "../../../Haike-Videohub/agent-runbooks/数字人口播模板6-招商A.md",
+    "implementation_paths": [
+      "index.tsx",
+      "RefinedDirections.tsx",
+      "NewDirections.tsx",
+      "shared.tsx",
+      "Motion.tsx",
+      "types.ts",
+      "layout.json",
+      "README.md",
+      "assets/PROVENANCE.json",
+      "assets/sound/PROVENANCE.json",
+      "../../backlot/studio_investment_source_art_v5.py",
+      "../../backlot/studio_investment_audio_v5.py",
+      "../../backlot/studio_investment_source_art_v4.py",
+      "../../backlot/studio_investment_source_video.py",
+      "../../backlot/studio_composition.py",
+      "../../backlot/production_queue_worker.py",
+      "../../scripts/avatar_investment_source_art_v5.py",
+      "assets/sound/generate_sound_pack.py",
+      "assets/sound/rebuild_sound_pack.py",
+      "assets/sound/REBUILD.md"
+    ],
+    "parameter_source": "layout.json"
+  },
+  "canvas": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "duration_seconds": 33.166666666666664,
+    "clock": "原MP4的完整24kHz mono PCM16保持原速1为语音/人物/字幕主时钟；预览与最终mux共用冻结48kHz立体声mixed-master，输出round(audioDuration*30)帧。此scenes代表源01/06的995帧计划；六条实际input duration见source_art.validation_inputs。BGM与编辑SFX不能移动word/cue/chapter时钟。",
+    "coordinate_system": "top_left_pixels"
+  },
+  "narrative": {
+    "purpose": "保留六方向艺术版式与原三套口播脚本，通过原创BGM、选择性语义落点和可读的短句/关键词/标题动效完成已有原视频的本地声画开发测试。",
+    "information_hierarchy": [
+      "源稿的钩子/业务解释",
+      "完整且清晰的当前语义短句",
+      "本章标题与不新增承诺的要点",
+      "合作方案条件与咨询行动",
+      "素材来源说明"
+    ],
+    "structure": [
+      "hook：对应本条原稿问题",
+      "story：体验/内容场景，素材只按其真实来源示意",
+      "ai：只有源03/输出03和05可用AI数字员工；其余仅社区产品/经营关系",
+      "offer：本条金额和本条确有的面积，保留先看投入/清单/支持的条件",
+      "cta：资料、咨询和再做判断，不增加商业承诺"
+    ]
+  },
+  "elements": [
+    {
+      "id": "art_background",
+      "type": "image",
+      "role": "旧三方向装饰PNG；新三方向使用源码矢量/颜色，不造实景",
+      "parent_id": null,
+      "z_index": 0,
+      "content": {
+        "mode": "embedded",
+        "binding": "background_slot",
+        "asset_id": "art_community",
+        "description": "旧三方向装饰PNG；新三方向使用源码矢量/颜色，不造实景"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1080,
+          1920
+        ],
+        "fit": "cover",
+        "clip": "self",
+        "style": {
+          "source": "当前v5 layout.json及对应TSX组件；音频混合由studio_investment_audio_v5.py定义",
+          "measurement_status": "当前冻结源码声明的参考分配框；最大运动和可读性只按本期根实际观察通过范围，不称DOM全组合测量或真机验收。",
+          "rule": "根据方向显示静态设计底图或代码背景，无背景慢缩放。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 33.166666666666664
+      },
+      "states": [
+        {
+          "id": "conditional",
+          "visible": true,
+          "description": "按方向、当前章节与真实cue/word/scene活动条件显示，区间左闭右开；不能由可见=true推断全片常驻。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "custom",
+          "target_id": null,
+          "rule": "根据方向显示静态设计底图或代码背景，无背景慢缩放。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "current_implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "frozen_source_and_visible_output",
+          "method": "冻结props/源码与同一最终SHA对应，并按本期根实际样本查看短拍、动效/章节/素材边界和最长句；其余组合需出样。",
+          "pass_condition": "原稿不丢、不新增承诺，主体及来源标签可读；来源、时钟、裁切和方向状态符合实现。"
+        }
+      ]
+    },
+    {
+      "id": "frame_design",
+      "type": "graphic",
+      "role": "各方向矢量/边线/纸签/舞台与蒙版装饰",
+      "parent_id": null,
+      "z_index": 1,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "各方向矢量/边线/纸签/舞台与蒙版装饰"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1080,
+          1920
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "source": "当前v5 layout.json及对应TSX组件；音频混合由studio_investment_audio_v5.py定义",
+          "measurement_status": "当前冻结源码声明的参考分配框；最大运动和可读性只按本期根实际观察通过范围，不称DOM全组合测量或真机验收。",
+          "rule": "形状、阴影及各方向章节揭示以组件源码为唯一真值，不表示数据或营业实证。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 33.166666666666664
+      },
+      "states": [
+        {
+          "id": "conditional",
+          "visible": true,
+          "description": "按方向、当前章节与真实cue/word/scene活动条件显示，区间左闭右开；不能由可见=true推断全片常驻。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "custom",
+          "target_id": null,
+          "rule": "形状、阴影及各方向章节揭示以组件源码为唯一真值，不表示数据或营业实证。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "current_implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "frozen_source_and_visible_output",
+          "method": "冻结props/源码与同一最终SHA对应，并按本期根实际样本查看短拍、动效/章节/素材边界和最长句；其余组合需出样。",
+          "pass_condition": "原稿不丢、不新增承诺，主体及来源标签可读；来源、时钟、裁切和方向状态符合实现。"
+        }
+      ]
+    },
+    {
+      "id": "brand",
+      "type": "text",
+      "role": "项目品牌",
+      "parent_id": null,
+      "z_index": 50,
+      "content": {
+        "mode": "editable",
+        "binding": "brand_slot",
+        "asset_id": null,
+        "description": "项目品牌"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          80,
+          76,
+          680,
+          70
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "source": "当前v5 layout.json及对应TSX组件；音频混合由studio_investment_audio_v5.py定义",
+          "measurement_status": "当前冻结源码声明的参考分配框；最大运动和可读性只按本期根实际观察通过范围，不称DOM全组合测量或真机验收。",
+          "rule": "单行14字以内；Microsoft YaHei 34。",
+          "font": "Microsoft YaHei；部分方向标题KaiTi/SimSun，源组件为准",
+          "font_size": 34,
+          "max_lines": 1,
+          "overflow": "对应方向拟合/限定行数并在根画布裁切；超长输入须重新出样，不能因此宣称无溢出。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 33.166666666666664
+      },
+      "states": [
+        {
+          "id": "conditional",
+          "visible": true,
+          "description": "按方向、当前章节与真实cue/word/scene活动条件显示，区间左闭右开；不能由可见=true推断全片常驻。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "custom",
+          "target_id": null,
+          "rule": "单行14字以内；Microsoft YaHei 34。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "current_implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "frozen_source_and_visible_output",
+          "method": "冻结props/源码与同一最终SHA对应，并按本期根实际样本查看短拍、动效/章节/素材边界和最长句；其余组合需出样。",
+          "pass_condition": "原稿不丢、不新增承诺，主体及来源标签可读；来源、时钟、裁切和方向状态符合实现。"
+        }
+      ]
+    },
+    {
+      "id": "category",
+      "type": "text",
+      "role": "固定栏目字句",
+      "parent_id": null,
+      "z_index": 50,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "固定栏目字句"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          760,
+          76,
+          240,
+          60
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "source": "当前v5 layout.json及对应TSX组件；音频混合由studio_investment_audio_v5.py定义",
+          "measurement_status": "当前冻结源码声明的参考分配框；最大运动和可读性只按本期根实际观察通过范围，不称DOM全组合测量或真机验收。",
+          "rule": "固定社区AI × 内容创作；不是独立可替换经营承诺。",
+          "font": "Microsoft YaHei；部分方向标题KaiTi/SimSun，源组件为准",
+          "font_size": 25,
+          "max_lines": 1,
+          "overflow": "对应方向拟合/限定行数并在根画布裁切；超长输入须重新出样，不能因此宣称无溢出。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 33.166666666666664
+      },
+      "states": [
+        {
+          "id": "conditional",
+          "visible": true,
+          "description": "按方向、当前章节与真实cue/word/scene活动条件显示，区间左闭右开；不能由可见=true推断全片常驻。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "custom",
+          "target_id": null,
+          "rule": "固定社区AI × 内容创作；不是独立可替换经营承诺。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions",
+        "content"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "current_implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "frozen_source_and_visible_output",
+          "method": "冻结props/源码与同一最终SHA对应，并按本期根实际样本查看短拍、动效/章节/素材边界和最长句；其余组合需出样。",
+          "pass_condition": "原稿不丢、不新增承诺，主体及来源标签可读；来源、时钟、裁切和方向状态符合实现。"
+        }
+      ]
+    },
+    {
+      "id": "chapter_heading",
+      "type": "text",
+      "role": "本章主标题",
+      "parent_id": null,
+      "z_index": 4,
+      "content": {
+        "mode": "editable",
+        "binding": "heading_slot",
+        "asset_id": null,
+        "description": "本章主标题"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          80,
+          222,
+          920,
+          260
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "source": "当前v5 layout.json及对应TSX组件；音频混合由studio_investment_audio_v5.py定义",
+          "measurement_status": "当前冻结源码声明的参考分配框；最大运动和可读性只按本期根实际观察通过范围，不称DOM全组合测量或真机验收。",
+          "rule": "沿用每章1–2行、每行<=12字真实标题。标题逐行整块收位，合作金额的主落点及边线由已登记hitPulse驱动；不抖动脸、不闪全屏。参数真值为对应组件及Motion.tsx。",
+          "font": "Microsoft YaHei；部分方向标题KaiTi/SimSun，源组件为准",
+          "font_size": 110,
+          "max_lines": 2,
+          "overflow": "对应方向拟合/限定行数并在根画布裁切；超长输入须重新出样，不能因此宣称无溢出。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 33.166666666666664
+      },
+      "states": [
+        {
+          "id": "conditional",
+          "visible": true,
+          "description": "按方向、当前章节与真实cue/word/scene活动条件显示，区间左闭右开；不能由可见=true推断全片常驻。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "custom",
+          "target_id": null,
+          "rule": "沿用每章1–2行、每行<=12字真实标题。标题逐行整块收位，合作金额的主落点及边线由已登记hitPulse驱动；不抖动脸、不闪全屏。参数真值为对应组件及Motion.tsx。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "current_implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "frozen_source_and_visible_output",
+          "method": "冻结props/源码与同一最终SHA对应，并按本期根实际样本查看短拍、动效/章节/素材边界和最长句；其余组合需出样。",
+          "pass_condition": "原稿不丢、不新增承诺，主体及来源标签可读；来源、时钟、裁切和方向状态符合实现。"
+        }
+      ]
+    },
+    {
+      "id": "chapter_deck",
+      "type": "text",
+      "role": "原稿条件及解释",
+      "parent_id": null,
+      "z_index": 4,
+      "content": {
+        "mode": "editable",
+        "binding": "deck_slot",
+        "asset_id": null,
+        "description": "原稿条件及解释"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          80,
+          505,
+          920,
+          100
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "source": "当前v5 layout.json及对应TSX组件；音频混合由studio_investment_audio_v5.py定义",
+          "measurement_status": "当前冻结源码声明的参考分配框；最大运动和可读性只按本期根实际观察通过范围，不称DOM全组合测量或真机验收。",
+          "rule": "最多40字；不吞掉合作条件；实际字号/字位由方向组件确定。",
+          "font": "Microsoft YaHei；部分方向标题KaiTi/SimSun，源组件为准",
+          "font_size": 42,
+          "max_lines": 3,
+          "overflow": "对应方向拟合/限定行数并在根画布裁切；超长输入须重新出样，不能因此宣称无溢出。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 33.166666666666664
+      },
+      "states": [
+        {
+          "id": "conditional",
+          "visible": true,
+          "description": "按方向、当前章节与真实cue/word/scene活动条件显示，区间左闭右开；不能由可见=true推断全片常驻。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "custom",
+          "target_id": null,
+          "rule": "最多40字；不吞掉合作条件；实际字号/字位由方向组件确定。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "current_implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "frozen_source_and_visible_output",
+          "method": "冻结props/源码与同一最终SHA对应，并按本期根实际样本查看短拍、动效/章节/素材边界和最长句；其余组合需出样。",
+          "pass_condition": "原稿不丢、不新增承诺，主体及来源标签可读；来源、时钟、裁切和方向状态符合实现。"
+        }
+      ]
+    },
+    {
+      "id": "presenter",
+      "type": "video",
+      "role": "主解释人物窗口",
+      "parent_id": null,
+      "z_index": 3,
+      "content": {
+        "mode": "embedded",
+        "binding": "source_video_slot",
+        "asset_id": "source_video",
+        "description": "主解释人物窗口"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          54,
+          602,
+          972,
+          990
+        ],
+        "fit": "cover",
+        "clip": "self",
+        "style": {
+          "source": "当前v5 layout.json及对应TSX组件；音频混合由studio_investment_audio_v5.py定义",
+          "measurement_status": "当前冻结源码声明的参考分配框；最大运动和可读性只按本期根实际观察通过范围，不称DOM全组合测量或真机验收。",
+          "rule": "原生成数字人及背景作为固化内容；cover保持口型，未重绘人物。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 33.166666666666664
+      },
+      "states": [
+        {
+          "id": "conditional",
+          "visible": true,
+          "description": "按方向、当前章节与真实cue/word/scene活动条件显示，区间左闭右开；不能由可见=true推断全片常驻。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "custom",
+          "target_id": null,
+          "rule": "原生成数字人及背景作为固化内容；cover保持口型，未重绘人物。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "current_implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "frozen_source_and_visible_output",
+          "method": "冻结props/源码与同一最终SHA对应，并按本期根实际样本查看短拍、动效/章节/素材边界和最长句；其余组合需出样。",
+          "pass_condition": "原稿不丢、不新增承诺，主体及来源标签可读；来源、时钟、裁切和方向状态符合实现。"
+        }
+      ]
+    },
+    {
+      "id": "secondary_presenter",
+      "type": "video",
+      "role": "真实素材出现时的小解释窗",
+      "parent_id": null,
+      "z_index": 6,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "source_video",
+        "description": "真实素材出现时的小解释窗"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          710,
+          1178,
+          286,
+          392
+        ],
+        "fit": "cover",
+        "clip": "self",
+        "style": {
+          "source": "当前v5 layout.json及对应TSX组件；音频混合由studio_investment_audio_v5.py定义",
+          "measurement_status": "当前冻结源码声明的参考分配框；最大运动和可读性只按本期根实际观察通过范围，不称DOM全组合测量或真机验收。",
+          "rule": "只在部分方向真实素材活动时显示；与原人物同一全片时钟；原视频静音。",
+          "binding_rule": "从同一source_video_slot派生，不能独立替换第二人物。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 33.166666666666664
+      },
+      "states": [
+        {
+          "id": "conditional",
+          "visible": true,
+          "description": "按方向、当前章节与真实cue/word/scene活动条件显示，区间左闭右开；不能由可见=true推断全片常驻。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "custom",
+          "target_id": null,
+          "rule": "只在部分方向真实素材活动时显示；与原人物同一全片时钟；原视频静音。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions",
+        "content"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "current_implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "frozen_source_and_visible_output",
+          "method": "冻结props/源码与同一最终SHA对应，并按本期根实际样本查看短拍、动效/章节/素材边界和最长句；其余组合需出样。",
+          "pass_condition": "原稿不丢、不新增承诺，主体及来源标签可读；来源、时钟、裁切和方向状态符合实现。"
+        }
+      ]
+    },
+    {
+      "id": "material_window",
+      "type": "media",
+      "role": "可选真实产品互动视频或定格",
+      "parent_id": null,
+      "z_index": 5,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "real_company_video",
+        "description": "可选真实产品互动视频或定格"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          54,
+          602,
+          972,
+          990
+        ],
+        "fit": "contain",
+        "clip": "self",
+        "style": {
+          "source": "当前v5 layout.json及对应TSX组件；音频混合由studio_investment_audio_v5.py定义",
+          "measurement_status": "当前冻结源码声明的参考分配框；最大运动和可读性只按本期根实际观察通过范围，不称DOM全组合测量或真机验收。",
+          "rule": "按cue区间显示；video从明确offset读取、原速且静音；image明确冻结，不伪装新动作；fit按配置。",
+          "binding_rule": "整体序列由global real_media_slot控制，不将固化图片内部文字变成编辑槽。",
+          "contain_rule": "contain时清晰前景保留原比例；另以同源cover+blur(28px)+brightness(.42)+scale1.12补边，窗口内裁切，不生成新场所。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 33.166666666666664
+      },
+      "states": [
+        {
+          "id": "conditional",
+          "visible": true,
+          "description": "按方向、当前章节与真实cue/word/scene活动条件显示，区间左闭右开；不能由可见=true推断全片常驻。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "custom",
+          "target_id": null,
+          "rule": "按cue区间显示；video从明确offset读取、原速且静音；image明确冻结，不伪装新动作；fit按配置。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "current_implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "frozen_source_and_visible_output",
+          "method": "冻结props/源码与同一最终SHA对应，并按本期根实际样本查看短拍、动效/章节/素材边界和最长句；其余组合需出样。",
+          "pass_condition": "原稿不丢、不新增承诺，主体及来源标签可读；来源、时钟、裁切和方向状态符合实现。"
+        }
+      ]
+    },
+    {
+      "id": "material_source_label",
+      "type": "text",
+      "role": "真实素材来源标签",
+      "parent_id": null,
+      "z_index": 8,
+      "content": {
+        "mode": "editable",
+        "binding": "source_label_slot",
+        "asset_id": null,
+        "description": "真实素材来源标签"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          76,
+          620,
+          830,
+          55
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "source": "当前v5 layout.json及对应TSX组件；音频混合由studio_investment_audio_v5.py定义",
+          "measurement_status": "当前冻结源码声明的参考分配框；最大运动和可读性只按本期根实际观察通过范围，不称DOM全组合测量或真机验收。",
+          "rule": "当前真实素材窗必有对应来源标签；银白在105,671绘制，社区/曜黑在94,602，纪实在76,620；来源或定格不冒称海客店。",
+          "font": "Microsoft YaHei；部分方向标题KaiTi/SimSun，源组件为准",
+          "font_size": 24,
+          "max_lines": 2,
+          "overflow": "对应方向拟合/限定行数并在根画布裁切；超长输入须重新出样，不能因此宣称无溢出。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 33.166666666666664
+      },
+      "states": [
+        {
+          "id": "conditional",
+          "visible": true,
+          "description": "按方向、当前章节与真实cue/word/scene活动条件显示，区间左闭右开；不能由可见=true推断全片常驻。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "custom",
+          "target_id": null,
+          "rule": "真实素材出现时同窗标注；本期粤仔产品互动素材/粤仔产品互动定格，不称海客门店。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "current_implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "frozen_source_and_visible_output",
+          "method": "冻结props/源码与同一最终SHA对应，并按本期根实际样本查看短拍、动效/章节/素材边界和最长句；其余组合需出样。",
+          "pass_condition": "原稿不丢、不新增承诺，主体及来源标签可读；来源、时钟、裁切和方向状态符合实现。"
+        }
+      ]
+    },
+    {
+      "id": "caption_panel",
+      "type": "graphic",
+      "role": "高对比短语字幕底板",
+      "parent_id": null,
+      "z_index": 40,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "高对比短语字幕底板"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          80,
+          1630,
+          920,
+          180
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "source": "当前v5 layout.json及对应TSX组件；音频混合由studio_investment_audio_v5.py定义",
+          "measurement_status": "当前冻结源码声明的参考分配框；最大运动和可读性只按本期根实际观察通过范围，不称DOM全组合测量或真机验收。",
+          "rule": "高对比底板与字幕同一短拍显隐、同一整体变换；声效事件仅驱动短衰减pulse和底板/边线，不移动人物或来源说明。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 33.166666666666664
+      },
+      "states": [
+        {
+          "id": "conditional",
+          "visible": true,
+          "description": "按方向、当前章节与真实cue/word/scene活动条件显示，区间左闭右开；不能由可见=true推断全片常驻。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "custom",
+          "target_id": null,
+          "rule": "高对比底板与字幕同一短拍显隐、同一整体变换；声效事件仅驱动短衰减pulse和底板/边线，不移动人物或来源说明。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "current_implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "frozen_source_and_visible_output",
+          "method": "冻结props/源码与同一最终SHA对应，并按本期根实际样本查看短拍、动效/章节/素材边界和最长句；其余组合需出样。",
+          "pass_condition": "原稿不丢、不新增承诺，主体及来源标签可读；来源、时钟、裁切和方向状态符合实现。"
+        }
+      ]
+    },
+    {
+      "id": "captions",
+      "type": "text",
+      "role": "完整原稿显示字幕，以真实词边界分为语义短拍",
+      "parent_id": null,
+      "z_index": 41,
+      "content": {
+        "mode": "editable",
+        "binding": "captions_slot",
+        "asset_id": null,
+        "description": "完整原稿显示字幕，以真实词边界分为语义短拍"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          100,
+          1647,
+          880,
+          140
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "source": "当前v5 layout.json及对应TSX组件；音频混合由studio_investment_audio_v5.py定义",
+          "measurement_status": "当前冻结源码声明的参考分配框；最大运动和可读性只按本期根实际观察通过范围，不称DOM全组合测量或真机验收。",
+          "rule": "完整原cue按未变captionBeats与真实词端点组成短拍，目标9字、上限13字，全部文字首个活动帧即存在。CaptionTrack按layout.motion.profiles计算整块比例/位移/倾角、稳定持读与真实词关键词回弹；具体revealFrames和最大比例以源码为准。不得丢字、提前抹除、随机单字或重排原时钟。",
+          "font": "Microsoft YaHei；部分方向标题KaiTi/SimSun，源组件为准",
+          "font_size": 68,
+          "max_lines": 2,
+          "overflow": "对应方向拟合/限定行数并在根画布裁切；超长输入须重新出样，不能因此宣称无溢出。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 33.166666666666664
+      },
+      "states": [
+        {
+          "id": "conditional",
+          "visible": true,
+          "description": "按方向、当前章节与真实cue/word/scene活动条件显示，区间左闭右开；不能由可见=true推断全片常驻。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "custom",
+          "target_id": null,
+          "rule": "完整原cue按未变captionBeats与真实词端点组成短拍，目标9字、上限13字，全部文字首个活动帧即存在。CaptionTrack按layout.motion.profiles计算整块比例/位移/倾角、稳定持读与真实词关键词回弹；具体revealFrames和最大比例以源码为准。不得丢字、提前抹除、随机单字或重排原时钟。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "current_implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "frozen_source_and_visible_output",
+          "method": "冻结props/源码与同一最终SHA对应，并按本期根实际样本查看短拍、动效/章节/素材边界和最长句；其余组合需出样。",
+          "pass_condition": "原稿不丢、不新增承诺，主体及来源标签可读；来源、时钟、裁切和方向状态符合实现。"
+        }
+      ]
+    },
+    {
+      "id": "caption_highlights",
+      "type": "text",
+      "role": "短语关键词的时间强调",
+      "parent_id": null,
+      "z_index": 42,
+      "content": {
+        "mode": "editable",
+        "binding": "phrase_slot",
+        "asset_id": null,
+        "description": "短语关键词的时间强调"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          100,
+          1647,
+          880,
+          140
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "source": "当前v5 layout.json及对应TSX组件；音频混合由studio_investment_audio_v5.py定义",
+          "measurement_status": "当前冻结源码声明的参考分配框；最大运动和可读性只按本期根实际观察通过范围，不称DOM全组合测量或真机验收。",
+          "rule": "本条原文的完整关键词按beat.words累计字位找实测端点，最长匹配词组一次回弹；raw ASR首单字不是独立动画单元。完整金额与AI数字员工保持整体，普通字符不随机抖动。",
+          "font": "Microsoft YaHei；部分方向标题KaiTi/SimSun，源组件为准",
+          "font_size": 68,
+          "max_lines": 2,
+          "overflow": "对应方向拟合/限定行数并在根画布裁切；超长输入须重新出样，不能因此宣称无溢出。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 33.166666666666664
+      },
+      "states": [
+        {
+          "id": "conditional",
+          "visible": true,
+          "description": "按方向、当前章节与真实cue/word/scene活动条件显示，区间左闭右开；不能由可见=true推断全片常驻。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "custom",
+          "target_id": null,
+          "rule": "本条原文的完整关键词按beat.words累计字位找实测端点，最长匹配词组一次回弹；raw ASR首单字不是独立动画单元。完整金额与AI数字员工保持整体，普通字符不随机抖动。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "current_implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "frozen_source_and_visible_output",
+          "method": "冻结props/源码与同一最终SHA对应，并按本期根实际样本查看短拍、动效/章节/素材边界和最长句；其余组合需出样。",
+          "pass_condition": "原稿不丢、不新增承诺，主体及来源标签可读；来源、时钟、裁切和方向状态符合实现。"
+        }
+      ]
+    },
+    {
+      "id": "chapter_points",
+      "type": "text",
+      "role": "当前章节最多三条语义要点",
+      "parent_id": null,
+      "z_index": 7,
+      "content": {
+        "mode": "editable",
+        "binding": "points_slot",
+        "asset_id": null,
+        "description": "当前章节最多三条语义要点"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          80,
+          1516,
+          920,
+          82
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "source": "当前v5 layout.json及对应TSX组件；音频混合由studio_investment_audio_v5.py定义",
+          "measurement_status": "当前冻结源码声明的参考分配框；最大运动和可读性只按本期根实际观察通过范围，不称DOM全组合测量或真机验收。",
+          "rule": "最多三条语义要点；PointMotion只在本章真实wordCues找到完整point文本时按首词ceil帧落位，找不到则静态。文本上限与布局同v4，本期最长<=6字，其他组合终验不外推。",
+          "font": "Microsoft YaHei；部分方向标题KaiTi/SimSun，源组件为准",
+          "font_size": 35,
+          "max_lines": 3,
+          "overflow": "对应方向拟合/限定行数并在根画布裁切；超长输入须重新出样，不能因此宣称无溢出。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 33.166666666666664
+      },
+      "states": [
+        {
+          "id": "conditional",
+          "visible": true,
+          "description": "按方向、当前章节与真实cue/word/scene活动条件显示，区间左闭右开；不能由可见=true推断全片常驻。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "custom",
+          "target_id": null,
+          "rule": "最多三条语义要点；PointMotion只在本章真实wordCues找到完整point文本时按首词ceil帧落位，找不到则静态。文本上限与布局同v4，本期最长<=6字，其他组合终验不外推。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "current_implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "frozen_source_and_visible_output",
+          "method": "冻结props/源码与同一最终SHA对应，并按本期根实际样本查看短拍、动效/章节/素材边界和最长句；其余组合需出样。",
+          "pass_condition": "原稿不丢、不新增承诺，主体及来源标签可读；来源、时钟、裁切和方向状态符合实现。"
+        }
+      ]
+    },
+    {
+      "id": "speech_audio",
+      "type": "audio",
+      "role": "同源完整口播",
+      "parent_id": null,
+      "z_index": 0,
+      "content": {
+        "mode": "embedded",
+        "binding": "audio_slot",
+        "asset_id": "source_audio",
+        "description": "同源完整口播"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "source": "当前v5 layout.json及对应TSX组件；音频混合由studio_investment_audio_v5.py定义",
+          "measurement_status": "当前冻结源码声明的参考分配框；最大运动和可读性只按本期根实际观察通过范围，不称DOM全组合测量或真机验收。",
+          "rule": "原声文件逐字节复用、语速1。混音阶段语音一次-2.5dB，与BGM和SFX合为唯一48k立体声PCM16母带；母线限幅/必要总增益另记回执。预览与最终AAC共用此母带，最终mux不再volume/loudnorm。",
+          "nonvisual": "音频无可视坐标；1x1只是通用结构占位，不绘制。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 33.166666666666664
+      },
+      "states": [
+        {
+          "id": "conditional",
+          "visible": true,
+          "description": "按方向、当前章节与真实cue/word/scene活动条件显示，区间左闭右开；不能由可见=true推断全片常驻。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "custom",
+          "target_id": null,
+          "rule": "原声文件逐字节复用、语速1。混音阶段语音一次-2.5dB，与BGM和SFX合为唯一48k立体声PCM16母带；母线限幅/必要总增益另记回执。预览与最终AAC共用此母带，最终mux不再volume/loudnorm。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "current_implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "frozen_source_and_visible_output",
+          "method": "冻结props/源码与同一最终SHA对应，并按本期根实际样本查看短拍、动效/章节/素材边界和最长句；其余组合需出样。",
+          "pass_condition": "原稿不丢、不新增承诺，主体及来源标签可读；来源、时钟、裁切和方向状态符合实现。"
+        }
+      ]
+    },
+    {
+      "id": "sound_punctuation",
+      "type": "graphic",
+      "role": "语义落点驱动的边线标点",
+      "parent_id": null,
+      "z_index": 42,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "语义落点驱动的边线标点"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1080,
+          1920
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "source": "当前v5 layout.json及对应TSX组件；音频混合由studio_investment_audio_v5.py定义",
+          "measurement_status": "当前冻结源码声明的参考分配框；最大运动和可读性只按本期根实际观察通过范围，不称DOM全组合测量或真机验收。",
+          "rule": "Motion.tsx SoundPunctuation仅读取dong/impact事件作画布边缘短促线条与顶部细线；指数衰减不累加镜头抖动，不遮盖人物或来源标签。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 33.166666666666664
+      },
+      "states": [
+        {
+          "id": "conditional",
+          "visible": true,
+          "description": "按方向、当前章节与真实cue/word/scene活动条件显示，区间左闭右开；不能由可见=true推断全片常驻。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "custom",
+          "target_id": null,
+          "rule": "Motion.tsx SoundPunctuation仅读取dong/impact事件作画布边缘短促线条与顶部细线；指数衰减不累加镜头抖动，不遮盖人物或来源标签。"
+        }
+      ],
+      "fixed": [
+        "content",
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "current_implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "frozen_source_and_visible_output",
+          "method": "冻结props/源码与同一最终SHA对应，并按本期根实际样本查看短拍、动效/章节/素材边界和最长句；其余组合需出样。",
+          "pass_condition": "原稿不丢、不新增承诺，主体及来源标签可读；来源、时钟、裁切和方向状态符合实现。"
+        }
+      ]
+    },
+    {
+      "id": "background_music",
+      "type": "audio",
+      "role": "人声侧链下的原创配乐",
+      "parent_id": null,
+      "z_index": 0,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "人声侧链下的原创配乐"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "source": "当前v5 layout.json及对应TSX组件；音频混合由studio_investment_audio_v5.py定义",
+          "measurement_status": "当前冻结源码声明的参考分配框；最大运动和可读性只按本期根实际观察通过范围，不称DOM全组合测量或真机验收。",
+          "rule": "audio-plan.music绑定本地WAV路径/SHA/source_label；offset/loop/gain/fades显式输入，完整长度不足且未loop拒绝。实际人声侧链压低音乐，仅作叙事底层。",
+          "nonvisual": "音频无可视坐标；1x1只是通用结构占位，不绘制。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 33.166666666666664
+      },
+      "states": [
+        {
+          "id": "conditional",
+          "visible": true,
+          "description": "按方向、当前章节与真实cue/word/scene活动条件显示，区间左闭右开；不能由可见=true推断全片常驻。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "custom",
+          "target_id": null,
+          "rule": "audio-plan.music绑定本地WAV路径/SHA/source_label；offset/loop/gain/fades显式输入，完整长度不足且未loop拒绝。实际人声侧链压低音乐，仅作叙事底层。"
+        }
+      ],
+      "fixed": [
+        "content",
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "current_implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "frozen_source_and_visible_output",
+          "method": "冻结props/源码与同一最终SHA对应，并按本期根实际样本查看短拍、动效/章节/素材边界和最长句；其余组合需出样。",
+          "pass_condition": "原稿不丢、不新增承诺，主体及来源标签可读；来源、时钟、裁切和方向状态符合实现。"
+        }
+      ]
+    },
+    {
+      "id": "editorial_sfx",
+      "type": "audio",
+      "role": "真实词/cue/章锚点的编辑音效",
+      "parent_id": null,
+      "z_index": 0,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "真实词/cue/章锚点的编辑音效"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "source": "当前v5 layout.json及对应TSX组件；音频混合由studio_investment_audio_v5.py定义",
+          "measurement_status": "当前冻结源码声明的参考分配框；最大运动和可读性只按本期根实际观察通过范围，不称DOM全组合测量或真机验收。",
+          "rule": "音效必须由raw anchor真实起止与命名single/triple-hit展开，禁止自由秒数或伪词钟。whoosh以资产sync_ms430铺前、原anchor不变，片头负起点裁素材。",
+          "nonvisual": "音频无可视坐标；1x1只是通用结构占位，不绘制。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 33.166666666666664
+      },
+      "states": [
+        {
+          "id": "conditional",
+          "visible": true,
+          "description": "按方向、当前章节与真实cue/word/scene活动条件显示，区间左闭右开；不能由可见=true推断全片常驻。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "custom",
+          "target_id": null,
+          "rule": "音效必须由raw anchor真实起止与命名single/triple-hit展开，禁止自由秒数或伪词钟。whoosh以资产sync_ms430铺前、原anchor不变，片头负起点裁素材。"
+        }
+      ],
+      "fixed": [
+        "content",
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "current_implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "frozen_source_and_visible_output",
+          "method": "冻结props/源码与同一最终SHA对应，并按本期根实际样本查看短拍、动效/章节/素材边界和最长句；其余组合需出样。",
+          "pass_condition": "原稿不丢、不新增承诺，主体及来源标签可读；来源、时钟、裁切和方向状态符合实现。"
+        }
+      ]
+    }
+  ],
+  "scenes": [
+    {
+      "id": "hook",
+      "start": 0,
+      "end": 4.88,
+      "purpose": "本期源01/06的hook代表章节；原cue/word时钟与v4一致，六个实际时长和验证范围由validation_inputs记录。",
+      "element_ids": [
+        "art_background",
+        "frame_design",
+        "brand",
+        "category",
+        "chapter_heading",
+        "chapter_deck",
+        "presenter",
+        "secondary_presenter",
+        "material_window",
+        "material_source_label",
+        "caption_panel",
+        "captions",
+        "caption_highlights",
+        "chapter_points",
+        "speech_audio",
+        "sound_punctuation",
+        "background_music",
+        "editorial_sfx"
+      ],
+      "variant": "documentary"
+    },
+    {
+      "id": "story",
+      "start": 4.88,
+      "end": 12.1,
+      "purpose": "本期源01/06的story代表章节；原cue/word时钟与v4一致，六个实际时长和验证范围由validation_inputs记录。",
+      "element_ids": [
+        "art_background",
+        "frame_design",
+        "brand",
+        "category",
+        "chapter_heading",
+        "chapter_deck",
+        "presenter",
+        "secondary_presenter",
+        "material_window",
+        "material_source_label",
+        "caption_panel",
+        "captions",
+        "caption_highlights",
+        "chapter_points",
+        "speech_audio",
+        "sound_punctuation",
+        "background_music",
+        "editorial_sfx"
+      ],
+      "variant": "documentary"
+    },
+    {
+      "id": "ai",
+      "start": 12.1,
+      "end": 25.18,
+      "purpose": "本期源01/06的ai代表章节；原cue/word时钟与v4一致，六个实际时长和验证范围由validation_inputs记录。",
+      "element_ids": [
+        "art_background",
+        "frame_design",
+        "brand",
+        "category",
+        "chapter_heading",
+        "chapter_deck",
+        "presenter",
+        "secondary_presenter",
+        "material_window",
+        "material_source_label",
+        "caption_panel",
+        "captions",
+        "caption_highlights",
+        "chapter_points",
+        "speech_audio",
+        "sound_punctuation",
+        "background_music",
+        "editorial_sfx"
+      ],
+      "variant": "documentary"
+    },
+    {
+      "id": "offer",
+      "start": 25.18,
+      "end": 30.84,
+      "purpose": "本期源01/06的offer代表章节；原cue/word时钟与v4一致，六个实际时长和验证范围由validation_inputs记录。",
+      "element_ids": [
+        "art_background",
+        "frame_design",
+        "brand",
+        "category",
+        "chapter_heading",
+        "chapter_deck",
+        "presenter",
+        "secondary_presenter",
+        "material_window",
+        "material_source_label",
+        "caption_panel",
+        "captions",
+        "caption_highlights",
+        "chapter_points",
+        "speech_audio",
+        "sound_punctuation",
+        "background_music",
+        "editorial_sfx"
+      ],
+      "variant": "documentary"
+    },
+    {
+      "id": "cta",
+      "start": 30.84,
+      "end": 33.166666666666664,
+      "purpose": "本期源01/06的cta代表章节；原cue/word时钟与v4一致，六个实际时长和验证范围由validation_inputs记录。",
+      "element_ids": [
+        "art_background",
+        "frame_design",
+        "brand",
+        "category",
+        "chapter_heading",
+        "chapter_deck",
+        "presenter",
+        "secondary_presenter",
+        "material_window",
+        "material_source_label",
+        "caption_panel",
+        "captions",
+        "caption_highlights",
+        "chapter_points",
+        "speech_audio",
+        "sound_punctuation",
+        "background_music",
+        "editorial_sfx"
+      ],
+      "variant": "documentary"
+    }
+  ],
+  "assets": [
+    {
+      "id": "source_video",
+      "kind": "video",
+      "path": null,
+      "source": "每期用户明确提供的原数字人口播MP4；本期01/02/03分别由import-manifest与SHA绑定",
+      "embedded_content": [
+        "人物脸、眼镜、头发、服装、原背景、自然动作和口型为固化内容"
+      ],
+      "rights_status": "仅本期用户提供并授权加工，不包含在模板可分发资源中。"
+    },
+    {
+      "id": "source_audio",
+      "kind": "audio",
+      "path": null,
+      "source": "同原视频track0:a:0提取完整24kHz mono PCM16，提取增益0且speed1；混音语音仅一次-2.5dB，最终封装只用冻结混音母带。",
+      "embedded_content": [
+        "完整既有口播语音及其已应用的供应商语速"
+      ],
+      "rights_status": "随本期原片授权复用，不打包用户语音。"
+    },
+    {
+      "id": "system_fonts",
+      "kind": "font",
+      "path": null,
+      "source": "本机已安装Microsoft YaHei、KaiTi、SimSun，字族选择见index.tsx",
+      "embedded_content": [],
+      "rights_status": "仅许可环境渲染，不将系统字体文件随模板打包。"
+    },
+    {
+      "id": "art_blue",
+      "kind": "image",
+      "path": "assets/blue-editorial.png",
+      "source": "复用v003既有生成纯装饰PNG，按原SHA复制；本期无新增图像生成。来源assets/PROVENANCE.json，不代表门店实拍。",
+      "embedded_content": [
+        "抽象折纸/社区建筑/光学材质；纯装饰设计，不含人物或可编辑中文，不是门店实拍。"
+      ],
+      "rights_status": "用户本次授权生成的项目装饰资源；随模板仅分发此装饰PNG与来源记录，用户原片、语音和系统字体不打包。"
+    },
+    {
+      "id": "art_community",
+      "kind": "image",
+      "path": "assets/community-showcase.png",
+      "source": "复用v003既有生成纯装饰PNG，按原SHA复制；本期无新增图像生成。来源assets/PROVENANCE.json，不代表门店实拍。",
+      "embedded_content": [
+        "抽象折纸/社区建筑/光学材质；纯装饰设计，不含人物或可编辑中文，不是门店实拍。"
+      ],
+      "rights_status": "用户本次授权生成的项目装饰资源；随模板仅分发此装饰PNG与来源记录，用户原片、语音和系统字体不打包。"
+    },
+    {
+      "id": "art_optical",
+      "kind": "image",
+      "path": "assets/optical-cinema.png",
+      "source": "复用v003既有生成纯装饰PNG，按原SHA复制；本期无新增图像生成。来源assets/PROVENANCE.json，不代表门店实拍。",
+      "embedded_content": [
+        "抽象折纸/社区建筑/光学材质；纯装饰设计，不含人物或可编辑中文，不是门店实拍。"
+      ],
+      "rights_status": "用户本次授权生成的项目装饰资源；随模板仅分发此装饰PNG与来源记录，用户原片、语音和系统字体不打包。"
+    },
+    {
+      "id": "real_company_video",
+      "kind": "video",
+      "path": null,
+      "source": "本期native library登记user_provided_internal_company_material的粤仔户外产品互动，源SHA与采用窗口见source-ledger和六配置。",
+      "embedded_content": [
+        "成人、机器狗、街道/建筑、自然动作及设备上实物文字已固化；不推断海客店、邻居、购买或成交。"
+      ],
+      "rights_status": "当前用户授权仅本期本地开发测试；未据此提升公开发布与所有权核实。"
+    },
+    {
+      "id": "real_company_still",
+      "kind": "image",
+      "path": null,
+      "source": "上述同SHA视频96.2秒的既有FrameSampler JPEG（frame_0010.jpg），无生成编辑；明确标定格。",
+      "embedded_content": [
+        "冻结的真实源画面，不代表新增现场持续动作。"
+      ],
+      "rights_status": "同原视频本期开发测试授权；非模板可分发公共资源。"
+    },
+    {
+      "id": "sound_main_118",
+      "kind": "audio",
+      "path": "assets/sound/main-118.wav",
+      "source": "原创电子配乐《铜流》118BPM，本地NumPy/DSP创作，无外部采样；SHA由assets/sound/PROVENANCE.json和本期冻结audio-plan记录。",
+      "embedded_content": [],
+      "rights_status": "本次本地确定性DSP原创，无外部歌曲/录音/采样、下载或云音乐调用；来源声明与生成脚本指纹可追溯。用户人物/口播/实景原片不随公共模板分发。"
+    },
+    {
+      "id": "sound_red_124",
+      "kind": "audio",
+      "path": "assets/sound/red-124.wav",
+      "source": "原创电子配乐《即刻向前》124BPM，本地NumPy/DSP创作，无外部采样；SHA由assets/sound/PROVENANCE.json和本期冻结audio-plan记录。",
+      "embedded_content": [],
+      "rights_status": "本次本地确定性DSP原创，无外部歌曲/录音/采样、下载或云音乐调用；来源声明与生成脚本指纹可追溯。用户人物/口播/实景原片不随公共模板分发。"
+    },
+    {
+      "id": "sound_documentary_100",
+      "kind": "audio",
+      "path": "assets/sound/documentary-100.wav",
+      "source": "原创电子配乐《日常向前》100BPM，本地NumPy/DSP创作，无外部采样；SHA由assets/sound/PROVENANCE.json和本期冻结audio-plan记录。",
+      "embedded_content": [],
+      "rights_status": "本次本地确定性DSP原创，无外部歌曲/录音/采样、下载或云音乐调用；来源声明与生成脚本指纹可追溯。用户人物/口播/实景原片不随公共模板分发。"
+    },
+    {
+      "id": "sound_dong",
+      "kind": "audio",
+      "path": "assets/sound/dong.wav",
+      "source": "原创dong音效，本地NumPy/DSP合成，无外部采样；SHA由assets/sound/PROVENANCE.json和本期冻结audio-plan记录。",
+      "embedded_content": [],
+      "rights_status": "本次本地确定性DSP原创，无外部歌曲/录音/采样、下载或云音乐调用；来源声明与生成脚本指纹可追溯。用户人物/口播/实景原片不随公共模板分发。"
+    },
+    {
+      "id": "sound_impact",
+      "kind": "audio",
+      "path": "assets/sound/impact.wav",
+      "source": "原创impact音效，本地NumPy/DSP合成，无外部采样；SHA由assets/sound/PROVENANCE.json和本期冻结audio-plan记录。",
+      "embedded_content": [],
+      "rights_status": "本次本地确定性DSP原创，无外部歌曲/录音/采样、下载或云音乐调用；来源声明与生成脚本指纹可追溯。用户人物/口播/实景原片不随公共模板分发。"
+    },
+    {
+      "id": "sound_whoosh",
+      "kind": "audio",
+      "path": "assets/sound/whoosh.wav",
+      "source": "原创whoosh音效，本地NumPy/DSP合成，无外部采样；SHA由assets/sound/PROVENANCE.json和本期冻结audio-plan记录。",
+      "embedded_content": [],
+      "rights_status": "本次本地确定性DSP原创，无外部歌曲/录音/采样、下载或云音乐调用；来源声明与生成脚本指纹可追溯。用户人物/口播/实景原片不随公共模板分发。"
+    },
+    {
+      "id": "sound_tick",
+      "kind": "audio",
+      "path": "assets/sound/tick.wav",
+      "source": "原创tick音效，本地NumPy/DSP合成，无外部采样；SHA由assets/sound/PROVENANCE.json和本期冻结audio-plan记录。",
+      "embedded_content": [],
+      "rights_status": "本次本地确定性DSP原创，无外部歌曲/录音/采样、下载或云音乐调用；来源声明与生成脚本指纹可追溯。用户人物/口播/实景原片不随公共模板分发。"
+    }
+  ],
+  "slots": [
+    {
+      "id": "source_video_slot",
+      "element_id": "presenter",
+      "property": "content.asset_id",
+      "value_type": "asset",
+      "required": true,
+      "limits": {
+        "format": "MP4 with AAC",
+        "duration_max_seconds": 121,
+        "source_SHA_required": true,
+        "source_framing": [
+          "close-4x5",
+          "medium-9x16"
+        ]
+      },
+      "missing": "缺少必需输入拒绝准备，保留来源与原任务；说明/points允许入口规定的空值。",
+      "overflow": "按v5入口复用v4 normalize_words/normalize_art与v3 normalize_cues明确拒绝，缩减原稿显示层或拆受控章节后重新冻结；不缩小时钟或编造字幕。"
+    },
+    {
+      "id": "audio_slot",
+      "element_id": "speech_audio",
+      "property": "content.asset_id",
+      "value_type": "asset",
+      "required": true,
+      "limits": {
+        "source": "same MP4 track 0:a:0",
+        "sample_rate": 24000,
+        "channels": 1,
+        "format": "PCM16",
+        "sourceSpeed": 1
+      },
+      "missing": "缺少必需输入拒绝准备，保留来源与原任务；说明/points允许入口规定的空值。",
+      "overflow": "按v5入口复用v4 normalize_words/normalize_art与v3 normalize_cues明确拒绝，缩减原稿显示层或拆受控章节后重新冻结；不缩小时钟或编造字幕。"
+    },
+    {
+      "id": "background_slot",
+      "element_id": "art_background",
+      "property": "content.asset_id",
+      "value_type": "asset",
+      "required": false,
+      "limits": {
+        "PNG_required_for": [
+          "community-showcase",
+          "blue-editorial",
+          "optical-cinema"
+        ],
+        "null_code_background_allowed_for": [
+          "red-manifesto",
+          "silver-launch",
+          "documentary"
+        ],
+        "path_and_sha_both_null_or_both_concrete": true,
+        "concrete_SHA256_required": true
+      },
+      "missing": "旧三方向缺PNG或SHA拒绝；新三方向可显式传path/sha双null使用确定性代码背景。",
+      "overflow": "按v5入口复用v4 normalize_words/normalize_art与v3 normalize_cues明确拒绝，缩减原稿显示层或拆受控章节后重新冻结；不缩小时钟或编造字幕。"
+    },
+    {
+      "id": "brand_slot",
+      "element_id": "brand",
+      "property": "content",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "min_chars": 1,
+        "max_chars": 14
+      },
+      "missing": "缺少必需输入拒绝准备，保留来源与原任务；说明/points允许入口规定的空值。",
+      "overflow": "按v5入口复用v4 normalize_words/normalize_art与v3 normalize_cues明确拒绝，缩减原稿显示层或拆受控章节后重新冻结；不缩小时钟或编造字幕。"
+    },
+    {
+      "id": "heading_slot",
+      "element_id": "chapter_heading",
+      "property": "content",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "lines_min": 1,
+        "lines_max": 2,
+        "max_characters_per_line": 12
+      },
+      "missing": "缺少必需输入拒绝准备，保留来源与原任务；说明/points允许入口规定的空值。",
+      "overflow": "按v5入口复用v4 normalize_words/normalize_art与v3 normalize_cues明确拒绝，缩减原稿显示层或拆受控章节后重新冻结；不缩小时钟或编造字幕。"
+    },
+    {
+      "id": "deck_slot",
+      "element_id": "chapter_deck",
+      "property": "content",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "max_characters": 40,
+        "min_characters": 0
+      },
+      "missing": "缺少必需输入拒绝准备，保留来源与原任务；说明/points允许入口规定的空值。",
+      "overflow": "按v5入口复用v4 normalize_words/normalize_art与v3 normalize_cues明确拒绝，缩减原稿显示层或拆受控章节后重新冻结；不缩小时钟或编造字幕。"
+    },
+    {
+      "id": "captions_slot",
+      "element_id": "captions",
+      "property": "content",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "cue_min": 1,
+        "cue_max": 2000,
+        "lines_max": 2,
+        "max_characters_per_line": 14,
+        "source_video_sha256_each_cue": true,
+        "ordered_nonoverlap_ms": true
+      },
+      "missing": "缺少必需输入拒绝准备，保留来源与原任务；说明/points允许入口规定的空值。",
+      "overflow": "按v5入口复用v4 normalize_words/normalize_art与v3 normalize_cues明确拒绝，缩减原稿显示层或拆受控章节后重新冻结；不缩小时钟或编造字幕。"
+    },
+    {
+      "id": "points_slot",
+      "element_id": "chapter_points",
+      "property": "content",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "items_max": 3,
+        "max_characters_each": 12
+      },
+      "missing": "缺少必需输入拒绝准备，保留来源与原任务；说明/points允许入口规定的空值。",
+      "overflow": "按v5入口复用v4 normalize_words/normalize_art与v3 normalize_cues明确拒绝，缩减原稿显示层或拆受控章节后重新冻结；不缩小时钟或编造字幕。"
+    },
+    {
+      "id": "art_direction_slot",
+      "element_id": "global",
+      "property": "art.direction",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "enum": [
+          "community-showcase",
+          "blue-editorial",
+          "optical-cinema",
+          "red-manifesto",
+          "silver-launch",
+          "documentary"
+        ]
+      },
+      "missing": "缺少必需输入拒绝准备，保留来源与原任务；说明/points允许入口规定的空值。",
+      "overflow": "按v5入口复用v4 normalize_words/normalize_art与v3 normalize_cues明确拒绝，缩减原稿显示层或拆受控章节后重新冻结；不缩小时钟或编造字幕。"
+    },
+    {
+      "id": "chapters_slot",
+      "element_id": "global",
+      "property": "art.chapters",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "items_min": 1,
+        "items_max": 40,
+        "fixed_kinds": [
+          "hook",
+          "story",
+          "ai",
+          "offer",
+          "cta"
+        ],
+        "contiguous_all_cues": true,
+        "this_test_chapters_each": 5
+      },
+      "missing": "缺少必需输入拒绝准备，保留来源与原任务；说明/points允许入口规定的空值。",
+      "overflow": "按v5入口复用v4 normalize_words/normalize_art与v3 normalize_cues明确拒绝，缩减原稿显示层或拆受控章节后重新冻结；不缩小时钟或编造字幕。"
+    },
+    {
+      "id": "highlights_slot",
+      "element_id": "global",
+      "property": "art.highlights",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "items_max": 24,
+        "text_min_chars": 2,
+        "text_max_chars": 10,
+        "bound_to_own_source_captions": true
+      },
+      "missing": "缺少必需输入拒绝准备，保留来源与原任务；说明/points允许入口规定的空值。",
+      "overflow": "按v5入口复用v4 normalize_words/normalize_art与v3 normalize_cues明确拒绝，缩减原稿显示层或拆受控章节后重新冻结；不缩小时钟或编造字幕。"
+    },
+    {
+      "id": "words_slot",
+      "element_id": "global",
+      "property": "art.wordCues",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "min_items": 1,
+        "max_items": 10000,
+        "ordered_nonoverlap_ms": true,
+        "every_word_source_video_sha256": true,
+        "normalized_full_cue_text_equal": true,
+        "startMs_endMs_from_observed_ASR_only": true
+      },
+      "missing": "必需项缺失拒绝准备；可选项为空数组，保留原人物和全部口播字幕。",
+      "overflow": "明确报错保留原请求，不截掉词、不均分时间、不循环或拉伸素材；按合法字段重新冻结新指纹。"
+    },
+    {
+      "id": "phrase_slot",
+      "element_id": "caption_highlights",
+      "property": "content",
+      "value_type": "array",
+      "required": false,
+      "limits": {
+        "max_items": 80,
+        "exact_fields": [
+          "text",
+          "fromWord",
+          "toWord"
+        ],
+        "text_max_chars": 28,
+        "no_manual_seconds": true,
+        "text_must_equal_joined_real_words": true
+      },
+      "missing": "必需项缺失拒绝准备；可选项为空数组，保留原人物和全部口播字幕。",
+      "overflow": "明确报错保留原请求，不截掉词、不均分时间、不循环或拉伸素材；按合法字段重新冻结新指纹。"
+    },
+    {
+      "id": "real_media_slot",
+      "element_id": "global",
+      "property": "art.scenes",
+      "value_type": "array",
+      "required": false,
+      "limits": {
+        "max_items": 16,
+        "exact_fields": [
+          "id",
+          "path",
+          "sha256",
+          "kind",
+          "fromCue",
+          "toCue",
+          "offset",
+          "fit",
+          "source_label"
+        ],
+        "kind": [
+          "video",
+          "image"
+        ],
+        "fit": [
+          "cover",
+          "contain"
+        ],
+        "ordered_nonoverlap_cues": true,
+        "source_SHA256_required": true,
+        "source_label_required": true,
+        "no_loop_stretch": true,
+        "image_offset_zero": true
+      },
+      "missing": "必需项缺失拒绝准备；可选项为空数组，保留原人物和全部口播字幕。",
+      "overflow": "明确报错保留原请求，不截掉词、不均分时间、不循环或拉伸素材；按合法字段重新冻结新指纹。"
+    },
+    {
+      "id": "source_label_slot",
+      "element_id": "material_source_label",
+      "property": "content",
+      "value_type": "string",
+      "required": false,
+      "limits": {
+        "max_characters": 100,
+        "derived_from": "art.scenes[].source_label",
+        "required_when_scene_used": true,
+        "must_state_source_identity_and_image_freeze_if_applicable": true
+      },
+      "missing": "有素材时来源标签缺失拒绝；没有素材时不显示标签。",
+      "overflow": "缩短真实来源说明或拒绝本期配置，不以海客门店等无证实身份替代。"
+    },
+    {
+      "id": "audio_plan_slot",
+      "element_id": "global",
+      "property": "audio_plan",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "version": "sound-motion-v1",
+        "mix_profile": "speech-led-v1",
+        "asset_max": 12,
+        "event_max": 80,
+        "expanded_hits_max": 120,
+        "sfx_duration_max_seconds": 10,
+        "sfx_gain_db": [
+          -36,
+          -3
+        ],
+        "music_gain_db": [
+          -36,
+          -3
+        ],
+        "asset_identity": "absolute path + sha256 + source_label",
+        "event_fields": [
+          "id",
+          "asset_id",
+          "anchor",
+          "pattern",
+          "gain_db"
+        ],
+        "anchor_fields": [
+          "type",
+          "index",
+          "boundary"
+        ],
+        "anchors": [
+          "word",
+          "cue",
+          "chapter"
+        ],
+        "patterns": {
+          "single": [
+            0
+          ],
+          "triple-hit": [
+            0,
+            0.12,
+            0.24
+          ]
+        },
+        "sync_ms": "optional per-asset numeric, default0; must be less than source duration"
+      },
+      "missing": "缺声音计划或来源拒绝prepare；不默认联网找歌、不默认静音或重新配音。",
+      "overflow": "入口拒绝索引/长度/SHA/密度越界；保持原词钟，减少或更正本地编辑事件后新冻结。"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "semantic_source_review",
+      "source_kind": "observation",
+      "source": "本轮唯一六fixture结构/语义审阅429项通过。",
+      "locator": "semantic-structure-review.json",
+      "method": "真实读取v4/v5配置与props、原词/cue/背景/素材/声音SHA及锚点展开；未重渲或测音。",
+      "file": "../../../.local/codex-runs/template6-sound-motion-20261020/review/semantic-structure-review.json",
+      "sha256": "66103623daac25587c48694efaf1acea1fc1f10e616adc33711109b7146cc131"
+    },
+    {
+      "id": "source_ledger",
+      "source_kind": "observation",
+      "source": "此前实际观察的公司粤仔产品互动来源与使用范围；本期原样保留。",
+      "locator": "source-ledger.json",
+      "method": "本期确认其场景配置和来源标签未改变，不重复视觉审核。",
+      "file": "../../../.local/codex-runs/template6-six-style-refine-20261020/materials/source-ledger.json",
+      "sha256": "45988619908d3788205f77f538eccf680a30a07e7b61520dfce6c3ae222a3003"
+    },
+    {
+      "id": "sound_provenance",
+      "source_kind": "observation",
+      "source": "三原创配乐与四音效的canonical分发来源。",
+      "locator": "PROVENANCE.json",
+      "method": "核对路径/SHA、生成脚本指纹、零外部采样声明；不等于主观听审。",
+      "file": "assets/sound/PROVENANCE.json",
+      "sha256": "ed68df2d1c8768b2bba6cae6288ae2dd8b22f3e03690a506bce9262c4784b7bc"
+    },
+    {
+      "id": "sound_source_ledger",
+      "source_kind": "observation",
+      "source": "本地资源检索与原创DSP来源台账。",
+      "locator": "source-ledger.json",
+      "method": "读取已有来源事实，未下载或调用新服务。",
+      "file": "../../../.local/codex-runs/template6-sound-motion-20261020/sound-design/source-ledger.json",
+      "sha256": "0c925e2e418340f9dc7243de0726528ebdd6f203e68d77fb04cb77fe7d97decd"
+    },
+    {
+      "id": "current_implementation",
+      "source_kind": "design",
+      "source": "当前v005-footerless-1实现，仅删除六风格共用数字人演绎页脚。",
+      "locator": "index.tsx",
+      "method": "原归档index.tsx与当前文件逐字节比较，变化限定为删除唯一footer整行；本记录是设计来源，旧六次runtime身份另存validation_history。",
+      "file": "index.tsx",
+      "sha256": "b8492899b21559bc0ab2010188a4fbda47eacc28126f2d9ca914206af20c7faa"
+    },
+    {
+      "id": "layout_rules",
+      "source_kind": "design",
+      "source": "实际v5动效、色板、音频策略参数真值。",
+      "locator": "layout.json",
+      "method": "读取冻结源码；最大变换实际观察范围另由root_visual_review证明。",
+      "file": "layout.json",
+      "sha256": "56d0ae8c25e58333a1b221352285253a7e4bfd2f3999f23112a3f8fd05dad6f8"
+    },
+    {
+      "id": "runtime_freeze",
+      "source_kind": "observation",
+      "source": "六次原生导出使用的共同28文件及工具身份。",
+      "locator": "runtime-freeze.json",
+      "method": "28项当前SHA与冻结映射一致；这是最终请求已有身份，不包含交付后新增规格和三重建源码。",
+      "file": "../../../.local/codex-runs/template6-sound-motion-20261020/queue/runtime-freeze.json",
+      "sha256": "feab7cc57400af5fd930fe12f516531e63bd287c4008d3b460b1412e76c10332"
+    },
+    {
+      "id": "native_queue_receipts",
+      "source_kind": "observation",
+      "source": "本期六条原生completed与实际作品版本。",
+      "locator": "run-summary.json",
+      "method": "通过真实request/result与技术/HTTP报告读取六条source/output/master/queue/work/version，未重测或改变批准。",
+      "file": "../../../.local/codex-runs/template6-sound-motion-20261020/queue/run-summary.json",
+      "sha256": "aa5dfe31d77eb61fe0417ef2bbdfa0c60fa2c7225204b540259e9c72eb441d3a"
+    },
+    {
+      "id": "native_readback",
+      "source_kind": "observation",
+      "source": "六原生统一队列各一次完成及28runtime/53fixture原样读回。",
+      "locator": "native-readback.json",
+      "method": "读取真实原生状态与来源身份；候选proof差异经明确授权绑定原生母带，未掩盖差异。",
+      "file": "../../../.local/codex-runs/template6-sound-motion-20261020/queue/native-readback.json",
+      "sha256": "3b5f85cef8d0b00f61c3eec39c13fbe4ca4cfb5bf56a112a342e1b5343afae26"
+    },
+    {
+      "id": "fixture_freeze",
+      "source_kind": "observation",
+      "source": "本期原53个来源与开发fixture的冻结身份。",
+      "locator": "fixture-freeze.json",
+      "method": "当前文件全部SHA与原冻结映射一致；最终原生母带身份另由request/technical绑定，不覆盖原proof。",
+      "file": "../../../.local/codex-runs/template6-sound-motion-20261020/queue/fixture-freeze.json",
+      "sha256": "16af31f86e6022f922d809084aa9dc48da4b4dd6e4003676b1677c5330e3031f"
+    },
+    {
+      "id": "final_technical",
+      "source_kind": "measurement",
+      "source": "本次唯一六片技术/输出/HTTP验收。",
+      "locator": "aggregate.json",
+      "method": "实际all_six_technical_passed=true，completed_QA=6，各真实technical-qa全部checks为true。",
+      "file": "../../../.local/codex-runs/template6-sound-motion-20261020/final-qa/aggregate.json",
+      "sha256": "1b923c03e9a447e19dcadcba3c4ff63d4692ac91c6c3f92ff539fd3cd66ca0cb"
+    },
+    {
+      "id": "root_visual_review",
+      "source_kind": "observation",
+      "source": "根对本期六最终SHA实际查看全部142短拍、章节/素材边界、动效细节和最长原尺寸。",
+      "locator": "final-visual-review.json",
+      "method": "只按根实际观察清单及各图SHA记录的范围给pass_scoped；不据此声称连续听看或真机。",
+      "file": "../../../.local/codex-runs/template6-sound-motion-20261020/final-visual-review.json",
+      "sha256": "0e277d01a8fd17f9cc95cf96b1e90f5beafeebeb8828c95e8e1d26c16be43938"
+    },
+    {
+      "id": "rebuild_local_sfx",
+      "source_kind": "measurement",
+      "source": "原DSP字节身份及本机包装入口隔离音效重建。",
+      "locator": "rebuild-wrapper-check.json",
+      "method": "仅四个核心SFX与原canonical同SHA、未安装、原28runtime未变；三主题/异机复现不外推。",
+      "file": "../../../.local/codex-runs/template6-sound-motion-20261020/review/rebuild-wrapper-check.json",
+      "sha256": "005313ee7edc51f8a11289e879e907b4a44259bc3907f0edb3e349a8f74533d0"
+    },
+    {
+      "id": "rebuild_source_generate_sound_pack",
+      "source_kind": "design",
+      "source": "本期六片后新增的可分发声音重建源码或说明。",
+      "locator": "generate_sound_pack.py",
+      "method": "不修改原DSP字节，不改变原28runtime；WAV仍ignored，未放宽全局媒体白名单。",
+      "file": "assets/sound/generate_sound_pack.py",
+      "sha256": "e2477be1613aa6b6095ca2c10e7bd4305cab14df31f747582b685fd3a9354ee4"
+    },
+    {
+      "id": "rebuild_source_rebuild_sound_pack",
+      "source_kind": "design",
+      "source": "本期六片后新增的可分发声音重建源码或说明。",
+      "locator": "rebuild_sound_pack.py",
+      "method": "不修改原DSP字节，不改变原28runtime；WAV仍ignored，未放宽全局媒体白名单。",
+      "file": "assets/sound/rebuild_sound_pack.py",
+      "sha256": "5624f83435f67f5fb46d4c300b9d2402f7c5f4eb168fdf294758abb3572a4b04"
+    },
+    {
+      "id": "rebuild_source_REBUILD",
+      "source_kind": "design",
+      "source": "本期六片后新增的可分发声音重建源码或说明。",
+      "locator": "REBUILD.md",
+      "method": "不修改原DSP字节，不改变原28runtime；WAV仍ignored，未放宽全局媒体白名单。",
+      "file": "assets/sound/REBUILD.md",
+      "sha256": "cd4df7498b2f474036c662e4599d7c3e9726f9e2f790f096699c6dee6fe338d1"
+    },
+    {
+      "id": "technical_01",
+      "source_kind": "measurement",
+      "source": "第01条最终成片真实技术报告。",
+      "locator": "technical-qa.json",
+      "method": "完整解码/原词/原生母带/声音/AAC/HTTP只对应此最终SHA，由本次唯一技术审阅执行。",
+      "file": "../../../.local/codex-runs/template6-sound-motion-20261020/final-qa/clip-01/technical-qa.json",
+      "sha256": "adb786433a116cbb6a11ef2147a4c5818cd04835fe645bec0269690ff4f93ce4"
+    },
+    {
+      "id": "root_visual_01",
+      "source_kind": "observation",
+      "source": "根实际查看第01条最终SHA的范围。",
+      "locator": "root-visual-review.json",
+      "method": "全部短拍裁图、章节/素材/动效边界与最长原尺寸；相应实际观察记录和图SHA，不代替连续听审。",
+      "file": "../../../.local/codex-runs/template6-sound-motion-20261020/final-visuals/clip-01/root-visual-review.json",
+      "sha256": "af40a60cce2e51361507e0525696958acad85acfbfb65b7f95e58889ac67c7ba"
+    },
+    {
+      "id": "http_media_01",
+      "source_kind": "observation",
+      "source": "第01条原生作品HTTP media读回。",
+      "locator": "http-media-binding.json",
+      "method": "真实同work/version/queue与完整MP4字节SHA；未批准或发布。",
+      "file": "../../../.local/codex-runs/template6-sound-motion-20261020/final-qa/clip-01/http-media-binding.json",
+      "sha256": "9ad3d19d1aaffc6c68f32c5f78e6f2772e183fb933ed9615d43a2de8d8b381c1"
+    },
+    {
+      "id": "http_work_01",
+      "source_kind": "observation",
+      "source": "第01条原生作品HTTP work读回。",
+      "locator": "http-work.json",
+      "method": "真实同work/version/queue与完整MP4字节SHA；未批准或发布。",
+      "file": "../../../.local/codex-runs/template6-sound-motion-20261020/final-qa/clip-01/http-work.json",
+      "sha256": "a759d9cbc30ab5360253b711115a1a6c1f8c14a402ad32c7cbe8f43ab5336e9d"
+    },
+    {
+      "id": "http_queue_01",
+      "source_kind": "observation",
+      "source": "第01条原生作品HTTP queue读回。",
+      "locator": "http-queue.json",
+      "method": "真实同work/version/queue与完整MP4字节SHA；未批准或发布。",
+      "file": "../../../.local/codex-runs/template6-sound-motion-20261020/final-qa/clip-01/http-queue.json",
+      "sha256": "7193e9f4afd89c4a419f59649d54683c90e40dc7806308200c05e5f5c01df7a8"
+    },
+    {
+      "id": "proof_binding_01",
+      "source_kind": "observation",
+      "source": "第01条经授权的原生母带proof绑定。",
+      "locator": "rebind-manifest.json",
+      "method": "原生request prepared母带为最终声音真值；保留候选proof和差异分析，不误称候选本来相同。",
+      "file": "../../../.local/codex-runs/template6-sound-motion-20261020/native-confirmed-proof/clip-01/rebind-manifest.json",
+      "sha256": "a18e61ec822c8cceb3a1324797ed8de4fbc49bbf6758ec939f5a026ef5c05e78"
+    },
+    {
+      "id": "technical_02",
+      "source_kind": "measurement",
+      "source": "第02条最终成片真实技术报告。",
+      "locator": "technical-qa.json",
+      "method": "完整解码/原词/原生母带/声音/AAC/HTTP只对应此最终SHA，由本次唯一技术审阅执行。",
+      "file": "../../../.local/codex-runs/template6-sound-motion-20261020/final-qa/clip-02/technical-qa.json",
+      "sha256": "e643634d60dcec0684548fab2b1c50253771ae918714df03b69168eec78b153e"
+    },
+    {
+      "id": "root_visual_02",
+      "source_kind": "observation",
+      "source": "根实际查看第02条最终SHA的范围。",
+      "locator": "root-visual-review.json",
+      "method": "全部短拍裁图、章节/素材/动效边界与最长原尺寸；相应实际观察记录和图SHA，不代替连续听审。",
+      "file": "../../../.local/codex-runs/template6-sound-motion-20261020/final-visuals/clip-02/root-visual-review.json",
+      "sha256": "ffa4ee9c74bf2ff071826236e9e082853f7158db2a080615373f31f39202f32d"
+    },
+    {
+      "id": "http_media_02",
+      "source_kind": "observation",
+      "source": "第02条原生作品HTTP media读回。",
+      "locator": "http-media-binding.json",
+      "method": "真实同work/version/queue与完整MP4字节SHA；未批准或发布。",
+      "file": "../../../.local/codex-runs/template6-sound-motion-20261020/final-qa/clip-02/http-media-binding.json",
+      "sha256": "d67530eeb254b58e7d621dbe9617ca6cf37ce16e0cd5406b8b52a2275e06d53f"
+    },
+    {
+      "id": "http_work_02",
+      "source_kind": "observation",
+      "source": "第02条原生作品HTTP work读回。",
+      "locator": "http-work.json",
+      "method": "真实同work/version/queue与完整MP4字节SHA；未批准或发布。",
+      "file": "../../../.local/codex-runs/template6-sound-motion-20261020/final-qa/clip-02/http-work.json",
+      "sha256": "682ee98e95ff3f920f18bb0d5ba8cde6f26ceb0f53392f408f8ae6d147afafde"
+    },
+    {
+      "id": "http_queue_02",
+      "source_kind": "observation",
+      "source": "第02条原生作品HTTP queue读回。",
+      "locator": "http-queue.json",
+      "method": "真实同work/version/queue与完整MP4字节SHA；未批准或发布。",
+      "file": "../../../.local/codex-runs/template6-sound-motion-20261020/final-qa/clip-02/http-queue.json",
+      "sha256": "37d6e5f21cf92a544df3d770d4ed7df6a9c7e70d760c846e482c60853bbbf08c"
+    },
+    {
+      "id": "proof_binding_02",
+      "source_kind": "observation",
+      "source": "第02条经授权的原生母带proof绑定。",
+      "locator": "rebind-manifest.json",
+      "method": "原生request prepared母带为最终声音真值；保留候选proof和差异分析，不误称候选本来相同。",
+      "file": "../../../.local/codex-runs/template6-sound-motion-20261020/native-confirmed-proof/clip-02/rebind-manifest.json",
+      "sha256": "60ae26bf2d9727b95a0fffa00461b368236348d66c157e038a61269d51905a78"
+    },
+    {
+      "id": "technical_03",
+      "source_kind": "measurement",
+      "source": "第03条最终成片真实技术报告。",
+      "locator": "technical-qa.json",
+      "method": "完整解码/原词/原生母带/声音/AAC/HTTP只对应此最终SHA，由本次唯一技术审阅执行。",
+      "file": "../../../.local/codex-runs/template6-sound-motion-20261020/final-qa/clip-03/technical-qa.json",
+      "sha256": "3f16f758035b9fa98deb1be0a5d119e33d1b302e04f1dddd6a0cd098f650f04b"
+    },
+    {
+      "id": "root_visual_03",
+      "source_kind": "observation",
+      "source": "根实际查看第03条最终SHA的范围。",
+      "locator": "root-visual-review.json",
+      "method": "全部短拍裁图、章节/素材/动效边界与最长原尺寸；相应实际观察记录和图SHA，不代替连续听审。",
+      "file": "../../../.local/codex-runs/template6-sound-motion-20261020/final-visuals/clip-03/root-visual-review.json",
+      "sha256": "53eb5f583517c8ae521e927b1e626d12d095eb41095c93c9853523778dd7ffda"
+    },
+    {
+      "id": "http_media_03",
+      "source_kind": "observation",
+      "source": "第03条原生作品HTTP media读回。",
+      "locator": "http-media-binding.json",
+      "method": "真实同work/version/queue与完整MP4字节SHA；未批准或发布。",
+      "file": "../../../.local/codex-runs/template6-sound-motion-20261020/final-qa/clip-03/http-media-binding.json",
+      "sha256": "7cbd9af0864f2e57ec4228039cf5f057ecbb8061a54e09df9d76b1ce6b610b44"
+    },
+    {
+      "id": "http_work_03",
+      "source_kind": "observation",
+      "source": "第03条原生作品HTTP work读回。",
+      "locator": "http-work.json",
+      "method": "真实同work/version/queue与完整MP4字节SHA；未批准或发布。",
+      "file": "../../../.local/codex-runs/template6-sound-motion-20261020/final-qa/clip-03/http-work.json",
+      "sha256": "c9b9e3a2dcb2e1aa728a768aeb04fe41b0849dd444e9f856a548db1f9422a2d7"
+    },
+    {
+      "id": "http_queue_03",
+      "source_kind": "observation",
+      "source": "第03条原生作品HTTP queue读回。",
+      "locator": "http-queue.json",
+      "method": "真实同work/version/queue与完整MP4字节SHA；未批准或发布。",
+      "file": "../../../.local/codex-runs/template6-sound-motion-20261020/final-qa/clip-03/http-queue.json",
+      "sha256": "46d111bbe7180b486a4c56ebb5ff2fc0288563bd19551181c6c4a37a38c1a1c6"
+    },
+    {
+      "id": "proof_binding_03",
+      "source_kind": "observation",
+      "source": "第03条经授权的原生母带proof绑定。",
+      "locator": "rebind-manifest.json",
+      "method": "原生request prepared母带为最终声音真值；保留候选proof和差异分析，不误称候选本来相同。",
+      "file": "../../../.local/codex-runs/template6-sound-motion-20261020/native-confirmed-proof/clip-03/rebind-manifest.json",
+      "sha256": "d958284d66ecde3325ec8a4eed749727d70bc63f47e487e7121dd0017f6cce22"
+    },
+    {
+      "id": "technical_04",
+      "source_kind": "measurement",
+      "source": "第04条最终成片真实技术报告。",
+      "locator": "technical-qa.json",
+      "method": "完整解码/原词/原生母带/声音/AAC/HTTP只对应此最终SHA，由本次唯一技术审阅执行。",
+      "file": "../../../.local/codex-runs/template6-sound-motion-20261020/final-qa/clip-04/technical-qa.json",
+      "sha256": "1659746ee37e10443927e410cb8903368f1ea33e6c14c33cc4fb31c4cfd6eb3d"
+    },
+    {
+      "id": "root_visual_04",
+      "source_kind": "observation",
+      "source": "根实际查看第04条最终SHA的范围。",
+      "locator": "root-visual-review.json",
+      "method": "全部短拍裁图、章节/素材/动效边界与最长原尺寸；相应实际观察记录和图SHA，不代替连续听审。",
+      "file": "../../../.local/codex-runs/template6-sound-motion-20261020/final-visuals/clip-04/root-visual-review.json",
+      "sha256": "8a0e6bf544abffed29e7ea7218cb66d8c209bfda18051dff74b3b1797427e778"
+    },
+    {
+      "id": "http_media_04",
+      "source_kind": "observation",
+      "source": "第04条原生作品HTTP media读回。",
+      "locator": "http-media-binding.json",
+      "method": "真实同work/version/queue与完整MP4字节SHA；未批准或发布。",
+      "file": "../../../.local/codex-runs/template6-sound-motion-20261020/final-qa/clip-04/http-media-binding.json",
+      "sha256": "90203799d5b5d0b77266d58574468c87b66290ca93a639054286457228971e29"
+    },
+    {
+      "id": "http_work_04",
+      "source_kind": "observation",
+      "source": "第04条原生作品HTTP work读回。",
+      "locator": "http-work.json",
+      "method": "真实同work/version/queue与完整MP4字节SHA；未批准或发布。",
+      "file": "../../../.local/codex-runs/template6-sound-motion-20261020/final-qa/clip-04/http-work.json",
+      "sha256": "067cb129d05ebad4b1a40d3e93f082605661eebb97196049d3801ef7713f92a8"
+    },
+    {
+      "id": "http_queue_04",
+      "source_kind": "observation",
+      "source": "第04条原生作品HTTP queue读回。",
+      "locator": "http-queue.json",
+      "method": "真实同work/version/queue与完整MP4字节SHA；未批准或发布。",
+      "file": "../../../.local/codex-runs/template6-sound-motion-20261020/final-qa/clip-04/http-queue.json",
+      "sha256": "0a195488b70ed9979a77033f133c7f6bc69f8ed31b8534586d9d95b227b10987"
+    },
+    {
+      "id": "proof_binding_04",
+      "source_kind": "observation",
+      "source": "第04条经授权的原生母带proof绑定。",
+      "locator": "rebind-manifest.json",
+      "method": "原生request prepared母带为最终声音真值；保留候选proof和差异分析，不误称候选本来相同。",
+      "file": "../../../.local/codex-runs/template6-sound-motion-20261020/native-confirmed-proof/clip-04/rebind-manifest.json",
+      "sha256": "cfd87b438d3be03e6e8de867839dd4b3967695581e165c0d22f180704b64f596"
+    },
+    {
+      "id": "technical_05",
+      "source_kind": "measurement",
+      "source": "第05条最终成片真实技术报告。",
+      "locator": "technical-qa.json",
+      "method": "完整解码/原词/原生母带/声音/AAC/HTTP只对应此最终SHA，由本次唯一技术审阅执行。",
+      "file": "../../../.local/codex-runs/template6-sound-motion-20261020/final-qa/clip-05/technical-qa.json",
+      "sha256": "a58a1b73df9bccc590d6b37fb0a96f5e47d70d5a803b4e97353b8b98bc1c7b24"
+    },
+    {
+      "id": "root_visual_05",
+      "source_kind": "observation",
+      "source": "根实际查看第05条最终SHA的范围。",
+      "locator": "root-visual-review.json",
+      "method": "全部短拍裁图、章节/素材/动效边界与最长原尺寸；相应实际观察记录和图SHA，不代替连续听审。",
+      "file": "../../../.local/codex-runs/template6-sound-motion-20261020/final-visuals/clip-05/root-visual-review.json",
+      "sha256": "5766f9ebb665f424b1fb6bd47b7589f251a1e164428c3de8b2edf91806b1ad6f"
+    },
+    {
+      "id": "http_media_05",
+      "source_kind": "observation",
+      "source": "第05条原生作品HTTP media读回。",
+      "locator": "http-media-binding.json",
+      "method": "真实同work/version/queue与完整MP4字节SHA；未批准或发布。",
+      "file": "../../../.local/codex-runs/template6-sound-motion-20261020/final-qa/clip-05/http-media-binding.json",
+      "sha256": "a85af98d48b56ba9b7d0f6e8813fa17c2ad7b79de8992278819699e3028436a1"
+    },
+    {
+      "id": "http_work_05",
+      "source_kind": "observation",
+      "source": "第05条原生作品HTTP work读回。",
+      "locator": "http-work.json",
+      "method": "真实同work/version/queue与完整MP4字节SHA；未批准或发布。",
+      "file": "../../../.local/codex-runs/template6-sound-motion-20261020/final-qa/clip-05/http-work.json",
+      "sha256": "23d2f7063817579e867180cf5e4c3d7cc2c9b0ee146246d87ef3a1002d47bb89"
+    },
+    {
+      "id": "http_queue_05",
+      "source_kind": "observation",
+      "source": "第05条原生作品HTTP queue读回。",
+      "locator": "http-queue.json",
+      "method": "真实同work/version/queue与完整MP4字节SHA；未批准或发布。",
+      "file": "../../../.local/codex-runs/template6-sound-motion-20261020/final-qa/clip-05/http-queue.json",
+      "sha256": "4567b53e349c53fe162fb40b98855745d4ddf5dc5aa3bca53f82b1e6aa5de561"
+    },
+    {
+      "id": "proof_binding_05",
+      "source_kind": "observation",
+      "source": "第05条经授权的原生母带proof绑定。",
+      "locator": "rebind-manifest.json",
+      "method": "原生request prepared母带为最终声音真值；保留候选proof和差异分析，不误称候选本来相同。",
+      "file": "../../../.local/codex-runs/template6-sound-motion-20261020/native-confirmed-proof/clip-05/rebind-manifest.json",
+      "sha256": "37a4fccfe4691d412e98f79dc92f215935592ede3bda2e5ac64ec6ebc94edd83"
+    },
+    {
+      "id": "technical_06",
+      "source_kind": "measurement",
+      "source": "第06条最终成片真实技术报告。",
+      "locator": "technical-qa.json",
+      "method": "完整解码/原词/原生母带/声音/AAC/HTTP只对应此最终SHA，由本次唯一技术审阅执行。",
+      "file": "../../../.local/codex-runs/template6-sound-motion-20261020/final-qa/clip-06/technical-qa.json",
+      "sha256": "359212404f4c016f3026b293605b907573abef518fbbb4981b936adf90dd3c41"
+    },
+    {
+      "id": "root_visual_06",
+      "source_kind": "observation",
+      "source": "根实际查看第06条最终SHA的范围。",
+      "locator": "root-visual-review.json",
+      "method": "全部短拍裁图、章节/素材/动效边界与最长原尺寸；相应实际观察记录和图SHA，不代替连续听审。",
+      "file": "../../../.local/codex-runs/template6-sound-motion-20261020/final-visuals/clip-06/root-visual-review.json",
+      "sha256": "2035259874ab111ac89ef2f0c34dc56ea29ee66d7e688d65a44b95c124796756"
+    },
+    {
+      "id": "http_media_06",
+      "source_kind": "observation",
+      "source": "第06条原生作品HTTP media读回。",
+      "locator": "http-media-binding.json",
+      "method": "真实同work/version/queue与完整MP4字节SHA；未批准或发布。",
+      "file": "../../../.local/codex-runs/template6-sound-motion-20261020/final-qa/clip-06/http-media-binding.json",
+      "sha256": "63b778f2b678b8373beb1a73ebe16a469851b9dbf468cb011f323bd0b44118df"
+    },
+    {
+      "id": "http_work_06",
+      "source_kind": "observation",
+      "source": "第06条原生作品HTTP work读回。",
+      "locator": "http-work.json",
+      "method": "真实同work/version/queue与完整MP4字节SHA；未批准或发布。",
+      "file": "../../../.local/codex-runs/template6-sound-motion-20261020/final-qa/clip-06/http-work.json",
+      "sha256": "0b5eaffe2056a6316b79a117ae8868ebc22a23b3f0dba40d5d727913436963db"
+    },
+    {
+      "id": "http_queue_06",
+      "source_kind": "observation",
+      "source": "第06条原生作品HTTP queue读回。",
+      "locator": "http-queue.json",
+      "method": "真实同work/version/queue与完整MP4字节SHA；未批准或发布。",
+      "file": "../../../.local/codex-runs/template6-sound-motion-20261020/final-qa/clip-06/http-queue.json",
+      "sha256": "b47f589c68a7158127ffdad743d45571e760c2a65a82dbc12e674f721a10af1a"
+    },
+    {
+      "id": "mobile_simulation",
+      "source_kind": "observation",
+      "source": "根实际查看六最终SHA的390px模拟。",
+      "locator": "mobile-simulation.json",
+      "method": "仅所列本地缩放模拟图及观察范围，非真实手机或平台UI。",
+      "file": "../../../.local/codex-runs/template6-sound-motion-20261020/final-visuals/mobile-simulation.json",
+      "sha256": "8d8b364b781c4ef88281f5c8c4b501793e7c6f1573e1898a74ab016e548ccbd7"
+    },
+    {
+      "id": "footerless_static_source",
+      "source_kind": "measurement",
+      "source": "当前v5入口与历史归档相比仅删除唯一数字人演绎footer整行。",
+      "locator": "index.tsx",
+      "method": "逐字节核对唯一整行删除；核对活动elements、五章element_ids与geometry已无disclosure元素。此为源码/规格静态检查，不代表新媒体技术或视觉验收。",
+      "file": "index.tsx",
+      "sha256": "b8492899b21559bc0ab2010188a4fbda47eacc28126f2d9ca914206af20c7faa"
+    },
+    {
+      "id": "footerless_final_technical",
+      "source_kind": "measurement",
+      "source": "footerless蓝色单片最终SHA的唯一专项技术QA，45/45通过。",
+      "locator": "technical-qa.json",
+      "method": "实际完整解码一次；核对仅删footer、其余TSX/props/素材时钟相同、原片直用、PNG/20M ABR实际命令、19.362405Mbps均码/无filler、母带及1556个AAC包逐字节同、作品/HTTP同SHA。范围仅本条blue成片。",
+      "file": "../../../.local/codex-runs/template6-remove-footer-20261020/final-qa/clip-02/technical-qa.json",
+      "sha256": "35fd3d16734980f9bdbeeaae67989d5ca81ad665c1c25ab7be0018538f8eac9b"
+    },
+    {
+      "id": "footerless_final_visual",
+      "source_kind": "observation",
+      "source": "Root实际查看7张图片，footerless蓝色单片按所观样本pass_scoped。",
+      "locator": "visual-review.json",
+      "method": "实际看开/中/尾3组100%页脚对照、同时刻人脸对照、15帧contact及2张原尺寸全帧；左下原背景完整，无覆盖补丁，所观人物/标题/字幕/来源/素材与原版保持。只证明本蓝片及所观样本，不推广其余五风格新媒体。",
+      "file": "../../../.local/codex-runs/template6-remove-footer-20261020/visual-review.json",
+      "sha256": "6e57edcfa32b0b15e8f033e80c3759d6ff05cb9048d9dd597611d94e6ea0a0e7"
+    },
+    {
+      "id": "footerless_native_receipt",
+      "source_kind": "observation",
+      "source": "footerless蓝色单片原生队列completed、作品版本与输出身份。",
+      "locator": "run-summary.json",
+      "method": "读取真实原生汇总；其qa_status为完成导出当时pending快照，最终QA以footerless_final_technical为准。该QA同时核对work/version、completed队列和HTTP全81,109,253字节同最终SHA；未批准或发布。",
+      "file": "../../../.local/codex-runs/template6-remove-footer-20261020/queue-final/run-summary.json",
+      "sha256": "b5b08055677a477d1329b224e2c13b664fe8715a8eb88a2e9d513b7371a4a4ea"
+    },
+    {
+      "id": "footerless_frozen_request",
+      "source_kind": "observation",
+      "source": "最终footerless原生请求保留prepare时34项runtime身份。",
+      "locator": "request.json",
+      "method": "读取原冻结request，不改写；spec冻结SHA为0ffc716ad3e775ba2f6638e504c95f8584220ea4a969c2d1da07886d097ce128。本次通过证据是渲染后补入文档，不能声称已包含于该runtime。",
+      "file": "../../../.local/codex-runs/template6-remove-footer-20261020/queue-final/single-video/request.json",
+      "sha256": "0aa7d136ee61c3c2eb681f7885b6d1f1ae64dd93f7c15e3a86cd6c8fd2161aad"
+    }
+  ],
+  "unknowns": [
+    {
+      "path": "/validation/audio",
+      "reason": "完整主观听看及音素口型尚未确认。",
+      "evidence_plan": "实际播放指定最终SHA并分别记录听看/同步范围，不能由抽帧推断。",
+      "blocks": [
+        "audio"
+      ]
+    },
+    {
+      "path": "/validation/platform",
+      "reason": "真实手机与平台呈现未验，模拟另列。",
+      "evidence_plan": "取得对应最终SHA的实际设备或用户明确确认后单独更新；不从授权或模拟推断。",
+      "blocks": [
+        "platform"
+      ]
+    },
+    {
+      "path": "/validation/user_review",
+      "reason": "用户尚未确认本期最终成片。",
+      "evidence_plan": "取得对应最终SHA的实际设备或用户明确确认后单独更新；不从授权或模拟推断。",
+      "blocks": [
+        "user_review"
+      ]
+    }
+  ],
+  "validation": {
+    "structure": {
+      "status": "pass",
+      "evidence_ids": [
+        "footerless_static_source"
+      ],
+      "note": "当前源码仅删除唯一页脚行，活动元素/五章引用/叙事/geometry一致；静态规范与TypeScript检查另行执行。历史429项语义与旧28runtime结论仍留validation_history，不迁移到本修订。"
+    },
+    "technical": {
+      "status": "pass",
+      "evidence_ids": [
+        "footerless_final_technical"
+      ],
+      "note": "仅最终蓝片c32551de2fc5d6a7e96c14c95f9b178b2954cdf3141ee63c75679fda3f3a7649的45/45专项技术通过：1080x1920/30fps/995帧、PNG+20M ABR/slow实际平均19.362405Mbps，无filler；原片直用且母带/AAC逐包保持。其他五风格未在本修订重新导出，不泛化其媒体通过。"
+    },
+    "visual": {
+      "status": "pass",
+      "evidence_ids": [
+        "footerless_final_visual"
+      ],
+      "note": "Root实际查看7图片，最终蓝片同SHA按样本pass_scoped：开/中/尾页脚消失、背景完整，所观人物/正文/字幕/素材来源标签保持。共用源码已删除footer；其余五方向未重新出样，连续听看/真机/用户确认不升级。"
+    },
+    "audio": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "音频母带/AAC峰值与侧链已技术核对；独立全片主观连续听看、音效遮蔽、音素口型与同步仍待验证。"
+    },
+    "platform": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "根实际查看的390px本地模拟在visual范围通过；真实手机/平台UI和压缩呈现仍pending。"
+    },
+    "user_review": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "用户授权自动制作不等于确认本期最终成片。"
+    },
+    "production": {
+      "status": "pass",
+      "evidence_ids": [
+        "footerless_native_receipt",
+        "footerless_final_technical",
+        "footerless_frozen_request"
+      ],
+      "note": "仅本蓝片原生PQ-eb3f469bf755e9b72734完成，work-b71c7ae95bc72bc5b4736d9f及v-c32551de2fc5d6a7e96c14c9、HTTP全字节同最终SHA。开发测试，quality未批准、未发布；原request与prepare时spec SHA不改。"
+    }
+  },
+  "extensions": {
+    "avatar": {
+      "face_crop": {
+        "mode": "cover",
+        "source": "PresenterWindow与各方向box/objectPosition；close-4x5固定近景校准，medium-9x16按组件。",
+        "rule": "原生成视频及背景固化，主/副人物同片同全局时钟，不重绘身份。"
+      },
+      "synchronization": "主语音原速1、主人物静音原时钟；真实Broll另一路静音offset、定格明确image；字幕/短语只取实测词端点。",
+      "voice_rules": "沿用原天亮猴哥既有1.15倍速产物；不再次加速、不调用TTS/数字人。"
+    },
+    "graphic": {
+      "intent": "字体、纸雕/刊物/光学、赤红分区、银白舞台与纪实来源排版；不生成伪界面或营业现场。",
+      "palette_source": "layout.json palette及NewDirections方向常量，细值以组件为准。",
+      "typography_source": "KaiTi用于社区非合作章；SimSun用于曜黑/纪实标题，Microsoft YaHei用于数字/字幕与其余。",
+      "text_policy": "固定栏目/标识由代码文本绘制；原图内部实物文字固化；所有稿件标题、说明与要点只开放原稿有据内容，字幕不入栅格图。",
+      "asset_fit": "旧三PNG cover作纯装饰；原人物cover按方向校准；真实产品video/image遵守各scene fit且本期为contain。"
+    },
+    "material_edit": {
+      "clock": "fromCue/toCue零基、start/end取该cue真实边界；video offset为源秒且不循环；image offset0，定格时长为配置cue范围。",
+      "source_review": "仅粤仔真实户外产品互动参考；明确来源标签，不冒充海客经营场所或真实居民/成交。",
+      "identity": "原片/照片 SHA、源96.2秒派生关系及实际看图范围均保存在本期私有台账。",
+      "source_ranges": "scenes[].fromCue/toCue取完整原cue真实毫秒区间，offset取源片局部秒；本期01/06视频95–98.28+96.2秒定格，03/05视频95–97.92，02/04无素材。",
+      "cut_policy": "每个scene与对应cue边界切换，原音轨不断；不循环、不拉伸产品动作，图片明确冻结；连续性和切口仍需最终输出审阅。"
+    },
+    "source_art": {
+      "contract": "investment-source-video-art-v5",
+      "variant": "art-v5",
+      "composition_id": "HaikeInvestmentArtV5",
+      "compatibility": "独立v5 CLI/config与渲染前缀local-source-art-v5-；Studio适配器仍avatar-investment-a-v6。v002默认、v003与v004历史合同保留，不声称Studio UI新增六项选择或收费人物新路由。",
+      "rules": [
+        "原三套口播、人物、原速和真实词/cue/章节时钟不变，映射01/06源01、02/04源02、03/05源03；71唯一/142显示短拍保留。",
+        "原五章/标题/deck/points/highlights/phraseHighlights/scenes保持v4数据；只有前三装饰PNG路径转本v5canonical目录，SHA不变。",
+        "人物及来源标签不随字幕抖动；真实画面只例证粤仔产品互动，不称海客门店实拍或指定孩子/邻居身份。",
+        "01/06无AI员工；02/04无AI员工及面积；03/05只有原稿的协助选品/宣传/客服。不新增回购、收益、独占名额或经营保证。",
+        "动态字幕、关键词和章要点以shared.tsx/Motion.tsx/layout.motion.profiles为唯一参数真值；完整文本从活动首帧可读，语义块运动，无随机逐字/全屏闪白/脸部缩放。",
+        "音效anchor仅真实word/cue/chapter的start/end；single或命名triple-hit按固定0/.12/.24秒编辑重复，重复不是新增ASR时钟。",
+        "资产可选sync_ms只移动音频播放起点；whoosh430ms，其他0。anchor/timeMs/ceil帧与原声原词钟不变；负起点裁素材头。",
+        "原创BGM/SFX用canonical assets/sound和PROVENANCE.json绑定SHA，不调用外部歌曲、云音乐或下载；声音路径和source_label必填。",
+        "同原24kHz mono语音一次-2.5dB，与配乐/侧链/事件增益形成唯一48kHz立体声mixed-master；预览与最终mux同母带，不重复音量或语速。母线headroom另报。",
+        "准备冻结source/cue/words/config/audio-plan/素材/母带/runtime，提交paused studio_investment_recompose，由worker全局单lane运行，不绕过queue renderer。",
+        "development_test=true、publication=false、cloud_calls=0；当前footerless ready仅本蓝片同SHA技术/限定视觉/作品接入，不设置正式质量批准或发布；其他五方向未在本修订重出样，历史六片限定ready记录独立保留。"
+      ],
+      "validation_inputs": [
+        {
+          "clip": 1,
+          "name": "晴空社区橱窗_动效声音v5测试",
+          "direction": "community-showcase",
+          "source_clip": 1,
+          "source_video_sha256": "dfb5cd26de93e69653da8d4742faff71259d2db028942104aa6a5e72ba4c329f",
+          "source_audio_seconds": 33.18258333333333,
+          "cue_count": 14,
+          "word_count": 156,
+          "display_beats": 23,
+          "scene_count": 2,
+          "request_file": "../../../.local/codex-runs/template6-sound-motion-20261020/queue/clip-01/request.json",
+          "request_file_sha256": "df9e879da7f0f4e1b3b215c50c6fad10aa51933761a1ee542d762e65013d3480",
+          "request_sha256": "83dc6dce44d9d6a04f7038dd5a764e9307c88d048337a8884cbdfca5ba204efe",
+          "config_file": "../../projects/studio-731eaac9c2fd4108/assets/source-art-v5/art-config.json",
+          "config_sha256": "43010459555fb6816908d61ca25207a79288c4056c1958c28ae067d8e5dbe8af",
+          "project_id": "studio-731eaac9c2fd4108",
+          "render_id": "local-source-art-v5-83dc6dce44d9d6a04f70",
+          "queue_id": "PQ-8c98bd40db3e65aa722f",
+          "work_id": "work-2e43c84b22703e87c360a825",
+          "version_id": "v-0bb7854843f9f61c4a105953",
+          "output_file": "../../projects/studio-731eaac9c2fd4108/renders/local-source-art-v5-83dc6dce44d9d6a04f70/avatar-preview.mp4",
+          "output_sha256": "0bb7854843f9f61c4a1059536fdc3350c8f03dc3b0c0ce849303461b6359bd76",
+          "media": {
+            "width": 1080,
+            "height": 1920,
+            "fps": "30",
+            "frames": 995,
+            "video_seconds": 33.166667,
+            "AAC_seconds": 33.166667,
+            "audio_channels": 2,
+            "container_seconds": 33.166667,
+            "original_PCM_clock_seconds": 33.18258333333333,
+            "video_clock_difference_seconds": -0.015916333333336752
+          },
+          "AAC": {
+            "integrated_LUFS": -16.7,
+            "true_peak_dBTP": -5.12,
+            "LRA_LU": 2.6
+          },
+          "native_master_file": "../../projects/studio-731eaac9c2fd4108/assets/source-art-v5/mixed-master.wav",
+          "native_master_sha256": "6b7628e9179a2f7c603923c569f900e6a1b992eb1728c345e4e5bfab0b7040e6",
+          "audio_mix": {
+            "master_sha256": "6b7628e9179a2f7c603923c569f900e6a1b992eb1728c345e4e5bfab0b7040e6",
+            "master": {
+              "integrated_lufs": -16.69,
+              "true_peak_dbtp": -5.09,
+              "loudness_range_lu": 2.6
+            },
+            "voice_gain_db": -2.5,
+            "master_gain_db": 0.0,
+            "effective_voice_gain_db": -2.5,
+            "music_gain_db": -8.5,
+            "duck": {
+              "method": "independent PCM16 RMS energy in 50ms original-voice-active windows (-35dBFS)",
+              "active_seconds": 26.45,
+              "active_windows": 529,
+              "active_pre_rms_dbfs": -27.691681738608448,
+              "active_post_rms_dbfs": -32.57670485619017,
+              "active_reduction_db": 4.885023117581717,
+              "pre_sha256": "54e7e36b051bbf2074d952576aff0016a6f28529cbca74cdeed314ff58dc351d",
+              "post_sha256": "5aa6644590804c39beb9f8dfe964988f38e3de8c0520033536e13c70c11c9a0f"
+            },
+            "sound_hits": 10
+          },
+          "proof_master_binding": {
+            "binding_valid": true,
+            "final_authority": "frozen_native_request_prepared_master",
+            "candidate_matches_native": false,
+            "rebind_manifest_sha256": "a18e61ec822c8cceb3a1324797ed8de4fbc49bbf6758ec939f5a026ef5c05e78"
+          },
+          "final_props_file": "../../projects/studio-731eaac9c2fd4108/renders/local-source-art-v5-83dc6dce44d9d6a04f70/props.json",
+          "final_props_sha256": "b260e1d87b4c96d95d6406ce27e37160d6dc40afdbc331a5079dfaa20d1cd264",
+          "final_scene_plan_file": "../../projects/studio-731eaac9c2fd4108/renders/local-source-art-v5-83dc6dce44d9d6a04f70/art-scene-plan.json",
+          "final_scene_plan_sha256": "0a937dec565ec5165212f4de50f75ecd966743e9e64f699bf57977d7bfb156ac",
+          "scene_uses": [
+            {
+              "id": "yuezai-product-interaction",
+              "kind": "video",
+              "sha256": "1292e9331b953591f4a737aeb30a7cfdff0d41c820fd27080d67718518bf82ff",
+              "start": 4.88,
+              "end": 8.16,
+              "offset": 95.0,
+              "fit": "contain",
+              "source_label": "粤仔产品互动素材"
+            },
+            {
+              "id": "yuezai-reaction-still",
+              "kind": "image",
+              "sha256": "07e4e5543df989eb4beb34739c41aa96998187c7ff41ca2c2f0ee42b82bf2aa1",
+              "start": 8.16,
+              "end": 12.1,
+              "offset": 0,
+              "fit": "contain",
+              "source_label": "粤仔产品互动定格"
+            }
+          ],
+          "music_theme_id": "main-118",
+          "music_gain_db": -8.5,
+          "raw_sound_events": 10,
+          "expanded_hits": 10,
+          "technical_checks_count": 53,
+          "technical": "pass",
+          "visual": "pass_scoped",
+          "sample_count": 55,
+          "quality_approved": false,
+          "publication": false
+        },
+        {
+          "clip": 2,
+          "name": "锐蓝商业刊物_动效声音v5测试",
+          "direction": "blue-editorial",
+          "source_clip": 2,
+          "source_video_sha256": "f836cc8965afb0f3c68c3cb87251c999a8b55a3e9fda4a6fe07e90bacd7261bd",
+          "source_audio_seconds": 36.73041666666666,
+          "cue_count": 14,
+          "word_count": 166,
+          "display_beats": 25,
+          "scene_count": 0,
+          "request_file": "../../../.local/codex-runs/template6-sound-motion-20261020/queue/clip-02/request.json",
+          "request_file_sha256": "e12419e93875346b39930a1bb74cf5b9003ec7bb736e695885cd65bcd189fe57",
+          "request_sha256": "11764723fbc0ea4c09bf146a3cfc61f933d13da5aaa49709f78d448ff1c046dc",
+          "config_file": "../../projects/studio-ef3d90f7e191edf7/assets/source-art-v5/art-config.json",
+          "config_sha256": "04729f66adb3702855ceb04a44f49ceaa5eac57f58ebda1f3dfcccfb86e06680",
+          "project_id": "studio-ef3d90f7e191edf7",
+          "render_id": "local-source-art-v5-11764723fbc0ea4c09bf",
+          "queue_id": "PQ-d0bbec4feaf01e0a4c5c",
+          "work_id": "work-26037d19f11e7767af5fb614",
+          "version_id": "v-0faa32b388f876c7297a0d68",
+          "output_file": "../../projects/studio-ef3d90f7e191edf7/renders/local-source-art-v5-11764723fbc0ea4c09bf/avatar-preview.mp4",
+          "output_sha256": "0faa32b388f876c7297a0d686a972a23e32c0568a1efd0592f2f9cdc9bb7db39",
+          "media": {
+            "width": 1080,
+            "height": 1920,
+            "fps": "30",
+            "frames": 1102,
+            "video_seconds": 36.733333,
+            "AAC_seconds": 36.730417,
+            "audio_channels": 2,
+            "container_seconds": 36.733333,
+            "original_PCM_clock_seconds": 36.73041666666666,
+            "video_clock_difference_seconds": 0.0029163333333386277
+          },
+          "AAC": {
+            "integrated_LUFS": -17.17,
+            "true_peak_dBTP": -3.37,
+            "LRA_LU": 1.9
+          },
+          "native_master_file": "../../projects/studio-ef3d90f7e191edf7/assets/source-art-v5/mixed-master.wav",
+          "native_master_sha256": "c50572d81efa06ab69a269d5a682bbffb2b125a6d6fe98db530b9e8a7f3a083f",
+          "audio_mix": {
+            "master_sha256": "c50572d81efa06ab69a269d5a682bbffb2b125a6d6fe98db530b9e8a7f3a083f",
+            "master": {
+              "integrated_lufs": -17.16,
+              "true_peak_dbtp": -3.36,
+              "loudness_range_lu": 2.0
+            },
+            "voice_gain_db": -2.5,
+            "master_gain_db": 0.0,
+            "effective_voice_gain_db": -2.5,
+            "music_gain_db": -9,
+            "duck": {
+              "method": "independent PCM16 RMS energy in 50ms original-voice-active windows (-35dBFS)",
+              "active_seconds": 31.15,
+              "active_windows": 623,
+              "active_pre_rms_dbfs": -28.251894776050154,
+              "active_post_rms_dbfs": -32.613883233586435,
+              "active_reduction_db": 4.3619884575362775,
+              "pre_sha256": "481a75f384b934a3d5a4e6eb22dd0f25f1f0e4b728610743715cb1c7cacf9500",
+              "post_sha256": "7e4caf63d9a3e344482bca344f2e4d8823918b106b2bffdda1d768148b54d36d"
+            },
+            "sound_hits": 11
+          },
+          "proof_master_binding": {
+            "binding_valid": true,
+            "final_authority": "frozen_native_request_prepared_master",
+            "candidate_matches_native": false,
+            "rebind_manifest_sha256": "60ae26bf2d9727b95a0fffa00461b368236348d66c157e038a61269d51905a78"
+          },
+          "final_props_file": "../../projects/studio-ef3d90f7e191edf7/renders/local-source-art-v5-11764723fbc0ea4c09bf/props.json",
+          "final_props_sha256": "305077cbeb875da227271082b41d06f46d19d8f366389047e40598ba65dc2d1e",
+          "final_scene_plan_file": "../../projects/studio-ef3d90f7e191edf7/renders/local-source-art-v5-11764723fbc0ea4c09bf/art-scene-plan.json",
+          "final_scene_plan_sha256": "d1fd8a25b7df0f848f3fb67954bf62e75d0f2b5d5a92a43063ce09ec93932666",
+          "scene_uses": [],
+          "music_theme_id": "main-118",
+          "music_gain_db": -9,
+          "raw_sound_events": 11,
+          "expanded_hits": 11,
+          "technical_checks_count": 53,
+          "technical": "pass",
+          "visual": "pass_scoped",
+          "sample_count": 49,
+          "quality_approved": false,
+          "publication": false
+        },
+        {
+          "clip": 3,
+          "name": "曜黑光学科技_动效声音v5测试",
+          "direction": "optical-cinema",
+          "source_clip": 3,
+          "source_video_sha256": "279ea1c879f47b9cb00f2d2e6daeb35f8e911c126a36ac94adeaa28260f0acdd",
+          "source_audio_seconds": 34.226083333333335,
+          "cue_count": 13,
+          "word_count": 157,
+          "display_beats": 23,
+          "scene_count": 1,
+          "request_file": "../../../.local/codex-runs/template6-sound-motion-20261020/queue/clip-03/request.json",
+          "request_file_sha256": "de6c41db3fd888676af5bfd00d7a1e7e1cb1e463b5d85bc4a73c4b5bd89a81a0",
+          "request_sha256": "1664201a9fa93445754071086f2c0bc78266116d1b6fd0df5155c10853c5ff5e",
+          "config_file": "../../projects/studio-89972622b9f1c13b/assets/source-art-v5/art-config.json",
+          "config_sha256": "2e7c1a2b6fdc8a2616f4516cd925e54b5faff2c5855a3c0ee24206ba69d02f37",
+          "project_id": "studio-89972622b9f1c13b",
+          "render_id": "local-source-art-v5-1664201a9fa934457540",
+          "queue_id": "PQ-ae4b7a8ed47e06afc3f5",
+          "work_id": "work-80dd248fc5c2231354f6a6b3",
+          "version_id": "v-4b2a454091107771b424686e",
+          "output_file": "../../projects/studio-89972622b9f1c13b/renders/local-source-art-v5-1664201a9fa934457540/avatar-preview.mp4",
+          "output_sha256": "4b2a454091107771b424686e0e855e206be1a4a2a5962f9c2c0da8d7c31a56a9",
+          "media": {
+            "width": 1080,
+            "height": 1920,
+            "fps": "30",
+            "frames": 1027,
+            "video_seconds": 34.233333,
+            "AAC_seconds": 34.226083,
+            "audio_channels": 2,
+            "container_seconds": 34.233333,
+            "original_PCM_clock_seconds": 34.226083333333335,
+            "video_clock_difference_seconds": 0.007249666666666599
+          },
+          "AAC": {
+            "integrated_LUFS": -16.06,
+            "true_peak_dBTP": -4.16,
+            "LRA_LU": 3.6
+          },
+          "native_master_file": "../../projects/studio-89972622b9f1c13b/assets/source-art-v5/mixed-master.wav",
+          "native_master_sha256": "44785a01298da087b63bb0c5f58c73df969a06d2ef22991971a051093ca99868",
+          "audio_mix": {
+            "master_sha256": "44785a01298da087b63bb0c5f58c73df969a06d2ef22991971a051093ca99868",
+            "master": {
+              "integrated_lufs": -16.07,
+              "true_peak_dbtp": -4.22,
+              "loudness_range_lu": 3.5
+            },
+            "voice_gain_db": -2.5,
+            "master_gain_db": 0.0,
+            "effective_voice_gain_db": -2.5,
+            "music_gain_db": -10,
+            "duck": {
+              "method": "independent PCM16 RMS energy in 50ms original-voice-active windows (-35dBFS)",
+              "active_seconds": 28.15,
+              "active_windows": 563,
+              "active_pre_rms_dbfs": -29.177880033206467,
+              "active_post_rms_dbfs": -34.29442196110373,
+              "active_reduction_db": 5.11654192789726,
+              "pre_sha256": "da701ae16ce1bd39afd4508a4ca98c84ae1231b22b939a84463051fe0c3f3a08",
+              "post_sha256": "6d191179a8f695f6a4a64e6b771d884086e51f3a0752fab0dbf0c39325b97c8f"
+            },
+            "sound_hits": 10
+          },
+          "proof_master_binding": {
+            "binding_valid": true,
+            "final_authority": "frozen_native_request_prepared_master",
+            "candidate_matches_native": false,
+            "rebind_manifest_sha256": "d958284d66ecde3325ec8a4eed749727d70bc63f47e487e7121dd0017f6cce22"
+          },
+          "final_props_file": "../../projects/studio-89972622b9f1c13b/renders/local-source-art-v5-1664201a9fa934457540/props.json",
+          "final_props_sha256": "01033f809bf4192912a298eccf2c792e6b4ac4905693047c1fc0958bfa07026b",
+          "final_scene_plan_file": "../../projects/studio-89972622b9f1c13b/renders/local-source-art-v5-1664201a9fa934457540/art-scene-plan.json",
+          "final_scene_plan_sha256": "4bea226c78c05734cd43c10946420444517cf0121036df77954a5285c7eb4184",
+          "scene_uses": [
+            {
+              "id": "yuezai-product-example",
+              "kind": "video",
+              "sha256": "1292e9331b953591f4a737aeb30a7cfdff0d41c820fd27080d67718518bf82ff",
+              "start": 9.08,
+              "end": 12.0,
+              "offset": 95.0,
+              "fit": "contain",
+              "source_label": "粤仔产品互动素材"
+            }
+          ],
+          "music_theme_id": "main-118",
+          "music_gain_db": -10,
+          "raw_sound_events": 10,
+          "expanded_hits": 10,
+          "technical_checks_count": 53,
+          "technical": "pass",
+          "visual": "pass_scoped",
+          "sample_count": 51,
+          "quality_approved": false,
+          "publication": false
+        },
+        {
+          "clip": 4,
+          "name": "赤红商业宣言_动效声音v5测试",
+          "direction": "red-manifesto",
+          "source_clip": 2,
+          "source_video_sha256": "f836cc8965afb0f3c68c3cb87251c999a8b55a3e9fda4a6fe07e90bacd7261bd",
+          "source_audio_seconds": 36.73041666666666,
+          "cue_count": 14,
+          "word_count": 166,
+          "display_beats": 25,
+          "scene_count": 0,
+          "request_file": "../../../.local/codex-runs/template6-sound-motion-20261020/queue/clip-04/request.json",
+          "request_file_sha256": "9a79a5e1af2e2aa2a0aadbf24ba5da001633b607cfbbc2424ba5ba6b16aa275c",
+          "request_sha256": "8030e6a43fa99f828a78abf5ddfc5f4635ba913309d893988e0c8b70f7067b6d",
+          "config_file": "../../projects/studio-3c3e8434402f96d9/assets/source-art-v5/art-config.json",
+          "config_sha256": "a36ff99bafa8e1d03b339a3bf74cb07a01d118408ffb0278087b41a85fef4a02",
+          "project_id": "studio-3c3e8434402f96d9",
+          "render_id": "local-source-art-v5-8030e6a43fa99f828a78",
+          "queue_id": "PQ-b03b0df9fbbbb3bfca84",
+          "work_id": "work-4b0d010b7829bc4fa393a5cd",
+          "version_id": "v-fa35b3a5c1bdc4426cddceb6",
+          "output_file": "../../projects/studio-3c3e8434402f96d9/renders/local-source-art-v5-8030e6a43fa99f828a78/avatar-preview.mp4",
+          "output_sha256": "fa35b3a5c1bdc4426cddceb62779f80d7772e71ee3f0cb2a9c1b395c54f04b00",
+          "media": {
+            "width": 1080,
+            "height": 1920,
+            "fps": "30",
+            "frames": 1102,
+            "video_seconds": 36.733333,
+            "AAC_seconds": 36.730417,
+            "audio_channels": 2,
+            "container_seconds": 36.733333,
+            "original_PCM_clock_seconds": 36.73041666666666,
+            "video_clock_difference_seconds": 0.0029163333333386277
+          },
+          "AAC": {
+            "integrated_LUFS": -17.04,
+            "true_peak_dBTP": -3.08,
+            "LRA_LU": 2.1
+          },
+          "native_master_file": "../../projects/studio-3c3e8434402f96d9/assets/source-art-v5/mixed-master.wav",
+          "native_master_sha256": "92a6b8ea337d9a142d17982f31a73bc20915f33e024516671f3b301b4c101b51",
+          "audio_mix": {
+            "master_sha256": "92a6b8ea337d9a142d17982f31a73bc20915f33e024516671f3b301b4c101b51",
+            "master": {
+              "integrated_lufs": -17.02,
+              "true_peak_dbtp": -3.06,
+              "loudness_range_lu": 2.1
+            },
+            "voice_gain_db": -2.5,
+            "master_gain_db": 0.0,
+            "effective_voice_gain_db": -2.5,
+            "music_gain_db": -7.5,
+            "duck": {
+              "method": "independent PCM16 RMS energy in 50ms original-voice-active windows (-35dBFS)",
+              "active_seconds": 31.15,
+              "active_windows": 623,
+              "active_pre_rms_dbfs": -26.82672619719859,
+              "active_post_rms_dbfs": -31.15312103769204,
+              "active_reduction_db": 4.326394840493447,
+              "pre_sha256": "703e57b5fbdbf01bd3dae2ef6561b18b2052bdd23a5680f897e970769575b282",
+              "post_sha256": "2f5b185622b006fbadcbae16527d8d121537505e52243cc9e40b4f42e16f3df6"
+            },
+            "sound_hits": 12
+          },
+          "proof_master_binding": {
+            "binding_valid": true,
+            "final_authority": "frozen_native_request_prepared_master",
+            "candidate_matches_native": false,
+            "rebind_manifest_sha256": "cfd87b438d3be03e6e8de867839dd4b3967695581e165c0d22f180704b64f596"
+          },
+          "final_props_file": "../../projects/studio-3c3e8434402f96d9/renders/local-source-art-v5-8030e6a43fa99f828a78/props.json",
+          "final_props_sha256": "5094703b53635ed0e08d0c5366b77948bb8785c2113b68ba2c0410a4e7769fcd",
+          "final_scene_plan_file": "../../projects/studio-3c3e8434402f96d9/renders/local-source-art-v5-8030e6a43fa99f828a78/art-scene-plan.json",
+          "final_scene_plan_sha256": "58d37cf2bd3b715088a137739ae06f5c4d9f8a01547b4c7a18b1bdef6b6e0776",
+          "scene_uses": [],
+          "music_theme_id": "red-124",
+          "music_gain_db": -7.5,
+          "raw_sound_events": 10,
+          "expanded_hits": 12,
+          "technical_checks_count": 53,
+          "technical": "pass",
+          "visual": "pass_scoped",
+          "sample_count": 51,
+          "quality_approved": false,
+          "publication": false
+        },
+        {
+          "clip": 5,
+          "name": "银白产品发布_动效声音v5测试",
+          "direction": "silver-launch",
+          "source_clip": 3,
+          "source_video_sha256": "279ea1c879f47b9cb00f2d2e6daeb35f8e911c126a36ac94adeaa28260f0acdd",
+          "source_audio_seconds": 34.226083333333335,
+          "cue_count": 13,
+          "word_count": 157,
+          "display_beats": 23,
+          "scene_count": 1,
+          "request_file": "../../../.local/codex-runs/template6-sound-motion-20261020/queue/clip-05/request.json",
+          "request_file_sha256": "f4de5a1d7cb8b2ac4966d3f943b85c467b7841df93ae6dedc86a7094620d7605",
+          "request_sha256": "31b8ca7636a1aabf6a7eb900513e4ef17adaf14a4920ce4ce51a9bf4a3ea3431",
+          "config_file": "../../projects/studio-a62fdae6cf80cf1f/assets/source-art-v5/art-config.json",
+          "config_sha256": "f10701597553d0656252cb033f509d19aa78b62fc98f626f929336157190dcba",
+          "project_id": "studio-a62fdae6cf80cf1f",
+          "render_id": "local-source-art-v5-31b8ca7636a1aabf6a7e",
+          "queue_id": "PQ-ce73d970c348ec64b3d2",
+          "work_id": "work-c22f9ed3cc87d4510a9f4b68",
+          "version_id": "v-c95f44befcdfb91975beff99",
+          "output_file": "../../projects/studio-a62fdae6cf80cf1f/renders/local-source-art-v5-31b8ca7636a1aabf6a7e/avatar-preview.mp4",
+          "output_sha256": "c95f44befcdfb91975beff99ec86567aa16ec43e423c1dcc9f31471bd90d8068",
+          "media": {
+            "width": 1080,
+            "height": 1920,
+            "fps": "30",
+            "frames": 1027,
+            "video_seconds": 34.233333,
+            "AAC_seconds": 34.226083,
+            "audio_channels": 2,
+            "container_seconds": 34.233333,
+            "original_PCM_clock_seconds": 34.226083333333335,
+            "video_clock_difference_seconds": 0.007249666666666599
+          },
+          "AAC": {
+            "integrated_LUFS": -16.12,
+            "true_peak_dBTP": -4.49,
+            "LRA_LU": 3.6
+          },
+          "native_master_file": "../../projects/studio-a62fdae6cf80cf1f/assets/source-art-v5/mixed-master.wav",
+          "native_master_sha256": "0d2087e4b83ac77441b81c1d8cd6ae05fdd6f47e8f28446e9082a48ea29df1ed",
+          "audio_mix": {
+            "master_sha256": "0d2087e4b83ac77441b81c1d8cd6ae05fdd6f47e8f28446e9082a48ea29df1ed",
+            "master": {
+              "integrated_lufs": -16.11,
+              "true_peak_dbtp": -4.48,
+              "loudness_range_lu": 3.6
+            },
+            "voice_gain_db": -2.5,
+            "master_gain_db": 0.0,
+            "effective_voice_gain_db": -2.5,
+            "music_gain_db": -10.5,
+            "duck": {
+              "method": "independent PCM16 RMS energy in 50ms original-voice-active windows (-35dBFS)",
+              "active_seconds": 28.15,
+              "active_windows": 563,
+              "active_pre_rms_dbfs": -29.677879958867788,
+              "active_post_rms_dbfs": -34.7944211975589,
+              "active_reduction_db": 5.116541238691111,
+              "pre_sha256": "06a9203f0ad8c7747a84c3cb4a17bfdc465357634e1560a25095b7b1c2c41402",
+              "post_sha256": "cc48f943f4444c502c07fecc470482dc55f16e149d958f202591d6f21893b974"
+            },
+            "sound_hits": 10
+          },
+          "proof_master_binding": {
+            "binding_valid": true,
+            "final_authority": "frozen_native_request_prepared_master",
+            "candidate_matches_native": false,
+            "rebind_manifest_sha256": "37a4fccfe4691d412e98f79dc92f215935592ede3bda2e5ac64ec6ebc94edd83"
+          },
+          "final_props_file": "../../projects/studio-a62fdae6cf80cf1f/renders/local-source-art-v5-31b8ca7636a1aabf6a7e/props.json",
+          "final_props_sha256": "1cec438d8e4ee8ddd8dc14a068619fd439e0b3a325ef828f7ee2c95c11166bfd",
+          "final_scene_plan_file": "../../projects/studio-a62fdae6cf80cf1f/renders/local-source-art-v5-31b8ca7636a1aabf6a7e/art-scene-plan.json",
+          "final_scene_plan_sha256": "0011d32f7212d48241fd6603022820a8cef797a2c0649c2372a9f53a5995368f",
+          "scene_uses": [
+            {
+              "id": "yuezai-product-example",
+              "kind": "video",
+              "sha256": "1292e9331b953591f4a737aeb30a7cfdff0d41c820fd27080d67718518bf82ff",
+              "start": 9.08,
+              "end": 12.0,
+              "offset": 95.0,
+              "fit": "contain",
+              "source_label": "粤仔产品互动素材"
+            }
+          ],
+          "music_theme_id": "main-118",
+          "music_gain_db": -10.5,
+          "raw_sound_events": 10,
+          "expanded_hits": 10,
+          "technical_checks_count": 53,
+          "technical": "pass",
+          "visual": "pass_scoped",
+          "sample_count": 50,
+          "quality_approved": false,
+          "publication": false
+        },
+        {
+          "clip": 6,
+          "name": "实景品牌纪实_动效声音v5测试",
+          "direction": "documentary",
+          "source_clip": 1,
+          "source_video_sha256": "dfb5cd26de93e69653da8d4742faff71259d2db028942104aa6a5e72ba4c329f",
+          "source_audio_seconds": 33.18258333333333,
+          "cue_count": 14,
+          "word_count": 156,
+          "display_beats": 23,
+          "scene_count": 2,
+          "request_file": "../../../.local/codex-runs/template6-sound-motion-20261020/queue/clip-06/request.json",
+          "request_file_sha256": "539f177b7cd01b2c3332e658bc3915ed63e23ab6ad244c0be54b798a5f87ebc1",
+          "request_sha256": "0da2834e2b96863ef826de4c5635b0c889b8ce9920fc16eed661efb8a3502128",
+          "config_file": "../../projects/studio-90251d333078c9e6/assets/source-art-v5/art-config.json",
+          "config_sha256": "399da88ffec17079bbeeba7199a4a29cbd9106455b20b62507fcde4db89182dd",
+          "project_id": "studio-90251d333078c9e6",
+          "render_id": "local-source-art-v5-0da2834e2b96863ef826",
+          "queue_id": "PQ-4db7f4073706faef945a",
+          "work_id": "work-a7b5948016b995764c3bdb9a",
+          "version_id": "v-76a9862d698bf4054a2ac211",
+          "output_file": "../../projects/studio-90251d333078c9e6/renders/local-source-art-v5-0da2834e2b96863ef826/avatar-preview.mp4",
+          "output_sha256": "76a9862d698bf4054a2ac211589654e77cdc65d757ac577154d39ca7c914685e",
+          "media": {
+            "width": 1080,
+            "height": 1920,
+            "fps": "30",
+            "frames": 995,
+            "video_seconds": 33.166667,
+            "AAC_seconds": 33.166667,
+            "audio_channels": 2,
+            "container_seconds": 33.166667,
+            "original_PCM_clock_seconds": 33.18258333333333,
+            "video_clock_difference_seconds": -0.015916333333336752
+          },
+          "AAC": {
+            "integrated_LUFS": -16.76,
+            "true_peak_dBTP": -5.19,
+            "LRA_LU": 2.9
+          },
+          "native_master_file": "../../projects/studio-90251d333078c9e6/assets/source-art-v5/mixed-master.wav",
+          "native_master_sha256": "711e65dc3256ed357973c94819e573786b1d56d9a2f408b840c0d1b7e9ff3bc0",
+          "audio_mix": {
+            "master_sha256": "711e65dc3256ed357973c94819e573786b1d56d9a2f408b840c0d1b7e9ff3bc0",
+            "master": {
+              "integrated_lufs": -16.76,
+              "true_peak_dbtp": -5.19,
+              "loudness_range_lu": 2.9
+            },
+            "voice_gain_db": -2.5,
+            "master_gain_db": 0.0,
+            "effective_voice_gain_db": -2.5,
+            "music_gain_db": -11,
+            "duck": {
+              "method": "independent PCM16 RMS energy in 50ms original-voice-active windows (-35dBFS)",
+              "active_seconds": 26.45,
+              "active_windows": 529,
+              "active_pre_rms_dbfs": -31.319822831941053,
+              "active_post_rms_dbfs": -36.13633319715837,
+              "active_reduction_db": 4.816510365217319,
+              "pre_sha256": "30100a5db029b3a9150813b4a77e32d0433a89360a812a1936f80798e5061d04",
+              "post_sha256": "9abec0ca9375c7a41d2ddc91c728ecedf7083a851bf357efafde736c5051e815"
+            },
+            "sound_hits": 7
+          },
+          "proof_master_binding": {
+            "binding_valid": true,
+            "final_authority": "frozen_native_request_prepared_master",
+            "candidate_matches_native": true,
+            "rebind_manifest_sha256": null
+          },
+          "final_props_file": "../../projects/studio-90251d333078c9e6/renders/local-source-art-v5-0da2834e2b96863ef826/props.json",
+          "final_props_sha256": "cc737836071c9e2bb71cb506882e31bd5d1dd28042108934fff11b270ce084f8",
+          "final_scene_plan_file": "../../projects/studio-90251d333078c9e6/renders/local-source-art-v5-0da2834e2b96863ef826/art-scene-plan.json",
+          "final_scene_plan_sha256": "cb4e9ba1dc9773bc36fcefc34013a46554ce33b5c05f0a42cd97125adf7abc9f",
+          "scene_uses": [
+            {
+              "id": "yuezai-product-interaction",
+              "kind": "video",
+              "sha256": "1292e9331b953591f4a737aeb30a7cfdff0d41c820fd27080d67718518bf82ff",
+              "start": 4.88,
+              "end": 8.16,
+              "offset": 95.0,
+              "fit": "contain",
+              "source_label": "粤仔产品互动素材"
+            },
+            {
+              "id": "yuezai-reaction-still",
+              "kind": "image",
+              "sha256": "07e4e5543df989eb4beb34739c41aa96998187c7ff41ca2c2f0ee42b82bf2aa1",
+              "start": 8.16,
+              "end": 12.1,
+              "offset": 0,
+              "fit": "contain",
+              "source_label": "粤仔产品互动定格"
+            }
+          ],
+          "music_theme_id": "documentary-100",
+          "music_gain_db": -11,
+          "raw_sound_events": 7,
+          "expanded_hits": 7,
+          "technical_checks_count": 53,
+          "technical": "pass",
+          "visual": "pass_scoped",
+          "sample_count": 53,
+          "quality_approved": false,
+          "publication": false
+        }
+      ],
+      "validation_scope": "v005-footerless-1 ready仅覆盖本条blue-editorial最终c32551de2fc5d6a7e96c14c95f9b178b2954cdf3141ee63c75679fda3f3a7649的45项技术、Root实际7图片限定视觉与原生作品/HTTP接入。六方向共有入口已删同一footer，但其余五方向未在本修订重出样。audio连续主观听看/音素、真实手机/平台与用户确认仍pending。历史v005六片validation_history、validation_inputs与28runtime记录原样保留。",
+      "geometry": {
+        "status": "当前名义分配框除删除共同footer外保持；新蓝片同SHA按Root所观7图片未见版式/来源标签破坏。其他五方向本修订未重出样，历史六SHA的运动/可读性观察见validation_history；不称所有字段上限或真机通过。",
+        "legacy_refined": "RefinedDirections.tsx：材料主窗80,586,920,982；副人物780,1192,210,356；无素材社区主窗294或338,586,706或662,984；锐蓝offer人物684,610,316,950；曜黑主窗126,590,828,980；字幕80,1610,920,180。",
+        "red": "NewDirections.tsx：标题74,196或211,920；deck80,578,894；人物344,670,654,902；points80,771,210；字幕80,1614,920,180。offer金额来自本条heading，不硬编码面积；合作文字及要点只取本条五章配置，无额外固定权益侧注。",
+        "silver": "标题80,212,920；deck105,513,870；主窗82,648,916,832；副人物739,1126,259,350；points80,1516,920,82；字幕80,1620,920,180。 来源标签105,671，maxWidth860，24px；实际实现见NewDirections.tsx。",
+        "documentary": "标题80,222,920；deck80,505,920；主窗54,602,972,990；来源76,620,max830；副人物710,1178,286,392；字幕80,1630,920,180。",
+        "material_fit": "shared.tsx MaterialWindow：contain清晰层加同源模糊补边，cover使用单清晰层；两层共用相同video offset/图片，不产生新时钟。",
+        "header": "品牌/栏目top76、left/right80；当前六风格不绘制数字人演绎页脚。设计safe不是平台真机验收。"
+      },
+      "runtime_basis_note": "historical_runtime_basis原样记录历史六次请求的28项render runtime；当前v005-footerless-1不再匹配其中index与后续演进源码。旧文件/请求和其通过证据保留，新请求须按当前runtime独立冻结。正式规格/声音重建文件属于原六片完成后的新增，不伪称属于旧28项。",
+      "selection_policy": "后续同类已有完整MP4的模板6任务优先复用本v005配乐/音效/字幕动效版，保留v004作A/B。原图片+音频付费数字人继续v002合同；未声称Studio UI新增六风格选择或付费人物新路由。",
+      "external_tool_fingerprints": {
+        "ffmpeg.exe": "486fd8bfed60fdefc5f65b5aedd834282a419cfb1c01ba2cfd55c4a5ebfbadb7",
+        "ffprobe.exe": "435355785120ae1cafdf827be334da6e6b92601ecef60074591849c8dbd95b21"
+      },
+      "post_render_additions": {
+        "assets/sound/generate_sound_pack.py": "e2477be1613aa6b6095ca2c10e7bd4305cab14df31f747582b685fd3a9354ee4",
+        "assets/sound/rebuild_sound_pack.py": "5624f83435f67f5fb46d4c300b9d2402f7c5f4eb168fdf294758abb3572a4b04",
+        "assets/sound/REBUILD.md": "cd4df7498b2f474036c662e4599d7c3e9726f9e2f790f096699c6dee6fe338d1"
+      },
+      "validation_history": [
+        {
+          "template_version": "v005",
+          "stage": "ready",
+          "scope": "implementation+ready仅覆盖本期三原MP4的六声画输出与已验原词/标题/素材/原创声音组合。技术、根实际抽样视觉和零云本地作品接入通过；连续听看/音素、真实手机/平台和用户成片确认独立pending。其他人物、最长字段、事件上限、素材上限和组合不泛化。",
+          "validation": {
+            "structure": {
+              "status": "pass",
+              "evidence_ids": [
+                "semantic_source_review",
+                "runtime_freeze",
+                "fixture_freeze",
+                "native_readback"
+              ],
+              "note": "六fixture唯一结构/语义429项通过，六请求原词/来源/配置/SFX锚点与28runtime及53原fixture冻结一致；官方v1规格静态检查配套执行。"
+            },
+            "technical": {
+              "status": "pass",
+              "evidence_ids": [
+                "final_technical",
+                "technical_01",
+                "technical_02",
+                "technical_03",
+                "technical_04",
+                "technical_05",
+                "technical_06"
+              ],
+              "note": "六最终SHA各53项、全部实际检查通过；完整解码/时长/词钟/原生母带/48k立体声AAC/增益/duck/HTTP同SHA。技术声音检查不等于主观连续听辨。"
+            },
+            "visual": {
+              "status": "pass",
+              "evidence_ids": [
+                "root_visual_review",
+                "root_visual_01",
+                "root_visual_02",
+                "root_visual_03",
+                "root_visual_04",
+                "root_visual_05",
+                "root_visual_06",
+                "mobile_simulation"
+              ],
+              "note": "根实际查看六最终SHA全部142短拍、章节/素材/动效细节及最长原尺寸；实际sample_count合计309，仅此离散范围。根实际查看的390px模拟亦按独立文件限定通过，真实手机仍pending。"
+            },
+            "audio": {
+              "status": "pending",
+              "evidence_ids": [],
+              "note": "音频母带/AAC峰值与侧链已技术核对；独立全片主观连续听看、音效遮蔽、音素口型与同步仍待验证。"
+            },
+            "platform": {
+              "status": "pending",
+              "evidence_ids": [],
+              "note": "根实际查看的390px本地模拟在visual范围通过；真实手机/平台UI和压缩呈现仍pending。"
+            },
+            "user_review": {
+              "status": "pending",
+              "evidence_ids": [],
+              "note": "用户授权自动制作不等于确认本期最终成片。"
+            },
+            "production": {
+              "status": "pass",
+              "evidence_ids": [
+                "native_queue_receipts",
+                "http_media_01",
+                "http_work_01",
+                "http_queue_01",
+                "http_media_02",
+                "http_work_02",
+                "http_queue_02",
+                "http_media_03",
+                "http_work_03",
+                "http_queue_03",
+                "http_media_04",
+                "http_work_04",
+                "http_queue_04",
+                "http_media_05",
+                "http_work_05",
+                "http_queue_05",
+                "http_media_06",
+                "http_work_06",
+                "http_queue_06"
+              ],
+              "note": "六原生统一队列completed、作品版本及HTTP完整字节同SHA；本地测试未正式批准或发布，未新增普通Studio选择或收费人物路线。"
+            }
+          },
+          "geometry": {
+            "status": "名义分配框来自当前冻结源码；本期最终运动外接与可读性通过仅限根实际查看的六SHA和样本，不称全部字段上限通过。",
+            "legacy_refined": "RefinedDirections.tsx：材料主窗80,586,920,982；副人物780,1192,210,356；无素材社区主窗294或338,586,706或662,984；锐蓝offer人物684,610,316,950；曜黑主窗126,590,828,980；字幕80,1610,920,180。",
+            "red": "NewDirections.tsx：标题74,196或211,920；deck80,578,894；人物344,670,654,902；points80,771,210；字幕80,1614,920,180。offer金额来自本条heading，不硬编码面积；合作文字及要点只取本条五章配置，无额外固定权益侧注。",
+            "silver": "标题80,212,920；deck105,513,870；主窗82,648,916,832；副人物739,1126,259,350；points80,1516,920,82；字幕80,1620,920,180。 来源标签105,671，maxWidth860，24px；实际实现见NewDirections.tsx。",
+            "documentary": "标题80,222,920；deck80,505,920；主窗54,602,972,990；来源76,620,max830；副人物710,1178,286,392；字幕80,1630,920,180。",
+            "header_disclosure": "品牌/栏目top76、left/right80；数字人演绎bottom64；设计safe不是平台真机验收。",
+            "material_fit": "shared.tsx MaterialWindow：contain清晰层加同源模糊补边，cover使用单清晰层；两层共用相同video offset/图片，不产生新时钟。"
+          },
+          "implementation_evidence": {
+            "id": "current_implementation",
+            "source_kind": "design",
+            "source": "与本期六次原生请求共同冻结的v5实现。",
+            "locator": "index.tsx",
+            "method": "当前文件逐SHA匹配28文件freeze，文档/重建入口在六片后新增且未伪称属于旧runtime。",
+            "file": "index.tsx",
+            "sha256": "9e4ffc3f6a59a52b9e7604866378ba2d39518fda377cad21948e310e5bd5ed84"
+          },
+          "archived_implementation_file": "../../projects/studio-731eaac9c2fd4108/renders/local-source-art-v5-83dc6dce44d9d6a04f70/index.tsx",
+          "archived_implementation_sha256": "9e4ffc3f6a59a52b9e7604866378ba2d39518fda377cad21948e310e5bd5ed84"
+        }
+      ],
+      "validation_inputs_scope": "以下六条为历史v005六次已完成输出的固定记录；其SHA、技术/视觉结论原样保留，不作为v005-footerless-1新媒体通过证据。",
+      "historical_runtime_basis": {
+        "../../backlot/production_queue_worker.py": "2bf5bf9fa6579868dc9e6f826b62fda8dff6455b19d8cce3963c6d398e5fccef",
+        "../../backlot/studio_composition.py": "2750e02ca81ad30c30a98724f80f894b5603c7715d10ce3fa0e462efcdd35287",
+        "../../backlot/studio_investment_audio_v5.py": "f2074a5ee645da43380cd7fb3533f766a66d1018d03bba9aface679830b9b670",
+        "../../backlot/studio_investment_source_art_v4.py": "e8110ce22982c89a6697511d60ba19dbe85ac9545ecc10f7fff5d0f5a0580fe9",
+        "../../backlot/studio_investment_source_art_v5.py": "d61b385d544ee46c9610c4fa7ad545634af29a1038bf30ccdeaa623cc57e71cf",
+        "../../backlot/studio_investment_source_video.py": "d18fb3b3f739fbf3acb404fe5642793c4e60607f0d7743abeed3126ea07deb55",
+        "assets/blue-editorial.png": "b8eb2b2445435a53e37efc07bef4db3f223600eb0345363aa9b3c7f0012ac7d9",
+        "assets/community-showcase.png": "b4c180bb73fed6df1b441282678cac84be6d49ca3862967ccbc6d9f4655e1102",
+        "assets/optical-cinema.png": "8b72be83d6702be6dae1dfee7ab2e30e95c45c828d6abc525c4e678b7e3c7b84",
+        "assets/PROVENANCE.json": "07e2ea48a6264ee26005e2b6d6df4268ec78bc0350de2381ff7c99bdee7b05d2",
+        "assets/sound/documentary-100.wav": "f2723289e4e24dbb65bd36f9951f20be3a28b0f85e4f8536344938cd81a29899",
+        "assets/sound/dong.wav": "736f32a3780ef2b815240c64d514ffa4bf35daf3f59fdc5064ac0a72372f62ad",
+        "assets/sound/impact.wav": "7b1f904df1b6632ea2ab844cd5002da3082bece0e9b697bbe2d6b151e6295d1b",
+        "assets/sound/main-118.wav": "83ba2d153cc839324ede4b5f293d5036109be5ff23f2b75d0e29ed08480456fd",
+        "assets/sound/PROVENANCE.json": "ed68df2d1c8768b2bba6cae6288ae2dd8b22f3e03690a506bce9262c4784b7bc",
+        "assets/sound/red-124.wav": "b3a2e33cd35ee2dea78c096fad37419e7aff6549023f86742f284609cb2f48a6",
+        "assets/sound/tick.wav": "3839d620e9422992220a5b51b5621a468e6c3db4e040fd3c0665c1dea2ae2aaa",
+        "assets/sound/whoosh.wav": "2e3991152b1d9521ce0971bae35d013693a034ae1fde679d2f56bc3371657860",
+        "index.tsx": "9e4ffc3f6a59a52b9e7604866378ba2d39518fda377cad21948e310e5bd5ed84",
+        "layout.json": "56d0ae8c25e58333a1b221352285253a7e4bfd2f3999f23112a3f8fd05dad6f8",
+        "Motion.tsx": "a64d45c2dfb700a5126b8200470f32e5a974d8cea6d1712d844abbe37e3cf10e",
+        "NewDirections.tsx": "adbe13fcff388015314a9a925b8da6e0312f93f8d85b85dfa2610a9170881fe8",
+        "README.md": "efbd6f0cad2643812738f6dd9ae79356a47ff29684073b71bbeb89b266044e31",
+        "RefinedDirections.tsx": "c3a72e4e53dc133be80c0c491f0032c1107e9fee978911a03c5eae8e1f42a52d",
+        "shared.tsx": "9c80f1b7f10f0fa7be8bc692aa9e47df2d5a48fc70cb7473bee974136a528480",
+        "types.ts": "3bfe2088212272ae33d5018810c87314f5da9642f2953e13987d611adbb2b083"
+      },
+      "footerless_validation": {
+        "template_version": "v005-footerless-1",
+        "direction": "blue-editorial",
+        "source_clip": 1,
+        "output_sha256": "c32551de2fc5d6a7e96c14c95f9b178b2954cdf3141ee63c75679fda3f3a7649",
+        "output_bytes": 81109253,
+        "request_file": "../../../.local/codex-runs/template6-remove-footer-20261020/queue-final/single-video/request.json",
+        "request_file_sha256": "0aa7d136ee61c3c2eb681f7885b6d1f1ae64dd93f7c15e3a86cd6c8fd2161aad",
+        "request_sha256": "3a2cea21607b9b5c300a98ecba7cb234f5cfce23c20331c0233d662a0038d707",
+        "project_id": "studio-d1f0f6b1de7016db",
+        "render_id": "local-source-art-v5-3a2cea21607b9b5c300a",
+        "queue_id": "PQ-eb3f469bf755e9b72734",
+        "work_id": "work-b71c7ae95bc72bc5b4736d9f",
+        "version_id": "v-c32551de2fc5d6a7e96c14c9",
+        "render_profile_id": "high-fidelity-20mbps-v1",
+        "actual_video_average_bps": 19362404.984924626,
+        "master_sha256": "cd81da66fd1adf7f2378105254c13a03242a78a2b217106aa2881370671893fa",
+        "technical_checks": 45,
+        "visual_scope": "7 actual-view image files; three footer pairs, one face pair, 15-frame contact, two whole native frames",
+        "other_directions_newly_rendered": false,
+        "quality_approved": false,
+        "publication": false
+      },
+      "post_render_footerless_documentation": {
+        "added_at_utc": "2026-10-20T13:44:25.637505+00:00",
+        "scope": "同一footerless修订渲染完成后补入真实证据；未修改TSX、README、运行文件、媒体、旧证据或冻结request。",
+        "frozen_request_spec_sha256": "0ffc716ad3e775ba2f6638e504c95f8584220ea4a969c2d1da07886d097ce128",
+        "current_spec_was_in_frozen_runtime": false,
+        "evidence_ids": [
+          "footerless_final_technical",
+          "footerless_final_visual",
+          "footerless_native_receipt",
+          "footerless_frozen_request"
+        ],
+        "pending_dimensions_unchanged": [
+          "audio",
+          "platform",
+          "user_review"
+        ]
+      }
+    },
+    "sound_motion": {
+      "contract": "sound-motion-v1 / speech-led-v1",
+      "rules": [
+        "参数和mix profile从studio_investment_audio_v5.py读取，不在runbook重复一份独立数值。",
+        "raw五字段与art六字段严格分离，扩展事件保留真实锚点和量化误差。",
+        "主事件4–5处/片，轻清单只一组，过门2–3处；本期总起音10/11/10/12/10/7。",
+        "04金额三连为同一真实word锚点的编辑pattern，不能拆成三词时钟。",
+        "母带与最终AAC检查同源同一SHA；原轨一次-2.5dB，不声称混音输出与旧AAC逐字节相同。"
+      ],
+      "raw_event_fields": [
+        "id",
+        "asset_id",
+        "anchor",
+        "pattern",
+        "gain_db"
+      ],
+      "art_event_fields": [
+        "id",
+        "role",
+        "timeMs",
+        "startFrame",
+        "endFrame",
+        "strength"
+      ],
+      "asset_provenance_file": "assets/sound/PROVENANCE.json",
+      "asset_provenance_sha256": "ed68df2d1c8768b2bba6cae6288ae2dd8b22f3e03690a506bce9262c4784b7bc",
+      "profile_source": "../../backlot/studio_investment_audio_v5.py",
+      "motion_source": "layout.json motion.profiles + shared.tsx + Motion.tsx",
+      "source_voice_policy": "byte-identical source PCM + speed1; only declared once voice track gain and reported master stage",
+      "distribution_policy": "公共源码分发为原DSP/包装器/REBUILD/PROVENANCE，不放宽*.wav忽略。七canonical音频为本机ignored可再生资源，缺失时先按REBUILD恢复同SHA，再准备本地请求。",
+      "rebuild_files": [
+        "assets/sound/generate_sound_pack.py",
+        "assets/sound/rebuild_sound_pack.py",
+        "assets/sound/REBUILD.md"
+      ]
+    }
+  },
+  "operations": [
+    {
+      "id": "prepare_v5",
+      "input": "本期完整原MP4、cue、每词绑定源SHA的word-clock、variant=art-v5艺术配置、audio-plan、title/brand及已核工作台。",
+      "action": "仓库根python Haike_video/scripts/avatar_investment_source_art_v5.py --evidence-dir --source-video --cues --word-clock --art-config --audio-plan --title --brand --base --prepare。",
+      "output": "request.json、source-art-v5-request.json、来源/素材/词clock副本、import-manifest、normalized audio plan、mixed-master及mix receipt。",
+      "completion": "原片/原词/来源/SHA合法，音效锚点/长度有效，canonical声音存在且同SHA，母带与该请求runtime冻结。当前ready仅已验蓝片；新输入/其他方向的新媒体仍需独立核验，历史通过不直接迁移。",
+      "recovery": "同指纹复用已有请求与母带；来源/runtime/audio-plan变化必须保留旧结果并新冻结，不重新生成TTS/ASR/数字人。",
+      "entrypoint": "../../scripts/avatar_investment_source_art_v5.py"
+    },
+    {
+      "id": "queue_v5",
+      "input": "当前授权的六条本地声画开发测试及完整冻结输入。",
+      "action": "同evidence-dir依次--submit、--run，以--status/--resume读取原统一paused studio_investment_recompose队列；worker全局单lane认领。",
+      "output": "独立local-source-art-v5-{fingerprint20}/avatar-preview.mp4、props、scene plan、source-art-v5-result.json及作品版本。",
+      "completion": "原生完成后仍需同SHA技术/视觉/HTTP证据；本期不设置正式质量批准或发布。",
+      "recovery": "lane忙等待原任务；结果未知先读原请求/文件/作品，不绕过队列或重提收费阶段。",
+      "entrypoint": "../../scripts/avatar_investment_source_art_v5.py"
+    },
+    {
+      "id": "acceptance_v5",
+      "input": "本次新输出SHA、冻结输入/runtime、唯一终验与根实际观察证据；历史六片证据单独保留。",
+      "action": "核对完整解码/时长/流、真实词与混音母带/AAC/音量策略、作品版本及HTTP；实际观察全部短拍和最大变换/章节/真实素材边界，听看独立记录。",
+      "output": "各维度的同SHA证据与限定交付声明，完成后由作者明确更新stage。",
+      "completion": "当前footerless蓝片c32551de2fc5d6a7e96c14c95f9b178b2954cdf3141ee63c75679fda3f3a7649的技术45/45、Root所观7图片限定视觉及作品/HTTP同SHA通过；其余五方向未重出样，audio/platform/user_review仍pending。证据为渲染后文档追加，不改prepare时spec0ffc...SHA或原request。",
+      "recovery": "修改后新冻结并只重验受影响本地部分；v002/v003/v004历史、默认UI和收费人物路由不变。",
+      "entrypoint": "../../scripts/codex_video_quality.py"
+    }
+  ]
+}

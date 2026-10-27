@@ -1,0 +1,86 @@
+{
+  "version": "5.3.1-agent-kit.2",
+  "provider": "RunningHub",
+  "instance_type": "plus",
+  "requested_vram_gb": 48,
+  "fps": 25,
+  "max_segment_seconds": 45,
+  "max_video_seconds": 600,
+  "colormatch": "disabled",
+  "output": "1536长边超分交付，非原生1536",
+  "sample_audio": "",
+  "workflow_id": "2112180419025260546",
+  "runninghub_key_env": null,
+  "ratios": {
+    "4x5": {
+      "image": "",
+      "native": [
+        640,
+        800
+      ],
+      "output": [
+        1228,
+        1536
+      ],
+      "selector": 4,
+      "adaptation": "用户显式提供有权使用的图片，工作流按目标比例适配"
+    },
+    "16x9": {
+      "image": "",
+      "native": [
+        960,
+        544
+      ],
+      "output": [
+        1536,
+        864
+      ],
+      "selector": 1,
+      "adaptation": "用户显式提供有权使用的图片，工作流按目标比例适配"
+    },
+    "1x1": {
+      "image": "",
+      "native": [
+        768,
+        768
+      ],
+      "output": [
+        1536,
+        1536
+      ],
+      "selector": 2,
+      "adaptation": "用户显式提供有权使用的图片，工作流按目标比例适配"
+    },
+    "9x16": {
+      "image": "",
+      "native": [
+        544,
+        960
+      ],
+      "output": [
+        864,
+        1536
+      ],
+      "selector": 3,
+      "adaptation": "用户显式提供有权使用的图片，工作流按目标比例适配"
+    }
+  },
+  "voice": {
+    "provider": "bailian",
+    "name": "用户自行配置的音色",
+    "model": "qwen-audio-3.1-tts-flash",
+    "id": "",
+    "rate": 1.15,
+    "whole_text_no_newlines": true,
+    "account_access": "requires_recipient_account_verification"
+  },
+  "historical_validation": {
+    "4x5_full_seconds": 117.147875,
+    "4x5_full_frames": 2929,
+    "successful_model_compute_seconds": 4589,
+    "other_ratios_seconds_each": 12,
+    "physical_gpu_independently_verified": false,
+    "five_to_ten_minute_actual_run": false,
+    "scope": "Historical source evidence only; not recipient or current release execution."
+  }
+}

@@ -162,3 +162,18 @@ def resolve_ffmpeg_with_option(option: str) -> tuple[str, str] | None:
         if supports_option(pair[0], token):
             return pair
     return None
+
+
+def resolve_ffmpeg_with_graph_file() -> tuple[str, str, str] | None:
+    """Return ``(ffmpeg, ffprobe, graph_file_option)`` for a file-backed graph.
+
+    Current FFmpeg loads option arguments from a file via ``-/filter_complex``;
+    older builds use ``-filter_complex_script``. Probe both spellings instead
+    of tying the runtime to a version number or putting a long graph in argv.
+    Keep the normal candidate order, preferring the current syntax per build.
+    """
+    for binary, probe in candidate_pairs():
+        for option in ("-/filter_complex", "-filter_complex_script"):
+            if supports_option(binary, option):
+                return binary, probe, option
+    return None

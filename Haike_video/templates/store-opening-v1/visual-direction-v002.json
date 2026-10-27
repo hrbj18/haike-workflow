@@ -1,0 +1,297 @@
+{
+  "version": "v002",
+  "kind": "portable-visual-direction-packet",
+  "brief_file": "../../../.local/codex-runs/store-opening-redesign-20261025/creative-brief.json",
+  "brief_interpretation": "以用户指定的湾仔爱设计撞色图文为参考，全面重做五套新塘未来汇海客AI社区服务站开业视频模板，并交付五条重新合成的完整视频。",
+  "direction_thesis": "用有力量的双色和斜体大字给开业现场节奏，让真实人潮占据画面，以版式随叙事变化凸显到店体验和权益。",
+  "reference_ledger": {
+    "source": {
+      "user_url": "https://v.douyin.com/ZvehNtkS86w/",
+      "canonical_url": "https://www.douyin.com/note/7683859300624314852",
+      "author": "湾仔爱设计",
+      "type": "six-image carousel",
+      "local_directory": "C:/Users/Administrator/Videos/参考素材/湾仔爱设计_撞色分享_ZvehNtkS86w",
+      "actual_observation": "已实际查看6张下载原图联系表及IAB页面。双色互为底色和文字色，明暗或高饱和关系清楚；标题极粗、紧凑、向右倾斜；图文通过大色面比例与字组对齐形成秩序。",
+      "transfer": [
+        "双色反转",
+        "粗重倾斜的显示字体层级",
+        "有目的的色面比例",
+        "明确成组对齐",
+        "短句与强节奏"
+      ],
+      "exclude": [
+        "作者的星形组合",
+        "原图文案与色号标签",
+        "原图画面",
+        "账号标识",
+        "原图上下分屏的整套精确版式"
+      ],
+      "measurement_note": "第02张印字#D4AF37但实际背景约#FFD799；已记录打印色号与实际解码主色之区别。"
+    },
+    "actual_viewing": "Author viewed all six original2160x3018 WebP files plus contact sheet. Reference is a still carousel; no observed motion/audio is claimed.",
+    "observed_evidence": [
+      "Two flat colors reverse surface/text roles between fields.",
+      "Short, tightly aligned, right-leaning display words dominate.",
+      "Large color-area proportions and a single reading group create hierarchy."
+    ],
+    "interpretation": "Confidence and immediate visual recognition come from controlled color and type scale rather than many small decorations.",
+    "transferable_mechanisms": [
+      "双色反转",
+      "粗重倾斜的显示字体层级",
+      "有目的的色面比例",
+      "明确成组对齐",
+      "短句与强节奏"
+    ],
+    "excluded_identity_details": [
+      "作者的星形组合",
+      "原图文案与色号标签",
+      "原图画面",
+      "账号标识",
+      "原图上下分屏的整套精确版式"
+    ],
+    "reference_asset_use": "Original carousel pixels are not composited into the Haike videos; source images stay local as analysis evidence."
+  },
+  "invariants": {
+    "canvas": {
+      "width": 1440,
+      "height": 1800,
+      "fps": 30
+    },
+    "approved_audio": "复用此前5条已确认干声与现有混音母带、ASR时钟；不改稿、不变速、不重新配音。",
+    "avatars": "复用此前4段高质量数字人，仅原店长介绍区间；第五条保持实拍。",
+    "source_footage": "每条同时使用10-23和10-24高清原片；不使用低清代理；不更改原片字节。",
+    "video_bitrate": "视频流实测>=20000000 bit/s",
+    "publication": false
+  },
+  "controlled_variables": [
+    {
+      "property": "composition",
+      "rule": "openingLayoutAt chooses real content states; avatar and paired native widescreen evidence override ordinary field layouts.",
+      "source": "index.tsx + layout.json"
+    },
+    {
+      "property": "color",
+      "rule": "Use only each selected two-color relationship for major display planes. Black/white may serve readable body caption/identity roles.",
+      "source": "layout.json states.<style>"
+    },
+    {
+      "property": "type",
+      "rule": "HaikeDisplay real Smiley400 original oblique, HaikeBody Noto variable700/800, HaikeLatin actual italic800. Font loading failure blocks rendering.",
+      "source": "index.tsx PackagedFonts"
+    },
+    {
+      "property": "photography",
+      "rule": "Raw store/crowd/interaction footage is the primary evidence. Recompose the visible shot and protect faces, products and complete sign identity.",
+      "source": "current material review + resolved-state-timeline.json"
+    },
+    {
+      "property": "motion",
+      "rule": "One state-entry word-group reveal: right inset100→0% with48px X settle over12frames; stable hold, then replace at next narrative boundary.",
+      "source": "index.tsx DisplayType"
+    }
+  ],
+  "anti_patterns": [
+    "Fixed colorful poster frame with small video for the entire film.",
+    "Full-width decorative bars without a clear information job.",
+    "Tiny duplicate footage pretending to be proof.",
+    "Long-term left vertical title/right picture inherited from v001.",
+    "Stretching avatar or filling a wrong-ratio rectangle with blank strips.",
+    "Synthetic bold/skew, fallback fonts, overflowing or silently shrunken text.",
+    "Copying reference star shapes, author text, account mark or precise two-panel composition.",
+    "Medical efficacy, invented prices/counts or national-first claims beyond the approved audio."
+  ],
+  "variants": [
+    {
+      "style": 22,
+      "case": "01",
+      "theme": "开业人气",
+      "colors": [
+        "#FFCE00",
+        "#030303"
+      ],
+      "intent": "高冲击开场和大幅人潮，色面开合与强标题接力",
+      "states_source": "layout.json states.22",
+      "state_evaluation": "index.tsx openingLayoutAt(props,frame)",
+      "current_title_inventory": "current task design-props.json"
+    },
+    {
+      "style": 23,
+      "case": "02",
+      "theme": "免费体验",
+      "colors": [
+        "#DBF007",
+        "#E91379"
+      ],
+      "intent": "把免费、不收费、不办卡做成独立权益高潮，结合持续真实店内人群",
+      "states_source": "layout.json states.23",
+      "state_evaluation": "index.tsx openingLayoutAt(props,frame)",
+      "current_title_inventory": "current task design-props.json"
+    },
+    {
+      "style": 24,
+      "case": "03",
+      "theme": "亲子逛店",
+      "colors": [
+        "#D6FF3E",
+        "#F44607"
+      ],
+      "intent": "主次拼版与全幅轮换，让家庭互动和围观动作发生关系",
+      "states_source": "layout.json states.24",
+      "state_evaluation": "index.tsx openingLayoutAt(props,frame)",
+      "current_title_inventory": "current task design-props.json"
+    },
+    {
+      "style": 25,
+      "case": "04",
+      "theme": "不懂AI也能来逛",
+      "colors": [
+        "#1DDFFF",
+        "#000000"
+      ],
+      "intent": "有力度的对话/引用排版，与店长短段和现场画面接力",
+      "states_source": "layout.json states.25",
+      "state_evaluation": "index.tsx openingLayoutAt(props,frame)",
+      "current_title_inventory": "current task design-props.json"
+    },
+    {
+      "style": 26,
+      "case": "05",
+      "theme": "开业优惠",
+      "colors": [
+        "#9B0A11",
+        "#FBD185"
+      ],
+      "intent": "开业活动画报，店招和人潮作主体，折扣先到先得形成文字高潮",
+      "states_source": "layout.json states.26",
+      "state_evaluation": "index.tsx openingLayoutAt(props,frame)",
+      "current_title_inventory": "current task design-props.json"
+    }
+  ],
+  "systems": {
+    "palette": {
+      "authority": "layout.json",
+      "tokens": "tokens.json",
+      "normal_text_contrast_min": 4.5,
+      "large_display_contrast_min": 3,
+      "role_warning": "23/24 mutually colored display text is large only. Body captions/locations use separately checked high-contrast pairs."
+    },
+    "typography": {
+      "display": {
+        "family": "HaikeDisplay",
+        "source": "SmileySans-Oblique.ttf",
+        "weight": 400,
+        "style": "original oblique outlines; no added skew",
+        "synthesis": "none",
+        "line_breaks": "explicit semantic groups"
+      },
+      "body": {
+        "family": "HaikeBody",
+        "source": "actual NotoSansSC variable100–900",
+        "weights": [
+          700,
+          800
+        ],
+        "caption_pixels": 64,
+        "caption_phone_equivalent": "16.67px at375px video width"
+      },
+      "latin": {
+        "family": "HaikeLatin",
+        "source": "actual Exo2 Italic variable",
+        "weight": 800,
+        "role": "HAIKE AI brand group"
+      },
+      "loading": "Every FontFace.load and document.fonts.load must resolve before continueRender; errors cancelRender."
+    },
+    "layout": {
+      "authority": "layout.json + source selector",
+      "units": "canvas pixels1440×1800, origin top-left",
+      "priority": "avatar > paired horizontal source evidence > content stage",
+      "raw_source_time": "props shot from/frames are global30fps; offset is source seconds; all video layers muted; source speed1x",
+      "occlusion": "Panels, brand, caption max region, speaker identity and location are explicit in current resolved-state-timeline. A main box is not automatically fully visible.",
+      "avatar": "Full original4:5; compact top identity header beside brand protects hair clearance.",
+      "wide_evidence": "Two1440×810 source-aspect windows; no vertical hard crop of D24_007/008.",
+      "portrait_duo": "Two meaningfully different large portrait sources; no content-free PIP.",
+      "negative_space": "Every large plane carries current hook/benefit/identity/CTA. Proof sections generally keep live footage dominant."
+    },
+    "texture_material": {
+      "graphic_surface": "flat clean color, no invented pattern or grain",
+      "photographic_material": "retain original footage detail; no precompression, no AI illustration replacement"
+    },
+    "light_camera": {
+      "source": "original camera footage and approved HQ avatar; no new relighting or image generation",
+      "cropping": "Review real source PTS under the current window and visible overlay. No stretching or false recovery from low-res sources."
+    },
+    "motion": {
+      "reveal_frames": 12,
+      "reveal": "word-group wipe and48px translate",
+      "hold": "stable after settle",
+      "exit": "hard replacement on next intended state/chapter; footage clock remains continuous",
+      "prohibited": "idle shake, flashing, per-letter chaos or motion that covers reading"
+    },
+    "color_management": {
+      "working": "browser CSS sRGB tokens / decoded reference pixels",
+      "source_hex": "printed reference labels and measured backgrounds tracked separately in palette-reference.json",
+      "delivery": "SDR native composition/encode pipeline; encoded color/device review is separate",
+      "look_transform": "no creative LUT is applied"
+    },
+    "continuity": {
+      "location": "exact new store name/location in approved audio and location strip",
+      "person": "same approved portrait/HQ outputs and original timed store-manager lines",
+      "footage": "both10-23 and10-24 raw sources, truthful store/activity context",
+      "voice": "approved five voice recordings and master clock unchanged"
+    }
+  },
+  "accessibility_and_rights": {
+    "caption": "Complete approved ASR cue meaning, stable readable plate; actual worst/native encoded frame review required.",
+    "viewing": "375px proofs simulate video width; this is not actual phone/platform playback.",
+    "motion": "No deliberate flash/strobe or repeated glyph oscillation.",
+    "fonts": "Original OFL font files/provenance/licenses retained locally and in frozen origin inputs.",
+    "source_permission": "User authorized this local production and supplied the reference for analysis; no public rights clearance claim is made.",
+    "reference_exclusions": "Do not embed the reference artwork, signature stars or creator mark in final films."
+  },
+  "proof_and_handoff": {
+    "current_complete_output_evidence": {
+      "path": "../../../.local/codex-runs/store-opening-redesign-20261025/final-spec-evidence.json",
+      "technical": "passed for current five exact native full outputs; measured video streams>=20Mbps, dimensions/frame clocks/AAC/full decode/source SHA",
+      "actual_encoded_visual": "703 discrete decoded frames /46 contact pages actually viewed by assigned authors; registered current five sampled-review handoffs",
+      "continuous_listening": "pending",
+      "platform_device": "pending",
+      "user_final_acceptance": "pending",
+      "publication": false
+    },
+    "proof_plan": "../../../.local/codex-runs/store-opening-redesign-20261025/proof-frames.json",
+    "resolved_geometry": "../../../.local/codex-runs/store-opening-redesign-20261025/resolved-state-timeline.json",
+    "runtime": "HaikeStoreOpening through existing store-opening-v1 native adapter/ProductionQueue",
+    "acceptance": [
+      "native font loading and correct real master-clock frames",
+      "current state/overlay source crop actually reviewed",
+      "all thirty current native/375px proofs viewed, repaired affected frames re-bound by SHA",
+      "new native freeze bound to actual reviewed draft props and source bytes; limited ready declared before full production",
+      "final full encode>=20Mbps video stream, exact frames/duration/format, audio peak and full decode",
+      "final output actual samples; continuous/device/user remain separate"
+    ],
+    "repair_log": [
+      {
+        "issue": "calculateMetadata used wrong key durationFrames",
+        "repair": "corrected to durationInFrames=props.durationFrames; failed partial PNG batch retained separately",
+        "status": "corrected, later30native PNG batch generated"
+      },
+      {
+        "issue": "310px identity header touched hair",
+        "repair": "220px compact identity header beside brand,170px main words",
+        "status": "current final30 native/375px actual author and root review passed; hair margin retained"
+      },
+      {
+        "issue": "station name was54px",
+        "repair": "64px equal readable identity/location hierarchy",
+        "status": "current final30 native/375px actual author and root review passed; station64px legible"
+      },
+      {
+        "issue": "candidate faces low under benefit/CTA panels",
+        "repair": "material owner adjusts objectPosition using actual source PTS and current occlusion",
+        "status": "formal five current source-crop reports passed and bound to new native frozen requests; current native representative frames actually viewed"
+      }
+    ],
+    "limits": "Compilation/swatches/source SHA alone do not prove visual quality, continuous listening, platform playback or user acceptance."
+  }
+}

@@ -1,55 +1,39 @@
 # 当前项目状态
 
-更新时间：2026-10-10
+更新：2026-10-25；仅haike-workflow-2，各项独立验收。
 
-## 主线状态
+## 产品与服务
 
-- **百炼**：克隆入口并入音色管理，上传/恢复83项过；V2升级已验，真实OSS/创建未验。
-- Qwen改为可选安装；RTX3050实测28秒，88项过；v3增补。
-- **二剪**：按素材左/右避让＋字幕联动、稳定/锁定/不确定隐藏；D待审，零新云费；V3/V2保留。
-- **素材解说**：`/material-commentary`；理解→选位，87项过；`docs/MATERIAL_COMMENTARY_V1.md`。
-- **素材库V1.1**：`/material-library/manage`，CAS/修复/归档/冻结引用/台账；粤仔2原片2衍生、7段9镜头；主台更新。见`docs/MATERIAL_LIBRARY_MANAGEMENT_V1_1.md`。旧九秒保留；950/DevDay三可审、一fact_pending，ds4.1/新采未测。
+- 工作台14756保留图文/数字人口播/作品/日历/API设置，更多工具为项目工作台/素材库。素材库搜索/导入/标签/合集/备注/归档保留CAS。
+- 新版默认Agent分析，百炼配音/ASR、RunningHub数字人、Pexels可选备用；设置统一海客表述。旧网关留兼容，供应商配置在私有后台14757。音色弹窗含克隆/选音色、默认/倍速/试听/关联图，六公共音色共享，未装本地Qwen。
+- 本机历史gateway任务保留原冻结路由，不随新版默认切换；云端音色同步待发布。未知结果只恢复原意图，禁止换源重发。每日额度是上限，与账户余额独立。
+- 中转CosyVoice实测扣0.00216元/2.48秒；阿里六公共音色及mm14/yy3直连通过，采购费估算。私有音色仅本机账号映射，云克隆/同步待发布；未知创建不重发。证据.local/gateway-tts-new-key-20261015。
+- ASR实测/回归通过：新任务默认本机内部百炼，仅明确未受理的Key无效/余额不足退已验Whisper，其余恢复原任务。成功固定、历史冻结不变；实费未知，Token估0.0004225元，预算100000micros。
 
-- **统一队列**：SQLite单通道，优先级/FIFO/幂等/恢复；父串行，双主持落账后并行；`review_ready`待观看。
-- **有数字人V1.8**：整数PCM+25FPS切割，Whisper仅诊断；`exact_frame_clock`阻断漂移。供应商仅记录当次`phases`，新任务重付费；换镜预览排`full_preview`。
-- **无数字人V1.6**：`source_audio_only`支持逐条定时字幕；新项目−9、旧项目−14 LUFS。
-- **多标题/新闻层V1.2**：`story_headline_overrides`与普通层共用revision/CAS/FFmpeg，保存仅重做本段。
-- **二次精剪V7/推荐v2**：边界只落VAD间隙，字幕随语音单元；句间默认0.30秒，`gap_policy=any`；导出无字幕片/SRT/`cut-list-v1`/FCP7/OTIO。权重40/25/20/15，默认优先时间长。
-- **成片二剪V1**：`/published-clips`，69转写、95候选/2确认，真值0/10，歌舞未验；选材/排序/切口/原声/CAS/冻结/队列已接，两源三段10.8秒待审；见`CODE_MAP.md`。
-- **音频默认**：人声+8/BGM−6dB/成片−9LUFS；`highpass→EQ→volume(+10)→alimiter`；`I=min(目标,−2.0−波峰因数)`，见`backlot/*_preferences.py`。
-- **竖屏文字层**：底边<0.80（默认64号/y0.75）；单层单色，不自动换行、超框裁字，改文案须重测。断行不切ASCII字母数字串；行首整串上限2×预算。
-- **研究包**：CopySkill只读；`current.json→pack_path`；不扫`.staging`/不入队列；`nodes:[]`，见有效决策。
-- **素材复刻契约**：`schemas/remake-spec-v1.json`＋离线`backlot/remake_project.py`；选材权归项目（`MATERIAL_SELECTION_POLICY_V1_ZH-CN.md`）。
-- **四平台分发**：以创作者后台确认发布。抖音 3:4 封面 `cover_path`（`d2a55c7`；`backlot/publish_adapter.py`）。★视频号封面仅能改一次且不可撤回，先 `--dry-run`。
-- **窗口复刻**：同名手册；字幕开关待修。
-- 口播图文29秒待听审。
+## N1 与 Codex 最小批次
 
-## 生产合同
+- 10/19三片、原13–18六项已发布核验，跟进已停；用户取消间隔已持久保存。收尾见.local/night-tech-20261019/SESSION.md，不重发。
+- 深蓝视窗N1：templates/avatar-deepblue-n1/，layout.json真值。主持人/素材/截图/数据板四模式、表单/持久草稿接通；旧字段隔离、切回保留、390窄屏通过。
+- 公共样片15秒无声、1080×1920/30fps，四帧/来源/SHA白名单分发，私人人物不分发。证据.local/n1-showcase-20261015。
+- 旧机器人N1三平台task1/2/3已提交；抖音完整验收，快手公开播放及视频号后台核对通过，余封面/公开播放待验；旧费用未知预留保留，不重发。证据.local/bailian-asr-20261016。
+- 入口/avatar、14756核工作区；口播预设明确指令优先、旧稿冻结，非出厂预算。
+- Agent总控调用既有队列/发布器；根START_HERE.md含接入条件、单条音频/样音、夜间三条/唤醒/汇报/原编号恢复。Codex已实跑，其它Agent未验；规范docs/CODEX_VIDEO_BATCH.md。
+- 联网素材贯通预设/口播/批次/N1；来源可明确选Pexels或抖音→Pexels，执行前验登录，无素材暂停。三平台灯分素材/发布；绿灯=8小时内检查正常，历史持久化、执行前验真；素材结果绑原版本。
+- tech-three-20261016晨报：三片/封面约16秒；任务4–12完成，抖音/快手实播封面已验，视频号列表已验/实播待补。敞口6.46768/15元，实费未知；17项恢复验证及原任务集证据见.local/three-video-20261016/REPORT.md。夜查暂停、临时发布时段双null已读回，其它配置不变；不为补证重发。
 
-- InfiniteTalk `config/runninghub/workflow-2094449979141218305.api.json`；新任务Plus48GB，每角色一次；双角色冻结5元，旧任务沿冻结配置。
-- 未知 RunningHub 响应进 `ambiguous` 并停止，禁止重复提交。
-- 响度验收 `|I−target| ≤ 1.5` 且 `TP ≤ −1.0`；正式渲染不达标直接 raise。
+## 本轮回归与交付
 
-## 阶段
+- 视觉库42版本/40样片；18–21共享Runbook。22–26v002参考撞色重做，五片≥20Mbps技术/703帧视觉抽查通过，连续听审/真机待验未发布。模板与回执见templates/TEMPLATE-LIBRARY.md；v001保留，异机另验。
+- 既有制作/采集/账号验收与跳过见根docs/RELEASE_READINESS_20261016.md；测试隔离真实配置。
+- 联网257/72及N1通过；本轮107/116/39项、三平台六项实查及账号服务重启保留历史通过，无付费/发布。证据.local/account-history-eight-hour-20261017。
+- 默认Agent分析，百炼配音/ASR，RunningHub数字人，Pexels备用；免腾讯/GPT Key。音轨/夜间批次/汇报已隔离联测，旧main/标签保留。新机等边界见DEPLOYMENT.md。
 
-`dev` 持续开发中；`main`/`v0.1.1` 仍为 `50352aaa`；私有数据不进 Git。
+## 既有作品与待办边界
 
-- **作品管理V1**：14756可用、旧台未重启；YC V4/历史9作入库；YC资料/交接/三平台账号已备，来源/发表授权待确认；未真发/删。`docs/HISTORY_WORKS_V1.md`。
+- Cookie已集成：素材库扫码预览/选账号/分scope检查/下载，三链共用平台账号隔离快照。原生抖音禁旧发布Cookie兜底，XHS冷启动用新快照；周期/关闭前保存、live Cookie优先、清临时Cookie，无人工布尔放行。下载UUID持久恢复，未知不重提。
+- 快手/视频号两轮冷启无需扫码，14756下载/创作检查通过。KS核本人ID、CP另查；视频号须等资料响应。即时证明5分钟、历史展示8小时持久化。启动器核副本指纹；证据.local/cookie-integration-20261015当次无发布/付费，隔夜/系统重启待验。
+- MediaCrawler8f583999及90依赖已装，学习/商用门禁保留；抖音账号3下载和重启复用、机器人三链全解码入库通过，样本已归档。时区/中文CA/详情403/fakeDNS修复，TLS/公网IP/人工验证闸门保留。证据.local/mediacrawler-live-20261016；方案根docs/COOKIE_SESSION_PLAN.md。下载凭据不代表发布验证。
 
-- `gpt-claude-0923` v7：抖音87、快手88、视频号90已发，89取消。
-- 9/24 `sub3-0924-nvidia-glass-substrate`：9秒/3景，待人工/版权复核、期限核实。
-- **数字人口播（9/28）**：`meta-muse-amazon-yaya-20260928` v008 正式片 107.8 秒；抖音 #105、快手 #106 已入队，作品核验待完成。
-- **檬檬＋原片（9/29）**：`musk-age-of-beyond-mengmeng-20260929` 195 秒，11 秒开场；三平台已发布并按新版标题详情更新。视频号新作已核验、旧作已删；证据见项目 `artifacts/publishing/`。
-
-## 最近验证
-
-- 素材管理112项过；旧ASR文案断言1失败。旧工作台4失败（OpenCV5接口/静态重叠）未改；百炼32项过。
-- 二次精剪 v7 三版 >0.30 秒空隙：25/18/24 处 → 0/1/0 处。
-- ★ `final_review.audio_spotcheck` 归一化前取值会稳定误报，以 `loudness.integrated_lufs`/`true_peak_dbtp` 为准。
-
-## 下一步
-
-1. 人工观看本轮各版本预览，含 `gap_policy=any` 切口听辨，只到待审，不发布。
-2. 产品决策：排序「优先时间长」与首次切片「单互动 ≤180 秒」冲突时跳过或放宽上限。
-3. `dev` 独立副本/Linux预发布验收后合入 `main`。
-4. 索引真值、长直播、歌舞未验。
+- 旧9秒“deepseek融资1000亿”图文技术通过，事实/音乐待核，标测试且未发布；证据.local/deepseek-9s-20261015。
+- 旧雅雅5秒数字人原中转任务有产物但submission_unknown，0.72元预留未结算；本地合成完成待审未发布，证据.local/avatar-yy3-20261015。不作为本次付费或发布回执。
+- 私有快照留素材路径，公开输出脱敏；旧后台非全部重验。平台提交不替代完整验收、事实/版权审核。迁移见根docs/PRODUCT_YBW_MIGRATION.md。

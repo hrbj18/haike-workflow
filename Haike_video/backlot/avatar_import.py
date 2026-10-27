@@ -29,7 +29,7 @@ from typing import Any
 from uuid import uuid4
 
 from schemas.artifacts import validate_artifact
-from lib.ffmpeg_locator import resolve_ffmpeg_with_option
+from lib.ffmpeg_locator import resolve_ffmpeg_with_graph_file
 from tools.video import video_compose as video_compose_runtime
 
 
@@ -797,7 +797,20 @@ def text_metrics(expected: str, actual: str) -> tuple[float, float]:
     return matcher.ratio(), matched / len(expected_norm)
 
 
+def _bundled_whisper_model() -> str | None:
+    """Resolve the portable model beside the repositories, after any move."""
+    root = Path(__file__).resolve().parents[2] / "runtime/models/whisper-small"
+    try:
+        snapshots = [path for path in root.glob("*") if path.is_dir() and (path / "model.bin").is_file()]
+    except OSError:
+        snapshots = []
+    return str(max(snapshots, key=lambda path: path.stat().st_mtime)) if snapshots else None
+
+
 def _cached_whisper_model() -> str | None:
+    bundled = _bundled_whisper_model()
+    if bundled:
+        return bundled
     root = Path.home() / ".cache" / "huggingface" / "hub" / "models--Systran--faster-whisper-small" / "snapshots"
     try:
         snapshots = [path for path in root.glob("*") if path.is_dir()]
@@ -810,6 +823,9 @@ def list_local_whisper_models() -> list[dict]:
     """List local snapshots only; re-analysis never downloads a model."""
     root = Path.home() / ".cache" / "huggingface" / "hub"
     options: list[dict] = []
+    bundled = _bundled_whisper_model()
+    if bundled:
+        options.append({"id": bundled, "label": "faster-whisper-small", "path": bundled})
     try:
         repositories = sorted(path for path in root.glob("models--Systran--faster-whisper-*") if path.is_dir())
     except OSError:
@@ -2591,31 +2607,22 @@ def _complete_avatar_assembly(project_dir: Path, package: dict, candidate_output
     return _save_package(project_dir, package)
 
 
-def _graph_script_ffmpeg() -> str:
-    """An FFmpeg that can read the filter graph from a file.
-
-    The avatar graph goes through ``-filter_complex_script`` so it stays under
-    the Windows command-line limit.  Not every build implements that option —
-    the master builds currently first on this machine's ``PATH`` do not — so the
-    binary is chosen by capability rather than by whatever ``PATH`` resolves
-    first.  Failing here with a readable reason is far better than failing in
-    assembly, after the paid avatar generation has already run.
-    """
-    pair = resolve_ffmpeg_with_option("filter_complex_script")
-    if not pair:
+def _graph_script_ffmpeg() -> tuple[str, str]:
+    """An FFmpeg and supported file-backed graph option, never a long argv."""
+    runtime = resolve_ffmpeg_with_graph_file()
+    if not runtime:
         raise AvatarImportError(
-            "本机没有支持 -filter_complex_script 的 FFmpeg，无法把长滤镜图写入文件合成数字人母版；"
-            "请改用项目自带的 static-ffmpeg"
-            "（.venv/Lib/site-packages/static_ffmpeg/bin/win32/）后重试"
+            "本机 FFmpeg 不支持从文件读取滤镜图，无法合成数字人母版；"
+            "请使用支持 -/filter_complex 或 -filter_complex_script 的 FFmpeg 后重试"
         )
-    return pair[0]
+    return runtime[0], runtime[2]
 
 
 def _assemble_avatar_package_parallel(project_dir: Path, payload: dict | None = None) -> dict:
     package = read_avatar_package(project_dir)
     if not package or package["assembly"]["status"] != "running":
         raise AvatarImportError("当前没有待执行的数字人合成任务")
-    ffmpeg = _graph_script_ffmpeg()
+    ffmpeg, graph_file_option = _graph_script_ffmpeg()
     inputs, graph, timeline = _build_filter_graph(project_dir, package)
     output_dir = project_dir / OUTPUT_DIRECTORY
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -2628,7 +2635,7 @@ def _assemble_avatar_package_parallel(project_dir: Path, payload: dict | None = 
         for source in inputs:
             command.extend(["-i", str(source)])
         command.extend([
-            "-filter_complex_script", str(graph_path),
+            graph_file_option, str(graph_path),
             "-map", "[vout]", "-map", "[aout]",
             "-c:v", "libx264", "-preset", "medium", "-crf", "18", "-profile:v", "high",
             "-pix_fmt", "yuv420p", "-r", str(package["settings"]["fps"]), "-fps_mode", "cfr",

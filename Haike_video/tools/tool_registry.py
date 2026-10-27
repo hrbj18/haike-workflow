@@ -89,6 +89,8 @@ class ToolRegistry:
         from pathlib import Path
         import os
         import re
+        if os.environ.get("PYTHON_DOTENV_DISABLED", "").casefold() in {"1", "true", "t", "yes", "y"}:
+            return
         project_root = Path(__file__).resolve().parent.parent
         for env_path in (
             project_root / ".env.secrets.local",

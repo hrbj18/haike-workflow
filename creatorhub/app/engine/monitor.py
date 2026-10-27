@@ -14,7 +14,7 @@ from pathlib import Path
 from typing import Optional
 
 from sqlmodel import select
-from sqlalchemy import or_
+from sqlalchemy import or_, update
 
 from ..browser import (BrowserManager, fetch_videos, fetch_comments,
                        fetch_creator_comments, fetch_danmaku, fetch_creator_danmaku,
@@ -408,13 +408,16 @@ class MonitorEngine:
     @asynccontextmanager
     async def _operation_guard(self, account_id, kind: OperationKind,
                                fallback_key: str = "", operation_target=None):
-        """Serialize by global limit, network exit, then account profile."""
+        """Reserve the account before consuming shared operation capacity."""
         account = operation_target or self._load_account(account_id)
         key = f"acc:{account_id}" if account_id else (fallback_key or "anon")
         lock = self.browser.lock_for(key)
-        async with self._active_sem:
-            async with self.risk.network_guard(account):
-                async with lock:
+        # A manual account window can hold this lock for its whole lifetime.
+        # Waiting for it must not monopolize the network exit or global slots
+        # needed by operations on other accounts.
+        async with lock:
+            async with self._active_sem:
+                async with self.risk.network_guard(account):
                     if account_id and self._load_account(account_id) is None:
                         raise AccountUnavailableError("绑定账号已删除，操作已停止")
                     yield account
@@ -1303,7 +1306,9 @@ class MonitorEngine:
                       and account.status != "invalid"
                       and self._keepalive_due(account.last_active_at, account_id=account.id)]
         for probe in probes:
-            await self._probe_account_health(probe)
+            result = await self._probe_account_health(probe)
+            from ..session_observability import record_background_health
+            record_background_health(probe, result, trigger="keepalive")
 
     async def _check_invalid_accounts(self):
         """给被判「登录失效」的账号一条低频自愈复检通道。
@@ -1347,6 +1352,8 @@ class MonitorEngine:
                 # 被风控冷却挡回(典型是 auth_probe_gap:上一次 AUTH 事件后 15
                 # 分钟),这不算探测过,交给下面的 probed==0 分支重排下次时间。
                 continue
+            from ..session_observability import record_background_health
+            record_background_health(probe, result, trigger="auth_recheck")
             probed += 1
             if result.get("ok"):
                 woken = self._wake_deferred_tasks(probe[0])
@@ -3394,7 +3401,7 @@ class MonitorEngine:
                                 signal=decision.signal)
                 s.add(t); s.commit()
                 return {"ok": False, "error": pause_error}
-            if not self._in_active_window(t.account_id):
+            if not self._in_active_window(t.account_id, OperationKind.PUBLISH):
                 self._defer_row(t, "当前处于非活跃时段，发布任务已保留在队列")
                 s.add(t); s.commit()
                 return {"ok": False, "error": t.error}
@@ -3443,6 +3450,9 @@ class MonitorEngine:
                     t.error = f"发布前校验失败: {exc}"
                     s.add(t); s.commit()
                     return {"ok": False, "error": t.error}
+            claimed = s.execute(update(PublishTask).where(PublishTask.id == task_id, PublishTask.status.in_(["pending", "failed"])).values(status="publishing", error=""))
+            if claimed.rowcount != 1:
+                s.rollback(); return {"ok": False, "error": "任务已取消或被其他执行器接管"}
             t.status = "publishing"; t.error = ""
             self._clear_row_block(t)
             s.add(t); s.commit()
@@ -3614,15 +3624,16 @@ class MonitorEngine:
         return {"ok": ok, "url": url, "error": err}
 
     # ── 活跃时段(夜间静默)──
-    def _in_active_window(self, account_id=None) -> bool:
+    def _in_active_window(self, account_id=None, kind: OperationKind | None = None) -> bool:
         """Check active hours in the bound account's persisted timezone."""
         if not self.cfg.engine.quiet_hours_enabled:
             return True
         account = self._load_account(account_id)
         if account is not None:
-            return self.risk._in_active_window(account, datetime.utcnow())
-        start = self.cfg.engine.active_hours_start
-        end = self.cfg.engine.active_hours_end
+            if kind is None:
+                return self.risk._in_active_window(account, datetime.utcnow())
+            return self.risk._in_active_window(account, datetime.utcnow(), kind)
+        start, end = self.risk._active_hours(kind)
         if end <= start:
             return True
         h = (datetime.utcnow() + timedelta(hours=8)).hour   # 东八区(账号默认时区)

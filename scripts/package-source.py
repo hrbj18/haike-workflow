@@ -2,11 +2,12 @@
 import hashlib
 from pathlib import Path
 import subprocess
+import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 
 def main():
-    subprocess.run(['python', str(ROOT / 'scripts/check.py')], cwd=ROOT, check=True, timeout=120)
+    subprocess.run([sys.executable, str(ROOT / 'scripts/check.py')], cwd=ROOT, check=True, timeout=120)
     status = subprocess.check_output(['git', 'status', '--porcelain', '--untracked-files=all'], cwd=ROOT, timeout=30)
     if status.strip():
         raise SystemExit('Commit or resolve source changes before packaging. Nothing was packaged.')

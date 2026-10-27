@@ -691,6 +691,7 @@ class TestCapabilityMetadata:
         assert "tts" in catalog
         providers = {item["provider"] for item in catalog["tts"] if item["provider"] != "selector"}
         assert providers == {
+            "bailian",
             "dashscope",
             "doubao",
             "elevenlabs",
@@ -700,6 +701,30 @@ class TestCapabilityMetadata:
             "piper",
             "openmontage_local_tts",
             "tencent",
+        }
+        bailian_tools = [item for item in catalog["tts"] if item["provider"] == "bailian"]
+        assert len(bailian_tools) == 1
+        bailian = bailian_tools[0]
+        assert bailian["name"] == "bailian_tts"
+        assert bailian["capability"] == "tts"
+        assert bailian["tier"] == ToolTier.VOICE.value
+        assert bailian["module_path"] == "tools.audio.bailian_tts"
+        assert Path(bailian["usage_location"]) == PROJECT_ROOT / "tools/audio/bailian_tts.py"
+        assert bailian["agent_skills"] == ["dashscope"]
+        assert bailian["related_skills"] == ["dashscope"]
+        assert bailian["input_schema"] == {
+            "type": "object",
+            "required": ["text", "voice_id"],
+            "properties": {
+                "text": {"type": "string"},
+                "voice_id": {"type": "string"},
+                "model": {
+                    "type": "string",
+                    "enum": ["qwen-audio-3.1-tts-flash", "cosyvoice-v3.5-flash"],
+                },
+                "rate": {"type": "number", "minimum": 0.5, "maximum": 2},
+                "output_path": {"type": "string"},
+            },
         }
 
 

@@ -1,7 +1,7 @@
 ﻿[CmdletBinding()]
 param(
     [ValidateRange(1024, 65535)]
-    [int]$Port = 14754,
+    [int]$Port = 14756,
     [switch]$NoBrowser,
     [switch]$Restart,
     [switch]$SkipLocalTts
@@ -9,6 +9,7 @@ param(
 
 $ErrorActionPreference = "Stop"
 $projectRoot = Split-Path -Parent $PSScriptRoot
+$expectedWorkspace = [System.IO.Path]::GetFullPath((Split-Path -Parent $projectRoot)).TrimEnd('\', '/')
 $python = Join-Path $projectRoot ".venv\Scripts\python.exe"
 $workbenchUrl = "http://127.0.0.1:$Port/"
 
@@ -75,11 +76,14 @@ function Stop-VerifiedBacklotServer {
     if (-not $ownerIds.Count) { return }
 
     try {
-        $health = Invoke-RestMethod -Uri "http://127.0.0.1:$TargetPort/api/health" -Method Get -TimeoutSec 3
+        $health = Read-BacklotHealth -BaseUrl "http://127.0.0.1:$TargetPort"
     } catch {
         throw "端口 $TargetPort 有监听程序，但无法确认它是 OpenMontage；为保护该程序，未执行重启。"
     }
-    if ($health.ok -ne $true -or $health.app -ne 'backlot') {
+    if ($health.ok -ne $true -or $health.app -ne 'backlot' -or
+            $health.edition -ne 'haike-workflow-2' -or
+            [string]::IsNullOrWhiteSpace([string]$health.workspace) -or
+            [System.IO.Path]::GetFullPath([string]$health.workspace).TrimEnd('\', '/') -ine $expectedWorkspace) {
         throw "端口 $TargetPort 的健康响应不属于 OpenMontage；为保护该程序，未执行重启。"
     }
 
@@ -105,7 +109,7 @@ function Stop-VerifiedBacklotServer {
     Start-Sleep -Milliseconds 700
 }
 
-function Test-BacklotHealth {
+function Read-BacklotHealth {
     param([string]$BaseUrl)
 
     try {
@@ -116,11 +120,20 @@ function Test-BacklotHealth {
         try {
             $reader = New-Object System.IO.StreamReader($response.GetResponseStream())
             try { $health = $reader.ReadToEnd() | ConvertFrom-Json } finally { $reader.Dispose() }
-            return $health.ok -eq $true -and $health.app -eq 'backlot'
+            return $health
         } finally { $response.Dispose() }
     } catch {
-        return $false
+        return $null
     }
+}
+
+function Test-BacklotHealth {
+    param([string]$BaseUrl)
+    $health = Read-BacklotHealth -BaseUrl $BaseUrl
+    return $null -ne $health -and $health.ok -eq $true -and $health.app -eq 'backlot' -and
+        $health.edition -eq 'haike-workflow-2' -and
+        -not [string]::IsNullOrWhiteSpace([string]$health.workspace) -and
+        [System.IO.Path]::GetFullPath([string]$health.workspace).TrimEnd('\', '/') -ieq $expectedWorkspace
 }
 
 function Open-WorkbenchBrowser {
@@ -152,7 +165,7 @@ try {
         if ($Restart) { throw "端口 $Port 无法绑定，未停止任何程序；请换一个端口。" }
         $originalPort = $Port
         $chosen = $false
-        foreach ($candidatePort in 14754..14854) {
+        foreach ($candidatePort in 14756..14854) {
             $candidateUrl = "http://127.0.0.1:$candidatePort/"
             if ((Test-BacklotHealth -BaseUrl $candidateUrl) -or (Test-LocalPortBindable -TargetPort $candidatePort)) {
                 $Port = $candidatePort
@@ -253,7 +266,7 @@ try {
 Write-Host "`n工作台已就绪：$workbenchUrl" -ForegroundColor Green
 Write-Host "工作台已在后台独立运行，关闭本窗口不会影响它。" -ForegroundColor DarkGray
 if (-not $NoBrowser) {
-    if (-not (Open-WorkbenchBrowser -Url $workbenchUrl)) {
+    if (-not (Open-WorkbenchBrowser -Url ($workbenchUrl.TrimEnd('/') + '/avatar'))) {
         Write-Host '工作台已经启动，但系统未能自动打开浏览器。请复制上面的地址到浏览器访问。' -ForegroundColor Yellow
     }
 }

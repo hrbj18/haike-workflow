@@ -17,8 +17,14 @@ from douyin_intelligence import native_runtime
 
 
 @pytest.fixture(autouse=True)
-def _fresh_preload_state():
+def _fresh_preload_state(tmp_path, monkeypatch):
     """Start and end every test with an empty preload cache."""
+    monkeypatch.setattr(sys, "prefix", str(tmp_path / "isolated-venv"))
+
+    def refuse_real_dll(_path):
+        pytest.fail("Native runtime tests must explicitly stub every DLL load")
+
+    monkeypatch.setattr(native_runtime, "_load_dll", refuse_real_dll)
     native_runtime._reset_state()
     yield
     native_runtime._reset_state()
@@ -116,8 +122,8 @@ def test_env_dir_pointing_to_empty_dir_degrades_without_raising(tmp_path: Path, 
     empty = tmp_path / "empty"
     empty.mkdir()
     monkeypatch.setenv("DOUYIN_MSVC_RUNTIME_DIR", str(empty))
-    # Neutralise the real onnxruntime/ctranslate2 dirs so this test never loads
-    # a genuine system DLL.
+    # The autouse fixture isolates the venv too; neutralise wheel discovery so
+    # no installed runtime can make this missing-runtime case vacuous.
     monkeypatch.setattr(native_runtime, "_module_dir", lambda name: None)
 
     with warnings.catch_warnings(record=True) as caught:
@@ -167,14 +173,67 @@ def test_runtime_dir_candidates_priority(tmp_path: Path, monkeypatch) -> None:
 
     candidates = native_runtime.runtime_dir_candidates()
 
-    assert candidates == [override, onnx / "capi", ctranslate]
+    assert candidates == [override, Path(sys.prefix) / "msvc", onnx / "capi", ctranslate]
 
 
 def test_runtime_dir_candidates_without_env(monkeypatch) -> None:
     monkeypatch.delenv("DOUYIN_MSVC_RUNTIME_DIR", raising=False)
     monkeypatch.setattr(native_runtime, "_module_dir", lambda name: None)
 
-    assert native_runtime.runtime_dir_candidates() == []
+    assert native_runtime.runtime_dir_candidates() == [Path(sys.prefix) / "msvc"]
+
+
+@pytest.mark.parametrize(("complete", "expected"), [
+    (("override", "venv", "onnx", "ctranslate"), "override"),
+    (("venv", "onnx", "ctranslate"), "venv"),
+    (("onnx", "ctranslate"), "onnx"),
+    (("ctranslate",), "ctranslate"),
+    ((), None),
+])
+def test_candidate_fallback_requires_a_complete_set(tmp_path, monkeypatch, complete, expected):
+    monkeypatch.setattr(sys, "platform", "win32")
+    directories = {
+        "override": tmp_path / "override",
+        "venv": Path(sys.prefix) / "msvc",
+        "onnx": tmp_path / "site-packages/onnxruntime/capi",
+        "ctranslate": tmp_path / "site-packages/ctranslate2",
+    }
+    for name, directory in directories.items():
+        directory.mkdir(parents=True)
+        members = native_runtime._RUNTIME_DLLS if name in complete else ("msvcp140.dll",)
+        for member in members:
+            (directory / member).write_bytes(b"fake-dll")
+    monkeypatch.setenv("DOUYIN_MSVC_RUNTIME_DIR", str(directories["override"]))
+    monkeypatch.setattr(native_runtime, "_module_dir", lambda name:
+                        directories["onnx"].parent if name == "onnxruntime" else directories["ctranslate"])
+    loaded = []
+    monkeypatch.setattr(native_runtime, "_load_dll", lambda path: loaded.append(Path(path)) or object())
+
+    if expected is None:
+        with pytest.warns(UserWarning, match="MSVC runtime"):
+            assert native_runtime.preload_msvc_runtime() is False
+        assert loaded == []
+    else:
+        assert native_runtime.preload_msvc_runtime() is True
+        assert loaded == [(directories[expected] / name).resolve() for name in native_runtime._RUNTIME_DLLS]
+
+
+def test_venv_runtime_survives_native_wheel_directory_rotation(tmp_path, monkeypatch):
+    monkeypatch.setattr(sys, "platform", "win32")
+    monkeypatch.delenv("DOUYIN_MSVC_RUNTIME_DIR", raising=False)
+    managed = Path(sys.prefix) / "msvc"
+    managed.mkdir(parents=True)
+    for name in native_runtime._RUNTIME_DLLS:
+        (managed / name).write_bytes(b"managed-fake-dll")
+    loaded = []
+    monkeypatch.setattr(native_runtime, "_load_dll", lambda path: loaded.append(Path(path)) or object())
+
+    for generation in ("old-wheel", "replacement-wheel"):
+        monkeypatch.setattr(native_runtime, "_module_dir", lambda name:
+                            tmp_path / generation / name)
+        assert native_runtime.preload_msvc_runtime(force=True) is True
+    assert loaded == [(managed / name).resolve() for name in native_runtime._RUNTIME_DLLS] * 2
+    assert all((managed / name).read_bytes() == b"managed-fake-dll" for name in native_runtime._RUNTIME_DLLS)
 
 
 def test_no_hardcoded_local_runtime_dir_is_shipped() -> None:

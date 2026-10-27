@@ -37,6 +37,8 @@ import io
 from datetime import datetime
 from pathlib import Path
 
+from .onboarding import dismiss_known_tour
+
 __all__ = ["set_kuaishou_cover"]
 
 _DEBUG_DIR = Path("./data/debug")
@@ -214,6 +216,11 @@ async def _cover_sig(page, tag: str) -> dict:
 async def _open_cover_modal(page) -> bool:
     """点开大封面(``[class*="cover-full-editor"]``,``opacity:0`` 的悬浮层)打开弹层。"""
     try:
+        # The tour can appear while the preceding thumbnail baseline is read,
+        # after the publisher's earlier cleanup. Guard the actual click seam.
+        if await dismiss_known_tour(page) is False:
+            _log("新手引导遮罩未确认关闭，停止点击封面入口")
+            return False
         loc = page.locator('[class*="cover-full-editor"]')
         if await loc.count() == 0:
             return False

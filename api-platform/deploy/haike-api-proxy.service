@@ -1,0 +1,25 @@
+[Unit]
+Description=Haike API dedicated HTTPS proxy on port 17894
+After=network-online.target haike-api.service
+Wants=haike-api.service
+
+[Service]
+Type=forking
+PIDFile=/run/haike-api-proxy/nginx.pid
+RuntimeDirectory=haike-api-proxy
+RuntimeDirectoryMode=0755
+ExecStartPre=/usr/sbin/nginx -t -c /opt/haike-api-platform/current/deploy/nginx.conf
+ExecStart=/usr/sbin/nginx -c /opt/haike-api-platform/current/deploy/nginx.conf
+ExecReload=/usr/sbin/nginx -c /opt/haike-api-platform/current/deploy/nginx.conf -s reload
+ExecStop=/usr/sbin/nginx -c /opt/haike-api-platform/current/deploy/nginx.conf -s quit
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=40
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=strict
+ReadWritePaths=/run/haike-api-proxy
+
+[Install]
+WantedBy=multi-user.target

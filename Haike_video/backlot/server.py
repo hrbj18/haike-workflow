@@ -1349,18 +1349,31 @@ async def _lifespan(app: FastAPI):
 
 def create_app() -> FastAPI:
     app = FastAPI(title="Backlot", docs_url=None, redoc_url=None, lifespan=_lifespan)
+    from backlot.customer_surface import install as install_customer_surface
+    install_customer_surface(app)
     app.include_router(published_clip_router)
     app.include_router(material_library_router)
     app.include_router(published_remix_router)
     app.include_router(commentary_router)
     app.state.works_projects_root = PROJECTS_DIR
+    from backlot.studio_api import REMOVED_ENTRIES
+    @app.middleware("http")
+    async def redirect_removed_entries(request, call_next):
+        destination = REMOVED_ENTRIES.get(request.url.path.rstrip("/"))
+        if request.method == "GET" and destination:
+            return RedirectResponse(destination, status_code=307)
+        return await call_next(request)
     app.include_router(work_router)
+    from backlot.studio_api import router as studio_router
+    app.include_router(studio_router)
+    from backlot.network_materials import router as network_materials_router
+    app.include_router(network_materials_router)
 
     # ---- API ----------------------------------------------------------
 
     @app.get("/api/health")
     async def health() -> dict:
-        return {"ok": True, "app": "backlot"}
+        return {"ok": True, "app": "backlot", "workspace": str(Path(__file__).resolve().parents[2]), "edition": "haike-workflow-2"}
 
     # ---- Unified cross-project production queue -----------------------
 
@@ -1517,7 +1530,7 @@ def create_app() -> FastAPI:
         action: str,
         payload: dict = Body(default={}),
     ) -> dict:
-        if action not in {"pause", "resume", "cancel", "retry"}:
+        if action not in {"pause", "resume", "cancel", "retry", "budget-amend"}:
             raise HTTPException(status_code=404, detail="未知的生产队列操作")
         queue = _ensure_production_queue(app)
         try:
@@ -1538,10 +1551,15 @@ def create_app() -> FastAPI:
                         str(job["parent_job_id"]),
                         {},
                     )
-                elif job["kind"] not in {"published_remix", "material_commentary"}:
+                elif job["kind"] not in {"published_remix", "material_commentary", "studio_avatar"}:
                     raise ProductionQueueConflict("全片预览失败请重新建立任务，不能复用旧任务编号")
-            operation = getattr(queue, action)
-            result = await asyncio.to_thread(operation, job_id)
+            if action == "budget-amend":
+                if set(payload) != {"expected_revision", "previous_max_charge_micros", "max_charge_micros", "authorization_evidence", "validate_only"}:
+                    raise ProductionQueueError("预算修订字段不完整或包含未知字段")
+                result = await asyncio.to_thread(queue.amend_studio_avatar_budget, job_id, **payload)
+            else:
+                operation = getattr(queue, action)
+                result = await asyncio.to_thread(operation, job_id)
         except (ReviewPreviewConflict, StaleReviewPreviewWorker, AvatarReviewPreviewConflict, StaleAvatarReviewPreviewWorker, AmbiguousAvatarOperation, ProductionQueueConflict) as exc:
             raise HTTPException(status_code=409, detail=str(exc)) from exc
         except (ReviewPreviewError, AvatarReviewPreviewError, WorkbenchError, ProductionQueueError) as exc:
@@ -4269,11 +4287,15 @@ def create_app() -> FastAPI:
 
     @app.get("/")
     async def library_page() -> HTMLResponse:
+        return _ui_html("avatar-generator/index.html", ())
+
+    @app.get("/legacy/projects")
+    async def legacy_library_page() -> HTMLResponse:
         return _ui_html("index.html", ("board.css", "library.js"))
 
     @app.get("/automation")
     async def daily_automation_page() -> HTMLResponse:
-        return _ui_html("automation.html", ("board.css", "automation.css", "automation.js"))
+        return RedirectResponse('/calendar', status_code=307)
 
     if UI_DIR.is_dir():
         app.mount("/ui", StaticFiles(directory=UI_DIR), name="ui")

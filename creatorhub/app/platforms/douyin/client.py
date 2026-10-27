@@ -16,6 +16,7 @@ import re
 
 from .signing import sign_url, gen_false_ms_token, gen_real_ms_token
 from ...netfp import impersonate_for_ua
+from ...tls_runtime import curl_verify_path
 
 BASE = "https://www.douyin.com"
 IMAPI_SEND_URL = "https://imapi.douyin.com/v1/message/send"
@@ -92,7 +93,7 @@ class DouyinClient:
         if self._session is not None:
             yield self
             return
-        self._session = AsyncSession(impersonate=self.impersonate)
+        self._session = AsyncSession(impersonate=self.impersonate, verify=curl_verify_path())
         try:
             yield self
         finally:
@@ -138,7 +139,7 @@ class DouyinClient:
         self.last_error = ""
         url = self._build_url(path, params)
         owned = self._session is None
-        cli = self._session or AsyncSession(impersonate=self.impersonate)
+        cli = self._session or AsyncSession(impersonate=self.impersonate, verify=curl_verify_path())
         try:
             if self._ms_token is None:
                 # 获取真实 token 失败时 gen_real_ms_token 自身回退随机 token。
@@ -166,6 +167,9 @@ class DouyinClient:
                 return None
         except Exception as exc:
             self.last_error = f"network:{type(exc).__name__}"
+            code = getattr(exc, "code", None)
+            if isinstance(code, int) and not isinstance(code, bool):
+                self.last_error += f":curl_{int(code)}"
             raise
         finally:
             if owned:
@@ -184,7 +188,7 @@ class DouyinClient:
         self.last_error = ""
         self.last_write_uncertain = False
         owned = self._session is None
-        cli = self._session or AsyncSession(impersonate=self.impersonate)
+        cli = self._session or AsyncSession(impersonate=self.impersonate, verify=curl_verify_path())
         try:
             if self._ms_token is None:
                 self._ms_token = await gen_real_ms_token(
@@ -306,7 +310,7 @@ class DouyinClient:
         self.last_error = ""
         self.last_write_uncertain = False
         owned = self._session is None
-        cli = self._session or AsyncSession(impersonate=self.impersonate)
+        cli = self._session or AsyncSession(impersonate=self.impersonate, verify=curl_verify_path())
         try:
             body = build_send_request(
                 str(conv_id), int(conv_type or 1), int(conv_short_id), str(ticket),
@@ -399,7 +403,7 @@ class DouyinClient:
 
         self.last_error = ""
         owned = self._session is None
-        cli = self._session or AsyncSession(impersonate=self.impersonate)
+        cli = self._session or AsyncSession(impersonate=self.impersonate, verify=curl_verify_path())
         try:
             body = build_init_request(int(time.time() * 1_000_000))
             response = await cli.post(

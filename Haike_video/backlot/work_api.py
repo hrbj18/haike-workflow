@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 
 from fastapi import APIRouter, Body, HTTPException, Query, Request
-from fastapi.responses import HTMLResponse, FileResponse
+from fastapi.responses import HTMLResponse, FileResponse, RedirectResponse
 
 from backlot.work_catalog import WorkCatalog, WorkError
 from backlot import work_ingest, work_publish, work_storage
@@ -27,14 +27,14 @@ def call(fn, *args, **kwargs):
     try:
         return fn(*args, **kwargs)
     except WorkError as exc:
-        raise HTTPException(status_code={"missing": 404, "conflict": 409, "unavailable": 503}.get(exc.code, 422), detail=str(exc)) from exc
+        raise HTTPException(status_code={"missing": 404, "not_found": 404, "forbidden": 403, "conflict": 409, "unavailable": 503}.get(exc.code, 422), detail=str(exc)) from exc
     except (KeyError, TypeError, OSError, ValueError) as exc:
         raise HTTPException(status_code=422, detail="输入或文件不可用，请核对后再操作") from exc
 
 
 @router.get("/works", response_class=HTMLResponse)
 def page():
-    return HTMLResponse((UI / "works.html").read_text(encoding="utf-8"), headers={"Cache-Control": "no-cache"})
+    return RedirectResponse('/projects', status_code=307)
 
 
 @router.get("/api/works")
@@ -106,12 +106,13 @@ def media(work_id: str, request: Request, version: str | None = None):
 
 
 @router.get("/api/works/{work_id}/cover")
-def cover(work_id: str, request: Request):
+def cover(work_id: str, request: Request, version: str | None = None):
     c = catalog(request); w = call(c.get, work_id)
-    if not w["materials"] or not w["materials"][-1]["data"].get("cover_path"):
+    selected = next((m for m in reversed(w["materials"]) if version is None or m.get("version_id") == version), None)
+    if not selected or not selected["data"].get("cover_path"):
         raise HTTPException(404, "封面待准备")
     from backlot.work_catalog import regular_path
-    return FileResponse(call(regular_path, w["materials"][-1]["data"]["cover_path"], c.project(w["project_id"])))
+    return FileResponse(call(regular_path, selected["data"]["cover_path"], c.project(w["project_id"])))
 
 
 @router.get("/api/works/{work_id}/storage")

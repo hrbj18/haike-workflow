@@ -1,0 +1,93 @@
+{
+  "version": 1,
+  "template_id": "avatar-deepblue-n1-v1",
+  "render_kind": "offline_development_showcase",
+  "description": "通用几何人物与源码合成内容的15秒四模式无声版式演示；不是口型、有声同步或新闻事实验收。",
+  "private_media_used": false,
+  "cloud_calls": 0,
+  "queue_used": false,
+  "caption_clock": "illustrative_manual",
+  "source_notice": "All SVG inputs and text are authored for this project; no personal image, recording or external media is used.",
+  "reproduce": "python Haike_video/templates/avatar-deepblue-n1/showcase/generate.py --render",
+  "layout_sha256": "1a142d9113195a9c470cd0fbfd51917530617388fa4c45bbad5f5750ea9f7e17",
+  "implementation_sha256": "7d982575645ece9ef9bfd64094f6e1c066ad5d7643b13d4ad1c4a11332cb8beb",
+  "inputs": [
+    {
+      "path": "Haike_video/templates/avatar-deepblue-n1/showcase/avatar-geometric.svg",
+      "sha256": "f665473cb089f11205a96e0cce76a671f148d51d74ee594e56142b2f535459f9"
+    },
+    {
+      "path": "Haike_video/templates/avatar-deepblue-n1/showcase/material.svg",
+      "sha256": "b03794e3a1c314ded4739443705d30fcc510fe44e25bcd3f75b4cdb268d5fe82"
+    },
+    {
+      "path": "Haike_video/templates/avatar-deepblue-n1/showcase/source-card.svg",
+      "sha256": "1ca142cf6ca2055a5d9f19cd06bf65d8d1c3049e2c1614fdb921134aed09e735"
+    },
+    {
+      "path": "Haike_video/templates/avatar-deepblue-n1/showcase/props.json",
+      "sha256": "be10ac58afb21bcc81424160026dc585247bfdf58d1a3276b71d5a3b06b4e887"
+    },
+    {
+      "path": "Haike_video/templates/avatar-deepblue-n1/showcase/generate.py",
+      "sha256": "85770cabfb1865a59f8183b4079ad6a54166736d20f6dec5c728e020e387e02c"
+    }
+  ],
+  "tools": {
+    "node": "v24.21.0",
+    "remotion": "4.0.506",
+    "ffmpeg": "ffmpeg version N-127527-g045dea2a34-20261014 Copyright (c) 2000-2026 the FFmpeg developers"
+  },
+  "video": {
+    "file": "n1-public-sample-v1.mp4",
+    "sha256": "d709207d6363aaafcd4b15982839e0880ab515984fafd26f3a4877200d887c09",
+    "bytes": 520937
+  },
+  "verification": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "frames": 450,
+    "duration_seconds": 15,
+    "audio_streams": 0,
+    "full_decode": "pass"
+  },
+  "frames": [
+    {
+      "file": "n1-public-presenter.png",
+      "sha256": "be7587ea8030964238d9c4cd5d80b2861abd3579d5d6844621645d2b2480ca51",
+      "bytes": 399357,
+      "mode": "presenter",
+      "time_seconds": 2
+    },
+    {
+      "file": "n1-public-material.png",
+      "sha256": "1ec0ee517053cf996771d59fd5caafa683db8d27fbab658fb6fdd10c20e43796",
+      "bytes": 553011,
+      "mode": "material",
+      "time_seconds": 5.5
+    },
+    {
+      "file": "n1-public-screenshot.png",
+      "sha256": "036af433d19bda006367735b1b17e4a5d7dd069882c1849d40bace31312f1be4",
+      "bytes": 530585,
+      "mode": "screenshot",
+      "time_seconds": 9.5
+    },
+    {
+      "file": "n1-public-data.png",
+      "sha256": "e888b93f5c74dfbbd424b3e7056ef5064de218b36a6fb93fffaa3977ca7bb586",
+      "bytes": 566568,
+      "mode": "data",
+      "time_seconds": 13.5
+    }
+  ],
+  "visual_review": {
+    "status": "pass",
+    "scope": "已实际查看四模式稳定帧及8张动效抽帧：主标题渐显、主持人/圆框互斥、截图红线出现和数据逐行显入；不替代连续听看、真实口型、任意替换边界或平台验收。",
+    "stable_frame_seconds": [2, 5.5, 9.5, 13.5],
+    "motion_frame_numbers": [1, 24, 111, 114, 228, 270, 339, 369]
+  },
+  "platform_review": "pending",
+  "user_review": "pending"
+}

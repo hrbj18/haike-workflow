@@ -151,6 +151,16 @@ def duration_patch_status(config: dict[str, Any] | None = None) -> dict[str, Any
             "consequence": "",
             "install_command": INSTALL_COMMAND,
         }
+    source = path.read_text(encoding="utf-8")
+    if (all(marker in source for marker in ("class DouyinStoreFactory", "async def update_douyin_aweme", "extract_video_urls"))
+            and Path(__file__).with_name("mediacrawler_runtime_store.py").is_file()):
+        return {
+            "status": "runtime_bridge_ready", "patched": False, "runtime_bridge": True,
+            "path": str(path),
+            "reason": "当前上游使用项目runner运行时传递duration_ms；未修改第三方源码。",
+            "consequence": "直接运行上游main.py不含项目运行时适配，请使用项目采集入口。",
+            "install_command": "",
+        }
     return {
         "status": "not_patched",
         "patched": False,

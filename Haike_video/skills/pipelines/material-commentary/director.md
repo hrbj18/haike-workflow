@@ -1,12 +1,14 @@
 # 素材解说导演（自由编排与精剪 V2）
 
-用于用户要求制作或返工素材解说视频，包括电影、直播切片、产品演示、现场互动。运行清单为 [material-commentary.yaml](../../../pipeline_defs/material-commentary.yaml)，入口为工作台 `/material-commentary` 和 [素材解说 CLI](../../../scripts/material_commentary_cli.py)。执行细节及恢复点见 [素材解说视频 runbook](../../../../Haike-Videohub/agent-runbooks/素材解说视频.md)，字段合同见 [MATERIAL_COMMENTARY_V1.md](../../../docs/MATERIAL_COMMENTARY_V1.md)。
+用于用户要求制作或返工素材解说视频，包括电影、直播切片、产品演示、现场互动。运行清单为 [material-commentary.yaml](../../../pipeline_defs/material-commentary.yaml)，执行入口为 [素材解说 CLI](../../../scripts/material_commentary_cli.py)。新版旧专页 `/material-commentary` 跳转作品入口 `/projects`。执行细节及恢复点见 [素材解说视频 runbook](../../../../Haike-Videohub/agent-runbooks/素材解说视频.md)，字段合同见 [MATERIAL_COMMENTARY_V1.md](../../../docs/MATERIAL_COMMENTARY_V1.md)。
 
 这是一条素材先行的生产流程。当前 agent 或人负责观察、理解和叙事判断；程序负责证据身份、源区间、音轨时钟、版本、缓存、队列及技术检查。`content_kind` 是描述性标签，不选择固定故事框架。
 
 ## 1. 确认本次输入
 
 读取用户目标、选定素材、现有草稿和配音。通过 `list`、`brief`、`versions` 核对同类项目及队列，已有结果优先复用。冻结画幅、配音来源及音色、音乐选择、费用边界和待审交付要求。创建项目后保留 `artifacts/commentary-workflow.json`，正式合成使用本地 FFmpeg。
+
+本流程的 `render_runtime_selection` 是受约束的选择：当前清单使用 `material_commentary` 执行器，创建时将 `render_runtime=local-ffmpeg` 写入不可变工作流记录，负责源区间、实际音轨时钟和段落缓存。生产前向用户说明这一约束；已有生产授权直接沿用。Remotion 和 hyperframes 目前没有本流程的最终合成适配器，安装了引擎也不代表可以替换本执行器。用户要求其他引擎时，先读[渲染引擎选择规则](../../meta/animation-runtime-selector.md)，核实适配能力并说明当前限制；有真实可选方案时再由用户选择，不把未支持的引擎列为可运行选项。
 
 完成判据：本次项目可识别，素材来源可追溯，制作范围与声音方案明确；已经获得的生产授权直接沿用。缺失的付费供应商或音色选择只阻断相关付费步骤，继续可独立完成的本地取证。
 
@@ -53,6 +55,8 @@
 ## 5. 冻结、排队与交付
 
 使用读回的 `revision` 保存，预检通过后经工作台或 CLI `submit` 入统一队列。每次提交冻结源指纹、证据、镜头、音轨、字幕及格式，并登记逐镜头素材引用和使用台账。新版本只能使用未归档素材；历史冻结版本可以按同一指纹恢复归档或重定位后的原片。内容修改产生新版本；重复提交同一 `revision` 恢复原版本及已有段落缓存。有意更换字体内容时也先保存修改说明以产生新草稿版本。
+
+冻结或恢复前核对工作流记录的 `render_runtime` 仍为 `local-ffmpeg`，按原执行器排队；发现其他值时报告工作流不匹配并保留已有产物。hyperframes 或 Remotion 的最终合成适配尚未支持，不能在 compose 阶段静默切换或改写冻结记录。
 
 结构/语义审查核对证据与叙事；视觉/输出审查查看代表帧并连续播放、回听字幕与切口。遵循项目最多两轮独立审查约定。输出 `completed`、`qa.status=passed` 只表示技术完成；`review_status=pending_review` 仍待人观看。
 

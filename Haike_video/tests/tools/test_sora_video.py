@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+import shutil
 import subprocess
 import sys
 import types
@@ -28,38 +29,59 @@ def test_sora_video_is_discovered_as_openai_video_provider():
     assert tool.capability == "video_generation"
 
 
-def test_sora_video_loads_openai_key_from_repo_dotenv_when_process_env_is_empty():
-    env_path = PROJECT_ROOT / ".env"
-    if env_path.exists():
-        pytest.skip("Protect local .env contents; CI regression covers absent-.env checkout")
+def _sora_import_with_temporary_dotenv(tmp_path, *, disabled=None, load_registry=False):
+    # Exercise the actual import-time loader from a temporary source tree. No
+    # test writes or reads the operator's repository dotenv files.
+    tools = tmp_path / "tools"
+    video = tools / "video"
+    video.mkdir(parents=True)
+    (tools / "__init__.py").touch()
+    (video / "__init__.py").touch()
+    shutil.copyfile(PROJECT_ROOT / "tools/base_tool.py", tools / "base_tool.py")
+    shutil.copyfile(PROJECT_ROOT / "tools/tool_registry.py", tools / "tool_registry.py")
+    shutil.copyfile(PROJECT_ROOT / "tools/video/sora_video.py", video / "sora_video.py")
+    (tmp_path / ".env").write_text("OPENAI_API_KEY=test-openai-key\n", encoding="utf-8")
+    env = os.environ.copy()
+    env.pop("OPENAI_API_KEY", None)
+    env.pop("PYTHON_DOTENV_DISABLED", None)
+    if disabled is not None:
+        env["PYTHON_DOTENV_DISABLED"] = disabled
+    env["PYTHONPATH"] = os.pathsep.join((str(tmp_path), str(PROJECT_ROOT)))
+    registry_load = (
+        "from tools.tool_registry import ToolRegistry; ToolRegistry._load_dotenv(); "
+        if load_registry else ""
+    )
+    script = (
+        "import os; import tools.video.sora_video; "
+        + registry_load
+        + "print('set' if os.environ.get('OPENAI_API_KEY') else 'missing')"
+    )
+    return subprocess.run(
+        [sys.executable, "-c", script],
+        cwd=tmp_path, env=env, text=True, capture_output=True, check=False, timeout=15,
+    )
 
-    env_path.write_text("OPENAI_API_KEY=test-openai-key\n", encoding="utf-8")
-    try:
-        env = os.environ.copy()
-        env.pop("OPENAI_API_KEY", None)
-        env["PYTHONPATH"] = str(PROJECT_ROOT)
 
-        result = subprocess.run(
-            [
-                sys.executable,
-                "-c",
-                (
-                    "import os; "
-                    "import tools.video.sora_video; "
-                    "print('set' if os.environ.get('OPENAI_API_KEY') else 'missing')"
-                ),
-            ],
-            cwd=PROJECT_ROOT,
-            env=env,
-            text=True,
-            capture_output=True,
-            check=False,
-        )
-    finally:
-        env_path.unlink(missing_ok=True)
+def test_sora_video_loads_openai_key_from_repo_dotenv_when_process_env_is_empty(tmp_path):
+    result = _sora_import_with_temporary_dotenv(tmp_path)
 
     assert result.returncode == 0, result.stderr
     assert result.stdout.strip() == "set"
+
+
+@pytest.mark.parametrize("disabled,expected", [("1", "missing"), ("TrUe", "missing"), ("yes", "missing"), ("0", "set")])
+def test_sora_import_respects_the_dotenv_disable_switch(tmp_path, disabled, expected):
+    result = _sora_import_with_temporary_dotenv(tmp_path, disabled=disabled)
+
+    assert result.returncode == 0, result.stderr
+    assert result.stdout.strip() == expected
+
+
+def test_registry_reload_respects_the_dotenv_disable_switch(tmp_path):
+    result = _sora_import_with_temporary_dotenv(tmp_path, disabled="1", load_registry=True)
+
+    assert result.returncode == 0, result.stderr
+    assert result.stdout.strip() == "missing"
 
 
 def test_sora_video_reports_unavailable_when_openai_sdk_lacks_video_api(monkeypatch):

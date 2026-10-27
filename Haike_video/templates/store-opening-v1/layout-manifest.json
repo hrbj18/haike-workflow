@@ -1,0 +1,7 @@
+{
+  "version": "v002",
+  "authority": "layout.json imported by index.tsx",
+  "numeric_parameter_source": "layout.json",
+  "state_selector": "index.tsx openingLayoutAt(props,frame)",
+  "note": "This manifest is an index only; no duplicate numeric geometry. v001 manifest remains in task snapshots."
+}

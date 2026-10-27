@@ -109,6 +109,21 @@ def test_v2_required_cover_and_package_dedupe(local_project):
     asyncio.run(scenario())
 
 
+def test_cancel_schedule_retains_v2_package_and_blocks_completed(local_project):
+    task = store(PublishTask(platform="douyin", contract_version=2, package_id="cancel-fixture", status="pending"))
+    async def scenario():
+        async with _client() as http:
+            response = await http.post(f"/api/publish/{task}/cancel", json={})
+            assert response.status_code == 200 and response.json()["status"] == "canceled"
+            assert response.json()["package_id"] == "cancel-fixture"
+            assert (await http.post(f"/api/publish/{task}/cancel",json={})).json()["status"] == "canceled"
+            assert (await http.delete(f"/api/publish/{task}")).status_code == 409
+            with db.get_session() as session:
+                row=session.get(PublishTask,task);row.status="done";session.add(row);session.commit()
+            assert (await http.post(f"/api/publish/{task}/cancel",json={})).status_code == 409
+    asyncio.run(scenario())
+
+
 def test_strict_douyin_and_kuaishou_never_click_after_cover_failure(local_project):
     media = local_project.root / "fixture.mp4"
     media.write_bytes(b"video fixture")

@@ -13,13 +13,26 @@ import urllib.request
 import pytest
 
 from lib.checkpoint import CANONICAL_STAGE_ARTIFACTS, init_project, write_checkpoint
+from lib.native_probe import _stop_owned_probe
 from lib.pipeline_loader import get_stage_order, load_pipeline
 from scripts import backlot_screenshot_stage
+from tests.backlot.isolated_browser_server import configure_private, local_browser_url
 from tests.contracts.test_phase0_contracts import sample_artifact
 
 
 pytest.importorskip("playwright.sync_api")
 from playwright.sync_api import sync_playwright  # noqa: E402
+
+
+def _local_page(browser, server_url, **kwargs):
+    page = browser.new_page(**kwargs)
+    page.route("**/*", lambda route: (
+        route.continue_() if local_browser_url(route.request.url, server_url) else route.abort()
+    ))
+    page.route_web_socket("**/*", lambda route: (
+        route.connect_to_server() if local_browser_url(route.url, server_url) else route.close()
+    ))
+    return page
 
 
 APPROVAL_CASES = [
@@ -203,7 +216,16 @@ def _build_approval_projects() -> None:
 
 
 @pytest.fixture(scope="module")
-def staged_backlot_server():
+def isolated_screenshot_stage(tmp_path_factory):
+    with pytest.MonkeyPatch.context() as scoped:
+        stage = tmp_path_factory.mktemp("ui-bug-bash") / "projects"
+        scoped.setattr(backlot_screenshot_stage, "STAGE_DIR", stage)
+        configure_private(stage.parent / "private", setter=scoped.setattr)
+        yield stage
+
+
+@pytest.fixture(scope="module")
+def staged_backlot_server(isolated_screenshot_stage):
     backlot_screenshot_stage.build_stage()
     _build_approval_projects()
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as probe:
@@ -211,32 +233,37 @@ def staged_backlot_server():
         port = int(probe.getsockname()[1])
     env = dict(os.environ)
     env["OPENMONTAGE_PROJECTS_DIR"] = str(backlot_screenshot_stage.STAGE_DIR)
+    env["PYTHON_DOTENV_DISABLED"] = "1"
+    env["HAIKE_DOWNLOAD_CREDENTIALS_DIR"] = str(isolated_screenshot_stage.parent / "private/download-credentials")
+    options = (
+        {"creationflags": subprocess.CREATE_NO_WINDOW | subprocess.CREATE_NEW_PROCESS_GROUP}
+        if os.name == "nt" else {"start_new_session": True}
+    )
     server = subprocess.Popen(
-        [sys.executable, "-m", "backlot", "serve", "--port", str(port)],
+        [sys.executable, "-m", "tests.backlot.isolated_browser_server", "serve", "--port", str(port)],
         cwd=backlot_screenshot_stage.REPO_ROOT,
         env=env,
+        stdin=subprocess.DEVNULL,
         stdout=subprocess.DEVNULL,
         stderr=subprocess.DEVNULL,
+        close_fds=True,
+        **options,
     )
-    deadline = time.time() + 20
-    while time.time() < deadline:
-        try:
-            with urllib.request.urlopen(f"http://127.0.0.1:{port}/api/health", timeout=1):
-                break
-        except Exception:
-            time.sleep(0.2)
-    else:
-        server.terminate()
-        raise RuntimeError("Backlot server did not become healthy")
-
     try:
+        deadline = time.time() + 20
+        while time.time() < deadline:
+            if server.poll() is not None:
+                raise RuntimeError("Backlot server exited before becoming healthy")
+            try:
+                with urllib.request.urlopen(f"http://127.0.0.1:{port}/api/health", timeout=1):
+                    break
+            except Exception:
+                time.sleep(0.2)
+        else:
+            raise RuntimeError("Backlot server did not become healthy")
         yield f"http://127.0.0.1:{port}"
     finally:
-        server.terminate()
-        try:
-            server.wait(timeout=5)
-        except subprocess.TimeoutExpired:
-            server.kill()
+        _stop_owned_probe(server)
 
 
 def test_project_pages_fit_mobile_and_tablet_widths(staged_backlot_server):
@@ -256,13 +283,20 @@ def test_project_pages_fit_mobile_and_tablet_widths(staged_backlot_server):
 
     with sync_playwright() as pw:
         browser = pw.chromium.launch(headless=True)
-        page = browser.new_page()
+        page = _local_page(browser, staged_backlot_server)
         try:
             for viewport in viewports:
                 page.set_viewport_size(viewport)
                 for path in project_paths:
-                    page.goto(staged_backlot_server + path, wait_until="networkidle")
-                    page.wait_for_timeout(300)
+                    static = "static=1" in path
+                    page.goto(
+                        staged_backlot_server + path,
+                        wait_until="networkidle" if static else "domcontentloaded",
+                    )
+                    if static:
+                        page.locator("#app h1").wait_for(state="visible")
+                    else:
+                        page.get_by_role("button", name="片段工作台", exact=True).wait_for(state="visible")
                     sizes = page.evaluate(
                         """() => ({
                             scrollWidth: document.documentElement.scrollWidth,
@@ -278,21 +312,30 @@ def test_project_pages_fit_mobile_and_tablet_widths(staged_backlot_server):
             browser.close()
 
 
-def test_daily_automation_center_fits_desktop_and_narrow_widths(staged_backlot_server):
+def test_retired_automation_entry_opens_responsive_publication_calendar(staged_backlot_server):
     with sync_playwright() as pw:
         browser = pw.chromium.launch(headless=True)
-        page = browser.new_page()
+        page = _local_page(browser, staged_backlot_server)
         try:
             for viewport in ({"width": 390, "height": 844}, {"width": 1440, "height": 1000}):
                 page.set_viewport_size(viewport)
-                page.goto(staged_backlot_server + "/automation", wait_until="networkidle")
-                page.wait_for_timeout(300)
+                response = page.goto(staged_backlot_server + "/automation", wait_until="domcontentloaded")
+                assert response and response.status == 200
+                redirected = response.request.redirected_from
+                assert redirected and redirected.url == staged_backlot_server + "/automation"
+                redirect_response = redirected.response()
+                assert redirect_response and redirect_response.status == 307
+                assert redirect_response.headers["location"] == "/calendar"
+                assert page.url == staged_backlot_server + "/calendar"
+                page.get_by_role("heading", name="发布日历", exact=True).wait_for(state="visible")
+                page.locator(".calendar-panel").wait_for(state="visible")
                 sizes = page.evaluate("""() => ({
                     scrollWidth: document.documentElement.scrollWidth,
                     clientWidth: document.documentElement.clientWidth
                 })""")
                 assert sizes["scrollWidth"] <= sizes["clientWidth"], (viewport, sizes)
-                assert page.get_by_text("每日科技快报生产中心").is_visible()
+                assert page.get_by_role("button", name="新建排期", exact=True).is_visible()
+                assert page.get_by_text("每日科技快报生产中心").count() == 0
         finally:
             browser.close()
 
@@ -300,11 +343,20 @@ def test_daily_automation_center_fits_desktop_and_narrow_widths(staged_backlot_s
 def test_static_navigation_invalid_route_and_active_takes(staged_backlot_server):
     with sync_playwright() as pw:
         browser = pw.chromium.launch(headless=True)
-        page = browser.new_page(viewport={"width": 1560, "height": 1000})
+        page = _local_page(browser, staged_backlot_server, viewport={"width": 1560, "height": 1000})
         try:
-            page.goto(staged_backlot_server + "/?static=1", wait_until="networkidle")
+            page.goto(staged_backlot_server + "/?static=1", wait_until="domcontentloaded")
+            page.get_by_role("heading", name="图文视频", exact=True).wait_for(state="visible")
+            assert page.locator("#root .graphic-editor").is_visible()
+            assert page.locator("a.lib-card-link").count() == 0
+
+            page.goto(staged_backlot_server + "/legacy/projects?static=1", wait_until="networkidle")
+            page.locator("a.lib-card-link").first.wait_for(state="visible")
             href = page.locator("a.lib-card-link").first.get_attribute("href")
             assert href and "static=1" in href
+            page.locator("a.lib-card-link").first.click()
+            page.locator("#app h1").wait_for(state="visible")
+            assert page.url == staged_backlot_server + href
 
             response = page.goto(
                 staged_backlot_server + "/p/..%2FAGENT_GUIDE.md?static=1",
@@ -314,7 +366,7 @@ def test_static_navigation_invalid_route_and_active_takes(staged_backlot_server)
             assert "PROJECT NOT FOUND" in page.locator("body").inner_text()
 
             page.goto(staged_backlot_server + "/p/the-last-lighthouse?static=1", wait_until="networkidle")
-            page.wait_for_timeout(300)
+            page.locator(".takes .tk.active").first.wait_for(state="visible")
             assert page.locator(".takes .tk.active").count() >= 1
         finally:
             browser.close()
@@ -334,7 +386,7 @@ def test_every_canonical_gate_promotes_its_artifact_before_approval(
 ):
     with sync_playwright() as pw:
         browser = pw.chromium.launch(headless=True)
-        page = browser.new_page(viewport={"width": 1280, "height": 900})
+        page = _local_page(browser, staged_backlot_server, viewport={"width": 1280, "height": 900})
         try:
             page.goto(
                 staged_backlot_server + f"/p/{project_id}?static=1",
@@ -358,7 +410,7 @@ def test_every_canonical_gate_promotes_its_artifact_before_approval(
 def test_script_gate_keeps_script_visible_and_marks_pending_approval(staged_backlot_server):
     with sync_playwright() as pw:
         browser = pw.chromium.launch(headless=True)
-        page = browser.new_page(viewport={"width": 1280, "height": 900})
+        page = _local_page(browser, staged_backlot_server, viewport={"width": 1280, "height": 900})
         try:
             page.goto(staged_backlot_server + "/p/gate-script?static=1", wait_until="networkidle")
             assert page.locator(".script-card").is_visible()
@@ -370,7 +422,7 @@ def test_script_gate_keeps_script_visible_and_marks_pending_approval(staged_back
 def test_manifest_declared_custom_gate_uses_generic_review_fallback(staged_backlot_server):
     with sync_playwright() as pw:
         browser = pw.chromium.launch(headless=True)
-        page = browser.new_page(viewport={"width": 1280, "height": 900})
+        page = _local_page(browser, staged_backlot_server, viewport={"width": 1280, "height": 900})
         try:
             page.goto(
                 staged_backlot_server + "/p/gate-character-design?static=1",
@@ -390,9 +442,10 @@ def test_avatar_role_library_form_fields_are_visible_when_optional_panel_is_open
     """Regression: a broad CSS selector previously hid all role text inputs."""
     with sync_playwright() as pw:
         browser = pw.chromium.launch(headless=True)
-        page = browser.new_page(viewport={"width": 1440, "height": 1000})
+        page = _local_page(browser, staged_backlot_server, viewport={"width": 1440, "height": 1000})
         try:
-            page.goto(staged_backlot_server + "/p/avatar-cloud-ready", wait_until="networkidle")
+            page.goto(staged_backlot_server + "/p/avatar-cloud-ready", wait_until="domcontentloaded")
+            page.get_by_text("数字人素材", exact=True).wait_for(state="visible")
             page.get_by_text("数字人素材", exact=True).click()
             page.get_by_text("可选：通用角色库（跨项目复用）", exact=True).click()
             field = page.get_by_label("角色名称")
@@ -404,10 +457,51 @@ def test_avatar_role_library_form_fields_are_visible_when_optional_panel_is_open
             browser.close()
 
 
-def test_workbench_light_theme_is_default_and_dark_choice_persists_after_reload(staged_backlot_server):
+def test_workbench_light_theme_is_default_and_dark_choice_persists_after_reload(
+    staged_backlot_server, tmp_path, record_property,
+):
     with sync_playwright() as pw:
         browser = pw.chromium.launch(headless=True)
-        page = browser.new_page(viewport={"width": 1440, "height": 1000})
+        page = _local_page(browser, staged_backlot_server, viewport={"width": 1440, "height": 1000})
+
+        def open_controls():
+            page.get_by_role("button", name="数字人素材", exact=True).click()
+            # The real initial role lookup re-renders this optional panel.
+            # Wait for that response-derived state before opening its details.
+            page.get_by_text("目前没有通用角色档案；这不会阻止本期生成。", exact=True).wait_for(state="attached")
+            page.get_by_text("可选：通用角色库（跨项目复用）", exact=True).click()
+            page.get_by_label("角色名称").wait_for(state="visible")
+
+        def palette():
+            return page.evaluate("""() => {
+                const luminance = color => {
+                    const rgb = color.match(/[0-9.]+/g).slice(0, 3).map(Number);
+                    const linear = rgb.map(value => {
+                        const channel = value / 255;
+                        return channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4;
+                    });
+                    return linear[0] * 0.2126 + linear[1] * 0.7152 + linear[2] * 0.0722;
+                };
+                const read = element => {
+                    const style = getComputedStyle(element);
+                    const background = luminance(style.backgroundColor), foreground = luminance(style.color);
+                    return {background: style.backgroundColor, foreground: style.color,
+                        background_luminance: background,
+                        contrast: (Math.max(background, foreground) + 0.05) / (Math.min(background, foreground) + 0.05),
+                        font: style.fontFamily, radius: style.borderRadius};
+                };
+                return {scheme: getComputedStyle(document.documentElement).colorScheme,
+                    body: read(document.body), panel: read(document.querySelector('.avatar-role-library-optional')),
+                    input: read(document.querySelector('input[aria-label="角色名称"]'))};
+            }""")
+
+        def screenshot(theme):
+            target = (tmp_path / f"workbench-{theme}.png").resolve()
+            page.evaluate("window.scrollTo(0, 0)")
+            page.screenshot(path=str(target), full_page=True, animations="disabled")
+            record_property(f"theme_{theme}_screenshot", str(target))
+            print(f"THEME_{theme.upper()}_SCREENSHOT={target}")
+
         try:
             page.goto(staged_backlot_server + "/p/avatar-cloud-ready", wait_until="domcontentloaded")
             page.evaluate("""() => {
@@ -422,15 +516,43 @@ def test_workbench_light_theme_is_default_and_dark_choice_persists_after_reload(
             toggle.wait_for(state="visible")
             assert toggle.get_attribute("aria-label") == "切换至深色主题"
             assert toggle.is_visible()
+            open_controls()
+            light = palette()
+            assert light["scheme"] == "light"
+            assert light["body"]["background"] == "rgb(247, 248, 250)"
+            assert light["panel"]["background"] == light["input"]["background"] == "rgb(255, 255, 255)"
+            screenshot("light")
             toggle.click()
             assert page.locator("html").get_attribute("data-theme") == "dark"
             assert page.evaluate("localStorage.getItem('backlot.theme')") == "dark"
+            open_controls()
+            dark = palette()
+            assert dark["scheme"] == "dark"
+            for element in ("body", "panel", "input"):
+                assert dark[element]["background"] != light[element]["background"]
+                assert dark[element]["foreground"] != light[element]["foreground"]
+                assert dark[element]["background_luminance"] < .15 < light[element]["background_luminance"]
+                assert dark[element]["contrast"] >= 4.5 and light[element]["contrast"] >= 4.5
+                assert dark[element]["font"] == light[element]["font"]
+                assert dark[element]["radius"] == light[element]["radius"]
+            screenshot("dark")
 
             page.reload(wait_until="domcontentloaded")
             assert page.locator("html").get_attribute("data-theme") == "dark"
             toggle = page.locator(".theme-toggle")
             toggle.wait_for(state="visible")
             assert toggle.get_attribute("aria-label") == "切换至浅色主题"
+            open_controls()
+            assert palette() == dark
+            evidence = (tmp_path / "theme-palette.json").resolve()
+            evidence.write_text(json.dumps({"light": light, "dark": dark}, ensure_ascii=False, indent=2), encoding="utf-8")
+            record_property("theme_palette", str(evidence))
+            print(f"THEME_PALETTE={evidence}")
+            toggle.click()
+            assert page.locator("html").get_attribute("data-theme") == "light"
+            assert page.evaluate("localStorage.getItem('backlot.theme')") == "light"
+            open_controls()
+            assert palette() == light
         finally:
             browser.close()
 
@@ -438,9 +560,10 @@ def test_workbench_light_theme_is_default_and_dark_choice_persists_after_reload(
 def test_workbench_focus_card_can_be_saved_and_survives_reload(staged_backlot_server):
     with sync_playwright() as pw:
         browser = pw.chromium.launch(headless=True)
-        page = browser.new_page(viewport={"width": 1440, "height": 1000})
+        page = _local_page(browser, staged_backlot_server, viewport={"width": 1440, "height": 1000})
         try:
-            page.goto(staged_backlot_server + "/p/multilayer-workbench", wait_until="networkidle")
+            page.goto(staged_backlot_server + "/p/multilayer-workbench", wait_until="domcontentloaded")
+            page.get_by_role("button", name="片段工作台", exact=True).wait_for(state="visible")
             page.get_by_role("button", name="片段工作台", exact=True).click()
             layout = page.get_by_label("画面布局")
             layout.select_option("focus_card")
@@ -454,7 +577,8 @@ def test_workbench_focus_card_can_be_saved_and_survives_reload(staged_backlot_se
             assert composition["layout_recipe"] == "focus_card"
             assert composition["overlays"][0]["asset_id"] == "S-001"
 
-            page.reload(wait_until="networkidle")
+            page.reload(wait_until="domcontentloaded")
+            page.get_by_role("button", name="片段工作台", exact=True).wait_for(state="visible")
             page.get_by_role("button", name="片段工作台", exact=True).click()
             assert page.get_by_label("画面布局").input_value() == "focus_card"
             assert page.get_by_label("重点素材 1").input_value() == "S-001"

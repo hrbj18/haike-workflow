@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-haike-brand="2025">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#f4ede0">
-<title>海客视频 — 项目库</title>
+<meta name="theme-color" content="#f7f8fa">
+<title>项目工作台 · 海客科技</title>
 <script>
   // 暖纸张是默认主题；只有用户明确保存的深色偏好才进入深色。
   try {
@@ -19,7 +19,9 @@
 </script>
 <link rel="stylesheet" href="/ui/board.css">
 <link rel="stylesheet" href="/ui/library_index.css">
+<link rel="stylesheet" href="/ui/haike-brand.css">
 <link rel="stylesheet" href="/ui/navigation.css">
+<link rel="stylesheet" href="/ui/workbench-modern.css">
 </head>
 <body>
 <div class="app-frame library-app-frame">
@@ -32,16 +34,16 @@
     <nav class="global-nav" aria-label="全局工作区">
       <div class="global-nav-group">
         <p>项目</p>
-        <a class="global-nav-link" href="/" aria-current="page">项目库</a>
-        <a class="global-nav-link" href="/works">作品管理</a>
+        <a class="global-nav-link" href="/graphic">图文视频</a>
+        <a class="global-nav-link" href="/avatar">数字人口播</a>
+        <a class="global-nav-link" href="/projects">我的作品</a>
+        <a class="global-nav-link" href="/calendar">发布日历</a>
+        <a class="global-nav-link" href="/settings">API 设置</a>
       </div>
       <div class="global-nav-group">
         <p>通用工具</p>
-        <a class="global-nav-link" href="/audio">配音中心</a>
-        <a class="global-nav-link" href="/automation">自动生产中心</a>
-        <a class="global-nav-link" href="/published-clips">已发布成片索引</a>
+        <a class="global-nav-link" href="/legacy/projects" aria-current="page">项目工作台</a>
         <a class="global-nav-link" href="/material-library">素材库</a>
-        <a class="global-nav-link" href="/material-commentary">素材解说</a>
       </div>
     </nav>
   </aside>
@@ -49,9 +51,9 @@
   <header class="slate library-slate">
     <div class="clapper"></div>
     <div class="library-heading">
-      <span class="wordmark">HAIKE VIDEO / PROJECT ARCHIVE</span>
-      <h1>项目库</h1>
-      <p>把项目、素材与审核进度放在同一份可追溯的制作档案里。</p>
+      <span class="wordmark">项目与制作</span>
+      <h1>项目工作台</h1>
+      <p>查看脚本、素材与片段进度，继续你的制作项目。</p>
     </div>
     <span class="chip" id="count"></span>
     <div class="spacer"></div>
@@ -63,12 +65,12 @@
   <section class="library-intro" aria-label="项目库说明">
     <div>
       <span class="library-kicker">项目总览</span>
-      <strong>从项目身份开始，再进入脚本、素材与逐段审核。</strong>
+      <strong>每个项目，保留完整制作进度。</strong>
     </div>
     <p>创建项目不会生成内容或消耗额度；预览与发布仍由人工确认。</p>
   </section>
   <p class="library-message" id="libraryMessage" role="status" aria-live="polite"></p>
-  <section class="daily-automation-panel" id="dailyAutomationPanel" aria-labelledby="dailyAutomationTitle">
+  <section class="daily-automation-panel" id="dailyAutomationPanel" aria-labelledby="dailyAutomationTitle" hidden>
     <button class="daily-automation-summary" id="toggleDailyAutomationPanel" type="button" aria-expanded="false">
       <span>
         <span class="wordmark">每日自动化</span>

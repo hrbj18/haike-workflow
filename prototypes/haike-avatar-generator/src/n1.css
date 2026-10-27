@@ -1,0 +1,13 @@
+.n1-settings {border-top:1px solid var(--line);padding:20px 0;display:grid;gap:16px;min-width:0}
+.n1-settings h3 {font-size:18px}.n1-title-fields {display:grid;grid-template-columns:1fr;gap:12px}
+.n1-brand-fields,.n1-scene-timing {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.n1-scene-section {border:1px solid var(--line);border-radius:10px;overflow:hidden}.n1-scene-section>.settings-toggle {padding:12px}
+.n1-scenes {display:grid;gap:14px;padding:0 12px 14px}.n1-scene {border:1px solid var(--line);border-radius:9px;background:#fafbf9;padding:14px;display:grid;gap:14px;min-width:0}
+.n1-scene-heading {display:flex;align-items:center;justify-content:space-between;gap:12px}.n1-scene-heading>.button {min-height:36px;padding:7px}
+.n1-data-rows {display:grid;gap:10px}.n1-data-rows>div {display:flex;align-items:end;gap:8px}.n1-data-rows .field {flex:1}
+.n1-data-rows .button {padding:10px;min-width:44px}
+.template-preview-gallery {display:grid;gap:12px}.template-preview-gallery .preview-note {margin:0}.template-preview-tabs {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.template-preview-tabs button {border:1px solid var(--line);border-radius:7px;background:white;min-height:38px;font-size:12px;padding:7px 6px}.template-preview-tabs button.selected {background:var(--pale-yellow);border-color:#ffbe77;font-weight:650}
+.template-preview-gallery>.preview-play {justify-self:center}.template-detail-note {font-size:13px;line-height:1.65;color:var(--muted);margin:0}
+.template-detail .template-preview-gallery {grid-template-columns:minmax(0,240px) minmax(0,1fr);align-items:start;gap:16px}.template-detail .poster-frame {grid-row:1/4}.template-detail .template-preview-tabs {align-self:end}.template-detail .preview-note {text-align:left}.template-detail .preview-play {justify-self:start}
+@media(max-width:600px) {.n1-brand-fields {grid-template-columns:1fr}.n1-scene {padding:10px}.template-detail .template-preview-gallery {grid-template-columns:1fr}.template-detail .poster-frame {grid-row:auto;max-width:230px}.template-detail .preview-note {text-align:center}.template-detail .preview-play {justify-self:center}}

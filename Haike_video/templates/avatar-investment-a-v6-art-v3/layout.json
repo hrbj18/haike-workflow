@@ -1,0 +1,12 @@
+{
+  "version": "art-v3",
+  "canvas": {"width": 1080, "height": 1920, "fps": 30},
+  "safe": {"left": 80, "right": 80, "top": 80, "bottom": 100},
+  "type": {"sans": "Microsoft YaHei", "communityDisplay": "KaiTi", "opticalDisplay": "SimSun", "headline": 108, "deck": 44, "caption": 56},
+  "motion": {"chapterRevealFrames": 12, "captionRevealFrames": 5, "captionRisePx": 8, "backgroundMaxScale": 1.015},
+  "blue-editorial": {"base": "#f7f6ef", "ink": "#173fc9", "accent": "#df4930", "muted": "#354c70", "portrait": {"left": 80, "top": 618, "width": 920, "height": 984, "radius": "6px", "objectY": "52%"}},
+  "community-showcase": {"base": "#f6f4e9", "ink": "#214c3b", "accent": "#e9b749", "muted": "#5c6551", "portrait": {"left": 302, "top": 618, "width": 698, "height": 984, "radius": "300px 300px 32px 32px", "objectY": "48%"}},
+  "optical-cinema": {"base": "#090d10", "ink": "#f3ecdf", "accent": "#d8b47c", "muted": "#c7beb0", "portrait": {"left": 132, "top": 618, "width": 816, "height": 984, "radius": "170px 170px 8px 8px", "objectY": "52%"}},
+  "caption": {"outsideTop": 1614, "outsideWidth": 920, "insideLeft": 30, "insideBottom": 32, "lineHeight": 1.5, "maxLines": 2, "maxLineCharacters": 14, "strokePx": 0, "maxKeywordChips": 2},
+  "audio": {"sourceSpeed": 1, "finalLinearGainDb": -2.5, "newProviderCalls": 0}
+}

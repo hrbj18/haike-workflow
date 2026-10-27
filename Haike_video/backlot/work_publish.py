@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 from urllib import request, error
 
@@ -10,8 +11,9 @@ from backlot.publish_adapter import PublishIntent, build_publish_payload, submis
 
 
 class CreatorGateway:
-    def __init__(self, base_url="http://127.0.0.1:8000"):
-        self.base_url = base_url.rstrip("/")
+    def __init__(self, base_url=None):
+        self.base_url = (base_url or os.environ.get(
+            "HAIKE_CREATORHUB_URL", "http://127.0.0.1:8000")).rstrip("/")
         self.opener = request.build_opener(request.ProxyHandler({}))
 
     def call(self, path, data=None, key=None, method=None):
@@ -112,6 +114,7 @@ def submit(catalog, plan_id, confirmed, gateway=None, actor="local-agent"):
                     "task_id": None, "status": "submitting", "acceptance_status": "not_checked", "at": now()})
             catalog._save(db, work, actor, "publish-submit-intent")
     # Intent is durable before network access; retries use exactly the same key.
+    failures = []
     for entry in plan["entries"]:
         current = catalog.get(work["work_id"])
         attempt = next(a for a in current["attempts"] if a["key"] == entry["key"])
@@ -123,15 +126,31 @@ def submit(catalog, plan_id, confirmed, gateway=None, actor="local-agent"):
                 raise WorkError("封面或证据与冻结发布计划不一致")
         if sha(payload["media_paths"][0]) != payload["video_sha256"].lower():
             raise WorkError("成片与冻结发布计划不一致")
-        result = gateway.submit(entry["payload"], entry["key"])
-        task = result.get("task", result)
-        if not task.get("id"):
-            raise WorkError("提交响应未包含任务编号，请查询原提交", "unavailable")
+        try:
+            result = gateway.submit(entry["payload"], entry["key"])
+            task = result.get("task", result)
+            if not task.get("id"):
+                raise WorkError("提交响应未包含任务编号，请查询原提交", "unavailable")
+        except WorkError as exc:
+            # A platform outage must not prevent the other frozen targets.
+            # Preserve this exact plan/key so a later recovery cannot fork it.
+            with catalog.transaction() as db:
+                current = catalog._get(db, work["work_id"])
+                a = next(a for a in current["attempts"] if a["key"] == entry["key"])
+                a.update(status="uncertain" if exc.code == "unavailable" else "blocked",
+                         blocked_reason=str(exc), error=str(exc), synced_at=now())
+                catalog._save(db, current, actor, "publish-target-blocked")
+            failures.append(exc)
+            continue
         with catalog.transaction() as db:
             current = catalog._get(db, work["work_id"])
             a = next(a for a in current["attempts"] if a["key"] == entry["key"])
             a.update(task_id=task["id"], status=task.get("status", "pending"))
+            a.pop("blocked_reason", None)
+            a.pop("error", None)
             catalog._save(db, current, actor, "publish-receipt")
+    if failures:
+        raise WorkError("部分平台待恢复，其他平台已继续提交；请查询原发布计划：" + str(failures[0]), failures[0].code)
     return catalog.get(work["work_id"])
 
 
@@ -159,6 +178,8 @@ def sync(catalog, work_id, gateway=None):
                         and all(evidence.get(k) is True for k in
                                 ("unique_work", "video_matches", "title_matches", "cover_matches")))
             values = {"status": t.get("status", "uncertain"), "result_url": t.get("result_url", ""),
+                      "error": t.get("error") or "", "blocked_reason": t.get("blocked_reason") or "",
+                      "next_allowed_at": t.get("next_allowed_at"), "platform_status": t.get("platform_status"),
                       "acceptance_status": "verified" if verified and t.get("acceptance_status") == "verified" else "not_checked",
                       "identity_verified": bound,
                       "acceptance": evidence, "synced_at": now()}

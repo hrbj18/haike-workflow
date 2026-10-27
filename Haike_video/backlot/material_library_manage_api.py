@@ -2,7 +2,7 @@
 from pathlib import Path
 
 from fastapi import APIRouter, Body, HTTPException, Query
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
 
 from backlot import material_library_management as management
 from backlot import material_library_refs as refs
@@ -22,7 +22,7 @@ def call(function, *args, **kwargs):
 
 @router.get("/material-library/manage", response_class=HTMLResponse)
 def page():
-    return HTMLResponse((Path(__file__).parent / "ui/material_library_manage.html").read_text(encoding="utf-8"))
+    return RedirectResponse('/material-library', status_code=307)
 
 
 @router.get(PREFIX + "/status")

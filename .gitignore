@@ -15,10 +15,13 @@ gcp-*.json
 .venv/
 venv/
 node_modules/
+/Haike_video/remotion-composer/node_modules
 __pycache__/
 *.py[cod]
 *.egg-info/
 .pytest_cache/
+.playwright-cli/
+.remotion/
 .p/
 .backlot/
 .workbuddy/
@@ -35,6 +38,7 @@ media/
 projects/
 renders/
 cache/
+/.cache/
 temp/
 logs/
 dist/
@@ -53,5 +57,30 @@ models/
 private-transfer/
 test_artifacts/
 .DS_Store
+.firecrawl/
 Thumbs.db
-
+# Private exports, archives and generated embedded frontend
+/deliverables/
+# User-authorized gallery screenshots ship in local delivery ZIPs, not public Git.
+/Haike_video/templates/library-covers/
+backups/
+.haike-archives/
+*api-keys*.txt
+*.p12
+*.pfx
+/Haike_video/backlot/ui/avatar-generator/
+# Private N1 previews stay on this machine; public geometry demo is hash-checked.
+!/prototypes/haike-avatar-generator/public/assets/n1-public-sample-v1.mp4
+/prototypes/haike-avatar-generator/public/assets/n1-cover.jpg
+/prototypes/haike-avatar-generator/public/assets/n1-presenter.jpg
+/prototypes/haike-avatar-generator/public/assets/n1-material.jpg
+/prototypes/haike-avatar-generator/public/assets/n1-screenshot.jpg
+/prototypes/haike-avatar-generator/public/assets/n1-data.jpg
+# Unreferenced legacy portrait has no distributable provenance; retain locally.
+/prototypes/haike-avatar-generator/public/assets/presenter.png
+/Haike_video/workflows/runninghub-high-quality/runs/
+/Haike_video/workflows/runninghub-high-quality/kit.local.json
+# Private colleague template handoff (contains original media).
+/deliverables/海客全模板_Mac复刻包_20261025/
+/deliverables/海客全模板_Mac复刻包_20261025.zip
+/deliverables/海客全模板_Mac复刻包_20261025.zip.sha256

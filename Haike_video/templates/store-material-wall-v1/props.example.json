@@ -1,0 +1,36 @@
+{
+  "durationFrames": 840,
+  "audio": "master.wav",
+  "brand": "海客AI社区服务站",
+  "title": "科技，就在身边",
+  "closingTitle": "来店里，看看AI",
+  "footer": "门店现场 · 走近身边的AI",
+  "palette": {"paper": "#F5F3EC", "ink": "#18212A", "muted": "#59616A", "blue": "#294CEE", "orange": "#FF6B35", "line": "#D3D6D5"},
+  "tabs": [
+    {"id": "all", "label": "全部现场", "order": ["a01", "a02", "a03", "a04", "a05", "a06", "a07", "a08"]},
+    {"id": "robot", "label": "机器人", "order": ["a01", "a03", "a05", "a06"]},
+    {"id": "family", "label": "亲子体验", "order": ["a04", "a06", "a08"]},
+    {"id": "store", "label": "门店日常", "order": ["a02", "a07", "a08"]}
+  ],
+  "cards": [
+    {"id": "a01", "title": "门前的机器人", "category": "机器人", "badge": "现场实拍", "thumbnail": "a01.jpg", "src": "a01.mp4", "offset": 0.3, "fit": "contain", "imageFit": "contain"},
+    {"id": "a02", "title": "走进海客门店", "category": "门店日常", "badge": "完整门头", "thumbnail": "a02.jpg", "src": "a02.mp4", "offset": 6.3, "fit": "contain", "imageFit": "contain"},
+    {"id": "a03", "title": "机器人现场展示", "category": "机器人", "badge": "真实片段", "thumbnail": "a03.jpg", "src": "a03.mp4", "offset": 8.3, "fit": "contain", "imageFit": "contain"},
+    {"id": "a04", "title": "孩子们的好奇心", "category": "亲子体验", "badge": "近距离观察", "thumbnail": "a04.jpg", "src": "a04.mp4", "offset": 5.0, "fit": "contain", "imageFit": "contain"},
+    {"id": "a05", "title": "机器狗站起来", "category": "机器人", "badge": "完整动作", "thumbnail": "a05.jpg", "src": "a05.mp4", "offset": 8.2, "fit": "contain", "imageFit": "contain"},
+    {"id": "a06", "title": "围桌一起体验", "category": "亲子体验", "badge": "门店现场", "thumbnail": "a06.jpg", "src": "a06.mp4", "offset": 0.3, "fit": "contain", "imageFit": "contain"},
+    {"id": "a07", "title": "身边的AI好物", "category": "门店日常", "badge": "实拍陈列", "thumbnail": "a07.jpg", "src": "a07.mp4", "offset": 0.8, "fit": "contain", "imageFit": "contain"},
+    {"id": "a08", "title": "店内接待日常", "category": "门店日常", "badge": "真实现场", "thumbnail": "a08.jpg", "src": "a08.mp4", "offset": 2.0, "fit": "contain", "imageFit": "contain"}
+  ],
+  "tabChanges": [
+    {"from": 0, "tabId": "all"},
+    {"from": 246, "tabId": "robot"},
+    {"from": 486, "tabId": "family"},
+    {"from": 714, "tabId": "all"}
+  ],
+  "moments": [
+    {"id": "show-store", "cardId": "a02", "tabId": "all", "cursorFrom": 54, "selectFrom": 78, "expandFrom": 90, "holdFrom": 108, "collapseFrom": 186, "end": 204, "sourceOffset": 6.3},
+    {"id": "show-dog", "cardId": "a05", "tabId": "robot", "cursorFrom": 276, "selectFrom": 312, "expandFrom": 324, "holdFrom": 342, "collapseFrom": 420, "end": 438, "sourceOffset": 8.2},
+    {"id": "show-family", "cardId": "a04", "tabId": "family", "cursorFrom": 516, "selectFrom": 552, "expandFrom": 564, "holdFrom": 582, "collapseFrom": 660, "end": 678, "sourceOffset": 5.0}
+  ]
+}

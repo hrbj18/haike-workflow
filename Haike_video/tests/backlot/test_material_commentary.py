@@ -176,7 +176,9 @@ def test_original_subtitles_preserved_and_new_cues_separated(setup,tmp_path):
 def test_api_contract_and_cli_roundtrip(setup,tmp_path,capsys):
     projects,db,draft,_,ev,_,_=setup
     app=FastAPI();app.include_router(api.router);client=TestClient(app)
-    assert client.get("/material-commentary").status_code==200
+    # The standalone legacy page was retired; the retained API and CLI below
+    # still enforce revision, evidence, rendering, and export contracts.
+    assert client.get("/material-commentary").status_code==404
     base="/api/material-commentaries/"+draft["id"]
     changed={**draft,"payload":{**draft["payload"],"intent":"问答","structure":"保留问题再给回答","segments":[segment(ev)]}}
     response=client.put(base,json=changed);assert response.status_code==200,response.text

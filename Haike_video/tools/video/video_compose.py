@@ -1040,6 +1040,12 @@ class VideoCompose(BaseTool):
             "scale":          <optional float, e.g. 0.5 for a fast draft>,
             "crf":            <optional int, e.g. 18 for a crisp final>,
             "concurrency":    <optional int>,
+            "image_format":   <optional "png" or "jpeg">,
+            "jpeg_quality":   <optional 1..100, JPEG only>,
+            "codec":          <optional "h264">,
+            "x264_preset":    <optional x264 preset>,
+            "pixel_format":   <optional "yuv420p" or "yuv444p">,
+            "video_bitrate":  <optional FFmpeg target rate, mutually exclusive with crf>,
         }
         """
         bespoke = edit_decisions.get("bespoke") or {}
@@ -1119,12 +1125,56 @@ class VideoCompose(BaseTool):
             if pd.exists():
                 cmd.append(f"--public-dir={pd}")
 
+        if "video_bitrate" in bespoke:
+            bitrate = bespoke["video_bitrate"]
+            if (not isinstance(bitrate, str) or not re.fullmatch(r"[1-9][0-9]*(?:[kKmM])?", bitrate)
+                    or bespoke.get("crf") is not None):
+                return ToolResult(success=False, error="Atelier video_bitrate必须是有效目标码率，且不能同时设置CRF")
+            cmd.append(f"--video-bitrate={bitrate}")
         if bespoke.get("scale"):
             cmd.append(f"--scale={bespoke['scale']}")
         if bespoke.get("crf") is not None:
             cmd.append(f"--crf={bespoke['crf']}")
         if bespoke.get("concurrency"):
             cmd.append(f"--concurrency={bespoke['concurrency']}")
+        allowed = {
+            "codec": ({"h264"}, "codec"),
+            "image_format": ({"png", "jpeg"}, "image-format"),
+            "x264_preset": ({"ultrafast", "superfast", "veryfast", "faster", "fast", "medium", "slow", "slower", "veryslow", "placebo"}, "x264-preset"),
+            "pixel_format": ({"yuv420p", "yuv444p"}, "pixel-format"),
+        }
+        for key, (values, flag) in allowed.items():
+            if key in bespoke:
+                value = bespoke[key]
+                if not isinstance(value, str) or value not in values:
+                    return ToolResult(success=False, error=f"Atelier invalid {key}: {value!r}")
+                cmd.append(f"--{flag}={value}")
+        if "jpeg_quality" in bespoke:
+            value = bespoke["jpeg_quality"]
+            if (bespoke.get("image_format") != "jpeg" or isinstance(value, bool)
+                    or not isinstance(value, int) or not 1 <= value <= 100):
+                return ToolResult(success=False, error="Atelier jpeg_quality requires JPEG and an integer from1 to100")
+            cmd.append(f"--jpeg-quality={value}")
+
+        if "h264_cbr" in bespoke:
+            if type(bespoke["h264_cbr"]) is not bool:
+                return ToolResult(success=False, error="Atelier h264_cbr必须为布尔值")
+            if bespoke["h264_cbr"]:
+                if bespoke.get("codec") != "h264" or not bespoke.get("video_bitrate") or bespoke.get("crf") is not None:
+                    return ToolResult(success=False, error="Atelier CBR需要H.264和明确码率，禁止同时CRF")
+                # Keep the original PNG-to-H.264 encode. HRD filler supplies the
+                # declared rate for simple graphics without a second lossy pass.
+                config = output_path.with_suffix(".cbr.config.js")
+                rate = bespoke["video_bitrate"]
+                config.write_text(
+                    "const {Config}=require('@remotion/cli/config');\n"
+                    "Config.overrideFfmpegCommand(({args})=>{\n"
+                    "if(!args.includes('libx264')) return args;\n"
+                    "return [...args.slice(0,-1),'-minrate'," + json.dumps(rate) +
+                    ",'-maxrate'," + json.dumps(rate) + ",'-bufsize'," + json.dumps(rate) +
+                    ",'-x264-params','nal-hrd=cbr:filler=1',args[args.length-1]];\n});\n",
+                    encoding="utf-8")
+                cmd.append(f"--config={config}")
 
         try:
             # Run from inside the composer dir so npx resolves the local
@@ -1177,6 +1227,7 @@ class VideoCompose(BaseTool):
             "effective_entry": str(effective_entry) if effective_entry != entry_path else None,
             "composition_id": comp_id,
             "output": str(output_path),
+            "render_command": cmd,
             "final_review": final_review,
             "final_review_status": final_review.get("status"),
         }
@@ -1255,7 +1306,9 @@ class VideoCompose(BaseTool):
         for src in real_project_dir.rglob("*"):
             if not src.is_file():
                 continue
-            if src.suffix.lower() not in self._ATELIER_STAGE_EXTS:
+            # A template's public layout is source configuration. Other JSON
+            # files (props, gateway state, credentials) remain at their origin.
+            if src.suffix.lower() not in self._ATELIER_STAGE_EXTS and src.name != "layout.json":
                 continue
             rel = src.relative_to(real_project_dir)
             dst = staging_dir / rel

@@ -313,19 +313,24 @@ def test_ceiling_only_run_never_overshoots(tmp_path: Path, monkeypatch) -> None:
 # test_replication_download_budget, so it is deliberately NOT re-asserted here.
 # --------------------------------------------------------------------------- #
 def test_shipped_config_quota_and_window_factory_values() -> None:
-    settings = load_config()["jobs"]["material_replication"]
+    shipped = Path(__file__).resolve().parents[1] / "config" / "content_intelligence.json"
+    settings = load_config(shipped)["jobs"]["material_replication"]
     material = settings["material_replica"]
     clips = settings["clips"]
 
     # 8 sources per period (was 4): the volume quota's count trigger.
     assert material["target_count"] == 8
-    # 300 s material window (was 180): the two long 9.13 clips (202 s / 182 s)
-    # must survive the pre-download gate so their bytes can be delivered.
-    assert material["max_seconds"] == 300
+    # The factory now allows ten-minute sources. Algorithm tests supply their
+    # own narrow windows instead of inheriting this operator-tunable policy.
+    assert material["max_seconds"] == 600
+    assert settings["prefilter"]["max_seconds"] == material["max_seconds"]
+    assert 0 < material["min_seconds"] < material["max_seconds"]
     # Delivered-source-bytes band: floor 70 MiB, ceiling 100 MiB.
     assert material["min_delivered_bytes"] == 73400320
     assert material["max_delivered_bytes"] == 104857600
+    assert 0 < material["min_delivered_bytes"] <= material["max_delivered_bytes"]
     # 8 sources x max_per_video(2) = 16 <= max_total, so no source is starved of
     # its clip; 24 keeps headroom above the pre-quota 12.
     assert clips["max_total"] == 24
+    assert material["target_count"] * clips["max_per_video"] <= clips["max_total"]
 

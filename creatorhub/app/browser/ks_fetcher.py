@@ -757,6 +757,12 @@ async def fetch_ks_self_profile(mgr: BrowserManager, identity: Identity,
     except Exception as e:
         error = f"{e!r}"
     finally:
+        checkpoint = getattr(mgr, "snapshot_session", None)
+        if callable(checkpoint) and getattr(page, "context", None) is not None:
+            try:
+                await checkpoint(identity, page.context)
+            except Exception:
+                pass
         try:
             await page.close()
         except Exception:
@@ -908,7 +914,14 @@ async def post_ks_comment(mgr: BrowserManager, identity: Identity, photo_id: str
     finally:
         try:
             if ctx is not None:
-                await ctx.close()
+                try:
+                    checkpoint = getattr(mgr, "snapshot_session", None)
+                    if callable(checkpoint):
+                        await checkpoint(identity, ctx)
+                except Exception:
+                    pass
+                finally:
+                    await ctx.close()
             else:
                 await page.close()
         except Exception:

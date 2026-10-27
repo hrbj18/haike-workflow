@@ -36,6 +36,9 @@ def rig(tmp_path, monkeypatch):
     monkeypatch.setattr(center, "AUDIO_CENTER_DIR", tmp_path / "audio")
     monkeypatch.setattr(center, "AUDIO_CENTER_FILE", tmp_path / "audio/audio_center.json")
     monkeypatch.setattr(center, "PREVIEW_DIRECTORY", tmp_path / "audio/previews")
+    # The catalog checks the local tool directly before provider_status(). A
+    # cloud enrollment fixture must never probe an optional background service.
+    monkeypatch.setattr(center.VoiceboxTTS, "get_status", classmethod(lambda cls: ToolStatus.UNAVAILABLE))
     monkeypatch.setattr(center.VoiceboxTTS, "list_profiles", classmethod(lambda cls: []))
     monkeypatch.setattr(center, "provider_status", lambda _: ToolStatus.AVAILABLE)
     monkeypatch.setattr(center, "find_avatar_role_by_voice_profile", lambda _: None)
@@ -163,10 +166,10 @@ def test_job_path_cannot_escape(bad):
     with pytest.raises(center.AudioCenterError): clone.resume_voice(bad)
 
 
-@pytest.mark.parametrize("seconds", [1, 61])
+@pytest.mark.parametrize("seconds", [1])
 def test_invalid_duration_rejected_before_upload(rig, seconds):
     rig.source.write_bytes(wav(seconds))
-    with pytest.raises(center.AudioCenterError, match="5–60"):
+    with pytest.raises(center.AudioCenterError, match="5 秒"):
         create(rig)
     assert not rig.uploaded and not rig.calls
 
@@ -203,8 +206,9 @@ def test_oversize_and_extra_field_rejected(rig, client):
     assert response.status_code == 422 and not rig.calls
 
 
-def test_actual_workbench_routes_expose_new_flow(rig):
+def test_actual_workbench_routes_expose_new_flow(rig, monkeypatch):
     from backlot import server
+    monkeypatch.setenv("HAIKE_INTERNAL_TESTING", "1")
     client = TestClient(server.create_app())
     response = client.post("/api/audio-center/bailian-clones", data={"name": "路由测试", "model_id": api.COSYVOICE_TTS_MODEL, "consent": "yes"},
                            files={"audio": ("record.wav", rig.source.read_bytes())})
@@ -213,7 +217,8 @@ def test_actual_workbench_routes_expose_new_flow(rig):
     assert listing.status_code == 200 and listing.json()["jobs"][0]["voice_id"] == VOICE
     assert "account" not in listing.text and "Signature" not in listing.text
     assert client.post("/api/audio-center/bailian-clones/not-a-job/resume").status_code == 422
-    assert "上传参考录音，添加克隆音色" in client.get("/ui/audio_center.js").text
+    # The retained internal API no longer ships the retired global-audio UI.
+    assert client.get("/ui/audio_center.js").status_code == 404
 
 
 @pytest.mark.parametrize("response", [
@@ -239,3 +244,100 @@ def test_rejected_create_can_only_retry_explicitly(rig, monkeypatch):
 def test_resume_readiness_never_uploads_or_calls_cloud(rig):
     assert clone.list_jobs()["jobs"] == []
     assert not rig.calls and not rig.uploaded
+
+
+def test_existing_voice_can_resume_without_oss_credentials(rig, monkeypatch):
+    result = create(rig)
+    record_path = clone._path(result["id"])
+    record = api.read_record(record_path)
+    record["status"] = "checking"
+    api.write_record(record_path, record)
+    for env in ("BAILIAN_OSS_ENDPOINT", "BAILIAN_OSS_BUCKET", "BAILIAN_OSS_ACCESS_KEY_ID",
+                "BAILIAN_OSS_ACCESS_KEY_SECRET"):
+        monkeypatch.delenv(env, raising=False)
+    monkeypatch.setattr(clone, "_oss_bucket", lambda: pytest.fail("Query must not require storage"))
+    assert clone.resume_voice(result["id"])["status"] == "completed"
+    assert [call["input"]["action"] for call in rig.calls] == ["create_voice", "query_voice", "query_voice"]
+
+
+@pytest.fixture
+def temporary_rig(rig, monkeypatch):
+    for env in ("BAILIAN_OSS_ENDPOINT", "BAILIAN_OSS_BUCKET", "BAILIAN_OSS_ACCESS_KEY_ID",
+                "BAILIAN_OSS_ACCESS_KEY_SECRET"):
+        monkeypatch.delenv(env, raising=False)
+    monkeypatch.setattr(clone, "_oss_bucket", lambda: pytest.fail("Temporary upload must not use private OSS"))
+    def get(url, **kwargs):
+        assert url == api.api_base() + "/uploads"
+        assert kwargs["params"] == {"action": "getPolicy", "model": "voice-enrollment"}
+        return SimpleNamespace(status_code=200, ok=True, json=lambda: {"data": {
+            "upload_host": "https://temporary.oss-cn-beijing.aliyuncs.com",
+            "upload_dir": "test-temporary", "oss_access_key_id": "temporary-id",
+            "signature": "temporary-signature", "policy": "temporary-policy"}})
+    def post(url, **kwargs):
+        if url == "https://temporary.oss-cn-beijing.aliyuncs.com":
+            assert kwargs["allow_redirects"] is False
+            assert kwargs["data"]["x-oss-object-acl"] == "private"
+            audio = kwargs["files"]["file"][1].read()
+            with wave.open(io.BytesIO(audio), "rb") as stream:
+                assert (stream.getnchannels(), stream.getsampwidth(), stream.getframerate()) == (1, 2, 24000)
+            rig.uploaded.append(audio)
+            return SimpleNamespace(status_code=204)
+        action = kwargs["json"]["input"]["action"]
+        if action == "create_voice":
+            assert kwargs["headers"]["X-DashScope-OssResourceResolve"] == "enable"
+            assert kwargs["json"]["input"]["url"].startswith("oss://test-temporary/")
+        else:
+            assert "X-DashScope-OssResourceResolve" not in kwargs["headers"]
+        return rig.post(url, **kwargs)
+    monkeypatch.setattr(clone.requests, "get", get)
+    monkeypatch.setattr(clone.requests, "post", post)
+    return rig
+
+
+def test_cosyvoice_temporary_upload_needs_only_api_key_preserves_model_and_default(temporary_rig):
+    default = center._load()["default_profile_id"]
+    assert clone.readiness()["ready"] and clone.readiness()["storage_mode"] == "temporary"
+    result = create(temporary_rig)
+    assert result["status"] == "completed" and result["model_id"] == api.COSYVOICE_TTS_MODEL
+    assert center._load()["default_profile_id"] == default
+    assert len(temporary_rig.uploaded) == 1 and not temporary_rig.deleted
+    assert create(temporary_rig) == result and len(temporary_rig.calls) == 2
+    assert len(temporary_rig.uploaded) == 1
+    record = clone._path(result["id"]).read_text(encoding="utf-8")
+    assert "temporary-signature" not in record and "oss://" not in record
+
+
+def test_long_recording_uses_first_twenty_seconds(temporary_rig):
+    temporary_rig.source.write_bytes(wav(61))
+    result = create(temporary_rig)
+    assert result["status"] == "completed" and result["reference_trimmed"]
+    assert result["reference_duration_seconds"] == 20
+    with wave.open(io.BytesIO(temporary_rig.uploaded[0]), "rb") as stream:
+        assert stream.getnframes() / stream.getframerate() == 20
+
+
+def test_temporary_actual_workbench_upload_and_catalog(temporary_rig, monkeypatch):
+    from backlot import server
+    monkeypatch.setenv("HAIKE_INTERNAL_TESTING", "1")
+    client = TestClient(server.create_app())
+    response = client.post("/api/audio-center/bailian-clones", data={
+        "name": "临时上传路由", "model_id": api.COSYVOICE_TTS_MODEL, "consent": "yes"},
+        files={"audio": ("sample.wav", temporary_rig.source.read_bytes(), "audio/wav")})
+    assert response.status_code == 201 and response.json()["status"] == "completed"
+    profile_id = response.json()["profile_id"]
+    profile = next(item for item in client.get("/api/audio-center").json()["profiles"] if item["id"] == profile_id)
+    assert profile["voice_type"] == "cloud_clone" and profile["model_id"] == api.COSYVOICE_TTS_MODEL
+    assert profile["available"] and len(temporary_rig.calls) == 2
+
+
+def test_temporary_rejection_has_no_private_storage_cleanup(temporary_rig, monkeypatch):
+    post = clone.requests.post
+    def rejected(url, **kwargs):
+        if url.endswith("/customization"):
+            return SimpleNamespace(status_code=400, ok=False, json=lambda: {
+                "code": "BadAudio", "message": "invalid data:audio/wav;base64,QUJDRA=="})
+        return post(url, **kwargs)
+    monkeypatch.setattr(clone.requests, "post", rejected)
+    result = create(temporary_rig)
+    assert result["status"] == "rejected" and "QUJDRA==" not in json.dumps(result)
+    assert not temporary_rig.deleted

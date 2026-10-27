@@ -1238,7 +1238,8 @@ def test_workbench_client_uses_explicit_two_step_visual_batch_flow(client):
     assert "默认只在网络视频与 HyperFrames 之间推荐" in script.text
     assert "按时长推荐" in script.text
     assert "批量画面已全部完成" in script.text
-    assert "visualBatchPlan = null;\n    trackVisualBatch((state.automation || {}).visual_batch);\n    render();" in script.text
+    source = "\n".join(script.text.splitlines())
+    assert "visualBatchPlan = null;\n    trackVisualBatch((state.automation || {}).visual_batch);\n    render();" in source
     action_index = script.text.index('class: "visual-batch-actions"')
     progress_index = script.text.index('data-visual-batch-island', action_index)
     plan_index = script.text.index("planningFeedback,", action_index)
@@ -1759,10 +1760,10 @@ def test_vision_v2_candidate_adoption_writes_auditable_current_scene_draft(clien
 
 def test_visual_composition_rejects_overlaps_stale_revision_and_locked_changes(client, projects_root):
     project = make_project(projects_root)
-    (project / "assets" / "hero.png").write_bytes(b"hero")
+    (project / "assets" / "hero.mp4").write_bytes(b"hero-video")
     client.post("/api/project/film/workbench/bootstrap")
     added = client.post("/api/project/film/workbench/assets", json={
-        "name": "机器鸭特写", "type": "image", "source_type": "human_provided", "path": "assets/hero.png",
+        "name": "机器鸭特写", "type": "video", "source_type": "human_provided", "path": "assets/hero.mp4", "duration_seconds": 4,
     }).json()["assets"][-1]
     initial = client.get("/api/project/film/workbench").json()
     revision = next(item for item in initial["scenes"] if item["id"] == "scene-a")["visual_composition"]["revision"]
@@ -1789,7 +1790,7 @@ def test_visual_composition_rejects_overlaps_stale_revision_and_locked_changes(c
     assert "其他操作中更新" in stale.json()["detail"]
     changed_locked = client.put("/api/project/film/workbench/scenes/scene-a/visual-composition", json={
         "expected_revision": current["revision"], "layout_recipe": "focus_card",
-        "overlays": [{**current["overlays"][0], "end_seconds": 2.5}],
+        "overlays": [{**current["overlays"][0], "end_seconds": 2.5, "source_out_seconds": 2.5}],
     })
     assert changed_locked.status_code == 422
     assert "已锁定" in changed_locked.json()["detail"]
@@ -1800,6 +1801,52 @@ def test_visual_composition_rejects_overlaps_stale_revision_and_locked_changes(c
     })
     assert unsupported.status_code == 422
     assert "第 1 版" in unsupported.json()["detail"]
+
+
+@pytest.mark.parametrize("last_type,last_start,expected", [
+    ("image", 2.5, 200),  # Concurrent stills are intentional layered collages.
+    ("video", 2.5, 422),  # The long first still overlaps this nonadjacent clip.
+    ("video", 2.987, 422),
+    ("video", 2.988, 200),  # Preserve the existing 12 ms boundary tolerance.
+    ("video", 3, 200),  # Exact half-open boundaries can touch.
+])
+def test_visual_composition_checks_nonadjacent_pairs_without_blocking_still_collages(
+    client, projects_root, last_type, last_start, expected,
+):
+    project = make_project(projects_root)
+    (project / "assets/hero.png").write_bytes(b"still")
+    initial = client.post("/api/project/film/workbench/bootstrap").json()
+    image = client.post("/api/project/film/workbench/assets", json={
+        "name": "拼贴图片", "type": "image", "source_type": "human_provided", "path": "assets/hero.png",
+    }).json()["assets"][-1]
+    last = image
+    if last_type == "video":
+        (project / "assets/hero.mp4").write_bytes(b"motion")
+        last = client.post("/api/project/film/workbench/assets", json={
+            "name": "重点视频", "type": "video", "source_type": "human_provided", "path": "assets/hero.mp4", "duration_seconds": 4,
+        }).json()["assets"][-1]
+    scene = next(item for item in initial["scenes"] if item["id"] == "scene-a")
+    response = client.put("/api/project/film/workbench/scenes/scene-a/visual-composition", json={
+        "expected_revision": scene["visual_composition"]["revision"], "layout_recipe": "focus_card",
+        "overlays": [
+            {"start_seconds": 0, "end_seconds": 3, "asset_id": image["id"],
+             "placement": {"position_x_ratio": .3, "size_ratio": .3}},
+            {"start_seconds": .5, "end_seconds": 1.5, "asset_id": image["id"],
+             "placement": {"position_x_ratio": .7, "size_ratio": .3}},
+            {"start_seconds": last_start, "end_seconds": 4, "asset_id": last["id"]},
+        ],
+    })
+    assert response.status_code == expected, response.text
+    current = next(item for item in client.get("/api/project/film/workbench").json()["scenes"] if item["id"] == "scene-a")["visual_composition"]
+    if expected == 422:
+        assert "不能互相重叠" in response.json()["detail"]
+        assert current["revision"] == scene["visual_composition"]["revision"]
+        assert current["overlays"] == []
+    else:
+        assert len(current["overlays"]) == 3
+        assert [item["start_seconds"] for item in current["overlays"]] == [0, .5, last_start]
+        assert current["overlays"][0]["placement"]["position_x_ratio"] == .3
+        assert current["overlays"][1]["placement"]["position_x_ratio"] == .7
 
 
 def test_visual_composition_lock_metadata_does_not_change_preview_signature(projects_root):
@@ -4560,9 +4607,22 @@ def test_interactive_project_page_is_workbench_but_static_board_is_preserved(cli
     workbench_script = client.get("/ui/workbench.js")
 
     assert workbench.status_code == 200
-    assert "海客导演台" in workbench.text
+    assert "<title>项目工作台 · 海客科技</title>" in workbench.text
     assert "workbench.js" in workbench.text
+    assert "workbench-modern.css" in workbench.text
+    assert "board.js" not in workbench.text
+    assert static_board.status_code == 200
     assert "board.js" in static_board.text
+    assert "workbench.js" not in static_board.text
+    assert workbench_script.status_code == 200
+    for identity in ("app", "toast", "assetDialog", "assetForm", "imageDialog", "imageForm"):
+        assert f'id="{identity}"' in workbench.text
+        assert f'getElementById("{identity}")' in workbench_script.text
+    board_script = client.get("/ui/board.js")
+    assert board_script.status_code == 200
+    for identity in ("app", "modal", "player"):
+        assert f'id="{identity}"' in static_board.text
+        assert f'getElementById("{identity}")' in board_script.text
 
 
 def test_workbench_preserves_review_position_but_never_auto_resumes_audio(client):

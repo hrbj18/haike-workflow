@@ -1,0 +1,2368 @@
+{
+  "schema_version": 1,
+  "standard_version": "video-template-v1",
+  "template_id": "motiongit-hum-pilot-v1",
+  "template_version": "v001",
+  "template_type": "custom",
+  "spec_kind": "implementation",
+  "stage": "ready",
+  "authority": {
+    "runbook": "README.md",
+    "implementation_paths": [
+      "../motiongit-narrated-pilot-v1/hum.tsx",
+      "../motiongit-narrated-pilot-v1/index.tsx",
+      "../motiongit-narrated-pilot-v1/types.ts",
+      "../motiongit-narrated-pilot-v1/layout.json",
+      "../../backlot/studio_motiongit_narrated_pilot.py"
+    ],
+    "parameter_source": "../motiongit-narrated-pilot-v1/hum.tsx"
+  },
+  "canvas": {
+    "width": 1440,
+    "height": 1800,
+    "fps": 30,
+    "duration_seconds": 20,
+    "clock": "600 output frames; one 48kHz stereo PCM16 master has960000samples/channel. Existing voice remains original-speed0–19.8s with0.2s no-speech tail; all visual/source clocks follow this master.",
+    "coordinate_system": "top_left_pixels"
+  },
+  "narrative": {
+    "purpose": "Hum cut-paper20s variant of the existing store-account film; preserve exact content/media/time/audio while replacing visual surfaces, paper frames and colour roles.",
+    "information_hierarchy": [
+      "Original voice meaning and exact approved captions",
+      "Reviewed full-frame actual footage",
+      "Short chapter titles and selection/focus motion",
+      "Existing same-clock presenter window",
+      "Brand and neutral footer"
+    ],
+    "structure": [
+      "opening",
+      "family-select",
+      "robot-focus",
+      "dog-focus",
+      "goods-focus",
+      "presenter",
+      "closing"
+    ]
+  },
+  "scenes": [
+    {
+      "id": "opening",
+      "start": 0.0,
+      "end": 4.0,
+      "purpose": "这家新店， / 吸引了谁？",
+      "element_ids": [
+        "wall-category",
+        "wall-card",
+        "wall-video",
+        "wall-cursor",
+        "canvas",
+        "scene-surface",
+        "scene-title",
+        "scene-subtitle",
+        "focus-window",
+        "focus-video",
+        "focus-label",
+        "presenter-layer",
+        "presenter-title",
+        "presenter-window",
+        "presenter-video",
+        "presenter-label",
+        "brand",
+        "captions",
+        "footer",
+        "master-audio",
+        "hum-fibre",
+        "hum-mint-band",
+        "hum-sand-band",
+        "hum-paper-frame",
+        "hum-wall-poster",
+        "hum-wall-label"
+      ],
+      "variant": "hum-wall"
+    },
+    {
+      "id": "family-select",
+      "start": 4.0,
+      "end": 9.0,
+      "purpose": "围着看， / 再凑近一点。",
+      "element_ids": [
+        "wall-category",
+        "wall-card",
+        "wall-video",
+        "wall-cursor",
+        "canvas",
+        "scene-surface",
+        "scene-title",
+        "scene-subtitle",
+        "focus-window",
+        "focus-video",
+        "focus-label",
+        "presenter-layer",
+        "presenter-title",
+        "presenter-window",
+        "presenter-video",
+        "presenter-label",
+        "brand",
+        "captions",
+        "footer",
+        "master-audio",
+        "hum-fibre",
+        "hum-mint-band",
+        "hum-sand-band",
+        "hum-paper-frame",
+        "hum-wall-poster",
+        "hum-wall-label"
+      ],
+      "variant": "hum-wall"
+    },
+    {
+      "id": "robot-focus",
+      "start": 9.0,
+      "end": 10.8,
+      "purpose": "人形机器人 / 近距离看看。",
+      "element_ids": [
+        "wall-category",
+        "wall-card",
+        "wall-video",
+        "wall-cursor",
+        "canvas",
+        "scene-surface",
+        "scene-title",
+        "scene-subtitle",
+        "focus-window",
+        "focus-video",
+        "focus-label",
+        "presenter-layer",
+        "presenter-title",
+        "presenter-window",
+        "presenter-video",
+        "presenter-label",
+        "brand",
+        "captions",
+        "footer",
+        "master-audio",
+        "hum-fibre",
+        "hum-mint-band",
+        "hum-sand-band",
+        "hum-paper-frame",
+        "hum-wall-poster",
+        "hum-wall-label"
+      ],
+      "variant": "hum-focus"
+    },
+    {
+      "id": "dog-focus",
+      "start": 10.8,
+      "end": 12.8,
+      "purpose": "桌边的 / 小互动。",
+      "element_ids": [
+        "wall-category",
+        "wall-card",
+        "wall-video",
+        "wall-cursor",
+        "canvas",
+        "scene-surface",
+        "scene-title",
+        "scene-subtitle",
+        "focus-window",
+        "focus-video",
+        "focus-label",
+        "presenter-layer",
+        "presenter-title",
+        "presenter-window",
+        "presenter-video",
+        "presenter-label",
+        "brand",
+        "captions",
+        "footer",
+        "master-audio",
+        "hum-fibre",
+        "hum-mint-band",
+        "hum-sand-band",
+        "hum-paper-frame",
+        "hum-wall-poster",
+        "hum-wall-label"
+      ],
+      "variant": "hum-focus"
+    },
+    {
+      "id": "goods-focus",
+      "start": 12.8,
+      "end": 15.4,
+      "purpose": "一家人， / 各有各的好奇。",
+      "element_ids": [
+        "wall-category",
+        "wall-card",
+        "wall-video",
+        "wall-cursor",
+        "canvas",
+        "scene-surface",
+        "scene-title",
+        "scene-subtitle",
+        "focus-window",
+        "focus-video",
+        "focus-label",
+        "presenter-layer",
+        "presenter-title",
+        "presenter-window",
+        "presenter-video",
+        "presenter-label",
+        "brand",
+        "captions",
+        "footer",
+        "master-audio",
+        "hum-fibre",
+        "hum-mint-band",
+        "hum-sand-band",
+        "hum-paper-frame",
+        "hum-wall-poster",
+        "hum-wall-label"
+      ],
+      "variant": "hum-focus"
+    },
+    {
+      "id": "presenter",
+      "start": 15.4,
+      "end": 18.8,
+      "purpose": "海客AI社区服务站 / 新塘未来汇",
+      "element_ids": [
+        "wall-category",
+        "wall-card",
+        "wall-video",
+        "wall-cursor",
+        "canvas",
+        "scene-surface",
+        "scene-title",
+        "scene-subtitle",
+        "focus-window",
+        "focus-video",
+        "focus-label",
+        "presenter-layer",
+        "presenter-title",
+        "presenter-window",
+        "presenter-video",
+        "presenter-label",
+        "brand",
+        "captions",
+        "footer",
+        "master-audio",
+        "hum-fibre",
+        "hum-mint-band",
+        "hum-sand-band",
+        "hum-paper-frame",
+        "hum-wall-poster",
+        "hum-wall-label"
+      ],
+      "variant": "hum-statement"
+    },
+    {
+      "id": "closing",
+      "start": 18.8,
+      "end": 20.0,
+      "purpose": "新店开业",
+      "element_ids": [
+        "wall-category",
+        "wall-card",
+        "wall-video",
+        "wall-cursor",
+        "canvas",
+        "scene-surface",
+        "scene-title",
+        "scene-subtitle",
+        "focus-window",
+        "focus-video",
+        "focus-label",
+        "presenter-layer",
+        "presenter-title",
+        "presenter-window",
+        "presenter-video",
+        "presenter-label",
+        "brand",
+        "captions",
+        "footer",
+        "master-audio",
+        "hum-fibre",
+        "hum-mint-band",
+        "hum-sand-band",
+        "hum-paper-frame",
+        "hum-wall-poster",
+        "hum-wall-label"
+      ],
+      "variant": "hum-focus"
+    }
+  ],
+  "assets": [
+    {
+      "id": "media-door",
+      "kind": "video",
+      "path": null,
+      "source": "props.media[id=door].src and exact reviewed original source interval",
+      "embedded_content": [
+        "source subjects, signage and existing baked pixels"
+      ],
+      "rights_status": "Actual local run binds source identity and usage basis; example carries no media or authorization proof."
+    },
+    {
+      "id": "media-family",
+      "kind": "video",
+      "path": null,
+      "source": "props.media[id=family].src and exact reviewed original source interval",
+      "embedded_content": [
+        "source subjects, signage and existing baked pixels"
+      ],
+      "rights_status": "Actual local run binds source identity and usage basis; example carries no media or authorization proof."
+    },
+    {
+      "id": "media-robot",
+      "kind": "video",
+      "path": null,
+      "source": "props.media[id=robot].src and exact reviewed original source interval",
+      "embedded_content": [
+        "source subjects, signage and existing baked pixels"
+      ],
+      "rights_status": "Actual local run binds source identity and usage basis; example carries no media or authorization proof."
+    },
+    {
+      "id": "media-dog",
+      "kind": "video",
+      "path": null,
+      "source": "props.media[id=dog].src and exact reviewed original source interval",
+      "embedded_content": [
+        "source subjects, signage and existing baked pixels"
+      ],
+      "rights_status": "Actual local run binds source identity and usage basis; example carries no media or authorization proof."
+    },
+    {
+      "id": "media-goods",
+      "kind": "video",
+      "path": null,
+      "source": "props.media[id=goods].src and exact reviewed original source interval",
+      "embedded_content": [
+        "source subjects, signage and existing baked pixels"
+      ],
+      "rights_status": "Actual local run binds source identity and usage basis; example carries no media or authorization proof."
+    },
+    {
+      "id": "media-doorEnd",
+      "kind": "video",
+      "path": null,
+      "source": "props.media[id=doorEnd].src and exact reviewed original source interval",
+      "embedded_content": [
+        "source subjects, signage and existing baked pixels"
+      ],
+      "rights_status": "Actual local run binds source identity and usage basis; example carries no media or authorization proof."
+    },
+    {
+      "id": "posters",
+      "kind": "image",
+      "path": null,
+      "source": "props.media[].thumbnail plus exact original timestamp andSHA",
+      "embedded_content": [
+        "thumbnail pixels from the actual original film"
+      ],
+      "rights_status": "Bound to the same reviewed original asset; not included in this public example."
+    },
+    {
+      "id": "presenter",
+      "kind": "video",
+      "path": null,
+      "source": "props.presenter.src, source-audit and original receipt",
+      "embedded_content": [
+        "existing person performance and original embedded audio, muted in output"
+      ],
+      "rights_status": "Use only the already authorized source window; no new person service call in this pilot."
+    },
+    {
+      "id": "audio-master",
+      "kind": "audio",
+      "path": null,
+      "source": "props.audio=master.wav plus current audio/source/ASR/prior receipts",
+      "embedded_content": [
+        "existing unchanged-speed speech plus independently mixed original music andSFX"
+      ],
+      "rights_status": "Current private receipt binds original approvals, sourceSHA and project-local music provenance."
+    },
+    {
+      "id": "fonts",
+      "kind": "font",
+      "path": null,
+      "source": "optional frozen display.ttf/body.ttf; exact files are current local inputs",
+      "embedded_content": [],
+      "rights_status": "Actual selected font files and distribution rights checked at packaging; no font binaries included here."
+    }
+  ],
+  "elements": [
+    {
+      "id": "wall-category",
+      "type": "text",
+      "role": "wall-filter-labels",
+      "parent_id": "canvas",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "wall-category-slot",
+        "asset_id": null,
+        "description": "Editable category labels; a visual category rail, not a live footage filter."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          88,
+          426,
+          1264,
+          50
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "MaterialWallModule in index.tsx",
+          "font": "props.fontAssets.body or declared system fallback",
+          "font_size": 25,
+          "max_lines": 1,
+          "overflow": "Reject total row capacity; never crop labels.",
+          "authority": "hum.tsx; layout.json supplies common geometry; frozen props supplies text/source clocks"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 9
+      },
+      "states": [
+        {
+          "id": "wall-only",
+          "visible": true,
+          "description": "Visible only in wall scenes; opacity=1-expansion progress."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source-contract",
+          "target_id": null,
+          "rule": "1–6 unique labels, each <=8 characters; recheck actual row width"
+        }
+      ],
+      "fixed": [],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "hum-implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "wall-category",
+          "method": "Hum README: inspect actual encoded states, source identity and separately recorded listening",
+          "pass_condition": "Labels are readable and disappear before the expanded subject."
+        }
+      ]
+    },
+    {
+      "id": "wall-card",
+      "type": "graphic",
+      "role": "repeated-card-and-label",
+      "parent_id": "canvas",
+      "z_index": 5,
+      "content": {
+        "mode": "generated",
+        "binding": "wall-card-slot",
+        "asset_id": null,
+        "description": "Each instance is identified by stable mediaId. Includes full-frame poster and editable label; selected instance retains identity through expansion."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          88,
+          520,
+          1264,
+          770
+        ],
+        "fit": "contain",
+        "clip": "none",
+        "style": {
+          "position": "[88+(i%3)*432,520+floor(i/3)*405,400,365]",
+          "poster": "inset14px 14px 78px; contain",
+          "label": "left/right22px, bottom12px,height58px,font29+progress*9",
+          "selected_target": "media.orientation chooses layout.json select.expanded or portraitExpanded",
+          "source": "HumWall + Sheet in hum.tsx",
+          "radius": 30,
+          "authority": "hum.tsx; layout.json supplies common geometry; frozen props supplies text/source clocks",
+          "paper": "Sheet: fringe+seeded torn polygon+grain, top-left lighting; sugar backing, pear on selection",
+          "rotation": "odd1.2deg,even-1.1deg; selected rotation multiplied by1-expansion",
+          "cascade": "per-card3frame delay,18frame arrival; original .97→1 scale and64px rise",
+          "selection": "actual scene.selection; same mediaId, unchanged global/source timing"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 9
+      },
+      "states": [
+        {
+          "id": "cascade",
+          "visible": true,
+          "description": "Scene-local card i enters at i*3..i*3+18 frames; translateY64→0, opacity0→1, scale.97→1; easing cubic-bezier(.18,.8,.16,1)."
+        },
+        {
+          "id": "selected",
+          "visible": true,
+          "description": "Outline3px blue at scene.selection.selectFrom; selection remains the same card."
+        },
+        {
+          "id": "expanded",
+          "visible": true,
+          "description": "Interpolate card box to source-defined target over expandFrom..holdFrom; other card alpha=1-progress."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source-contract",
+          "target_id": null,
+          "rule": "4–6 distinct IDs; selected media must belong to wall; no missing media"
+        }
+      ],
+      "fixed": [],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "hum-implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "same-card",
+          "method": "Hum README: inspect actual encoded states, source identity and separately recorded listening",
+          "pass_condition": "No subject swap or restart between selected poster and corresponding source video."
+        }
+      ]
+    },
+    {
+      "id": "wall-video",
+      "type": "video",
+      "role": "selected-wall-source",
+      "parent_id": "wall-card",
+      "z_index": 6,
+      "content": {
+        "mode": "editable",
+        "binding": "wall-video-slot",
+        "asset_id": null,
+        "description": "Original video starts once at scene-local expandFrom; embedded sound muted."
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          14,
+          14,
+          372,
+          273
+        ],
+        "fit": "contain",
+        "clip": "self",
+        "style": {
+          "box": "[14,14,parentWidth-28,parentHeight-92] inside Sheet",
+          "source": "HumWall in hum.tsx",
+          "radius": 18,
+          "authority": "hum.tsx; layout.json supplies common geometry; frozen props supplies text/source clocks"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 9
+      },
+      "states": [
+        {
+          "id": "playing",
+          "visible": true,
+          "description": "Visible only after expandFrom; sourceTime=offset+(age-expandFrom)/30. Never loop, freeze or stretch."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source-contract",
+          "target_id": null,
+          "rule": "Playing range must fit the reviewed original interval; 0.5–4 seconds continuous playback"
+        }
+      ],
+      "fixed": [],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "hum-implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "full-source",
+          "method": "Hum README: inspect actual encoded states, source identity and separately recorded listening",
+          "pass_condition": "Whole source picture, correct rotation, original speed and muted source audio."
+        }
+      ]
+    },
+    {
+      "id": "wall-cursor",
+      "type": "graphic",
+      "role": "selection-pointer",
+      "parent_id": "canvas",
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Source-owned SVG pointer; timing follows actual selected card index."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          1240,
+          440,
+          52,
+          62
+        ],
+        "fit": "contain",
+        "clip": "none",
+        "style": {
+          "target": "origin selected-card x+.6*width, y+.5*height",
+          "source": "MaterialWallModule in index.tsx",
+          "authority": "hum.tsx; layout.json supplies common geometry; frozen props supplies text/source clocks"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 9
+      },
+      "states": [
+        {
+          "id": "move-and-fade",
+          "visible": true,
+          "description": "0 alpha before cursorFrom; source easing to card by selectFrom-2; fades over expandFrom..expandFrom+8."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source-contract",
+          "target_id": null,
+          "rule": "Cursor must land on the selected ID, not a different card"
+        }
+      ],
+      "fixed": [
+        "content"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "hum-implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "cursor-target",
+          "method": "Hum README: inspect actual encoded states, source identity and separately recorded listening",
+          "pass_condition": "Pointer, outline and expanded material refer to one mediaId."
+        }
+      ]
+    },
+    {
+      "id": "canvas",
+      "type": "graphic",
+      "role": "canvas",
+      "parent_id": null,
+      "z_index": 0,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Root 4:5 canvas with the active scene theme; palette and fonts are controlled current inputs."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "palette": "HUM constant in hum.tsx; parent props.palette is compatibility-only",
+          "fontAssets": "props.fontAssets",
+          "authority": "hum.tsx; layout.json supplies common geometry; frozen props supplies text/source clocks",
+          "texture": "fixed feTurbulence grain/fibre seeds13/7"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 20
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "显示条件与几何以该组件的当前源码、所属模块及全局/局部时钟为准。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [],
+      "replaceable": [
+        "layout.style.palette",
+        "layout.style.fontAssets",
+        "layout.style.scenes",
+        "props.visualStyle"
+      ],
+      "evidence_ids": [
+        "hum-implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-state",
+          "method": "Hum README: inspect actual encoded states, source identity and separately recorded listening",
+          "pass_condition": "对象身份、文字、主体完整性和时钟符合本期声明；未执行项保持待验证。"
+        }
+      ]
+    },
+    {
+      "id": "scene-surface",
+      "type": "graphic",
+      "role": "scene-surface",
+      "parent_id": "canvas",
+      "z_index": 0,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Each active scene owns its paper/dark fill and module subtree; no media is baked into this surface."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "hum.tsx; layout.json supplies common geometry; frozen props supplies text/source clocks",
+          "palette": "HUM constant in hum.tsx; parent props.palette is compatibility-only",
+          "texture": "fixed feTurbulence grain/fibre seeds13/7"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 20
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "显示条件与几何以该组件的当前源码、所属模块及全局/局部时钟为准。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [],
+      "replaceable": [],
+      "evidence_ids": [
+        "hum-implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-state",
+          "method": "Hum README: inspect actual encoded states, source identity and separately recorded listening",
+          "pass_condition": "对象身份、文字、主体完整性和时钟符合本期声明；未执行项保持待验证。"
+        }
+      ]
+    },
+    {
+      "id": "scene-title",
+      "type": "text",
+      "role": "scene-title",
+      "parent_id": "canvas",
+      "z_index": 0,
+      "content": {
+        "mode": "editable",
+        "binding": "titles-slot",
+        "asset_id": null,
+        "description": "props.scenes[].title; statement uses statement.title/132px, select/focus use sceneHeader.title/92px; lines reveal with2-frame stagger and10-frame cubic rise."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          88,
+          170,
+          1264,
+          260
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "geometry_source": "layout.json statement.title or sceneHeader.title; selected by module",
+          "statement_font_size": 132,
+          "font": "index.tsx displayFont/bodyFont role; optional frozen fontAssets",
+          "font_size": 92,
+          "max_lines": 3,
+          "overflow": "adapter caps and actual-font width gate; inspect the encoded readable hold, never silently delete words",
+          "authority": "hum.tsx; layout.json supplies common geometry; frozen props supplies text/source clocks"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 20
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "显示条件与几何以该组件的当前源码、所属模块及全局/局部时钟为准。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "hum-implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-state",
+          "method": "Hum README: inspect actual encoded states, source identity and separately recorded listening",
+          "pass_condition": "对象身份、文字、主体完整性和时钟符合本期声明；未执行项保持待验证。"
+        }
+      ]
+    },
+    {
+      "id": "scene-subtitle",
+      "type": "text",
+      "role": "scene-subtitle",
+      "parent_id": "canvas",
+      "z_index": 0,
+      "content": {
+        "mode": "editable",
+        "binding": "subtitles-slot",
+        "asset_id": null,
+        "description": "Optional scene subtitle: only presenter statement has this field in the current example; its underlying statement is occluded by the active presenter layer."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          100,
+          930,
+          1240,
+          190
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "font": "index.tsx displayFont/bodyFont role; optional frozen fontAssets",
+          "font_size": 52,
+          "max_lines": 2,
+          "overflow": "adapter caps and actual-font width gate; inspect the encoded readable hold, never silently delete words",
+          "authority": "hum.tsx; layout.json supplies common geometry; frozen props supplies text/source clocks"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 20
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "显示条件与几何以该组件的当前源码、所属模块及全局/局部时钟为准。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "hum-implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-state",
+          "method": "Hum README: inspect actual encoded states, source identity and separately recorded listening",
+          "pass_condition": "对象身份、文字、主体完整性和时钟符合本期声明；未执行项保持待验证。"
+        }
+      ]
+    },
+    {
+      "id": "focus-window",
+      "type": "group",
+      "role": "focus-window",
+      "parent_id": "canvas",
+      "z_index": 0,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Original-film focus window interpolates entry→expanded overmin(18,scene.frames−1) local frames."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          88,
+          470,
+          1264,
+          870
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "expanded_box": [
+            88,
+            450,
+            1264,
+            960
+          ],
+          "radius": 24,
+          "authority": "hum.tsx; layout.json supplies common geometry; frozen props supplies text/source clocks"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 20
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "显示条件与几何以该组件的当前源码、所属模块及全局/局部时钟为准。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [],
+      "replaceable": [],
+      "evidence_ids": [
+        "hum-implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-state",
+          "method": "Hum README: inspect actual encoded states, source identity and separately recorded listening",
+          "pass_condition": "对象身份、文字、主体完整性和时钟符合本期声明；未执行项保持待验证。"
+        }
+      ]
+    },
+    {
+      "id": "focus-video",
+      "type": "video",
+      "role": "focus-video",
+      "parent_id": "focus-window",
+      "z_index": 0,
+      "content": {
+        "mode": "editable",
+        "binding": "focus-videos-slot",
+        "asset_id": null,
+        "description": "Muted original media referenced by the active focus scene, sourceSeconds=media.offset+sceneAge/30; no source audio or speech-speed change."
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1264,
+          870
+        ],
+        "fit": "contain",
+        "clip": "self",
+        "style": {
+          "authority": "hum.tsx; layout.json supplies common geometry; frozen props supplies text/source clocks",
+          "viewport": "parent frame inset16px; radius20; contain; original offset and source clock"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 20
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "显示条件与几何以该组件的当前源码、所属模块及全局/局部时钟为准。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "hum-implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-state",
+          "method": "Hum README: inspect actual encoded states, source identity and separately recorded listening",
+          "pass_condition": "对象身份、文字、主体完整性和时钟符合本期声明；未执行项保持待验证。"
+        }
+      ]
+    },
+    {
+      "id": "focus-label",
+      "type": "text",
+      "role": "focus-label",
+      "parent_id": "canvas",
+      "z_index": 0,
+      "content": {
+        "mode": "editable",
+        "binding": "focus-labels-slot",
+        "asset_id": null,
+        "description": "Current focus media label reveals overlocal6–18frames; not an ASR caption."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          88,
+          1440,
+          950,
+          86
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "font": "index.tsx displayFont/bodyFont role; optional frozen fontAssets",
+          "font_size": 40,
+          "max_lines": 2,
+          "overflow": "adapter caps and actual-font width gate; inspect the encoded readable hold, never silently delete words",
+          "authority": "hum.tsx; layout.json supplies common geometry; frozen props supplies text/source clocks"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 20
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "显示条件与几何以该组件的当前源码、所属模块及全局/局部时钟为准。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "hum-implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-state",
+          "method": "Hum README: inspect actual encoded states, source identity and separately recorded listening",
+          "pass_condition": "对象身份、文字、主体完整性和时钟符合本期声明；未执行项保持待验证。"
+        }
+      ]
+    },
+    {
+      "id": "presenter-layer",
+      "type": "group",
+      "role": "presenter-layer",
+      "parent_id": "canvas",
+      "z_index": 20,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Only during the verified global presenter window15.4–18.8s; its opaque theme and title treatment replace the main scene presentation."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "hum.tsx; layout.json supplies common geometry; frozen props supplies text/source clocks"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 15.4,
+        "end": 18.8
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "显示条件与几何以该组件的当前源码、所属模块及全局/局部时钟为准。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [],
+      "replaceable": [],
+      "evidence_ids": [
+        "hum-implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-state",
+          "method": "Hum README: inspect actual encoded states, source identity and separately recorded listening",
+          "pass_condition": "对象身份、文字、主体完整性和时钟符合本期声明；未执行项保持待验证。"
+        }
+      ]
+    },
+    {
+      "id": "presenter-title",
+      "type": "text",
+      "role": "presenter-title",
+      "parent_id": "presenter-layer",
+      "z_index": 0,
+      "content": {
+        "mode": "editable",
+        "binding": "presenter-title-slot",
+        "asset_id": null,
+        "description": "Active scene title with geometry/font-size following the large↔small presenter factor; same source text as scene-title, no new narration."
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          88,
+          160,
+          1264,
+          240
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "small_box": [
+            100,
+            450,
+            1240,
+            390
+          ],
+          "small_font_size": 132,
+          "large_font_size": 92,
+          "font": "index.tsx displayFont/bodyFont role; optional frozen fontAssets",
+          "font_size": 92,
+          "max_lines": 3,
+          "overflow": "adapter caps and actual-font width gate; inspect the encoded readable hold, never silently delete words",
+          "authority": "hum.tsx; layout.json supplies common geometry; frozen props supplies text/source clocks"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 15.4,
+        "end": 18.8
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "显示条件与几何以该组件的当前源码、所属模块及全局/局部时钟为准。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "hum-implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-state",
+          "method": "Hum README: inspect actual encoded states, source identity and separately recorded listening",
+          "pass_condition": "对象身份、文字、主体完整性和时钟符合本期声明；未执行项保持待验证。"
+        }
+      ]
+    },
+    {
+      "id": "presenter-window",
+      "type": "group",
+      "role": "presenter-window",
+      "parent_id": "presenter-layer",
+      "z_index": 0,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Global15.4–18.8s verified source window; large[462,510), small[510,564) with16-frame box interpolation at510."
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          300,
+          432,
+          840,
+          1110
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "small_box": [
+            1092,
+            1222,
+            260,
+            325
+          ],
+          "transition_frames": 16,
+          "source_clock": "offset+(globalFrame-presenter.from)/30",
+          "authority": "hum.tsx; layout.json supplies common geometry; frozen props supplies text/source clocks"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 15.4,
+        "end": 18.8
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "显示条件与几何以该组件的当前源码、所属模块及全局/局部时钟为准。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [],
+      "replaceable": [],
+      "evidence_ids": [
+        "hum-implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-state",
+          "method": "Hum README: inspect actual encoded states, source identity and separately recorded listening",
+          "pass_condition": "对象身份、文字、主体完整性和时钟符合本期声明；未执行项保持待验证。"
+        }
+      ]
+    },
+    {
+      "id": "presenter-video",
+      "type": "avatar",
+      "role": "presenter-video",
+      "parent_id": "presenter-window",
+      "z_index": 0,
+      "content": {
+        "mode": "editable",
+        "binding": "presenter-slot",
+        "asset_id": null,
+        "description": "One already-created25fps person video is sampled by continuous global seconds into30fps output and is always muted; changing size never restarts its0–3.4s source."
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          840,
+          1110
+        ],
+        "fit": "contain",
+        "clip": "self",
+        "style": {
+          "authority": "hum.tsx; layout.json supplies common geometry; frozen props supplies text/source clocks",
+          "viewport": "original interpolated presenter outer box inset12px; radius22; contain"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 15.4,
+        "end": 18.8
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "显示条件与几何以该组件的当前源码、所属模块及全局/局部时钟为准。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "hum-implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-state",
+          "method": "Hum README: inspect actual encoded states, source identity and separately recorded listening",
+          "pass_condition": "对象身份、文字、主体完整性和时钟符合本期声明；未执行项保持待验证。"
+        }
+      ]
+    },
+    {
+      "id": "presenter-label",
+      "type": "text",
+      "role": "presenter-label",
+      "parent_id": "presenter-layer",
+      "z_index": 0,
+      "content": {
+        "mode": "editable",
+        "binding": "presenter-label-slot",
+        "asset_id": null,
+        "description": "Optional presenter scene subtitle at the source-defined side label; current example says店长介绍."
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          88,
+          1415,
+          180,
+          110
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "font": "index.tsx displayFont/bodyFont role; optional frozen fontAssets",
+          "font_size": 34,
+          "max_lines": 2,
+          "overflow": "adapter caps and actual-font width gate; inspect the encoded readable hold, never silently delete words",
+          "authority": "hum.tsx; layout.json supplies common geometry; frozen props supplies text/source clocks"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 15.4,
+        "end": 18.8
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "显示条件与几何以该组件的当前源码、所属模块及全局/局部时钟为准。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "hum-implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-state",
+          "method": "Hum README: inspect actual encoded states, source identity and separately recorded listening",
+          "pass_condition": "对象身份、文字、主体完整性和时钟符合本期声明；未执行项保持待验证。"
+        }
+      ]
+    },
+    {
+      "id": "brand",
+      "type": "text",
+      "role": "brand",
+      "parent_id": "canvas",
+      "z_index": 40,
+      "content": {
+        "mode": "editable",
+        "binding": "brand-slot",
+        "asset_id": null,
+        "description": "Editable current brand plus fixedHAIKE AI label above all module/presenter layers."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          88,
+          64,
+          1264,
+          48
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "font": "index.tsx displayFont/bodyFont role; optional frozen fontAssets",
+          "font_size": 29,
+          "max_lines": 2,
+          "overflow": "adapter caps and actual-font width gate; inspect the encoded readable hold, never silently delete words",
+          "authority": "hum.tsx; layout.json supplies common geometry; frozen props supplies text/source clocks",
+          "surface": "pear paper chip; original brand and HAIKE AI label"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 20
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "显示条件与几何以该组件的当前源码、所属模块及全局/局部时钟为准。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "hum-implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-state",
+          "method": "Hum README: inspect actual encoded states, source identity and separately recorded listening",
+          "pass_condition": "对象身份、文字、主体完整性和时钟符合本期声明；未执行项保持待验证。"
+        }
+      ]
+    },
+    {
+      "id": "captions",
+      "type": "subtitle",
+      "role": "captions",
+      "parent_id": "canvas",
+      "z_index": 50,
+      "content": {
+        "mode": "editable",
+        "binding": "captions-slot",
+        "asset_id": null,
+        "description": "Existing approved cue text at unchanged startMs/endMs, current11cues end19.72s; every video stream muted and only one mixed master carries speech."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          88,
+          1570,
+          1264,
+          116
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "font": "index.tsx displayFont/bodyFont role; optional frozen fontAssets",
+          "font_size": 60,
+          "max_lines": 2,
+          "overflow": "adapter caps and actual-font width gate; inspect the encoded readable hold, never silently delete words",
+          "authority": "hum.tsx; layout.json supplies common geometry; frozen props supplies text/source clocks",
+          "surface": "cream Sheet at original box; text colourHUM.ink; exact original cue clock"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 20
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "显示条件与几何以该组件的当前源码、所属模块及全局/局部时钟为准。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "hum-implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-state",
+          "method": "Hum README: inspect actual encoded states, source identity and separately recorded listening",
+          "pass_condition": "对象身份、文字、主体完整性和时钟符合本期声明；未执行项保持待验证。"
+        }
+      ]
+    },
+    {
+      "id": "footer",
+      "type": "text",
+      "role": "footer",
+      "parent_id": "canvas",
+      "z_index": 40,
+      "content": {
+        "mode": "editable",
+        "binding": "footer-slot",
+        "asset_id": null,
+        "description": "Current neutral historical-event footer, no new immediate-date/price/service claims."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          88,
+          1720,
+          1264,
+          36
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "font": "index.tsx displayFont/bodyFont role; optional frozen fontAssets",
+          "font_size": 25,
+          "max_lines": 2,
+          "overflow": "adapter caps and actual-font width gate; inspect the encoded readable hold, never silently delete words",
+          "authority": "hum.tsx; layout.json supplies common geometry; frozen props supplies text/source clocks",
+          "surface": "sand paper band; existing footer text"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 20
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "显示条件与几何以该组件的当前源码、所属模块及全局/局部时钟为准。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "hum-implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-state",
+          "method": "Hum README: inspect actual encoded states, source identity and separately recorded listening",
+          "pass_condition": "对象身份、文字、主体完整性和时钟符合本期声明；未执行项保持待验证。"
+        }
+      ]
+    },
+    {
+      "id": "master-audio",
+      "type": "audio",
+      "role": "master-audio",
+      "parent_id": null,
+      "z_index": 0,
+      "content": {
+        "mode": "editable",
+        "binding": "master-slot",
+        "asset_id": null,
+        "description": "One master.wav carries original-speed narration+BGM+SFX for20s; voice0–19.8 plus0.2s no-speech tail. No nested video audio."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "hum.tsx; layout.json supplies common geometry; frozen props supplies text/source clocks"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 20
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "显示条件与几何以该组件的当前源码、所属模块及全局/局部时钟为准。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "hum-implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-state",
+          "method": "Hum README: inspect actual encoded states, source identity and separately recorded listening",
+          "pass_condition": "对象身份、文字、主体完整性和时钟符合本期声明；未执行项保持待验证。"
+        }
+      ]
+    },
+    {
+      "id": "hum-fibre",
+      "type": "graphic",
+      "role": "hum-fibre",
+      "parent_id": "scene-surface",
+      "z_index": 0,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Source-generated paper/material component; repeated instances follow their owning object."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "hum.tsx: Grain/Backdrop/Sheet/HumWall",
+          "behaviour": "Fixed seed; inherits parent position, time, clip and opacity. Interior source pixels remain original.",
+          "grain": "200px tile,baseFrequency.72,3octaves,seed13",
+          "fibre": "240px tile,baseFrequency.012/.42,2octaves,seed7",
+          "opacity": 0.28
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 20
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "显示条件与几何以该组件的当前源码、所属模块及全局/局部时钟为准。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [],
+      "replaceable": [],
+      "evidence_ids": [
+        "hum-implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-state",
+          "method": "Hum README: inspect actual encoded states, source identity and separately recorded listening",
+          "pass_condition": "对象身份、文字、主体完整性和时钟符合本期声明；未执行项保持待验证。"
+        }
+      ]
+    },
+    {
+      "id": "hum-mint-band",
+      "type": "graphic",
+      "role": "hum-mint-band",
+      "parent_id": "scene-surface",
+      "z_index": 0,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Source-generated paper/material component; repeated instances follow their owning object."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          -20,
+          1480,
+          1480,
+          380
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "hum.tsx: Grain/Backdrop/Sheet/HumWall",
+          "behaviour": "Fixed seed; inherits parent position, time, clip and opacity. Interior source pixels remain original.",
+          "rotate": "-2deg",
+          "fill": "HUM.mint or dark mintDeep",
+          "seed": 19
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 20
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "显示条件与几何以该组件的当前源码、所属模块及全局/局部时钟为准。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "allow_overflow",
+          "target_id": "canvas",
+          "rule": "Paper bands intentionally extend20px horizontally and below the canvas to cover rotated edges; the final canvas clips overflow."
+        }
+      ],
+      "fixed": [],
+      "replaceable": [],
+      "evidence_ids": [
+        "hum-implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-state",
+          "method": "Hum README: inspect actual encoded states, source identity and separately recorded listening",
+          "pass_condition": "对象身份、文字、主体完整性和时钟符合本期声明；未执行项保持待验证。"
+        }
+      ]
+    },
+    {
+      "id": "hum-sand-band",
+      "type": "graphic",
+      "role": "hum-sand-band",
+      "parent_id": "scene-surface",
+      "z_index": 0,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Source-generated paper/material component; repeated instances follow their owning object."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          -20,
+          1695,
+          1480,
+          140
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "hum.tsx: Grain/Backdrop/Sheet/HumWall",
+          "behaviour": "Fixed seed; inherits parent position, time, clip and opacity. Interior source pixels remain original.",
+          "rotate": "1deg",
+          "fill": "HUM.sand or dark kraft",
+          "seed": 28
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 20
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "显示条件与几何以该组件的当前源码、所属模块及全局/局部时钟为准。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "allow_overflow",
+          "target_id": "canvas",
+          "rule": "Paper bands intentionally extend20px horizontally and below the canvas to cover rotated edges; the final canvas clips overflow."
+        }
+      ],
+      "fixed": [],
+      "replaceable": [],
+      "evidence_ids": [
+        "hum-implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-state",
+          "method": "Hum README: inspect actual encoded states, source identity and separately recorded listening",
+          "pass_condition": "对象身份、文字、主体完整性和时钟符合本期声明；未执行项保持待验证。"
+        }
+      ]
+    },
+    {
+      "id": "hum-paper-frame",
+      "type": "graphic",
+      "role": "hum-paper-frame",
+      "parent_id": "wall-card",
+      "z_index": 0,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Source-generated paper/material component; repeated instances follow their owning object."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "hum.tsx: Grain/Backdrop/Sheet/HumWall",
+          "behaviour": "Fixed seed; inherits parent position, time, clip and opacity. Interior source pixels remain original.",
+          "box": "parent outer box; fringe and inner layer with fixed-seed torn edges;30/28px radius",
+          "shadow": "drop-shadow(1px3px1px ink20) + drop-shadow(5px13px15px ink1F)"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 20
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "显示条件与几何以该组件的当前源码、所属模块及全局/局部时钟为准。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [],
+      "replaceable": [],
+      "evidence_ids": [
+        "hum-implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-state",
+          "method": "Hum README: inspect actual encoded states, source identity and separately recorded listening",
+          "pass_condition": "对象身份、文字、主体完整性和时钟符合本期声明；未执行项保持待验证。"
+        }
+      ]
+    },
+    {
+      "id": "hum-wall-poster",
+      "type": "graphic",
+      "role": "hum-wall-poster",
+      "parent_id": "wall-card",
+      "z_index": 0,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Exact existing media thumbnail or label; the parent mediaId is stable through expansion."
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          14,
+          14,
+          372,
+          273
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "hum.tsx: Grain/Backdrop/Sheet/HumWall",
+          "behaviour": "Fixed seed; inherits parent position, time, clip and opacity. Interior source pixels remain original.",
+          "box": "poster [14,14,W-28,H-92]; label [22,H-70,W-44,58]"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 20
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "显示条件与几何以该组件的当前源码、所属模块及全局/局部时钟为准。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [],
+      "replaceable": [],
+      "evidence_ids": [
+        "hum-implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-state",
+          "method": "Hum README: inspect actual encoded states, source identity and separately recorded listening",
+          "pass_condition": "对象身份、文字、主体完整性和时钟符合本期声明；未执行项保持待验证。"
+        }
+      ]
+    },
+    {
+      "id": "hum-wall-label",
+      "type": "graphic",
+      "role": "hum-wall-label",
+      "parent_id": "wall-card",
+      "z_index": 0,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Exact existing media thumbnail or label; the parent mediaId is stable through expansion."
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          22,
+          295,
+          356,
+          58
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "hum.tsx: Grain/Backdrop/Sheet/HumWall",
+          "behaviour": "Fixed seed; inherits parent position, time, clip and opacity. Interior source pixels remain original.",
+          "box": "poster [14,14,W-28,H-92]; label [22,H-70,W-44,58]"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 20
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "显示条件与几何以该组件的当前源码、所属模块及全局/局部时钟为准。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [],
+      "replaceable": [],
+      "evidence_ids": [
+        "hum-implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-state",
+          "method": "Hum README: inspect actual encoded states, source identity and separately recorded listening",
+          "pass_condition": "对象身份、文字、主体完整性和时钟符合本期声明；未执行项保持待验证。"
+        }
+      ]
+    }
+  ],
+  "slots": [
+    {
+      "id": "fonts-slot",
+      "element_id": "canvas",
+      "property": "layout.style.fontAssets",
+      "value_type": "object",
+      "required": false,
+      "limits": {
+        "filenames": [
+          "display.ttf",
+          "body.ttf"
+        ],
+        "missing": "omit only when using the declared system-font route; validate environment separately"
+      },
+      "missing": "阻断依赖该字段的冻结或渲染",
+      "overflow": "修订当前参数并重验相关场景，不覆盖旧请求"
+    },
+    {
+      "id": "scenes-slot",
+      "element_id": "canvas",
+      "property": "layout.style.scenes",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "durationFrames": 600,
+        "module": [
+          "statement",
+          "select",
+          "focus",
+          "wall"
+        ],
+        "theme": [
+          "paper",
+          "dark"
+        ],
+        "coverage": "strict continuous [0,600), every mediaId used, original video segments0.5–4s"
+      },
+      "missing": "阻断依赖该字段的冻结或渲染",
+      "overflow": "修订当前参数并重验相关场景，不覆盖旧请求"
+    },
+    {
+      "id": "titles-slot",
+      "element_id": "scene-title",
+      "property": "content",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "path": "props.scenes[].title",
+        "max_characters": 36,
+        "max_lines": 3,
+        "max_per_line": 16,
+        "actual_font_width": 1264
+      },
+      "missing": "缺必需输入时阻断冻结；可选内容仅按源码显隐",
+      "overflow": "修正当前公开参数与真实源区间后新冻结，不修改既有产物或牺牲原口播"
+    },
+    {
+      "id": "subtitles-slot",
+      "element_id": "scene-subtitle",
+      "property": "content",
+      "value_type": "array",
+      "required": false,
+      "limits": {
+        "path": "props.scenes[].subtitle",
+        "max_characters": 36,
+        "max_lines": 2
+      },
+      "missing": "缺必需输入时阻断冻结；可选内容仅按源码显隐",
+      "overflow": "修正当前公开参数与真实源区间后新冻结，不修改既有产物或牺牲原口播"
+    },
+    {
+      "id": "focus-videos-slot",
+      "element_id": "focus-video",
+      "property": "content",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "path": "props.media[scene.mediaId]",
+        "fit": "contain",
+        "playback_rate": 1,
+        "audio": "muted",
+        "source_coverage": "must fit the currently reviewed window"
+      },
+      "missing": "缺必需输入时阻断冻结；可选内容仅按源码显隐",
+      "overflow": "修正当前公开参数与真实源区间后新冻结，不修改既有产物或牺牲原口播"
+    },
+    {
+      "id": "focus-labels-slot",
+      "element_id": "focus-label",
+      "property": "content",
+      "value_type": "array",
+      "required": false,
+      "limits": {
+        "path": "props.media[scene.mediaId].label",
+        "max_characters": 12
+      },
+      "missing": "缺必需输入时阻断冻结；可选内容仅按源码显隐",
+      "overflow": "修正当前公开参数与真实源区间后新冻结，不修改既有产物或牺牲原口播"
+    },
+    {
+      "id": "presenter-title-slot",
+      "element_id": "presenter-title",
+      "property": "content",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "path": "props.scenes[].title when presenter active",
+        "same_text_as": "titles-slot"
+      },
+      "missing": "缺必需输入时阻断冻结；可选内容仅按源码显隐",
+      "overflow": "修正当前公开参数与真实源区间后新冻结，不修改既有产物或牺牲原口播"
+    },
+    {
+      "id": "presenter-slot",
+      "element_id": "presenter-video",
+      "property": "content",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "path": "props.presenter + props.presenterModes",
+        "fit": "contain",
+        "global_from_frame": 462,
+        "global_frames": 102,
+        "source_offset_seconds": 0,
+        "source_seconds": 3.4,
+        "proof": "current source-audit+prior-receipt+source-ASR identity; audio correlation is not lip acceptance"
+      },
+      "missing": "缺必需输入时阻断冻结；可选内容仅按源码显隐",
+      "overflow": "修正当前公开参数与真实源区间后新冻结，不修改既有产物或牺牲原口播"
+    },
+    {
+      "id": "presenter-label-slot",
+      "element_id": "presenter-label",
+      "property": "content",
+      "value_type": "array",
+      "required": false,
+      "limits": {
+        "path": "props.scenes[].subtitle during presenter window",
+        "max_characters": 36
+      },
+      "missing": "缺必需输入时阻断冻结；可选内容仅按源码显隐",
+      "overflow": "修正当前公开参数与真实源区间后新冻结，不修改既有产物或牺牲原口播"
+    },
+    {
+      "id": "brand-slot",
+      "element_id": "brand",
+      "property": "content",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "path": "props.brand",
+        "max_characters": 24
+      },
+      "missing": "缺必需输入时阻断冻结；可选内容仅按源码显隐",
+      "overflow": "修正当前公开参数与真实源区间后新冻结，不修改既有产物或牺牲原口播"
+    },
+    {
+      "id": "captions-slot",
+      "element_id": "captions",
+      "property": "content",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "path": "props.captions",
+        "max_characters": 18,
+        "source": "exact old ASR cue indices and approved display text",
+        "last_end_ms": 19720,
+        "maximum_end_ms": 19800
+      },
+      "missing": "缺必需输入时阻断冻结；可选内容仅按源码显隐",
+      "overflow": "修正当前公开参数与真实源区间后新冻结，不修改既有产物或牺牲原口播"
+    },
+    {
+      "id": "footer-slot",
+      "element_id": "footer",
+      "property": "content",
+      "value_type": "string",
+      "required": false,
+      "limits": {
+        "path": "props.footer",
+        "max_characters": 40
+      },
+      "missing": "缺必需输入时阻断冻结；可选内容仅按源码显隐",
+      "overflow": "修正当前公开参数与真实源区间后新冻结，不修改既有产物或牺牲原口播"
+    },
+    {
+      "id": "master-slot",
+      "element_id": "master-audio",
+      "property": "content",
+      "value_type": "asset",
+      "required": true,
+      "limits": {
+        "filename": "master.wav",
+        "sample_rate": 48000,
+        "channels": 2,
+        "sample_width_bits": 16,
+        "samples_per_channel": 960000,
+        "narration": "existing-voiceover",
+        "source_audio": "muted"
+      },
+      "missing": "缺必需输入时阻断冻结；可选内容仅按源码显隐",
+      "overflow": "修正当前公开参数与真实源区间后新冻结，不修改既有产物或牺牲原口播"
+    },
+    {
+      "id": "wall-category-slot",
+      "element_id": "wall-category",
+      "property": "content",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "path": "props.wallCategories or source defaults",
+        "scope": "Current source-defined control and verified actual input"
+      },
+      "missing": "Block the affected scene and preserve original assets.",
+      "overflow": "Adjust declared content/geometry and inspect a new source-bound preview."
+    },
+    {
+      "id": "wall-card-slot",
+      "element_id": "wall-card",
+      "property": "content",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "path": "scene.wallMediaIds[] + props.media[id]",
+        "scope": "Current source-defined control and verified actual input"
+      },
+      "missing": "Block the affected scene and preserve original assets.",
+      "overflow": "Adjust declared content/geometry and inspect a new source-bound preview."
+    },
+    {
+      "id": "wall-video-slot",
+      "element_id": "wall-video",
+      "property": "content",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "path": "props.media[scene.mediaId].src/offset",
+        "scope": "Current source-defined control and verified actual input"
+      },
+      "missing": "Block the affected scene and preserve original assets.",
+      "overflow": "Adjust declared content/geometry and inspect a new source-bound preview."
+    },
+    {
+      "id": "hum-visual-style",
+      "element_id": "canvas",
+      "property": "props.visualStyle",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "enum": [
+          "hum"
+        ],
+        "authority": "hum.tsx HUM tokens; wall/focus/statement only"
+      },
+      "missing": "Choose hum explicitly; absent/original routes to the separate original visual implementation.",
+      "overflow": "Unsupported style or two-card select is rejected before freeze."
+    }
+  ],
+  "evidence": [
+    {
+      "id": "hum-implementation",
+      "source_kind": "design",
+      "source": "Project-owned Hum implementation based on the named public material reference.",
+      "locator": "hum.tsx + Hallmark Hum at7ec868225c6caa040558c321ee0fefa0e73f83a8",
+      "method": "Read theme specification and actual reference image; preserve original media/time/audio; fixed-seed procedural material.",
+      "file": "../motiongit-narrated-pilot-v1/hum.tsx",
+      "sha256": "8eae378a42eff6989f6733e81341ecf3f61ce6612a73362a1248ef7e4fa8a2b2"
+    },
+    {
+      "id": "hum-local-review",
+      "source_kind": "measurement",
+      "source": "Actual Hum queue output, source/audio equality, encoded frames, browser playback and isolated source checks.",
+      "locator": "studio-a6686346e3f1e414 / PQ-ade62e819dc7739cf58f",
+      "method": "1440x1800/30fps/600frames/20s;20490695bps;-16.56LUFS/-3.74dBTP;full decode. Inspected26 encoded times and3native images. Browser0→20 ended. Device listening and user art approval pending.",
+      "file": "../../../.local/hum-upgrade-20261027/REVIEW.json",
+      "sha256": "f3251b0540abb11f42b766762713d1928b505e633274becf346911fdbed79bd0"
+    }
+  ],
+  "unknowns": [],
+  "validation": {
+    "structure": {
+      "status": "pass",
+      "evidence_ids": [
+        "hum-local-review"
+      ],
+      "note": "Passed for the exact source-bound20s4:5Hum film; independent listening/device/user states remain pending."
+    },
+    "technical": {
+      "status": "pass",
+      "evidence_ids": [
+        "hum-local-review"
+      ],
+      "note": "Passed for the exact source-bound20s4:5Hum film; independent listening/device/user states remain pending."
+    },
+    "visual": {
+      "status": "pass",
+      "evidence_ids": [
+        "hum-local-review"
+      ],
+      "note": "26 encoded times plus three native-size inspections; bounded phase review, not continuous visual or listening approval"
+    },
+    "audio": {
+      "status": "pending",
+      "evidence_ids": [
+        "hum-local-review"
+      ],
+      "note": "Audio decoded data matches original; continuous listening, actual device/platform and user art acceptance remain separate pending checks."
+    },
+    "platform": {
+      "status": "pending",
+      "evidence_ids": [
+        "hum-local-review"
+      ],
+      "note": "Audio decoded data matches original; continuous listening, actual device/platform and user art acceptance remain separate pending checks."
+    },
+    "user_review": {
+      "status": "pending",
+      "evidence_ids": [
+        "hum-local-review"
+      ],
+      "note": "Audio decoded data matches original; continuous listening, actual device/platform and user art acceptance remain separate pending checks."
+    },
+    "production": {
+      "status": "pass",
+      "evidence_ids": [
+        "hum-local-review"
+      ],
+      "note": "Passed for the exact source-bound20s4:5Hum film; independent listening/device/user states remain pending."
+    }
+  },
+  "extensions": {
+    "custom": {
+      "contract": "motiongit-narrated-pilot-v1",
+      "rules": "Hum visualStyle selects HumContent. Authoritative colour/material is HUM/Sheet/Backdrop in hum.tsx; actual media, captions, presenter and selection clocks remain unchanged. Original palette inputs are compatibility-only in this variant."
+    },
+    "graphic": {
+      "text_policy": "Exact original speech captions, approved display corrections and editable short titles; preserve negation, conditions, numbers/units and event scope. Adapter allows at most18characters per caption.",
+      "asset_fit": "Every real film/presenter is contain and muted; media.orientation chooses the wider landscape or taller portrait window and must match the reviewed original poster. Poster/source identities and exact viewed intervals bind before freeze. Source interior pixels are not editable text."
+    },
+    "material_edit": {
+      "source_ranges": "Select source starts atmedia.offset when its local expandFrom begins; focus source starts atmedia.offset at scene0. Each playing range must fit the reviewed real source window and remain <=4s.",
+      "cut_policy": "No loops/frozen people/time-stretch.7scenes continuously cover[0,600). Preserve every original19.8s speech cue and0.2s no-speech tail."
+    },
+    "avatar": {
+      "face_crop": "Existing full-frame1228x1536 source usescontain in declared large/small boxes, no artificial face crop. Current source-global binding verified independently before use.",
+      "synchronization": "Global[462,564)=15.4–18.8s maps continuously to source0–3.4s at1x; mode switches at510with16frame interpolation never restart playback.25FPS source sampled into30FPS output; correlation proves lineage/offset only, not phoneme acceptance."
+    },
+    "narration": {
+      "contract": "existing-voiceover-source-chain/1",
+      "rules": "Require original approved dry voice, old ASR/cue identity, source-audit, prior-receipt and current master+independent narration. Original source0–19.8s is continuous1x, unreordered; last0.2s of independent narration is zero. No new TTS,ASR,avatar generation or publication."
+    }
+  },
+  "operations": [
+    {
+      "id": "freeze",
+      "input": "Current safe-name props/source mapping plus all original voice/ASR/approval/person/footage/thumbnail/music and actual review receipts.",
+      "action": "Validate exposed slots and complete source lineage, actual intervals, caption exact equality, sample clock and same-source presenter mapping; copy unchanged sources and freeze request/runtimeSHA.",
+      "output": "Original immutable request and local verified asset copies.",
+      "completion": "All required sources and receipts match current inputs; no missing cue/source, no new paid calls, no source-audio duplication and exact600frame clock.",
+      "recovery": "Restore the same hashes or intentionally update the affected controlled input and freeze a new version; retain completed sources and old outputs.",
+      "entrypoint": "../../scripts/motiongit_narrated_pilot.py --input <current-input.json>"
+    },
+    {
+      "id": "render",
+      "input": "Original frozen request and its idempotent local-recompose unified queue job.",
+      "action": "Run the registered motiongit-narrated-pilot-v1 adapter via existing unified queue; invoke VideoCompose/Remotion with source-owned modules,encode and measured QA.",
+      "output": "Actual20s film, technical QA/result identity and candidate work record.",
+      "completion": "Queue and media match request;1440x1800/30FPS/600frames,full decode,H264yuv420p,video>=20Mbps andAAC48kstereo peak<=-1.5dBTP.",
+      "recovery": "Read original task and completed local artifacts first; resume without fresh voice/person/ASR calls; changed runtime or inputs require a new frozen identity.",
+      "entrypoint": "../../scripts/motiongit.py preview <saved project-wall draft with visualStyle=hum>"
+    },
+    {
+      "id": "review",
+      "input": "Complete encoded film, current frozen props, source evidence, audio tracks and exact module/presenter phase table.",
+      "action": "Inspect actual module boundaries/moving midpoints/holds, full-scene reading, exact subtitles and presenter large→small→absent; separately record continuous watching/listening/device checks.",
+      "output": "Actual review scope, individual dimension results, final hash and playable handoff.",
+      "completion": "Technical status,static examples,source correlation and sampled frames do not substitute motion/lip/listening/user acceptance. All applicable dimensions keep their actual independent status.",
+      "recovery": "Locate the specific source/element/output frame; repair authoritative parameters, preserve previous version and repeat affected plus related checks.",
+      "entrypoint": "README.md#4-验收并交付"
+    }
+  ]
+}

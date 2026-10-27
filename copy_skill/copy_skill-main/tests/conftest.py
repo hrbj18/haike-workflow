@@ -113,6 +113,13 @@ _PORTABLE_GIT_BASE = Path(
 
 
 @pytest.fixture(autouse=True)
+def _isolate_download_credentials(tmp_path, monkeypatch):
+    # A real selected account must never supply credentials or change output
+    # paths in an offline test. Credential-specific fixtures can override this.
+    monkeypatch.setenv("HAIKE_DOWNLOAD_CREDENTIALS_DIR", str(tmp_path / "download-credentials"))
+
+
+@pytest.fixture(autouse=True)
 def _isolate_replication_project_root(request, tmp_path_factory, monkeypatch):
     # Two jobs, deliberately kept in ONE fixture so there is only ever one wrapper
     # around ``load_config`` in a given test:

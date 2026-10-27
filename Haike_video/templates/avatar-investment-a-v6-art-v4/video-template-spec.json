@@ -1,0 +1,2634 @@
+{
+  "schema_version": 1,
+  "standard_version": "video-template-v1",
+  "template_type": "avatar",
+  "template_id": "avatar-investment-a-v6-art-v4",
+  "template_version": "v004",
+  "spec_kind": "implementation",
+  "stage": "ready",
+  "authority": {
+    "runbook": "../../../Haike-Videohub/agent-runbooks/数字人口播模板6-招商A.md",
+    "implementation_paths": [
+      "index.tsx",
+      "RefinedDirections.tsx",
+      "NewDirections.tsx",
+      "shared.tsx",
+      "types.ts",
+      "layout.json",
+      "README.md",
+      "assets/PROVENANCE.json",
+      "../../backlot/studio_investment_source_art_v4.py",
+      "../../backlot/studio_investment_source_video.py",
+      "../../backlot/studio_composition.py",
+      "../../backlot/production_queue_worker.py",
+      "../../scripts/avatar_investment_source_art_v4.py"
+    ],
+    "parameter_source": "layout.json"
+  },
+  "canvas": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "duration_seconds": 33.166666666666664,
+    "clock": "原MP4第一AAC音轨提取的完整24kHz mono PCM16为主时钟，speed=1；输出计划round(audioDuration*30)帧。此scenes值以06 documentary本期输入为代表，其余5输入见extensions.source_art.validation_inputs。字幕/词高亮只用实测毫秒端点，speech不得拉伸。",
+    "coordinate_system": "top_left_pixels"
+  },
+  "narrative": {
+    "purpose": "优化模板6原三方向并新增赤红、银白、纪实三个方向，用本期三原片制作六条本地已有视频艺术开发测试；复用真实词时钟及来源标注的可选互动视频/定格。",
+    "information_hierarchy": [
+      "当前完整口播字幕、人物脸/嘴",
+      "可选真实素材及其明确来源标签",
+      "每章主标题与对应合作条件",
+      "原稿要点、品牌与数字人演绎标识",
+      "艺术背景与结构装饰"
+    ],
+    "structure": [
+      "hook：对应本条原稿问题",
+      "story：体验/内容场景，素材只按其真实来源示意",
+      "ai：只有源03/输出03和05可用AI数字员工；其余仅社区产品/经营关系",
+      "offer：本条金额和本条确有的面积，保留先看投入/清单/支持的条件",
+      "cta：资料、咨询和再做判断，不增加商业承诺"
+    ]
+  },
+  "elements": [
+    {
+      "id": "art_background",
+      "type": "image",
+      "role": "旧三方向装饰PNG；新三方向使用源码矢量/颜色，不造实景",
+      "parent_id": null,
+      "z_index": 0,
+      "content": {
+        "mode": "embedded",
+        "binding": "background_slot",
+        "asset_id": "art_community",
+        "description": "旧三方向装饰PNG；新三方向使用源码矢量/颜色，不造实景"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1080,
+          1920
+        ],
+        "fit": "cover",
+        "clip": "self",
+        "style": {
+          "source": "当前v4 layout.json及对应TSX组件",
+          "measurement_status": "从当前源码声明的documentary参考分配框；不是DOM精测。六方向实际看图通过范围见validation.visual，参数真值为对应TSX/layout。",
+          "rule": "根据方向显示静态设计底图或代码背景，无背景慢缩放。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 33.166666666666664
+      },
+      "states": [
+        {
+          "id": "conditional",
+          "visible": true,
+          "description": "按方向、当前章节与真实cue/word/scene活动条件显示，区间左闭右开；不能由可见=true推断全片常驻。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "custom",
+          "target_id": null,
+          "rule": "根据方向显示静态设计底图或代码背景，无背景慢缩放。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "current_implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "frozen_source_and_visible_output",
+          "method": "从冻结props核对本元素真值，并在当前最终SHA实际看对应状态与边界。",
+          "pass_condition": "原稿不丢、不新增承诺，主体及来源标签可读；来源、时钟、裁切和方向状态符合实现。"
+        }
+      ]
+    },
+    {
+      "id": "frame_design",
+      "type": "graphic",
+      "role": "各方向矢量/边线/纸签/舞台与蒙版装饰",
+      "parent_id": null,
+      "z_index": 1,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "各方向矢量/边线/纸签/舞台与蒙版装饰"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1080,
+          1920
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "source": "当前v4 layout.json及对应TSX组件",
+          "measurement_status": "从当前源码声明的documentary参考分配框；不是DOM精测。六方向实际看图通过范围见validation.visual，参数真值为对应TSX/layout。",
+          "rule": "形状、阴影及各方向章节揭示以组件源码为唯一真值，不表示数据或营业实证。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 33.166666666666664
+      },
+      "states": [
+        {
+          "id": "conditional",
+          "visible": true,
+          "description": "按方向、当前章节与真实cue/word/scene活动条件显示，区间左闭右开；不能由可见=true推断全片常驻。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "custom",
+          "target_id": null,
+          "rule": "形状、阴影及各方向章节揭示以组件源码为唯一真值，不表示数据或营业实证。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "current_implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "frozen_source_and_visible_output",
+          "method": "从冻结props核对本元素真值，并在当前最终SHA实际看对应状态与边界。",
+          "pass_condition": "原稿不丢、不新增承诺，主体及来源标签可读；来源、时钟、裁切和方向状态符合实现。"
+        }
+      ]
+    },
+    {
+      "id": "brand",
+      "type": "text",
+      "role": "项目品牌",
+      "parent_id": null,
+      "z_index": 50,
+      "content": {
+        "mode": "editable",
+        "binding": "brand_slot",
+        "asset_id": null,
+        "description": "项目品牌"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          80,
+          76,
+          680,
+          70
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "source": "当前v4 layout.json及对应TSX组件",
+          "measurement_status": "从当前源码声明的documentary参考分配框；不是DOM精测。六方向实际看图通过范围见validation.visual，参数真值为对应TSX/layout。",
+          "rule": "单行14字以内；Microsoft YaHei 34。",
+          "font": "Microsoft YaHei；部分方向标题KaiTi/SimSun，源组件为准",
+          "font_size": 34,
+          "max_lines": 1,
+          "overflow": "对应方向拟合/限定行数并在根画布裁切；超长输入须重新出样，不能因此宣称无溢出。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 33.166666666666664
+      },
+      "states": [
+        {
+          "id": "conditional",
+          "visible": true,
+          "description": "按方向、当前章节与真实cue/word/scene活动条件显示，区间左闭右开；不能由可见=true推断全片常驻。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "custom",
+          "target_id": null,
+          "rule": "单行14字以内；Microsoft YaHei 34。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "current_implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "frozen_source_and_visible_output",
+          "method": "从冻结props核对本元素真值，并在当前最终SHA实际看对应状态与边界。",
+          "pass_condition": "原稿不丢、不新增承诺，主体及来源标签可读；来源、时钟、裁切和方向状态符合实现。"
+        }
+      ]
+    },
+    {
+      "id": "category",
+      "type": "text",
+      "role": "固定栏目字句",
+      "parent_id": null,
+      "z_index": 50,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "固定栏目字句"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          760,
+          76,
+          240,
+          60
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "source": "当前v4 layout.json及对应TSX组件",
+          "measurement_status": "从当前源码声明的documentary参考分配框；不是DOM精测。六方向实际看图通过范围见validation.visual，参数真值为对应TSX/layout。",
+          "rule": "固定社区AI × 内容创作；不是独立可替换经营承诺。",
+          "font": "Microsoft YaHei；部分方向标题KaiTi/SimSun，源组件为准",
+          "font_size": 25,
+          "max_lines": 1,
+          "overflow": "对应方向拟合/限定行数并在根画布裁切；超长输入须重新出样，不能因此宣称无溢出。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 33.166666666666664
+      },
+      "states": [
+        {
+          "id": "conditional",
+          "visible": true,
+          "description": "按方向、当前章节与真实cue/word/scene活动条件显示，区间左闭右开；不能由可见=true推断全片常驻。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "custom",
+          "target_id": null,
+          "rule": "固定社区AI × 内容创作；不是独立可替换经营承诺。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions",
+        "content"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "current_implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "frozen_source_and_visible_output",
+          "method": "从冻结props核对本元素真值，并在当前最终SHA实际看对应状态与边界。",
+          "pass_condition": "原稿不丢、不新增承诺，主体及来源标签可读；来源、时钟、裁切和方向状态符合实现。"
+        }
+      ]
+    },
+    {
+      "id": "chapter_heading",
+      "type": "text",
+      "role": "本章主标题",
+      "parent_id": null,
+      "z_index": 4,
+      "content": {
+        "mode": "editable",
+        "binding": "heading_slot",
+        "asset_id": null,
+        "description": "本章主标题"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          80,
+          222,
+          920,
+          260
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "source": "当前v4 layout.json及对应TSX组件",
+          "measurement_status": "从当前源码声明的documentary参考分配框；不是DOM精测。六方向实际看图通过范围见validation.visual，参数真值为对应TSX/layout。",
+          "rule": "每章1–2行、每行<=12字，按源稿；大字由各方向拟合规则处理。",
+          "font": "Microsoft YaHei；部分方向标题KaiTi/SimSun，源组件为准",
+          "font_size": 110,
+          "max_lines": 2,
+          "overflow": "对应方向拟合/限定行数并在根画布裁切；超长输入须重新出样，不能因此宣称无溢出。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 33.166666666666664
+      },
+      "states": [
+        {
+          "id": "conditional",
+          "visible": true,
+          "description": "按方向、当前章节与真实cue/word/scene活动条件显示，区间左闭右开；不能由可见=true推断全片常驻。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "custom",
+          "target_id": null,
+          "rule": "每章1–2行、每行<=12字，按源稿；大字由各方向拟合规则处理。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "current_implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "frozen_source_and_visible_output",
+          "method": "从冻结props核对本元素真值，并在当前最终SHA实际看对应状态与边界。",
+          "pass_condition": "原稿不丢、不新增承诺，主体及来源标签可读；来源、时钟、裁切和方向状态符合实现。"
+        }
+      ]
+    },
+    {
+      "id": "chapter_deck",
+      "type": "text",
+      "role": "原稿条件及解释",
+      "parent_id": null,
+      "z_index": 4,
+      "content": {
+        "mode": "editable",
+        "binding": "deck_slot",
+        "asset_id": null,
+        "description": "原稿条件及解释"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          80,
+          505,
+          920,
+          100
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "source": "当前v4 layout.json及对应TSX组件",
+          "measurement_status": "从当前源码声明的documentary参考分配框；不是DOM精测。六方向实际看图通过范围见validation.visual，参数真值为对应TSX/layout。",
+          "rule": "最多40字；不吞掉合作条件；实际字号/字位由方向组件确定。",
+          "font": "Microsoft YaHei；部分方向标题KaiTi/SimSun，源组件为准",
+          "font_size": 42,
+          "max_lines": 3,
+          "overflow": "对应方向拟合/限定行数并在根画布裁切；超长输入须重新出样，不能因此宣称无溢出。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 33.166666666666664
+      },
+      "states": [
+        {
+          "id": "conditional",
+          "visible": true,
+          "description": "按方向、当前章节与真实cue/word/scene活动条件显示，区间左闭右开；不能由可见=true推断全片常驻。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "custom",
+          "target_id": null,
+          "rule": "最多40字；不吞掉合作条件；实际字号/字位由方向组件确定。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "current_implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "frozen_source_and_visible_output",
+          "method": "从冻结props核对本元素真值，并在当前最终SHA实际看对应状态与边界。",
+          "pass_condition": "原稿不丢、不新增承诺，主体及来源标签可读；来源、时钟、裁切和方向状态符合实现。"
+        }
+      ]
+    },
+    {
+      "id": "presenter",
+      "type": "video",
+      "role": "主解释人物窗口",
+      "parent_id": null,
+      "z_index": 3,
+      "content": {
+        "mode": "embedded",
+        "binding": "source_video_slot",
+        "asset_id": "source_video",
+        "description": "主解释人物窗口"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          54,
+          602,
+          972,
+          990
+        ],
+        "fit": "cover",
+        "clip": "self",
+        "style": {
+          "source": "当前v4 layout.json及对应TSX组件",
+          "measurement_status": "从当前源码声明的documentary参考分配框；不是DOM精测。六方向实际看图通过范围见validation.visual，参数真值为对应TSX/layout。",
+          "rule": "原生成数字人及背景作为固化内容；cover保持口型，未重绘人物。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 33.166666666666664
+      },
+      "states": [
+        {
+          "id": "conditional",
+          "visible": true,
+          "description": "按方向、当前章节与真实cue/word/scene活动条件显示，区间左闭右开；不能由可见=true推断全片常驻。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "custom",
+          "target_id": null,
+          "rule": "原生成数字人及背景作为固化内容；cover保持口型，未重绘人物。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "current_implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "frozen_source_and_visible_output",
+          "method": "从冻结props核对本元素真值，并在当前最终SHA实际看对应状态与边界。",
+          "pass_condition": "原稿不丢、不新增承诺，主体及来源标签可读；来源、时钟、裁切和方向状态符合实现。"
+        }
+      ]
+    },
+    {
+      "id": "secondary_presenter",
+      "type": "video",
+      "role": "真实素材出现时的小解释窗",
+      "parent_id": null,
+      "z_index": 6,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "source_video",
+        "description": "真实素材出现时的小解释窗"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          710,
+          1178,
+          286,
+          392
+        ],
+        "fit": "cover",
+        "clip": "self",
+        "style": {
+          "source": "当前v4 layout.json及对应TSX组件",
+          "measurement_status": "从当前源码声明的documentary参考分配框；不是DOM精测。六方向实际看图通过范围见validation.visual，参数真值为对应TSX/layout。",
+          "rule": "只在部分方向真实素材活动时显示；与原人物同一全片时钟；原视频静音。",
+          "binding_rule": "从同一source_video_slot派生，不能独立替换第二人物。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 33.166666666666664
+      },
+      "states": [
+        {
+          "id": "conditional",
+          "visible": true,
+          "description": "按方向、当前章节与真实cue/word/scene活动条件显示，区间左闭右开；不能由可见=true推断全片常驻。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "custom",
+          "target_id": null,
+          "rule": "只在部分方向真实素材活动时显示；与原人物同一全片时钟；原视频静音。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions",
+        "content"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "current_implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "frozen_source_and_visible_output",
+          "method": "从冻结props核对本元素真值，并在当前最终SHA实际看对应状态与边界。",
+          "pass_condition": "原稿不丢、不新增承诺，主体及来源标签可读；来源、时钟、裁切和方向状态符合实现。"
+        }
+      ]
+    },
+    {
+      "id": "material_window",
+      "type": "media",
+      "role": "可选真实产品互动视频或定格",
+      "parent_id": null,
+      "z_index": 5,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "real_company_video",
+        "description": "可选真实产品互动视频或定格"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          54,
+          602,
+          972,
+          990
+        ],
+        "fit": "contain",
+        "clip": "self",
+        "style": {
+          "source": "当前v4 layout.json及对应TSX组件",
+          "measurement_status": "从当前源码声明的documentary参考分配框；不是DOM精测。六方向实际看图通过范围见validation.visual，参数真值为对应TSX/layout。",
+          "rule": "按cue区间显示；video从明确offset读取、原速且静音；image明确冻结，不伪装新动作；fit按配置。",
+          "binding_rule": "整体序列由global real_media_slot控制，不将固化图片内部文字变成编辑槽。",
+          "contain_rule": "contain时清晰前景保留原比例；另以同源cover+blur(28px)+brightness(.42)+scale1.12补边，窗口内裁切，不生成新场所。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 33.166666666666664
+      },
+      "states": [
+        {
+          "id": "conditional",
+          "visible": true,
+          "description": "按方向、当前章节与真实cue/word/scene活动条件显示，区间左闭右开；不能由可见=true推断全片常驻。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "custom",
+          "target_id": null,
+          "rule": "按cue区间显示；video从明确offset读取、原速且静音；image明确冻结，不伪装新动作；fit按配置。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "current_implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "frozen_source_and_visible_output",
+          "method": "从冻结props核对本元素真值，并在当前最终SHA实际看对应状态与边界。",
+          "pass_condition": "原稿不丢、不新增承诺，主体及来源标签可读；来源、时钟、裁切和方向状态符合实现。"
+        }
+      ]
+    },
+    {
+      "id": "material_source_label",
+      "type": "text",
+      "role": "真实素材来源标签",
+      "parent_id": null,
+      "z_index": 8,
+      "content": {
+        "mode": "editable",
+        "binding": "source_label_slot",
+        "asset_id": null,
+        "description": "真实素材来源标签"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          76,
+          620,
+          830,
+          55
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "source": "当前v4 layout.json及对应TSX组件",
+          "measurement_status": "从当前源码声明的documentary参考分配框；不是DOM精测。六方向实际看图通过范围见validation.visual，参数真值为对应TSX/layout。",
+          "rule": "当前真实素材窗必有对应来源标签；银白在105,671绘制，社区/曜黑在94,602，纪实在76,620；来源或定格不冒称海客店。",
+          "font": "Microsoft YaHei；部分方向标题KaiTi/SimSun，源组件为准",
+          "font_size": 24,
+          "max_lines": 2,
+          "overflow": "对应方向拟合/限定行数并在根画布裁切；超长输入须重新出样，不能因此宣称无溢出。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 33.166666666666664
+      },
+      "states": [
+        {
+          "id": "conditional",
+          "visible": true,
+          "description": "按方向、当前章节与真实cue/word/scene活动条件显示，区间左闭右开；不能由可见=true推断全片常驻。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "custom",
+          "target_id": null,
+          "rule": "真实素材出现时同窗标注；本期粤仔产品互动素材/粤仔产品互动定格，不称海客门店。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "current_implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "frozen_source_and_visible_output",
+          "method": "从冻结props核对本元素真值，并在当前最终SHA实际看对应状态与边界。",
+          "pass_condition": "原稿不丢、不新增承诺，主体及来源标签可读；来源、时钟、裁切和方向状态符合实现。"
+        }
+      ]
+    },
+    {
+      "id": "caption_panel",
+      "type": "graphic",
+      "role": "高对比短语字幕底板",
+      "parent_id": null,
+      "z_index": 40,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "高对比短语字幕底板"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          80,
+          1630,
+          920,
+          180
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "source": "当前v4 layout.json及对应TSX组件",
+          "measurement_status": "从当前源码声明的documentary参考分配框；不是DOM精测。六方向实际看图通过范围见validation.visual，参数真值为对应TSX/layout。",
+          "rule": "皮肤按方向，避免多层彩色描边；只在真实语句beat区间显示。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 33.166666666666664
+      },
+      "states": [
+        {
+          "id": "conditional",
+          "visible": true,
+          "description": "按方向、当前章节与真实cue/word/scene活动条件显示，区间左闭右开；不能由可见=true推断全片常驻。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "custom",
+          "target_id": null,
+          "rule": "皮肤按方向，避免多层彩色描边；只在真实语句beat区间显示。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "current_implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "frozen_source_and_visible_output",
+          "method": "从冻结props核对本元素真值，并在当前最终SHA实际看对应状态与边界。",
+          "pass_condition": "原稿不丢、不新增承诺，主体及来源标签可读；来源、时钟、裁切和方向状态符合实现。"
+        }
+      ]
+    },
+    {
+      "id": "captions",
+      "type": "text",
+      "role": "完整原稿显示字幕，以真实词边界分为语义短拍",
+      "parent_id": null,
+      "z_index": 41,
+      "content": {
+        "mode": "editable",
+        "binding": "captions_slot",
+        "asset_id": null,
+        "description": "完整原稿显示字幕，以真实词边界分为语义短拍"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          100,
+          1647,
+          880,
+          140
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "source": "当前v4 layout.json及对应TSX组件",
+          "measurement_status": "从当前源码声明的documentary参考分配框；不是DOM精测。六方向实际看图通过范围见validation.visual，参数真值为对应TSX/layout。",
+          "rule": "原始cue<=14字×2行；当前display beat按标点/语义换行和观察词端点划分，目标9字、上限13字；不均分时钟、不省词。",
+          "font": "Microsoft YaHei；部分方向标题KaiTi/SimSun，源组件为准",
+          "font_size": 68,
+          "max_lines": 2,
+          "overflow": "对应方向拟合/限定行数并在根画布裁切；超长输入须重新出样，不能因此宣称无溢出。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 33.166666666666664
+      },
+      "states": [
+        {
+          "id": "conditional",
+          "visible": true,
+          "description": "按方向、当前章节与真实cue/word/scene活动条件显示，区间左闭右开；不能由可见=true推断全片常驻。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "custom",
+          "target_id": null,
+          "rule": "原始cue<=14字×2行；当前display beat按标点/语义换行和观察词端点划分，目标9字、上限13字；不均分时钟、不省词。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "current_implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "frozen_source_and_visible_output",
+          "method": "从冻结props核对本元素真值，并在当前最终SHA实际看对应状态与边界。",
+          "pass_condition": "原稿不丢、不新增承诺，主体及来源标签可读；来源、时钟、裁切和方向状态符合实现。"
+        }
+      ]
+    },
+    {
+      "id": "caption_highlights",
+      "type": "text",
+      "role": "短语关键词的时间强调",
+      "parent_id": null,
+      "z_index": 42,
+      "content": {
+        "mode": "editable",
+        "binding": "phrase_slot",
+        "asset_id": null,
+        "description": "短语关键词的时间强调"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          100,
+          1647,
+          880,
+          140
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "source": "当前v4 layout.json及对应TSX组件",
+          "measurement_status": "从当前源码声明的documentary参考分配框；不是DOM精测。六方向实际看图通过范围见validation.visual，参数真值为对应TSX/layout。",
+          "rule": "highlights来源于本条原文，按beat.words累计字位映射实测词起止；词组说到时出现下划线/阴影。phraseHighlights显式索引在入口校验并保存，不接受手写秒数。",
+          "font": "Microsoft YaHei；部分方向标题KaiTi/SimSun，源组件为准",
+          "font_size": 68,
+          "max_lines": 2,
+          "overflow": "对应方向拟合/限定行数并在根画布裁切；超长输入须重新出样，不能因此宣称无溢出。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 33.166666666666664
+      },
+      "states": [
+        {
+          "id": "conditional",
+          "visible": true,
+          "description": "按方向、当前章节与真实cue/word/scene活动条件显示，区间左闭右开；不能由可见=true推断全片常驻。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "custom",
+          "target_id": null,
+          "rule": "highlights来源于本条原文，按beat.words累计字位映射实测词起止；词组说到时出现下划线/阴影。phraseHighlights显式索引在入口校验并保存，不接受手写秒数。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "current_implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "frozen_source_and_visible_output",
+          "method": "从冻结props核对本元素真值，并在当前最终SHA实际看对应状态与边界。",
+          "pass_condition": "原稿不丢、不新增承诺，主体及来源标签可读；来源、时钟、裁切和方向状态符合实现。"
+        }
+      ]
+    },
+    {
+      "id": "chapter_points",
+      "type": "text",
+      "role": "当前章节最多三条语义要点",
+      "parent_id": null,
+      "z_index": 7,
+      "content": {
+        "mode": "editable",
+        "binding": "points_slot",
+        "asset_id": null,
+        "description": "当前章节最多三条语义要点"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          80,
+          1516,
+          920,
+          82
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "source": "当前v4 layout.json及对应TSX组件",
+          "measurement_status": "从当前源码声明的documentary参考分配框；不是DOM精测。六方向实际看图通过范围见validation.visual，参数真值为对应TSX/layout。",
+          "rule": "位置随方向/合作章变化；原三方向3项以内，最长本期<=6字；通用<=12字上限未泛化验收。",
+          "font": "Microsoft YaHei；部分方向标题KaiTi/SimSun，源组件为准",
+          "font_size": 35,
+          "max_lines": 3,
+          "overflow": "对应方向拟合/限定行数并在根画布裁切；超长输入须重新出样，不能因此宣称无溢出。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 33.166666666666664
+      },
+      "states": [
+        {
+          "id": "conditional",
+          "visible": true,
+          "description": "按方向、当前章节与真实cue/word/scene活动条件显示，区间左闭右开；不能由可见=true推断全片常驻。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "custom",
+          "target_id": null,
+          "rule": "位置随方向/合作章变化；原三方向3项以内，最长本期<=6字；通用<=12字上限未泛化验收。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "current_implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "frozen_source_and_visible_output",
+          "method": "从冻结props核对本元素真值，并在当前最终SHA实际看对应状态与边界。",
+          "pass_condition": "原稿不丢、不新增承诺，主体及来源标签可读；来源、时钟、裁切和方向状态符合实现。"
+        }
+      ]
+    },
+    {
+      "id": "disclosure",
+      "type": "text",
+      "role": "固定生成内容标识",
+      "parent_id": null,
+      "z_index": 50,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "固定生成内容标识"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          80,
+          1820,
+          400,
+          40
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "source": "当前v4 layout.json及对应TSX组件",
+          "measurement_status": "从当前源码声明的documentary参考分配框；不是DOM精测。六方向实际看图通过范围见validation.visual，参数真值为对应TSX/layout。",
+          "rule": "固定数字人演绎，不把互动素材或原生成背景统一冒称海客实拍。",
+          "font": "Microsoft YaHei；部分方向标题KaiTi/SimSun，源组件为准",
+          "font_size": 23,
+          "max_lines": 1,
+          "overflow": "对应方向拟合/限定行数并在根画布裁切；超长输入须重新出样，不能因此宣称无溢出。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 33.166666666666664
+      },
+      "states": [
+        {
+          "id": "conditional",
+          "visible": true,
+          "description": "按方向、当前章节与真实cue/word/scene活动条件显示，区间左闭右开；不能由可见=true推断全片常驻。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "custom",
+          "target_id": null,
+          "rule": "固定数字人演绎，不把互动素材或原生成背景统一冒称海客实拍。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions",
+        "content"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "current_implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "frozen_source_and_visible_output",
+          "method": "从冻结props核对本元素真值，并在当前最终SHA实际看对应状态与边界。",
+          "pass_condition": "原稿不丢、不新增承诺，主体及来源标签可读；来源、时钟、裁切和方向状态符合实现。"
+        }
+      ]
+    },
+    {
+      "id": "speech_audio",
+      "type": "audio",
+      "role": "同源完整口播",
+      "parent_id": null,
+      "z_index": 0,
+      "content": {
+        "mode": "embedded",
+        "binding": "audio_slot",
+        "asset_id": "source_audio",
+        "description": "同源完整口播"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "source": "当前v4 layout.json及对应TSX组件",
+          "measurement_status": "从当前源码声明的documentary参考分配框；不是DOM精测。六方向实际看图通过范围见validation.visual，参数真值为对应TSX/layout。",
+          "rule": "音频是主时钟，最终仅一次-2.5dB线性增益，无BGM、无再次语速处理。",
+          "nonvisual": "音频无可视坐标；1x1只是通用结构占位，不绘制。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 33.166666666666664
+      },
+      "states": [
+        {
+          "id": "conditional",
+          "visible": true,
+          "description": "按方向、当前章节与真实cue/word/scene活动条件显示，区间左闭右开；不能由可见=true推断全片常驻。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "custom",
+          "target_id": null,
+          "rule": "音频是主时钟，最终仅一次-2.5dB线性增益，无BGM、无再次语速处理。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "current_implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "frozen_source_and_visible_output",
+          "method": "从冻结props核对本元素真值，并在当前最终SHA实际看对应状态与边界。",
+          "pass_condition": "原稿不丢、不新增承诺，主体及来源标签可读；来源、时钟、裁切和方向状态符合实现。"
+        }
+      ]
+    }
+  ],
+  "scenes": [
+    {
+      "id": "hook",
+      "start": 0,
+      "end": 4.88,
+      "purpose": "本期06原稿hook章节；真实cue连续覆盖，字幕独立按词端点。",
+      "element_ids": [
+        "art_background",
+        "frame_design",
+        "brand",
+        "category",
+        "chapter_heading",
+        "chapter_deck",
+        "presenter",
+        "secondary_presenter",
+        "material_window",
+        "material_source_label",
+        "caption_panel",
+        "captions",
+        "caption_highlights",
+        "chapter_points",
+        "disclosure",
+        "speech_audio"
+      ],
+      "variant": "documentary"
+    },
+    {
+      "id": "story",
+      "start": 4.88,
+      "end": 12.1,
+      "purpose": "本期06原稿story章节；真实cue连续覆盖，字幕独立按词端点。",
+      "element_ids": [
+        "art_background",
+        "frame_design",
+        "brand",
+        "category",
+        "chapter_heading",
+        "chapter_deck",
+        "presenter",
+        "secondary_presenter",
+        "material_window",
+        "material_source_label",
+        "caption_panel",
+        "captions",
+        "caption_highlights",
+        "chapter_points",
+        "disclosure",
+        "speech_audio"
+      ],
+      "variant": "documentary"
+    },
+    {
+      "id": "ai",
+      "start": 12.1,
+      "end": 25.18,
+      "purpose": "本期06原稿ai章节；真实cue连续覆盖，字幕独立按词端点。",
+      "element_ids": [
+        "art_background",
+        "frame_design",
+        "brand",
+        "category",
+        "chapter_heading",
+        "chapter_deck",
+        "presenter",
+        "secondary_presenter",
+        "material_window",
+        "material_source_label",
+        "caption_panel",
+        "captions",
+        "caption_highlights",
+        "chapter_points",
+        "disclosure",
+        "speech_audio"
+      ],
+      "variant": "documentary"
+    },
+    {
+      "id": "offer",
+      "start": 25.18,
+      "end": 30.84,
+      "purpose": "本期06原稿offer章节；真实cue连续覆盖，字幕独立按词端点。",
+      "element_ids": [
+        "art_background",
+        "frame_design",
+        "brand",
+        "category",
+        "chapter_heading",
+        "chapter_deck",
+        "presenter",
+        "secondary_presenter",
+        "material_window",
+        "material_source_label",
+        "caption_panel",
+        "captions",
+        "caption_highlights",
+        "chapter_points",
+        "disclosure",
+        "speech_audio"
+      ],
+      "variant": "documentary"
+    },
+    {
+      "id": "cta",
+      "start": 30.84,
+      "end": 33.166666666666664,
+      "purpose": "本期06原稿cta章节；真实cue连续覆盖，字幕独立按词端点。",
+      "element_ids": [
+        "art_background",
+        "frame_design",
+        "brand",
+        "category",
+        "chapter_heading",
+        "chapter_deck",
+        "presenter",
+        "secondary_presenter",
+        "material_window",
+        "material_source_label",
+        "caption_panel",
+        "captions",
+        "caption_highlights",
+        "chapter_points",
+        "disclosure",
+        "speech_audio"
+      ],
+      "variant": "documentary"
+    }
+  ],
+  "assets": [
+    {
+      "id": "source_video",
+      "kind": "video",
+      "path": null,
+      "source": "每期用户明确提供的原数字人口播MP4；本期01/02/03分别由import-manifest与SHA绑定",
+      "embedded_content": [
+        "人物脸、眼镜、头发、服装、原背景、自然动作和口型为固化内容"
+      ],
+      "rights_status": "仅本期用户提供并授权加工，不包含在模板可分发资源中。"
+    },
+    {
+      "id": "source_audio",
+      "kind": "audio",
+      "path": null,
+      "source": "同一原视频track0:a:0提取24kHz mono PCM16，提取增益0，播放原速1；最终封装仅一次-2.5dB",
+      "embedded_content": [
+        "完整既有口播语音及其已应用的供应商语速"
+      ],
+      "rights_status": "随本期原片授权复用，不打包用户语音。"
+    },
+    {
+      "id": "system_fonts",
+      "kind": "font",
+      "path": null,
+      "source": "本机已安装Microsoft YaHei、KaiTi、SimSun，字族选择见index.tsx",
+      "embedded_content": [],
+      "rights_status": "仅许可环境渲染，不将系统字体文件随模板打包。"
+    },
+    {
+      "id": "art_blue",
+      "kind": "image",
+      "path": "assets/blue-editorial.png",
+      "source": "复用v003既有生成纯装饰PNG，按原SHA复制；本期无新增图像生成。来源assets/PROVENANCE.json，不代表门店实拍。",
+      "embedded_content": [
+        "抽象折纸/社区建筑/光学材质；纯装饰设计，不含人物或可编辑中文，不是门店实拍。"
+      ],
+      "rights_status": "用户本次授权生成的项目装饰资源；随模板仅分发此装饰PNG与来源记录，用户原片、语音和系统字体不打包。"
+    },
+    {
+      "id": "art_community",
+      "kind": "image",
+      "path": "assets/community-showcase.png",
+      "source": "复用v003既有生成纯装饰PNG，按原SHA复制；本期无新增图像生成。来源assets/PROVENANCE.json，不代表门店实拍。",
+      "embedded_content": [
+        "抽象折纸/社区建筑/光学材质；纯装饰设计，不含人物或可编辑中文，不是门店实拍。"
+      ],
+      "rights_status": "用户本次授权生成的项目装饰资源；随模板仅分发此装饰PNG与来源记录，用户原片、语音和系统字体不打包。"
+    },
+    {
+      "id": "art_optical",
+      "kind": "image",
+      "path": "assets/optical-cinema.png",
+      "source": "复用v003既有生成纯装饰PNG，按原SHA复制；本期无新增图像生成。来源assets/PROVENANCE.json，不代表门店实拍。",
+      "embedded_content": [
+        "抽象折纸/社区建筑/光学材质；纯装饰设计，不含人物或可编辑中文，不是门店实拍。"
+      ],
+      "rights_status": "用户本次授权生成的项目装饰资源；随模板仅分发此装饰PNG与来源记录，用户原片、语音和系统字体不打包。"
+    },
+    {
+      "id": "real_company_video",
+      "kind": "video",
+      "path": null,
+      "source": "本期native library登记user_provided_internal_company_material的粤仔户外产品互动，源SHA与采用窗口见source-ledger和六配置。",
+      "embedded_content": [
+        "成人、机器狗、街道/建筑、自然动作及设备上实物文字已固化；不推断海客店、邻居、购买或成交。"
+      ],
+      "rights_status": "当前用户授权仅本期本地开发测试；未据此提升公开发布与所有权核实。"
+    },
+    {
+      "id": "real_company_still",
+      "kind": "image",
+      "path": null,
+      "source": "上述同SHA视频96.2秒的既有FrameSampler JPEG（frame_0010.jpg），无生成编辑；明确标定格。",
+      "embedded_content": [
+        "冻结的真实源画面，不代表新增现场持续动作。"
+      ],
+      "rights_status": "同原视频本期开发测试授权；非模板可分发公共资源。"
+    }
+  ],
+  "slots": [
+    {
+      "id": "source_video_slot",
+      "element_id": "presenter",
+      "property": "content.asset_id",
+      "value_type": "asset",
+      "required": true,
+      "limits": {
+        "format": "MP4 with AAC",
+        "duration_max_seconds": 121,
+        "source_SHA_required": true,
+        "source_framing": [
+          "close-4x5",
+          "medium-9x16"
+        ]
+      },
+      "missing": "缺少必需输入拒绝准备，保留来源与原任务；说明/points允许入口规定的空值。",
+      "overflow": "按v4 normalize_words/normalize_art与v3 normalize_cues明确拒绝，缩减原稿显示层或拆受控章节后重新冻结；不缩小时钟或编造字幕。"
+    },
+    {
+      "id": "audio_slot",
+      "element_id": "speech_audio",
+      "property": "content.asset_id",
+      "value_type": "asset",
+      "required": true,
+      "limits": {
+        "source": "same MP4 track 0:a:0",
+        "sample_rate": 24000,
+        "channels": 1,
+        "format": "PCM16",
+        "sourceSpeed": 1
+      },
+      "missing": "缺少必需输入拒绝准备，保留来源与原任务；说明/points允许入口规定的空值。",
+      "overflow": "按v4 normalize_words/normalize_art与v3 normalize_cues明确拒绝，缩减原稿显示层或拆受控章节后重新冻结；不缩小时钟或编造字幕。"
+    },
+    {
+      "id": "background_slot",
+      "element_id": "art_background",
+      "property": "content.asset_id",
+      "value_type": "asset",
+      "required": false,
+      "limits": {
+        "PNG_required_for": [
+          "community-showcase",
+          "blue-editorial",
+          "optical-cinema"
+        ],
+        "null_code_background_allowed_for": [
+          "red-manifesto",
+          "silver-launch",
+          "documentary"
+        ],
+        "path_and_sha_both_null_or_both_concrete": true,
+        "concrete_SHA256_required": true
+      },
+      "missing": "旧三方向缺PNG或SHA拒绝；新三方向可显式传path/sha双null使用确定性代码背景。",
+      "overflow": "按v4 normalize_words/normalize_art与v3 normalize_cues明确拒绝，缩减原稿显示层或拆受控章节后重新冻结；不缩小时钟或编造字幕。"
+    },
+    {
+      "id": "brand_slot",
+      "element_id": "brand",
+      "property": "content",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "min_chars": 1,
+        "max_chars": 14
+      },
+      "missing": "缺少必需输入拒绝准备，保留来源与原任务；说明/points允许入口规定的空值。",
+      "overflow": "按v4 normalize_words/normalize_art与v3 normalize_cues明确拒绝，缩减原稿显示层或拆受控章节后重新冻结；不缩小时钟或编造字幕。"
+    },
+    {
+      "id": "heading_slot",
+      "element_id": "chapter_heading",
+      "property": "content",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "lines_min": 1,
+        "lines_max": 2,
+        "max_characters_per_line": 12
+      },
+      "missing": "缺少必需输入拒绝准备，保留来源与原任务；说明/points允许入口规定的空值。",
+      "overflow": "按v4 normalize_words/normalize_art与v3 normalize_cues明确拒绝，缩减原稿显示层或拆受控章节后重新冻结；不缩小时钟或编造字幕。"
+    },
+    {
+      "id": "deck_slot",
+      "element_id": "chapter_deck",
+      "property": "content",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "max_characters": 40,
+        "min_characters": 0
+      },
+      "missing": "缺少必需输入拒绝准备，保留来源与原任务；说明/points允许入口规定的空值。",
+      "overflow": "按v4 normalize_words/normalize_art与v3 normalize_cues明确拒绝，缩减原稿显示层或拆受控章节后重新冻结；不缩小时钟或编造字幕。"
+    },
+    {
+      "id": "captions_slot",
+      "element_id": "captions",
+      "property": "content",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "cue_min": 1,
+        "cue_max": 2000,
+        "lines_max": 2,
+        "max_characters_per_line": 14,
+        "source_video_sha256_each_cue": true,
+        "ordered_nonoverlap_ms": true
+      },
+      "missing": "缺少必需输入拒绝准备，保留来源与原任务；说明/points允许入口规定的空值。",
+      "overflow": "按v4 normalize_words/normalize_art与v3 normalize_cues明确拒绝，缩减原稿显示层或拆受控章节后重新冻结；不缩小时钟或编造字幕。"
+    },
+    {
+      "id": "points_slot",
+      "element_id": "chapter_points",
+      "property": "content",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "items_max": 3,
+        "max_characters_each": 12
+      },
+      "missing": "缺少必需输入拒绝准备，保留来源与原任务；说明/points允许入口规定的空值。",
+      "overflow": "按v4 normalize_words/normalize_art与v3 normalize_cues明确拒绝，缩减原稿显示层或拆受控章节后重新冻结；不缩小时钟或编造字幕。"
+    },
+    {
+      "id": "art_direction_slot",
+      "element_id": "global",
+      "property": "art.direction",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "enum": [
+          "community-showcase",
+          "blue-editorial",
+          "optical-cinema",
+          "red-manifesto",
+          "silver-launch",
+          "documentary"
+        ]
+      },
+      "missing": "缺少必需输入拒绝准备，保留来源与原任务；说明/points允许入口规定的空值。",
+      "overflow": "按v4 normalize_words/normalize_art与v3 normalize_cues明确拒绝，缩减原稿显示层或拆受控章节后重新冻结；不缩小时钟或编造字幕。"
+    },
+    {
+      "id": "chapters_slot",
+      "element_id": "global",
+      "property": "art.chapters",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "items_min": 1,
+        "items_max": 40,
+        "fixed_kinds": [
+          "hook",
+          "story",
+          "ai",
+          "offer",
+          "cta"
+        ],
+        "contiguous_all_cues": true,
+        "this_test_chapters_each": 5
+      },
+      "missing": "缺少必需输入拒绝准备，保留来源与原任务；说明/points允许入口规定的空值。",
+      "overflow": "按v4 normalize_words/normalize_art与v3 normalize_cues明确拒绝，缩减原稿显示层或拆受控章节后重新冻结；不缩小时钟或编造字幕。"
+    },
+    {
+      "id": "highlights_slot",
+      "element_id": "global",
+      "property": "art.highlights",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "items_max": 24,
+        "text_min_chars": 2,
+        "text_max_chars": 10,
+        "bound_to_own_source_captions": true
+      },
+      "missing": "缺少必需输入拒绝准备，保留来源与原任务；说明/points允许入口规定的空值。",
+      "overflow": "按v4 normalize_words/normalize_art与v3 normalize_cues明确拒绝，缩减原稿显示层或拆受控章节后重新冻结；不缩小时钟或编造字幕。"
+    },
+    {
+      "id": "words_slot",
+      "element_id": "global",
+      "property": "art.wordCues",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "min_items": 1,
+        "max_items": 10000,
+        "ordered_nonoverlap_ms": true,
+        "every_word_source_video_sha256": true,
+        "normalized_full_cue_text_equal": true,
+        "startMs_endMs_from_observed_ASR_only": true
+      },
+      "missing": "必需项缺失拒绝准备；可选项为空数组，保留原人物和全部口播字幕。",
+      "overflow": "明确报错保留原请求，不截掉词、不均分时间、不循环或拉伸素材；按合法字段重新冻结新指纹。"
+    },
+    {
+      "id": "phrase_slot",
+      "element_id": "caption_highlights",
+      "property": "content",
+      "value_type": "array",
+      "required": false,
+      "limits": {
+        "max_items": 80,
+        "exact_fields": [
+          "text",
+          "fromWord",
+          "toWord"
+        ],
+        "text_max_chars": 28,
+        "no_manual_seconds": true,
+        "text_must_equal_joined_real_words": true
+      },
+      "missing": "必需项缺失拒绝准备；可选项为空数组，保留原人物和全部口播字幕。",
+      "overflow": "明确报错保留原请求，不截掉词、不均分时间、不循环或拉伸素材；按合法字段重新冻结新指纹。"
+    },
+    {
+      "id": "real_media_slot",
+      "element_id": "global",
+      "property": "art.scenes",
+      "value_type": "array",
+      "required": false,
+      "limits": {
+        "max_items": 16,
+        "exact_fields": [
+          "id",
+          "path",
+          "sha256",
+          "kind",
+          "fromCue",
+          "toCue",
+          "offset",
+          "fit",
+          "source_label"
+        ],
+        "kind": [
+          "video",
+          "image"
+        ],
+        "fit": [
+          "cover",
+          "contain"
+        ],
+        "ordered_nonoverlap_cues": true,
+        "source_SHA256_required": true,
+        "source_label_required": true,
+        "no_loop_stretch": true,
+        "image_offset_zero": true
+      },
+      "missing": "必需项缺失拒绝准备；可选项为空数组，保留原人物和全部口播字幕。",
+      "overflow": "明确报错保留原请求，不截掉词、不均分时间、不循环或拉伸素材；按合法字段重新冻结新指纹。"
+    },
+    {
+      "id": "source_label_slot",
+      "element_id": "material_source_label",
+      "property": "content",
+      "value_type": "string",
+      "required": false,
+      "limits": {
+        "max_characters": 100,
+        "derived_from": "art.scenes[].source_label",
+        "required_when_scene_used": true,
+        "must_state_source_identity_and_image_freeze_if_applicable": true
+      },
+      "missing": "有素材时来源标签缺失拒绝；没有素材时不显示标签。",
+      "overflow": "缩短真实来源说明或拒绝本期配置，不以海客门店等无证实身份替代。"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "current_implementation",
+      "source_kind": "design",
+      "source": "本期六条最终请求共同冻结的v4入口，与runtime-freeze十五文件身份一致。",
+      "locator": "index.tsx",
+      "method": "核对当前冻结源码与本期最终runtime；后续新增规格/文档不改变此次渲染身份。",
+      "file": "index.tsx",
+      "sha256": "0aed1ba0b63068a205f5c9386d2aef45dc674301818ced12a91aff41ac38de18"
+    },
+    {
+      "id": "layout_rules",
+      "source_kind": "design",
+      "source": "画布、safe设计留白、短拍字幕和声音参数。",
+      "locator": "layout.json",
+      "method": "读取当前layout；safe为设计余量，非平台实测。",
+      "file": "layout.json",
+      "sha256": "cc88c73f5e4a977d43e115976240b81db20537f90fc60719059316c7db294fb9"
+    },
+    {
+      "id": "semantic_source_review",
+      "source_kind": "observation",
+      "source": "本次唯一语义/来源审阅，对六配置和props逐条检查。",
+      "locator": "semantic-source-review.json",
+      "method": "实际读原稿与固定文本，验证words全文、词组端点、源视频/定格SHA；不是成片QA。",
+      "file": "../../../.local/codex-runs/template6-six-style-refine-20261020/materials/semantic-source-review.json",
+      "sha256": "6af9ae7d53615ebdff3d8f1558971e6f447dd323e4a65677b341a51503e21be5"
+    },
+    {
+      "id": "source_ledger",
+      "source_kind": "observation",
+      "source": "原生库来源记录、实际代表帧与密集窗口观察、采用范围。",
+      "locator": "source-ledger.json",
+      "method": "本地mode=ro查询与实际view_image；不是连续听辨或海客门店身份认证。",
+      "file": "../../../.local/codex-runs/template6-six-style-refine-20261020/materials/source-ledger.json",
+      "sha256": "45988619908d3788205f77f538eccf680a30a07e7b61520dfce6c3ae222a3003"
+    },
+    {
+      "id": "six_input_snapshot",
+      "source_kind": "measurement",
+      "source": "六输入、配置和预览props来源快照；最终采用身份另由native_queue_receipts、最终props/QA证明。",
+      "locator": "six-inputs.json",
+      "method": "路径/SHA/时钟元数据核对；后续最终SHA须另外登记。",
+      "file": "../../../.local/codex-runs/template6-six-style-refine-20261020/six-inputs.json",
+      "sha256": "2d62b8b7aefced64b94a4bd4fd61e41f3d291fff24abfadc20a8280142cd8da9"
+    },
+    {
+      "id": "community_showcase_decoration",
+      "source_kind": "design",
+      "source": "复用既有生成装饰PNG，无人物/文字/实景宣称。",
+      "locator": "community-showcase.png",
+      "method": "从v003同SHA复制，不在本期新生成；新三个方向为代码背景。",
+      "file": "assets/community-showcase.png",
+      "sha256": "b4c180bb73fed6df1b441282678cac84be6d49ca3862967ccbc6d9f4655e1102"
+    },
+    {
+      "id": "blue_editorial_decoration",
+      "source_kind": "design",
+      "source": "复用既有生成装饰PNG，无人物/文字/实景宣称。",
+      "locator": "blue-editorial.png",
+      "method": "从v003同SHA复制，不在本期新生成；新三个方向为代码背景。",
+      "file": "assets/blue-editorial.png",
+      "sha256": "b8eb2b2445435a53e37efc07bef4db3f223600eb0345363aa9b3c7f0012ac7d9"
+    },
+    {
+      "id": "optical_cinema_decoration",
+      "source_kind": "design",
+      "source": "复用既有生成装饰PNG，无人物/文字/实景宣称。",
+      "locator": "optical-cinema.png",
+      "method": "从v003同SHA复制，不在本期新生成；新三个方向为代码背景。",
+      "file": "assets/optical-cinema.png",
+      "sha256": "8b72be83d6702be6dae1dfee7ab2e30e95c45c828d6abc525c4e678b7e3c7b84"
+    },
+    {
+      "id": "decorative_provenance",
+      "source_kind": "measurement",
+      "source": "可分发装饰来源，用户原片/声音/实景素材不打包。",
+      "locator": "PROVENANCE.json",
+      "method": "与当前PNG SHA核对；不是现实门店证明。",
+      "file": "assets/PROVENANCE.json",
+      "sha256": "07e2ea48a6264ee26005e2b6d6df4268ec78bc0350de2381ff7c99bdee7b05d2"
+    },
+    {
+      "id": "native_queue_receipts",
+      "source_kind": "measurement",
+      "source": "六条原生v4统一队列完成且各attempt1，来源/作品/输出身份记录。",
+      "locator": "run-summary.json",
+      "method": "读已完成回执；cloud_calls0、publicationfalse、quality_passedfalse，不新提交或改变批准。",
+      "file": "../../../.local/codex-runs/template6-six-style-refine-20261020/queue/run-summary.json",
+      "sha256": "5422fefc56350997fb766c61c53d4a783c1f3caf7dc285daac28503820fc81c0"
+    },
+    {
+      "id": "native_readback",
+      "source_kind": "measurement",
+      "source": "六作品、版本与原生队列持久读回。",
+      "locator": "native-readback.json",
+      "method": "all_six_completed_once、all_unapproved_unpublished与实际输出SHA绑定；不是主观听看。",
+      "file": "../../../.local/codex-runs/template6-six-style-refine-20261020/queue/native-readback.json",
+      "sha256": "d04cf3db7a69224a27c283ab3c3a8dd3887d3ec56cb161369288bb7b051abf2b"
+    },
+    {
+      "id": "runtime_freeze",
+      "source_kind": "measurement",
+      "source": "本期十五个共同渲染运行时文件的冻结SHA。",
+      "locator": "runtime-freeze.json",
+      "method": "实际当前文件逐一同SHA；新增本规格/手册不计入既有请求runtime。",
+      "file": "../../../.local/codex-runs/template6-six-style-refine-20261020/queue/runtime-freeze.json",
+      "sha256": "8cc43d938f8386a203a5349950a0537fba12be5a6cefb842d513b8a37e77709b"
+    },
+    {
+      "id": "final_technical",
+      "source_kind": "measurement",
+      "source": "六最终MP4唯一完整技术QA，各41项通过。",
+      "locator": "aggregate.json",
+      "method": "真实schema all_six_technical_passed=true，逐条technical-qa中technical_passed/checks与HTTP媒体/作品/队列证据核对；不造旧版字段。",
+      "file": "../../../.local/codex-runs/template6-six-style-refine-20261020/final-qa/aggregate.json",
+      "sha256": "0b116c55fcb3a07e5e24cef0681266304d878d968b3e512b808b6829bd48ca8c"
+    },
+    {
+      "id": "root_visual_review",
+      "source_kind": "observation",
+      "source": "根Agent实际查看六片全部142短拍字幕裁图、章节/边界、4片真实素材边界及每片最长字幕原尺寸。",
+      "locator": "final-visual-review.json",
+      "method": "根实际view_image并写pass_scoped；230个可追溯输出样本，不冒充连续听看/音素、真机或用户确认。",
+      "file": "../../../.local/codex-runs/template6-six-style-refine-20261020/final-visual-review.json",
+      "sha256": "6d1399cf444e1b51c3cf112164329267dc79b7b9d4f88822f63a8cca55d76956"
+    },
+    {
+      "id": "final_clip_01",
+      "source_kind": "measurement",
+      "source": "本期01完整最终MP4；queue=PQ-acc78619b86664c82112; work=work-246d2f03e9b4842582fa585a; version=v-489ad783c8780fe0272b8280。",
+      "locator": "avatar-preview.mp4",
+      "method": "最终技术、根实际视觉及HTTP完整字节证据共同绑定该SHA。",
+      "file": "../../projects/studio-1af0e3bb91207eb1/renders/local-source-art-v4-f54ba80dea574841fe1b/avatar-preview.mp4",
+      "sha256": "489ad783c8780fe0272b828031ff8dad634d703b25eb11387e53c8ad190ea366"
+    },
+    {
+      "id": "technical_01",
+      "source_kind": "measurement",
+      "source": "本期01唯一完整技术报告，41项通过。",
+      "locator": "technical-qa.json",
+      "method": "完整解码、时钟/词序/字幕短拍、单次增益、来源/运行时和HTTP检查；无新增媒体修改或重复QA。",
+      "file": "../../../.local/codex-runs/template6-six-style-refine-20261020/final-qa/clip-01/technical-qa.json",
+      "sha256": "97c9737555b32459d5b6b8a4f5636a44d6232661667a0b220885fdb9de2b51f6"
+    },
+    {
+      "id": "http_media_01",
+      "source_kind": "measurement",
+      "source": "本期01实际HTTPmedia读回，与同最终SHA绑定。",
+      "locator": "http-media-binding.json",
+      "method": "读取既有实际HTTP回执；不重新请求、批准或发布。",
+      "file": "../../../.local/codex-runs/template6-six-style-refine-20261020/final-qa/clip-01/http-media-binding.json",
+      "sha256": "676bcdde40838e74e057f00baf5e0b1ed048b478a2a4690b02bc6d75559e6f7f"
+    },
+    {
+      "id": "http_work_01",
+      "source_kind": "measurement",
+      "source": "本期01实际HTTPwork读回，与同最终SHA绑定。",
+      "locator": "http-work.json",
+      "method": "读取既有实际HTTP回执；不重新请求、批准或发布。",
+      "file": "../../../.local/codex-runs/template6-six-style-refine-20261020/final-qa/clip-01/http-work.json",
+      "sha256": "ec6eb74708691b463893f39207b29756deb050da6afd83b8bff467e22ca1c89f"
+    },
+    {
+      "id": "http_queue_01",
+      "source_kind": "measurement",
+      "source": "本期01实际HTTPqueue读回，与同最终SHA绑定。",
+      "locator": "http-queue.json",
+      "method": "读取既有实际HTTP回执；不重新请求、批准或发布。",
+      "file": "../../../.local/codex-runs/template6-six-style-refine-20261020/final-qa/clip-01/http-queue.json",
+      "sha256": "888aa41483f1b6b7bfa56a23d93b898dcf1e55d8dd3876d42367a3213f27e30a"
+    },
+    {
+      "id": "visual_manifest_01",
+      "source_kind": "observation",
+      "source": "本期01最终MP4离散取帧身份与范围清单。",
+      "locator": "visual-manifest.json",
+      "method": "仅实际取帧范围；根实际观察另见本条root_visual记录。",
+      "file": "../../../.local/codex-runs/template6-six-style-refine-20261020/final-visuals/clip-01/visual-manifest.json",
+      "sha256": "56824f411fe97b3f37fb4912041d0b9d309ac94564e6290ca4ee539a1d9d034e"
+    },
+    {
+      "id": "root_visual_01",
+      "source_kind": "observation",
+      "source": "本期01根实际看图pass_scoped。",
+      "locator": "root-visual-review.json",
+      "method": "全部本条显示短拍、章节/边界及最长原尺寸；有实景时同时看素材边界，不等同连续听看。",
+      "file": "../../../.local/codex-runs/template6-six-style-refine-20261020/final-visuals/clip-01/root-visual-review.json",
+      "sha256": "ae7f9031ecf02f32c6af07f26373c5fc4255db5ceed502ee2f20aac8c3fe4a8f"
+    },
+    {
+      "id": "final_clip_02",
+      "source_kind": "measurement",
+      "source": "本期02完整最终MP4；queue=PQ-99f55daeb9427472f25d; work=work-8fa71df3f5b9e7f9d74c2de8; version=v-45782bde69ae672673170bed。",
+      "locator": "avatar-preview.mp4",
+      "method": "最终技术、根实际视觉及HTTP完整字节证据共同绑定该SHA。",
+      "file": "../../projects/studio-0ec21656aebe548b/renders/local-source-art-v4-06836f1d8f287cc8aea4/avatar-preview.mp4",
+      "sha256": "45782bde69ae672673170bed2be8e11021c4a1a4cb1c2d0a71b9b50e7c27c3d1"
+    },
+    {
+      "id": "technical_02",
+      "source_kind": "measurement",
+      "source": "本期02唯一完整技术报告，41项通过。",
+      "locator": "technical-qa.json",
+      "method": "完整解码、时钟/词序/字幕短拍、单次增益、来源/运行时和HTTP检查；无新增媒体修改或重复QA。",
+      "file": "../../../.local/codex-runs/template6-six-style-refine-20261020/final-qa/clip-02/technical-qa.json",
+      "sha256": "96be43e8a5acfdfcf86aae8c1ca80432b214049f8cbe671b7c40224cea921ee5"
+    },
+    {
+      "id": "http_media_02",
+      "source_kind": "measurement",
+      "source": "本期02实际HTTPmedia读回，与同最终SHA绑定。",
+      "locator": "http-media-binding.json",
+      "method": "读取既有实际HTTP回执；不重新请求、批准或发布。",
+      "file": "../../../.local/codex-runs/template6-six-style-refine-20261020/final-qa/clip-02/http-media-binding.json",
+      "sha256": "b3c264e7e2ab58599aafbee141821bae2c1c9553dd7258648804814a4ecc9f48"
+    },
+    {
+      "id": "http_work_02",
+      "source_kind": "measurement",
+      "source": "本期02实际HTTPwork读回，与同最终SHA绑定。",
+      "locator": "http-work.json",
+      "method": "读取既有实际HTTP回执；不重新请求、批准或发布。",
+      "file": "../../../.local/codex-runs/template6-six-style-refine-20261020/final-qa/clip-02/http-work.json",
+      "sha256": "ebb7010fe4a90fdc9c8429980130cd50efa8a961cd5bd630c90c79d3edcd1a19"
+    },
+    {
+      "id": "http_queue_02",
+      "source_kind": "measurement",
+      "source": "本期02实际HTTPqueue读回，与同最终SHA绑定。",
+      "locator": "http-queue.json",
+      "method": "读取既有实际HTTP回执；不重新请求、批准或发布。",
+      "file": "../../../.local/codex-runs/template6-six-style-refine-20261020/final-qa/clip-02/http-queue.json",
+      "sha256": "248f130c2a8c326abbc9117af2f1d8df3fc65d2bbbf7b9b0ea6fec42b3c77f9d"
+    },
+    {
+      "id": "visual_manifest_02",
+      "source_kind": "observation",
+      "source": "本期02最终MP4离散取帧身份与范围清单。",
+      "locator": "visual-manifest.json",
+      "method": "仅实际取帧范围；根实际观察另见本条root_visual记录。",
+      "file": "../../../.local/codex-runs/template6-six-style-refine-20261020/final-visuals/clip-02/visual-manifest.json",
+      "sha256": "ed7bbae6aeb78367cd0ce68c4cc906a1b4d35034fcc3fa34e3445063bf45c22e"
+    },
+    {
+      "id": "root_visual_02",
+      "source_kind": "observation",
+      "source": "本期02根实际看图pass_scoped。",
+      "locator": "root-visual-review.json",
+      "method": "全部本条显示短拍、章节/边界及最长原尺寸；有实景时同时看素材边界，不等同连续听看。",
+      "file": "../../../.local/codex-runs/template6-six-style-refine-20261020/final-visuals/clip-02/root-visual-review.json",
+      "sha256": "f38275ad7d60c6a3aace61fd5db909488c00bc0a9e895936ce22d5425119530b"
+    },
+    {
+      "id": "final_clip_03",
+      "source_kind": "measurement",
+      "source": "本期03完整最终MP4；queue=PQ-9c909ac4bf5284222a1d; work=work-f76de25da27875587a334293; version=v-b4875db89b8ced8d62b55049。",
+      "locator": "avatar-preview.mp4",
+      "method": "最终技术、根实际视觉及HTTP完整字节证据共同绑定该SHA。",
+      "file": "../../projects/studio-1f7a6c9e7cf835a4/renders/local-source-art-v4-e00e9cd5e5e6d11b546f/avatar-preview.mp4",
+      "sha256": "b4875db89b8ced8d62b550495d878b6073d74b09296da88a55ab6ee8700eeb45"
+    },
+    {
+      "id": "technical_03",
+      "source_kind": "measurement",
+      "source": "本期03唯一完整技术报告，41项通过。",
+      "locator": "technical-qa.json",
+      "method": "完整解码、时钟/词序/字幕短拍、单次增益、来源/运行时和HTTP检查；无新增媒体修改或重复QA。",
+      "file": "../../../.local/codex-runs/template6-six-style-refine-20261020/final-qa/clip-03/technical-qa.json",
+      "sha256": "e963e4f9f5fe4ca438916b5b7e66822988c05ac3390ffdf37d526accfae86bf7"
+    },
+    {
+      "id": "http_media_03",
+      "source_kind": "measurement",
+      "source": "本期03实际HTTPmedia读回，与同最终SHA绑定。",
+      "locator": "http-media-binding.json",
+      "method": "读取既有实际HTTP回执；不重新请求、批准或发布。",
+      "file": "../../../.local/codex-runs/template6-six-style-refine-20261020/final-qa/clip-03/http-media-binding.json",
+      "sha256": "30f2985bab72540bc3d4842d8460e8e2eaf4dc48c472966161fe04157254a85e"
+    },
+    {
+      "id": "http_work_03",
+      "source_kind": "measurement",
+      "source": "本期03实际HTTPwork读回，与同最终SHA绑定。",
+      "locator": "http-work.json",
+      "method": "读取既有实际HTTP回执；不重新请求、批准或发布。",
+      "file": "../../../.local/codex-runs/template6-six-style-refine-20261020/final-qa/clip-03/http-work.json",
+      "sha256": "e6cb74290f7a362d2435390855a560cb1e355bee700569c15ac56f15b32dd788"
+    },
+    {
+      "id": "http_queue_03",
+      "source_kind": "measurement",
+      "source": "本期03实际HTTPqueue读回，与同最终SHA绑定。",
+      "locator": "http-queue.json",
+      "method": "读取既有实际HTTP回执；不重新请求、批准或发布。",
+      "file": "../../../.local/codex-runs/template6-six-style-refine-20261020/final-qa/clip-03/http-queue.json",
+      "sha256": "a18664def8276ab962cfa10186bb89de5da7c4b5e278d71ba651ed5aa6a27d45"
+    },
+    {
+      "id": "visual_manifest_03",
+      "source_kind": "observation",
+      "source": "本期03最终MP4离散取帧身份与范围清单。",
+      "locator": "visual-manifest.json",
+      "method": "仅实际取帧范围；根实际观察另见本条root_visual记录。",
+      "file": "../../../.local/codex-runs/template6-six-style-refine-20261020/final-visuals/clip-03/visual-manifest.json",
+      "sha256": "0466d0690b1ad8fb765e1f1cc15ba7b357454485aaaa9274b0c1d663b6ac7217"
+    },
+    {
+      "id": "root_visual_03",
+      "source_kind": "observation",
+      "source": "本期03根实际看图pass_scoped。",
+      "locator": "root-visual-review.json",
+      "method": "全部本条显示短拍、章节/边界及最长原尺寸；有实景时同时看素材边界，不等同连续听看。",
+      "file": "../../../.local/codex-runs/template6-six-style-refine-20261020/final-visuals/clip-03/root-visual-review.json",
+      "sha256": "dc7e5d70b452f103efb130e812749d5e6c138d00346d7b3bf1f1206b5b116342"
+    },
+    {
+      "id": "final_clip_04",
+      "source_kind": "measurement",
+      "source": "本期04完整最终MP4；queue=PQ-3d87e48f560242badc33; work=work-0cfe1409fb41edc657dc9a53; version=v-dfae2da90a7f927cd28a770c。",
+      "locator": "avatar-preview.mp4",
+      "method": "最终技术、根实际视觉及HTTP完整字节证据共同绑定该SHA。",
+      "file": "../../projects/studio-039b1e173845b15e/renders/local-source-art-v4-4e537110afcd8c4bdfc7/avatar-preview.mp4",
+      "sha256": "dfae2da90a7f927cd28a770c84c76f07606ea3af21d72630013fd5373437ff1e"
+    },
+    {
+      "id": "technical_04",
+      "source_kind": "measurement",
+      "source": "本期04唯一完整技术报告，41项通过。",
+      "locator": "technical-qa.json",
+      "method": "完整解码、时钟/词序/字幕短拍、单次增益、来源/运行时和HTTP检查；无新增媒体修改或重复QA。",
+      "file": "../../../.local/codex-runs/template6-six-style-refine-20261020/final-qa/clip-04/technical-qa.json",
+      "sha256": "8fa237ce9c73c69087d1abcdecbe668fc9018d0cd89da2c59614d7552a71ab99"
+    },
+    {
+      "id": "http_media_04",
+      "source_kind": "measurement",
+      "source": "本期04实际HTTPmedia读回，与同最终SHA绑定。",
+      "locator": "http-media-binding.json",
+      "method": "读取既有实际HTTP回执；不重新请求、批准或发布。",
+      "file": "../../../.local/codex-runs/template6-six-style-refine-20261020/final-qa/clip-04/http-media-binding.json",
+      "sha256": "014e6c0670276f809283b9b0c32dac08e3db9ab575a4007f6dde29abbe83f996"
+    },
+    {
+      "id": "http_work_04",
+      "source_kind": "measurement",
+      "source": "本期04实际HTTPwork读回，与同最终SHA绑定。",
+      "locator": "http-work.json",
+      "method": "读取既有实际HTTP回执；不重新请求、批准或发布。",
+      "file": "../../../.local/codex-runs/template6-six-style-refine-20261020/final-qa/clip-04/http-work.json",
+      "sha256": "a5a805a910664371101b0c50ff774e35f1d0559743dafd6ca08be96632bfe24a"
+    },
+    {
+      "id": "http_queue_04",
+      "source_kind": "measurement",
+      "source": "本期04实际HTTPqueue读回，与同最终SHA绑定。",
+      "locator": "http-queue.json",
+      "method": "读取既有实际HTTP回执；不重新请求、批准或发布。",
+      "file": "../../../.local/codex-runs/template6-six-style-refine-20261020/final-qa/clip-04/http-queue.json",
+      "sha256": "8a0286dfcf57b2e23136090193671fe7206c8c0dd66be442406b51cc6f6412c7"
+    },
+    {
+      "id": "visual_manifest_04",
+      "source_kind": "observation",
+      "source": "本期04最终MP4离散取帧身份与范围清单。",
+      "locator": "visual-manifest.json",
+      "method": "仅实际取帧范围；根实际观察另见本条root_visual记录。",
+      "file": "../../../.local/codex-runs/template6-six-style-refine-20261020/final-visuals/clip-04/visual-manifest.json",
+      "sha256": "1beb0f1c6f5b46db44846c7c1684bd324e775d2799497714bf58b557f86b5e71"
+    },
+    {
+      "id": "root_visual_04",
+      "source_kind": "observation",
+      "source": "本期04根实际看图pass_scoped。",
+      "locator": "root-visual-review.json",
+      "method": "全部本条显示短拍、章节/边界及最长原尺寸；有实景时同时看素材边界，不等同连续听看。",
+      "file": "../../../.local/codex-runs/template6-six-style-refine-20261020/final-visuals/clip-04/root-visual-review.json",
+      "sha256": "1bcd46472b9fdb780bd235a3a9b7b0cf9771541a53368aff3ca72aa028f44b26"
+    },
+    {
+      "id": "final_clip_05",
+      "source_kind": "measurement",
+      "source": "本期05完整最终MP4；queue=PQ-d8a8784510d57dd60b41; work=work-8ff9056d6380ee7bb91568c9; version=v-878c38680096681d6f1ad74b。",
+      "locator": "avatar-preview.mp4",
+      "method": "最终技术、根实际视觉及HTTP完整字节证据共同绑定该SHA。",
+      "file": "../../projects/studio-b6d6ef44eb10187e/renders/local-source-art-v4-04681d373f20459027a5/avatar-preview.mp4",
+      "sha256": "878c38680096681d6f1ad74b71bccc4137aa88bc3e49c9162cdbd5cdfc8dcd50"
+    },
+    {
+      "id": "technical_05",
+      "source_kind": "measurement",
+      "source": "本期05唯一完整技术报告，41项通过。",
+      "locator": "technical-qa.json",
+      "method": "完整解码、时钟/词序/字幕短拍、单次增益、来源/运行时和HTTP检查；无新增媒体修改或重复QA。",
+      "file": "../../../.local/codex-runs/template6-six-style-refine-20261020/final-qa/clip-05/technical-qa.json",
+      "sha256": "367f89a81ff12d65143998ba3ec40f21b4412ea5534ebdb12f4599f549df9d32"
+    },
+    {
+      "id": "http_media_05",
+      "source_kind": "measurement",
+      "source": "本期05实际HTTPmedia读回，与同最终SHA绑定。",
+      "locator": "http-media-binding.json",
+      "method": "读取既有实际HTTP回执；不重新请求、批准或发布。",
+      "file": "../../../.local/codex-runs/template6-six-style-refine-20261020/final-qa/clip-05/http-media-binding.json",
+      "sha256": "bccbbb17faf2ff96a66e357f116de7bc814e792a9a1ea371ff6a79a35cc2420b"
+    },
+    {
+      "id": "http_work_05",
+      "source_kind": "measurement",
+      "source": "本期05实际HTTPwork读回，与同最终SHA绑定。",
+      "locator": "http-work.json",
+      "method": "读取既有实际HTTP回执；不重新请求、批准或发布。",
+      "file": "../../../.local/codex-runs/template6-six-style-refine-20261020/final-qa/clip-05/http-work.json",
+      "sha256": "e4252c7c80561ba01e67cc7b588841c520892e4fca1fafa8c562a4f0abaac8ce"
+    },
+    {
+      "id": "http_queue_05",
+      "source_kind": "measurement",
+      "source": "本期05实际HTTPqueue读回，与同最终SHA绑定。",
+      "locator": "http-queue.json",
+      "method": "读取既有实际HTTP回执；不重新请求、批准或发布。",
+      "file": "../../../.local/codex-runs/template6-six-style-refine-20261020/final-qa/clip-05/http-queue.json",
+      "sha256": "815f28a21870eb98f68c303aa7626bbd20f9d5b43c73d082d4b0d81fc730dfa0"
+    },
+    {
+      "id": "visual_manifest_05",
+      "source_kind": "observation",
+      "source": "本期05最终MP4离散取帧身份与范围清单。",
+      "locator": "visual-manifest.json",
+      "method": "仅实际取帧范围；根实际观察另见本条root_visual记录。",
+      "file": "../../../.local/codex-runs/template6-six-style-refine-20261020/final-visuals/clip-05/visual-manifest.json",
+      "sha256": "accde01ac387a65f7ba8670cfcb926960fbd4517e88abc3557e827f9fb4a5e4a"
+    },
+    {
+      "id": "root_visual_05",
+      "source_kind": "observation",
+      "source": "本期05根实际看图pass_scoped。",
+      "locator": "root-visual-review.json",
+      "method": "全部本条显示短拍、章节/边界及最长原尺寸；有实景时同时看素材边界，不等同连续听看。",
+      "file": "../../../.local/codex-runs/template6-six-style-refine-20261020/final-visuals/clip-05/root-visual-review.json",
+      "sha256": "e83af639d0a9300ce7a23f2449241c7823eadf92aa48469d18ac896696265a6a"
+    },
+    {
+      "id": "final_clip_06",
+      "source_kind": "measurement",
+      "source": "本期06完整最终MP4；queue=PQ-61c33a4eedcd924f401c; work=work-253a1bf9ffeaacd9300639a1; version=v-3dc5cdfdadd2453908976345。",
+      "locator": "avatar-preview.mp4",
+      "method": "最终技术、根实际视觉及HTTP完整字节证据共同绑定该SHA。",
+      "file": "../../projects/studio-c60808410f30cce4/renders/local-source-art-v4-e6f974574237db633412/avatar-preview.mp4",
+      "sha256": "3dc5cdfdadd24539089763451a5762becc9c8529e5cb3eaaceaed4818e653866"
+    },
+    {
+      "id": "technical_06",
+      "source_kind": "measurement",
+      "source": "本期06唯一完整技术报告，41项通过。",
+      "locator": "technical-qa.json",
+      "method": "完整解码、时钟/词序/字幕短拍、单次增益、来源/运行时和HTTP检查；无新增媒体修改或重复QA。",
+      "file": "../../../.local/codex-runs/template6-six-style-refine-20261020/final-qa/clip-06/technical-qa.json",
+      "sha256": "2421e33433758b219fab4da28354af364cc85154fcaac25f4b581c98462fa063"
+    },
+    {
+      "id": "http_media_06",
+      "source_kind": "measurement",
+      "source": "本期06实际HTTPmedia读回，与同最终SHA绑定。",
+      "locator": "http-media-binding.json",
+      "method": "读取既有实际HTTP回执；不重新请求、批准或发布。",
+      "file": "../../../.local/codex-runs/template6-six-style-refine-20261020/final-qa/clip-06/http-media-binding.json",
+      "sha256": "ef4b6ba39cd581e8778341fe94f332b11996a3fc93321ce611128257a43fb225"
+    },
+    {
+      "id": "http_work_06",
+      "source_kind": "measurement",
+      "source": "本期06实际HTTPwork读回，与同最终SHA绑定。",
+      "locator": "http-work.json",
+      "method": "读取既有实际HTTP回执；不重新请求、批准或发布。",
+      "file": "../../../.local/codex-runs/template6-six-style-refine-20261020/final-qa/clip-06/http-work.json",
+      "sha256": "259ad4594565d86cb954aa22c8691f07f6b264dc1167ede7c300eb24c05cf631"
+    },
+    {
+      "id": "http_queue_06",
+      "source_kind": "measurement",
+      "source": "本期06实际HTTPqueue读回，与同最终SHA绑定。",
+      "locator": "http-queue.json",
+      "method": "读取既有实际HTTP回执；不重新请求、批准或发布。",
+      "file": "../../../.local/codex-runs/template6-six-style-refine-20261020/final-qa/clip-06/http-queue.json",
+      "sha256": "6b4db2f0db3491db10f5ee66217afc38e4aa550bda3873d072c0b911d6ddecc5"
+    },
+    {
+      "id": "visual_manifest_06",
+      "source_kind": "observation",
+      "source": "本期06最终MP4离散取帧身份与范围清单。",
+      "locator": "visual-manifest.json",
+      "method": "仅实际取帧范围；根实际观察另见本条root_visual记录。",
+      "file": "../../../.local/codex-runs/template6-six-style-refine-20261020/final-visuals/clip-06/visual-manifest.json",
+      "sha256": "038ef69fe3c2c80425af429a30a34ee70454627c3582147d471007b2c6724f8c"
+    },
+    {
+      "id": "root_visual_06",
+      "source_kind": "observation",
+      "source": "本期06根实际看图pass_scoped。",
+      "locator": "root-visual-review.json",
+      "method": "全部本条显示短拍、章节/边界及最长原尺寸；有实景时同时看素材边界，不等同连续听看。",
+      "file": "../../../.local/codex-runs/template6-six-style-refine-20261020/final-visuals/clip-06/root-visual-review.json",
+      "sha256": "67d408effb0ab989f3c65dc3f8ff87abfb933e27a23b23dbfabbd0e335f35856"
+    }
+  ],
+  "unknowns": [],
+  "validation": {
+    "structure": {
+      "status": "pass",
+      "evidence_ids": [
+        "runtime_freeze",
+        "semantic_source_review",
+        "source_ledger",
+        "native_queue_receipts"
+      ],
+      "note": "来源/文字/实词/配置/运行时身份与原生队列冻结一致；正式v1规格静态检查配套执行。ready仅本期六输入映射的现有视频艺术测试。"
+    },
+    "technical": {
+      "status": "pass",
+      "evidence_ids": [
+        "final_technical",
+        "technical_01",
+        "technical_02",
+        "technical_03",
+        "technical_04",
+        "technical_05",
+        "technical_06"
+      ],
+      "note": "六片1080×1920/30fps，各41项通过；帧数995/1102/1027/1102/1027/995。完整解码、原音轨/真实词时钟及单次-2.5dB、HTTP完整同SHA，不代表独立连续听辨。"
+    },
+    "visual": {
+      "status": "pass",
+      "evidence_ids": [
+        "root_visual_review",
+        "root_visual_01",
+        "root_visual_02",
+        "root_visual_03",
+        "root_visual_04",
+        "root_visual_05",
+        "root_visual_06"
+      ],
+      "note": "根实际查看六最终SHA的全部142显示短拍、章节/边界、4片真实素材边界与每片最长字幕原尺寸，230个实际样本可追溯。仅此范围；其他字段上限和组合不泛化。"
+    },
+    "audio": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "最终技术音频/波形/峰值和一次降幅已验；独立全片连续听辨、音素口型与主观同步仍待验证。"
+    },
+    "platform": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "本机画布/图片与本地HTTP读回不代表真实手机或平台UI/清晰度验收。"
+    },
+    "user_review": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "用户授权六条制作，尚未确认本期最终成片；不设置正式质量批准。"
+    },
+    "production": {
+      "status": "pass",
+      "evidence_ids": [
+        "native_queue_receipts",
+        "native_readback",
+        "http_media_01",
+        "http_media_02",
+        "http_media_03",
+        "http_media_04",
+        "http_media_05",
+        "http_media_06"
+      ],
+      "note": "六原生统一队列各attempt1完成、作品/版本与HTTP完整字节同SHA，来源未变；仅零云本地开发测试，未批准/发布。通过CLI/config选择六方向，不声称Studio新增选择或付费人物路由。"
+    }
+  },
+  "extensions": {
+    "avatar": {
+      "face_crop": {
+        "mode": "cover",
+        "source": "PresenterWindow与各方向box/objectPosition；close-4x5固定近景校准，medium-9x16按组件。",
+        "rule": "原生成视频及背景固化，主/副人物同片同全局时钟，不重绘身份。"
+      },
+      "synchronization": "主语音原速1、主人物静音原时钟；真实Broll另一路静音offset、定格明确image；字幕/短语只取实测词端点。",
+      "voice_rules": "沿用原天亮猴哥既有1.15倍速产物；不再次加速、不调用TTS/数字人。"
+    },
+    "graphic": {
+      "intent": "字体、纸雕/刊物/光学、赤红分区、银白舞台与纪实来源排版；不生成伪界面或营业现场。",
+      "palette_source": "layout.json palette及NewDirections方向常量，细值以组件为准。",
+      "typography_source": "KaiTi用于社区非合作章；SimSun用于曜黑/纪实标题，Microsoft YaHei用于数字/字幕与其余。",
+      "text_policy": "固定栏目/标识由代码文本绘制；原图内部实物文字固化；所有稿件标题、说明与要点只开放原稿有据内容，字幕不入栅格图。",
+      "asset_fit": "旧三PNG cover作纯装饰；原人物cover按方向校准；真实产品video/image遵守各scene fit且本期为contain。"
+    },
+    "material_edit": {
+      "clock": "fromCue/toCue零基、start/end取该cue真实边界；video offset为源秒且不循环；image offset0，定格时长为配置cue范围。",
+      "source_review": "仅粤仔真实户外产品互动参考；明确来源标签，不冒充海客经营场所或真实居民/成交。",
+      "identity": "原片/照片 SHA、源96.2秒派生关系及实际看图范围均保存在本期私有台账。",
+      "source_ranges": "scenes[].fromCue/toCue取完整原cue真实毫秒区间，offset取源片局部秒；本期01/06视频95–98.28+96.2秒定格，03/05视频95–97.92，02/04无素材。",
+      "cut_policy": "每个scene与对应cue边界切换，原音轨不断；不循环、不拉伸产品动作，图片明确冻结；连续性和切口仍需最终输出审阅。"
+    },
+    "source_art": {
+      "contract": "investment-source-video-art-v4",
+      "variant": "art-v4",
+      "composition_id": "HaikeInvestmentArtV4",
+      "compatibility": "Studio适配器template_id仍avatar-investment-a-v6；独立v4 CLI/合同/前缀，v002默认和v003原合同保留，不声称UI新增六项选择或付费人物新路由。",
+      "rules": [
+        "五种章类型连续覆盖原cue；首章0，其余章从首cue实测起点，末章至主音轨话尾。",
+        "原cue每行<=14字/最多2行；共享CaptionTrack按语义边界和真实词组合短拍，目标9字、上限13字，四帧/8px入场。",
+        "关键词底色静态，实际说到的实测词范围触发下划线/阴影；不造卡拉OK时钟；显式phraseHighlights仅接受原文和word索引。",
+        "本期六最终输出已按实际范围通过技术与抽样视觉；源码允许的更长字段、素材数量及其他组合不据此泛化。",
+        "旧三方向需要SHA绑定PNG；新三方向允许双null确定性代码背景。",
+        "真实素材最多16段、各段源SHA/标签/有序cue/可用时长明确，不足不循环；图片offset0并写定格标签。",
+        "01/06无AI员工，02/04无AI员工和面积，仅03/05有协助选品/宣传/客服；不加回购/收益/独占名额。",
+        "完整原MP4含AAC、0<duration<=121；音轨24kHz PCM16 mono，speed1，最终一次-2.5dB，无BGM。",
+        "source-art prepare冻结原视频/cues/words/config/可选PNG/scenes/draft及整个v4 runtime；submit paused统一studio_investment_recompose，worker单lane认领。",
+        "未改变质量批准或发布：development_test=true、publication=false、cloud_calls=0。"
+      ],
+      "validation_inputs": [
+        {
+          "clip": 1,
+          "name": "晴空社区橱窗_优化",
+          "direction": "community-showcase",
+          "source_clip": 1,
+          "source_video_sha256": "dfb5cd26de93e69653da8d4742faff71259d2db028942104aa6a5e72ba4c329f",
+          "source_audio_seconds": 33.18258333333333,
+          "cue_count": 14,
+          "word_count": 156,
+          "display_beats": 23,
+          "scene_count": 2,
+          "request_file": "../../../.local/codex-runs/template6-six-style-refine-20261020/queue/clip-01/request.json",
+          "request_sha256": "f54ba80dea574841fe1b7a6658717fcf3eae8b6c18b22b9b80c37eaa9949b098",
+          "request_file_sha256": "0f719d8d3e3db66966c41284f0d5d7b00646957d3da1b415c4adf3cafc646fdb",
+          "config_file": "../../projects/studio-1af0e3bb91207eb1/assets/source-art-v4/art-config.json",
+          "config_sha256": "a3e43683a61d11b3a9f04aa74a1bc85fa5ae81c9da425ed318073587e195d59c",
+          "project_id": "studio-1af0e3bb91207eb1",
+          "render_id": "local-source-art-v4-f54ba80dea574841fe1b",
+          "queue_id": "PQ-acc78619b86664c82112",
+          "work_id": "work-246d2f03e9b4842582fa585a",
+          "version_id": "v-489ad783c8780fe0272b8280",
+          "output_file": "../../projects/studio-1af0e3bb91207eb1/renders/local-source-art-v4-f54ba80dea574841fe1b/avatar-preview.mp4",
+          "output_sha256": "489ad783c8780fe0272b828031ff8dad634d703b25eb11387e53c8ad190ea366",
+          "media": {
+            "width": 1080,
+            "height": 1920,
+            "fps": "30",
+            "frames": 995,
+            "video_seconds": 33.166667,
+            "AAC_seconds": 33.166667,
+            "container_seconds": 33.166667,
+            "original_PCM_clock_seconds": 33.18258333333333,
+            "video_clock_difference_seconds": -0.015916333333336752
+          },
+          "AAC": {
+            "integrated_LUFS": -16.69,
+            "true_peak_dBTP": -2.29,
+            "LRA_LU": 2.9
+          },
+          "final_props_file": "../../projects/studio-1af0e3bb91207eb1/renders/local-source-art-v4-f54ba80dea574841fe1b/props.json",
+          "final_props_sha256": "9987a403ab3051a22dee8c70ff15268d25ff04a52731d5e7738ab2345945d6d9",
+          "final_scene_plan_file": "../../projects/studio-1af0e3bb91207eb1/renders/local-source-art-v4-f54ba80dea574841fe1b/art-scene-plan.json",
+          "final_scene_plan_sha256": "52dc4b65265124b9bb9e93de5d5b364e10ac52c3535e7042c2629f24ef810054",
+          "final_technical": "pass",
+          "final_visual": "pass_scoped",
+          "quality_approved": false,
+          "publication": false
+        },
+        {
+          "clip": 2,
+          "name": "锐蓝商业刊物_优化",
+          "direction": "blue-editorial",
+          "source_clip": 2,
+          "source_video_sha256": "f836cc8965afb0f3c68c3cb87251c999a8b55a3e9fda4a6fe07e90bacd7261bd",
+          "source_audio_seconds": 36.73041666666666,
+          "cue_count": 14,
+          "word_count": 166,
+          "display_beats": 25,
+          "scene_count": 0,
+          "request_file": "../../../.local/codex-runs/template6-six-style-refine-20261020/queue/clip-02/request.json",
+          "request_sha256": "06836f1d8f287cc8aea4900598e8a77f67d127173e628153bcd7bd9d939ddf10",
+          "request_file_sha256": "1576858b794050fa2d0a2b8c7add0b8c82baccde1851cff2cc48d4de004465a8",
+          "config_file": "../../projects/studio-0ec21656aebe548b/assets/source-art-v4/art-config.json",
+          "config_sha256": "bb2153700cd486cc287f150262e023d79e4671bfff9e8ae5aa64705aee0811fe",
+          "project_id": "studio-0ec21656aebe548b",
+          "render_id": "local-source-art-v4-06836f1d8f287cc8aea4",
+          "queue_id": "PQ-99f55daeb9427472f25d",
+          "work_id": "work-8fa71df3f5b9e7f9d74c2de8",
+          "version_id": "v-45782bde69ae672673170bed",
+          "output_file": "../../projects/studio-0ec21656aebe548b/renders/local-source-art-v4-06836f1d8f287cc8aea4/avatar-preview.mp4",
+          "output_sha256": "45782bde69ae672673170bed2be8e11021c4a1a4cb1c2d0a71b9b50e7c27c3d1",
+          "media": {
+            "width": 1080,
+            "height": 1920,
+            "fps": "30",
+            "frames": 1102,
+            "video_seconds": 36.733333,
+            "AAC_seconds": 36.730417,
+            "container_seconds": 36.733333,
+            "original_PCM_clock_seconds": 36.73041666666666,
+            "video_clock_difference_seconds": 0.0029163333333386277
+          },
+          "AAC": {
+            "integrated_LUFS": -17.24,
+            "true_peak_dBTP": -2.15,
+            "LRA_LU": 1.9
+          },
+          "final_props_file": "../../projects/studio-0ec21656aebe548b/renders/local-source-art-v4-06836f1d8f287cc8aea4/props.json",
+          "final_props_sha256": "b2fca8962b7adb111330f04b4bf4ae7bf68d2e81dec214c9c9837b06b8321d6b",
+          "final_scene_plan_file": "../../projects/studio-0ec21656aebe548b/renders/local-source-art-v4-06836f1d8f287cc8aea4/art-scene-plan.json",
+          "final_scene_plan_sha256": "8e24739cb0ce356429e3507054250956bfa7432eadf0f936d3d812bf5131445c",
+          "final_technical": "pass",
+          "final_visual": "pass_scoped",
+          "quality_approved": false,
+          "publication": false
+        },
+        {
+          "clip": 3,
+          "name": "曜黑光学科技_优化",
+          "direction": "optical-cinema",
+          "source_clip": 3,
+          "source_video_sha256": "279ea1c879f47b9cb00f2d2e6daeb35f8e911c126a36ac94adeaa28260f0acdd",
+          "source_audio_seconds": 34.226083333333335,
+          "cue_count": 13,
+          "word_count": 157,
+          "display_beats": 23,
+          "scene_count": 1,
+          "request_file": "../../../.local/codex-runs/template6-six-style-refine-20261020/queue/clip-03/request.json",
+          "request_sha256": "e00e9cd5e5e6d11b546f47821f8a7647414089bd1f1f59fc3921e1195dbf81ec",
+          "request_file_sha256": "89a7682ae0c2f745d2bd28384bd12e154966d497371748bdbb7cbaeffdd1217c",
+          "config_file": "../../projects/studio-1f7a6c9e7cf835a4/assets/source-art-v4/art-config.json",
+          "config_sha256": "aa69ed930e3795c6472cb23afa8a974a96523aa78673e0b0a767ae688c64b22f",
+          "project_id": "studio-1f7a6c9e7cf835a4",
+          "render_id": "local-source-art-v4-e00e9cd5e5e6d11b546f",
+          "queue_id": "PQ-9c909ac4bf5284222a1d",
+          "work_id": "work-f76de25da27875587a334293",
+          "version_id": "v-b4875db89b8ced8d62b55049",
+          "output_file": "../../projects/studio-1f7a6c9e7cf835a4/renders/local-source-art-v4-e00e9cd5e5e6d11b546f/avatar-preview.mp4",
+          "output_sha256": "b4875db89b8ced8d62b550495d878b6073d74b09296da88a55ab6ee8700eeb45",
+          "media": {
+            "width": 1080,
+            "height": 1920,
+            "fps": "30",
+            "frames": 1027,
+            "video_seconds": 34.233333,
+            "AAC_seconds": 34.226083,
+            "container_seconds": 34.233333,
+            "original_PCM_clock_seconds": 34.226083333333335,
+            "video_clock_difference_seconds": 0.007249666666666599
+          },
+          "AAC": {
+            "integrated_LUFS": -16.06,
+            "true_peak_dBTP": -2.12,
+            "LRA_LU": 3.8
+          },
+          "final_props_file": "../../projects/studio-1f7a6c9e7cf835a4/renders/local-source-art-v4-e00e9cd5e5e6d11b546f/props.json",
+          "final_props_sha256": "a14a593acac7ec9fff025c423bda3332e9cb1b3eb0ed633de5155a48eec4ab66",
+          "final_scene_plan_file": "../../projects/studio-1f7a6c9e7cf835a4/renders/local-source-art-v4-e00e9cd5e5e6d11b546f/art-scene-plan.json",
+          "final_scene_plan_sha256": "f275452e5f852826f8c7537fa8a9294e41cfa8a5f2699e1126093a99b83969f4",
+          "final_technical": "pass",
+          "final_visual": "pass_scoped",
+          "quality_approved": false,
+          "publication": false
+        },
+        {
+          "clip": 4,
+          "name": "赤红商业宣言_新增测试",
+          "direction": "red-manifesto",
+          "source_clip": 2,
+          "source_video_sha256": "f836cc8965afb0f3c68c3cb87251c999a8b55a3e9fda4a6fe07e90bacd7261bd",
+          "source_audio_seconds": 36.73041666666666,
+          "cue_count": 14,
+          "word_count": 166,
+          "display_beats": 25,
+          "scene_count": 0,
+          "request_file": "../../../.local/codex-runs/template6-six-style-refine-20261020/queue/clip-04/request.json",
+          "request_sha256": "4e537110afcd8c4bdfc726f7a71001b39cc0aae672e0985d1807dd5d46335005",
+          "request_file_sha256": "aa8fff33a3608f74207458e62eea768fa32daa8712bff709717593f8fd955907",
+          "config_file": "../../projects/studio-039b1e173845b15e/assets/source-art-v4/art-config.json",
+          "config_sha256": "7dbb952455d737ddcd00fcde9b98a2940fdcf65a782b2504cdf1f85ef6f5cf7d",
+          "project_id": "studio-039b1e173845b15e",
+          "render_id": "local-source-art-v4-4e537110afcd8c4bdfc7",
+          "queue_id": "PQ-3d87e48f560242badc33",
+          "work_id": "work-0cfe1409fb41edc657dc9a53",
+          "version_id": "v-dfae2da90a7f927cd28a770c",
+          "output_file": "../../projects/studio-039b1e173845b15e/renders/local-source-art-v4-4e537110afcd8c4bdfc7/avatar-preview.mp4",
+          "output_sha256": "dfae2da90a7f927cd28a770c84c76f07606ea3af21d72630013fd5373437ff1e",
+          "media": {
+            "width": 1080,
+            "height": 1920,
+            "fps": "30",
+            "frames": 1102,
+            "video_seconds": 36.733333,
+            "AAC_seconds": 36.730417,
+            "container_seconds": 36.733333,
+            "original_PCM_clock_seconds": 36.73041666666666,
+            "video_clock_difference_seconds": 0.0029163333333386277
+          },
+          "AAC": {
+            "integrated_LUFS": -17.24,
+            "true_peak_dBTP": -2.15,
+            "LRA_LU": 1.9
+          },
+          "final_props_file": "../../projects/studio-039b1e173845b15e/renders/local-source-art-v4-4e537110afcd8c4bdfc7/props.json",
+          "final_props_sha256": "1f81d29044ea5f9ef141d7c0b8678f81eb09e3e1539473540bd8c874b9fdd909",
+          "final_scene_plan_file": "../../projects/studio-039b1e173845b15e/renders/local-source-art-v4-4e537110afcd8c4bdfc7/art-scene-plan.json",
+          "final_scene_plan_sha256": "0465e040805661fb2a06144529011cf5526480303ff5ba34401212adc23c069b",
+          "final_technical": "pass",
+          "final_visual": "pass_scoped",
+          "quality_approved": false,
+          "publication": false
+        },
+        {
+          "clip": 5,
+          "name": "银白产品发布_新增测试",
+          "direction": "silver-launch",
+          "source_clip": 3,
+          "source_video_sha256": "279ea1c879f47b9cb00f2d2e6daeb35f8e911c126a36ac94adeaa28260f0acdd",
+          "source_audio_seconds": 34.226083333333335,
+          "cue_count": 13,
+          "word_count": 157,
+          "display_beats": 23,
+          "scene_count": 1,
+          "request_file": "../../../.local/codex-runs/template6-six-style-refine-20261020/queue/clip-05/request.json",
+          "request_sha256": "04681d373f20459027a59048be8ff873bad59e2b286ad3d06ba159ba4a0c67fa",
+          "request_file_sha256": "fad12b3332121b5aa610782d8adfcac7c948f1f90af7af832817ed6605306f89",
+          "config_file": "../../projects/studio-b6d6ef44eb10187e/assets/source-art-v4/art-config.json",
+          "config_sha256": "205777063c6d20138a0b34a2a59a5f9a645120b39db7b0d047b0ecab5d5d4dea",
+          "project_id": "studio-b6d6ef44eb10187e",
+          "render_id": "local-source-art-v4-04681d373f20459027a5",
+          "queue_id": "PQ-d8a8784510d57dd60b41",
+          "work_id": "work-8ff9056d6380ee7bb91568c9",
+          "version_id": "v-878c38680096681d6f1ad74b",
+          "output_file": "../../projects/studio-b6d6ef44eb10187e/renders/local-source-art-v4-04681d373f20459027a5/avatar-preview.mp4",
+          "output_sha256": "878c38680096681d6f1ad74b71bccc4137aa88bc3e49c9162cdbd5cdfc8dcd50",
+          "media": {
+            "width": 1080,
+            "height": 1920,
+            "fps": "30",
+            "frames": 1027,
+            "video_seconds": 34.233333,
+            "AAC_seconds": 34.226083,
+            "container_seconds": 34.233333,
+            "original_PCM_clock_seconds": 34.226083333333335,
+            "video_clock_difference_seconds": 0.007249666666666599
+          },
+          "AAC": {
+            "integrated_LUFS": -16.06,
+            "true_peak_dBTP": -2.12,
+            "LRA_LU": 3.8
+          },
+          "final_props_file": "../../projects/studio-b6d6ef44eb10187e/renders/local-source-art-v4-04681d373f20459027a5/props.json",
+          "final_props_sha256": "41f551c44dec271b8e5f7cc8630c476c2d5ead1b0d8cd31f9d43cbe54f0b60af",
+          "final_scene_plan_file": "../../projects/studio-b6d6ef44eb10187e/renders/local-source-art-v4-04681d373f20459027a5/art-scene-plan.json",
+          "final_scene_plan_sha256": "cf252bf942afa939e98847c9e9d11cb1e38ebff69ae9c8ac4417f008c667de06",
+          "final_technical": "pass",
+          "final_visual": "pass_scoped",
+          "quality_approved": false,
+          "publication": false
+        },
+        {
+          "clip": 6,
+          "name": "实景品牌纪实_新增测试",
+          "direction": "documentary",
+          "source_clip": 1,
+          "source_video_sha256": "dfb5cd26de93e69653da8d4742faff71259d2db028942104aa6a5e72ba4c329f",
+          "source_audio_seconds": 33.18258333333333,
+          "cue_count": 14,
+          "word_count": 156,
+          "display_beats": 23,
+          "scene_count": 2,
+          "request_file": "../../../.local/codex-runs/template6-six-style-refine-20261020/queue/clip-06/request.json",
+          "request_sha256": "e6f974574237db633412fdf27c70751e52ce60c6ece0f5e3f560bfa047ac4364",
+          "request_file_sha256": "0a83d31a62969a6f0ba5ba5d04da0e7d36e59c48ad4a9396243dc2b5641d1290",
+          "config_file": "../../projects/studio-c60808410f30cce4/assets/source-art-v4/art-config.json",
+          "config_sha256": "58cba986e83b0e1700c971f9b10848a6d1ff44914e58af9a566f35acd381dfd2",
+          "project_id": "studio-c60808410f30cce4",
+          "render_id": "local-source-art-v4-e6f974574237db633412",
+          "queue_id": "PQ-61c33a4eedcd924f401c",
+          "work_id": "work-253a1bf9ffeaacd9300639a1",
+          "version_id": "v-3dc5cdfdadd2453908976345",
+          "output_file": "../../projects/studio-c60808410f30cce4/renders/local-source-art-v4-e6f974574237db633412/avatar-preview.mp4",
+          "output_sha256": "3dc5cdfdadd24539089763451a5762becc9c8529e5cb3eaaceaed4818e653866",
+          "media": {
+            "width": 1080,
+            "height": 1920,
+            "fps": "30",
+            "frames": 995,
+            "video_seconds": 33.166667,
+            "AAC_seconds": 33.166667,
+            "container_seconds": 33.166667,
+            "original_PCM_clock_seconds": 33.18258333333333,
+            "video_clock_difference_seconds": -0.015916333333336752
+          },
+          "AAC": {
+            "integrated_LUFS": -16.69,
+            "true_peak_dBTP": -2.29,
+            "LRA_LU": 2.9
+          },
+          "final_props_file": "../../projects/studio-c60808410f30cce4/renders/local-source-art-v4-e6f974574237db633412/props.json",
+          "final_props_sha256": "01e7cd5b7df2a5fec9b583446fade44421c1e033655a38b7f45f181595926e39",
+          "final_scene_plan_file": "../../projects/studio-c60808410f30cce4/renders/local-source-art-v4-e6f974574237db633412/art-scene-plan.json",
+          "final_scene_plan_sha256": "94b6f84ff68f8c37de697f8941cdf7f0542a4e1a134e2d2f608087227df18488",
+          "final_technical": "pass",
+          "final_visual": "pass_scoped",
+          "quality_approved": false,
+          "publication": false
+        }
+      ],
+      "validation_scope": "implementation+ready仅覆盖本期三输入六输出：01/06源01、02/04源02、03/05源03，和其冻结文字、真实词时钟与来源素材组合。六片技术/实际抽样视觉/零云本地作品接入通过；其他人物、最长字段、素材16段上限、格式/裁切及组合未泛化。v002默认与v003合同保持独立。",
+      "geometry": {
+        "status": "当前冻结源码的布局分配框；所有实际通过仍限定本期最终SHA及根实际观察范围。",
+        "legacy_refined": "RefinedDirections.tsx：材料主窗80,586,920,982；副人物780,1192,210,356；无素材社区主窗294或338,586,706或662,984；锐蓝offer人物684,610,316,950；曜黑主窗126,590,828,980；字幕80,1610,920,180。",
+        "red": "NewDirections.tsx：标题74,196或211,920；deck80,578,894；人物344,670,654,902；points80,771,210；字幕80,1614,920,180。offer金额来自本条heading，不硬编码面积；合作文字及要点只取本条五章配置，无额外固定权益侧注。",
+        "silver": "标题80,212,920；deck105,513,870；主窗82,648,916,832；副人物739,1126,259,350；points80,1516,920,82；字幕80,1620,920,180。 来源标签105,671，maxWidth860，24px；实际实现见NewDirections.tsx。",
+        "documentary": "标题80,222,920；deck80,505,920；主窗54,602,972,990；来源76,620,max830；副人物710,1178,286,392；字幕80,1630,920,180。",
+        "header_disclosure": "品牌/栏目top76、left/right80；数字人演绎bottom64；设计safe不是平台真机验收。",
+        "material_fit": "shared.tsx MaterialWindow：contain清晰层加同源模糊补边，cover使用单清晰层；两层共用相同video offset/图片，不产生新时钟。"
+      },
+      "runtime_basis": {
+        "../../backlot/production_queue_worker.py": "6bde18ef0b663d6bb43808641efae96ef54dbae4fbef18b1dc113bd440f08213",
+        "../../backlot/studio_composition.py": "c4b4cac53df34a2b9d3957d64cb4125f2f0d3e157f760237dcdb2d0556767269",
+        "../../backlot/studio_investment_source_art_v4.py": "e8110ce22982c89a6697511d60ba19dbe85ac9545ecc10f7fff5d0f5a0580fe9",
+        "../../backlot/studio_investment_source_video.py": "d18fb3b3f739fbf3acb404fe5642793c4e60607f0d7743abeed3126ea07deb55",
+        "assets/blue-editorial.png": "b8eb2b2445435a53e37efc07bef4db3f223600eb0345363aa9b3c7f0012ac7d9",
+        "assets/community-showcase.png": "b4c180bb73fed6df1b441282678cac84be6d49ca3862967ccbc6d9f4655e1102",
+        "assets/optical-cinema.png": "8b72be83d6702be6dae1dfee7ab2e30e95c45c828d6abc525c4e678b7e3c7b84",
+        "assets/PROVENANCE.json": "07e2ea48a6264ee26005e2b6d6df4268ec78bc0350de2381ff7c99bdee7b05d2",
+        "index.tsx": "0aed1ba0b63068a205f5c9386d2aef45dc674301818ced12a91aff41ac38de18",
+        "layout.json": "cc88c73f5e4a977d43e115976240b81db20537f90fc60719059316c7db294fb9",
+        "NewDirections.tsx": "1cc6224ea04990a523643611c65e2502dcc94e9fa87b779ade664349fb7e5d40",
+        "README.md": "baa0c5347d3481d89ea329fff0b86591266cd17b6a30f9fb5403e088ce211e24",
+        "RefinedDirections.tsx": "f542d98d3e149e8a11890a29b570a8df8314131fc59326ea98d0de92073fb450",
+        "shared.tsx": "7dc3102a6ea8c29d640c7c307ed9a952ff7d155de1611eccafb2dc5bec87f7c8",
+        "types.ts": "184331ca78e229659aa4f5e2b57a6c55e2acd76b966b8bd8c94005d0f63e7dbb"
+      },
+      "runtime_basis_note": "十五个渲染runtime文件于六条准备/完成时共同冻结并在最终技术QA中核对；本规格与手册为产出完成后的新增说明，不伪称它们已存在于旧请求runtime。未改TSX/layout。"
+    }
+  },
+  "operations": [
+    {
+      "id": "prepare_v4",
+      "input": "本期授权原MP4、真实cue JSON与每词绑定source_video_sha256的word JSON、variant=art-v4配置、可选来源素材/PNG、title/brand、本机工作区。",
+      "action": "使用avatar_investment_source_art_v4.py --evidence-dir --source-video --cues --word-clock --art-config --title --brand --base --prepare；先核工作区，导入并冻结原片、音轨、words与素材SHA。",
+      "output": "request.json、项目artifacts/source-art-v4-request.json、assets/source-art-v4/import-manifest.json、source-audio.wav、word-clock.json及输入副本。",
+      "completion": "当前输入缺失/越界/原文与word不符/SHA不符均明确拒绝；代码背景双null只用于新三方向，来源素材不冒称海客门店。",
+      "recovery": "保留原来源与evidence-dir；同指纹复用原请求，冲突不覆盖，修订后新冻结。",
+      "entrypoint": "../../scripts/avatar_investment_source_art_v4.py"
+    },
+    {
+      "id": "queue_v4",
+      "input": "达到本期限定ready范围的实现、合法完整冻结输入及本次零云已有原视频测试授权；超出本期组合先做新的开发出样。",
+      "action": "同evidence-dir --submit，后--run/--resume/--status；ProductionQueueWorker.run_local_recompose在统一单lane认领paused studio_investment_recompose。",
+      "output": "独立local-source-art-v4-{fingerprint20}/avatar-preview.mp4、props.json、art-scene-plan.json、source-art-v4-result.json、作品/版本。",
+      "completion": "来源/runtime/词clock未变、全片原时钟，cloud_calls0与publicationfalse；队列completed不当作最终QA。",
+      "recovery": "lane忙等原任务，不新建/绕过runner；成功先核原请求/输出SHA再恢复作品登记；不重生付费素材。",
+      "entrypoint": "../../scripts/avatar_investment_source_art_v4.py"
+    },
+    {
+      "id": "acceptance_v4",
+      "input": "六条完整最终SHA、原请求、props/word/cue/scene/来源台账、冻结runtime、唯一最终输出QA。",
+      "action": "由根指定唯一技术/视觉输出审阅，完整解码与音轨/时钟检查，实际看完整短拍字幕及章节/素材边界、最长字句、来源标签与人物；HTTP媒体读回绑定同SHA。",
+      "output": "六条分维度验证矩阵及明确未验范围，ready仅作者按实际证据范围生效。",
+      "completion": "本期技术、实际抽样视觉及本地作品接入已按六最终SHA通过；其余连续听看/音素、真机和用户确认仍pending。新输入或局部变更须按范围重验，不凭六片结果泛化全部字段上限。",
+      "recovery": "保留原片/旧v002/v003，局部版式或文案变更后冻结新SHA，只重做受影响本地合成与复核。",
+      "entrypoint": "../../scripts/codex_video_quality.py"
+    }
+  ]
+}

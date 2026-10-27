@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1440" viewBox="0 0 1080 1440" role="img" aria-label="模板3卡片讲解版式示意">
+<!-- Original vector layout reference. No private image, recording or external asset. -->
+<defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#cae0fc"/><stop offset=".5" stop-color="#fff0d0"/><stop offset="1" stop-color="#d7c5e7"/></linearGradient></defs><rect width="1080" height="1440" fill="url(#bg)"/>
+<rect x="62" y="72" width="956" height="1300" rx="52" fill="white"/>
+<g font-family="Microsoft YaHei,sans-serif"><text x="112" y="145" fill="#f46519" font-size="32" font-weight="bold">HAIKE 海客科技</text><text x="630" y="145" fill="#778399" font-size="26">版式示意 · 通用内容</text>
+<rect x="112" y="190" width="856" height="660" rx="30" fill="#f3f6fb"/><text x="152" y="270" fill="#8796b2" font-size="30">02 能力连接</text><text x="152" y="365" fill="#202b40" font-size="66" font-weight="bold">一个接口</text><text x="152" y="447" fill="#326bd8" font-size="66" font-weight="bold">连接工作流</text>
+<g fill="white" stroke="#e0e6ef"><rect x="152" y="500" width="770" height="86" rx="20"/><rect x="152" y="614" width="770" height="86" rx="20"/><rect x="152" y="728" width="770" height="86" rx="20"/></g><g font-size="35" fill="#384e73"><text x="190" y="556">01　文案与声音</text><text x="190" y="670">02　人物与素材</text><text x="190" y="784">03　创作工作流</text></g>
+<circle cx="300" cy="1060" r="145" fill="#edf1f6"/><circle cx="300" cy="1018" r="49" fill="#b7c4d5"/><path d="M209 1155v-42c0-48 41-75 91-75s91 27 91 75v42" fill="#8da1ba"/>
+<text x="520" y="1000" fill="#8a95a6" font-size="28">海客创作</text><text x="520" y="1073" fill="#25334c" font-size="52" font-weight="bold">统一接入</text><text x="520" y="1133" fill="#7c8aa0" font-size="35">配音 · 数字人</text><text x="520" y="1188" fill="#7c8aa0" font-size="35">创作工作流</text>
+<text x="540" y="1295" text-anchor="middle" fill="#326bd8" font-size="38">上传你的人物与声音，生成本期内容。</text></g>
+</svg>

@@ -7,11 +7,12 @@ does not re-implement any collection logic.  It reuses:
 * :func:`douyin_intelligence.replication_candidates.normalize_candidates` /
   ``compute_heat_scores`` / ``media_url_map`` for normalization.
 
-The security-critical part is inherited verbatim: the crawler's
-``video_download_url`` is a *signed* value that the on-disk sanitizer strips.
-The adapter captures it in memory only, through the ``before_sanitize`` callback,
-into :attr:`DouyinSource._media_urls`; a signed URL therefore never reaches
-:attr:`SourceResult.candidates`, :attr:`SourceResult.report`, or the disk.
+The crawler first writes ``video_download_url`` (a signed value) into temporary
+raw JSONL in the private run directory. This adapter captures that value through
+``before_sanitize`` into :attr:`DouyinSource._media_urls`; the collector then
+sanitizes those files before returning. Signed URLs do not reach retained
+:attr:`SourceResult.candidates` or :attr:`SourceResult.report`. Raw files can
+exist during collection or an interrupted process and must not be shared.
 """
 
 from __future__ import annotations
@@ -39,6 +40,7 @@ _CRAWL_REPORT_KEYS = (
     "returncode",
     "timeout_seconds",
     "error",
+    "needs_human_verification",
     "output_observation",
     "sanitization",
     "browser",
@@ -144,8 +146,8 @@ class DouyinSource:
 
         candidates = self._normalize(raw_rows, config, requested)
         searched = self._searched_keywords(report, requested)
-        # Capture the signed URLs in memory *after* normalization; they live only
-        # in ``self._media_urls`` and are handed out one candidate at a time.
+        # After normalization/sanitization, retain signed URLs only in memory
+        # and hand them out one candidate at a time.
         self._media_urls = self._capture_media_urls(raw_rows)
 
         crawl_status = str(report.get("status") or "")

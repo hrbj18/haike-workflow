@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="700" viewBox="0 0 1080 700">
+<!-- Original explanatory artwork, with no external media. -->
+<rect width="1080" height="700" fill="#102b4b"/><circle cx="960" cy="60" r="280" fill="#1d4266"/>
+<g font-family="Microsoft YaHei,sans-serif"><text x="75" y="110" fill="#ffd602" font-size="46" font-weight="bold">一套模板 · 四种内容模式</text><text x="75" y="177" fill="#c1d4e6" font-size="29">人物、素材、截图与数据，共用同一条时间线</text>
+<path d="M210 350H870" stroke="#678aaf" stroke-width="5"/><g fill="#254c73"><rect x="70" y="270" width="205" height="170" rx="26"/><rect x="315" y="270" width="205" height="170" rx="26"/><rect x="560" y="270" width="205" height="170" rx="26"/><rect x="805" y="270" width="205" height="170" rx="26"/></g>
+<g fill="#ffffff" font-size="42" text-anchor="middle"><text x="172" y="374">人物</text><text x="417" y="374">素材</text><text x="662" y="374">截图</text><text x="907" y="374">数据</text></g><text x="75" y="555" fill="#c1d4e6" font-size="28">示例仅展示版式；正式生成使用你的内容。</text></g>
+</svg>

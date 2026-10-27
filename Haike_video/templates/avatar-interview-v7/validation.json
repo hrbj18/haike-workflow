@@ -1,0 +1,105 @@
+{
+  "template_id": "avatar-interview-v7",
+  "template_version": "v001",
+  "date": "2026-10-19",
+  "scope": "19-second local development sample; broll foreground contain plus same-source blurred cover background, independent circle presenter, editable headings/pills/captions, yellow numbered focus 1/2",
+  "stage": "implementation + specification",
+  "native_fingerprint": "114d7611dd8986441fbe0b41ef36772298efbc295f58c8d2a448c784d0bf5ead",
+  "video": {
+    "local_artifact": ".local/avatar-template7/数字人模板7-19秒测试.mp4",
+    "sha256": "eb86e79808bf929d8faf7e4e61842025b3ca83421d62a00e2069cb90812e1cdc",
+    "bytes": 8601673,
+    "codec": "h264",
+    "audio_codec": "aac",
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "frame_count": 570,
+    "video_duration_seconds": 19,
+    "audio_duration_seconds": 19,
+    "container_duration_seconds": 19,
+    "full_decode": "pass"
+  },
+  "source_identity": {
+    "reference_sha256": "00ddc2b55574b636db73620122e8de818df1fd7c5a0045119f6cec88bf04f051",
+    "reference_interval_seconds": [
+      17.2,
+      36.2
+    ],
+    "master_audio_sha256": "868c7184381e9c2183921c34251877c4cc1117431c5f7cbe4bd23b0ac6248a9a",
+    "template_source_sha256": {
+      "index.tsx": "a58f804bf74bab68b4549aa5c715eb4a89ec5835206d198fc79b462b4fc71ef9",
+      "Root.tsx": "d6555053a4fb228eed149c558971027a5282ff95ac7eebd561b21cd9f9b45bf2",
+      "Composition.tsx": "b1ab832ca8f212f7d6c1c05b5636d0840a9662d4f7f684a62e9dcd8e171c5b59",
+      "Captions.tsx": "e916994f7090a66a11afdb170b2f86452ac6af7e255db278c4228d7fe9da7c19",
+      "layout.json": "2cd80a182013c972113ce6ec42ec787e6cd8432f37d14a105ddcfc2508bf742a"
+    },
+    "cli_sha256": "8bce7b698ffda17ebeaf020df0833824713eac23aadd7cf75161109a2883f222",
+    "rights_scope": "User-supplied reference; local development analysis/recomposition. No cloud character or speech generation and no publication."
+  },
+  "audio_measurement": {
+    "method": "48kHz mono float decode; zero-lag correlation and FFT cross-correlation within +/-100ms",
+    "zero_lag_correlation": 0.9999977075863922,
+    "best_lag_samples": 0,
+    "audio_clock_mux": "master_wav_v1",
+    "speech_speed_change": false,
+    "continuous_listening": "pending"
+  },
+  "visual_observation": {
+    "reviewer": "root agent",
+    "reviewed_sheet": ".local/avatar-template7/qa/contact-sheet.jpg",
+    "sheet_sha256": "a27dee62c78fc41a5e099eae44c694f734dc5aa1f1658dc8204632b2015380b4",
+    "sampled_times_seconds": [
+      0,
+      1.8,
+      4.8,
+      6.2,
+      6.6,
+      8.7,
+      9.2,
+      11.8,
+      14,
+      14.4,
+      16.6,
+      18.9
+    ],
+    "original_size_views_seconds": [
+      6.6,
+      18.9
+    ],
+    "result": "pass for the declared 19s sample",
+    "findings": [
+      "Stable three-region shell, readable two-line header, two source/context pills and editable brand footer.",
+      "Circle presenter has no inherited source subtitles and stays above independent subtitle box.",
+      "Foreground contain preserves embedded source words; same-source dark blurred backdrop fills the main window without stretching.",
+      "Focus 1/2 and yellow keyword states appear; longest subtitle fits and transitions are sampled.",
+      "Source broll has a black transition at sample 9.2s, confirmed in the extracted source; retained intentionally.",
+      "Circle intentionally covers the lower-right media region; independent captions preserve the spoken phrase. Embedded source annotations remain non-editable."
+    ],
+    "pending": [
+      "continuous listening and phoneme-level lip sync",
+      "red focus variant",
+      "full-window presenter mode",
+      "summary-card mode",
+      "new presenter/media boundaries",
+      "target-platform device playback",
+      "Studio template/queue/work-catalog integration",
+      "user acceptance"
+    ]
+  },
+  "static_checks": {
+    "template_schema": "pass",
+    "workspace_template_routes": "pass",
+    "python_source_check": "pass",
+    "typescript_strict": "pass",
+    "focused_contract_tests": "8 passed",
+    "handoff_audit": "pass",
+    "general_runbook_check": "Other runbooks and reference documents have existing/concurrent failures; no Template 7 failures. This task does not certify the entire runbook collection."
+  },
+  "cost_and_effects": {
+    "new_cloud_calls": 0,
+    "publication": false,
+    "production_queue_submission": false
+  },
+  "distribution": "This JSON is a portable review record. Reference media, voice, rendered video, frame images and per-run logs remain ignored local artifacts; this record does not make those files available on another machine."
+}

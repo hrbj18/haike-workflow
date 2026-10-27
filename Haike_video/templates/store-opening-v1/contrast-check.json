@@ -1,0 +1,35 @@
+{
+  "method": "declared sRGB role swatches; not encoded-frame proof",
+  "pairs": [
+    {
+      "style": 22,
+      "large_display_pair": 13.829,
+      "caption_pair": 21.0,
+      "location_pair": 14.081
+    },
+    {
+      "style": 23,
+      "large_display_pair": 3.409,
+      "caption_pair": 16.479,
+      "location_pair": 16.479
+    },
+    {
+      "style": 24,
+      "large_display_pair": 3.184,
+      "caption_pair": 21.0,
+      "location_pair": 18.233
+    },
+    {
+      "style": 25,
+      "large_display_pair": 13.051,
+      "caption_pair": 13.051,
+      "location_pair": 13.051
+    },
+    {
+      "style": 26,
+      "large_display_pair": 5.955,
+      "caption_pair": 5.955,
+      "location_pair": 5.955
+    }
+  ]
+}

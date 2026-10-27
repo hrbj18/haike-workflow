@@ -55,6 +55,120 @@ async def _reuse_or_create_login_page(ctx):
     return await ctx.new_page()
 
 
+async def _pause_login_checkpoints(mgr, ctx):
+    """Do not persist guest/intermediate QR state before the login commits."""
+    pause = getattr(mgr, "pause_session_checkpoints", None)
+    resume = getattr(mgr, "resume_session_checkpoints", None)
+    if not callable(pause) or not callable(resume):
+        return None  # Compatibility with older browser adapters.
+    try:
+        await pause(ctx)
+    except BaseException:
+        # pause sets its guard before draining an already-running capture.
+        # Cancellation during that await must release the same guard.
+        resume(ctx)
+        raise
+    return resume
+
+
+async def _confirmed_login_state_json(mgr, identity, ctx):
+    """Freeze confirmed state for DB commit and replace an older handoff cache.
+
+    Called only after the platform's existing login confirmation. Capture stays
+    side-effect free; remembering here never invokes the persistence callback.
+    """
+    capture = getattr(mgr, "capture_session_state", None)
+    state = await capture(identity, ctx) if callable(capture) else await ctx.storage_state()
+    serialized = json.dumps(state)
+    remember = getattr(mgr, "remember_session_state", None)
+    if callable(remember):
+        remember(identity, state)
+    return serialized
+
+
+async def _restore_login_cookies(ctx, cookies, platform):
+    # Exact rollback removes partial credentials written during an abandoned
+    # QR flow. A failed add gets one bounded retry after clearing again.
+    for attempt in range(2):
+        try:
+            await ctx.clear_cookies()
+            await ctx.add_cookies(cookies)
+            return
+        except Exception as exc:
+            _LOG.warning("[%s-login] 回滚旧 Cookie 失败(第 %d 次): %s",
+                         platform, attempt + 1, type(exc).__name__)
+
+
+async def _close_login_context(ctx, resume):
+    try:
+        try:
+            await ctx.close()
+        except Exception:
+            pass
+    finally:
+        if resume is not None:
+            resume(ctx)
+
+
+async def _douyin_login_panel_visible(page) -> bool:
+    """发现登录/验证面板后只等待用户，不点击其中的验证或协议控件。"""
+    for text in (
+        "扫码登录", "二维码登录", "打开抖音扫码登录", "请使用抖音扫码登录",
+        "验证码登录", "手机验证码登录", "短信验证码登录", "安全验证",
+    ):
+        try:
+            loc = page.get_by_text(text, exact=True)
+            for index in range(min(await loc.count(), 8)):
+                if await loc.nth(index).is_visible():
+                    return True
+        except Exception:
+            continue
+    return False
+
+
+async def _expand_douyin_login_panel(page) -> bool:
+    """首页水合期间有界重试可见的登录入口，避免严格匹配多个隐藏副本。"""
+    deadline = _now() + 8.0
+    next_click_round = 0
+    for round_index in range(16):
+        if page.is_closed() or _now() >= deadline:
+            return False
+        if await _douyin_login_panel_visible(page):
+            return True
+        if round_index >= next_click_round:
+            # 精确文案优先；逐个检查可见性，不使用可能严格匹配多个节点的 page.click。
+            factories = (
+                lambda: page.get_by_text("登录", exact=True),
+                lambda: page.get_by_role("button", name="登录", exact=True),
+                lambda: page.locator('[data-e2e="login-button"]'),
+            )
+            clicked = False
+            for make_locator in factories:
+                try:
+                    loc = make_locator()
+                    for index in range(min(await loc.count(), 8)):
+                        if _now() >= deadline:
+                            return False
+                        candidate = loc.nth(index)
+                        if not await candidate.is_visible():
+                            continue
+                        try:
+                            await candidate.click(timeout=600)
+                        except Exception:
+                            continue
+                        clicked = True
+                        # 点击已被接受后留出一次水合机会，再判断是否需要重试。
+                        next_click_round = round_index + 2
+                        break
+                except Exception:
+                    continue
+                if clicked:
+                    break
+        if round_index < 15:
+            await asyncio.sleep(0.5)
+    return await _douyin_login_panel_visible(page)
+
+
 async def interactive_login(mgr: BrowserManager, identity: Identity,
                             timeout_seconds: int = 180,
                             start_url: str = "https://www.douyin.com/",
@@ -81,13 +195,7 @@ async def interactive_login(mgr: BrowserManager, identity: Identity,
     try:
         await page.goto(start_url, wait_until="domcontentloaded", timeout=30000)
         await _focus(page)
-        # 尝试自动弹出登录框(失败也没关系,用户可自行点“登录”)
-        for sel in ('text=登录', '[data-e2e="login-button"]', 'button:has-text("登录")'):
-            try:
-                await page.click(sel, timeout=2500)
-                break
-            except Exception:
-                continue
+        await _expand_douyin_login_panel(page)
 
         # 轮询登录态(用户关窗 -> 立即视为未登录,不抛错)
         waited = 0.0
@@ -596,15 +704,20 @@ async def interactive_ks_login(mgr: BrowserManager, identity: Identity,
     判定登录:出现 userId + web_st/passToken(游客态没有)。用户中途关窗视为未登录。
     ⚠️ 选择器/登录态 Cookie 名随快手改版可能变化,集中在 _KS_LOGIN_COOKIES。"""
     ctx = await mgr.open_headed(identity)
-    if force_reauth:
-        await ctx.clear_cookies()
-    await _open_first_environment_check(mgr, identity, ctx)
-    page = await ctx.new_page()
-    await _focus(page)
     logged = False
+    committed = False
+    backup_cookies = []
+    resume = None
     nickname = ""
     state_json = ""
     try:
+        resume = await _pause_login_checkpoints(mgr, ctx)
+        if force_reauth:
+            backup_cookies = list(await ctx.cookies())
+            await ctx.clear_cookies()
+        await _open_first_environment_check(mgr, identity, ctx)
+        page = await ctx.new_page()
+        await _focus(page)
         await page.goto(start_url, wait_until="domcontentloaded", timeout=30000)
         await _focus(page)
         # 新版按钮是 ``span[role=button].sidebar-login-button``，文案被拆成
@@ -626,13 +739,15 @@ async def interactive_ks_login(mgr: BrowserManager, identity: Identity,
             waited += 0.5
         if logged:
             await page.wait_for_timeout(1500)
-            state_json = json.dumps(await ctx.storage_state())
+            state_json = await _confirmed_login_state_json(mgr, identity, ctx)
+            committed = True
             nickname = await _read_ks_nickname(page)
     finally:
         try:
-            await ctx.close()
-        except Exception:
-            pass
+            if force_reauth and backup_cookies and not committed:
+                await _restore_login_cookies(ctx, backup_cookies, "ks")
+        finally:
+            await _close_login_context(ctx, resume)
     return logged, state_json, nickname
 
 
@@ -643,15 +758,20 @@ async def interactive_ks_creator_login(mgr: BrowserManager, identity: Identity,
     """快手「创作者服务平台」登录(cp.kuaishou.com,发布用)。扫码后落地含创作者会话的登录态。
     返回 (是否成功, storage_state_json, nickname)。登录成功标志:出现 cp.api_st/api_ph。"""
     ctx = await mgr.open_headed(identity)
-    if force_reauth:
-        await ctx.clear_cookies()
-    await _open_first_environment_check(mgr, identity, ctx)
-    page = await ctx.new_page()
-    await _focus(page)
     logged = False
+    committed = False
+    backup_cookies = []
+    resume = None
     nickname = ""
     state_json = ""
     try:
+        resume = await _pause_login_checkpoints(mgr, ctx)
+        if force_reauth:
+            backup_cookies = list(await ctx.cookies())
+            await ctx.clear_cookies()
+        await _open_first_environment_check(mgr, identity, ctx)
+        page = await ctx.new_page()
+        await _focus(page)
         await page.goto("https://cp.kuaishou.com/", wait_until="domcontentloaded",
                         timeout=30000)
         await _focus(page)
@@ -670,7 +790,8 @@ async def interactive_ks_creator_login(mgr: BrowserManager, identity: Identity,
                     on_cp and _ks_web_login_ready(names)):
                 await page.wait_for_timeout(1500)
                 try:
-                    state_json = json.dumps(await ctx.storage_state())
+                    state_json = await _confirmed_login_state_json(mgr, identity, ctx)
+                    committed = True
                     logged = True
                     nickname = await _read_ks_nickname(page)
                 except Exception:
@@ -681,9 +802,10 @@ async def interactive_ks_creator_login(mgr: BrowserManager, identity: Identity,
             waited += 0.5
     finally:
         try:
-            await ctx.close()
-        except Exception:
-            pass
+            if force_reauth and backup_cookies and not committed:
+                await _restore_login_cookies(ctx, backup_cookies, "ks-creator")
+        finally:
+            await _close_login_context(ctx, resume)
     return logged, state_json, nickname
 
 
@@ -852,6 +974,7 @@ async def interactive_channels_login(mgr: BrowserManager, identity: Identity,
     nickname = ""
     state_json = ""
     committed = False
+    resume = None
     auth_verified = asyncio.Event()
     last_auth: dict = {"code": None, "url": ""}
 
@@ -874,6 +997,7 @@ async def interactive_channels_login(mgr: BrowserManager, identity: Identity,
     # 不再出现「cookie 已清空却零回滚 + ctx 泄漏」。
     # ⚠️ 这里刻意不收异常(无 except)：异常继续向上抛，保持原有语义。
     try:
+        resume = await _pause_login_checkpoints(mgr, ctx)
         if force_reauth:
             # 「重新登录」先备份当前登录态再清空：本次扫码若关窗/超时/中途取消，
             # 收尾时会把备份回滚回去，避免「一次没完成的扫码」把已经能用的登录态
@@ -930,7 +1054,7 @@ async def interactive_channels_login(mgr: BrowserManager, identity: Identity,
                 and "login.html" not in page.url
             logged = bool(confirmed and still_on_platform)
             if logged:
-                state_json = json.dumps(await ctx.storage_state())
+                state_json = await _confirmed_login_state_json(mgr, identity, ctx)
                 committed = True
             _LOG.info(
                 "[ch-login] confirmed=%s on_platform=%s cookies=%d "
@@ -945,25 +1069,13 @@ async def interactive_channels_login(mgr: BrowserManager, identity: Identity,
         # 登录态；故对「clear+add」整组再重试一次(仍失败才认栽，交由
         # manager._bridge_identity_cookies 在下次开 context 时兜底)。正常路径依旧
         # 只做一次 clear+add，可观测行为不变。
-        if force_reauth and backup_cookies and not committed:
-            restored = False
-            for attempt in range(2):
-                try:
-                    await ctx.clear_cookies()
-                    await ctx.add_cookies(backup_cookies)
-                    restored = True
-                    break
-                except Exception as exc:
-                    _LOG.warning("[ch-login] 回滚旧 Cookie 失败(第 %d 次): %r",
-                                 attempt + 1, exc)
-            if restored:
-                _LOG.warning("[ch-login] 登录未完成，已回滚 %d 条旧 Cookie",
-                             len(backup_cookies))
-        # ctx.close() 无条件调用(含 backup/clear 之后任何早抛场景)。
         try:
-            await ctx.close()
-        except Exception:
-            pass
+            if force_reauth and backup_cookies and not committed:
+                await _restore_login_cookies(ctx, backup_cookies, "ch")
+        finally:
+            # Remain paused through rollback and close. Resuming first would
+            # let a periodic checkpoint commit a partial state at teardown.
+            await _close_login_context(ctx, resume)
     return logged, state_json, nickname
 
 

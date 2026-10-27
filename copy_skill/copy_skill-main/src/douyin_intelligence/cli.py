@@ -8,6 +8,7 @@ import re
 from pathlib import Path
 from typing import Any
 
+from ._stdio import configure_utf8_stdio
 from .config import ConfigurationError, load_config, resolve_path
 from .collector import BrowserSession, close_project_browser, collect_creators, creator_commands, prepare_douyin_login
 from .account_evaluation import run_account_evaluation
@@ -280,10 +281,7 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def main(argv: list[str] | None = None) -> int:
-    if hasattr(sys.stdout, "reconfigure"):
-        sys.stdout.reconfigure(encoding="utf-8")
-    if hasattr(sys.stderr, "reconfigure"):
-        sys.stderr.reconfigure(encoding="utf-8")
+    configure_utf8_stdio()
     parser = build_parser()
     args = parser.parse_args(argv)
     try:

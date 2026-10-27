@@ -368,10 +368,14 @@ def make_run_id(config: dict[str, Any]) -> str:
 
 
 def creator_commands(config: dict[str, Any], run_dir: Path) -> list[tuple[dict[str, Any], list[str], Path]]:
+    from .download_credentials_adapter import download_collection_config
+    config = download_collection_config(config)
     crawler = config["media_crawler"]
     python = resolve_path(crawler["python"])
     root = resolve_path(crawler["root"])
     runner = Path(__file__).with_name("mediacrawler_runner.py").resolve()
+    from .download_credentials_adapter import crawler_account_args
+    credential_args = crawler_account_args(config)
     commands = []
     for account in config["benchmark_accounts"]:
         if not account.get("enabled", True):
@@ -382,6 +386,7 @@ def creator_commands(config: dict[str, Any], run_dir: Path) -> list[tuple[dict[s
             "--crawler-root", str(root),
             "--cdp-port", str(int(crawler["cdp_port"])),
             "--navigation-timeout", str(int(crawler.get("navigation_timeout_seconds") or 90)),
+            *credential_args,
             "--",
             "--platform", "dy", "--type", "creator", "--lt", "qrcode",
             "--save_data_option", "jsonl", "--save_data_path", str(destination),
@@ -442,6 +447,8 @@ def collect_creators(
     *,
     before_sanitize: Callable[[list[Path], dict[str, Any]], None] | None = None,
 ) -> dict[str, Any]:
+    from .download_credentials_adapter import download_collection_config
+    config = download_collection_config(config)
     browser_session = BrowserSession(config, "collect_creators")
     browser = browser_session.prepare()
     root = resolve_path(config["media_crawler"]["runs_output"])

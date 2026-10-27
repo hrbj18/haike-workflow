@@ -1,0 +1,149 @@
+name: Build Windows installer
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Numeric version, for example 0.2.0
+        required: true
+        default: "0.2.0"
+
+concurrency:
+  group: windows-installer-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 45
+    env:
+      # 确保英文 Windows 构建机也能输出中文说明，并保持子进程编码一致。
+      PYTHONUTF8: "1"
+      PYTHONIOENCODING: "utf-8"
+    outputs:
+      version: ${{ steps.version.outputs.value }}
+    steps:
+      - uses: actions/checkout@v6
+      - name: Resolve and validate version
+        id: version
+        shell: pwsh
+        env:
+          INPUT_VERSION: ${{ inputs.version }}
+        run: |
+          $version = $env:INPUT_VERSION
+          if ($env:GITHUB_EVENT_NAME -eq 'push') { $version = $env:GITHUB_REF_NAME.Substring(1) }
+          if ($version -cnotmatch '^[0-9]+\.[0-9]+\.[0-9]+(\.[0-9]+)?$') { throw 'Use a numeric version such as v0.1.0; preview tags are not supported' }
+          "APP_VERSION=$version" >> $env:GITHUB_ENV
+          "value=$version" >> $env:GITHUB_OUTPUT
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+          architecture: x64
+      - name: Prepare Chinese release notes
+        run: python desktop/release.py $env:APP_VERSION --notes-output dist/installer/RELEASE_NOTES.md
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - name: Build desktop renderer
+        run: |
+          npm ci
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          npm run build:ui
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          npm run build:desktop
+      - name: Install build dependencies
+        run: python -m pip install -r requirements.txt -r desktop/requirements-build.txt pytest -c desktop/constraints-windows.txt
+      - name: Test monitor API and frontend contracts
+        run: python -m pytest tests/test_monitor_accounts.py tests/test_monitor_intervals.py tests/test_automatic_cadence.py tests/test_engine_settings.py tests/test_web_optimizations.py -q
+      - name: Test release contract
+        run: python -m unittest discover -s tests -p test_windows_release.py
+      - name: Test release helper
+        run: python -m unittest discover -s tests -p test_desktop_release.py
+      - name: Test installer localization contract
+        run: python -m unittest discover -s tests -p test_installer_language.py
+      - name: Validate documentation
+        run: python -m unittest discover -s tests -p test_guide_site.py
+      - name: Test desktop entry point
+        run: python -m unittest discover -s tests -p test_desktop_launcher.py
+      - name: Test legacy desktop widgets
+        run: python -m unittest discover -s tests -p test_desktop_ui.py
+      - name: Test desktop control server
+        run: python -m unittest discover -s tests -p test_desktop_shell.py
+      - name: Test desktop updates
+        run: python -m unittest discover -s tests -p "test_desktop_update*.py"
+      - name: Test crash recovery and manual startup
+        run: python -m unittest discover -s tests -p test_desktop_lifecycle.py
+      - name: Package Python, application and offline guide
+        run: python desktop/build_windows.py --version $env:APP_VERSION
+      - name: Test frozen updater handoff with disposable fixtures
+        run: python desktop/smoke_update_windows.py dist/windows/CreatorHub/_internal/desktop/CreatorHubUpdater.exe
+      - name: Test frozen file delta and automatic rollback
+        run: python desktop/smoke_update_windows.py dist/windows/CreatorHub/_internal/desktop/CreatorHubUpdater.exe --delta
+      - name: Smoke-test frozen resources and service lifecycle
+        run: python desktop/smoke_windows.py dist/windows/CreatorHub/CreatorHub.exe
+      - name: Download verified WebView2 bootstrapper
+        run: ./desktop/prepare_webview2.ps1
+      - name: Compile installer
+        run: |
+          $compiler = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe"
+          if (!(Test-Path $compiler)) { throw "Inno Setup 6 compiler is required on the build runner" }
+          python desktop/check_installer_language.py --compiler "$compiler"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          & $compiler "/DAppVersion=$env:APP_VERSION" desktop/installer.iss
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $file = Get-Item "dist/installer/CreatorHub-Setup-$env:APP_VERSION-windows-x64.exe"
+          "$((Get-FileHash $file.FullName -Algorithm SHA256).Hash.ToLower())  $($file.Name)" | Set-Content dist/installer/SHA256.txt -Encoding ascii
+      - name: Fetch verified previous release inventory
+        run: python desktop/fetch_update_base.py --version $env:APP_VERSION
+      - name: Build file delta and release inventory
+        run: python desktop/build_update.py --version $env:APP_VERSION --base-manifest build/windows/update-base.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: CreatorHub-Windows-Installer
+          path: dist/installer/*
+          if-no-files-found: error
+
+  release:
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+    needs: windows
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: CreatorHub-Windows-Installer
+          path: installer
+      - name: Publish installer and checksum
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          TAG: ${{ github.ref_name }}
+          APP_VERSION: ${{ needs.windows.outputs.version }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd installer
+          sha256sum --check SHA256.txt
+          # Published releases are immutable here: reruns never replace user downloads.
+          if gh release view "$TAG" --json isDraft > release.json; then
+            if ! jq -e '.isDraft == true' release.json > /dev/null; then
+              echo "Release already published; no assets were changed."
+              exit 0
+            fi
+          else
+            gh release create "$TAG" --verify-tag --draft --title "CreatorHub $TAG" --notes-file RELEASE_NOTES.md
+          fi
+          assets=("CreatorHub-Setup-$APP_VERSION-windows-x64.exe" "CreatorHub-Update-$APP_VERSION-windows-x64.json" SHA256.txt)
+          for delta in CreatorHub-Delta-*-to-"$APP_VERSION"-windows-x64.zip; do
+            [ ! -f "$delta" ] || assets+=("$delta")
+          done
+          gh release upload "$TAG" "${assets[@]}" --clobber
+          gh release edit "$TAG" --notes-file RELEASE_NOTES.md --draft=false --prerelease=false

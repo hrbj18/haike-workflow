@@ -1,0 +1,2259 @@
+{
+  "schema_version": 1,
+  "standard_version": "video-template-v1",
+  "template_id": "avatar-deepblue-n1-v1",
+  "template_version": "2026-10-15-v1",
+  "template_type": "avatar",
+  "spec_kind": "implementation",
+  "stage": "ready",
+  "authority": {
+    "runbook": "README.md",
+    "implementation_paths": [
+      "index.tsx",
+      "layout.json",
+      "../../backlot/studio_n1.py"
+    ],
+    "parameter_source": "layout.json"
+  },
+  "canvas": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "duration_seconds": 15,
+    "clock": "本规格时间范围为15秒四模式开发演示。普通制作按最终独立音轨时长和30fps帧时钟，不循环、拉伸语音；视觉层静音。演示静音及人物源循环仅在本期演示输入明确声明。",
+    "coordinate_system": "top_left_pixels"
+  },
+  "narrative": {
+    "purpose": "展示深蓝视窗N1固定壳与四种可替换主窗状态，不包含已核验新闻或固定叙事。",
+    "information_hierarchy": [
+      "三行主题",
+      "主窗画面与字幕",
+      "来源、人物与品牌",
+      "低对比英文和背景装饰"
+    ],
+    "structure": [
+      "presenter 主持人",
+      "material 本期素材",
+      "screenshot 来源截图与红线",
+      "data 纵向信息板"
+    ]
+  },
+  "scenes": [
+    {
+      "id": "scene_presenter",
+      "start": 0,
+      "end": 3.75,
+      "purpose": "开发演示覆盖presenter模式及相关状态；不固定普通作品分镜",
+      "element_ids": [
+        "background",
+        "title_1",
+        "title_2",
+        "title_3",
+        "source",
+        "window",
+        "caption",
+        "circle",
+        "brand",
+        "english",
+        "bottom_line",
+        "presenter"
+      ],
+      "variant": "presenter"
+    },
+    {
+      "id": "scene_material",
+      "start": 3.75,
+      "end": 7.5,
+      "purpose": "开发演示覆盖material模式及相关状态；不固定普通作品分镜",
+      "element_ids": [
+        "background",
+        "title_1",
+        "title_2",
+        "title_3",
+        "source",
+        "window",
+        "caption",
+        "circle",
+        "brand",
+        "english",
+        "bottom_line",
+        "material"
+      ],
+      "variant": "material"
+    },
+    {
+      "id": "scene_screenshot",
+      "start": 7.5,
+      "end": 11.25,
+      "purpose": "开发演示覆盖screenshot模式及相关状态；不固定普通作品分镜",
+      "element_ids": [
+        "background",
+        "title_1",
+        "title_2",
+        "title_3",
+        "source",
+        "window",
+        "caption",
+        "circle",
+        "brand",
+        "english",
+        "bottom_line",
+        "screenshot",
+        "highlight"
+      ],
+      "variant": "screenshot"
+    },
+    {
+      "id": "scene_data",
+      "start": 11.25,
+      "end": 15,
+      "purpose": "开发演示覆盖data模式及相关状态；不固定普通作品分镜",
+      "element_ids": [
+        "background",
+        "title_1",
+        "title_2",
+        "title_3",
+        "source",
+        "window",
+        "caption",
+        "circle",
+        "brand",
+        "english",
+        "bottom_line",
+        "data_background",
+        "data_label",
+        "data_title",
+        "data_row_1",
+        "data_row_2",
+        "data_row_3",
+        "data_row_4"
+      ],
+      "variant": "data"
+    }
+  ],
+  "assets": [
+    {
+      "id": "runtime_font",
+      "kind": "font",
+      "path": null,
+      "source": "layout.json fontFamily与当前渲染机可用字体；换机须重新查看字宽。",
+      "embedded_content": [],
+      "rights_status": "使用本机已安装字体；对外分发字体须另核授权"
+    },
+    {
+      "id": "runtime_avatar",
+      "kind": "video",
+      "path": null,
+      "source": "本期冻结人物视频，项目资产身份与源起点进入运行manifest；公共模板不附带私人素材。",
+      "embedded_content": [
+        "人物面容、服装与原画面背景"
+      ],
+      "rights_status": "本期用户提供/授权；不作为公共模板素材授权"
+    },
+    {
+      "id": "runtime_material",
+      "kind": "image",
+      "path": null,
+      "source": "material模式的项目资产；可为受支持图片或视频，实际kind和SHA在本期manifest记录。",
+      "embedded_content": [
+        "素材原有文字和画面"
+      ],
+      "rights_status": "本期核验来源与使用权"
+    },
+    {
+      "id": "runtime_screenshot",
+      "kind": "image",
+      "path": null,
+      "source": "screenshot模式完整项目图片；引文上下文与来源由本期核对。",
+      "embedded_content": [
+        "截图内文字、图标、排版和已有标注均为固化内容"
+      ],
+      "rights_status": "本期核验引用范围与来源"
+    },
+    {
+      "id": "runtime_audio",
+      "kind": "audio",
+      "path": null,
+      "source": "本期独立主音轨；演示允许明确声明audioSrc=null。",
+      "embedded_content": [
+        "语音内容"
+      ],
+      "rights_status": "本期用户授权与音色供应商范围"
+    }
+  ],
+  "elements": [
+    {
+      "id": "background",
+      "type": "background",
+      "role": "深蓝纵渐变和低对比曲面固定壳",
+      "parent_id": null,
+      "z_index": 0,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "渐变与两条装饰曲面为同一固定背景组件；曲面允许超画布，被根容器裁切。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1080,
+          1920
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "parameter_ref": "#/canvas,#/colors,#/curves",
+          "decorative_overflow": "曲面名义椭圆可超画布，背景整体在画布裁切。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 15
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "当前模式满足触发条件时显示；全片坐标与父级不随内容漂移。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "parameter_authority",
+          "target_id": null,
+          "rule": "本box仅layout.json和index.tsx的只读投影；按style.parameter_ref读唯一真值，变更后重建投影和证据。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "n1_reference",
+        "layout_projection"
+      ],
+      "acceptance": [
+        {
+          "check": "mode_layout",
+          "method": "查看当前模式稳定态和切换实际渲染帧；最长内容另做边界检查。",
+          "pass_condition": "元素位于真值对应区域，比例/裁切/层级和可读性符合已声明规则，无未说明遮挡。"
+        }
+      ]
+    },
+    {
+      "id": "title_1",
+      "type": "text",
+      "role": "暖黄主题",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "editable",
+        "binding": "title_1_slot",
+        "asset_id": null,
+        "description": "暖黄主题"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          54,
+          201,
+          972,
+          98.82
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "parameter_ref": "#/title/left,#/title/tops/0,#/title/width,#/title/sizes/0,#/title/lineHeight",
+          "font": "layout.json#/fontFamily",
+          "font_size": 81,
+          "max_lines": 1,
+          "overflow": "输入长度受校验；实际超宽先压短内容并重验，缩字行为读取当前组件规则。",
+          "color_ref": "#/colors/yellow",
+          "line_height": 1.22
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 15
+      },
+      "states": [
+        {
+          "id": "entering",
+          "visible": true,
+          "description": "全片片头主标题透明度从0线性到1；背景/主窗不中断。"
+        },
+        {
+          "id": "held",
+          "visible": true,
+          "description": "渐显结束后保持。"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "entering",
+          "to": "held",
+          "trigger": "全片0秒",
+          "start": 0,
+          "end": 0.6,
+          "properties": {
+            "opacity": [
+              0,
+              1
+            ]
+          },
+          "easing": "linear"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "parameter_authority",
+          "target_id": null,
+          "rule": "本box仅layout.json和index.tsx的只读投影；按style.parameter_ref读唯一真值，变更后重建投影和证据。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "n1_reference",
+        "layout_projection"
+      ],
+      "acceptance": [
+        {
+          "check": "mode_layout",
+          "method": "查看当前模式稳定态和切换实际渲染帧；最长内容另做边界检查。",
+          "pass_condition": "元素位于真值对应区域，比例/裁切/层级和可读性符合已声明规则，无未说明遮挡。"
+        }
+      ]
+    },
+    {
+      "id": "title_2",
+      "type": "text",
+      "role": "白色副标题",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "editable",
+        "binding": "title_2_slot",
+        "asset_id": null,
+        "description": "白色副标题"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          54,
+          297,
+          972,
+          69.53999999999999
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "parameter_ref": "#/title/left,#/title/tops/1,#/title/width,#/title/sizes/1,#/title/lineHeight",
+          "font": "layout.json#/fontFamily",
+          "font_size": 57,
+          "max_lines": 1,
+          "overflow": "输入长度受校验；实际超宽先压短内容并重验，缩字行为读取当前组件规则。",
+          "color_ref": "#/colors/white",
+          "line_height": 1.22
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 15
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "当前模式满足触发条件时显示；全片坐标与父级不随内容漂移。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "parameter_authority",
+          "target_id": null,
+          "rule": "本box仅layout.json和index.tsx的只读投影；按style.parameter_ref读唯一真值，变更后重建投影和证据。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "n1_reference",
+        "layout_projection"
+      ],
+      "acceptance": [
+        {
+          "check": "mode_layout",
+          "method": "查看当前模式稳定态和切换实际渲染帧；最长内容另做边界检查。",
+          "pass_condition": "元素位于真值对应区域，比例/裁切/层级和可读性符合已声明规则，无未说明遮挡。"
+        }
+      ]
+    },
+    {
+      "id": "title_3",
+      "type": "text",
+      "role": "白色副标题",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "editable",
+        "binding": "title_3_slot",
+        "asset_id": null,
+        "description": "白色副标题"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          54,
+          368,
+          972,
+          69.53999999999999
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "parameter_ref": "#/title/left,#/title/tops/2,#/title/width,#/title/sizes/2,#/title/lineHeight",
+          "font": "layout.json#/fontFamily",
+          "font_size": 57,
+          "max_lines": 1,
+          "overflow": "输入长度受校验；实际超宽先压短内容并重验，缩字行为读取当前组件规则。",
+          "color_ref": "#/colors/white",
+          "line_height": 1.22
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 15
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "当前模式满足触发条件时显示；全片坐标与父级不随内容漂移。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "parameter_authority",
+          "target_id": null,
+          "rule": "本box仅layout.json和index.tsx的只读投影；按style.parameter_ref读唯一真值，变更后重建投影和证据。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "n1_reference",
+        "layout_projection"
+      ],
+      "acceptance": [
+        {
+          "check": "mode_layout",
+          "method": "查看当前模式稳定态和切换实际渲染帧；最长内容另做边界检查。",
+          "pass_condition": "元素位于真值对应区域，比例/裁切/层级和可读性符合已声明规则，无未说明遮挡。"
+        }
+      ]
+    },
+    {
+      "id": "source",
+      "type": "text",
+      "role": "真实素材来源声明",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "editable",
+        "binding": "source_slot",
+        "asset_id": null,
+        "description": "真实素材来源声明"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          63,
+          510,
+          954,
+          28.799999999999997
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "parameter_ref": "#/source；文字行高由组件读取",
+          "font": "layout.json#/fontFamily",
+          "font_size": 24,
+          "max_lines": 1,
+          "overflow": "输入长度受校验；实际超宽先压短内容并重验，缩字行为读取当前组件规则。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 15
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "当前模式满足触发条件时显示；全片坐标与父级不随内容漂移。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "parameter_authority",
+          "target_id": null,
+          "rule": "本box仅layout.json和index.tsx的只读投影；按style.parameter_ref读唯一真值，变更后重建投影和证据。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "n1_reference",
+        "layout_projection"
+      ],
+      "acceptance": [
+        {
+          "check": "mode_layout",
+          "method": "查看当前模式稳定态和切换实际渲染帧；最长内容另做边界检查。",
+          "pass_condition": "元素位于真值对应区域，比例/裁切/层级和可读性符合已声明规则，无未说明遮挡。"
+        }
+      ]
+    },
+    {
+      "id": "window",
+      "type": "container",
+      "role": "稳定圆角主窗",
+      "parent_id": null,
+      "z_index": 20,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "四模式共用固定窗，圆角裁切；子图层/红线/字幕以主窗为父坐标。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          566,
+          1080,
+          782
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "parameter_ref": "#/window"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 15
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "当前模式满足触发条件时显示；全片坐标与父级不随内容漂移。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "parameter_authority",
+          "target_id": null,
+          "rule": "本box仅layout.json和index.tsx的只读投影；按style.parameter_ref读唯一真值，变更后重建投影和证据。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "n1_reference",
+        "layout_projection"
+      ],
+      "acceptance": [
+        {
+          "check": "mode_layout",
+          "method": "查看当前模式稳定态和切换实际渲染帧；最长内容另做边界检查。",
+          "pass_condition": "元素位于真值对应区域，比例/裁切/层级和可读性符合已声明规则，无未说明遮挡。"
+        }
+      ]
+    },
+    {
+      "id": "presenter",
+      "type": "avatar",
+      "role": "主持人模式同源模糊底与居中清晰前景",
+      "parent_id": "window",
+      "z_index": 30,
+      "content": {
+        "mode": "generated",
+        "binding": "presenter_slot",
+        "asset_id": "runtime_avatar",
+        "description": "仅presenter显示。前景清晰域由(window.width-clearWidth)/2居中，同源视频模糊铺底。视频静音、全片时钟一致，不横向拉伸。"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1080,
+          782
+        ],
+        "fit": "cover",
+        "clip": "parent",
+        "style": {
+          "parameter_ref": "#/window/clearWidth,#/window/portraitY,#/window/blurPixels"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 15
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "当前模式满足触发条件时显示；全片坐标与父级不随内容漂移。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "parameter_authority",
+          "target_id": null,
+          "rule": "本box仅layout.json和index.tsx的只读投影；按style.parameter_ref读唯一真值，变更后重建投影和证据。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content.asset_id"
+      ],
+      "evidence_ids": [
+        "n1_reference",
+        "layout_projection"
+      ],
+      "acceptance": [
+        {
+          "check": "mode_layout",
+          "method": "查看当前模式稳定态和切换实际渲染帧；最长内容另做边界检查。",
+          "pass_condition": "元素位于真值对应区域，比例/裁切/层级和可读性符合已声明规则，无未说明遮挡。"
+        }
+      ]
+    },
+    {
+      "id": "material",
+      "type": "media",
+      "role": "本期素材清晰层和可选同源模糊背景",
+      "parent_id": "window",
+      "z_index": 30,
+      "content": {
+        "mode": "embedded",
+        "binding": "material_slot",
+        "asset_id": "runtime_material",
+        "description": "仅material显示；contain/cover/blur由本期scene明确选择，assetId为项目资产。offset是源起点，原声静音。"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1080,
+          782
+        ],
+        "fit": "contain",
+        "clip": "parent",
+        "style": {
+          "parameter_ref": "#/window；input.n1.scenes[].fit/offset"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 15
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "当前模式满足触发条件时显示；全片坐标与父级不随内容漂移。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "parameter_authority",
+          "target_id": null,
+          "rule": "本box仅layout.json和index.tsx的只读投影；按style.parameter_ref读唯一真值，变更后重建投影和证据。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content.asset_id"
+      ],
+      "evidence_ids": [
+        "n1_reference",
+        "layout_projection"
+      ],
+      "acceptance": [
+        {
+          "check": "mode_layout",
+          "method": "查看当前模式稳定态和切换实际渲染帧；最长内容另做边界检查。",
+          "pass_condition": "元素位于真值对应区域，比例/裁切/层级和可读性符合已声明规则，无未说明遮挡。"
+        }
+      ]
+    },
+    {
+      "id": "screenshot",
+      "type": "media",
+      "role": "保留上下文的来源截图",
+      "parent_id": "window",
+      "z_index": 30,
+      "content": {
+        "mode": "embedded",
+        "binding": "screenshot_slot",
+        "asset_id": "runtime_screenshot",
+        "description": "仅screenshot显示。此box为实际contain布局区域，图像最终矩形由源宽高等比派生；截图内文字全部固化。"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1080,
+          642
+        ],
+        "fit": "contain",
+        "clip": "parent",
+        "style": {
+          "parameter_ref": "#/window/width,#/window/height,#/window/screenshotCaptionReserve；实际图片矩形按contain缩放居中"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 15
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "当前模式满足触发条件时显示；全片坐标与父级不随内容漂移。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "parameter_authority",
+          "target_id": null,
+          "rule": "本box仅layout.json和index.tsx的只读投影；按style.parameter_ref读唯一真值，变更后重建投影和证据。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content.asset_id"
+      ],
+      "evidence_ids": [
+        "n1_reference",
+        "layout_projection"
+      ],
+      "acceptance": [
+        {
+          "check": "mode_layout",
+          "method": "查看当前模式稳定态和切换实际渲染帧；最长内容另做边界检查。",
+          "pass_condition": "元素位于真值对应区域，比例/裁切/层级和可读性符合已声明规则，无未说明遮挡。"
+        }
+      ]
+    },
+    {
+      "id": "highlight",
+      "type": "annotation",
+      "role": "随截图坐标展开的红线",
+      "parent_id": "screenshot",
+      "z_index": 40,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "只在screenshot生效。每条线的归一化x/y/width绑定原图，start/duration相对场景；0→指定长度线性展开。"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1080,
+          642
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "parameter_ref": "#/highlight；input.n1.scenes[].highlights，按截图真实contain矩形映射",
+          "geometry_rule": "实际线盒=[x*iw,y*ih,width*iw*progress,layout.highlight.height]，iw/ih为contain后原图；本box为本组件有效源坐标域。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 15
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "当前模式满足触发条件时显示；全片坐标与父级不随内容漂移。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "parameter_authority",
+          "target_id": null,
+          "rule": "本box仅layout.json和index.tsx的只读投影；按style.parameter_ref读唯一真值，变更后重建投影和证据。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "n1_reference",
+        "layout_projection"
+      ],
+      "acceptance": [
+        {
+          "check": "mode_layout",
+          "method": "查看当前模式稳定态和切换实际渲染帧；最长内容另做边界检查。",
+          "pass_condition": "元素位于真值对应区域，比例/裁切/层级和可读性符合已声明规则，无未说明遮挡。"
+        }
+      ]
+    },
+    {
+      "id": "data_background",
+      "type": "background",
+      "role": "深蓝数据板底",
+      "parent_id": "window",
+      "z_index": 30,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "仅data模式，深蓝底。信息板是纵向列表而非横向节点卡。"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1080,
+          782
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "parameter_ref": "index.tsx DataBoard"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 15
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "当前模式满足触发条件时显示；全片坐标与父级不随内容漂移。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "parameter_authority",
+          "target_id": null,
+          "rule": "本box仅layout.json和index.tsx的只读投影；按style.parameter_ref读唯一真值，变更后重建投影和证据。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "n1_reference",
+        "layout_projection"
+      ],
+      "acceptance": [
+        {
+          "check": "mode_layout",
+          "method": "查看当前模式稳定态和切换实际渲染帧；最长内容另做边界检查。",
+          "pass_condition": "元素位于真值对应区域，比例/裁切/层级和可读性符合已声明规则，无未说明遮挡。"
+        }
+      ]
+    },
+    {
+      "id": "data_label",
+      "type": "text",
+      "role": "数据板暖黄标签",
+      "parent_id": "window",
+      "z_index": 40,
+      "content": {
+        "mode": "editable",
+        "binding": "data_label_slot",
+        "asset_id": null,
+        "description": "数据板暖黄标签"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          71,
+          92,
+          938,
+          49.199999999999996
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "parameter_ref": "#/data/left,#/data/labelTop,#/data/labelSize",
+          "font": "layout.json#/fontFamily",
+          "font_size": 41,
+          "max_lines": 1,
+          "overflow": "输入长度受校验；实际超宽先压短内容并重验，缩字行为读取当前组件规则。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 15
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "当前模式满足触发条件时显示；全片坐标与父级不随内容漂移。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "parameter_authority",
+          "target_id": null,
+          "rule": "本box仅layout.json和index.tsx的只读投影；按style.parameter_ref读唯一真值，变更后重建投影和证据。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "n1_reference",
+        "layout_projection"
+      ],
+      "acceptance": [
+        {
+          "check": "mode_layout",
+          "method": "查看当前模式稳定态和切换实际渲染帧；最长内容另做边界检查。",
+          "pass_condition": "元素位于真值对应区域，比例/裁切/层级和可读性符合已声明规则，无未说明遮挡。"
+        }
+      ]
+    },
+    {
+      "id": "data_title",
+      "type": "text",
+      "role": "数据板白色标题",
+      "parent_id": "window",
+      "z_index": 40,
+      "content": {
+        "mode": "editable",
+        "binding": "data_title_slot",
+        "asset_id": null,
+        "description": "数据板白色标题"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          71,
+          163,
+          938,
+          72.0
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "parameter_ref": "#/data/left,#/data/titleTop,#/data/titleSize",
+          "font": "layout.json#/fontFamily",
+          "font_size": 60,
+          "max_lines": 1,
+          "overflow": "输入长度受校验；实际超宽先压短内容并重验，缩字行为读取当前组件规则。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 15
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "当前模式满足触发条件时显示；全片坐标与父级不随内容漂移。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "parameter_authority",
+          "target_id": null,
+          "rule": "本box仅layout.json和index.tsx的只读投影；按style.parameter_ref读唯一真值，变更后重建投影和证据。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "n1_reference",
+        "layout_projection"
+      ],
+      "acceptance": [
+        {
+          "check": "mode_layout",
+          "method": "查看当前模式稳定态和切换实际渲染帧；最长内容另做边界检查。",
+          "pass_condition": "元素位于真值对应区域，比例/裁切/层级和可读性符合已声明规则，无未说明遮挡。"
+        }
+      ]
+    },
+    {
+      "id": "data_row_1",
+      "type": "text",
+      "role": "数据第1行与同层黄色方块",
+      "parent_id": "window",
+      "z_index": 40,
+      "content": {
+        "mode": "editable",
+        "binding": "data_row_1_slot",
+        "asset_id": null,
+        "description": "文本与左侧黄色方块同组先后淡入，按scene局部时间与rowRevealSeconds计算；文字列由data.textLeft决定。"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          71,
+          295,
+          938,
+          61.199999999999996
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "parameter_ref": "#/data/rowTop,#/data/rowStep,#/data/rowSize,#/data/bulletSize,#/data/textLeft",
+          "font": "layout.json#/fontFamily",
+          "font_size": 51,
+          "max_lines": 1,
+          "overflow": "输入长度受校验；实际超宽先压短内容并重验，缩字行为读取当前组件规则。",
+          "reveal_index": 0,
+          "reveal_interval_ref": "#/data/rowRevealSeconds"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 15
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "当前模式满足触发条件时显示；全片坐标与父级不随内容漂移。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "parameter_authority",
+          "target_id": null,
+          "rule": "本box仅layout.json和index.tsx的只读投影；按style.parameter_ref读唯一真值，变更后重建投影和证据。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "n1_reference",
+        "layout_projection"
+      ],
+      "acceptance": [
+        {
+          "check": "mode_layout",
+          "method": "查看当前模式稳定态和切换实际渲染帧；最长内容另做边界检查。",
+          "pass_condition": "元素位于真值对应区域，比例/裁切/层级和可读性符合已声明规则，无未说明遮挡。"
+        }
+      ]
+    },
+    {
+      "id": "data_row_2",
+      "type": "text",
+      "role": "数据第2行与同层黄色方块",
+      "parent_id": "window",
+      "z_index": 40,
+      "content": {
+        "mode": "editable",
+        "binding": "data_row_2_slot",
+        "asset_id": null,
+        "description": "文本与左侧黄色方块同组先后淡入，按scene局部时间与rowRevealSeconds计算；文字列由data.textLeft决定。"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          71,
+          392,
+          938,
+          61.199999999999996
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "parameter_ref": "#/data/rowTop,#/data/rowStep,#/data/rowSize,#/data/bulletSize,#/data/textLeft",
+          "font": "layout.json#/fontFamily",
+          "font_size": 51,
+          "max_lines": 1,
+          "overflow": "输入长度受校验；实际超宽先压短内容并重验，缩字行为读取当前组件规则。",
+          "reveal_index": 1,
+          "reveal_interval_ref": "#/data/rowRevealSeconds"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 15
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "当前模式满足触发条件时显示；全片坐标与父级不随内容漂移。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "parameter_authority",
+          "target_id": null,
+          "rule": "本box仅layout.json和index.tsx的只读投影；按style.parameter_ref读唯一真值，变更后重建投影和证据。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "n1_reference",
+        "layout_projection"
+      ],
+      "acceptance": [
+        {
+          "check": "mode_layout",
+          "method": "查看当前模式稳定态和切换实际渲染帧；最长内容另做边界检查。",
+          "pass_condition": "元素位于真值对应区域，比例/裁切/层级和可读性符合已声明规则，无未说明遮挡。"
+        }
+      ]
+    },
+    {
+      "id": "data_row_3",
+      "type": "text",
+      "role": "数据第3行与同层黄色方块",
+      "parent_id": "window",
+      "z_index": 40,
+      "content": {
+        "mode": "editable",
+        "binding": "data_row_3_slot",
+        "asset_id": null,
+        "description": "文本与左侧黄色方块同组先后淡入，按scene局部时间与rowRevealSeconds计算；文字列由data.textLeft决定。"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          71,
+          489,
+          938,
+          61.199999999999996
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "parameter_ref": "#/data/rowTop,#/data/rowStep,#/data/rowSize,#/data/bulletSize,#/data/textLeft",
+          "font": "layout.json#/fontFamily",
+          "font_size": 51,
+          "max_lines": 1,
+          "overflow": "输入长度受校验；实际超宽先压短内容并重验，缩字行为读取当前组件规则。",
+          "reveal_index": 2,
+          "reveal_interval_ref": "#/data/rowRevealSeconds"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 15
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "当前模式满足触发条件时显示；全片坐标与父级不随内容漂移。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "parameter_authority",
+          "target_id": null,
+          "rule": "本box仅layout.json和index.tsx的只读投影；按style.parameter_ref读唯一真值，变更后重建投影和证据。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "n1_reference",
+        "layout_projection"
+      ],
+      "acceptance": [
+        {
+          "check": "mode_layout",
+          "method": "查看当前模式稳定态和切换实际渲染帧；最长内容另做边界检查。",
+          "pass_condition": "元素位于真值对应区域，比例/裁切/层级和可读性符合已声明规则，无未说明遮挡。"
+        }
+      ]
+    },
+    {
+      "id": "data_row_4",
+      "type": "text",
+      "role": "数据第4行与同层黄色方块",
+      "parent_id": "window",
+      "z_index": 40,
+      "content": {
+        "mode": "editable",
+        "binding": "data_row_4_slot",
+        "asset_id": null,
+        "description": "文本与左侧黄色方块同组先后淡入，按scene局部时间与rowRevealSeconds计算；文字列由data.textLeft决定。"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          71,
+          586,
+          938,
+          61.199999999999996
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "parameter_ref": "#/data/rowTop,#/data/rowStep,#/data/rowSize,#/data/bulletSize,#/data/textLeft",
+          "font": "layout.json#/fontFamily",
+          "font_size": 51,
+          "max_lines": 1,
+          "overflow": "输入长度受校验；实际超宽先压短内容并重验，缩字行为读取当前组件规则。",
+          "reveal_index": 3,
+          "reveal_interval_ref": "#/data/rowRevealSeconds"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 15
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "当前模式满足触发条件时显示；全片坐标与父级不随内容漂移。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "parameter_authority",
+          "target_id": null,
+          "rule": "本box仅layout.json和index.tsx的只读投影；按style.parameter_ref读唯一真值，变更后重建投影和证据。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "n1_reference",
+        "layout_projection"
+      ],
+      "acceptance": [
+        {
+          "check": "mode_layout",
+          "method": "查看当前模式稳定态和切换实际渲染帧；最长内容另做边界检查。",
+          "pass_condition": "元素位于真值对应区域，比例/裁切/层级和可读性符合已声明规则，无未说明遮挡。"
+        }
+      ]
+    },
+    {
+      "id": "caption",
+      "type": "subtitle",
+      "role": "逐句白字幕和静态黄色重点",
+      "parent_id": "window",
+      "z_index": 50,
+      "content": {
+        "mode": "editable",
+        "binding": "caption_slot",
+        "asset_id": null,
+        "description": "cue按主音轨毫秒切换，主窗内底部居中；强调是静态词色，不是卡拉OK逐字跟读。"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          48,
+          668.75,
+          984,
+          66.25
+        ],
+        "fit": "none",
+        "clip": "parent",
+        "style": {
+          "parameter_ref": "#/caption",
+          "font": "layout.json#/fontFamily",
+          "font_size": 53,
+          "max_lines": 1,
+          "overflow": "输入长度受校验；实际超宽先压短内容并重验，缩字行为读取当前组件规则。",
+          "max_chars": 18,
+          "line_height": 1.25,
+          "stroke_ref": "#/caption/stroke"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 15
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "当前模式满足触发条件时显示；全片坐标与父级不随内容漂移。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "parameter_authority",
+          "target_id": null,
+          "rule": "本box仅layout.json和index.tsx的只读投影；按style.parameter_ref读唯一真值，变更后重建投影和证据。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "n1_reference",
+        "layout_projection"
+      ],
+      "acceptance": [
+        {
+          "check": "mode_layout",
+          "method": "查看当前模式稳定态和切换实际渲染帧；最长内容另做边界检查。",
+          "pass_condition": "元素位于真值对应区域，比例/裁切/层级和可读性符合已声明规则，无未说明遮挡。"
+        }
+      ]
+    },
+    {
+      "id": "circle",
+      "type": "avatar",
+      "role": "非主持人模式下方人物圆框",
+      "parent_id": null,
+      "z_index": 60,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": "runtime_avatar",
+        "description": "同一人物同一全片时钟，独立圆形白边裁切；不与主窗主持人同时出现。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          429,
+          1391,
+          221,
+          221
+        ],
+        "fit": "cover",
+        "clip": "self",
+        "style": {
+          "parameter_ref": "#/circle"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 15
+      },
+      "states": [
+        {
+          "id": "presenter_hidden",
+          "visible": false,
+          "description": "主窗presenter时隐藏。"
+        },
+        {
+          "id": "secondary_shown",
+          "visible": true,
+          "description": "material/screenshot/data时显示同源人物。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "parameter_authority",
+          "target_id": null,
+          "rule": "本box仅layout.json和index.tsx的只读投影；按style.parameter_ref读唯一真值，变更后重建投影和证据。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "n1_reference",
+        "layout_projection"
+      ],
+      "acceptance": [
+        {
+          "check": "mode_layout",
+          "method": "查看当前模式稳定态和切换实际渲染帧；最长内容另做边界检查。",
+          "pass_condition": "元素位于真值对应区域，比例/裁切/层级和可读性符合已声明规则，无未说明遮挡。"
+        }
+      ]
+    },
+    {
+      "id": "brand",
+      "type": "text",
+      "role": "品牌胶囊、暖黄标识和自有品牌",
+      "parent_id": null,
+      "z_index": 60,
+      "content": {
+        "mode": "editable",
+        "binding": "brand_slot",
+        "asset_id": null,
+        "description": "胶囊整体细灰蓝边和蓝色渐变，内部mark与文字flex居中；标识H为本模板设计，不复用原作者品牌。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          290,
+          1640,
+          501,
+          101
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "parameter_ref": "#/brand；index.tsx flex内排版",
+          "font": "layout.json#/fontFamily",
+          "font_size": 42,
+          "max_lines": 1,
+          "overflow": "输入长度受校验；实际超宽先压短内容并重验，缩字行为读取当前组件规则。",
+          "mark_size_ref": "#/brand/markSize",
+          "shape": "rounded_capsule"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 15
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "当前模式满足触发条件时显示；全片坐标与父级不随内容漂移。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "parameter_authority",
+          "target_id": null,
+          "rule": "本box仅layout.json和index.tsx的只读投影；按style.parameter_ref读唯一真值，变更后重建投影和证据。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "n1_reference",
+        "layout_projection"
+      ],
+      "acceptance": [
+        {
+          "check": "mode_layout",
+          "method": "查看当前模式稳定态和切换实际渲染帧；最长内容另做边界检查。",
+          "pass_condition": "元素位于真值对应区域，比例/裁切/层级和可读性符合已声明规则，无未说明遮挡。"
+        }
+      ]
+    },
+    {
+      "id": "english",
+      "type": "text",
+      "role": "底部低对比英文",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "editable",
+        "binding": "english_slot",
+        "asset_id": null,
+        "description": "底部低对比英文"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          1770,
+          1080,
+          147.6
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "parameter_ref": "#/english",
+          "font": "layout.json#/fontFamily",
+          "font_size": 123,
+          "max_lines": 1,
+          "overflow": "输入长度受校验；实际超宽先压短内容并重验，缩字行为读取当前组件规则。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 15
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "当前模式满足触发条件时显示；全片坐标与父级不随内容漂移。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "parameter_authority",
+          "target_id": null,
+          "rule": "本box仅layout.json和index.tsx的只读投影；按style.parameter_ref读唯一真值，变更后重建投影和证据。"
+        },
+        {
+          "kind": "allow_overflow",
+          "target_id": null,
+          "rule": "低对比英文允许被画布下沿裁切，按根容器overflow:hidden，非平台安全区。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "n1_reference",
+        "layout_projection"
+      ],
+      "acceptance": [
+        {
+          "check": "mode_layout",
+          "method": "查看当前模式稳定态和切换实际渲染帧；最长内容另做边界检查。",
+          "pass_condition": "元素位于真值对应区域，比例/裁切/层级和可读性符合已声明规则，无未说明遮挡。"
+        }
+      ]
+    },
+    {
+      "id": "bottom_line",
+      "type": "decoration",
+      "role": "贴底暖黄装饰线",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "贴底暖黄装饰线"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          1895,
+          1080,
+          25
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "parameter_ref": "#/bottomLine,#/colors/yellow"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 15
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "当前模式满足触发条件时显示；全片坐标与父级不随内容漂移。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "parameter_authority",
+          "target_id": null,
+          "rule": "本box仅layout.json和index.tsx的只读投影；按style.parameter_ref读唯一真值，变更后重建投影和证据。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "n1_reference",
+        "layout_projection"
+      ],
+      "acceptance": [
+        {
+          "check": "mode_layout",
+          "method": "查看当前模式稳定态和切换实际渲染帧；最长内容另做边界检查。",
+          "pass_condition": "元素位于真值对应区域，比例/裁切/层级和可读性符合已声明规则，无未说明遮挡。"
+        }
+      ]
+    }
+  ],
+  "slots": [
+    {
+      "id": "title_1_slot",
+      "element_id": "title_1",
+      "property": "content",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "input_path": "input.n1.titleLines[0]",
+        "max_characters": 16,
+        "max_lines": 1
+      },
+      "missing": "空配置从本期标题派生；后两行允许留空。",
+      "overflow": "超过输入长度阻断；字号按可用宽度和字符数估算缩小，实际字形须看帧。"
+    },
+    {
+      "id": "title_2_slot",
+      "element_id": "title_2",
+      "property": "content",
+      "value_type": "string",
+      "required": false,
+      "limits": {
+        "input_path": "input.n1.titleLines[1]",
+        "max_characters": 20,
+        "max_lines": 1
+      },
+      "missing": "空配置从本期标题派生；后两行允许留空。",
+      "overflow": "超过输入长度阻断；字号按可用宽度和字符数估算缩小，实际字形须看帧。"
+    },
+    {
+      "id": "title_3_slot",
+      "element_id": "title_3",
+      "property": "content",
+      "value_type": "string",
+      "required": false,
+      "limits": {
+        "input_path": "input.n1.titleLines[2]",
+        "max_characters": 20,
+        "max_lines": 1
+      },
+      "missing": "空配置从本期标题派生；后两行允许留空。",
+      "overflow": "超过输入长度阻断；字号按可用宽度和字符数估算缩小，实际字形须看帧。"
+    },
+    {
+      "id": "source_slot",
+      "element_id": "source",
+      "property": "content",
+      "value_type": "string",
+      "required": false,
+      "limits": {
+        "input_path": "input.n1.sourceLabel",
+        "max_characters": 40
+      },
+      "missing": "默认素材来源于网络；无此来源时替换为真实来源，空值隐藏。",
+      "overflow": "压短来源行，检查最宽文本。"
+    },
+    {
+      "id": "presenter_slot",
+      "element_id": "presenter",
+      "property": "content.asset_id",
+      "value_type": "asset",
+      "required": true,
+      "limits": {
+        "source": "本期人物视频与同源音轨",
+        "input_path": "现有数字人素材输入；运行manifest资产ID",
+        "crop_ref": "#/window/portraitY,#/circle/portraitY"
+      },
+      "missing": "缺人物素材停在准备阶段。",
+      "overflow": "人物/声音时长需匹配；重新校准主体裁切，不拉伸或自动循环补齐。"
+    },
+    {
+      "id": "material_slot",
+      "element_id": "material",
+      "property": "content.asset_id",
+      "value_type": "asset",
+      "required": false,
+      "limits": {
+        "input_path": "input.n1.scenes[].assetId",
+        "kind": [
+          "image",
+          "video"
+        ],
+        "fit": [
+          "contain",
+          "cover",
+          "blur"
+        ],
+        "max_scene_count": 24
+      },
+      "missing": "启用material却缺资产时阻断；未启用不需要。",
+      "overflow": "视频源长度不足阻断，调整选段或补素材；不自动拉伸/循环。"
+    },
+    {
+      "id": "screenshot_slot",
+      "element_id": "screenshot",
+      "property": "content.asset_id",
+      "value_type": "asset",
+      "required": false,
+      "limits": {
+        "input_path": "input.n1.scenes[].assetId",
+        "kind": [
+          "png",
+          "jpg",
+          "jpeg"
+        ],
+        "fit": "contain"
+      },
+      "missing": "启用screenshot却缺图片时阻断。",
+      "overflow": "截图若字过小，制作本期证据裁切图并保留必要上下文，重新核对引用。"
+    },
+    {
+      "id": "highlight_slot",
+      "element_id": "highlight",
+      "property": "content",
+      "value_type": "array",
+      "required": false,
+      "limits": {
+        "input_path": "input.n1.scenes[].highlights",
+        "max_items": 4,
+        "x_y_width": "0..1；width>0且x+width<=1",
+        "timebase": "scene_seconds"
+      },
+      "missing": "无高亮允许；启用后所有坐标和场景局部时间必需合法。",
+      "overflow": "高亮超图/超场景阻断；移动引用区域须同步调整线坐标。"
+    },
+    {
+      "id": "data_label_slot",
+      "element_id": "data_label",
+      "property": "content",
+      "value_type": "string",
+      "required": false,
+      "limits": {
+        "input_path": "input.n1.scenes[].dataLabel",
+        "max_characters": 12
+      },
+      "missing": "data启用时默认信息摘要。",
+      "overflow": "压短并重看最长标签。"
+    },
+    {
+      "id": "data_title_slot",
+      "element_id": "data_title",
+      "property": "content",
+      "value_type": "string",
+      "required": false,
+      "limits": {
+        "input_path": "input.n1.scenes[].dataTitle",
+        "max_characters": 16
+      },
+      "missing": "data模式启用时需有标题。",
+      "overflow": "超过上限阻断，按配置字号上限实测宽度。"
+    },
+    {
+      "id": "data_row_1_slot",
+      "element_id": "data_row_1",
+      "property": "content",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "input_path": "input.n1.scenes[].rows[0]",
+        "max_characters": 17,
+        "max_rows": 4
+      },
+      "missing": "data模式至少一行，其余按实际rows数量显隐。",
+      "overflow": "超过长度/数量阻断；数据事实与来源由本期审核。"
+    },
+    {
+      "id": "data_row_2_slot",
+      "element_id": "data_row_2",
+      "property": "content",
+      "value_type": "string",
+      "required": false,
+      "limits": {
+        "input_path": "input.n1.scenes[].rows[1]",
+        "max_characters": 17,
+        "max_rows": 4
+      },
+      "missing": "data模式至少一行，其余按实际rows数量显隐。",
+      "overflow": "超过长度/数量阻断；数据事实与来源由本期审核。"
+    },
+    {
+      "id": "data_row_3_slot",
+      "element_id": "data_row_3",
+      "property": "content",
+      "value_type": "string",
+      "required": false,
+      "limits": {
+        "input_path": "input.n1.scenes[].rows[2]",
+        "max_characters": 17,
+        "max_rows": 4
+      },
+      "missing": "data模式至少一行，其余按实际rows数量显隐。",
+      "overflow": "超过长度/数量阻断；数据事实与来源由本期审核。"
+    },
+    {
+      "id": "data_row_4_slot",
+      "element_id": "data_row_4",
+      "property": "content",
+      "value_type": "string",
+      "required": false,
+      "limits": {
+        "input_path": "input.n1.scenes[].rows[3]",
+        "max_characters": 17,
+        "max_rows": 4
+      },
+      "missing": "data模式至少一行，其余按实际rows数量显隐。",
+      "overflow": "超过长度/数量阻断；数据事实与来源由本期审核。"
+    },
+    {
+      "id": "caption_slot",
+      "element_id": "caption",
+      "property": "content",
+      "value_type": "array",
+      "required": false,
+      "limits": {
+        "source": "同源ASR/人工校准Caption[]",
+        "cue_max_chars": 18,
+        "emphasis_path": "input.n1.emphasis",
+        "emphasis_max_items": 12,
+        "emphasis_word_max_chars": 12
+      },
+      "missing": "开发静音演示可提供明确的示意cues；普通制作需同源字幕/主时钟。",
+      "overflow": "过长先按语义拆cue，不能遮挡截图引文或数据行；重验读完时间。"
+    },
+    {
+      "id": "brand_slot",
+      "element_id": "brand",
+      "property": "content",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "input_path": "input.n1.brand",
+        "max_characters": 8
+      },
+      "missing": "默认海客科技；本期使用自有品牌。",
+      "overflow": "超过8字阻断，按字符数与可用宽度估算缩小；实际字形需看帧。"
+    },
+    {
+      "id": "english_slot",
+      "element_id": "english",
+      "property": "content",
+      "value_type": "string",
+      "required": false,
+      "limits": {
+        "input_path": "input.n1.englishLabel",
+        "max_characters": 40
+      },
+      "missing": "默认HAIKE；空值隐藏。",
+      "overflow": "缩短或按字符数与可用宽度估算缩小；检查底部有意裁切。"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "n1_reference",
+      "source_kind": "observation",
+      "source": "复制的原N1视觉规格，保持原核验范围与待验证状态。",
+      "locator": "画布与测量、四种主窗模式、入场与文字动效；不视作本实现已验证",
+      "method": "读取原手册的参考测量和观察边界；参考字体/精确曲线不可由静帧确认。",
+      "file": "../../../Haike-Videohub/agent-runbooks/数字人口播模板——深蓝视窗N1.md",
+      "sha256": "8567afa31169013a1884f5ccdefb2de7683141e7e7d44810227d3a1edebcf75c"
+    },
+    {
+      "id": "layout_projection",
+      "source_kind": "design",
+      "source": "layout.json唯一参数真值；本spec元素框是该版本及index.tsx计算的只读投影。",
+      "locator": "version=avatar-deepblue-n1-v1；style.parameter_ref定位实际参数，不可独立编辑投影几何",
+      "method": "读取配置并按组件父坐标、文字行高、contain与flex计算名义盒；以实际渲染复核字形和裁切。配置哈希变化须重建投影并重验。",
+      "file": "layout.json",
+      "sha256": "1a142d9113195a9c470cd0fbfd51917530617388fa4c45bbad5f5750ea9f7e17"
+    },
+    {
+      "id": "static_spec_check",
+      "source_kind": "measurement",
+      "source": "本副本当前模板规格和只读投影检查的真实命令输出。",
+      "locator": "standard.exit_code=0；projection.exit_code=0；绑定layout SHA",
+      "method": "运行标准checker --spec与verify_spec.py，保存命令、输出与退出码；仅证明实际检查的静态范围。",
+      "file": "../../../.local/n1-showcase-20261015/template-static-check.json",
+      "sha256": "7c2d59020c065e3d942d27758c247a44f794ec572d76b8e2daee228e7c5915a8"
+    },
+    {
+      "id": "sample_technical",
+      "source_kind": "measurement",
+      "source": "2026-10-15本机统一队列产生的15秒N1私人演示样片技术核验；历史证据不随通用源码分发。",
+      "locator": "项目studio-7130cdfddd6e4aa4；PQ-db1ab5c26f31ab421681 completed；本地复用素材，无新增供应商调用",
+      "method": "probe得到1080x1920、30fps、450帧、15秒；完整解码通过。前端演示文件剥离音轨，sample_silent=true，字幕illustrative_manual；只证明该演示范围。",
+      "file": "../../../.local/n1-showcase-20261015/verification.json",
+      "sha256": "162f3eef45067a157fba9420549b0db6ec4ae8b9dfee749c28117c4c0b448258"
+    },
+    {
+      "id": "sample_video",
+      "source_kind": "measurement",
+      "source": "2026-10-15与四张实际渲染帧同源的私人无声演示文件；当前公共前端不展示或播放该文件。",
+      "locator": "n1-sample.mp4；2374499 bytes；15秒；0/3.75/7.5/11.25/15秒四模式",
+      "method": "从已完成统一队列样片保留同一画面并移除音轨；本次授权只做示例，静音循环和手工字幕不用于证明口型或有声同步。",
+      "file": "../../../.local/release-private-previews-20261016/n1-sample.mp4",
+      "sha256": "ccc02080964cdaa866ff5fc334a58376e99acae29bc09e6e3d745c5e61506d24"
+    },
+    {
+      "id": "sample_presenter",
+      "source_kind": "observation",
+      "source": "主任务实际查看的同一版本四模式联系表与对应真实渲染帧。",
+      "locator": "presenter稳定态，样片2秒；four-modes.jpg对应格",
+      "method": "主任务人工查看四个模式稳定布局，核对标题/来源/主窗/字幕/品牌，主持人圆框互斥与截图/数据可读。仅抽样帧，不证明尚未查看的动效细帧、任意替换内容或连续听看。",
+      "file": "../../../.local/release-private-previews-20261016/n1-presenter.jpg",
+      "sha256": "f86890c6c900cc0080016ee6eb68fe768480a66f56a5e3cc68cb8b0e4723031f"
+    },
+    {
+      "id": "sample_material",
+      "source_kind": "observation",
+      "source": "主任务实际查看的同一版本四模式联系表与对应真实渲染帧。",
+      "locator": "material稳定态，样片5.5秒；four-modes.jpg对应格",
+      "method": "主任务人工查看四个模式稳定布局，核对标题/来源/主窗/字幕/品牌，主持人圆框互斥与截图/数据可读。仅抽样帧，不证明尚未查看的动效细帧、任意替换内容或连续听看。",
+      "file": "../../../.local/release-private-previews-20261016/n1-material.jpg",
+      "sha256": "41789488be16e1b55d1e298ea1c89f290e2ca177a5687f883e926853d66cd3cd"
+    },
+    {
+      "id": "sample_screenshot",
+      "source_kind": "observation",
+      "source": "主任务实际查看的同一版本四模式联系表与对应真实渲染帧。",
+      "locator": "screenshot稳定态，样片9.5秒；four-modes.jpg对应格",
+      "method": "主任务人工查看四个模式稳定布局，核对标题/来源/主窗/字幕/品牌，主持人圆框互斥与截图/数据可读。仅抽样帧，不证明尚未查看的动效细帧、任意替换内容或连续听看。",
+      "file": "../../../.local/release-private-previews-20261016/n1-screenshot.jpg",
+      "sha256": "80b891980c3e64ea8326c3a421d5f86e28bebb1411968fab60b50c95df527f3d"
+    },
+    {
+      "id": "sample_data",
+      "source_kind": "observation",
+      "source": "主任务实际查看的同一版本四模式联系表与对应真实渲染帧。",
+      "locator": "data稳定态，样片13.5秒；four-modes.jpg对应格",
+      "method": "主任务人工查看四个模式稳定布局，核对标题/来源/主窗/字幕/品牌，主持人圆框互斥与截图/数据可读。仅抽样帧，不证明尚未查看的动效细帧、任意替换内容或连续听看。",
+      "file": "../../../.local/release-private-previews-20261016/n1-data.jpg",
+      "sha256": "dec22c65641361f29eb2987455ae9940f484029d515d649cc38d0577449e8d20"
+    },
+    {
+      "id": "sample_animation",
+      "source_kind": "observation",
+      "source": "主任务亲看同一N1样片动效实际抽帧的检查记录。",
+      "locator": "0.03/0.8/3.7/3.8/7.6/9/11.3/12.3秒；animation-0至7.jpg",
+      "method": "实际抽帧核对主标题渐显、presenter退出后圆框切换、截图红线出现和数据行先后显入；记录四项passed。不是逐帧全片比对、连续听看或任意替换内容验收。",
+      "file": "../../../.local/n1-showcase-20261015/animation-qa.json",
+      "sha256": "105c1b3629c0f76cfa37ad9f55c8efa6d89d6d1787f42bb289ed2d73ea83da8c"
+    },
+    {
+      "id": "normal_composition_smoke",
+      "source_kind": "measurement",
+      "source": "普通N1默认主持人模式复用既有人物与音轨的真实统一队列合成。",
+      "locator": "项目studio-21b042fed85d4c12；PQ-60228be037ba405482f9 completed；作品work-64f10c8849335ec8c0635ebe",
+      "method": "非development_sample，默认presenter、字幕关闭，复用5.12秒既有音视频；输出1080x1920、30fps、154帧、5.133333秒，完整解码通过。provider_jobs/paid_stages为空、未新建网关状态或报价、未发布；仅本地合成和作品登记，不验证新云生成/ASR。",
+      "file": "../../../.local/n1-showcase-20261015/normal-smoke.json",
+      "sha256": "85320fab391bdecf634abef424daa114fab3a13e958f0ee5b2fe8dd584ac47e1"
+    },
+    {
+      "id": "normal_presenter_frame",
+      "source_kind": "observation",
+      "source": "普通N1合成产物2.5秒真实代表帧。",
+      "locator": "默认presenter；对应normal-smoke.verification.visual_review",
+      "method": "执行代理实际查看默认主持人主窗、同源模糊、圆框隐藏、品牌与底线；该帧通过，不代表全片连续观看或口型验收。",
+      "file": "../../../.local/n1-showcase-20261015/normal-presenter.jpg",
+      "sha256": "e02465546fa52497d2009c5200bbc826a8d09424151d6de3b41890c940613020"
+    },
+    {
+      "id": "frontend_qa",
+      "source_kind": "measurement",
+      "source": "2026-10-15工作台旧私人预览的实际浏览器交互、DOM读回和已查看截图；不作为当前公共SVG版式示意的浏览器验收。",
+      "locator": "/avatar?template=avatar-deepblue-n1-v1；1280x720与390x844；无新增云付费动作",
+      "method": "实际打开N1卡片/详情、切换四图并播放15秒真实视频（readyState4、无错误）；上传真实本地音频后保存，切旧模板保存再切回保留三行标题与音频。390窄屏无横向溢出，查看内滚动/底部操作；不证明目标发布平台真机。",
+      "file": "../../../.local/n1-showcase-20261015/ui-qa.json",
+      "sha256": "55b4ebc99f72fbe77ab7b9c3ec526955095787f58c3b42958ad185deff4ae672"
+    },
+    {
+      "id": "frontend_desktop_frame",
+      "source_kind": "observation",
+      "source": "2026-10-15主任务亲看旧私人预览前端桌面截图；历史画面不代表当前公共SVG预览。",
+      "locator": "1280x720；frontend-final.png",
+      "method": "实际截图核对N1卡片/详情、布局与显示状态；动态播放、保存和切换结论取frontend_qa，不用截图代替动作证据。",
+      "file": "../../../.local/n1-showcase-20261015/frontend-final.png",
+      "sha256": "e2f0f36eb7742be28a6197e50340b2f45d23e182e17addb04934a86b15176832"
+    },
+    {
+      "id": "public_showcase_manifest",
+      "source_kind": "measurement",
+      "source": "可分发N1无声开发样片的公开来源、输入/实现身份、工具版本、完整解码和抽样看帧记录。",
+      "locator": "15秒/1080x1920/30fps/450帧/无音轨；offline_development_showcase；cloud_calls=0；queue_used=false。",
+      "method": "只使用showcase目录自写SVG及props，由原样N1组件和同layout本地渲染；去除静音AAC，ffprobe及FFmpeg完整解码。实际查看四稳定帧和8张动效帧，记录限定范围结论；不证明口型、听看或平台。",
+      "file": "../../../prototypes/haike-avatar-generator/public/assets/n1-public-provenance.json",
+      "sha256": "d8c4a91b15075f77d0ce9c5a8f0150f85ef0faa98de15f7c52b9b7827a1f20a0"
+    },
+    {
+      "id": "public_showcase_video",
+      "source_kind": "measurement",
+      "source": "无私人图片/声音、由公开源码输入渲染的可分发N1开发样片。",
+      "locator": "n1-public-sample-v1.mp4；15秒；四模式各3.75秒。",
+      "method": "实际HaikeDeepblueN1组件及layout渲染，画面流450帧完整解码、最终无音轨；不是生产队列或云端生成。",
+      "file": "../../../prototypes/haike-avatar-generator/public/assets/n1-public-sample-v1.mp4",
+      "sha256": "d709207d6363aaafcd4b15982839e0880ab515984fafd26f3a4877200d887c09"
+    },
+    {
+      "id": "public_presenter",
+      "source_kind": "observation",
+      "source": "本轮实际查看的公开样片同源渲染帧，仅通用几何人物和源码合成内容。",
+      "locator": "presenter模式稳定态；2秒。",
+      "method": "亲看同源四模式实际帧，核对主标题、来源、主窗、字幕、品牌、人物/圆框互斥与截图/数据可读；8张动效抽帧核对渐显、红线和数据逐行出现。抽样不证明连续听看、口型或任意替换。",
+      "file": "../../../prototypes/haike-avatar-generator/public/assets/n1-public-presenter.png",
+      "sha256": "be7587ea8030964238d9c4cd5d80b2861abd3579d5d6844621645d2b2480ca51"
+    },
+    {
+      "id": "public_material",
+      "source_kind": "observation",
+      "source": "本轮实际查看的公开样片同源渲染帧，仅通用几何人物和源码合成内容。",
+      "locator": "material模式稳定态；5.5秒。",
+      "method": "亲看同源四模式实际帧，核对主标题、来源、主窗、字幕、品牌、人物/圆框互斥与截图/数据可读；8张动效抽帧核对渐显、红线和数据逐行出现。抽样不证明连续听看、口型或任意替换。",
+      "file": "../../../prototypes/haike-avatar-generator/public/assets/n1-public-material.png",
+      "sha256": "1ec0ee517053cf996771d59fd5caafa683db8d27fbab658fb6fdd10c20e43796"
+    },
+    {
+      "id": "public_screenshot",
+      "source_kind": "observation",
+      "source": "本轮实际查看的公开样片同源渲染帧，仅通用几何人物和源码合成内容。",
+      "locator": "screenshot模式稳定态；9.5秒。",
+      "method": "亲看同源四模式实际帧，核对主标题、来源、主窗、字幕、品牌、人物/圆框互斥与截图/数据可读；8张动效抽帧核对渐显、红线和数据逐行出现。抽样不证明连续听看、口型或任意替换。",
+      "file": "../../../prototypes/haike-avatar-generator/public/assets/n1-public-screenshot.png",
+      "sha256": "036af433d19bda006367735b1b17e4a5d7dd069882c1849d40bace31312f1be4"
+    },
+    {
+      "id": "public_data",
+      "source_kind": "observation",
+      "source": "本轮实际查看的公开样片同源渲染帧，仅通用几何人物和源码合成内容。",
+      "locator": "data模式稳定态；13.5秒。",
+      "method": "亲看同源四模式实际帧，核对主标题、来源、主窗、字幕、品牌、人物/圆框互斥与截图/数据可读；8张动效抽帧核对渐显、红线和数据逐行出现。抽样不证明连续听看、口型或任意替换。",
+      "file": "../../../prototypes/haike-avatar-generator/public/assets/n1-public-data.png",
+      "sha256": "e888b93f5c74dfbbd424b3e7056ef5064de218b36a6fb93fffaa3977ca7bb586"
+    }
+  ],
+  "unknowns": [],
+  "validation": {
+    "structure": {
+      "status": "pass",
+      "evidence_ids": ["static_spec_check"],
+      "note": "当前规范依赖、schema、元素/槽/时间引用、配置哈希与逐项几何/名义字号投影检查通过。静态通过不代表媒体验收。"
+    },
+    "technical": {
+      "status": "pass",
+      "evidence_ids": ["public_showcase_manifest", "public_showcase_video", "sample_technical", "sample_video", "normal_composition_smoke"],
+      "note": "公开开发样片由同一实际N1组件及layout、仅通用几何人物和源码合成内容渲染，1080x1920/30fps/450帧/15秒/无音轨且完整解码，未使用私人媒体、云调用或真实生产队列。另保留历史私人15秒四模式演示及普通主持人5.133333秒/154帧合成原证据；不证明新云数字人、ASR或口型同步。"
+    },
+    "visual": {
+      "status": "pass",
+      "evidence_ids": ["public_presenter", "public_material", "public_screenshot", "public_data", "public_showcase_manifest", "sample_presenter", "sample_material", "sample_screenshot", "sample_data", "sample_animation", "normal_presenter_frame"],
+      "note": "已实际查看公开开发样片2/5.5/9.5/13.5秒四稳定帧和1/24/111/114/228/270/339/369帧动效抽样：布局、主标题渐显、人物/圆框互斥、截图红线和数据逐行显入通过。历史私人样片及普通主持人代表帧保持各自范围；未验证任意替换/最长文本、全片连续听看或真实口型。"
+    },
+    "audio": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "待真实有声作品连续听看；静音开发演示不证明语音、口型或同步。"
+    },
+    "platform": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "待真实目标设备/平台检查；本地页面模拟不替代。"
+    },
+    "user_review": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "待用户确认当前版式样片。"
+    },
+    "production": {
+      "status": "pass",
+      "evidence_ids": ["sample_technical", "normal_composition_smoke", "frontend_qa", "frontend_desktop_frame"],
+      "note": "本地N1组件的历史私人样片及普通主持人队列合成保留原范围。新增公开15秒四模式无声开发样片由相同组件/layout离线渲染，使用通用几何人物与源码合成内容，非生产队列；当前前端恢复其播放下载和同源四帧，浏览器另做本次回归。私人样片不进入公开目录。新增云数字人/配音/ASR、任意替换边界、连续听看、真实发布平台、异机和用户确认仍未证明；未发布。"
+    }
+  },
+  "extensions": {
+    "avatar": {
+      "face_crop": "layout.window清晰前景等比cover与同源模糊背景；portraitY控制主体位置。非presenter模式显示layout.circle圆框，同一源同一全片时钟；换人物须查头顶/下巴/手势。",
+      "synchronization": "人物与素材视觉层muted；独立audioSrc只播放一次。主音轨为普通生产时钟，Caption毫秒时间映射30fps。静音循环演示仅验证视觉壳，不证明口型/字幕/配音同步。"
+    },
+    "graphic": {
+      "text_policy": "titleLines三行与来源/品牌/英文使用本期内容；字号按真实字数在配置名义上限内缩小。字幕18字短cue与静态emphasis；截图文字固化，仅整图替换。数据板文字不是事实核验。",
+      "asset_fit": "material支持contain/cover/同源blur；截图contain且按layout.window.screenshotCaptionReserve为字幕预留底部，红线以原图归一化坐标映射。不得裁掉必要引文。"
+    },
+    "material_edit": {
+      "source_ranges": "scene全片[start,end)，offset是源素材起点，秒→round(fps*seconds)。素材时长在报价前检查；人物贯穿使用本期同源主时钟。",
+      "cut_policy": "自定义scenes有序不重叠，未填区间回到presenter；模式主窗稳定，其他三模式显示圆框。普通生产视频不足阻断，演示预先准备的静音循环须在manifest标明。"
+    },
+    "n1_projection": {
+      "contract": "video-template-v1只读实现投影，几何和动效修改仅在authority.parameter_source；数值投影绑定layout文件哈希。",
+      "rules": "所有style.parameter_ref指向layout.json或index.tsx公式；公开样片和四帧由同一实际组件及layout、仅showcase源码输入离线生成，记录来源/工具/哈希及无声开发范围。原SVG仅占位示意，不冒充渲染帧。历史私人样片SHA不变并保留于忽略目录。spec.scene只表示15秒演示覆盖，不是普通生产固定分镜。",
+      "ready_scope": ["当前工作区绑定版本的本地N1视觉组件及公开源码输入15秒四模式无声开发样片的技术/视觉抽样", "公共前端配置实际公开样片播放下载与同源四帧，历史私人媒体不分发；当前浏览器交互须另验", "复用既有人物和音轨、字幕关闭的普通N1默认主持人历史本地队列合成及作品登记"],
+      "unverified_scope": ["本轮新增云数字人/配音/ASR调用", "任意人物、素材比例或最长替换文本", "当前公开样片前端浏览器呈现与干净新机复现，须随本次交付回归单独验收", "有声全片连续听看及口型/字幕同步", "真实发布平台或异机呈现", "用户确认及正式发布"]
+    }
+  },
+  "operations": [
+    {
+      "id": "preflight",
+      "input": "当前规格、layout/实现版本、本期草稿与音视频/字幕、项目资产身份和现有任务。",
+      "action": "读回哈希与资产；由backlot/studio_n1.py settings在报价前校验input.n1；核对本次授权及付费已有任务。",
+      "output": "冻结的本期合法输入、已有任务复用范围与缺失清单。",
+      "completion": "资产ID属于当前项目；启用模式字段/时长合法；主时钟明确；未知付费结果按原任务查询恢复。",
+      "recovery": "补齐缺失槽与素材，重检受影响场景；复用已完成音色/数字人素材。",
+      "entrypoint": "../../backlot/studio_n1.py:settings；工作台数字人草稿与报价入口"
+    },
+    {
+      "id": "sample",
+      "input": "实现规格+specification、明确15秒四模式开发输入、已完成本地人物视频、示例图片/数据。",
+      "action": "使用HaikeDeepblueN1本地渲染开发验收样片并从同一视频抽取四模式代表帧；演示静音/循环在输入清单声明。",
+      "output": "MP4、封面与四帧、版本/输入清单、probe/解码结果和实际看帧记录。",
+      "completion": "技术和视觉按实际覆盖分别有结果；全部关键状态和切换存在，未验听看/真机/生产不升级为通过。",
+      "recovery": "先读已有渲染与文件，只修本地合成失败项；不重发供应商任务。",
+      "entrypoint": "index.tsx / HaikeDeepblueN1，按本期冻结props经Remotion渲染"
+    },
+    {
+      "id": "delivery",
+      "input": "公开无声开发样片、同源四帧、公开来源清单、规格/配置身份和前端模板登记；历史私人媒体独立保存。",
+      "action": "在数字人模板选择器打开N1详情，切换四帧、播放下载同一公开样片；核对通用几何人物及无声开发说明，当前前端与历史生产队列分别验收。",
+      "output": "可查看/播放/下载的公开实际开发样片及独立验证矩阵；私人证据不随通用源码分发。",
+      "completion": "来源清单及公开视频/四帧SHA匹配，当前浏览器实际播放下载通过后才声明前端通过；开发示例不冒充队列生产、真实口型、听看或真机验收。",
+      "recovery": "按来源清单检查公开文件与缓存；修改布局或示例输入后显式重制、重验并更新精确分发SHA。私人历史样片仅从忽略目录读回，不复制进public或构建产物。",
+      "entrypoint": "README.md 当前操作；主工作台 /avatar 模板选择器"
+    },
+    {
+      "id": "production",
+      "input": "ready规格、本期完整输入、对应动作gate和用户生产授权。",
+      "action": "通过工作台现有统一队列制作并登记作品版本；读回任务、媒体与费用状态。",
+      "output": "与冻结输入和规格一致的完整作品与QA。",
+      "completion": "实际任务与成片一致，完整技术/视觉/连续听看分别验收；发布另有本次授权。",
+      "recovery": "只按原任务恢复已付费阶段；局部替换不重做无关素材。",
+      "entrypoint": "../../AGENT_GUIDE.md；工作台统一队列"
+    }
+  ]
+}

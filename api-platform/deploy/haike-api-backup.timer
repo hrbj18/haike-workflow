@@ -1,0 +1,9 @@
+[Unit]
+Description=Daily Haike API backup
+[Timer]
+OnCalendar=*-*-* 03:20:00
+Persistent=true
+RandomizedDelaySec=300
+Unit=haike-api-backup.service
+[Install]
+WantedBy=timers.target

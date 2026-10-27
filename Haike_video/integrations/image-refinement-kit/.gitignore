@@ -1,0 +1,12 @@
+.env
+.env.local
+.env.*
+!.env.example
+.image-refinement/
+.venv/
+build/
+.ruff_cache/
+__pycache__/
+.pytest_cache/
+*.egg-info/
+dist/

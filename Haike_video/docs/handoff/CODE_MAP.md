@@ -1,63 +1,45 @@
 # 代码地图
 
-更新时间：2026-10-11
+更新时间：2026-10-19
 
-## 前端
+## 当前工作台V2
 
-- 启动/重载 启动工作台.bat、更新并重启工作台.bat、scripts/launch_backlot.py
-- 服务与 API backlot/server.py；项目库 ui/index.html、library.js
-- 自动生产 ui/automation.*；工作台 ui/workbench.*；配音 audio_center.py、ui/audio_center.*；日期/发布 library_index.py、ui/library_index.*；队列 production_queue*.py
-- 作品 backlot/work_*.py、ui/works.*；scripts/work_catalog_cli.py；docs/HISTORY_WORKS_V1.md。
-- 文字层 text_overlay_composition.py、workbench.py、tools/video/video_compose.py、CinematicRenderer.tsx
+- 主服务器backlot/server.py；API路由studio_api.py；底层域模型/Key/资产/草稿/发布日历studio.py。
+- 新前端：仓库根prototypes/haike-avatar-generator/src/{StudioApp,App}.jsx；UI构建backlot/ui/avatar-generator；共享navigation.*和haike-brand.css。
+- 路由：/graphic、/avatar、/projects、/calendar、/settings。旧工具GET跳新页；旧独立UI已归档移除。workbench.*保留历史项目维护。
+- 图文：studio_render.py复用scripts/template_video/build_923.py和_paths.py，参数化safe_v2/9秒/三景、资产指纹、文字边界和FFmpeg完整解码。
+- 口播：studio_avatar.py/studio_composition.py；招商A：studio_investment*.py、templates/avatar-investment-a-v6*/、scripts/avatar_investment_*.py；v5默认高清，见模板README。
+- AI分镜/素材：studio_storyboard.py赞助中转/严格原文与真实句级时钟/用户→抖音→Pexels→插画/恢复；configure_studio_ai.py后台私有配置。前端AvatarTemplatePicker/AiMaterials/DouyinRecovery共用组件；tests/backlot/test_studio_storyboard.py。
+- 动效：studio_motion.py固定ADu目录/时钟/素材/规划/冻结/导出，studio_motion_quick.py九TPL白名单；Motion.jsx/motion-model.js/motion.css共用ui.jsx和AvatarModeBar。/api/studio/motion/*、drafts/*/motion-{source,plan,job,project}。
+- 原生队列：production_queue.py/production_queue_worker.py；studio_graphic、studio_avatar、studio_motion处理器，所有产物登记作品台账。
+- Codex：scripts/codex_video_batch.py、backlot/codex_batch*.py；默认studio_avatar_defaults.py/AvatarDefaults.jsx；QA codex_video_quality.py；规范docs/CODEX_VIDEO_BATCH.md。同名测试及test_studio_avatar_artifact_recovery、test_studio_composition_audio。
+- 作品：work_catalog.py、work_api.py、work_publish.py；版本选择、人工确认、资料/封面/授权、冻结发布包和幂等提交。
+- 发布：CreatorHub app/main.py中POST /api/publish/{id}/cancel，engine/monitor.py条件状态更新；日历同步/取消/提交互斥。
+- 统一网关：根api-platform/、Haike_video/scripts/haike_api.py；Key私有配置.backlot/haike-api/client-config.json（不读取或提交秘密）。
+- 新字幕：studio_asr.py/脚本studio_asr_worker.py，configure_studio_asr.py验收已有离线模型，冻结引擎/音频SHA并保留原网关任务；test_studio_asr.py。网关runninghub_billing.py区分钱包/币回执，wallet_receipt按实扣×1.5。
+- 产品/清理/边界：根docs/PRODUCT_STUDIO_V2.md；视觉QA：prototypes/haike-avatar-generator/design-qa.md及qa/studio-v2。
 
-## 素材理解与切割
+## 保留的原制作依赖
 
-- 成片索引 published_clip_*.py、ui/published_clips.*；二剪 published_remix*.py、ui/published_remix.js、pipeline_defs/published-remix.yaml；test_published_*.py。
-- 解说/避让：docs/MATERIAL_COMMENTARY_V1.md。
+- 启动scripts/launch_backlot.py；API/workbench/task_center；文字层text_overlay_composition.py、tools/video/video_compose.py和CinematicRenderer.tsx。
+- 旧数字人avatar_cloud.py、runninghub_avatar.py、avatar_audio_clock.py、runninghub_config.py；预览avatar_review_preview_pipeline.py；config/runninghub/冻结参数。
+- 配音/转写：tencent_asr.py、tencent_config.py、lib/tencent_cloud.py、openmontage_tts_*、voicebox_tts.py；声音策略*_loudness_preferences.py和narration/music_preferences.py。
+- 基础媒体：lib/ffmpeg_locator.py、lib/subprocess_window.py；tools/video/{video_compose,hyperframes_compose}.py和tools/audio/audio_mixer.py。
+- 素材管理/证据/互动切割：material_library*.py、material_crop.py、material_interaction*.py；原二剪published_clip_*.py、published_remix*.py，旧独立UI已删除。
+- 外站复刻/研究包：remake_*.py、copy_skill_research_pack.py、research_pack_*.py；每日科技后端daily_*.py保留内部历史依赖。
+- 历史入口见LEGACY_CODE_MAP_20261013.md。
 
-- 共享库/分级：material_library*.py、material_crop.py；scripts/material_library_cli.py；docs/MATERIAL_LIBRARY_V1.md。
-- 管理：material_library_{management,refs,manage_api}.py、ui/material_library_manage.*；docs/MATERIAL_LIBRARY_MANAGEMENT_V1_1.md（CLI）；test_material_library_*.py。
-- 概览/V2：scripts/video_understanding_cli.py、material_overview.py、media_index.py、ai_vision.py
-- 画面目标/选材 visual_need_plan.py、autonomous_material_selection.py；导入 material_catalog_import.py
+## 验证入口
 
-- 素材证据 material_evidence.py、material_audio_envelope.py、material_{motion_timeline,pause_evidence}.py
-- 户外互动首次切片 material_interactions.py、material_interaction_{review,edit,render,candidates}.py、material_audio_evidence.py
-- 短语单元 material_interaction_units.py；二次精剪 material_interaction_story.py、material_interaction_second_pass*.py；接线 workbench.py、server.py、task_center.py
-- 并发 interaction_concurrency.py、scripts/benchmark_interaction_concurrency.py
-- 导出 material_interaction_export.py（cut-list-v1/FCP7/OTIO/SRT）
-- 推荐 material_interaction_recommend.py；ui/workbench.js::renderMaterialInteractionRankLayout
+- 修图移植包integrations/image-refinement-kit，入口START_HERE.md/INTEGRATE.md；Python/HTTP/Node及上传对比组件。白名单包output/responses-image-refinement-kit-1.1.0.zip，解包Python18/Node6通过；不含秘密/人像/任务或工作台依赖，目标接入未验。
 
-## 关键媒体模块
+- 人物精修：studio_refinement.py/studio_refinement_api.py，前端PortraitRefinement.jsx/App.jsx。海客haike/image-refinement经/responses编辑，原图/候选分离、费用与采用确认、账号隔离、原意图恢复。测试test_studio_refinement.py及api-platform/tests/test_image_refinement.py，网关108/配音与Studio42及隔离浏览器通过。2026-10-16用户授权直连GPT中转，gpt-5.6驱动gpt-image-2、avatar-seated-v1单次成功；交付1024×1280 PNG解码/视觉通过，费用未知。证据.local/gpt-relay-refinement-real-20261016；交付output/image-refinement-live-20261016/test-result.json。14756默认海客，云端开通/部署/采购价待完成；直连不代表海客端到端或正式采用通过。
 
-- 口播：skills/INDEX.md（圆框、卡片模板3）。
-- RunningHub runninghub_avatar.py、avatar_cloud.py、avatar_audio_clock.py、runninghub_config.py；config/runninghub/；scripts/{build_runninghub_infinitetalk_48g_workflow,probe_infinitetalk_48g_variants}.py
-- 数字人预览/OOM 恢复/安全点 avatar_review_preview_pipeline.py
-- 配音：tencent_asr.py（分片/并发）、tencent_config.py、lib/tencent_cloud.py；openmontage_tts_{engine,server}.py、voicebox_tts.py
-- 导入/切割 avatar_import.py；导演 visual_director.py、ai_text.py；Pexels tools/video/stock_sources/pexels.py
-- 预览 tools/video/hyperframes_compose.py、review_preview_pipeline.py；合成 tools/video/video_compose.py、tools/audio/audio_mixer.py
-- 声音 narration/music/output_loudness_preferences.py、workbench.py::NARRATION_PROCESSING_CHAIN
-- 跨平台 lib/ffmpeg_locator.py、lib/subprocess_window.py；Remotion NewsAnchor.tsx、dark-tech-news.yaml
-
-## 外站素材复刻
-
-- 工作流 skills/creative/material-remake-workflow.md；政策 docs/MATERIAL_SELECTION_POLICY_V1_ZH-CN.md；样例 projects/apple-fold-duo-remake-1/
-- remake_material_screen.py（screen|pick|verify|audit）、remake_reference_transcript.py（腾讯ASR三态防重费）、remake_build_project.py、remake_retime_shots.py（换镜零付费）、remake_subtitle_safe_area.py（字幕安全区）
-- 契约 schemas/remake-spec-v1.json；离线规格→脚本/时间线 remake_project.py
-
-## 跨仓研究包与编辑层
-
-- 研究包校验 copy_skill_research_pack.py；冻结 research_pack_snapshot.py；入账 research_pack_intake.py；CLI scripts/remake_editorial_cli.py（退出码2/3/4）、python -m backlot research-pack
-- 编辑层 remake_intake.py、remake_editorial.py、remake_editorial_verdict.py
-
-## 每日科技快报
-
-- 采集/调度/供应商门/预算账本 daily_automation.py；候选池 copy_skill_hotspot_feed.py；选题证据门 news_selection_v2.py；脚本/冷审 daily_script_v2.py；恢复 daily_text_resilience.py
-- 配音/切割/失败槽恢复/合成/QA daily_pipeline.py；CLI daily_cli select-v2|script-v2、scripts/run_daily_automation.py；API /api/daily-automation/*；状态 .backlot/daily-runs/<日期>/daily_run.json
-
-## 测试入口
-
-- 每日自动化 test_daily_*.py、test_news_selection_v2.py；工作台与声音 test_{workbench,server,narration_preferences,audio_center}.py
-- 素材理解与证据 test_{media_index,ai_vision}.py、test_material_evidence*.py、test_material_{audio_envelope,motion_timeline,pause_evidence}.py
-- 二次精剪与 Cut V2 test_material_interaction_*.py、test_interaction_concurrency.py、test_tencent_asr_long_audio.py
-- 复刻与研究包 test_remake_{intake,project,editorial,editorial_cli,editorial_verdict}.py、test_research_pack_{cross_repo,intake}.py、test_copy_skill_research_pack.py
-- 上下文 tests/unit/test_context_handoff.py；云端 tests/tools/test_runninghub_avatar.py
+- 新制作/日历/付费恢复：tests/backlot/test_studio.py。
+- 队列/作品：test_production_queue*.py、test_work_catalog.py。
+- 发布合同：根creatorhub/tests/test_publish_contract_v2.py。
+- 前端：tests/generator-model.test.mjs和tests/sites-worker.test.mjs。
+- 动效：tests/backlot/test_studio_motion.py；前端tests/motion.test.mjs、gateway-config.test.mjs；真实队列scripts/studio_motion_smoke.py。产品与验收根docs/PRODUCT_AVATAR_MOTION.md、docs/tasks/2026-10-13-adu-integration.md。
+- 本地合成：scripts/studio_local_smoke.py；studio_composition.mux_avatar_audio有限PCM/fast AAC，保留驱动时钟。
+- 实际工作台零费图文：.backlot/studio-v2-live-smoke.json，作品待用户审核。
+- 源码检查：根scripts/check.py（Python3.12）；上下文预算：scripts/audit_context_handoff.py。

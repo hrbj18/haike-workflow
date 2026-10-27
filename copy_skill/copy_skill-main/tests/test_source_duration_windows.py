@@ -44,10 +44,21 @@ def _candidate(video_id: str, *, source: str, duration: float) -> Candidate:
 
 
 def _config_with_window(window: dict) -> dict:
-    """The live config (the seam strips the shipped key) plus an explicit window."""
-    config = load_config()
-    config["jobs"]["material_replication"]["source_duration_windows"] = window
-    return config
+    """A fixed policy independent of the operator's shipped/local defaults."""
+    return {
+        "jobs": {
+            "material_replication": {
+                "prefilter": {
+                    "enabled": True,
+                    "min_seconds": 10,
+                    "max_seconds": 300,
+                    "allow_unknown_duration": True,
+                    "heat_gate_percentile": 0,
+                },
+                "source_duration_windows": window,
+            }
+        }
+    }
 
 
 # --------------------------------------------------------------------------- #
@@ -117,7 +128,8 @@ def test_prefilter_verdict_depends_on_the_source_not_just_the_duration() -> None
 
 def test_prefilter_absent_key_is_byte_equivalent() -> None:
     """No key -> a long clip is dropped the same way for every source."""
-    config = load_config()
+    config = _config_with_window({})
+    del config["jobs"]["material_replication"]["source_duration_windows"]
     assert "source_duration_windows" not in config["jobs"]["material_replication"]
     candidates = [
         _candidate("dy", source="douyin", duration=600),
@@ -128,6 +140,7 @@ def test_prefilter_absent_key_is_byte_equivalent() -> None:
 
     assert passed == []
     assert {entry["video_id"] for entry in rejected} == {"dy", "bili"}
+    assert prefilter_candidates(candidates, _config_with_window({})) == (passed, rejected)
 
 
 # --------------------------------------------------------------------------- #
@@ -149,6 +162,28 @@ def test_measured_window_is_a_noop_once_metadata_carried_a_duration() -> None:
     config = _config_with_window({"bilibili": BILIBILI_WINDOW})
     # The pre-download gate already judged it, so the post-download half stays out.
     assert measured_duration_window_reject(600.0, config, metadata_duration=600.0, source="douyin") == (False, "")
+
+
+@pytest.mark.parametrize("shared_max", [300, 600])
+def test_duration_boundaries_follow_the_configured_default_at_both_checkpoints(shared_max: int) -> None:
+    config = _config_with_window({"bilibili": BILIBILI_WINDOW})
+    config["jobs"]["material_replication"]["prefilter"]["max_seconds"] = shared_max
+    candidates = [
+        _candidate("dy-at-limit", source="douyin", duration=shared_max),
+        _candidate("dy-over-limit", source="douyin", duration=shared_max + 0.01),
+        _candidate("bili-over-shared-limit", source="bilibili", duration=shared_max + 0.01),
+    ]
+
+    passed, rejected = prefilter_candidates(candidates, config)
+
+    assert [item.video_id for item in passed] == ["dy-at-limit", "bili-over-shared-limit"]
+    assert [item["video_id"] for item in rejected] == ["dy-over-limit"]
+    assert [
+        measured_duration_window_reject(
+            item.duration_seconds, config, metadata_duration=0, source=item.source
+        )[0]
+        for item in candidates
+    ] == [False, True, False]
 
 
 # --------------------------------------------------------------------------- #

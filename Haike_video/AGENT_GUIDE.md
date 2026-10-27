@@ -1,10 +1,10 @@
 # OpenMontage Agent Fast Router
 
-Read this file first for every request. Scan the repository as needed.
+Read first.
 
 ## 1. Context routing
 
-- Ordinary explanation, writing, or advice: this file is enough.
+- Explanation/writing/advice: this file suffices.
 - Project development, diagnosis, status, planning, or monitoring: additionally read `docs/handoff/README.md` and `docs/handoff/CURRENT_STATUS.md`.
 - Then read at most the relevant topic handoff first:
   - product behavior and invariants: `docs/handoff/PRODUCT_RULES.md`
@@ -12,9 +12,9 @@ Read this file first for every request. Scan the repository as needed.
   - code and test entrypoints: `docs/handoff/CODE_MAP.md`
   - daily technology brief: `docs/handoff/DAILY_TECH_BRIEF.md`
   - GitHub release and cross-machine setup: `docs/handoff/DEPLOYMENT.md`
-- Read `PROJECT_CONTEXT.md` only when deeper architecture or repository conventions are needed.
-- Old task guides and PRDs are historical evidence. Do not treat them as current rules when they conflict with `docs/handoff/`.
-- Do not default-scan `projects/`, `.backlot/daily-runs/`, logs, media, old guides, full Git history, or the whole dirty diff. Inspect only paths needed to answer or change the requested behavior.
+- Read `PROJECT_CONTEXT.md` for deeper architecture or conventions.
+- `docs/handoff/` overrides historical guides/PRDs.
+- Inspect only task-relevant paths; do not default-scan projects, logs, media, old guides, full Git history or the whole dirty diff.
 
 After material implementation/state/decision/blocker/next-step changes, update the smallest applicable handoff file and run:
 
@@ -24,8 +24,13 @@ Do not update handoff files for ordinary questions, acknowledgements, or repeate
 
 ## 2. Request routing
 
+- 高质量数字人工作流：读 `docs/高质量数字人工作流.md`，优先于通用口播。
+- 新建、修改或审查视频模板：先读 `../Haike-Videohub/agent-runbooks/视频模板编写标准.md`，按骨架、类型扩展与验收量表记录当前范围。
+- 视频审美/Hallmark：读 `skills/creative/hallmark-video.md`。
+- 数字人模板7：`../Haike-Videohub/agent-runbooks/数字人模板7.md`。
 - Exact call sign **「模板图文视频」** maps to `../Haike-Videohub/agent-runbooks/模板图文视频.md` before type inference; never substitute another production line.
-- 模板3读 `skills/INDEX.md`；其他口播读 `../Haike-Videohub/agent-runbooks/数字人口播视频.md`。
+- 数字人口播模板6／招商A：读 `../Haike-Videohub/agent-runbooks/数字人口播模板6-招商A.md`；模板3读 `skills/INDEX.md`；其他口播读 `../Haike-Videohub/agent-runbooks/数字人口播视频.md`。
+- Agent 制片（含模糊指令）或续做：读 `docs/CODEX_VIDEO_BATCH.md`；新任务用账号预设、明确参数优先，旧任务复用冻结规格与回执。
 - 素材解说/电影解说/直播切片解说：读 `../Haike-Videohub/agent-runbooks/素材解说视频.md`；素材决定结构，走统一队列。
 - Video analysis: read `../Haike-Videohub/agent-runbooks/视频快速理解与分层分析.md`; start with local overview, deepen by goal. Analysis does not authorize production.
 - Answer, explain, review, or report status: inspect read-only evidence and respond. Do not mutate external state.
@@ -48,11 +53,11 @@ Before a production run:
 5. Use idempotent job identifiers and durable state so retries do not duplicate paid work.
 6. Submit supported parent production through the unified queue (`python -m backlot queue submit ...` or `/api/production-queue/jobs`). Do not call the registered review-preview or full-preview runners directly; the queue is the cross-project execution authority.
 
-Typical stages are: script/source verification, narration or source audio, avatar/video generation, media planning, material acquisition, composition, subtitles, background music, QA, then human review. Audio duration is the master clock; visuals follow audio. Do not stretch speech to fit a visual slot.
+Stages: source/script, audio, avatar, media, composition, captions/music, QA and review. Audio duration is the master clock; visuals follow it. Never stretch speech to fit a slot.
 
-Every used asset must have provenance and a stable ID. Avatar media and main visual media are separate layers: an avatar does not mean a scene has a main visual. Locked or frozen slots must not be overwritten by batch operations. Local replacement must not invalidate unrelated segments.
+Assets need provenance and stable IDs. Avatars and main visuals are separate layers; an avatar alone does not supply the main visual. Batch operations preserve locked/frozen slots; replacements preserve unrelated segments.
 
-Preview and final render must share the same timeline, subtitle, avatar geometry, crop, and asset contract. Never publish a formal video automatically; automation may stop at a review-ready preview.
+Preview and final render must share the same timeline, subtitle, avatar geometry, crop, and asset contract. Formal publication requires explicit user authorization for the current accounts, content scope and budget. An authorized agent batch may complete quality checks and publish within that scope without repeated confirmations; otherwise stop at a review-ready preview.
 
 ## 4. Providers, cost, and failures
 
@@ -67,10 +72,12 @@ For daily technology brief rules, always use `docs/handoff/DAILY_TECH_BRIEF.md`.
 
 ## 5. Quality gates
 
+所有制片、续做与修订执行[画质与混音标准](docs/VIDEO_QUALITY.md)：原片优先、成片20Mbps；外放BGM明显且不盖人声，逐条验收。
+
 - Validate schemas and state transitions before running media tools.
 - Use at most two independent review passes unless the user explicitly requests more: one structural/semantic pass and one visual/output pass.
 - Verify outputs with appropriate evidence: tests, ffprobe/media streams, dimensions, duration, representative frames, subtitles, audio mix, and persisted task status.
-- A generated artifact is not complete until it is visible through the intended frontend flow or clearly handed off as a test artifact.
+- Completion requires frontend visibility or an explicit test-artifact handoff.
 - Preserve completed paid artifacts during retries. Never restart the whole pipeline to fix one local slot.
 
 ## 6. Repository work
@@ -87,9 +94,9 @@ For daily technology brief rules, always use `docs/handoff/DAILY_TECH_BRIEF.md`.
 - If the user names a skill, or the task clearly matches an available skill, read its `SKILL.md` completely and follow it.
 - Resolve Chinese production call signs through `skills/INDEX.md` before loading a pipeline. Distinguish the two 「复刻」 lines by supplied input; ask only when ambiguous.
 - **「模板图文视频」 is exact:** load its runbook first and require its 9-second/3-scene gate.
-- Route project-specific pipeline, runtime, music, and taste guidance through `skills/INDEX.md`; it points to the authoritative stage and meta skills without expanding this fast router.
+- Use `skills/INDEX.md` for pipeline, runtime, music and taste guidance.
 - For repeated operator tasks such as three-platform publication, start at `../Haike-Videohub/agent-runbooks/README.md`; verify live account and task state before following a recorded procedure.
-- After a real repeated operation, propose evidenced reusable steps, recovery paths, or behavior changes through the Videohub runbook governance. Edit the runbook only when explicitly assigned maintenance; skip proposals when nothing new was learned.
+- Propose new evidence and recovery steps through Videohub governance; edit shared runbooks only with explicit maintenance assignment.
 - Announce skill use and any skill-caused action or pause in commentary.
 - When tools are needed, send a concise commentary update first and keep the user informed during long work.
 - Final responses lead with the outcome, name material files with clickable absolute paths, state what was tested, and call out only genuine remaining risks.
