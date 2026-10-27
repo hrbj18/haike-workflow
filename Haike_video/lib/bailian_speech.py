@@ -127,7 +127,20 @@ def read_record(path: Path) -> dict:
         raise BailianSpeechError("本地云端调用记录无法读取，已停止以避免重复计费") from exc
 
 
+def _native_path(path: Path) -> Path:
+    """Let Python filesystem calls use long Windows absolute paths."""
+    if os.name == "nt":
+        absolute = str(path.absolute())
+        if not absolute.startswith("\\\\?\\"):
+            absolute = ("\\\\?\\UNC\\" + absolute[2:] if absolute.startswith("\\\\")
+                        else "\\\\?\\" + absolute)
+        return Path(absolute)
+    return path
+
+
 def write_record(path: Path, data: dict) -> None:
+    # Protect the atomic temporary filename before the pre-submit write.
+    path = _native_path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     fd, name = tempfile.mkstemp(prefix=".bailian-", dir=path.parent)
     try:
@@ -175,6 +188,7 @@ def download(url: str, target: Path) -> None:
     response = requests.get(secure_url, timeout=(15, 180), allow_redirects=False)
     if response.status_code != 200 or not response.content:
         raise BailianSpeechError(f"百炼结果下载失败（HTTP {response.status_code}）；已保留调用记录，可恢复下载")
+    target = _native_path(target)
     target.parent.mkdir(parents=True, exist_ok=True)
     temporary = target.with_name(target.name + ".download")
     temporary.write_bytes(response.content)

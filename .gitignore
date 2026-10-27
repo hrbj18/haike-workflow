@@ -21,6 +21,7 @@ __pycache__/
 *.egg-info/
 .pytest_cache/
 .playwright-cli/
+.remotion/
 .p/
 .backlot/
 .workbuddy/
@@ -59,6 +60,9 @@ test_artifacts/
 .firecrawl/
 Thumbs.db
 # Private exports, archives and generated embedded frontend
+/deliverables/
+# User-authorized gallery screenshots ship in local delivery ZIPs, not public Git.
+/Haike_video/templates/library-covers/
 backups/
 .haike-archives/
 *api-keys*.txt
@@ -76,3 +80,7 @@ backups/
 /prototypes/haike-avatar-generator/public/assets/presenter.png
 /Haike_video/workflows/runninghub-high-quality/runs/
 /Haike_video/workflows/runninghub-high-quality/kit.local.json
+# Private colleague template handoff (contains original media).
+/deliverables/海客全模板_Mac复刻包_20261025/
+/deliverables/海客全模板_Mac复刻包_20261025.zip
+/deliverables/海客全模板_Mac复刻包_20261025.zip.sha256

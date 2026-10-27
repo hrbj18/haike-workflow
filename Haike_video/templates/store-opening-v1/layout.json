@@ -1,0 +1,613 @@
+{
+  "version": "v002",
+  "authority": "layout.json imported by index.tsx; no duplicate numeric authority",
+  "canvas": [
+    1440,
+    1800,
+    30
+  ],
+  "brand": [
+    46,
+    28,
+    390,
+    82
+  ],
+  "captionMax": [
+    54,
+    1500,
+    1332,
+    150
+  ],
+  "location": [
+    0,
+    1662,
+    1440,
+    138
+  ],
+  "wideMain": [
+    0,
+    0,
+    1440,
+    810
+  ],
+  "wideDetail": [
+    0,
+    820,
+    1440,
+    810
+  ],
+  "wideTitle": [
+    0,
+    736,
+    1440,
+    152
+  ],
+  "avatar": [
+    0,
+    0,
+    1440,
+    1800
+  ],
+  "states": {
+    "22": {
+      "name": "金黄极黑·开业声量",
+      "a": "#FFCE00",
+      "b": "#030303",
+      "states": {
+        "impact": {
+          "main": [
+            0,
+            0,
+            1440,
+            1800
+          ],
+          "detail": null,
+          "panel": [
+            0,
+            0,
+            1440,
+            450
+          ],
+          "title": [
+            66,
+            124,
+            1308,
+            278
+          ],
+          "titleSize": 252,
+          "fg": "a",
+          "bg": "b"
+        },
+        "field": {
+          "main": [
+            0,
+            0,
+            1440,
+            1800
+          ],
+          "detail": null,
+          "panel": [
+            50,
+            130,
+            1050,
+            188
+          ],
+          "title": [
+            78,
+            146,
+            998,
+            156
+          ],
+          "titleSize": 144,
+          "fg": "b",
+          "bg": "a"
+        },
+        "closing": {
+          "main": [
+            0,
+            0,
+            1440,
+            1800
+          ],
+          "detail": null,
+          "panel": [
+            0,
+            1180,
+            1440,
+            620
+          ],
+          "title": [
+            68,
+            1210,
+            1304,
+            290
+          ],
+          "titleSize": 238,
+          "fg": "a",
+          "bg": "b"
+        }
+      }
+    },
+    "23": {
+      "name": "荧光玫红·免费体验",
+      "a": "#DBF007",
+      "b": "#E91379",
+      "states": {
+        "teaser": {
+          "main": [
+            0,
+            0,
+            1440,
+            1800
+          ],
+          "detail": null,
+          "panel": [
+            0,
+            1150,
+            1440,
+            650
+          ],
+          "title": [
+            66,
+            1200,
+            1308,
+            280
+          ],
+          "titleSize": 232,
+          "fg": "b",
+          "bg": "a"
+        },
+        "field": {
+          "main": [
+            0,
+            0,
+            1440,
+            1800
+          ],
+          "detail": null,
+          "panel": [
+            870,
+            190,
+            570,
+            530
+          ],
+          "title": [
+            900,
+            220,
+            500,
+            460
+          ],
+          "titleSize": 154,
+          "fg": "a",
+          "bg": "b"
+        },
+        "benefit": {
+          "main": [
+            0,
+            0,
+            1440,
+            1800
+          ],
+          "detail": null,
+          "panel": [
+            0,
+            1080,
+            1440,
+            720
+          ],
+          "title": [
+            66,
+            1110,
+            1308,
+            390
+          ],
+          "titleSize": 182,
+          "fg": "a",
+          "bg": "b"
+        },
+        "invite": {
+          "main": [
+            0,
+            0,
+            1440,
+            1800
+          ],
+          "detail": null,
+          "panel": [
+            0,
+            1200,
+            1440,
+            600
+          ],
+          "title": [
+            68,
+            1220,
+            1304,
+            266
+          ],
+          "titleSize": 222,
+          "fg": "a",
+          "bg": "b"
+        }
+      }
+    },
+    "24": {
+      "name": "柠绿橘红·全家来逛",
+      "a": "#D6FF3E",
+      "b": "#F44607",
+      "states": {
+        "family-hero": {
+          "main": [
+            0,
+            0,
+            1440,
+            1800
+          ],
+          "detail": null,
+          "panel": [
+            0,
+            0,
+            1440,
+            300
+          ],
+          "title": [
+            62,
+            104,
+            1316,
+            192
+          ],
+          "titleSize": 184,
+          "fg": "b",
+          "bg": "a"
+        },
+        "chase": {
+          "main": [
+            0,
+            0,
+            1440,
+            1800
+          ],
+          "detail": null,
+          "panel": [
+            0,
+            1180,
+            1280,
+            304
+          ],
+          "title": [
+            56,
+            1200,
+            1216,
+            264
+          ],
+          "titleSize": 204,
+          "fg": "a",
+          "bg": "b"
+        },
+        "family-duo": {
+          "main": [
+            0,
+            260,
+            710,
+            1540
+          ],
+          "detail": [
+            730,
+            260,
+            710,
+            1540
+          ],
+          "panel": [
+            0,
+            0,
+            1440,
+            260
+          ],
+          "title": [
+            62,
+            98,
+            1316,
+            162
+          ],
+          "titleSize": 160,
+          "fg": "b",
+          "bg": "a"
+        },
+        "family-close": {
+          "main": [
+            0,
+            0,
+            1440,
+            1800
+          ],
+          "detail": null,
+          "panel": [
+            0,
+            1200,
+            1440,
+            600
+          ],
+          "title": [
+            62,
+            1230,
+            1316,
+            260
+          ],
+          "titleSize": 226,
+          "fg": "b",
+          "bg": "a"
+        }
+      }
+    },
+    "25": {
+      "name": "亮青极黑·店长面对面",
+      "a": "#1DDFFF",
+      "b": "#000000",
+      "states": {
+        "question": {
+          "main": [
+            0,
+            0,
+            1440,
+            1800
+          ],
+          "detail": null,
+          "panel": [
+            0,
+            0,
+            1440,
+            650
+          ],
+          "title": [
+            66,
+            128,
+            1308,
+            502
+          ],
+          "titleSize": 216,
+          "fg": "a",
+          "bg": "b"
+        },
+        "edge": {
+          "main": [
+            300,
+            0,
+            1140,
+            1800
+          ],
+          "detail": null,
+          "panel": [
+            0,
+            0,
+            300,
+            1800
+          ],
+          "title": [
+            30,
+            310,
+            240,
+            1070
+          ],
+          "titleSize": 218,
+          "fg": "b",
+          "bg": "a",
+          "spine": true
+        },
+        "full": {
+          "main": [
+            0,
+            0,
+            1440,
+            1800
+          ],
+          "detail": null,
+          "panel": [
+            690,
+            110,
+            750,
+            440
+          ],
+          "title": [
+            730,
+            142,
+            650,
+            380
+          ],
+          "titleSize": 172,
+          "fg": "a",
+          "bg": "b"
+        },
+        "follow": {
+          "main": [
+            0,
+            0,
+            1440,
+            1800
+          ],
+          "detail": null,
+          "panel": [
+            0,
+            1180,
+            1440,
+            620
+          ],
+          "title": [
+            68,
+            1220,
+            1304,
+            270
+          ],
+          "titleSize": 246,
+          "fg": "a",
+          "bg": "b"
+        },
+        "quote": {
+          "main": [
+            0,
+            0,
+            1440,
+            1800
+          ],
+          "detail": null,
+          "panel": [
+            0,
+            1170,
+            1380,
+            340
+          ],
+          "title": [
+            56,
+            1194,
+            1300,
+            280
+          ],
+          "titleSize": 180,
+          "fg": "a",
+          "bg": "b"
+        }
+      }
+    },
+    "26": {
+      "name": "猩红蜜橙·开业邀约",
+      "a": "#9B0A11",
+      "b": "#FBD185",
+      "states": {
+        "announcement": {
+          "main": [
+            0,
+            0,
+            1440,
+            1800
+          ],
+          "detail": null,
+          "panel": [
+            0,
+            0,
+            1440,
+            390
+          ],
+          "title": [
+            66,
+            108,
+            1308,
+            272
+          ],
+          "titleSize": 246,
+          "fg": "b",
+          "bg": "a"
+        },
+        "field": {
+          "main": [
+            0,
+            0,
+            1440,
+            1800
+          ],
+          "detail": null,
+          "panel": [
+            48,
+            128,
+            1150,
+            190
+          ],
+          "title": [
+            76,
+            143,
+            1094,
+            160
+          ],
+          "titleSize": 148,
+          "fg": "a",
+          "bg": "b"
+        },
+        "offer": {
+          "main": [
+            0,
+            0,
+            1440,
+            1800
+          ],
+          "detail": null,
+          "panel": [
+            0,
+            1120,
+            1440,
+            680
+          ],
+          "title": [
+            66,
+            1136,
+            1308,
+            360
+          ],
+          "titleSize": 208,
+          "fg": "a",
+          "bg": "b",
+          "secondarySize": 142
+        },
+        "invite": {
+          "main": [
+            0,
+            0,
+            1440,
+            1800
+          ],
+          "detail": null,
+          "panel": [
+            0,
+            1180,
+            1440,
+            620
+          ],
+          "title": [
+            68,
+            1220,
+            1304,
+            274
+          ],
+          "titleSize": 236,
+          "fg": "b",
+          "bg": "a"
+        }
+      }
+    }
+  },
+  "selectionRules": [
+    "avatar -> identity (full 4:5 source, independent of footage layout)",
+    "non-avatar main.fit==contain -> wide-pair if detail active else wide-single; only original horizontal footage may use contain",
+    "22: frame<78 impact, last chapter closing, otherwise field",
+    "23: frame<90 teaser; chapter2/3 and chapter age<66 benefit; final chapter invite; otherwise field",
+    "24: active portrait detail family-duo; frame<84 family-hero; final chapter family-close; otherwise chase",
+    "25: frame<72 question; final chapter follow; chapter4 full; otherwise edge",
+    "25: frame<72 question; final chapter follow; chapter3 first36frames edge; chapter4 full; otherwise quote (chapter indexes zero-based)"
+  ],
+  "occlusionRules": [
+    "all boxes are [left,top,width,height] in 1440x1800 canvas pixels",
+    "main is the raw displayed region; panel/brand/caption/location overlay it; do not treat the whole main box as unobscured content",
+    "full frame avatar shows the original 1228x1536 content at its native 4:5 ratio, no stretch or old mismatched rectangle",
+    "body captions 64px Noto SC700, 375px equivalent16.67px; display Smiley400 no synthetic weight/skew",
+    "wide pair is two full 1440x810 horizontal originals; title crosses the inter-window join; no small PIP"
+  ],
+  "identity": {
+    "main": [
+      0,
+      0,
+      1440,
+      1800
+    ],
+    "panel": [
+      0,
+      0,
+      1440,
+      220
+    ],
+    "title": [
+      490,
+      26,
+      900,
+      184
+    ],
+    "titleSize": 170,
+    "description": "Compact identity header beside brand; retain sky clearance above hair. Colors selected by style in openingLayoutAt."
+  }
+}

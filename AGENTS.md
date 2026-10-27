@@ -19,6 +19,6 @@
 
 ## Git迭代管理
 
-用户确认的仓库为hrbj18/haike-workflow，保留公开可见性，origin指向它。main为旧交付基线，dev-ybw为现有集成分支；新版上传feat/retain-capabilities-ui并给旧main打保留标签，不合并main。先前源码上传阶段的“不打包”范围已结束，当前另行授权制作干净便携ZIP，交付边界见docs/DISTRIBUTION.md。后续修改从集成分支建立feat/fix分支，通过检查、PR审阅和已授权推送管理迭代。流程见docs/GIT_WORKFLOW.md。
+用户确认的仓库为hrbj18/haike-workflow，保留公开可见性，origin指向它。用户于2026-10-27明确授权将本次已验收交付源码合入main作为新稳定版；旧main以legacy-main-before-20261027标签保留，旧功能分支及dev-ybw不删除。后续从明确基线建立feat/fix分支，通过检查、PR审阅和当期授权推送管理迭代，不强推改写共享历史。便携ZIP与公开源码的交付边界见docs/DISTRIBUTION.md，流程见docs/GIT_WORKFLOW.md。
 
 实际14754安装副本与Git源码checkout分离：优先修改版本管理的源码，验收后向明确安装目标同步，不把安装副本的运行数据当作源码。前端用scripts/build-studio.py构建，编译目录被忽略。Git提交与生产部署分开；云端账本和主密钥独立备份，代码回退不自动恢复资金数据库。

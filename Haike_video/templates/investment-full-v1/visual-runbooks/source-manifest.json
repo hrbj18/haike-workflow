@@ -1,0 +1,52 @@
+{
+  "version": "2026-10-23-r1",
+  "type": "reference-source-snapshot",
+  "target_machine_verified": false,
+  "files": [
+    {
+      "path": "source-snapshot/layout.json",
+      "original": "Haike_video/templates/investment-full-v1/layout.json",
+      "sha256": "8132ad2939b21b0ce0fa4997efcdfecaa8d6963e6a7486665cbd0f8d1e4eebc8"
+    },
+    {
+      "path": "source-snapshot/palettes.ts",
+      "original": "Haike_video/templates/investment-full-v1/palettes.ts",
+      "sha256": "3c58a20d7576d1a8823dcb667c605ec665bd7651b88edc83a2bff52788746372"
+    },
+    {
+      "path": "source-snapshot/geometry.ts",
+      "original": "Haike_video/templates/investment-full-v1/geometry.ts",
+      "sha256": "0db4c652caf33b557ca7cb4d13f05c0d028e657399ca0bf638f11a42ac06b5b1"
+    },
+    {
+      "path": "source-snapshot/Full.tsx",
+      "original": "Haike_video/templates/investment-full-v1/Full.tsx",
+      "sha256": "4c59ec30588eb000fe53f2163b3280b05a1993f960a8d3341b0db6fe60a5275b"
+    },
+    {
+      "path": "source-snapshot/Shared.tsx",
+      "original": "Haike_video/templates/investment-full-v1/Shared.tsx",
+      "sha256": "217a036b63dd597cd75f96c1360f3da5e40b607b0a7367cef8c162865913b9b1"
+    },
+    {
+      "path": "source-snapshot/Graphics.tsx",
+      "original": "Haike_video/templates/investment-full-v1/Graphics.tsx",
+      "sha256": "75426ae999b3aa09fdaf8fcd8893e40062c30c0540ccd7a2f24401f46deacb2b"
+    },
+    {
+      "path": "source-snapshot/types.ts",
+      "original": "Haike_video/templates/investment-full-v1/types.ts",
+      "sha256": "0249307b87d6e0b9214d5d1f154a812542c847af2db388d02fc55a975d2e2e1f"
+    },
+    {
+      "path": "source-snapshot/index.tsx",
+      "original": "Haike_video/templates/investment-full-v1/index.tsx",
+      "sha256": "fe9fc6e7c85000222d04693c486324d206d4ad72cd2d06aec0afc4ebc79e4a50"
+    },
+    {
+      "path": "source-snapshot/studio_investment_audio_v5.py",
+      "original": "Haike_video/backlot/studio_investment_audio_v5.py",
+      "sha256": "f2074a5ee645da43380cd7fb3533f766a66d1018d03bba9aface679830b9b670"
+    }
+  ]
+}

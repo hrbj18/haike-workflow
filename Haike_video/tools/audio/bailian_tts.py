@@ -112,7 +112,8 @@ class BailianTTS(BaseTool):
                 if not pcm.exists():
                     if not raw.exists():
                         api.download(record["audio_url"], raw)
-                    normalizing = pcm.with_name(pcm.stem + ".normalizing.wav")
+                    # Keep FFmpeg's staging path within the raw file's path budget.
+                    normalizing = pcm.with_name(pcm.stem + ".norm.wav")
                     completed = subprocess.run([binary, "-y", "-v", "error", "-i", str(raw),
                         "-ac", "1", "-ar", "24000", "-c:a", "pcm_s16le", str(normalizing)],
                         capture_output=True, timeout=120)

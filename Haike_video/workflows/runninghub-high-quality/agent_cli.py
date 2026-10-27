@@ -5,6 +5,7 @@ from contextlib import contextmanager
 from pathlib import Path
 from datetime import datetime, timezone
 from concurrent.futures import ThreadPoolExecutor
+from urllib.parse import urlsplit, unquote
 
 ROOT = Path(__file__).resolve().parent
 SUCCESS = {'SUCCESS', 'SUCCEEDED', 'COMPLETED'}
@@ -109,18 +110,33 @@ def clean(value):
             if secret: value = value.replace(secret, '[已隐藏]')
     return value
 
+class ProviderReplyError(RuntimeError):
+    def __init__(self, status, response):
+        self.http_status = status
+        self.response = clean(response)
+        self.code = response.get('code')
+        super().__init__('RunningHub拒绝请求，HTTP '+str(status)+'，代码 '+str(self.code))
+
+
 def request(method, path, key, body=None, timeout=60):
     import requests
     r = requests.request(method, BASE+path, headers={'Authorization':'Bearer '+key}, json=body, timeout=timeout, allow_redirects=False)
-    require(r.status_code == 200, 'RunningHub HTTP '+str(r.status_code)+'；保留任务记录后检查权限或网络')
-    v = r.json()
+    try: v = r.json()
+    except ValueError: raise ProviderReplyError(r.status_code, {'non_json':True}) from None
     require(isinstance(v, dict), 'RunningHub 响应格式异常')
-    require(v.get('code') in (None, 0, 200, '0', '200'), 'RunningHub 拒绝请求，代码 '+str(v.get('code')))
+    if r.status_code != 200 or v.get('code') not in (None, 0, 200, '0', '200'):
+        raise ProviderReplyError(r.status_code, v)
     return v
 
 def body(v): return v['data'] if isinstance(v.get('data'), dict) else v
 
 def account(key): return body(request('POST','/uc/openapi/accountStatus',key,{'apikey':key}))
+
+def consumer_account(key):
+    result=account(key)
+    require(result.get('apiType')=='NORMAL',
+        '高质量RH币工作流必须使用NORMAL消费级Key；当前类型 '+str(result.get('apiType'))+'，未上传或提交生成')
+    return result
 
 def upload(p, key):
     import requests
@@ -133,6 +149,50 @@ def upload(p, key):
     d = v.get('data'); name = (d.get('fileName') or d.get('filename') or d.get('name')) if isinstance(d,dict) else d
     require(isinstance(name,str) and name, '上传未返回素材文件名')
     return name
+
+def matching_artifact_url(result, legacy_results):
+    original=result['url']
+    for item in legacy_results:
+        candidate=item.get('fileUrl') or ''
+        if (str(item.get('nodeId'))==str(result['nodeId']) and urlsplit(candidate).scheme=='https'
+                and unquote(urlsplit(candidate).path)==unquote(urlsplit(original).path)):
+            return candidate
+    return original
+
+def download_existing_artifact(result,target,key,task_id,case):
+    """Recover a successful artifact through its authoritative alternate CDN."""
+    import requests
+    if target.exists():return
+    receipt=case/'outputs-legacy.json'
+    cached=read(receipt) if receipt.exists() else {}
+    if cached.get('task_id')!=str(task_id):
+        try:
+            raw=request('POST','/task/openapi/outputs',key,{'apiKey':key,'taskId':str(task_id)})
+            cached={'task_id':str(task_id),'response':clean(raw)}
+            write(receipt,cached)
+        except (requests.RequestException,RuntimeError):cached={}
+    legacy=(cached.get('response') or {}).get('data') or []
+    selected=matching_artifact_url(result,legacy if isinstance(legacy,list) else [])
+    # Windows OpenSSL can time out on the TOS route while the platform's
+    # alternate CDN succeeds with Schannel. Keep normal certificate checks.
+    curl=shutil.which('curl.exe') if os.name=='nt' else None
+    if curl and selected!=result['url']:
+        temporary=target.with_name(target.name+'.curl.part')
+        p=subprocess.run([curl,'--silent','--show-error','--fail','--connect-timeout','10','--max-time','300',
+            '--max-filesize','2000000000','--output',str(temporary),'--write-out','%{http_code}',selected],
+            capture_output=True,timeout=310,creationflags=subprocess.CREATE_NO_WINDOW)
+        require(p.returncode==0 and p.stdout.strip()==b'200' and temporary.is_file() and temporary.stat().st_size>0,
+            '已成功生成，备用CDN下载未完成；保留原任务和回执，仅恢复下载，不重新生成')
+        temporary.replace(target)
+    else:
+        try:download(selected,target)
+        except (requests.RequestException,RuntimeError):
+            raise RuntimeError('已成功生成，文件下载暂未完成；保留原任务恢复下载，不重新生成') from None
+    write(target.with_name(target.name+'.download.json'),{'task_id':str(task_id),'node_id':str(result['nodeId']),
+        'same_storage_object_path':True,'alternate_cdn':selected!=result['url'],
+        'original_url_sha256':hashlib.sha256(result['url'].encode()).hexdigest(),
+        'selected_url_sha256':hashlib.sha256(selected.encode()).hexdigest(),'sha256':sha(target),
+        'tls_verification':True,'new_generation':False})
 
 def wav_info(path):
     with wave.open(str(path),'rb') as w:
@@ -259,12 +319,12 @@ def doctor(a,pair):
     require('setts' in filters,'FFmpeg缺少setts过滤器，无法保证拼接时间戳')
     result={'offline':'pass','package_hashes':'pass','ffmpeg_setts':'pass','schema_check':static,'voice_id':c['voice']['id'],'voice_account_access':'尚未实调，不把本地ID校验当作授权证明','cloud_checked':False}
     if a.cloud:
-        key,wid=credentials(c); acc=account(key)
+        key,wid=credentials(c); acc=consumer_account(key)
         schemas=request('GET','/proxy-plus/'+key+'/object_info',key,timeout=120)
         missing=sorted({n['class_type'] for n in read(ROOT/'workflows/InfiniteTalk_V5.3.1_API.json').values()}-set(schemas))
         require(not missing,'缺少RunningHub节点：'+','.join(missing))
         live=check(g,schemas);require(live['passed'],'当前平台模型/节点参数不兼容：'+str(live['errors']))
-        result.update(cloud_checked=True,account_available=True,workflow_binding=wid,workflow_access='需以导入后可访问或首次提交结果为准',current_tasks=acc.get('currentTaskCounts'),all_node_classes_available=True,live_schema_check=live)
+        result.update(cloud_checked=True,account_available=True,api_type=acc['apiType'],workflow_binding=wid,workflow_access='需以导入后可访问或首次提交结果为准',current_tasks=acc.get('currentTaskCounts'),all_node_classes_available=True,live_schema_check=live)
     say(**result)
 
 def verify_package():
@@ -302,6 +362,7 @@ def run(a,pair):
     import requests
     from PIL import Image
     c=config();verify_package();key,wid=credentials(c)
+    consumer_account(key)
     from schema_check import check
     checked=check(read(ROOT/'workflows/InfiniteTalk_V5.3.1_API.json'),read(ROOT/'reference/node_specs.json'))
     require(checked['passed'],'模板节点规格已损坏')
@@ -354,9 +415,18 @@ def run(a,pair):
                 st={'state':'submitting','submitted_at':now(),'segment':seg};write(ledger,st)
                 try:
                     raw=request('POST','/task/openapi/create',key,{'apiKey':key,'workflowId':wid,'instanceType':'plus','nodeInfoList':[],'workflow':json.dumps(g,ensure_ascii=False)},timeout=90)
+                    write(case/'submission-response.json',clean(raw))
                     d=body(raw);tid=d.get('taskId');require(tid,'提交未返回任务ID')
                     st.update(state='submitted',task_id=str(tid));write(ledger,st)
                     write(case/'submission.json',clean(raw))
+                except ProviderReplyError as error:
+                    write(case/'submission-response.json',{'http_status':error.http_status,'response':error.response})
+                    # Explicit balance/validation rejections are distinct from
+                    # unknown transport outcomes; neither is auto-resubmitted.
+                    known_rejected=error.code in (301,380,416,433,605,801,802,803,806,810,811,812)
+                    st.update(state='rejected' if known_rejected else 'ambiguous',provider_code=error.code)
+                    write(ledger,st)
+                    raise RuntimeError('提交被明确拒绝，代码 '+str(error.code)+'；完整脱敏回执已保留，不自动重发' if known_rejected else '提交回执异常；记录已保留，不自动重发') from None
                 except Exception:
                     st.update(state='ambiguous');write(ledger,st)
                     raise RuntimeError('提交结果不明或被拒绝；已落账并停止，先核对云端任务，不自动重发') from None
@@ -394,7 +464,7 @@ def run(a,pair):
             checkpoints=[r for r in results if str(r.get('nodeId','')).endswith('_107') and r.get('url')]
             require(len(finals)==1 and checkpoints,'云端成功但成片/原生尾帧缺失，保留同一任务恢复')
             for result,target in [(checkpoints[-1],case/'native_checkpoint.png'),(finals[0],case/'video.mp4')]:
-                if not target.exists():download(result['url'],target)
+                download_existing_artifact(result,target,key,st['task_id'],case)
             with Image.open(case/'native_checkpoint.png') as im:im.verify()
             verify_video(pair,case/'video.mp4',plan,seg['frames'])
             st.update(state='verified',video_sha256=sha(case/'video.mp4'),checkpoint_sha256=sha(case/'native_checkpoint.png'));write(ledger,st)

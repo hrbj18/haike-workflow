@@ -22,6 +22,8 @@
 
 明确说“高质量数字人工作流”时，读取[同名规则](Haike_video/docs/高质量数字人工作流.md)，使用其分段策略和本地侯总默认绑定。
 
+`show`若返回`preference.duration_rule`，按新视频**完整时长**执行条件默认；确定时长后传`show --duration-seconds <秒数>`解析，不能拿数字人出镜累计时长代替全片时长。保存条件偏好用`select --workflow high-quality --max-video-seconds 120 --confirm-default-change`；这只改本机Agent新任务路由，费用仍按当期授权，既有任务和Studio供应商保持冻结配置。
+
 先读根 [AGENTS.md](AGENTS.md)，再读 [Haike_video/AGENTS.md](Haike_video/AGENTS.md) 及其要求的文档。制作流程和当前状态以该入口为准；便携包安装读 [PORTABLE.md](docs/PORTABLE.md)，源码安装读根 [README.md](README.md)。
 
 | 用户任务 | 进入方式 | 本步完成条件 |

@@ -26,6 +26,7 @@ PREFIX = "local-investment-style-lab-"
 FPS, FRAMES, DURATION = 30, 360, 12
 DIMENSIONS = {"9x16": (1080, 1920), "4x5": (1440, 1800),
               "1x1": (1536, 1536), "16x9": (1920, 1080)}
+PALETTE_VARIANTS = {"blue-beige": 7, "cyan-charcoal": 8, "black-pink": 9}
 EXECUTABLE_SUFFIXES = {".tsx", ".ts", ".css", ".ttf", ".ttc", ".otf", ".woff", ".woff2",
                        ".png", ".jpg", ".jpeg", ".webp", ".svg", ".wav"}
 
@@ -39,6 +40,16 @@ def render_profile(ratio):
             "avatar_preparation": "source-byte-copy", "codec": "h264", "video_bitrate": "20M",
             "rate_control": "abr", "crf": None, "image_format": "png", "x264_preset": "slow",
             "pixel_format": "yuv420p", "scale": 1, "final_video": "stream-copy"}
+
+
+def normalize_palette_variant(value, template_number, ratio):
+    """Absence/default preserves the legacy request and props byte contract."""
+    if value is None or value == "default":
+        return None
+    if (not isinstance(value, str) or value not in PALETTE_VARIANTS
+            or PALETTE_VARIANTS[value] != template_number or ratio != "4x5"):
+        raise WorkError("新配色仅支持4x5：模板07蓝米、08青炭、09黑粉，且编号必须匹配")
+    return value
 
 
 def _root():
@@ -229,18 +240,23 @@ def _plan_master(folder, voice, cues):
 def _props(request):
     captions = [{**cue, "startMs": round(cue["start"] * 1000), "endMs": round(cue["end"] * 1000),
                  "timestampMs": None, "confidence": None} for cue in request["cues"]]
-    return {"templateNumber": request["template_number"], "ratio": request["ratio"],
+    props = {"templateNumber": request["template_number"], "ratio": request["ratio"],
         "width": request["render_profile"]["width"], "height": request["render_profile"]["height"],
         "fps": FPS, "durationInFrames": FRAMES, "avatarSrc": "source.mp4", "audioSrc": "mixed-master.wav",
         "cues": captions, "beatTitles": request["beat_titles"], "brand": request["brand"],
         "headline": request["headline"], "cta": request["cta"]}
+    if "palette_variant" in request:
+        props["paletteVariant"] = request["palette_variant"]
+    return props
 
 
 def prepare(queue, source_video, cues_json, *, template_number, ratio, title, brand, headline=None, cta="",
-            audio_plan=None, mixed_audio=None, audio_receipt=None):
+            audio_plan=None, mixed_audio=None, audio_receipt=None, palette_variant=None):
     if type(template_number) is not int or template_number not in range(3, 11):
         raise WorkError("招商视频模板编号仅支持3至10")
     quality = render_profile(ratio)
+    variant = normalize_palette_variant(palette_variant, template_number, ratio)
+    palette = {} if variant is None else {"palette_variant": variant}
     title, brand = _text(title, 120, "标题"), _text(brand, 24, "品牌")
     cta = "" if cta == "" else _text(cta, 60, "咨询引导")
     if bool(mixed_audio) != bool(audio_receipt) or audio_plan and mixed_audio:
@@ -277,7 +293,8 @@ def prepare(queue, source_video, cues_json, *, template_number, ratio, title, br
     runtime = _runtime()
     identity = fingerprint({"contract": CONTRACT, "origins": origins, "runtime": runtime,
         "template_number": template_number, "ratio": ratio, "title": title, "brand": brand,
-        "headline": headline, "beat_titles": beat_titles, "cta": cta, "render_profile": quality, "audio_mode": mode})
+        "headline": headline, "beat_titles": beat_titles, "cta": cta, "render_profile": quality, "audio_mode": mode,
+        **palette})
     project_id = "studio-" + identity[:16]
     project = queue.projects_root / project_id
     frozen = project / "artifacts/investment-style-lab-request.json"
@@ -300,13 +317,14 @@ def prepare(queue, source_video, cues_json, *, template_number, ratio, title, br
     template = _template()
     specs = {str(path.relative_to(_root())): sha(path) for path in template.rglob("*.json")
              if path.name != "layout.json" and "spec" in path.name}
-    core = {"contract": CONTRACT, "project_id": project_id, "template_id": f"investment-template-{template_number:02d}",
+    template_id = f"investment-template-{template_number:02d}" + ("-" + variant if variant else "")
+    core = {"contract": CONTRACT, "project_id": project_id, "template_id": template_id,
         "template_number": template_number, "ratio": ratio, "title": title, "brand": brand,
         "headline": headline, "beat_titles": beat_titles, "cta": cta, "render_profile": quality, "cues": cues,
         "caption_provenance": {key: read_json(cue_file)[key] for key in ("timing_basis", "evidence")},
         "audio_mode": mode, "origins": origins, "sources": sources, "runtime": runtime,
         "specification_snapshot": {"files": specs, "role": "prepare-time documentation only; post-render evidence may change"},
-        "development_test": True, "publication": False, "cloud_calls": 0}
+        "development_test": True, "publication": False, "cloud_calls": 0, **palette}
     request_sha = fingerprint(core)
     request = {**core, "request_sha256": request_sha, "render_id": PREFIX + request_sha[:20]}
     atomic_private(frozen, request)
@@ -322,13 +340,23 @@ def validate(queue, request):
             or not re.fullmatch(r"studio-[a-f0-9]{16}", str(request.get("project_id", "")))):
         raise WorkError("招商模板测试冻结合同或指纹无效")
     number = request.get("template_number")
+    variant = normalize_palette_variant(request.get("palette_variant"), number, request.get("ratio"))
+    template_id = f"investment-template-{number:02d}" + ("-" + variant if variant else "") if type(number) is int else None
     if (type(number) is not int or number not in range(3, 11)
-            or request.get("template_id") != f"investment-template-{number:02d}"
+            or request.get("template_id") != template_id
             or request.get("render_profile") != render_profile(request.get("ratio"))
             or request.get("development_test") is not True or request.get("publication") is not False
             or request.get("cloud_calls") != 0):
         raise WorkError("模板身份、20Mbps配置或零云不发布范围不可修改")
+    if "palette_variant" in request and variant is None:
+        raise WorkError("默认配色沿用原合同，不得在冻结请求中新增空或default配色字段")
     project = WorkCatalog(queue.projects_root).project(request["project_id"])
+    # A re-signed JSON must not silently remove/add a color revision on an
+    # existing native project. Completed legacy requests have no such field.
+    frozen = read_json(project / "artifacts/investment-style-lab-request.json")
+    if (("palette_variant" in frozen) != ("palette_variant" in request)
+            or frozen.get("palette_variant") != request.get("palette_variant")):
+        raise WorkError("配色变体与项目原冻结请求不一致，请使用新prepare目录")
     folder = project / "assets/investment-style-lab"
     expected = set(request["origins"]) | {"source-audio.wav", "mixed-master.wav", "audio-mix-receipt.json"}
     if request["audio_mode"] != "voice-only":

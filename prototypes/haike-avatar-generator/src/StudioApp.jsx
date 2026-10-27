@@ -14,6 +14,7 @@ import { AudioCenterDialog } from './AudioCenter.jsx';
 import { audioRoute,accountsRoute,closePlatformAccounts } from './studio-routes.js';
 import {NetworkMaterials} from './NetworkMaterials.jsx';
 import {forgetAudioOperation} from './audio-operation-store.js';
+import {MotionGitLibrary} from './MotionGitLibrary.jsx';
 
 const asset = name => `${import.meta.env.BASE_URL}assets/${name}`;
 const money = value => `¥${(Number(value || 0) / 1000000).toFixed(2)}`;
@@ -79,5 +80,6 @@ export function StudioApp(){
   const [current,setCurrent]=useState(()=>({pathname:location.pathname,search:location.search}));
   useEffect(()=>{const update=()=>setCurrent({pathname:location.pathname,search:location.search});window.addEventListener('popstate',update);window.addEventListener('haike:navigate',update);window.addEventListener('haike:gateway-changed',forgetAudioOperation);return()=>{window.removeEventListener('popstate',update);window.removeEventListener('haike:navigate',update);window.removeEventListener('haike:gateway-changed',forgetAudioOperation);};},[]);
   const view=current.pathname==='/'?'/avatar':current.pathname, audio=audioRoute(current),accounts=accountsRoute(current);
+  if(view==='/motiongit')return <><Sidebar/><main className="workspace"><MotionGitLibrary/></main></>;
   return <><Sidebar/>{view==='/settings'?<Settings/>:view==='/task-center'?<TaskCenter search={current.search}/>:view==='/material-library'?<Materials/>:view==='/calendar'?<Calendar/>:view==='/projects'?<Projects search={current.search}/>:view==='/avatar'||view.startsWith('/ui/avatar-generator/')?<Avatar/>:<Graphic/>}{audio.open&&<AudioCenterDialog route={audio}/>} {accounts.open&&<NetworkMaterials key={accounts.platform} initialPanel="accounts" initialPlatform={accounts.platform} hideActions onClose={closePlatformAccounts}/>}</>;
 }

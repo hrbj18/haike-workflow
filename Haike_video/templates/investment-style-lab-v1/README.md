@@ -17,7 +17,11 @@
 
 ## 执行和可替换输入
 
-index.tsx注册HaikeInvestmentStyleLab与8个Studio预览Composition；这些Remotion预览ID不等于普通Studio选择器接通。唯一生产入口scripts/investment_style_lab.py→统一paused studio_investment_recompose队列→专属single-lane worker；不直接调用renderer绕过队列。
+2026-10-21新增三个显式可选配色变体，仅开放4x5开发测试：[07蓝米](variants/07/palettes/blue-beige/招商视频模板7-蓝米配色.md)、[08青炭](variants/08/palettes/cyan-charcoal/招商视频模板8-青炭配色.md)、[09黑粉](variants/09/palettes/black-pink/招商视频模板9-黑粉配色.md)。CLI在原prepare参数上增加`--palette-variant blue-beige|cyan-charcoal|black-pink`，依次绑定模板7/8/9；省略或default保留旧默认，不向旧请求添加字段。颜色角色与人物窗口垫色以`palettes.ts`为真值，原人物像素不染色。新变体各有独立runbook/spec和本次4x5冻结输入证据，原32条通过不自动外推。09黑粉为分离两行标题和照片，采用本变体独立人物框与100u请求字号；旧09默认构图不变。
+
+本次三条12秒实片已通过原生技术、Root实际关键帧/全部7句字幕抽样和完整HTTP同SHA核对，实测视频平均码率分别20.116926、19.894382、19.990740Mbps；20M ABR目标和固定20Mbps导出合同不变。BGM较旧对应计划提升5/3.5/4.5dB，原声原速并固定-2.5dB，动态音效沿真实4x5 cue；母带/AAC与实际duck母线技术通过，主观连续听审、真机和用户审美确认仍独立待验。交付与恢复记录在本次`.local/codex-runs/investment-palette-07-09-20261021/STATE.json`，具体每条只继承其新spec所列输入/输出SHA范围。
+
+index.tsx注册HaikeInvestmentStyleLab、8个基础风格和3个配色4x5的Studio预览Composition；这些Remotion预览ID不等于普通Studio选择器接通。唯一生产入口scripts/investment_style_lab.py→统一paused studio_investment_recompose队列→专属single-lane worker；不直接调用renderer绕过队列。
 
 props为templateNumber、ratio、width/height/fps/durationInFrames、avatarSrc/source.mp4、audioSrc/mixed-master.wav、cues完整Caption兼容字段及start/end秒、brand、headline、cta、beatTitles[4]。每模板4拍标题均由本期beat_titles输入；headline等于首拍；非空cta可在phase3覆盖第四拍标题（03–06由shared.ReadableBeat、07–10由words实现）。本期32输入的cta全部为空，不添加源稿未说的引导，也不将非空CTA可选能力记为已测。品牌和字幕可替换，固定媒介题签/AI环境字/01–04章节号不是新商业主张。
 

@@ -1,10 +1,10 @@
 # OpenMontage Agent Fast Router
 
-Read first; scan as needed.
+Read first.
 
 ## 1. Context routing
 
-- Explanation, writing, or advice: this file is enough.
+- Explanation/writing/advice: this file suffices.
 - Project development, diagnosis, status, planning, or monitoring: additionally read `docs/handoff/README.md` and `docs/handoff/CURRENT_STATUS.md`.
 - Then read at most the relevant topic handoff first:
   - product behavior and invariants: `docs/handoff/PRODUCT_RULES.md`
@@ -13,7 +13,7 @@ Read first; scan as needed.
   - daily technology brief: `docs/handoff/DAILY_TECH_BRIEF.md`
   - GitHub release and cross-machine setup: `docs/handoff/DEPLOYMENT.md`
 - Read `PROJECT_CONTEXT.md` for deeper architecture or conventions.
-- Old guides/PRDs are historical; current `docs/handoff/` wins conflicts.
+- `docs/handoff/` overrides historical guides/PRDs.
 - Inspect only task-relevant paths; do not default-scan projects, logs, media, old guides, full Git history or the whole dirty diff.
 
 After material implementation/state/decision/blocker/next-step changes, update the smallest applicable handoff file and run:
@@ -26,6 +26,7 @@ Do not update handoff files for ordinary questions, acknowledgements, or repeate
 
 - 高质量数字人工作流：读 `docs/高质量数字人工作流.md`，优先于通用口播。
 - 新建、修改或审查视频模板：先读 `../Haike-Videohub/agent-runbooks/视频模板编写标准.md`，按骨架、类型扩展与验收量表记录当前范围。
+- 视频审美/Hallmark：读 `skills/creative/hallmark-video.md`。
 - 数字人模板7：`../Haike-Videohub/agent-runbooks/数字人模板7.md`。
 - Exact call sign **「模板图文视频」** maps to `../Haike-Videohub/agent-runbooks/模板图文视频.md` before type inference; never substitute another production line.
 - 数字人口播模板6／招商A：读 `../Haike-Videohub/agent-runbooks/数字人口播模板6-招商A.md`；模板3读 `skills/INDEX.md`；其他口播读 `../Haike-Videohub/agent-runbooks/数字人口播视频.md`。
@@ -54,7 +55,7 @@ Before a production run:
 
 Stages: source/script, audio, avatar, media, composition, captions/music, QA and review. Audio duration is the master clock; visuals follow it. Never stretch speech to fit a slot.
 
-Every used asset must have provenance and a stable ID. Avatar media and main visual media are separate layers: an avatar does not mean a scene has a main visual. Locked or frozen slots must not be overwritten by batch operations. Local replacement must not invalidate unrelated segments.
+Assets need provenance and stable IDs. Avatars and main visuals are separate layers; an avatar alone does not supply the main visual. Batch operations preserve locked/frozen slots; replacements preserve unrelated segments.
 
 Preview and final render must share the same timeline, subtitle, avatar geometry, crop, and asset contract. Formal publication requires explicit user authorization for the current accounts, content scope and budget. An authorized agent batch may complete quality checks and publish within that scope without repeated confirmations; otherwise stop at a review-ready preview.
 
@@ -71,10 +72,12 @@ For daily technology brief rules, always use `docs/handoff/DAILY_TECH_BRIEF.md`.
 
 ## 5. Quality gates
 
+所有制片、续做与修订执行[画质与混音标准](docs/VIDEO_QUALITY.md)：原片优先、成片20Mbps；外放BGM明显且不盖人声，逐条验收。
+
 - Validate schemas and state transitions before running media tools.
 - Use at most two independent review passes unless the user explicitly requests more: one structural/semantic pass and one visual/output pass.
 - Verify outputs with appropriate evidence: tests, ffprobe/media streams, dimensions, duration, representative frames, subtitles, audio mix, and persisted task status.
-- A generated artifact is not complete until it is visible through the intended frontend flow or clearly handed off as a test artifact.
+- Completion requires frontend visibility or an explicit test-artifact handoff.
 - Preserve completed paid artifacts during retries. Never restart the whole pipeline to fix one local slot.
 
 ## 6. Repository work

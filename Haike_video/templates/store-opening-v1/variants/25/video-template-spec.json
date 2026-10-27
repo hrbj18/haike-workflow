@@ -1,0 +1,1403 @@
+{
+  "schema_version": 1,
+  "standard_version": "video-template-v1",
+  "template_id": "store-opening-25",
+  "template_version": "v002",
+  "template_type": "custom",
+  "spec_kind": "implementation",
+  "stage": "ready",
+  "authority": {
+    "runbook": "runbook.md",
+    "implementation_paths": [
+      "../../index.tsx",
+      "../../layout.json"
+    ],
+    "parameter_source": "../../layout.json"
+  },
+  "canvas": {
+    "width": 1440,
+    "height": 1800,
+    "fps": 30,
+    "duration_seconds": 31.8,
+    "clock": "本期批准音频同钟954帧/30fps；v002重新构图，未生成完整视频前不能继承v001产物通过。",
+    "coordinate_system": "top_left_pixels"
+  },
+  "narrative": {
+    "purpose": "亮青极黑·店长面对面，真实开业人潮与到店体验为主，信息字面按叙事变化。",
+    "information_hierarchy": [
+      "真实店招、人群与产品动作",
+      "当前语义大字/权益重点",
+      "同钟字幕及准确地点"
+    ],
+    "structure": [
+      "不懂AI / 照样来逛",
+      "我是店长",
+      "新店开业",
+      "带着问题来",
+      "开业现场",
+      "面对面聊",
+      "关注我"
+    ]
+  },
+  "scenes": [
+    {
+      "id": "chapter_01",
+      "start": 0.0,
+      "end": 2.533333333333333,
+      "purpose": "不懂AI / 照样来逛",
+      "element_ids": [
+        "ground",
+        "main_stream",
+        "detail_stream",
+        "avatar_stream",
+        "color_plane",
+        "display_type",
+        "brand",
+        "speaker",
+        "caption",
+        "location",
+        "master_audio"
+      ],
+      "variant": "25"
+    },
+    {
+      "id": "chapter_02",
+      "start": 2.533333333333333,
+      "end": 6.966666666666667,
+      "purpose": "我是店长",
+      "element_ids": [
+        "ground",
+        "main_stream",
+        "detail_stream",
+        "avatar_stream",
+        "color_plane",
+        "display_type",
+        "brand",
+        "speaker",
+        "caption",
+        "location",
+        "master_audio"
+      ],
+      "variant": "25"
+    },
+    {
+      "id": "chapter_03",
+      "start": 6.966666666666667,
+      "end": 11.566666666666666,
+      "purpose": "新店开业",
+      "element_ids": [
+        "ground",
+        "main_stream",
+        "detail_stream",
+        "avatar_stream",
+        "color_plane",
+        "display_type",
+        "brand",
+        "speaker",
+        "caption",
+        "location",
+        "master_audio"
+      ],
+      "variant": "25"
+    },
+    {
+      "id": "chapter_04",
+      "start": 11.566666666666666,
+      "end": 16.833333333333332,
+      "purpose": "带着问题来",
+      "element_ids": [
+        "ground",
+        "main_stream",
+        "detail_stream",
+        "avatar_stream",
+        "color_plane",
+        "display_type",
+        "brand",
+        "speaker",
+        "caption",
+        "location",
+        "master_audio"
+      ],
+      "variant": "25"
+    },
+    {
+      "id": "chapter_05",
+      "start": 16.833333333333332,
+      "end": 21.433333333333334,
+      "purpose": "开业现场",
+      "element_ids": [
+        "ground",
+        "main_stream",
+        "detail_stream",
+        "avatar_stream",
+        "color_plane",
+        "display_type",
+        "brand",
+        "speaker",
+        "caption",
+        "location",
+        "master_audio"
+      ],
+      "variant": "25"
+    },
+    {
+      "id": "chapter_06",
+      "start": 21.433333333333334,
+      "end": 27.833333333333332,
+      "purpose": "面对面聊",
+      "element_ids": [
+        "ground",
+        "main_stream",
+        "detail_stream",
+        "avatar_stream",
+        "color_plane",
+        "display_type",
+        "brand",
+        "speaker",
+        "caption",
+        "location",
+        "master_audio"
+      ],
+      "variant": "25"
+    },
+    {
+      "id": "chapter_07",
+      "start": 27.833333333333332,
+      "end": 31.8,
+      "purpose": "关注我",
+      "element_ids": [
+        "ground",
+        "main_stream",
+        "detail_stream",
+        "avatar_stream",
+        "color_plane",
+        "display_type",
+        "brand",
+        "speaker",
+        "caption",
+        "location",
+        "master_audio"
+      ],
+      "variant": "25"
+    }
+  ],
+  "assets": [],
+  "elements": [
+    {
+      "id": "ground",
+      "type": "background",
+      "role": "ground",
+      "parent_id": null,
+      "z_index": 0,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "初始主题色底面；实际主画面覆盖它，无独立纹理。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "parameter_source": "../../layout.json + openingLayoutAt(props,frame)",
+          "box_scope": "frame0 default only; each frame uses the source selector, identity/wide/scene rules take precedence",
+          "runtime_geometry_selector": "openingLayoutAt(props,frame).stage.ground"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 31.8
+      },
+      "states": [
+        {
+          "id": "source_controlled",
+          "visible": true,
+          "description": "actual visibility and geometry are evaluated each frame by openingLayoutAt; avatar hides footage, absent optional layers do not render"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source_authority",
+          "target_id": null,
+          "rule": "Numeric layout authority is layout.json and selectors in index.tsx. Do not edit copied values independently."
+        }
+      ],
+      "fixed": [
+        "geometry_source",
+        "font_role",
+        "master_clock_policy"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation",
+        "geometry",
+        "creative_brief"
+      ],
+      "acceptance": [
+        {
+          "check": "actual_native_frames",
+          "method": "view current native proof at output size and375px; then current full encoded output samples",
+          "pass_condition": "readable complete text, correct store/crowd/subjects, no bars from ratio mismatch, no unintentional overlap; samples do not establish hearing"
+        }
+      ]
+    },
+    {
+      "id": "main_stream",
+      "type": "video",
+      "role": "main_stream",
+      "parent_id": null,
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "main_slot",
+        "asset_id": null,
+        "description": "props.shots的main连续轨，原速/静音，保留源内固化门头与人群。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "cover",
+        "clip": "self",
+        "style": {
+          "parameter_source": "../../layout.json + openingLayoutAt(props,frame)",
+          "box_scope": "frame0 default only; each frame uses the source selector, identity/wide/scene rules take precedence",
+          "runtime_geometry_selector": "openingLayoutAt(props,frame).stage.main"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 31.8
+      },
+      "states": [
+        {
+          "id": "source_controlled",
+          "visible": true,
+          "description": "actual visibility and geometry are evaluated each frame by openingLayoutAt; avatar hides footage, absent optional layers do not render"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source_authority",
+          "target_id": null,
+          "rule": "Numeric layout authority is layout.json and selectors in index.tsx. Do not edit copied values independently."
+        }
+      ],
+      "fixed": [
+        "geometry_source",
+        "font_role",
+        "master_clock_policy"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation",
+        "geometry",
+        "creative_brief"
+      ],
+      "acceptance": [
+        {
+          "check": "actual_native_frames",
+          "method": "view current native proof at output size and375px; then current full encoded output samples",
+          "pass_condition": "readable complete text, correct store/crowd/subjects, no bars from ratio mismatch, no unintentional overlap; samples do not establish hearing"
+        }
+      ]
+    },
+    {
+      "id": "detail_stream",
+      "type": "video",
+      "role": "detail_stream",
+      "parent_id": null,
+      "z_index": 2,
+      "content": {
+        "mode": "editable",
+        "binding": "detail_slot",
+        "asset_id": null,
+        "description": "仅明确双大竖窗或双16:9宽窗展示的第二真实镜头；不是旧小PIP。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          820,
+          1440,
+          810
+        ],
+        "fit": "contain",
+        "clip": "self",
+        "style": {
+          "parameter_source": "../../layout.json + openingLayoutAt(props,frame)",
+          "box_scope": "frame0 default only; each frame uses the source selector, identity/wide/scene rules take precedence",
+          "runtime_geometry_selector": "openingLayoutAt(props,frame).stage.detail"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 31.8
+      },
+      "states": [
+        {
+          "id": "source_controlled",
+          "visible": true,
+          "description": "actual visibility and geometry are evaluated each frame by openingLayoutAt; avatar hides footage, absent optional layers do not render"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source_authority",
+          "target_id": null,
+          "rule": "Numeric layout authority is layout.json and selectors in index.tsx. Do not edit copied values independently."
+        }
+      ],
+      "fixed": [
+        "geometry_source",
+        "font_role",
+        "master_clock_policy"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation",
+        "geometry",
+        "creative_brief"
+      ],
+      "acceptance": [
+        {
+          "check": "actual_native_frames",
+          "method": "view current native proof at output size and375px; then current full encoded output samples",
+          "pass_condition": "readable complete text, correct store/crowd/subjects, no bars from ratio mismatch, no unintentional overlap; samples do not establish hearing"
+        }
+      ]
+    },
+    {
+      "id": "avatar_stream",
+      "type": "video",
+      "role": "avatar_stream",
+      "parent_id": null,
+      "z_index": 3,
+      "content": {
+        "mode": "editable",
+        "binding": "avatar_slot",
+        "asset_id": null,
+        "description": "原4:5高质量数字人，只有原店长句指定区间可见，局部从0开始。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "contain",
+        "clip": "self",
+        "style": {
+          "parameter_source": "../../layout.json + openingLayoutAt(props,frame)",
+          "box_scope": "frame0 default only; each frame uses the source selector, identity/wide/scene rules take precedence",
+          "runtime_geometry_selector": "openingLayoutAt(props,frame).stage.avatar_stream"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 31.8
+      },
+      "states": [
+        {
+          "id": "source_controlled",
+          "visible": true,
+          "description": "actual visibility and geometry are evaluated each frame by openingLayoutAt; avatar hides footage, absent optional layers do not render"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source_authority",
+          "target_id": null,
+          "rule": "Numeric layout authority is layout.json and selectors in index.tsx. Do not edit copied values independently."
+        }
+      ],
+      "fixed": [
+        "geometry_source",
+        "font_role",
+        "master_clock_policy"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation",
+        "geometry",
+        "creative_brief"
+      ],
+      "acceptance": [
+        {
+          "check": "actual_native_frames",
+          "method": "view current native proof at output size and375px; then current full encoded output samples",
+          "pass_condition": "readable complete text, correct store/crowd/subjects, no bars from ratio mismatch, no unintentional overlap; samples do not establish hearing"
+        }
+      ]
+    },
+    {
+      "id": "color_plane",
+      "type": "background",
+      "role": "color_plane",
+      "parent_id": null,
+      "z_index": 4,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "双色之一构成有信息功能的字面，非模糊边/无功能填充。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          650
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "parameter_source": "../../layout.json + openingLayoutAt(props,frame)",
+          "box_scope": "frame0 default only; each frame uses the source selector, identity/wide/scene rules take precedence",
+          "runtime_geometry_selector": "openingLayoutAt(props,frame).stage.panel"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 31.8
+      },
+      "states": [
+        {
+          "id": "source_controlled",
+          "visible": true,
+          "description": "actual visibility and geometry are evaluated each frame by openingLayoutAt; avatar hides footage, absent optional layers do not render"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source_authority",
+          "target_id": null,
+          "rule": "Numeric layout authority is layout.json and selectors in index.tsx. Do not edit copied values independently."
+        }
+      ],
+      "fixed": [
+        "geometry_source",
+        "font_role",
+        "master_clock_policy"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation",
+        "geometry",
+        "creative_brief"
+      ],
+      "acceptance": [
+        {
+          "check": "actual_native_frames",
+          "method": "view current native proof at output size and375px; then current full encoded output samples",
+          "pass_condition": "readable complete text, correct store/crowd/subjects, no bars from ratio mismatch, no unintentional overlap; samples do not establish hearing"
+        }
+      ]
+    },
+    {
+      "id": "display_type",
+      "type": "text",
+      "role": "display_type",
+      "parent_id": null,
+      "z_index": 5,
+      "content": {
+        "mode": "editable",
+        "binding": "title_slot",
+        "asset_id": null,
+        "description": "章节短句由Smiley原400字形显示；原生斜角，无skew/伪粗。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          66,
+          128,
+          1308,
+          502
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "parameter_source": "../../layout.json + openingLayoutAt(props,frame)",
+          "box_scope": "frame0 default only; each frame uses the source selector, identity/wide/scene rules take precedence",
+          "runtime_geometry_selector": "openingLayoutAt(props,frame).stage.title",
+          "font_family": "HaikeDisplay",
+          "real_font_weight": 400,
+          "font_synthesis": "none",
+          "built_in_slant": "Smiley Sans original oblique outlines; do not add skew",
+          "size_source": "stage.titleSize; benefit single-line232; offer secondary142",
+          "line_break_rule": "explicit semantic lines only, no auto-wrap; source titleFor adds quote/spine variants",
+          "font": "HaikeDisplay",
+          "font_size": 216,
+          "max_lines": 5,
+          "overflow": "No silent truncation; repair semantic copy/layout and re-proof. Display uses explicit lines; caption fits at most2 approved short cue lines."
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 31.8
+      },
+      "states": [
+        {
+          "id": "source_controlled",
+          "visible": true,
+          "description": "actual visibility and geometry are evaluated each frame by openingLayoutAt; avatar hides footage, absent optional layers do not render"
+        },
+        {
+          "id": "state_entry",
+          "visible": true,
+          "description": "First12 frames relative to source-selected layout.from."
+        },
+        {
+          "id": "hold",
+          "visible": true,
+          "description": "Stable reading after12 frames; no idle typography oscillation."
+        }
+      ],
+      "transitions": [
+        {
+          "from": "state_entry",
+          "to": "hold",
+          "trigger": "layout state/chapter entry, local state age frame0–12",
+          "start": 0,
+          "end": 0.4,
+          "properties": {
+            "relative_to": "current layout state from, not global seconds",
+            "clipPath_inset_right_percent": {
+              "from": 100,
+              "to": 0
+            },
+            "translateX_px": {
+              "from": 48,
+              "to": 0
+            }
+          },
+          "easing": "cubic-bezier(.18,.8,.2,1)"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "source_authority",
+          "target_id": null,
+          "rule": "Numeric layout authority is layout.json and selectors in index.tsx. Do not edit copied values independently."
+        }
+      ],
+      "fixed": [
+        "geometry_source",
+        "font_role",
+        "master_clock_policy"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation",
+        "geometry",
+        "creative_brief"
+      ],
+      "acceptance": [
+        {
+          "check": "actual_native_frames",
+          "method": "view current native proof at output size and375px; then current full encoded output samples",
+          "pass_condition": "readable complete text, correct store/crowd/subjects, no bars from ratio mismatch, no unintentional overlap; samples do not establish hearing"
+        }
+      ]
+    },
+    {
+      "id": "brand",
+      "type": "text",
+      "role": "brand",
+      "parent_id": null,
+      "z_index": 6,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "HAIKE AI使用Exo2 Italic800；开业标签使用Noto SC800，两者作为同一品牌组。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          46,
+          28,
+          390,
+          82
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "parameter_source": "../../layout.json + openingLayoutAt(props,frame)",
+          "box_scope": "frame0 default only; each frame uses the source selector, identity/wide/scene rules take precedence",
+          "runtime_geometry_selector": "openingLayoutAt(props,frame).stage.brand",
+          "families": [
+            "HaikeLatin",
+            "HaikeBody"
+          ],
+          "weights": [
+            800,
+            800
+          ],
+          "font_sizes": [
+            55,
+            40
+          ],
+          "latin_style": "actual italic font",
+          "font": "HaikeLatin + HaikeBody",
+          "font_size": 55,
+          "max_lines": 1,
+          "overflow": "No silent truncation; repair semantic copy/layout and re-proof. Display uses explicit lines; caption fits at most2 approved short cue lines."
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 31.8
+      },
+      "states": [
+        {
+          "id": "source_controlled",
+          "visible": true,
+          "description": "actual visibility and geometry are evaluated each frame by openingLayoutAt; avatar hides footage, absent optional layers do not render"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source_authority",
+          "target_id": null,
+          "rule": "Numeric layout authority is layout.json and selectors in index.tsx. Do not edit copied values independently."
+        }
+      ],
+      "fixed": [
+        "geometry_source",
+        "font_role",
+        "master_clock_policy"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation",
+        "geometry",
+        "creative_brief"
+      ],
+      "acceptance": [
+        {
+          "check": "actual_native_frames",
+          "method": "view current native proof at output size and375px; then current full encoded output samples",
+          "pass_condition": "readable complete text, correct store/crowd/subjects, no bars from ratio mismatch, no unintentional overlap; samples do not establish hearing"
+        }
+      ]
+    },
+    {
+      "id": "speaker",
+      "type": "text",
+      "role": "speaker",
+      "parent_id": null,
+      "z_index": 7,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "仅人物时出现的海客AI社区服务站店长，Noto SC800。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          54,
+          1370,
+          1332,
+          94
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "parameter_source": "../../layout.json + openingLayoutAt(props,frame)",
+          "box_scope": "frame0 default only; each frame uses the source selector, identity/wide/scene rules take precedence",
+          "runtime_geometry_selector": "openingLayoutAt(props,frame).stage.speaker",
+          "font_family": "HaikeBody",
+          "real_variable_weight": 800,
+          "font_pixels": 54,
+          "font": "HaikeBody",
+          "font_size": 54,
+          "max_lines": 1,
+          "overflow": "No silent truncation; repair semantic copy/layout and re-proof. Display uses explicit lines; caption fits at most2 approved short cue lines."
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 31.8
+      },
+      "states": [
+        {
+          "id": "source_controlled",
+          "visible": true,
+          "description": "actual visibility and geometry are evaluated each frame by openingLayoutAt; avatar hides footage, absent optional layers do not render"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source_authority",
+          "target_id": null,
+          "rule": "Numeric layout authority is layout.json and selectors in index.tsx. Do not edit copied values independently."
+        }
+      ],
+      "fixed": [
+        "geometry_source",
+        "font_role",
+        "master_clock_policy"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation",
+        "geometry",
+        "creative_brief"
+      ],
+      "acceptance": [
+        {
+          "check": "actual_native_frames",
+          "method": "view current native proof at output size and375px; then current full encoded output samples",
+          "pass_condition": "readable complete text, correct store/crowd/subjects, no bars from ratio mismatch, no unintentional overlap; samples do not establish hearing"
+        }
+      ]
+    },
+    {
+      "id": "caption",
+      "type": "text",
+      "role": "caption",
+      "parent_id": null,
+      "z_index": 8,
+      "content": {
+        "mode": "editable",
+        "binding": "caption_slot",
+        "asset_id": null,
+        "description": "唯一同钟ASR完整字幕；64px Noto SC700，内容自适应底板，绝不缩字隐藏。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          54,
+          1500,
+          1332,
+          150
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "parameter_source": "../../layout.json + openingLayoutAt(props,frame)",
+          "box_scope": "frame0 default only; each frame uses the source selector, identity/wide/scene rules take precedence",
+          "runtime_geometry_selector": "openingLayoutAt(props,frame).stage.caption",
+          "font_family": "HaikeBody",
+          "real_variable_weight": 700,
+          "font_pixels": 64,
+          "phone_equivalent": "16.67px at375px video width",
+          "backplate": "inline fit-content, max1332; exact color logic in Caption",
+          "contrast": "normal text pairs>=4.5; not low-contrast color-on-color",
+          "font": "HaikeBody",
+          "font_size": 64,
+          "max_lines": 2,
+          "overflow": "No silent truncation; repair semantic copy/layout and re-proof. Display uses explicit lines; caption fits at most2 approved short cue lines."
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 31.8
+      },
+      "states": [
+        {
+          "id": "source_controlled",
+          "visible": true,
+          "description": "actual visibility and geometry are evaluated each frame by openingLayoutAt; avatar hides footage, absent optional layers do not render"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source_authority",
+          "target_id": null,
+          "rule": "Numeric layout authority is layout.json and selectors in index.tsx. Do not edit copied values independently."
+        }
+      ],
+      "fixed": [
+        "geometry_source",
+        "font_role",
+        "master_clock_policy"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation",
+        "geometry",
+        "creative_brief"
+      ],
+      "acceptance": [
+        {
+          "check": "actual_native_frames",
+          "method": "view current native proof at output size and375px; then current full encoded output samples",
+          "pass_condition": "readable complete text, correct store/crowd/subjects, no bars from ratio mismatch, no unintentional overlap; samples do not establish hearing"
+        }
+      ]
+    },
+    {
+      "id": "location",
+      "type": "text",
+      "role": "location",
+      "parent_id": null,
+      "z_index": 9,
+      "content": {
+        "mode": "editable",
+        "binding": "location_slot",
+        "asset_id": null,
+        "description": "新塘未来汇64px＋海客AI社区服务站64px同一地点组；本期只支持此地点。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          1662,
+          1440,
+          138
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "parameter_source": "../../layout.json + openingLayoutAt(props,frame)",
+          "box_scope": "frame0 default only; each frame uses the source selector, identity/wide/scene rules take precedence",
+          "runtime_geometry_selector": "openingLayoutAt(props,frame).stage.location",
+          "font_family": "HaikeBody",
+          "weights": [
+            800,
+            800
+          ],
+          "font_sizes": [
+            64,
+            64
+          ],
+          "font": "HaikeBody",
+          "font_size": 64,
+          "max_lines": 1,
+          "overflow": "No silent truncation; repair semantic copy/layout and re-proof. Display uses explicit lines; caption fits at most2 approved short cue lines."
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 31.8
+      },
+      "states": [
+        {
+          "id": "source_controlled",
+          "visible": true,
+          "description": "actual visibility and geometry are evaluated each frame by openingLayoutAt; avatar hides footage, absent optional layers do not render"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source_authority",
+          "target_id": null,
+          "rule": "Numeric layout authority is layout.json and selectors in index.tsx. Do not edit copied values independently."
+        }
+      ],
+      "fixed": [
+        "geometry_source",
+        "font_role",
+        "master_clock_policy"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation",
+        "geometry",
+        "creative_brief"
+      ],
+      "acceptance": [
+        {
+          "check": "actual_native_frames",
+          "method": "view current native proof at output size and375px; then current full encoded output samples",
+          "pass_condition": "readable complete text, correct store/crowd/subjects, no bars from ratio mismatch, no unintentional overlap; samples do not establish hearing"
+        }
+      ]
+    },
+    {
+      "id": "master_audio",
+      "type": "audio",
+      "role": "master_audio",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "editable",
+        "binding": "audio_slot",
+        "asset_id": null,
+        "description": "已确认完整配音与原创音乐的唯一主混音，时间/语速不变。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "parameter_source": "../../layout.json + openingLayoutAt(props,frame)",
+          "box_scope": "frame0 default only; each frame uses the source selector, identity/wide/scene rules take precedence",
+          "runtime_geometry_selector": "openingLayoutAt(props,frame).stage.master_audio"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 31.8
+      },
+      "states": [
+        {
+          "id": "source_controlled",
+          "visible": true,
+          "description": "actual visibility and geometry are evaluated each frame by openingLayoutAt; avatar hides footage, absent optional layers do not render"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source_authority",
+          "target_id": null,
+          "rule": "Numeric layout authority is layout.json and selectors in index.tsx. Do not edit copied values independently."
+        }
+      ],
+      "fixed": [
+        "geometry_source",
+        "font_role",
+        "master_clock_policy"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation",
+        "geometry",
+        "creative_brief"
+      ],
+      "acceptance": [
+        {
+          "check": "actual_native_frames",
+          "method": "view current native proof at output size and375px; then current full encoded output samples",
+          "pass_condition": "readable complete text, correct store/crowd/subjects, no bars from ratio mismatch, no unintentional overlap; samples do not establish hearing"
+        }
+      ]
+    }
+  ],
+  "slots": [
+    {
+      "id": "main_slot",
+      "element_id": "main_stream",
+      "property": "content",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "coverage": "main all frames,1x,no loops,each<=4s",
+        "fit": "cover only after new crop review; contain only paired native wide originals"
+      },
+      "missing": "Required data missing blocks native freeze. Optional omitted layers stay absent.",
+      "overflow": "Repair semantics/crop or design and re-proof. No stretching voice, hidden text or false low-res upgrade."
+    },
+    {
+      "id": "detail_slot",
+      "element_id": "detail_stream",
+      "property": "content",
+      "value_type": "array",
+      "required": false,
+      "limits": {
+        "role": "only meaningful two large portrait or16:9 windows",
+        "missing": "do not show a placeholder"
+      },
+      "missing": "Required data missing blocks native freeze. Optional omitted layers stay absent.",
+      "overflow": "Repair semantics/crop or design and re-proof. No stretching voice, hidden text or false low-res upgrade."
+    },
+    {
+      "id": "avatar_slot",
+      "element_id": "avatar_stream",
+      "property": "content",
+      "value_type": "array",
+      "required": false,
+      "limits": {
+        "placement": "original approved store-manager lines only",
+        "geometry": "full original4:5, no stretch"
+      },
+      "missing": "Required data missing blocks native freeze. Optional omitted layers stay absent.",
+      "overflow": "Repair semantics/crop or design and re-proof. No stretching voice, hidden text or false low-res upgrade."
+    },
+    {
+      "id": "title_slot",
+      "element_id": "display_type",
+      "property": "content",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "copy": "design-props.json chapter titles; titleFor uses stated quote/spine alternatives",
+        "wrap": "explicit semantic line groups; do not shrink"
+      },
+      "missing": "Required data missing blocks native freeze. Optional omitted layers stay absent.",
+      "overflow": "Repair semantics/crop or design and re-proof. No stretching voice, hidden text or false low-res upgrade."
+    },
+    {
+      "id": "caption_slot",
+      "element_id": "caption",
+      "property": "content",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "clock": "real approved ASR cues",
+        "font_pixels": 64,
+        "max_characters": 21,
+        "fit": "readable normal text, no overflow"
+      },
+      "missing": "Required data missing blocks native freeze. Optional omitted layers stay absent.",
+      "overflow": "Repair semantics/crop or design and re-proof. No stretching voice, hidden text or false low-res upgrade."
+    },
+    {
+      "id": "location_slot",
+      "element_id": "location",
+      "property": "content",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "fixed_location": "新塘未来汇 · 海客AI社区服务站"
+      },
+      "missing": "Required data missing blocks native freeze. Optional omitted layers stay absent.",
+      "overflow": "Repair semantics/crop or design and re-proof. No stretching voice, hidden text or false low-res upgrade."
+    },
+    {
+      "id": "audio_slot",
+      "element_id": "master_audio",
+      "property": "content",
+      "value_type": "asset",
+      "required": true,
+      "limits": {
+        "filename": "master.wav",
+        "retime": false
+      },
+      "missing": "Required data missing blocks native freeze. Optional omitted layers stay absent.",
+      "overflow": "Repair semantics/crop or design and re-proof. No stretching voice, hidden text or false low-res upgrade."
+    },
+    {
+      "id": "fonts_slot",
+      "element_id": "display_type",
+      "property": "content",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "aliases": {
+          "display": "display.ttf",
+          "body": "body.ttf",
+          "latin": "latin.ttf"
+        },
+        "loading": "FontFace/delayRender must succeed; no OS fallback"
+      },
+      "missing": "Required data missing blocks native freeze. Optional omitted layers stay absent.",
+      "overflow": "Repair semantics/crop or design and re-proof. No stretching voice, hidden text or false low-res upgrade."
+    }
+  ],
+  "evidence": [
+    {
+      "id": "implementation",
+      "source_kind": "design",
+      "source": "v002 implemented source, not the rejected v001 output",
+      "locator": "openingLayoutAt + render components",
+      "method": "read current code, actual source SHA",
+      "file": "D:\\刘宇钊\\codex_work\\haike-workflow-2\\Haike_video\\templates\\store-opening-v1\\index.tsx",
+      "sha256": "e0596c4f7eee01c36bcbf8519bd176866a7b05109b59886e56253052511968a9"
+    },
+    {
+      "id": "geometry",
+      "source_kind": "design",
+      "source": "v002 canonical source geometry",
+      "locator": "states.25 + shared/identity/wide rules",
+      "method": "canonical boxes + dynamic selectors; no inferred crop approval",
+      "file": "D:\\刘宇钊\\codex_work\\haike-workflow-2\\Haike_video\\templates\\store-opening-v1\\layout.json",
+      "sha256": "9db5881462fced8a8b03961fa47726c4834ba9765499bcf8c1cfac2eca30d95d"
+    },
+    {
+      "id": "creative_brief",
+      "source_kind": "design",
+      "source": "current user-approved scope and chosen reference transfer",
+      "locator": "reference/variants/invariants",
+      "method": "root authored current brief and local reference ledger",
+      "file": "D:\\刘宇钊\\codex_work\\haike-workflow-2\\.local\\codex-runs\\store-opening-redesign-20261025\\creative-brief.json",
+      "sha256": "ed1698c405bb9259879c791171b9d4454181b7b7cd002c30798ecf119a62bfec"
+    },
+    {
+      "id": "reference_palette",
+      "source_kind": "observation",
+      "source": "six actually downloaded and viewed source WebP references",
+      "locator": "pages01..06, printed labels versus rendered pixels",
+      "method": "colors observed from originals; not copied signature shapes/layout/text",
+      "file": "C:\\Users\\Administrator\\Videos\\参考素材\\湾仔爱设计_撞色分享_ZvehNtkS86w\\palette-reference.json",
+      "sha256": "dc81e995371627825b052e258f2e71d95c81260c654e458a93b8fff48584dd4b"
+    },
+    {
+      "id": "current_v002_input",
+      "source_kind": "measurement",
+      "source": "Current five native frozen requests",
+      "locator": "04",
+      "method": "Native adapter.validate plus draft/props/runtime/source-font/crop identity readback",
+      "file": "D:\\刘宇钊\\codex_work\\haike-workflow-2\\.local\\codex-runs\\store-opening-redesign-20261025\\04\\request.json",
+      "sha256": "69b4652f71667dcfad8e0f5195b55d4c0f2eed981940711a2a5b04ad0bac250f"
+    },
+    {
+      "id": "current_v002_crop",
+      "source_kind": "observation",
+      "source": "Actual source PTS with current state/occlusion review",
+      "locator": "04",
+      "method": "Current layout entry+manifest hashes match actual crop review",
+      "file": "D:\\刘宇钊\\codex_work\\haike-workflow-2\\Haike_video\\projects\\studio-007ffec90d4dc2d3\\assets\\store-manager\\asset-review.json",
+      "sha256": "68b5d526711c1cc1b57103aba054946c6e16e1fa66ccfdfdd2b4114e4379be62"
+    },
+    {
+      "id": "current_v002_png_technical",
+      "source_kind": "measurement",
+      "source": "Current thirty native PNG technical checks",
+      "locator": "04",
+      "method": "Full pixel decode1440×1800 and per-file SHA; no complete-video claim",
+      "file": "D:\\刘宇钊\\codex_work\\haike-workflow-2\\.local\\codex-runs\\store-opening-redesign-20261025\\native-proof-technical-current.json",
+      "sha256": "ffb086201b7aecefbf1f0ecae899f2bba3e3ef4e84c67e2a1a0fa6fddd6c8414"
+    },
+    {
+      "id": "current_v002_png_visual",
+      "source_kind": "observation",
+      "source": "Actual current native/375px author visual review",
+      "locator": "04",
+      "method": "作者实际查看当前5张375px原生宽度联系图，覆盖全部30个当前真实native PNG的等比衍生；检查开头/主要状态/最长字幕/权益/人物发顶/地点及结尾。仅这些离散PNG/375px视图，不是完整视频、连续听看、音素口型、手机真机或用户确认。",
+      "file": "D:\\刘宇钊\\codex_work\\haike-workflow-2\\.local\\codex-runs\\store-opening-redesign-20261025\\native-author-review.json",
+      "sha256": "79530e659377f01f1980440488920c2f327d47945c1a19d30a3992757e53aca3"
+    },
+    {
+      "id": "current_v002_png_root",
+      "source_kind": "observation",
+      "source": "Root actual current native/375px visual acceptance",
+      "locator": "04",
+      "method": "实际查看本期全部native PNG的375px面板；限声明画面及字体/版式/裁切代表状态，不等于完整视频视听验收。",
+      "file": "D:\\刘宇钊\\codex_work\\haike-workflow-2\\.local\\codex-runs\\store-opening-redesign-20261025\\proof-final-root-review.json",
+      "sha256": "0c405515698401f2458be79b82fdfec14621f23f6c8f68c41f31a270b37c6d50"
+    },
+    {
+      "id": "final_v002_quality",
+      "source_kind": "measurement",
+      "source": "Current native full-export media measurement",
+      "locator": "04",
+      "method": "Exact full video dimensions/fps/frame count/duration/bitrate/AAC peak, full decode and source-copy SHA validation",
+      "file": "D:\\刘宇钊\\codex_work\\haike-workflow-2\\Haike_video\\projects\\studio-007ffec90d4dc2d3\\renders\\store-opening-d6023049866e0f11013b\\quality.json",
+      "sha256": "a66bb3b9fbc331aff86a81ba9e460ec4ea9a4277c6e326f88122bf010275eba3"
+    },
+    {
+      "id": "final_v002_result",
+      "source_kind": "measurement",
+      "source": "Current native output result",
+      "locator": "04",
+      "method": "Current request/output/quality SHA readback; zero new cloud calls, no publication",
+      "file": "D:\\刘宇钊\\codex_work\\haike-workflow-2\\Haike_video\\projects\\studio-007ffec90d4dc2d3\\renders\\store-opening-d6023049866e0f11013b\\result.json",
+      "sha256": "b977c132966b68bb07d703465f8bd7e85debde77eff7b5b915e9d79f69943db3"
+    },
+    {
+      "id": "final_v002_visual",
+      "source_kind": "observation",
+      "source": "Current encoded film actual discrete visual sampling",
+      "locator": "04",
+      "method": "作者实际查看当前最终编码MP4解出的全部10页联系图、145个完整画面（每幅360px宽）。覆盖真实resolved布局状态切点及进入后3/6/12帧动作、开头每3帧、全程1fps、全部主/副轨镜头与章节入出前后、人物入中出、最长字幕首中尾、最后一帧。仅离散编码帧视觉样本；未连续听看，不替代逐帧动态、音素口型、手机真机、目标平台或用户最终确认。",
+      "file": "D:\\刘宇钊\\codex_work\\haike-workflow-2\\.local\\codex-runs\\store-opening-redesign-20261025\\final-qa\\04\\297878b72afd3c79\\visual-review.json",
+      "sha256": "f757883f53cfea21300cb5f3e5f6a540b9c0de1915630f0809a0b5409d84f46e"
+    },
+    {
+      "id": "final_v002_sample_manifest",
+      "source_kind": "measurement",
+      "source": "Current encoded film actual decoded PTS sampling",
+      "locator": "04",
+      "method": "Source-resolved layout boundaries and3/6/12-frame reveal, 1fps, all cuts/chapters, applicable avatar/long subtitles and last frame",
+      "file": "D:\\刘宇钊\\codex_work\\haike-workflow-2\\.local\\codex-runs\\store-opening-redesign-20261025\\final-qa\\04\\297878b72afd3c79\\sampling-manifest.json",
+      "sha256": "aa5d5ebff2d1cabfd3a98f7e8c8956c39a72316f9d180312846c735ba901550f"
+    },
+    {
+      "id": "final_v002_registration",
+      "source_kind": "measurement",
+      "source": "Current catalog sampled-review handoff registration",
+      "locator": "04",
+      "method": "Exact native input/output/quality/result/manifest/visual identities and WorkCatalog handoff, without confirmation or publication",
+      "file": "D:\\刘宇钊\\codex_work\\haike-workflow-2\\Haike_video\\projects\\studio-007ffec90d4dc2d3\\renders\\store-opening-d6023049866e0f11013b\\review-sampled.json",
+      "sha256": "8ef80b476b47e874bc5b8afec9ced695c6d17f3840db76ed76d0c63059e9f49d"
+    }
+  ],
+  "unknowns": [],
+  "validation": {
+    "structure": {
+      "status": "pass",
+      "evidence_ids": [
+        "current_v002_input",
+        "current_v002_crop",
+        "final_v002_registration"
+      ],
+      "note": "本期当前5个冻结输入与原生完整输出身份一致；仅本机本期输入，不扩展其他输入或设备。"
+    },
+    "technical": {
+      "status": "pass",
+      "evidence_ids": [
+        "final_v002_quality",
+        "final_v002_result",
+        "final_v002_registration"
+      ],
+      "note": "当前完整视频954帧/31.800000秒，1440×1800/30fps/H.264 yuv420p；视频流20494271bps≥20Mbps；AAC48kHz双声道峰值-4.32dBTP≤-1.5；全解码和源SHA通过。"
+    },
+    "visual": {
+      "status": "pass",
+      "evidence_ids": [
+        "final_v002_visual",
+        "final_v002_sample_manifest",
+        "final_v002_registration"
+      ],
+      "note": "当前正式视频由opening_redesign_audit实际看完全部10页联系图/145个离散编码帧；含真实布局/动作节点、全程1fps、全部镜头/章节、适用人物与长字幕及末帧。仅离散样本，不等于连续动态或听看。"
+    },
+    "audio": {
+      "status": "pending",
+      "evidence_ids": [
+        "final_v002_quality"
+      ],
+      "note": "AAC格式与峰值已作为技术项通过；当前完整片连续听辨、视听同步及适用音素口型未验，不由ASR或抽帧替代。"
+    },
+    "platform": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "目标平台/实际手机真机呈现和声音未验；本机抽样不是平台真机。"
+    },
+    "user_review": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "五条新完整成片待用户最终确认。"
+    },
+    "production": {
+      "status": "pass",
+      "evidence_ids": [
+        "final_v002_result",
+        "final_v002_registration"
+      ],
+      "note": "本期原生统一队列完整输出和quality/result已读回；WorkCatalog采样审核handoff已登记。用户确认、最终版本选择和公开发布不在本通过范围。"
+    }
+  },
+  "extensions": {
+    "custom": {
+      "contract": "store-opening-v1",
+      "rules": {
+        "version": "v002",
+        "brief": "creative-brief.json in current task",
+        "numeric_authority": "layout.json imported by index.tsx",
+        "state_selector": "openingLayoutAt(props,frame), priority avatar > native wide > content stage",
+        "state_geometries": "../../layout.json states.25; proof source geometry must be current",
+        "source_sha256": "e0596c4f7eee01c36bcbf8519bd176866a7b05109b59886e56253052511968a9",
+        "layout_sha256": "9db5881462fced8a8b03961fa47726c4834ba9765499bcf8c1cfac2eca30d95d",
+        "old_scope": "v001 whole directory is snapshotted in TASK/snapshots/template-v001; do not reuse its passed visual status",
+        "ready_scope": "本机本期当前5个冻结输入；完整技术和分工作者离散编码视觉样本通过。连续听看/音素口型/平台真机/用户最终确认pending，未发布。",
+        "frozen_request_sha256": "d6023049866e0f11013b0dbde67f85de52673e41a7a9004384b56b418488cc7f",
+        "frozen_props_sha256": "da5262be557f23210ecc3ddcf3ff83059cb9bbdd6be9f21b32920655a23ad149",
+        "native_visual_review_sha256": "79530e659377f01f1980440488920c2f327d47945c1a19d30a3992757e53aca3",
+        "root_native_visual_review_sha256": "0c405515698401f2458be79b82fdfec14621f23f6c8f68c41f31a270b37c6d50",
+        "current_phone_contact_sha256": "dcbba7b0d932a2cdf8680f1adaf08c9642b89f19b3c9b4acc1ee06af5c9153f9",
+        "final_output_sha256": "297878b72afd3c794af0855e1520f4104c56e2379f27ef4e9ee8785628ac7343",
+        "final_registration_sha256": "8ef80b476b47e874bc5b8afec9ced695c6d17f3840db76ed76d0c63059e9f49d",
+        "full_video_validation": "完整技术pass；离散编码帧视觉样本pass；连续听看/音素口型/真机/用户最终确认pending。"
+      }
+    },
+    "avatar": {
+      "synchronization": "original approved short ranges, local source starts0, master clock continues",
+      "face_crop": "Full original4:5. No stretch; head/gestures actual new proof review.",
+      "geometry": "full native4:5 panel, no old footage-rectangle substitution"
+    },
+    "material_edit": {
+      "source_ranges": "current task materials draft/review and props.shots; source bytes unchanged",
+      "cut_policy": "1x, no loops/freezes, each<=4sec, main complete, detail only explicit large-window intervals",
+      "review": "new state box+overlay crop requires actual review, even with unchanged source interval"
+    },
+    "audio": {
+      "contract": "speech-led-v1",
+      "rules": {
+        "clock": "approved voice and ASR unchanged",
+        "mix": "single frozen master; source videos muted"
+      }
+    },
+    "fonts": {
+      "contract": "opening-fonts-v002",
+      "rules": {
+        "families": {
+          "HaikeDisplay": "Smiley Sans Oblique400, original slant",
+          "HaikeBody": "Noto Sans SC variable100–900, uses700/800",
+          "HaikeLatin": "Exo2 Italic variable, uses800"
+        },
+        "loading": "all3 FontFace.load/document.fonts.load complete via delayRender; failure cancels rendering",
+        "synthesis": "none"
+      }
+    }
+  },
+  "operations": [
+    {
+      "id": "freeze",
+      "input": "本期完整WAV、真实ASR、已观察的原片镜头、可选新口型、props、SHA与用户授权。",
+      "action": "通过本仓store-opening-v1适配器prepare冻结，本目录只提供视觉实现。",
+      "output": "本期request、来源和runtime指纹。",
+      "completion": "Current schema/source/FontFace and actual native proof/crop gate pass before ready/new native freeze. Old v001 gates cannot pass v002.",
+      "recovery": "沿原队列与来源SHA恢复；素材或实现变化新冻结，仅重做受影响本地合成。",
+      "entrypoint": "../../../../backlot/studio_store_opening.py"
+    },
+    {
+      "id": "review",
+      "input": "Current v002 native proof and then current v002 complete MP4, not old v001 exports.",
+      "action": "按README与视频模板验收量表检查所有章节和状态，记录技术、视觉、听看、真机范围。",
+      "output": "REVIEW.md及可验证文件/哈希，符合ready条件才明确升级规格。",
+      "completion": "必需项有对应证据，不把抽帧当听审或本机当真机；失败项修复后检查受影响范围。",
+      "recovery": "源码改动重做本地冻结；保留云端成功音频与人物；恢复入口沿本期原队列。",
+      "entrypoint": "../../README.md"
+    }
+  ]
+}

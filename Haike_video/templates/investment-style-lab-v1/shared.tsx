@@ -1,6 +1,7 @@
 import React from 'react';
 import {OffthreadVideo, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
 import type {Box, LabProps} from './types';
+import {paletteMount} from './palettes';
 import layout from './layout.json';
 
 export const SANS = '"Microsoft YaHei", sans-serif';
@@ -22,7 +23,7 @@ export const metrics = (p:LabProps) => {
 
 export const SourceWindow:React.FC<{props:LabProps;box:Box;radius?:number;border?:string;style?:React.CSSProperties;clipPath?:string}>=({props:p,box,radius=0,border,style,clipPath})=>{
   const mount:Record<number,string>={3:'#d7c9b6',4:'#15101e',5:'#f4f5e9',6:'#f5ead6',7:'#0e1820',8:'#fff6ed',9:'#f4f3ee',10:'#fff8ec'};
-  return <div data-role="source-window" style={{...boxStyle(box),borderRadius:radius,overflow:'hidden',border,background:mount[p.templateNumber],clipPath,...style}}>
+  return <div data-role="source-window" style={{...boxStyle(box),borderRadius:radius,overflow:'hidden',border,background:paletteMount(p,mount[p.templateNumber]),clipPath,...style}}>
     <OffthreadVideo src={staticFile(p.avatarSrc)} muted style={{width:'100%',height:'100%',objectFit:'contain'}}/>
   </div>;
 };

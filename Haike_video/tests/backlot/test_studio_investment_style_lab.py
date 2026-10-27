@@ -102,6 +102,66 @@ def test_historical_short_test_can_omit_an_unspoken_cta(sample):
     assert lab._props(request)["cta"] == ""
 
 
+def test_default_palette_omission_keeps_legacy_request_and_props(sample):
+    legacy = prepare(sample, template_number=7, ratio="4x5")
+    explicit = prepare(sample, template_number=7, ratio="4x5", palette_variant="default")
+    assert explicit == legacy
+    assert "palette_variant" not in legacy and "paletteVariant" not in lab._props(legacy)
+    # A completed result remains readable after executable source changes.
+    project = sample["queue"].projects_root / legacy["project_id"]
+    render = project / "renders" / legacy["render_id"]
+    render.mkdir(parents=True)
+    (render / "avatar-preview.mp4").write_bytes(b"legacy-completed-output")
+    atomic_private(render / "props.json", lab._props(legacy))
+    atomic_private(render / "render-quality-receipt.json", {"fixture": True})
+    atomic_private(render / "investment-style-lab-result.json", {
+        "request_sha256": legacy["request_sha256"], "output_sha256": sha(render / "avatar-preview.mp4"),
+        "props_sha256": sha(render / "props.json"), "quality_receipt_sha256": sha(render / "render-quality-receipt.json")})
+    (sample["template"] / "index.tsx").write_text("new palette executable", encoding="utf-8")
+    assert lab.validate(sample["queue"], legacy) == project
+
+
+@pytest.mark.parametrize("variant,number", list(lab.PALETTE_VARIANTS.items()))
+def test_optional_palette_is_frozen_and_bound_to_its_template_and_ratio(sample, variant, number):
+    legacy = prepare(sample, template_number=number, ratio="4x5")
+    revised = prepare(sample, template_number=number, ratio="4x5", palette_variant=variant)
+    assert revised["palette_variant"] == variant and lab._props(revised)["paletteVariant"] == variant
+    assert revised["template_id"] == f"investment-template-{number:02d}-{variant}"
+    assert revised["project_id"] != legacy["project_id"]
+    assert revised["request_sha256"] != legacy["request_sha256"]
+    assert revised["render_profile"] == legacy["render_profile"]
+    assert revised["cues"] == legacy["cues"] and revised["beat_titles"] == legacy["beat_titles"]
+    assert lab.validate(sample["queue"], revised)
+    removed = deepcopy(revised)
+    del removed["palette_variant"]
+    removed["template_id"] = legacy["template_id"]
+    with pytest.raises(WorkError, match="配色变体"):
+        lab.validate(sample["queue"], resign(removed))
+    added = deepcopy(legacy)
+    added["palette_variant"] = variant
+    added["template_id"] = revised["template_id"]
+    with pytest.raises(WorkError, match="配色变体"):
+        lab.validate(sample["queue"], resign(added))
+
+
+@pytest.mark.parametrize("variant,number,ratio", [
+    ("blue-beige", 8, "4x5"), ("cyan-charcoal", 7, "4x5"), ("black-pink", 10, "4x5"),
+    ("blue-beige", 7, "9x16"), ("cyan-charcoal", 8, "1x1"), ("black-pink", 9, "16x9"),
+    ("unknown", 7, "4x5"), ("", 7, "4x5"), (True, 7, "4x5"), ({}, 7, "4x5")])
+def test_wrong_palette_template_or_ratio_rejected_before_import(sample, variant, number, ratio):
+    with pytest.raises(WorkError, match="新配色"):
+        prepare(sample, template_number=number, ratio=ratio, palette_variant=variant)
+    assert sample["calls"] == []
+
+
+@pytest.mark.parametrize("value", [None, "default"])
+def test_frozen_palette_cannot_add_an_empty_default_field(sample, value):
+    request = prepare(sample)
+    request["palette_variant"] = value
+    with pytest.raises(WorkError, match="默认配色"):
+        lab.validate(sample["queue"], resign(request))
+
+
 def test_four_beat_titles_are_owned_by_current_input_and_headline_is_effective(sample):
     value = read_json(sample["cues"])
     value["beat_titles"] = ["第一拍\n可换文案", "第二拍", "第三拍", "第四拍"]

@@ -3,7 +3,7 @@
   "files": [
     {
       "path": "agent_cli.py",
-      "sha256": "156f358ce608107a7c7cd252c0514693f947e8f6720532970bfee83d60225ff0"
+      "sha256": "cd13612a4a0aaeb7be181176372efb924b2a172394c8d23360edfa552eb15679"
     },
     {
       "path": "capability.json",
@@ -11,7 +11,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "fcd5596802778a28bea40a2f63e3eb116531cfe97b1a386e38545a1aa615745b"
+      "sha256": "44504798f41bd8ea727107180a6d74fac756034305f80fdf71f749acb13f69f4"
     },
     {
       "path": "reference/node_specs.json",

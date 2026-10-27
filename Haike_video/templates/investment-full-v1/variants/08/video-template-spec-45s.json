@@ -1,0 +1,213 @@
+{
+  "schema_version": 1,
+  "standard_version": "video-template-v1",
+  "template_id": "investment-full-08-cyan-charcoal",
+  "template_version": "v003-45s-clock",
+  "template_type": "custom",
+  "spec_kind": "implementation",
+  "stage": "specification",
+  "authority": {
+    "runbook": "45秒扩展.md",
+    "implementation_paths": [
+      "../../index.tsx",
+      "../../Full.tsx",
+      "../../Shared.tsx",
+      "../../Graphics.tsx",
+      "../../geometry.ts",
+      "../../palettes.ts",
+      "../../types.ts",
+      "../../layout.json",
+      "../../../../backlot/studio_investment_full.py",
+      "../../../../scripts/investment_full.py",
+      "../../../../backlot/production_queue_worker.py",
+      "../../../../backlot/studio_investment_audio_v5.py"
+    ],
+    "parameter_source": "../../geometry.ts"
+  },
+  "canvas": {
+    "width": 1440,
+    "height": 1800,
+    "fps": 30,
+    "duration_seconds": 45,
+    "clock": "EDL显式1350帧；内容帧+0至60帧尾卡=1350，真实音频原速，不隐式补人物帧。原900帧默认保留。",
+    "coordinate_system": "top_left_pixels"
+  },
+  "narrative": {
+    "purpose": "既有08青炭的显式时长扩展，视觉语法与全部原组件继承，不是新美术模板。",
+    "information_hierarchy": [
+      "完整语音",
+      "真实字幕",
+      "本期人物/素材/图文",
+      "原版品牌与折面"
+    ],
+    "structure": [
+      "本期chapters连续覆盖1350帧",
+      "尾卡由最终offer承载且人物停止"
+    ]
+  },
+  "scenes": [
+    {
+      "id": "clock_scope",
+      "start": 0,
+      "end": 45,
+      "purpose": "继承08组件，约束本期每个元素的全片/局部时间映射",
+      "element_ids": [
+        "canvas"
+      ],
+      "variant": "cyan08_1350f"
+    }
+  ],
+  "assets": [],
+  "elements": [
+    {
+      "id": "canvas",
+      "type": "group",
+      "role": "08青炭45秒时钟作用域",
+      "parent_id": null,
+      "z_index": 0,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "继承原版全部视觉元素，仅将本期全片主钟显式扩展至1350帧；实际章节、源和cue由新request冻结"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "按当前章节/全片状态求值",
+          "rule": "背景palettes.PALETTES['cyan-charcoal'].canvas=#202425；overflow hidden"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 45
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "按当前章节/全片状态求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/geometry/palettes→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "duration_source"
+      ],
+      "acceptance": [
+        {
+          "check": "青炭完整片根画布",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    }
+  ],
+  "slots": [],
+  "evidence": [
+    {
+      "id": "duration_source",
+      "source_kind": "design",
+      "source": "用户明确授权保留全文并扩展08到约45秒；当前实现新增1350帧分支",
+      "locator": "studio_investment_full._edit_frames、geometry.assertProps、index.calculateMetadata",
+      "method": "54项隔离合同及编码接口检查；实际数据卡与第1349帧尾卡短样查看，完整成片独立验收",
+      "file": null,
+      "sha256": null
+    }
+  ],
+  "unknowns": [],
+  "validation": {
+    "structure": {
+      "status": "pending",
+      "evidence_ids": [
+        "duration_source"
+      ],
+      "note": "范围仅为1350帧扩展合同；完整成片、声音、平台及用户验收独立。"
+    },
+    "technical": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "范围仅为1350帧扩展合同；完整成片、声音、平台及用户验收独立。"
+    },
+    "visual": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "范围仅为1350帧扩展合同；完整成片、声音、平台及用户验收独立。"
+    },
+    "audio": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "范围仅为1350帧扩展合同；完整成片、声音、平台及用户验收独立。"
+    },
+    "platform": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "范围仅为1350帧扩展合同；完整成片、声音、平台及用户验收独立。"
+    },
+    "user_review": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "范围仅为1350帧扩展合同；完整成片、声音、平台及用户验收独立。"
+    },
+    "production": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "范围仅为1350帧扩展合同；完整成片、声音、平台及用户验收独立。"
+    }
+  },
+  "extensions": {
+    "custom": {
+      "contract": "cyan08-explicit-45s-v1",
+      "rules": {
+        "base_visual_spec": "video-template-spec-v002.json",
+        "scope": "仅时长扩展；全量视觉元素与空间/层级/转场规则继承原规格及其源码权威，实际源与章节由新request冻结。",
+        "allowed_frames": [
+          900,
+          1350
+        ],
+        "extended_template_number": 8,
+        "implicit_rate_change": false,
+        "implicit_padding": false,
+        "presenter_video_override": {
+          "binding": "optional storyboard.presenterVideo; same source video byte-copy; new native queue request",
+          "coverage": "all merged presenter intervals only; reject omissions, cross-scene coverage, repeated source and insufficient duration",
+          "clock": "30fps sourceOffsetFrames in editing clock; natural source-time sampling; original audio master and AV EDL retained",
+          "fallback": "omitted override keeps original AV source; present override must cover every presenter interval"
+        }
+      }
+    }
+  },
+  "operations": [
+    {
+      "id": "native_prepare_submit_run",
+      "input": "完整源MP4、真实cue、EDL、storyboard、声音计划与本期授权",
+      "action": "原生CLI prepare→submit(paused)→run；同请求status/resume",
+      "output": "新冻结request、同1350帧成片及同SHA技术/视觉记录",
+      "completion": "真实完整输出与素材、字幕、声音检查分别完成；旧样片不代替新范围",
+      "recovery": "复用原付费素材，保留原request与队列，局部修订新prepare",
+      "entrypoint": "../../../../scripts/investment_full.py"
+    }
+  ]
+}

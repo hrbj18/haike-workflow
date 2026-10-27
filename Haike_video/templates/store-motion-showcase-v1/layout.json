@@ -1,0 +1,49 @@
+{
+  "width": 1440,
+  "height": 1800,
+  "fps": 30,
+  "brand": [80, 62, 1280, 72],
+  "topRule": [80, 158, 1280, 2],
+  "chapter": [80, 190, 1280, 48],
+  "progress": [80, 1630, 1280, 4],
+  "location": [80, 1680, 1280, 56],
+  "radius": 20,
+  "layouts": {
+    "wide": {
+      "footage": [80, 445, 1280, 720],
+      "title": [80, 286, 1280, 146],
+      "subtitle": [80, 1250, 1280, 150],
+      "kicker": [80, 1450, 1280, 55],
+      "titleSize": 126,
+      "subtitleSize": 56,
+      "align": "left"
+    },
+    "portrait-left": {
+      "footage": [80, 305, 750, 1260],
+      "title": [890, 500, 470, 560],
+      "subtitle": [890, 1120, 470, 230],
+      "kicker": [890, 1420, 470, 55],
+      "titleSize": 104,
+      "subtitleSize": 43,
+      "align": "left"
+    },
+    "portrait-right": {
+      "footage": [610, 305, 750, 1260],
+      "title": [80, 500, 470, 560],
+      "subtitle": [80, 1120, 470, 230],
+      "kicker": [80, 1420, 470, 55],
+      "titleSize": 104,
+      "subtitleSize": 43,
+      "align": "left"
+    },
+    "portrait-center": {
+      "footage": [390, 398, 660, 1174],
+      "title": [80, 272, 1280, 116],
+      "subtitle": [80, 1500, 250, 90],
+      "kicker": [1110, 1460, 250, 55],
+      "titleSize": 88,
+      "subtitleSize": 34,
+      "align": "center"
+    }
+  }
+}

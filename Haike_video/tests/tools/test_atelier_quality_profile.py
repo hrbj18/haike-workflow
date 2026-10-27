@@ -66,3 +66,22 @@ def test_target_bitrate_cannot_be_combined_with_crf(renderer, bitrate):
     tool, output, calls, settings = renderer
     assert not tool._render_via_atelier({"output_path": str(output)}, {"bespoke": {**settings, "video_bitrate": bitrate}}).success
     assert calls == []
+
+
+def test_explicit_h264_cbr_uses_native_single_encode_config(renderer):
+    tool, output, calls, settings = renderer
+    settings = {**settings, "crf": None, "video_bitrate": "22M", "h264_cbr": True}
+    assert tool._render_via_atelier({"output_path": str(output)}, {"bespoke": settings}).success
+    config = output.with_suffix(".cbr.config.js")
+    assert f"--config={config}" in calls[0]
+    content = config.read_text(encoding="utf-8")
+    assert "nal-hrd=cbr:filler=1" in content and "libx264" in content
+    assert "'-minrate'" in content and "'-maxrate'" in content
+
+
+@pytest.mark.parametrize("change", [{"codec": "copy"}, {"video_bitrate": None}, {"crf": 16}, {"h264_cbr": "true"}])
+def test_invalid_cbr_contract_does_not_launch(renderer, change):
+    tool, output, calls, settings = renderer
+    settings = {**settings, "crf": None, "video_bitrate": "22M", "h264_cbr": True, **change}
+    assert not tool._render_via_atelier({"output_path": str(output)}, {"bespoke": settings}).success
+    assert not calls

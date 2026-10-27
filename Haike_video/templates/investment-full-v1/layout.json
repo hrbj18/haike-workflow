@@ -1,0 +1,44 @@
+{
+  "contract": "investment-full-v1",
+  "composition": "HaikeInvestmentFull",
+  "width": 1440,
+  "height": 1800,
+  "fps": 30,
+  "durationInFrames": 900,
+  "ratio": "4x5",
+  "caption": {"x": 78, "y": 1502, "w": 1284, "h": 222, "fontSize": 68, "lineHeight": 1.23, "maxLines": 2, "maxCharsPerLine": 18, "revealFrames": 6, "minCueFramesForReveal": 30},
+  "brand": {"x": 100, "y": 74, "w": 1240, "h": 58, "fontSize": 38},
+  "styles": {
+    "blue-beige": {
+      "presenter": {"x": 444, "y": 418, "w": 864, "h": 1026},
+      "presenterHeading": {"x": 102, "y": 189, "w": 1220, "h": 208},
+      "media": {"x": 100, "y": 410, "w": 1240, "h": 940},
+      "mediaHeading": {"x": 102, "y": 193, "w": 1220, "h": 176},
+      "graphic": {"x": 102, "y": 430, "w": 1236, "h": 960}
+    },
+    "cyan-charcoal": {
+      "presenter": {"x": 506, "y": 418, "w": 822, "h": 1032},
+      "presenterHeading": {"x": 100, "y": 188, "w": 1220, "h": 204},
+      "media": {"x": 100, "y": 400, "w": 1240, "h": 956},
+      "mediaHeading": {"x": 100, "y": 188, "w": 1220, "h": 178},
+      "graphic": {"x": 100, "y": 420, "w": 1240, "h": 972}
+    },
+    "black-pink": {
+      "presenter": {"x": 560, "y": 440, "w": 760, "h": 1012},
+      "presenterHeading": {"x": 104, "y": 196, "w": 1210, "h": 224},
+      "media": {"x": 104, "y": 442, "w": 1232, "h": 900},
+      "mediaHeading": {"x": 104, "y": 192, "w": 1210, "h": 212},
+      "graphic": {"x": 104, "y": 454, "w": 1232, "h": 948}
+    }
+  },
+  "rules": {
+    "sourceFit": "contain",
+    "sourcePixelTreatment": "none",
+    "sourceAudio": "muted",
+    "mediaGapBeforeCaption": 96,
+    "titleLinesMax": 2,
+    "graphicItemsMax": 3,
+    "tailHold": "graphic offer only, no source avatar",
+    "copyrightedSourceCredits": "full source retained by contain, labels outside image"
+  }
+}

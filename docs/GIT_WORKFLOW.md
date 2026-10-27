@@ -1,6 +1,6 @@
 # 海客科技 · Git项目管理
 
-2026-10-17。用户确认视频工作台和收费中转站在 [hrbj18/haike-workflow](https://github.com/hrbj18/haike-workflow) 管理，保留仓库公开可见性和原提交历史。本次只上传新版独立分支，保留旧版标签，不合并 `main`、不打包。
+2026-10-27。用户确认视频工作台和收费中转站在 [hrbj18/haike-workflow](https://github.com/hrbj18/haike-workflow) 管理，保留仓库公开可见性和原提交历史。本次明确授权将已验收交付源码更新到`main`作为稳定版，先保存旧main标签，再经PR和检查合入；不强推改写共享历史。早期“不合并main、不打包”仅为历史阶段范围。
 
 | 目录 | 管理对象 |
 |---|---|
@@ -14,21 +14,23 @@
 
 ## 分支与提交
 
-- `main`：本次保留原旧版提交 `05183670edca40483f4d2d212282e4c05c94cc84`。
+- `main`：当前稳定交付入口；2026-10-27版本范围见[稳定版说明](releases/20261027-stable.md)。
+- `legacy-main-before-20261027`：升级前main提交`05183670edca40483f4d2d212282e4c05c94cc84`的回退标签。
+- `stable-20261027`：本次main合入后固定的稳定版标签。
 - `legacy-before-v2-20261017`：固定上述旧版源码的保留标签。
 - `dev-ybw`：现有集成分支；后续 feature/fix 经 PR 审阅后再合入。
-- `feat/retain-capabilities-ui`：本次新版源码与通用 Agent 教程，不因上传就宣称正式稳定版或新机验收完成。
-- 后续从集成分支建立 `feat/<功能>`、`fix/<问题>`；更新 `main` 和正式版本标签另行授权。
+- `feat/retain-capabilities-ui`、`feat/avatar-template6-zhaoshang-a`：历史功能交付分支，继续保留。
+- 后续从明确且已同步的基线建立`feat/<功能>`、`fix/<问题>`或`codex/`分支，通过检查和PR审阅后合入；发布、推送及版本标签按当期授权执行。稳定版本命名不替代另一台物理机或真实账号/云端验收。
 
 ```sh
-git switch dev-ybw
-git pull --ff-only origin dev-ybw
-git switch -c feat/new-template
+git switch main
+git pull --ff-only origin main
+git switch -c codex/feat/new-template
 # 修改、运行所属模块检查，再暂存明确的文件
 git add 路径
 git diff --cached
 git commit -m "Add new avatar template"
-git push -u origin feat/new-template
+git push -u origin codex/feat/new-template
 ```
 
 通过Pull Request审阅代码和检查结果。不要用force push改写共享分支。需要回退功能时用 `git revert <提交>` 产生可追踪的反向提交；资金数据库回退必须按独立备份恢复流程执行，不能跟随代码自动回退。
@@ -36,7 +38,7 @@ git push -u origin feat/new-template
 ## 新克隆与构建
 
 ```sh
-git clone --branch feat/retain-capabilities-ui https://github.com/hrbj18/haike-workflow.git
+git clone --branch main https://github.com/hrbj18/haike-workflow.git
 cd haike-workflow
 python scripts/check.py
 python scripts/build-studio.py

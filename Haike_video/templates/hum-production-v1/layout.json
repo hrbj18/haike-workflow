@@ -1,0 +1,8 @@
+{
+  "width":1440,"height":1800,"fps":30,
+  "brand":[88,64,1264,48],"footer":[88,1730,1264,38],
+  "captions":[88,1580,1264,116],"captionSize":58,
+  "statement":{"title":[88,178,1264,300],"titleSize":104},
+  "sceneHeader":{"title":[88,178,1264,260],"titleSize":88},
+  "presenter":{"large":[300,460,840,1060],"small":[1082,1205,270,338],"transitionFrames":18}
+}

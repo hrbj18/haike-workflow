@@ -1,14 +1,16 @@
 # GitHub 与跨电脑部署
 
-更新时间：2026-10-21
+更新时间：2026-10-27
+
+10/27：用户授权将已验收交付快照21d1ff2发布为main稳定版，旧main保留legacy-main-before-20261027，合入后固定stable-20261027；见根[稳定版说明](../../../docs/releases/20261027-stable.md)。模板[交付说明](../../../docs/TEMPLATE_DELIVERY.md)含40张本地ZIP截图/42目录及备份回退。发布不混入其他窗口新改动；未声称异机/付费/发布验收。
 
 ## 权威入口
 
-- 10/21新增源码交付分支`feat/avatar-template6-zhaoshang-a`，不合并main。便携包从提交导出并重建界面；独立APIKey私有ZIP含海客/原服务两份配置，禁止上传GitHub。简明入口根`使用说明.txt`、`00-install.cmd`；具体交付哈希与诊断保存在本机`.local/release-20261021/`，不把准备过程称为已完成打包。
+- 10/21交付分支`feat/avatar-template6-zhaoshang-a`为历史入口；当前稳定入口main。便携包从提交导出并重建界面；APIKey私有ZIP禁止上传GitHub。初始化见根`使用说明.txt`、`01-setup.cmd`；既有10/21证据在根`.local/release-20261021/`。
 - 两条RunningHub路线随源码交付：性价比2094449979141218305仍为默认；V5.3.1高质量2112180419025260546的独立执行器及完整JSON位于`workflows/runninghub-high-quality/`。新任务读取根`scripts/runninghub-workflow.py show`，仅用户明确要求才保存长期Agent偏好；不修改Studio路由/旧任务。普通Studio与高质量统一父队列适配仍待验。公开附件不带私人图/声音/音色。
 
 - 用户确认单仓为`https://github.com/hrbj18/haike-workflow`，保留公开可见性。根README及 `docs/GIT_WORKFLOW.md` 是安装、分支、CI和迭代入口。
-- 新版仅上传`feat/retain-capabilities-ui`；旧main `0518367`以`legacy-before-v2-20261017`标签保留，main不合并。当前已授权另交便携ZIP及独立多Key配置文档；`dev-ybw`为现有集成分支。
+- 原`feat/retain-capabilities-ui`与`legacy-before-v2-20261017`保留；旧main为0518367。`dev-ybw`集成分支不自动移动；后续基线与分支流程以根`docs/GIT_WORKFLOW.md`为准。
 - 旧单模块仓库、旧标签和便携包不代表新版已发布能力；共享分支通过PR审阅，保留原历史。
 - Windows完整安装：根 `scripts/setup.ps1`，Python3.12、Node22+、Git/uv；默认跳过本地Qwen TTS。安装新增前端构建，不继承账号、任务或素材。
 - 工作台静态文件由根 `scripts/build-studio.py`生成；源码目录为 `prototypes/haike-avatar-generator`。Mac源码checkout与14754安装副本分离，更新须明确同步目标。

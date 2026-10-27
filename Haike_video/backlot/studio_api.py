@@ -14,6 +14,8 @@ from backlot.work_catalog import WorkError
 from backlot import work_publish
 
 router = APIRouter()
+from backlot.studio_motiongit_api import router as motiongit_router
+router.include_router(motiongit_router)
 # Professional tools remain reachable. Customer audio uses the account-scoped
 # relay modal; the former global supplier settings are internal only.
 REMOVED_ENTRIES = {"/audio": "/settings?panel=audio", "/settings/audio-center": "/settings?panel=audio",
@@ -46,6 +48,7 @@ def mutation(request):
 @router.get("/settings/audio-center", response_class=HTMLResponse)
 @router.get("/settings/audio-center/{voice_id}", response_class=HTMLResponse)
 @router.get("/projects", response_class=HTMLResponse)
+@router.get("/motiongit", response_class=HTMLResponse)
 def page():
     path = Path(__file__).parent / "ui/avatar-generator/index.html"
     return HTMLResponse(path.read_text(encoding="utf-8"), headers={"Cache-Control": "no-cache"})
@@ -53,6 +56,30 @@ def page():
 
 @router.get("/api/studio/templates")
 def templates(): return {"templates": TEMPLATES}
+
+
+@router.get("/api/studio/template-library")
+def template_library():
+    from backlot.studio_template_library import library
+    return library()
+
+
+@router.get("/api/studio/template-library/{template_id}/media/{kind}")
+def template_library_media(template_id: str, kind: str):
+    from backlot.studio_template_library import media
+    path = media(template_id, kind)
+    if path is None:
+        raise HTTPException(404, "本机未绑定此模板样片")
+    return FileResponse(path, headers={"Cache-Control": "no-cache"})
+
+
+@router.get("/api/studio/template-library/{template_id}/guide")
+def template_library_guide(template_id: str):
+    from backlot.studio_template_library import document
+    path = document(template_id)
+    if path is None:
+        raise HTTPException(404, "模板手册不存在")
+    return {"text": path.read_text(encoding="utf-8-sig")}
 
 
 @router.get("/api/studio/motion/catalog")

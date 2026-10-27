@@ -1156,6 +1156,26 @@ class VideoCompose(BaseTool):
                 return ToolResult(success=False, error="Atelier jpeg_quality requires JPEG and an integer from1 to100")
             cmd.append(f"--jpeg-quality={value}")
 
+        if "h264_cbr" in bespoke:
+            if type(bespoke["h264_cbr"]) is not bool:
+                return ToolResult(success=False, error="Atelier h264_cbr必须为布尔值")
+            if bespoke["h264_cbr"]:
+                if bespoke.get("codec") != "h264" or not bespoke.get("video_bitrate") or bespoke.get("crf") is not None:
+                    return ToolResult(success=False, error="Atelier CBR需要H.264和明确码率，禁止同时CRF")
+                # Keep the original PNG-to-H.264 encode. HRD filler supplies the
+                # declared rate for simple graphics without a second lossy pass.
+                config = output_path.with_suffix(".cbr.config.js")
+                rate = bespoke["video_bitrate"]
+                config.write_text(
+                    "const {Config}=require('@remotion/cli/config');\n"
+                    "Config.overrideFfmpegCommand(({args})=>{\n"
+                    "if(!args.includes('libx264')) return args;\n"
+                    "return [...args.slice(0,-1),'-minrate'," + json.dumps(rate) +
+                    ",'-maxrate'," + json.dumps(rate) + ",'-bufsize'," + json.dumps(rate) +
+                    ",'-x264-params','nal-hrd=cbr:filler=1',args[args.length-1]];\n});\n",
+                    encoding="utf-8")
+                cmd.append(f"--config={config}")
+
         try:
             # Run from inside the composer dir so npx resolves the local
             # remotion binary (mirrors _remotion_render).

@@ -2,6 +2,7 @@ import React from 'react';
 import {AbsoluteFill, useCurrentFrame} from 'remotion';
 import type {Box, LabProps} from './types';
 import {Brand, Caption, ease, metrics, phase, phaseStart, Rule, SERIF, SourceWindow, TextBlock} from './shared';
+import {palette07,palette08,palette09} from './palettes';
 
 // Each layout is recomposed in its native ratio. These helpers interpolate
 // layout geometry only; SourceWindow always contains the complete source.
@@ -18,7 +19,7 @@ const positioned=(p:LabProps,f:number,states:Box[]):Box=>{
 
 export const Style07:React.FC<LabProps>=(p)=>{
   const f=useCurrentFrame(),m=metrics(p),{W,H,unit:u,wide,square}=m,i=phase(f);
-  const night='#0E1820',light='#F6EDDE',copper='#C99867',depth='#273B45';
+  const palette=palette07(p),{night,light,copper,depth}=palette;
   const base=wide?rect(p,.34,.17,.59,.58):square?rect(p,.08,.33,.84,.42):p.ratio==='4x5'?rect(p,.10,.29,.79,.47):rect(p,.10,.31,.78,.44);
   const person=positioned(p,f,[base,{...base,x:base.x+W*.01,w:base.w-W*.01},{...base,x:base.x-W*.012,w:base.w+W*.012},{...base,y:base.y-H*.012,h:base.h+H*.012}]);
   const title=wide?rect(p,.065,.22,.255,.32):square?rect(p,.10,.105,.76,.18):rect(p,.10,.12,.76,.17);
@@ -27,23 +28,23 @@ export const Style07:React.FC<LabProps>=(p)=>{
   const cap=wide?rect(p,.065,.815,.865,.105):square?rect(p,.08,.805,.84,.115):rect(p,.085,.805,.80,.102);
   const lineProgress=i===3?1-ease((f-phaseStart(f))/12)*.36:1;
   return <AbsoluteFill style={{background:night}}>
-    <div style={{position:'absolute',left:0,top:0,width:W*.035,height:H,background:'#17252D'}}/>
-    <div style={{position:'absolute',right:0,top:0,width:W*.042,height:H,background:'#091116'}}/>
+    <div style={{position:'absolute',left:0,top:0,width:W*.035,height:H,background:palette.leftWing}}/>
+    <div style={{position:'absolute',right:0,top:0,width:W*.042,height:H,background:palette.rightWing}}/>
     <div style={{position:'absolute',left:person.x-W*.018,top:person.y-H*.012,width:person.w+W*.036,height:person.h+H*.024,border:`${u*1.5}px solid ${depth}`,boxSizing:'border-box'}}/>
-    <SourceWindow props={p} box={person} border={`${u*1.5}px solid #46515A`} style={{boxShadow:`0 ${18*u}px ${40*u}px #00000055`}}/>
-    <div style={{position:'absolute',left:person.x-(1-reveal)*side,top:person.y,width:side*(1-reveal*.78),height:person.h,background:'#111C23',pointerEvents:'none'}}/>
-    <div style={{position:'absolute',right:W-person.x-person.w-(1-reveal)*side,top:person.y,width:side*(1-reveal*.78),height:person.h,background:'#111C23',pointerEvents:'none'}}/>
+    <SourceWindow props={p} box={person} border={`${u*1.5}px solid ${palette.sourceBorder}`} style={{boxShadow:`0 ${18*u}px ${40*u}px ${palette.shadow}`}}/>
+    <div style={{position:'absolute',left:person.x-(1-reveal)*side,top:person.y,width:side*(1-reveal*.78),height:person.h,background:palette.curtain,pointerEvents:'none'}}/>
+    <div style={{position:'absolute',right:W-person.x-person.w-(1-reveal)*side,top:person.y,width:side*(1-reveal*.78),height:person.h,background:palette.curtain,pointerEvents:'none'}}/>
     <Rule x={person.x} y={person.y+person.h+H*.013} w={person.w*lineProgress} color={copper} thickness={u*2}/>
     <Brand props={p} color={light} x={W*.10} y={H*.052} w={W*.73}/>
     <TextBlock text={text} x={title.x} y={title.y} w={title.w} size={font} color={light} lineHeight={1.17} style={{letterSpacing:u*2,...stableTitle(f)}}/>
     <Rule x={title.x} y={title.y-u*15} w={W*(wide?.068:.12)} color={copper} thickness={u*3}/>
-    <Caption props={p} box={cap} color={light} background='#15232D' accent={light} mode='rise'/>
+    <Caption props={p} box={cap} color={light} background={palette.captionBg} accent={light} mode='rise'/>
   </AbsoluteFill>;
 };
 
 export const Style08:React.FC<LabProps>=(p)=>{
   const f=useCurrentFrame(),m=metrics(p),{W,H,unit:u,wide,square}=m,i=phase(f);
-  const paper='#F3DDD2',ink='#173D42',coral='#CC624C',fold='#B84F3C',light='#FFF6ED';
+  const palette=palette08(p),{paper,ink,coral,fold,light}=palette;
   const base=wide?rect(p,.52,.12,.41,.64):square?rect(p,.34,.30,.59,.48):p.ratio==='4x5'?rect(p,.25,.26,.67,.51):rect(p,.17,.29,.75,.46);
   const person=positioned(p,f,[base,{...base,x:base.x-W*.018,w:base.w+W*.012},{...base,x:base.x+W*.008,y:base.y-H*.008},{...base,x:base.x-W*.01,y:base.y-H*.01,w:base.w+W*.01,h:base.h+H*.01}]);
   const title=wide?rect(p,.07,.20,.39,.32):square?rect(p,.07,.10,.86,.18):rect(p,.07,.105,.79,.18);
@@ -66,24 +67,26 @@ export const Style08:React.FC<LabProps>=(p)=>{
       <path d={`M ${person.x+person.w} ${person.y+person.h-corner} L ${person.x+person.w-corner} ${person.y+person.h-corner} L ${person.x+person.w-corner} ${person.y+person.h} Z`} fill={paper}/>
     </svg>
     <div style={{position:'absolute',left:W*(1.01-entrance*.03),top:H*.30,width:W*.12,height:H*.42,background:coral,transform:'skewY(-18deg)'}}/>
+    {palette.titlePanel&&<div data-role="palette-title-panel" style={{position:'absolute',left:title.x-u*12,top:title.y-u*12,width:title.w+u*24,height:font*1.14*text.split('\n').length+u*24,background:palette.titlePanel,pointerEvents:'none'}}/>}
     <Brand props={p} color={ink} x={W*.07} y={H*.047} w={W*.79}/>
-    <TextBlock text={text} x={title.x} y={title.y} w={title.w} size={font} color={ink} lineHeight={1.14} style={{letterSpacing:-u*.7,...stableTitle(f)}}/>
-    <Caption props={p} box={cap} color={light} background={ink} accent={light} mode='wipe'/>
+    <TextBlock text={text} x={title.x} y={title.y} w={title.w} size={font} color={palette.title} lineHeight={1.14} style={{letterSpacing:-u*.7,...stableTitle(f)}}/>
+    <Caption props={p} box={cap} color={palette.caption} background={palette.captionBg} accent={palette.captionAccent} mode='wipe'/>
   </AbsoluteFill>;
 };
 
 export const Style09:React.FC<LabProps>=(p)=>{
   const f=useCurrentFrame(),m=metrics(p),{W,H,unit:u,wide,square}=m,i=phase(f);
-  const paper='#F4F3EE',ink='#151515';
-  const base=wide?rect(p,.66,.09,.26,.68):square?rect(p,.45,.14,.40,.65):p.ratio==='4x5'?rect(p,.38,.22,.49,.56):rect(p,.27,.28,.61,.48);
+  const palette=palette09(p),{paper,ink}=palette;
+  const revised=p.paletteVariant==='black-pink';
+  const base=wide?rect(p,.66,.09,.26,.68):square?rect(p,.45,.14,.40,.65):revised?rect(p,.38,.31,.49,.47):p.ratio==='4x5'?rect(p,.38,.22,.49,.56):rect(p,.27,.28,.61,.48);
   const person=positioned(p,f,[base,{...base,x:base.x-W*.012,w:base.w+W*.012},{...base,x:base.x-W*.025,w:base.w+W*.025},{...base,y:base.y-H*.012,h:base.h+H*.012}]);
   const title=wide?rect(p,.065,.18,.54,.48):square?rect(p,.065,.20,.34,.45):rect(p,.065,.115,.79,.18);
-  const text=words(p,f),font=sizedTitle(text,title.w,(wide?134:square?110:110)*u);
+  const text=words(p,f),font=sizedTitle(text,title.w,(wide?134:square?110:revised?100:110)*u);
   const cap=wide?rect(p,.065,.815,.865,.105):square?rect(p,.065,.815,.87,.105):rect(p,.065,.805,.82,.105);
   const bar=i<2?W*.022:W*(.022+.026*ease((f-162)/8));
   const ambientX=wide?W*.04:W*.002;
   return <AbsoluteFill style={{background:paper}}>
-    <div style={{position:'absolute',left:ambientX+(i===0?1-ease(f/8):0)*W*.02,top:wide?H*.56:H*.41,fontSize:(wide?345:square?610:510)*u,fontFamily:'"Microsoft YaHei", sans-serif',fontWeight:900,letterSpacing:-u*35,lineHeight:.85,color:i===3?'#DAD9D4':'#D0CFCA',whiteSpace:'nowrap',pointerEvents:'none'}}>AI</div>
+    <div style={{position:'absolute',left:ambientX+(i===0?1-ease(f/8):0)*W*.02,top:wide?H*.56:H*.41,fontSize:(wide?345:square?610:510)*u,fontFamily:'"Microsoft YaHei", sans-serif',fontWeight:900,letterSpacing:-u*35,lineHeight:.85,color:i===3?palette.ambientEnd:palette.ambient,whiteSpace:'nowrap',pointerEvents:'none'}}>AI</div>
     <div style={{position:'absolute',left:0,top:0,width:bar,height:H,background:ink}}/>
     <Rule x={W*.065} y={H*.093} w={W*.865} color={ink} thickness={u*2}/>
     <div style={{position:'absolute',left:person.x-u*8,top:person.y-u*8,width:person.w+u*16,height:person.h+u*16,background:ink}}/>
@@ -91,7 +94,7 @@ export const Style09:React.FC<LabProps>=(p)=>{
     <Brand props={p} color={ink} x={W*.065} y={H*.044} w={W*.78}/>
     <TextBlock text={text} x={title.x} y={title.y} w={title.w} size={font} color={ink} weight={900} lineHeight={1.08} style={{letterSpacing:-u*1.5,...stableTitle(f)}}/>
     <Rule x={title.x} y={wide?H*.716:square?H*.728:H*.739} w={W*(wide?.30:square?.22:.16)} color={ink} thickness={u*7}/>
-    <Caption props={p} box={cap} color='#FFFFFF' background={ink} accent='#FFFFFF' mode='wipe'/>
+    <Caption props={p} box={cap} color={palette.caption} background={palette.captionBg} accent={palette.captionAccent} mode='wipe'/>
   </AbsoluteFill>;
 };
 

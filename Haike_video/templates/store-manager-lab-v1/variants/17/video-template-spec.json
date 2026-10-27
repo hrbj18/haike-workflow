@@ -1,0 +1,899 @@
+{
+  "schema_version": 1,
+  "standard_version": "video-template-v1",
+  "template_id": "store-manager-17",
+  "template_version": "v001",
+  "template_type": "custom",
+  "spec_kind": "implementation",
+  "stage": "specification",
+  "authority": {
+    "runbook": "视觉Runbook.md",
+    "implementation_paths": [
+      "../../index.tsx",
+      "../../../../backlot/studio_store_manager_lab.py"
+    ],
+    "parameter_source": "../../index.tsx"
+  },
+  "canvas": {
+    "width": 1440,
+    "height": 1800,
+    "fps": 30,
+    "duration_seconds": 6,
+    "clock": "30fps全局主时钟；已确认第一条配音0至6秒，不变速",
+    "coordinate_system": "top_left_pixels"
+  },
+  "narrative": {
+    "purpose": "店长账号风格17六秒开发样片",
+    "information_hierarchy": [
+      "现场体验主题",
+      "店长与实拍",
+      "字幕与地址"
+    ],
+    "structure": [
+      "问题引子",
+      "3秒素材切换",
+      "问句结束"
+    ]
+  },
+  "scenes": [
+    {
+      "id": "opening",
+      "start": 0,
+      "end": 3,
+      "purpose": "问题引子",
+      "element_ids": [
+        "background",
+        "title",
+        "right_title",
+        "stage",
+        "tagline",
+        "avatar",
+        "side",
+        "cta",
+        "caption",
+        "address",
+        "master_audio"
+      ],
+      "variant": "17"
+    },
+    {
+      "id": "question",
+      "start": 3,
+      "end": 6,
+      "purpose": "面对面感觉会一样吗",
+      "element_ids": [
+        "background",
+        "title",
+        "right_title",
+        "stage",
+        "tagline",
+        "avatar",
+        "side",
+        "cta",
+        "caption",
+        "address",
+        "master_audio"
+      ],
+      "variant": "17"
+    }
+  ],
+  "assets": [],
+  "elements": [
+    {
+      "id": "background",
+      "type": "background",
+      "role": "background",
+      "parent_id": null,
+      "z_index": 0,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "background由index.tsx style=17控制；素材内嵌文字不可编辑；字幕58px微软雅黑900单行"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "../../index.tsx",
+          "unit": "px",
+          "overflow": "根hidden；实拍contain，人物cover；颜色字体按style分支"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 6
+      },
+      "states": [
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "中央0–3秒人物，3–6秒left实拍；小人物/side仅后3秒；tagline仅前3秒"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "actual_frames",
+          "method": "成片0.5/1.5/2.95/3.05/4.1/5.1秒抽帧",
+          "pass_condition": "字幕无遮挡，主体完整，切换无黑帧"
+        }
+      ]
+    },
+    {
+      "id": "title",
+      "type": "text",
+      "role": "title",
+      "parent_id": null,
+      "z_index": 1,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "title由index.tsx style=17控制；素材内嵌文字不可编辑；字幕58px微软雅黑900单行"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          54,
+          130,
+          200,
+          440
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "../../index.tsx",
+          "unit": "px",
+          "overflow": "根hidden；实拍contain，人物cover；颜色字体按style分支",
+          "font": "SimHei",
+          "font_size": 155,
+          "max_lines": 2
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 6
+      },
+      "states": [
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "中央0–3秒人物，3–6秒left实拍；小人物/side仅后3秒；tagline仅前3秒"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "actual_frames",
+          "method": "成片0.5/1.5/2.95/3.05/4.1/5.1秒抽帧",
+          "pass_condition": "字幕无遮挡，主体完整，切换无黑帧"
+        }
+      ]
+    },
+    {
+      "id": "right_title",
+      "type": "text",
+      "role": "right_title",
+      "parent_id": null,
+      "z_index": 2,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "right_title由index.tsx style=17控制；素材内嵌文字不可编辑；字幕58px微软雅黑900单行"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          1190,
+          145,
+          190,
+          190
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "../../index.tsx",
+          "unit": "px",
+          "overflow": "根hidden；实拍contain，人物cover；颜色字体按style分支",
+          "font": "SimHei",
+          "font_size": 160,
+          "max_lines": 1
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 6
+      },
+      "states": [
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "中央0–3秒人物，3–6秒left实拍；小人物/side仅后3秒；tagline仅前3秒"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "actual_frames",
+          "method": "成片0.5/1.5/2.95/3.05/4.1/5.1秒抽帧",
+          "pass_condition": "字幕无遮挡，主体完整，切换无黑帧"
+        }
+      ]
+    },
+    {
+      "id": "stage",
+      "type": "video",
+      "role": "stage",
+      "parent_id": null,
+      "z_index": 3,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "stage由index.tsx style=17控制；素材内嵌文字不可编辑；字幕58px微软雅黑900单行"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          295,
+          80,
+          815,
+          1390
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "../../index.tsx",
+          "unit": "px",
+          "overflow": "根hidden；实拍contain，人物cover；颜色字体按style分支"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 6
+      },
+      "states": [
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "中央0–3秒人物，3–6秒left实拍；小人物/side仅后3秒；tagline仅前3秒"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "actual_frames",
+          "method": "成片0.5/1.5/2.95/3.05/4.1/5.1秒抽帧",
+          "pass_condition": "字幕无遮挡，主体完整，切换无黑帧"
+        }
+      ]
+    },
+    {
+      "id": "tagline",
+      "type": "text",
+      "role": "tagline",
+      "parent_id": null,
+      "z_index": 4,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "tagline由index.tsx style=17控制；素材内嵌文字不可编辑；字幕58px微软雅黑900单行"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          345,
+          1280,
+          765,
+          135
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "../../index.tsx",
+          "unit": "px",
+          "overflow": "根hidden；实拍contain，人物cover；颜色字体按style分支",
+          "font": "Microsoft YaHei",
+          "font_size": 82,
+          "max_lines": 1
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 6
+      },
+      "states": [
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "中央0–3秒人物，3–6秒left实拍；小人物/side仅后3秒；tagline仅前3秒"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "actual_frames",
+          "method": "成片0.5/1.5/2.95/3.05/4.1/5.1秒抽帧",
+          "pass_condition": "字幕无遮挡，主体完整，切换无黑帧"
+        }
+      ]
+    },
+    {
+      "id": "avatar",
+      "type": "video",
+      "role": "avatar",
+      "parent_id": null,
+      "z_index": 5,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "avatar由index.tsx style=17控制；素材内嵌文字不可编辑；字幕58px微软雅黑900单行"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          1118,
+          1010,
+          285,
+          460
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "../../index.tsx",
+          "unit": "px",
+          "overflow": "根hidden；实拍contain，人物cover；颜色字体按style分支"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 6
+      },
+      "states": [
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "中央0–3秒人物，3–6秒left实拍；小人物/side仅后3秒；tagline仅前3秒"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "actual_frames",
+          "method": "成片0.5/1.5/2.95/3.05/4.1/5.1秒抽帧",
+          "pass_condition": "字幕无遮挡，主体完整，切换无黑帧"
+        }
+      ]
+    },
+    {
+      "id": "side",
+      "type": "text",
+      "role": "side",
+      "parent_id": null,
+      "z_index": 6,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "side由index.tsx style=17控制；素材内嵌文字不可编辑；字幕58px微软雅黑900单行"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          1145,
+          540,
+          295,
+          240
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "../../index.tsx",
+          "unit": "px",
+          "overflow": "根hidden；实拍contain，人物cover；颜色字体按style分支",
+          "font": "Microsoft YaHei",
+          "font_size": 90,
+          "max_lines": 3
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 6
+      },
+      "states": [
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "中央0–3秒人物，3–6秒left实拍；小人物/side仅后3秒；tagline仅前3秒"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "actual_frames",
+          "method": "成片0.5/1.5/2.95/3.05/4.1/5.1秒抽帧",
+          "pass_condition": "字幕无遮挡，主体完整，切换无黑帧"
+        }
+      ]
+    },
+    {
+      "id": "cta",
+      "type": "text",
+      "role": "cta",
+      "parent_id": null,
+      "z_index": 7,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "cta由index.tsx style=17控制；素材内嵌文字不可编辑；字幕58px微软雅黑900单行"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          54,
+          1100,
+          170,
+          370
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "../../index.tsx",
+          "unit": "px",
+          "overflow": "根hidden；实拍contain，人物cover；颜色字体按style分支",
+          "font": "Microsoft YaHei",
+          "font_size": 48,
+          "max_lines": 1
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 6
+      },
+      "states": [
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "中央0–3秒人物，3–6秒left实拍；小人物/side仅后3秒；tagline仅前3秒"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "actual_frames",
+          "method": "成片0.5/1.5/2.95/3.05/4.1/5.1秒抽帧",
+          "pass_condition": "字幕无遮挡，主体完整，切换无黑帧"
+        }
+      ]
+    },
+    {
+      "id": "caption",
+      "type": "text",
+      "role": "caption",
+      "parent_id": null,
+      "z_index": 8,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "caption由index.tsx style=17控制；素材内嵌文字不可编辑；字幕58px微软雅黑900单行"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          55,
+          1558,
+          1330,
+          142
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "../../index.tsx",
+          "unit": "px",
+          "overflow": "根hidden；实拍contain，人物cover；颜色字体按style分支",
+          "font": "Microsoft YaHei",
+          "font_size": 58,
+          "max_lines": 1
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 6
+      },
+      "states": [
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "中央0–3秒人物，3–6秒left实拍；小人物/side仅后3秒；tagline仅前3秒"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "actual_frames",
+          "method": "成片0.5/1.5/2.95/3.05/4.1/5.1秒抽帧",
+          "pass_condition": "字幕无遮挡，主体完整，切换无黑帧"
+        }
+      ]
+    },
+    {
+      "id": "address",
+      "type": "text",
+      "role": "address",
+      "parent_id": null,
+      "z_index": 9,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "address由index.tsx style=17控制；素材内嵌文字不可编辑；字幕58px微软雅黑900单行"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          1720,
+          1440,
+          40
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "../../index.tsx",
+          "unit": "px",
+          "overflow": "根hidden；实拍contain，人物cover；颜色字体按style分支",
+          "font": "Microsoft YaHei",
+          "font_size": 30,
+          "max_lines": 1
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 6
+      },
+      "states": [
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "中央0–3秒人物，3–6秒left实拍；小人物/side仅后3秒；tagline仅前3秒"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "actual_frames",
+          "method": "成片0.5/1.5/2.95/3.05/4.1/5.1秒抽帧",
+          "pass_condition": "字幕无遮挡，主体完整，切换无黑帧"
+        }
+      ]
+    },
+    {
+      "id": "master_audio",
+      "type": "audio",
+      "role": "master_audio",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "master_audio由index.tsx style=17控制；素材内嵌文字不可编辑；字幕58px微软雅黑900单行"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "../../index.tsx",
+          "unit": "px",
+          "overflow": "根hidden；实拍contain，人物cover；颜色字体按style分支"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 6
+      },
+      "states": [
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "中央0–3秒人物，3–6秒left实拍；小人物/side仅后3秒；tagline仅前3秒"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "actual_frames",
+          "method": "成片0.5/1.5/2.95/3.05/4.1/5.1秒抽帧",
+          "pass_condition": "字幕无遮挡，主体完整，切换无黑帧"
+        }
+      ]
+    }
+  ],
+  "slots": [],
+  "evidence": [
+    {
+      "id": "implementation",
+      "source_kind": "design",
+      "source": "Creative Production广告叙事与frontend-design色彩结构设计",
+      "locator": "index.tsx style=17",
+      "method": "源码确定几何时序，实际导出后验证",
+      "file": "../../index.tsx",
+      "sha256": "87bab79c8cb44c996a6ad8f185c85650a0b8738f1f3072ee4e2889b5ee848195"
+    },
+    {
+      "id": "actual_review",
+      "source_kind": "measurement",
+      "source": "本机原生队列导出与实际成片抽帧",
+      "locator": "TEST-REVIEW.md",
+      "method": "技术测量、完整解码、6张实际帧查看；未冒充听审",
+      "file": "TEST-REVIEW.md",
+      "sha256": null
+    }
+  ],
+  "unknowns": [],
+  "validation": {
+    "structure": {
+      "status": "pass",
+      "evidence_ids": [
+        "actual_review"
+      ],
+      "note": "仅当前本机6秒冻结输入；详见TEST-REVIEW.md"
+    },
+    "technical": {
+      "status": "pass",
+      "evidence_ids": [
+        "actual_review"
+      ],
+      "note": "仅当前本机6秒冻结输入；详见TEST-REVIEW.md"
+    },
+    "visual": {
+      "status": "pass",
+      "evidence_ids": [
+        "actual_review"
+      ],
+      "note": "仅当前本机6秒冻结输入；详见TEST-REVIEW.md"
+    },
+    "audio": {
+      "status": "pending",
+      "evidence_ids": [
+        "actual_review"
+      ],
+      "note": "声音技术峰值、混音与单声道通过，设备主观听审待验"
+    },
+    "platform": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "仅6秒本机开发样片；完整片、跨机和平台待验"
+    },
+    "user_review": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "仅6秒本机开发样片；完整片、跨机和平台待验"
+    },
+    "production": {
+      "status": "pass",
+      "evidence_ids": [
+        "actual_review"
+      ],
+      "note": "仅当前本机6秒冻结输入；详见TEST-REVIEW.md"
+    }
+  },
+  "extensions": {
+    "custom": {
+      "contract": "store-manager-lab-v1",
+      "rules": {
+        "geometry": "../../index.tsx",
+        "input": "180帧、style14–17、原片和前6秒母带；无通用替换槽",
+        "export": "CRF1高保真母版后20.5M CBR/2M缓冲，视频流实测≥20M"
+      }
+    },
+    "audio": {
+      "contract": "speech-led-v1",
+      "rules": {
+        "mix": "人声−2.5dB、BGM−5dB、dong−15dB、whoosh−19dB",
+        "timing": "dong0.68秒；whoosh峰值3秒/起播2.874秒；音乐淡出0.45秒"
+      }
+    },
+    "material_edit": {
+      "source_ranges": [
+        {
+          "id": "left-0",
+          "lane": "left",
+          "src": "S052.mp4",
+          "from": 0,
+          "frames": 90,
+          "offset": 0,
+          "fit": "contain",
+          "path": "C:\\Users\\Administrator\\Videos\\10-23素材\\S052_门头下机器人与机器狗清晰同框.mp4",
+          "source_sha256": "b7de5023354825e0033084a21a9b5dce4eed614e6f00a6086cd2c7cbdb757b7d"
+        },
+        {
+          "id": "left-1",
+          "lane": "left",
+          "src": "S082.mp4",
+          "from": 90,
+          "frames": 90,
+          "offset": 3.8,
+          "fit": "contain",
+          "path": "C:\\Users\\Administrator\\Videos\\10-23素材\\S082_围桌体验转向门头与机器狗.mp4",
+          "source_sha256": "d348018f4b76cf1fe64ac8d9f80bb573120df54195917d544a16ab8cf6344021"
+        },
+        {
+          "id": "right-0",
+          "lane": "right",
+          "src": "S083.mp4",
+          "from": 0,
+          "frames": 90,
+          "offset": 10,
+          "fit": "contain",
+          "path": "C:\\Users\\Administrator\\Videos\\10-23素材\\S083_工作人员指导儿童操作小型设备.mp4",
+          "source_sha256": "9983a77be815422d12ffe042426570b69ecf8b3c3ed136ba38629958ef855989"
+        },
+        {
+          "id": "right-1",
+          "lane": "right",
+          "src": "S081.mp4",
+          "from": 90,
+          "frames": 90,
+          "offset": 1,
+          "fit": "contain",
+          "path": "C:\\Users\\Administrator\\Videos\\10-23素材\\S081_门头下工作人员迎接亲子顾客.mp4",
+          "source_sha256": "e6cdfd13f55ff5f8d7a1357fb0fa767724b4abe90cf2c9afab8456275ff40098"
+        }
+      ],
+      "cut_policy": "原片不预压缩；left/right每镜3秒；人物全局时钟"
+    }
+  },
+  "operations": [
+    {
+      "id": "native_queue",
+      "input": "180帧props及原始avatar/master/audio-receipt/asr/全部实拍sources",
+      "action": "prepare→submit→ProductionQueueWorker.run_local_recompose",
+      "output": "冻结request、MP4、quality.json、result.json",
+      "completion": "技术与字幕素材切换实际抽帧验证，听审用户确认独立",
+      "recovery": "先查已有任务；SHA校验复用，源码变化新冻结，不重发数字人",
+      "entrypoint": "../../../../backlot/studio_store_manager_lab.py"
+    }
+  ]
+}

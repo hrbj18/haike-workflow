@@ -1,0 +1,2609 @@
+{
+  "schema_version": 1,
+  "standard_version": "video-template-v1",
+  "template_id": "motiongit-narrated-pilot-v1",
+  "template_version": "v003",
+  "template_type": "custom",
+  "spec_kind": "implementation",
+  "stage": "ready",
+  "authority": {
+    "runbook": "README.md",
+    "implementation_paths": [
+      "index.tsx",
+      "types.ts",
+      "layout.json",
+      "../../backlot/studio_motiongit_narrated_pilot.py",
+      "../../scripts/motiongit_narrated_pilot.py"
+    ],
+    "parameter_source": "index.tsx"
+  },
+  "canvas": {
+    "width": 1440,
+    "height": 1800,
+    "fps": 30,
+    "duration_seconds": 20,
+    "clock": "600 output frames; one 48kHz stereo PCM16 master has960000samples/channel. Existing voice remains original-speed0–19.8s with0.2s no-speech tail; all visual/source clocks follow this master.",
+    "coordinate_system": "top_left_pixels"
+  },
+  "narrative": {
+    "purpose": "A source-bound20s narrated store-account template with statement/select/focus and optional six-card wall modules; v002 default scene example remains valid, v003 wall inputs use the same speech clock.",
+    "information_hierarchy": [
+      "Original voice meaning and exact approved captions",
+      "Reviewed full-frame actual footage",
+      "Short chapter titles and selection/focus motion",
+      "Existing same-clock presenter window",
+      "Brand and neutral footer"
+    ],
+    "structure": [
+      "opening",
+      "family-select",
+      "robot-focus",
+      "dog-focus",
+      "goods-focus",
+      "presenter",
+      "closing"
+    ]
+  },
+  "scenes": [
+    {
+      "id": "opening",
+      "start": 0,
+      "end": 4,
+      "purpose": "这家新店， / 吸引了谁？",
+      "element_ids": [
+        "canvas",
+        "scene-surface",
+        "brand",
+        "captions",
+        "footer",
+        "master-audio",
+        "scene-title",
+        "secondary-card",
+        "secondary-poster",
+        "secondary-label",
+        "selected-card",
+        "selected-poster",
+        "selected-video",
+        "selected-label",
+        "selection-outline",
+        "selection-cursor",
+        "wall-category",
+        "wall-card",
+        "wall-video",
+        "wall-cursor"
+      ],
+      "variant": "select-or-wall-paper"
+    },
+    {
+      "id": "family-select",
+      "start": 4,
+      "end": 9,
+      "purpose": "围着看， / 再凑近一点。",
+      "element_ids": [
+        "canvas",
+        "scene-surface",
+        "brand",
+        "captions",
+        "footer",
+        "master-audio",
+        "scene-title",
+        "secondary-card",
+        "secondary-poster",
+        "secondary-label",
+        "selected-card",
+        "selected-poster",
+        "selected-video",
+        "selected-label",
+        "selection-outline",
+        "selection-cursor",
+        "wall-category",
+        "wall-card",
+        "wall-video",
+        "wall-cursor"
+      ],
+      "variant": "select-or-wall-paper"
+    },
+    {
+      "id": "robot-focus",
+      "start": 9,
+      "end": 10.8,
+      "purpose": "人形机器人 / 近距离看看。",
+      "element_ids": [
+        "canvas",
+        "scene-surface",
+        "brand",
+        "captions",
+        "footer",
+        "master-audio",
+        "scene-title",
+        "focus-window",
+        "focus-video",
+        "focus-label"
+      ],
+      "variant": "focus-paper"
+    },
+    {
+      "id": "dog-focus",
+      "start": 10.8,
+      "end": 12.8,
+      "purpose": "桌边的 / 小互动。",
+      "element_ids": [
+        "canvas",
+        "scene-surface",
+        "brand",
+        "captions",
+        "footer",
+        "master-audio",
+        "scene-title",
+        "focus-window",
+        "focus-video",
+        "focus-label"
+      ],
+      "variant": "focus-paper"
+    },
+    {
+      "id": "goods-focus",
+      "start": 12.8,
+      "end": 15.4,
+      "purpose": "一家人， / 各有各的好奇。",
+      "element_ids": [
+        "canvas",
+        "scene-surface",
+        "brand",
+        "captions",
+        "footer",
+        "master-audio",
+        "scene-title",
+        "focus-window",
+        "focus-video",
+        "focus-label"
+      ],
+      "variant": "focus-paper"
+    },
+    {
+      "id": "presenter",
+      "start": 15.4,
+      "end": 18.8,
+      "purpose": "海客AI社区服务站 / 新塘未来汇",
+      "element_ids": [
+        "canvas",
+        "scene-surface",
+        "brand",
+        "captions",
+        "footer",
+        "master-audio",
+        "scene-title",
+        "statement-rule",
+        "scene-subtitle",
+        "presenter-layer",
+        "presenter-title",
+        "presenter-rule",
+        "presenter-window",
+        "presenter-video",
+        "presenter-label"
+      ],
+      "variant": "statement-dark"
+    },
+    {
+      "id": "closing",
+      "start": 18.8,
+      "end": 20,
+      "purpose": "新店开业",
+      "element_ids": [
+        "canvas",
+        "scene-surface",
+        "brand",
+        "captions",
+        "footer",
+        "master-audio",
+        "scene-title",
+        "focus-window",
+        "focus-video",
+        "focus-label"
+      ],
+      "variant": "focus-paper"
+    }
+  ],
+  "assets": [
+    {
+      "id": "media-door",
+      "kind": "video",
+      "path": null,
+      "source": "props.media[id=door].src and exact reviewed original source interval",
+      "embedded_content": [
+        "source subjects, signage and existing baked pixels"
+      ],
+      "rights_status": "Actual local run binds source identity and usage basis; example carries no media or authorization proof."
+    },
+    {
+      "id": "media-family",
+      "kind": "video",
+      "path": null,
+      "source": "props.media[id=family].src and exact reviewed original source interval",
+      "embedded_content": [
+        "source subjects, signage and existing baked pixels"
+      ],
+      "rights_status": "Actual local run binds source identity and usage basis; example carries no media or authorization proof."
+    },
+    {
+      "id": "media-robot",
+      "kind": "video",
+      "path": null,
+      "source": "props.media[id=robot].src and exact reviewed original source interval",
+      "embedded_content": [
+        "source subjects, signage and existing baked pixels"
+      ],
+      "rights_status": "Actual local run binds source identity and usage basis; example carries no media or authorization proof."
+    },
+    {
+      "id": "media-dog",
+      "kind": "video",
+      "path": null,
+      "source": "props.media[id=dog].src and exact reviewed original source interval",
+      "embedded_content": [
+        "source subjects, signage and existing baked pixels"
+      ],
+      "rights_status": "Actual local run binds source identity and usage basis; example carries no media or authorization proof."
+    },
+    {
+      "id": "media-goods",
+      "kind": "video",
+      "path": null,
+      "source": "props.media[id=goods].src and exact reviewed original source interval",
+      "embedded_content": [
+        "source subjects, signage and existing baked pixels"
+      ],
+      "rights_status": "Actual local run binds source identity and usage basis; example carries no media or authorization proof."
+    },
+    {
+      "id": "media-doorEnd",
+      "kind": "video",
+      "path": null,
+      "source": "props.media[id=doorEnd].src and exact reviewed original source interval",
+      "embedded_content": [
+        "source subjects, signage and existing baked pixels"
+      ],
+      "rights_status": "Actual local run binds source identity and usage basis; example carries no media or authorization proof."
+    },
+    {
+      "id": "posters",
+      "kind": "image",
+      "path": null,
+      "source": "props.media[].thumbnail plus exact original timestamp andSHA",
+      "embedded_content": [
+        "thumbnail pixels from the actual original film"
+      ],
+      "rights_status": "Bound to the same reviewed original asset; not included in this public example."
+    },
+    {
+      "id": "presenter",
+      "kind": "video",
+      "path": null,
+      "source": "props.presenter.src, source-audit and original receipt",
+      "embedded_content": [
+        "existing person performance and original embedded audio, muted in output"
+      ],
+      "rights_status": "Use only the already authorized source window; no new person service call in this pilot."
+    },
+    {
+      "id": "audio-master",
+      "kind": "audio",
+      "path": null,
+      "source": "props.audio=master.wav plus current audio/source/ASR/prior receipts",
+      "embedded_content": [
+        "existing unchanged-speed speech plus independently mixed original music andSFX"
+      ],
+      "rights_status": "Current private receipt binds original approvals, sourceSHA and project-local music provenance."
+    },
+    {
+      "id": "fonts",
+      "kind": "font",
+      "path": null,
+      "source": "optional frozen display.ttf/body.ttf; exact files are current local inputs",
+      "embedded_content": [],
+      "rights_status": "Actual selected font files and distribution rights checked at packaging; no font binaries included here."
+    }
+  ],
+  "elements": [
+    {
+      "id": "wall-category",
+      "type": "text",
+      "role": "wall-filter-labels",
+      "parent_id": "canvas",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "wall-category-slot",
+        "asset_id": null,
+        "description": "Editable category labels; a visual category rail, not a live footage filter."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          88,
+          426,
+          1264,
+          50
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "MaterialWallModule in index.tsx",
+          "font": "props.fontAssets.body or declared system fallback",
+          "font_size": 25,
+          "max_lines": 1,
+          "overflow": "Reject total row capacity; never crop labels."
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 9
+      },
+      "states": [
+        {
+          "id": "wall-only",
+          "visible": true,
+          "description": "Visible only in wall scenes; opacity=1-expansion progress."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source-contract",
+          "target_id": null,
+          "rule": "1–6 unique labels, each <=8 characters; recheck actual row width"
+        }
+      ],
+      "fixed": [],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "wall-category",
+          "method": "Inspect actual wall frames",
+          "pass_condition": "Labels are readable and disappear before the expanded subject."
+        }
+      ]
+    },
+    {
+      "id": "wall-card",
+      "type": "graphic",
+      "role": "repeated-card-and-label",
+      "parent_id": "canvas",
+      "z_index": 5,
+      "content": {
+        "mode": "generated",
+        "binding": "wall-card-slot",
+        "asset_id": null,
+        "description": "Each instance is identified by stable mediaId. Includes full-frame poster and editable label; selected instance retains identity through expansion."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          88,
+          520,
+          1264,
+          770
+        ],
+        "fit": "contain",
+        "clip": "self",
+        "style": {
+          "position": "[88+(i%3)*432,520+floor(i/3)*405,400,365]",
+          "poster": "height=cardHeight-64; contain",
+          "label": "bottom64px, left/right20px; font29+progress*9",
+          "selected_target": "media.orientation chooses layout.json select.expanded or portraitExpanded",
+          "source": "MaterialWallModule in index.tsx",
+          "radius": 24
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 9
+      },
+      "states": [
+        {
+          "id": "cascade",
+          "visible": true,
+          "description": "Scene-local card i enters at i*3..i*3+18 frames; translateY64→0, opacity0→1, scale.97→1; easing cubic-bezier(.18,.8,.16,1)."
+        },
+        {
+          "id": "selected",
+          "visible": true,
+          "description": "Outline3px blue at scene.selection.selectFrom; selection remains the same card."
+        },
+        {
+          "id": "expanded",
+          "visible": true,
+          "description": "Interpolate card box to source-defined target over expandFrom..holdFrom; other card alpha=1-progress."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source-contract",
+          "target_id": null,
+          "rule": "4–6 distinct IDs; selected media must belong to wall; no missing media"
+        }
+      ],
+      "fixed": [],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "same-card",
+          "method": "Inspect cascade, click, moving midpoint and hold",
+          "pass_condition": "No subject swap or restart between selected poster and corresponding source video."
+        }
+      ]
+    },
+    {
+      "id": "wall-video",
+      "type": "video",
+      "role": "selected-wall-source",
+      "parent_id": "wall-card",
+      "z_index": 6,
+      "content": {
+        "mode": "editable",
+        "binding": "wall-video-slot",
+        "asset_id": null,
+        "description": "Original video starts once at scene-local expandFrom; embedded sound muted."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          88,
+          520,
+          400,
+          301
+        ],
+        "fit": "contain",
+        "clip": "self",
+        "style": {
+          "box": "selected wall-card body; height=cardHeight-64",
+          "source": "MaterialWallModule in index.tsx",
+          "radius": 24
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 9
+      },
+      "states": [
+        {
+          "id": "playing",
+          "visible": true,
+          "description": "Visible only after expandFrom; sourceTime=offset+(age-expandFrom)/30. Never loop, freeze or stretch."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source-contract",
+          "target_id": null,
+          "rule": "Playing range must fit the reviewed original interval; 0.5–4 seconds continuous playback"
+        }
+      ],
+      "fixed": [],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "full-source",
+          "method": "Compare selected original source and encoded output",
+          "pass_condition": "Whole source picture, correct rotation, original speed and muted source audio."
+        }
+      ]
+    },
+    {
+      "id": "wall-cursor",
+      "type": "graphic",
+      "role": "selection-pointer",
+      "parent_id": "canvas",
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Source-owned SVG pointer; timing follows actual selected card index."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          1240,
+          440,
+          52,
+          62
+        ],
+        "fit": "contain",
+        "clip": "none",
+        "style": {
+          "target": "origin selected-card x+.6*width, y+.5*height",
+          "source": "MaterialWallModule in index.tsx"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 9
+      },
+      "states": [
+        {
+          "id": "move-and-fade",
+          "visible": true,
+          "description": "0 alpha before cursorFrom; source easing to card by selectFrom-2; fades over expandFrom..expandFrom+8."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source-contract",
+          "target_id": null,
+          "rule": "Cursor must land on the selected ID, not a different card"
+        }
+      ],
+      "fixed": [
+        "content"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "cursor-target",
+          "method": "Inspect adjacent select/expand frames",
+          "pass_condition": "Pointer, outline and expanded material refer to one mediaId."
+        }
+      ]
+    },
+    {
+      "id": "canvas",
+      "type": "graphic",
+      "role": "canvas",
+      "parent_id": null,
+      "z_index": 0,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Root 4:5 canvas with the active scene theme; palette and fonts are controlled current inputs."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "palette": "props.palette",
+          "fontAssets": "props.fontAssets"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 20
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "显示条件与几何以该组件的当前源码、所属模块及全局/局部时钟为准。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [],
+      "replaceable": [
+        "layout.style.palette",
+        "layout.style.fontAssets",
+        "layout.style.scenes"
+      ],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-state",
+          "method": "README第4步实际看帧与听看",
+          "pass_condition": "对象身份、文字、主体完整性和时钟符合本期声明；未执行项保持待验证。"
+        }
+      ]
+    },
+    {
+      "id": "scene-surface",
+      "type": "graphic",
+      "role": "scene-surface",
+      "parent_id": "canvas",
+      "z_index": 0,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Each active scene owns its paper/dark fill and module subtree; no media is baked into this surface."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {}
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 20
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "显示条件与几何以该组件的当前源码、所属模块及全局/局部时钟为准。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-state",
+          "method": "README第4步实际看帧与听看",
+          "pass_condition": "对象身份、文字、主体完整性和时钟符合本期声明；未执行项保持待验证。"
+        }
+      ]
+    },
+    {
+      "id": "scene-title",
+      "type": "text",
+      "role": "scene-title",
+      "parent_id": "canvas",
+      "z_index": 0,
+      "content": {
+        "mode": "editable",
+        "binding": "titles-slot",
+        "asset_id": null,
+        "description": "props.scenes[].title; statement uses statement.title/132px, select/focus use sceneHeader.title/92px; lines reveal with2-frame stagger and10-frame cubic rise."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          88,
+          170,
+          1264,
+          260
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "geometry_source": "layout.json statement.title or sceneHeader.title; selected by module",
+          "statement_font_size": 132,
+          "font": "index.tsx displayFont/bodyFont role; optional frozen fontAssets",
+          "font_size": 92,
+          "max_lines": 3,
+          "overflow": "adapter caps and actual-font width gate; inspect the encoded readable hold, never silently delete words"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 20
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "显示条件与几何以该组件的当前源码、所属模块及全局/局部时钟为准。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-state",
+          "method": "README第4步实际看帧与听看",
+          "pass_condition": "对象身份、文字、主体完整性和时钟符合本期声明；未执行项保持待验证。"
+        }
+      ]
+    },
+    {
+      "id": "scene-subtitle",
+      "type": "text",
+      "role": "scene-subtitle",
+      "parent_id": "canvas",
+      "z_index": 0,
+      "content": {
+        "mode": "editable",
+        "binding": "subtitles-slot",
+        "asset_id": null,
+        "description": "Optional scene subtitle: only presenter statement has this field in the current example; its underlying statement is occluded by the active presenter layer."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          100,
+          930,
+          1240,
+          190
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "font": "index.tsx displayFont/bodyFont role; optional frozen fontAssets",
+          "font_size": 52,
+          "max_lines": 2,
+          "overflow": "adapter caps and actual-font width gate; inspect the encoded readable hold, never silently delete words"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 20
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "显示条件与几何以该组件的当前源码、所属模块及全局/局部时钟为准。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-state",
+          "method": "README第4步实际看帧与听看",
+          "pass_condition": "对象身份、文字、主体完整性和时钟符合本期声明；未执行项保持待验证。"
+        }
+      ]
+    },
+    {
+      "id": "statement-rule",
+      "type": "graphic",
+      "role": "statement-rule",
+      "parent_id": "canvas",
+      "z_index": 0,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Statement accent line grows from0 to760px at local frames6–22; current example exists behind the presenter layer."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          340,
+          874,
+          760,
+          7
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "StatementModule, layout.json statement.line",
+          "width_curve": "ease(localFrame,6,22)"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 20
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "显示条件与几何以该组件的当前源码、所属模块及全局/局部时钟为准。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-state",
+          "method": "README第4步实际看帧与听看",
+          "pass_condition": "对象身份、文字、主体完整性和时钟符合本期声明；未执行项保持待验证。"
+        }
+      ]
+    },
+    {
+      "id": "secondary-card",
+      "type": "group",
+      "role": "secondary-card",
+      "parent_id": "canvas",
+      "z_index": 0,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Secondary same-scene card rises44px during local frames5–23 and fades92% as the primary card expands."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          752,
+          666,
+          600,
+          430
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "radius": 24,
+          "clock": "scene-local integer frames"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 20
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "显示条件与几何以该组件的当前源码、所属模块及全局/局部时钟为准。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-state",
+          "method": "README第4步实际看帧与听看",
+          "pass_condition": "对象身份、文字、主体完整性和时钟符合本期声明；未执行项保持待验证。"
+        }
+      ]
+    },
+    {
+      "id": "secondary-poster",
+      "type": "image",
+      "role": "secondary-poster",
+      "parent_id": "secondary-card",
+      "z_index": 0,
+      "content": {
+        "mode": "editable",
+        "binding": "secondary-posters-slot",
+        "asset_id": null,
+        "description": "Whole reviewed thumbnail for scene.secondaryMediaId; baked people/signage remain fixed pixels."
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          600,
+          358
+        ],
+        "fit": "contain",
+        "clip": "self",
+        "style": {}
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 20
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "显示条件与几何以该组件的当前源码、所属模块及全局/局部时钟为准。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-state",
+          "method": "README第4步实际看帧与听看",
+          "pass_condition": "对象身份、文字、主体完整性和时钟符合本期声明；未执行项保持待验证。"
+        }
+      ]
+    },
+    {
+      "id": "secondary-label",
+      "type": "text",
+      "role": "secondary-label",
+      "parent_id": "secondary-card",
+      "z_index": 0,
+      "content": {
+        "mode": "editable",
+        "binding": "secondary-labels-slot",
+        "asset_id": null,
+        "description": "Secondary media label, falling back to brand only as declared in StillCard."
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          22,
+          358,
+          556,
+          72
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "font": "index.tsx displayFont/bodyFont role; optional frozen fontAssets",
+          "font_size": 36,
+          "max_lines": 2,
+          "overflow": "adapter caps and actual-font width gate; inspect the encoded readable hold, never silently delete words"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 20
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "显示条件与几何以该组件的当前源码、所属模块及全局/局部时钟为准。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-state",
+          "method": "README第4步实际看帧与听看",
+          "pass_condition": "对象身份、文字、主体完整性和时钟符合本期声明；未执行项保持待验证。"
+        }
+      ]
+    },
+    {
+      "id": "selected-card",
+      "type": "group",
+      "role": "selected-card",
+      "parent_id": "canvas",
+      "z_index": 0,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "One primary card retains identity while selection expands its box fromprimary toexpanded during local expandFrom→holdFrom; source film does not restart."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          88,
+          520,
+          600,
+          430
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "expanded_box": [
+            88,
+            470,
+            1264,
+            870
+          ],
+          "clock": "props.scenes[].selection relative to scene",
+          "radius": 24
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 20
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "显示条件与几何以该组件的当前源码、所属模块及全局/局部时钟为准。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-state",
+          "method": "README第4步实际看帧与听看",
+          "pass_condition": "对象身份、文字、主体完整性和时钟符合本期声明；未执行项保持待验证。"
+        }
+      ]
+    },
+    {
+      "id": "selected-poster",
+      "type": "image",
+      "role": "selected-poster",
+      "parent_id": "selected-card",
+      "z_index": 0,
+      "content": {
+        "mode": "editable",
+        "binding": "selected-posters-slot",
+        "asset_id": null,
+        "description": "Reviewed primary thumbnail remains below the actual playing video; whole-asset replacement does not make interior text editable."
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          600,
+          358
+        ],
+        "fit": "contain",
+        "clip": "self",
+        "style": {}
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 20
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "显示条件与几何以该组件的当前源码、所属模块及全局/局部时钟为准。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-state",
+          "method": "README第4步实际看帧与听看",
+          "pass_condition": "对象身份、文字、主体完整性和时钟符合本期声明；未执行项保持待验证。"
+        }
+      ]
+    },
+    {
+      "id": "selected-video",
+      "type": "video",
+      "role": "selected-video",
+      "parent_id": "selected-card",
+      "z_index": 0,
+      "content": {
+        "mode": "editable",
+        "binding": "selected-videos-slot",
+        "asset_id": null,
+        "description": "Original muted primary film starts at media.offset when the same card begins expansion; plays continuously until the scene end, no loop/freeze/speed change."
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          600,
+          358
+        ],
+        "fit": "contain",
+        "clip": "self",
+        "style": {}
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 20
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "显示条件与几何以该组件的当前源码、所属模块及全局/局部时钟为准。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-state",
+          "method": "README第4步实际看帧与听看",
+          "pass_condition": "对象身份、文字、主体完整性和时钟符合本期声明；未执行项保持待验证。"
+        }
+      ]
+    },
+    {
+      "id": "selected-label",
+      "type": "text",
+      "role": "selected-label",
+      "parent_id": "selected-card",
+      "z_index": 0,
+      "content": {
+        "mode": "editable",
+        "binding": "selected-labels-slot",
+        "asset_id": null,
+        "description": "Primary label stays in the card footer as the card expands; font grows36→43px."
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          22,
+          358,
+          556,
+          72
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "font": "index.tsx displayFont/bodyFont role; optional frozen fontAssets",
+          "font_size": 36,
+          "max_lines": 2,
+          "overflow": "adapter caps and actual-font width gate; inspect the encoded readable hold, never silently delete words"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 20
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "显示条件与几何以该组件的当前源码、所属模块及全局/局部时钟为准。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-state",
+          "method": "README第4步实际看帧与听看",
+          "pass_condition": "对象身份、文字、主体完整性和时钟符合本期声明；未执行项保持待验证。"
+        }
+      ]
+    },
+    {
+      "id": "selection-outline",
+      "type": "graphic",
+      "role": "selection-outline",
+      "parent_id": "canvas",
+      "z_index": 0,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "3px blue outline follows the exact same selected-card box and local selected state."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          88,
+          520,
+          600,
+          430
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "moving_box_source": "pilotSelectionAt(scene,age).box",
+          "border_width": 3
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 20
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "显示条件与几何以该组件的当前源码、所属模块及全局/局部时钟为准。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-state",
+          "method": "README第4步实际看帧与听看",
+          "pass_condition": "对象身份、文字、主体完整性和时钟符合本期声明；未执行项保持待验证。"
+        }
+      ]
+    },
+    {
+      "id": "selection-cursor",
+      "type": "vector",
+      "role": "selection-cursor",
+      "parent_id": "canvas",
+      "z_index": 0,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Project-owned cursor interpolates to the primary card using local cursorFrom→selectFrom−2, fades over8frames after expandFrom."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          1240,
+          440,
+          52,
+          62
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "target": "[primary.x+0.6*primary.w,primary.y+0.5*primary.h]",
+          "source": "SelectModule SVG, not a protected source asset"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 20
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "显示条件与几何以该组件的当前源码、所属模块及全局/局部时钟为准。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-state",
+          "method": "README第4步实际看帧与听看",
+          "pass_condition": "对象身份、文字、主体完整性和时钟符合本期声明；未执行项保持待验证。"
+        }
+      ]
+    },
+    {
+      "id": "focus-window",
+      "type": "group",
+      "role": "focus-window",
+      "parent_id": "canvas",
+      "z_index": 0,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Original-film focus window interpolates entry→expanded overmin(18,scene.frames−1) local frames."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          88,
+          470,
+          1264,
+          870
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "expanded_box": [
+            88,
+            450,
+            1264,
+            960
+          ],
+          "radius": 24
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 20
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "显示条件与几何以该组件的当前源码、所属模块及全局/局部时钟为准。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-state",
+          "method": "README第4步实际看帧与听看",
+          "pass_condition": "对象身份、文字、主体完整性和时钟符合本期声明；未执行项保持待验证。"
+        }
+      ]
+    },
+    {
+      "id": "focus-video",
+      "type": "video",
+      "role": "focus-video",
+      "parent_id": "focus-window",
+      "z_index": 0,
+      "content": {
+        "mode": "editable",
+        "binding": "focus-videos-slot",
+        "asset_id": null,
+        "description": "Muted original media referenced by the active focus scene, sourceSeconds=media.offset+sceneAge/30; no source audio or speech-speed change."
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1264,
+          870
+        ],
+        "fit": "contain",
+        "clip": "self",
+        "style": {}
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 20
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "显示条件与几何以该组件的当前源码、所属模块及全局/局部时钟为准。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-state",
+          "method": "README第4步实际看帧与听看",
+          "pass_condition": "对象身份、文字、主体完整性和时钟符合本期声明；未执行项保持待验证。"
+        }
+      ]
+    },
+    {
+      "id": "focus-label",
+      "type": "text",
+      "role": "focus-label",
+      "parent_id": "canvas",
+      "z_index": 0,
+      "content": {
+        "mode": "editable",
+        "binding": "focus-labels-slot",
+        "asset_id": null,
+        "description": "Current focus media label reveals overlocal6–18frames; not an ASR caption."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          88,
+          1440,
+          950,
+          86
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "font": "index.tsx displayFont/bodyFont role; optional frozen fontAssets",
+          "font_size": 40,
+          "max_lines": 2,
+          "overflow": "adapter caps and actual-font width gate; inspect the encoded readable hold, never silently delete words"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 20
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "显示条件与几何以该组件的当前源码、所属模块及全局/局部时钟为准。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-state",
+          "method": "README第4步实际看帧与听看",
+          "pass_condition": "对象身份、文字、主体完整性和时钟符合本期声明；未执行项保持待验证。"
+        }
+      ]
+    },
+    {
+      "id": "presenter-layer",
+      "type": "group",
+      "role": "presenter-layer",
+      "parent_id": "canvas",
+      "z_index": 20,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Only during the verified global presenter window15.4–18.8s; its opaque theme and title treatment replace the main scene presentation."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {}
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 15.4,
+        "end": 18.8
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "显示条件与几何以该组件的当前源码、所属模块及全局/局部时钟为准。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-state",
+          "method": "README第4步实际看帧与听看",
+          "pass_condition": "对象身份、文字、主体完整性和时钟符合本期声明；未执行项保持待验证。"
+        }
+      ]
+    },
+    {
+      "id": "presenter-title",
+      "type": "text",
+      "role": "presenter-title",
+      "parent_id": "presenter-layer",
+      "z_index": 0,
+      "content": {
+        "mode": "editable",
+        "binding": "presenter-title-slot",
+        "asset_id": null,
+        "description": "Active scene title with geometry/font-size following the large↔small presenter factor; same source text as scene-title, no new narration."
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          88,
+          160,
+          1264,
+          240
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "small_box": [
+            100,
+            450,
+            1240,
+            390
+          ],
+          "small_font_size": 132,
+          "large_font_size": 92,
+          "font": "index.tsx displayFont/bodyFont role; optional frozen fontAssets",
+          "font_size": 92,
+          "max_lines": 3,
+          "overflow": "adapter caps and actual-font width gate; inspect the encoded readable hold, never silently delete words"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 15.4,
+        "end": 18.8
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "显示条件与几何以该组件的当前源码、所属模块及全局/局部时钟为准。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-state",
+          "method": "README第4步实际看帧与听看",
+          "pass_condition": "对象身份、文字、主体完整性和时钟符合本期声明；未执行项保持待验证。"
+        }
+      ]
+    },
+    {
+      "id": "presenter-rule",
+      "type": "graphic",
+      "role": "presenter-rule",
+      "parent_id": "presenter-layer",
+      "z_index": 0,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Accent rule follows the presenter size factor; it does not alter the source video clock."
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          340,
+          407,
+          760,
+          5
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "small_box": [
+            340,
+            874,
+            760,
+            7
+          ]
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 15.4,
+        "end": 18.8
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "显示条件与几何以该组件的当前源码、所属模块及全局/局部时钟为准。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-state",
+          "method": "README第4步实际看帧与听看",
+          "pass_condition": "对象身份、文字、主体完整性和时钟符合本期声明；未执行项保持待验证。"
+        }
+      ]
+    },
+    {
+      "id": "presenter-window",
+      "type": "group",
+      "role": "presenter-window",
+      "parent_id": "presenter-layer",
+      "z_index": 0,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Global15.4–18.8s verified source window; large[462,510), small[510,564) with16-frame box interpolation at510."
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          300,
+          432,
+          840,
+          1110
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "small_box": [
+            1092,
+            1222,
+            260,
+            325
+          ],
+          "transition_frames": 16,
+          "source_clock": "offset+(globalFrame-presenter.from)/30"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 15.4,
+        "end": 18.8
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "显示条件与几何以该组件的当前源码、所属模块及全局/局部时钟为准。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-state",
+          "method": "README第4步实际看帧与听看",
+          "pass_condition": "对象身份、文字、主体完整性和时钟符合本期声明；未执行项保持待验证。"
+        }
+      ]
+    },
+    {
+      "id": "presenter-video",
+      "type": "avatar",
+      "role": "presenter-video",
+      "parent_id": "presenter-window",
+      "z_index": 0,
+      "content": {
+        "mode": "editable",
+        "binding": "presenter-slot",
+        "asset_id": null,
+        "description": "One already-created25fps person video is sampled by continuous global seconds into30fps output and is always muted; changing size never restarts its0–3.4s source."
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          840,
+          1110
+        ],
+        "fit": "contain",
+        "clip": "self",
+        "style": {}
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 15.4,
+        "end": 18.8
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "显示条件与几何以该组件的当前源码、所属模块及全局/局部时钟为准。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-state",
+          "method": "README第4步实际看帧与听看",
+          "pass_condition": "对象身份、文字、主体完整性和时钟符合本期声明；未执行项保持待验证。"
+        }
+      ]
+    },
+    {
+      "id": "presenter-label",
+      "type": "text",
+      "role": "presenter-label",
+      "parent_id": "presenter-layer",
+      "z_index": 0,
+      "content": {
+        "mode": "editable",
+        "binding": "presenter-label-slot",
+        "asset_id": null,
+        "description": "Optional presenter scene subtitle at the source-defined side label; current example says店长介绍."
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          88,
+          1415,
+          180,
+          110
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "font": "index.tsx displayFont/bodyFont role; optional frozen fontAssets",
+          "font_size": 34,
+          "max_lines": 2,
+          "overflow": "adapter caps and actual-font width gate; inspect the encoded readable hold, never silently delete words"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 15.4,
+        "end": 18.8
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "显示条件与几何以该组件的当前源码、所属模块及全局/局部时钟为准。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-state",
+          "method": "README第4步实际看帧与听看",
+          "pass_condition": "对象身份、文字、主体完整性和时钟符合本期声明；未执行项保持待验证。"
+        }
+      ]
+    },
+    {
+      "id": "brand",
+      "type": "text",
+      "role": "brand",
+      "parent_id": "canvas",
+      "z_index": 40,
+      "content": {
+        "mode": "editable",
+        "binding": "brand-slot",
+        "asset_id": null,
+        "description": "Editable current brand plus fixedHAIKE AI label above all module/presenter layers."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          88,
+          64,
+          1264,
+          48
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "font": "index.tsx displayFont/bodyFont role; optional frozen fontAssets",
+          "font_size": 29,
+          "max_lines": 2,
+          "overflow": "adapter caps and actual-font width gate; inspect the encoded readable hold, never silently delete words"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 20
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "显示条件与几何以该组件的当前源码、所属模块及全局/局部时钟为准。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-state",
+          "method": "README第4步实际看帧与听看",
+          "pass_condition": "对象身份、文字、主体完整性和时钟符合本期声明；未执行项保持待验证。"
+        }
+      ]
+    },
+    {
+      "id": "captions",
+      "type": "subtitle",
+      "role": "captions",
+      "parent_id": "canvas",
+      "z_index": 50,
+      "content": {
+        "mode": "editable",
+        "binding": "captions-slot",
+        "asset_id": null,
+        "description": "Existing approved cue text at unchanged startMs/endMs, current11cues end19.72s; every video stream muted and only one mixed master carries speech."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          88,
+          1570,
+          1264,
+          116
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "font": "index.tsx displayFont/bodyFont role; optional frozen fontAssets",
+          "font_size": 60,
+          "max_lines": 2,
+          "overflow": "adapter caps and actual-font width gate; inspect the encoded readable hold, never silently delete words"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 20
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "显示条件与几何以该组件的当前源码、所属模块及全局/局部时钟为准。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-state",
+          "method": "README第4步实际看帧与听看",
+          "pass_condition": "对象身份、文字、主体完整性和时钟符合本期声明；未执行项保持待验证。"
+        }
+      ]
+    },
+    {
+      "id": "footer",
+      "type": "text",
+      "role": "footer",
+      "parent_id": "canvas",
+      "z_index": 40,
+      "content": {
+        "mode": "editable",
+        "binding": "footer-slot",
+        "asset_id": null,
+        "description": "Current neutral historical-event footer, no new immediate-date/price/service claims."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          88,
+          1720,
+          1264,
+          36
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "font": "index.tsx displayFont/bodyFont role; optional frozen fontAssets",
+          "font_size": 25,
+          "max_lines": 2,
+          "overflow": "adapter caps and actual-font width gate; inspect the encoded readable hold, never silently delete words"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 20
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "显示条件与几何以该组件的当前源码、所属模块及全局/局部时钟为准。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-state",
+          "method": "README第4步实际看帧与听看",
+          "pass_condition": "对象身份、文字、主体完整性和时钟符合本期声明；未执行项保持待验证。"
+        }
+      ]
+    },
+    {
+      "id": "master-audio",
+      "type": "audio",
+      "role": "master-audio",
+      "parent_id": null,
+      "z_index": 0,
+      "content": {
+        "mode": "editable",
+        "binding": "master-slot",
+        "asset_id": null,
+        "description": "One master.wav carries original-speed narration+BGM+SFX for20s; voice0–19.8 plus0.2s no-speech tail. No nested video audio."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {}
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 20
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "显示条件与几何以该组件的当前源码、所属模块及全局/局部时钟为准。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-state",
+          "method": "README第4步实际看帧与听看",
+          "pass_condition": "对象身份、文字、主体完整性和时钟符合本期声明；未执行项保持待验证。"
+        }
+      ]
+    }
+  ],
+  "slots": [
+    {
+      "id": "palette-slot",
+      "element_id": "canvas",
+      "property": "layout.style.palette",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "keys": [
+          "paper",
+          "ink",
+          "muted",
+          "blue",
+          "orange",
+          "line",
+          "dark",
+          "light"
+        ],
+        "format": "#RRGGBB"
+      },
+      "missing": "阻断依赖该字段的冻结或渲染",
+      "overflow": "修订当前参数并重验相关场景，不覆盖旧请求"
+    },
+    {
+      "id": "fonts-slot",
+      "element_id": "canvas",
+      "property": "layout.style.fontAssets",
+      "value_type": "object",
+      "required": false,
+      "limits": {
+        "filenames": [
+          "display.ttf",
+          "body.ttf"
+        ],
+        "missing": "omit only when using the declared system-font route; validate environment separately"
+      },
+      "missing": "阻断依赖该字段的冻结或渲染",
+      "overflow": "修订当前参数并重验相关场景，不覆盖旧请求"
+    },
+    {
+      "id": "scenes-slot",
+      "element_id": "canvas",
+      "property": "layout.style.scenes",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "durationFrames": 600,
+        "module": [
+          "statement",
+          "select",
+          "focus",
+          "wall"
+        ],
+        "theme": [
+          "paper",
+          "dark"
+        ],
+        "coverage": "strict continuous [0,600), every mediaId used, original video segments0.5–4s"
+      },
+      "missing": "阻断依赖该字段的冻结或渲染",
+      "overflow": "修订当前参数并重验相关场景，不覆盖旧请求"
+    },
+    {
+      "id": "titles-slot",
+      "element_id": "scene-title",
+      "property": "content",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "path": "props.scenes[].title",
+        "max_characters": 36,
+        "max_lines": 3,
+        "max_per_line": 16,
+        "actual_font_width": 1264
+      },
+      "missing": "缺必需输入时阻断冻结；可选内容仅按源码显隐",
+      "overflow": "修正当前公开参数与真实源区间后新冻结，不修改既有产物或牺牲原口播"
+    },
+    {
+      "id": "subtitles-slot",
+      "element_id": "scene-subtitle",
+      "property": "content",
+      "value_type": "array",
+      "required": false,
+      "limits": {
+        "path": "props.scenes[].subtitle",
+        "max_characters": 36,
+        "max_lines": 2
+      },
+      "missing": "缺必需输入时阻断冻结；可选内容仅按源码显隐",
+      "overflow": "修正当前公开参数与真实源区间后新冻结，不修改既有产物或牺牲原口播"
+    },
+    {
+      "id": "secondary-posters-slot",
+      "element_id": "secondary-poster",
+      "property": "content",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "path": "props.media[scene.secondaryMediaId].thumbnail",
+        "whole_asset_only": true,
+        "identity": "original sourceSHA + exact poster timestamp + posterSHA"
+      },
+      "missing": "缺必需输入时阻断冻结；可选内容仅按源码显隐",
+      "overflow": "修正当前公开参数与真实源区间后新冻结，不修改既有产物或牺牲原口播"
+    },
+    {
+      "id": "secondary-labels-slot",
+      "element_id": "secondary-label",
+      "property": "content",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "path": "props.media[scene.secondaryMediaId].label",
+        "max_characters": 12
+      },
+      "missing": "缺必需输入时阻断冻结；可选内容仅按源码显隐",
+      "overflow": "修正当前公开参数与真实源区间后新冻结，不修改既有产物或牺牲原口播"
+    },
+    {
+      "id": "selected-posters-slot",
+      "element_id": "selected-poster",
+      "property": "content",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "path": "props.media[scene.mediaId].thumbnail",
+        "whole_asset_only": true,
+        "identity": "original sourceSHA + poster timestamp + posterSHA"
+      },
+      "missing": "缺必需输入时阻断冻结；可选内容仅按源码显隐",
+      "overflow": "修正当前公开参数与真实源区间后新冻结，不修改既有产物或牺牲原口播"
+    },
+    {
+      "id": "selected-videos-slot",
+      "element_id": "selected-video",
+      "property": "content",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "path": "props.media[scene.mediaId]",
+        "source_fields": [
+          "src",
+          "offset",
+          "fit",
+          "objectPosition"
+        ],
+        "fit": "contain",
+        "playback_rate": 1,
+        "audio": "muted",
+        "maximum_continuous_seconds": 4
+      },
+      "missing": "缺必需输入时阻断冻结；可选内容仅按源码显隐",
+      "overflow": "修正当前公开参数与真实源区间后新冻结，不修改既有产物或牺牲原口播"
+    },
+    {
+      "id": "selected-labels-slot",
+      "element_id": "selected-label",
+      "property": "content",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "path": "props.media[scene.mediaId].label",
+        "max_characters": 12
+      },
+      "missing": "缺必需输入时阻断冻结；可选内容仅按源码显隐",
+      "overflow": "修正当前公开参数与真实源区间后新冻结，不修改既有产物或牺牲原口播"
+    },
+    {
+      "id": "focus-videos-slot",
+      "element_id": "focus-video",
+      "property": "content",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "path": "props.media[scene.mediaId]",
+        "fit": "contain",
+        "playback_rate": 1,
+        "audio": "muted",
+        "source_coverage": "must fit the currently reviewed window"
+      },
+      "missing": "缺必需输入时阻断冻结；可选内容仅按源码显隐",
+      "overflow": "修正当前公开参数与真实源区间后新冻结，不修改既有产物或牺牲原口播"
+    },
+    {
+      "id": "focus-labels-slot",
+      "element_id": "focus-label",
+      "property": "content",
+      "value_type": "array",
+      "required": false,
+      "limits": {
+        "path": "props.media[scene.mediaId].label",
+        "max_characters": 12
+      },
+      "missing": "缺必需输入时阻断冻结；可选内容仅按源码显隐",
+      "overflow": "修正当前公开参数与真实源区间后新冻结，不修改既有产物或牺牲原口播"
+    },
+    {
+      "id": "presenter-title-slot",
+      "element_id": "presenter-title",
+      "property": "content",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "path": "props.scenes[].title when presenter active",
+        "same_text_as": "titles-slot"
+      },
+      "missing": "缺必需输入时阻断冻结；可选内容仅按源码显隐",
+      "overflow": "修正当前公开参数与真实源区间后新冻结，不修改既有产物或牺牲原口播"
+    },
+    {
+      "id": "presenter-slot",
+      "element_id": "presenter-video",
+      "property": "content",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "path": "props.presenter + props.presenterModes",
+        "fit": "contain",
+        "global_from_frame": 462,
+        "global_frames": 102,
+        "source_offset_seconds": 0,
+        "source_seconds": 3.4,
+        "proof": "current source-audit+prior-receipt+source-ASR identity; audio correlation is not lip acceptance"
+      },
+      "missing": "缺必需输入时阻断冻结；可选内容仅按源码显隐",
+      "overflow": "修正当前公开参数与真实源区间后新冻结，不修改既有产物或牺牲原口播"
+    },
+    {
+      "id": "presenter-label-slot",
+      "element_id": "presenter-label",
+      "property": "content",
+      "value_type": "array",
+      "required": false,
+      "limits": {
+        "path": "props.scenes[].subtitle during presenter window",
+        "max_characters": 36
+      },
+      "missing": "缺必需输入时阻断冻结；可选内容仅按源码显隐",
+      "overflow": "修正当前公开参数与真实源区间后新冻结，不修改既有产物或牺牲原口播"
+    },
+    {
+      "id": "brand-slot",
+      "element_id": "brand",
+      "property": "content",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "path": "props.brand",
+        "max_characters": 24
+      },
+      "missing": "缺必需输入时阻断冻结；可选内容仅按源码显隐",
+      "overflow": "修正当前公开参数与真实源区间后新冻结，不修改既有产物或牺牲原口播"
+    },
+    {
+      "id": "captions-slot",
+      "element_id": "captions",
+      "property": "content",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "path": "props.captions",
+        "max_characters": 18,
+        "source": "exact old ASR cue indices and approved display text",
+        "last_end_ms": 19720,
+        "maximum_end_ms": 19800
+      },
+      "missing": "缺必需输入时阻断冻结；可选内容仅按源码显隐",
+      "overflow": "修正当前公开参数与真实源区间后新冻结，不修改既有产物或牺牲原口播"
+    },
+    {
+      "id": "footer-slot",
+      "element_id": "footer",
+      "property": "content",
+      "value_type": "string",
+      "required": false,
+      "limits": {
+        "path": "props.footer",
+        "max_characters": 40
+      },
+      "missing": "缺必需输入时阻断冻结；可选内容仅按源码显隐",
+      "overflow": "修正当前公开参数与真实源区间后新冻结，不修改既有产物或牺牲原口播"
+    },
+    {
+      "id": "master-slot",
+      "element_id": "master-audio",
+      "property": "content",
+      "value_type": "asset",
+      "required": true,
+      "limits": {
+        "filename": "master.wav",
+        "sample_rate": 48000,
+        "channels": 2,
+        "sample_width_bits": 16,
+        "samples_per_channel": 960000,
+        "narration": "existing-voiceover",
+        "source_audio": "muted"
+      },
+      "missing": "缺必需输入时阻断冻结；可选内容仅按源码显隐",
+      "overflow": "修正当前公开参数与真实源区间后新冻结，不修改既有产物或牺牲原口播"
+    },
+    {
+      "id": "wall-category-slot",
+      "element_id": "wall-category",
+      "property": "content",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "path": "props.wallCategories or source defaults",
+        "scope": "Current source-defined control and verified actual input"
+      },
+      "missing": "Block the affected scene and preserve original assets.",
+      "overflow": "Adjust declared content/geometry and inspect a new source-bound preview."
+    },
+    {
+      "id": "wall-card-slot",
+      "element_id": "wall-card",
+      "property": "content",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "path": "scene.wallMediaIds[] + props.media[id]",
+        "scope": "Current source-defined control and verified actual input"
+      },
+      "missing": "Block the affected scene and preserve original assets.",
+      "overflow": "Adjust declared content/geometry and inspect a new source-bound preview."
+    },
+    {
+      "id": "wall-video-slot",
+      "element_id": "wall-video",
+      "property": "content",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "path": "props.media[scene.mediaId].src/offset",
+        "scope": "Current source-defined control and verified actual input"
+      },
+      "missing": "Block the affected scene and preserve original assets.",
+      "overflow": "Adjust declared content/geometry and inspect a new source-bound preview."
+    }
+  ],
+  "evidence": [
+    {
+      "id": "implementation",
+      "source_kind": "design",
+      "source": "Project-owned Remotion implementation and local durable queue adapter.",
+      "locator": "index.tsx components/pure state helpers, types.ts, layout.json and adapter validation",
+      "method": "Documents implemented geometry, timing and controlled input slots; source alone does not prove rendering, watching, listening or production acceptance.",
+      "file": "index.tsx",
+      "sha256": null
+    },
+    {
+      "id": "example",
+      "source_kind": "illustrative",
+      "source": "Public safe-filename parameter example matching this pilot schema.",
+      "locator": "props.example.json",
+      "method": "Shows the current7-scene composition,11captions and existing presenter window without private paths or media; not a production input/approval receipt.",
+      "file": "props.example.json",
+      "sha256": null
+    },
+    {
+      "id": "local-v002-review",
+      "source_kind": "measurement",
+      "source": "Actual v002 frozen request, unified queue delivery, measured encoded video, source lineage and bounded visual/browser checks.",
+      "locator": "studio-9dfb9c49360060cd / motiongit-narrated-pilot-3845d66337bf59e32228 / PQ-1650131fb810322f3421",
+      "method": "54 isolated pilot tests and35 queue tests passed; encoded600frames/20s at1440x1800/30fps,20490710bps; full decode passed; AAC-16.56LUFS/-3.74dBTP;44 actual encoded phase frames plus5 originals viewed. Local player exercised; continuous image/sound, device/platform and user art review remain separate pending dimensions.",
+      "file": "../../../.local/motiongit-narrated-20261026/REVIEW.json",
+      "sha256": "469a8b4794f02df3a391b0eb7eb8860038a0bcc43d197285f7b65962602cd9ec"
+    },
+    {
+      "id": "local-v003-wall",
+      "source_kind": "measurement",
+      "source": "Actual project-owned six-card wall output and original queue.",
+      "locator": "studio-243213ebcbf9109a / motiongit-narrated-pilot-d8bbff38f04dc38b01c6 / PQ-59680a62f0ddca34e322",
+      "method": "Actual1440x1800/30fps/600frames/20seconds;20490709bps;-16.56LUFS/-3.74dBTP;full decode. Viewed17 encoded phase frames covering cascade, same-card expansion, full source windows and presenter large/small states. Continuous listening/device/user-art review pending.",
+      "file": "../../../.local/motiongit-integration-20261027/REVIEW.json",
+      "sha256": "4212db2465b95ffc01ee782671ec6c68b575bf2df8ca07148e489659997d898d"
+    }
+  ],
+  "unknowns": [],
+  "validation": {
+    "structure": {
+      "status": "pass",
+      "evidence_ids": [
+        "local-v002-review",
+        "local-v003-wall"
+      ],
+      "note": "Current single specification, safe-name example and54 isolated pilot tests passed;35 queue regression tests passed. Only this20s source contract is covered. v003 wall additionally validated within its explicit20-second source-bound scope; new input needs fresh preview/review."
+    },
+    "technical": {
+      "status": "pass",
+      "evidence_ids": [
+        "local-v002-review",
+        "local-v003-wall"
+      ],
+      "note": "Actual v0021440x1800/30fps/600frames/20.0s,H264yuv420p,20490710bps; AAC48kstereo-16.56LUFS/-3.74dBTP; full decode passed. v003 wall additionally validated within its explicit20-second source-bound scope; new input needs fresh preview/review."
+    },
+    "visual": {
+      "status": "pass",
+      "evidence_ids": [
+        "local-v002-review",
+        "local-v003-wall"
+      ],
+      "note": "Passed bounded review of44 encoded phase frames and5 originals, covering all modules, orientation windows and presenter large-to-small identity. Continuous watching and user art approval remain pending. v003 wall additionally validated within its explicit20-second source-bound scope; new input needs fresh preview/review."
+    },
+    "audio": {
+      "status": "pending",
+      "evidence_ids": [
+        "local-v002-review"
+      ],
+      "note": "Source lineage,sample clock,music/SFX mapping and AAC measurements passed; continuous listening,lip-reading and device sound acceptance remain pending."
+    },
+    "platform": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "No publication in this pilot; target platform UI and actual device presentation remain untested."
+    },
+    "user_review": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "Await user review of the specific actual output version."
+    },
+    "production": {
+      "status": "pass",
+      "evidence_ids": [
+        "local-v002-review",
+        "local-v003-wall"
+      ],
+      "note": "Actual current request and completed unified queue job PQ-1650131fb810322f3421 match outputSHA f2bf8c45939ba69a9d0c03f5a7ed59952eef880502e23e9275fb2b6ab7a66c5c; local candidate/delivery only,no publication. v003 wall additionally validated within its explicit20-second source-bound scope; new input needs fresh preview/review."
+    }
+  },
+  "extensions": {
+    "custom": {
+      "contract": "motiongit-narrated-pilot-v1",
+      "rules": "Element IDs describe reusable components. Opening/family scenes declare conditional select/wall subtrees; props.scenes[].module selects the actual rendered subtree. MaterialWallModule instances use stable media IDs. Current source files govern dynamic geometry."
+    },
+    "graphic": {
+      "text_policy": "Exact original speech captions, approved display corrections and editable short titles; preserve negation, conditions, numbers/units and event scope. Adapter allows at most18characters per caption.",
+      "asset_fit": "Every real film/presenter is contain and muted; media.orientation chooses the wider landscape or taller portrait window and must match the reviewed original poster. Poster/source identities and exact viewed intervals bind before freeze. Source interior pixels are not editable text."
+    },
+    "material_edit": {
+      "source_ranges": "Select source starts atmedia.offset when its local expandFrom begins; focus source starts atmedia.offset at scene0. Each playing range must fit the reviewed real source window and remain <=4s.",
+      "cut_policy": "No loops/frozen people/time-stretch.7scenes continuously cover[0,600). Preserve every original19.8s speech cue and0.2s no-speech tail."
+    },
+    "avatar": {
+      "face_crop": "Existing full-frame1228x1536 source usescontain in declared large/small boxes, no artificial face crop. Current source-global binding verified independently before use.",
+      "synchronization": "Global[462,564)=15.4–18.8s maps continuously to source0–3.4s at1x; mode switches at510with16frame interpolation never restart playback.25FPS source sampled into30FPS output; correlation proves lineage/offset only, not phoneme acceptance."
+    },
+    "narration": {
+      "contract": "existing-voiceover-source-chain/1",
+      "rules": "Require original approved dry voice, old ASR/cue identity, source-audit, prior-receipt and current master+independent narration. Original source0–19.8s is continuous1x, unreordered; last0.2s of independent narration is zero. No new TTS,ASR,avatar generation or publication."
+    }
+  },
+  "operations": [
+    {
+      "id": "freeze",
+      "input": "Current safe-name props/source mapping plus all original voice/ASR/approval/person/footage/thumbnail/music and actual review receipts.",
+      "action": "Validate exposed slots and complete source lineage, actual intervals, caption exact equality, sample clock and same-source presenter mapping; copy unchanged sources and freeze request/runtimeSHA.",
+      "output": "Original immutable request and local verified asset copies.",
+      "completion": "All required sources and receipts match current inputs; no missing cue/source, no new paid calls, no source-audio duplication and exact600frame clock.",
+      "recovery": "Restore the same hashes or intentionally update the affected controlled input and freeze a new version; retain completed sources and old outputs.",
+      "entrypoint": "../../scripts/motiongit_narrated_pilot.py --input <current-input.json>"
+    },
+    {
+      "id": "render",
+      "input": "Original frozen request and its idempotent local-recompose unified queue job.",
+      "action": "Run the registered motiongit-narrated-pilot-v1 adapter via existing unified queue; invoke VideoCompose/Remotion with source-owned modules,encode and measured QA.",
+      "output": "Actual20s film, technical QA/result identity and candidate work record.",
+      "completion": "Queue and media match request;1440x1800/30FPS/600frames,full decode,H264yuv420p,video>=20Mbps andAAC48kstereo peak<=-1.5dBTP.",
+      "recovery": "Read original task and completed local artifacts first; resume without fresh voice/person/ASR calls; changed runtime or inputs require a new frozen identity.",
+      "entrypoint": "../../scripts/motiongit_narrated_pilot.py --request <original-request.json> --output-dir <delivery>"
+    },
+    {
+      "id": "review",
+      "input": "Complete encoded film, current frozen props, source evidence, audio tracks and exact module/presenter phase table.",
+      "action": "Inspect actual module boundaries/moving midpoints/holds, full-scene reading, exact subtitles and presenter large→small→absent; separately record continuous watching/listening/device checks.",
+      "output": "Actual review scope, individual dimension results, final hash and playable handoff.",
+      "completion": "Technical status,static examples,source correlation and sampled frames do not substitute motion/lip/listening/user acceptance. All applicable dimensions keep their actual independent status.",
+      "recovery": "Locate the specific source/element/output frame; repair authoritative parameters, preserve previous version and repeat affected plus related checks.",
+      "entrypoint": "README.md#4-验收并交付"
+    }
+  ]
+}

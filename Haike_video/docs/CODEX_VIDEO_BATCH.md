@@ -8,6 +8,8 @@
 
 ## 规格和命令
 
+每次单条、批次及续做，在冻结规格与最终交付时执行[画质标准](VIDEO_QUALITY.md)，核对实际素材与输出文件。
+
 在工作区根目录使用 `Haike_video/.venv/Scripts/python.exe` 调用
 `Haike_video/scripts/codex_video_batch.py <command> --spec <JSON>`。
 新指令省略口播参数时，先用 `defaults --spec request.json --output spec.json` 补全；

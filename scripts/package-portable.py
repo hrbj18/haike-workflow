@@ -159,7 +159,7 @@ def copy_browser_tree(source, destination):
         shutil.copyfile(file, target)
 
 
-def copy_template_sounds(destination):
+def copy_template_sounds(destination, source_root=None):
     """Ship only original sounds individually authorized by the tracked provenance."""
     relative = Path('Haike_video/templates/avatar-investment-a-v6-art-v5/assets/sound')
     catalog = json.loads((destination / relative / 'PROVENANCE.json').read_text(encoding='utf-8'))
@@ -171,7 +171,7 @@ def copy_template_sounds(destination):
         name = safe_relative(asset['relative_path'])
         if len(name.parts) != 1 or not str(name).endswith('.wav'):
             raise ValueError('Invalid template sound path')
-        source = ROOT / relative / str(name)
+        source = (source_root or ROOT) / relative / str(name)
         if not source.is_file() or source.is_symlink() or sha256(source) != asset['sha256']:
             raise ValueError('Missing/mismatched original template sound: ' + str(name))
         approved.append(source)
@@ -194,7 +194,8 @@ def stage(args):
         subprocess.run(['git', 'archive', '--format=zip', '-o', str(archive), 'HEAD'], cwd=ROOT, check=True)
         extract_archive(archive, destination)
     print('Exported committed source: ' + revision, flush=True)
-    copy_template_sounds(destination)
+    dependency_root = getattr(args, 'dependency_root', None) or ROOT
+    copy_template_sounds(destination, dependency_root)
     # Rendering dependencies must match the current source lock exactly.
     with zipfile.ZipFile(args.runtime_archive) as package:
         candidates = [name for name in package.namelist() if name.endswith('/Haike_video/remotion-composer/package-lock.json')]
@@ -213,27 +214,27 @@ def stage(args):
         for sibling in sorted(args.chromium.parent.parent.glob('ffmpeg-*')):
             copy_browser_tree(sibling, destination / 'runtime/playwright' / sibling.name)
     print('Copied selected runtime dependencies; no legacy application code/configuration.', flush=True)
-    environments = [copy_environment(ROOT, destination, module) for module in MODULES]
+    environments = [copy_environment(dependency_root, destination, module) for module in MODULES]
     if args.include_crawler:
-        crawler = ROOT / CRAWLER
+        crawler = dependency_root / CRAWLER
         if git('status', '--porcelain', '--untracked-files=no', cwd=crawler).strip():
             raise ValueError('External crawler source has modifications; export an audited commit first')
         with tempfile.TemporaryDirectory(prefix='haike-crawler-') as tmp:
             archive = Path(tmp) / 'crawler.zip'
             subprocess.run(['git', 'archive', '--format=zip', '-o', str(archive), 'HEAD'], cwd=crawler, check=True)
             extract_archive(archive, destination / CRAWLER)
-        environments.append(copy_environment(ROOT, destination, CRAWLER))
+        environments.append(copy_environment(dependency_root, destination, CRAWLER))
         write_json(destination / 'portable/CRAWLER-SOURCE.json', {
             'url': 'https://github.com/NanmiCoder/MediaCrawler',
             'commit': git('rev-parse', 'HEAD', cwd=crawler).decode().strip(),
             'license': CRAWLER + '/LICENSE', 'scope': 'Non-commercial learning/research; separate permission needed for commercial use',
         })
     model_spec = json.loads((ROOT / 'config/external-models.json').read_text(encoding='utf-8'))['yunet']
-    model = ROOT / model_spec['destination']
+    model = dependency_root / model_spec['destination']
     if model.is_file():
         if sha256(model) != model_spec['sha256']:
             raise ValueError('YuNet model does not match the tracked model specification')
-        target = destination / model.relative_to(ROOT)
+        target = destination / model.relative_to(dependency_root)
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(model, target)
         for license_file in model.parent.glob('*.LICENSE'):
@@ -326,6 +327,8 @@ def main():
     parser.add_argument('action', choices=['stage', 'archive'])
     parser.add_argument('--stage', type=Path, required=True)
     parser.add_argument('--runtime-archive', type=Path)
+    parser.add_argument('--dependency-root', type=Path,
+                        help='Audited installed dependency trees; application code still comes only from clean HEAD')
     parser.add_argument('--include-crawler', action='store_true')
     parser.add_argument('--chromium', type=Path, help='Clean Playwright Chromium application directory; no browser profile')
     parser.add_argument('--destination', type=Path, default=ROOT / 'dist/portable')

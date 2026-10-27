@@ -17,6 +17,8 @@ def main(argv=None):
     parser.add_argument("--cues", type=Path)
     parser.add_argument("--template-number", type=int, choices=range(3, 11))
     parser.add_argument("--ratio", choices=("9x16", "4x5", "1x1", "16x9"))
+    parser.add_argument("--palette-variant", choices=("default", "blue-beige", "cyan-charcoal", "black-pink"),
+                        help="可选；新配色仅4x5且依次绑定模板07/08/09；default与省略保持旧默认")
     parser.add_argument("--title")
     parser.add_argument("--brand", default="海客AI社区服务站")
     parser.add_argument("--headline", help="可选；须与cues JSON的beat_titles首拍一致；省略时读取首拍")
@@ -47,7 +49,8 @@ def main(argv=None):
                 raise ValueError("prepare需要source-video、cues、template-number、ratio与title")
             request = prepare(queue, args.source_video, args.cues, template_number=args.template_number,
                 ratio=args.ratio, title=args.title, brand=args.brand, headline=args.headline, cta=args.cta,
-                audio_plan=args.audio_plan, mixed_audio=args.mixed_audio, audio_receipt=args.audio_receipt)
+                audio_plan=args.audio_plan, mixed_audio=args.mixed_audio, audio_receipt=args.audio_receipt,
+                palette_variant=args.palette_variant)
             if path.exists() and json.loads(path.read_text(encoding="utf-8")) != request:
                 raise ValueError("此证据目录已有不同冻结请求，请保留原目录并为新请求使用另一目录")
             atomic_private(path, request)

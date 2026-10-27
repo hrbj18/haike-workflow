@@ -1,13 +1,14 @@
 海客工作台（Windows 64位）
 
-1. 解压安装包和APIKey包，得到并排的 Haike_videoflow 和 Haike_APIKeys 两个文件夹。
-2. 打开 Haike_videoflow，双击 00-install.cmd，选择原服务（默认）或海客中转站，等待检查完成。
+1. 完整解压项目安装ZIP。包内不含私人Key、登录记录、历史素材和成片。
+2. 打开项目根目录，双击 01-setup.cmd 初始化；按 docs/API_KEY_SETUP.md 导入自己的私有配置文档。已有独立APIKey包时，仍可放在旁边并用 00-install.cmd 选择服务。
 3. 双击 02-start.cmd；抖音、快手、视频号请在新电脑分别扫码。
 
 默认数字人：性价比 RunningHub 2094449979141218305。
 高质量：RunningHub 2112180419025260546（V5.3.1），明确告诉Agent本次使用才调用；长期改默认须明确保存。
 高质量独立入口及45秒自动分段见 Haike_video/workflows/runninghub-high-quality/README.md；普通Studio暂用原性价比入口。
 把根目录 START_HERE.md 交给本机Agent，即可读取最新模板、制作及恢复接口。
+模板入口：数字人口播 → 选择模板 → 视觉模板库。2026-10-27交付有40张随包截图，目录保留42条（另2条为制作/手册入口）。旧版只更新模板时使用独立模板更新ZIP，详见 docs/TEMPLATE_DELIVERY.md。
 
 APIKey包含私人凭据，只私下保存和交付，不上传GitHub。新电脑仍需各云服务权限、联网和自己的媒体。
 包内包含运行环境；初始化不收费、不发布。真实制作和发布先确认预算与账号。

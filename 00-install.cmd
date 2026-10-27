@@ -9,9 +9,12 @@ set "HAIKE_SETUP_ROUTE=direct"
 if errorlevel 2 set "HAIKE_SETUP_ROUTE=gateway"
 set "HAIKE_SETUP_DOC=%~dp0..\Haike_APIKeys\%HAIKE_SETUP_ROUTE%.private.md"
 if not exist "%HAIKE_SETUP_DOC%" (
-  echo 请先把 APIKey包解压到安装文件夹旁，保留 Haike_APIKeys 文件夹名称。
+  echo 未发现私人APIKey包，将先检查并初始化运行环境。
+  echo 云服务配置请按 docs\API_KEY_SETUP.md 导入自己的私有配置文档。
+  call "%~dp001-setup.cmd" -Full
+  if errorlevel 1 exit /b 1
   pause
-  exit /b 1
+  exit /b
 )
 call "%~dp001-setup.cmd" -ConfigDocument "%HAIKE_SETUP_DOC%" -Full
 set "HAIKE_SETUP_EXIT=%errorlevel%"

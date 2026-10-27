@@ -77,6 +77,43 @@ class ProductionQueueWorker:
         return run_motion(self._project_dir(job), job["frozen_request"])
 
     def _run_investment_recompose(self, job):
+        if job.get("frozen_request", {}).get("contract") == "hum-production-v1":
+            from backlot.studio_hum_production import run
+            return run(self.queue, job)
+        if job.get("frozen_request", {}).get("contract") == "motiongit-component-render-v1":
+            from backlot.studio_motiongit_render import run
+            return run(self.queue, job)
+        if job.get("frozen_request", {}).get("contract") == "motiongit-narrated-pilot-v1":
+            from backlot.studio_motiongit_narrated_pilot import run
+            return run(self.queue, job)
+        if job.get("frozen_request", {}).get("contract") == "store-material-wall-v1":
+            from backlot.studio_store_material_wall import run
+            return run(self.queue, job)
+        if job.get("frozen_request", {}).get("contract") == "store-motion-showcase-v1":
+            from backlot.studio_store_motion_showcase import run
+            return run(self.queue, job)
+        if job.get("frozen_request", {}).get("contract") == "store-opening-v1":
+            from backlot.studio_store_opening import run
+            return run(self.queue, job)
+        if job.get("frozen_request", {}).get("contract") == "investment-six-v1":
+            from backlot.studio_investment_six import run
+            return run(self.queue, job)
+        if job.get("frozen_request", {}).get("contract") == "store-footage-contrast-v1":
+            from backlot.studio_store_footage import run
+            return run(self.queue, job)
+        if job.get("frozen_request", {}).get("contract") == "store-manager-lab-v1":
+            from backlot.studio_store_manager_lab import run
+            return run(self.queue, job)
+        if job.get("frozen_request", {}).get("contract") == "store-manager-contrast-v1":
+            from backlot.studio_store_manager import run
+            return run(self.queue, job)
+        if job.get("frozen_request", {}).get("contract") == "investment-contrast-five-v1":
+            from backlot.studio_investment_contrast import run
+            return run(self.queue, job)
+        from backlot.studio_investment_full import CONTRACT as FULL_INVESTMENT_CONTRACT
+        if job.get("frozen_request", {}).get("contract") == FULL_INVESTMENT_CONTRACT:
+            from backlot.studio_investment_full import run
+            return run(self.queue, job)
         from backlot.studio_investment_style_lab import CONTRACT as STYLE_LAB_CONTRACT
         if job.get("frozen_request", {}).get("contract") == STYLE_LAB_CONTRACT:
             from backlot.studio_investment_style_lab import run

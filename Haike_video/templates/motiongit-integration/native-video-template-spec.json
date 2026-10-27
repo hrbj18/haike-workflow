@@ -1,0 +1,953 @@
+{
+  "schema_version": 1,
+  "standard_version": "video-template-v1",
+  "template_id": "motiongit-vibrant-poster-adapter-v1",
+  "template_version": "v001",
+  "template_type": "custom",
+  "spec_kind": "implementation",
+  "stage": "ready",
+  "authority": {
+    "runbook": "NATIVE-RUNBOOK.md",
+    "implementation_paths": [
+      "../../backlot/studio_motiongit.py",
+      "../../backlot/studio_motiongit_render.py",
+      "../../backlot/studio_motiongit_api.py",
+      "../../scripts/motiongit.py"
+    ],
+    "parameter_source": "../../backlot/studio_motiongit_render.py"
+  },
+  "canvas": {
+    "width": 1440,
+    "height": 1800,
+    "fps": 60,
+    "duration_seconds": 20,
+    "clock": "Original 20-second narration, source SRT and native 60fps control clock; no speech speed changes.",
+    "coordinate_system": "top_left_pixels"
+  },
+  "narrative": {
+    "purpose": "Private-package native motion reuse with existing real store materials and narration; verify a second package without rewriting its animation.",
+    "information_hierarchy": [
+      "Original narration and complete captions",
+      "Current actual photos and footage",
+      "Native kinetic and photo motion",
+      "Native clock/signature"
+    ],
+    "structure": [
+      "opening",
+      "photos",
+      "footage",
+      "closing"
+    ]
+  },
+  "scenes": [
+    {
+      "id": "opening",
+      "start": 0,
+      "end": 4,
+      "purpose": "Store opening hook",
+      "element_ids": [
+        "native-canvas",
+        "kinetic-opening",
+        "native-captions",
+        "native-clock",
+        "voiceover",
+        "music",
+        "native-sfx"
+      ],
+      "variant": "kinetic-wave"
+    },
+    {
+      "id": "photos",
+      "start": 4,
+      "end": 9,
+      "purpose": "Opening scene and family experience evidence",
+      "element_ids": [
+        "native-canvas",
+        "polaroid-photos",
+        "native-captions",
+        "native-clock",
+        "voiceover",
+        "music",
+        "native-sfx"
+      ],
+      "variant": "polaroid-drop"
+    },
+    {
+      "id": "footage",
+      "start": 9,
+      "end": 15.4,
+      "purpose": "Humanoid and robot-dog real footage",
+      "element_ids": [
+        "native-canvas",
+        "media-window",
+        "native-captions",
+        "native-clock",
+        "voiceover",
+        "music",
+        "native-sfx"
+      ],
+      "variant": "media-tilt"
+    },
+    {
+      "id": "closing",
+      "start": 15.4,
+      "end": 20,
+      "purpose": "Introduce the service station and store manager",
+      "element_ids": [
+        "native-canvas",
+        "kinetic-closing",
+        "native-captions",
+        "native-clock",
+        "voiceover",
+        "music",
+        "native-sfx"
+      ],
+      "variant": "kinetic-beat"
+    }
+  ],
+  "assets": [
+    {
+      "id": "original-package",
+      "kind": "other",
+      "path": null,
+      "source": "Private original vibrant-poster@2.7.13 personal envelope; packageSHA bcf4d5995342cdffe345d140... is fully bound in frozen request.",
+      "embedded_content": [
+        "Native animation implementation, fonts, motion sounds and original control geometry"
+      ],
+      "rights_status": "Personal package retained privately; template and third-party rights follow original package conditions."
+    },
+    {
+      "id": "current-materials",
+      "kind": "other",
+      "path": null,
+      "source": "Owned input vault; each file is frozen by exact SHA in the actual project request.",
+      "embedded_content": [
+        "Existing store footage, photographs and narration"
+      ],
+      "rights_status": "User supplied local materials; no new stock generation or publication."
+    }
+  ],
+  "elements": [
+    {
+      "id": "native-canvas",
+      "type": "graphic",
+      "role": "source-native-frame",
+      "parent_id": null,
+      "z_index": 5,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "The 1080x1920 native portrait frame is explicitly viewed through [0,0,1080,1350] and scaled to1440x1800. Review adapted images before export; source photos use contained square derivatives."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "contain",
+        "clip": "none",
+        "style": {
+          "authority": "Original package public control contract and selected timeline; the source native frame owns internal geometry."
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 20
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Only active in its actual source-bound interval; retain native entrance, hold and exit clocks."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source-contract",
+          "target_id": null,
+          "rule": "Retain source clock and complete material; inspect actual preview after replacement."
+        }
+      ],
+      "fixed": [],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "actual-two-package-run"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-native-render",
+          "method": "Inspect actual preview and encoded transition phases",
+          "pass_condition": "Current user content is bound to the declared native control, captions remain readable and no important source pixels are lost."
+        }
+      ]
+    },
+    {
+      "id": "kinetic-opening",
+      "type": "text",
+      "role": "native-kinetic-wave",
+      "parent_id": "native-canvas",
+      "z_index": 5,
+      "content": {
+        "mode": "editable",
+        "binding": "kinetic-opening-slot",
+        "asset_id": null,
+        "description": "Native staggered wave text; cues .64 and1.56seconds. Complete line wording stays in parameters."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "contain",
+        "clip": "none",
+        "style": {
+          "authority": "Original package public control contract and selected timeline; the source native frame owns internal geometry.",
+          "font": "Frozen native package font set; no project font substitution.",
+          "font_size": "48 source pixels for captions; original native control measurement for kinetic text; output scales4/3.",
+          "max_lines": 5,
+          "overflow": "Original package capacity checks; reject or split supported controls without deleting words."
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 4
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Only active in its actual source-bound interval; retain native entrance, hold and exit clocks."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source-contract",
+          "target_id": null,
+          "rule": "Retain source clock and complete material; inspect actual preview after replacement."
+        }
+      ],
+      "fixed": [],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "actual-two-package-run"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-native-render",
+          "method": "Inspect actual preview and encoded transition phases",
+          "pass_condition": "Current user content is bound to the declared native control, captions remain readable and no important source pixels are lost."
+        }
+      ]
+    },
+    {
+      "id": "polaroid-photos",
+      "type": "graphic",
+      "role": "native-polaroid-drop",
+      "parent_id": "native-canvas",
+      "z_index": 5,
+      "content": {
+        "mode": "editable",
+        "binding": "polaroid-photos-slot",
+        "asset_id": null,
+        "description": "Two full-source contained photo inputs; native drop, bounce and development effect at4.2/5.6seconds."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "contain",
+        "clip": "none",
+        "style": {
+          "authority": "Original package public control contract and selected timeline; the source native frame owns internal geometry."
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 4,
+        "end": 9
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Only active in its actual source-bound interval; retain native entrance, hold and exit clocks."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source-contract",
+          "target_id": null,
+          "rule": "Retain source clock and complete material; inspect actual preview after replacement."
+        }
+      ],
+      "fixed": [],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "actual-two-package-run"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-native-render",
+          "method": "Inspect actual preview and encoded transition phases",
+          "pass_condition": "Current user content is bound to the declared native control, captions remain readable and no important source pixels are lost."
+        }
+      ]
+    },
+    {
+      "id": "media-window",
+      "type": "video",
+      "role": "native-media-tilt",
+      "parent_id": "native-canvas",
+      "z_index": 5,
+      "content": {
+        "mode": "editable",
+        "binding": "media-window-slot",
+        "asset_id": null,
+        "description": "Real original footage7.5..13.9seconds; source14.375seconds; no freeze/loop/tempo edits; embedded footage sound excluded."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "contain",
+        "clip": "none",
+        "style": {
+          "authority": "Original package public control contract and selected timeline; the source native frame owns internal geometry."
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 9,
+        "end": 15.4
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Only active in its actual source-bound interval; retain native entrance, hold and exit clocks."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source-contract",
+          "target_id": null,
+          "rule": "Retain source clock and complete material; inspect actual preview after replacement."
+        }
+      ],
+      "fixed": [],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "actual-two-package-run"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-native-render",
+          "method": "Inspect actual preview and encoded transition phases",
+          "pass_condition": "Current user content is bound to the declared native control, captions remain readable and no important source pixels are lost."
+        }
+      ]
+    },
+    {
+      "id": "kinetic-closing",
+      "type": "text",
+      "role": "native-kinetic-beat",
+      "parent_id": "native-canvas",
+      "z_index": 5,
+      "content": {
+        "mode": "editable",
+        "binding": "kinetic-closing-slot",
+        "asset_id": null,
+        "description": "Native line change at real sentence cues15.52/16.76; no invented word timing."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "contain",
+        "clip": "none",
+        "style": {
+          "authority": "Original package public control contract and selected timeline; the source native frame owns internal geometry.",
+          "font": "Frozen native package font set; no project font substitution.",
+          "font_size": "48 source pixels for captions; original native control measurement for kinetic text; output scales4/3.",
+          "max_lines": 5,
+          "overflow": "Original package capacity checks; reject or split supported controls without deleting words."
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 15.4,
+        "end": 20
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Only active in its actual source-bound interval; retain native entrance, hold and exit clocks."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source-contract",
+          "target_id": null,
+          "rule": "Retain source clock and complete material; inspect actual preview after replacement."
+        }
+      ],
+      "fixed": [],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "actual-two-package-run"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-native-render",
+          "method": "Inspect actual preview and encoded transition phases",
+          "pass_condition": "Current user content is bound to the declared native control, captions remain readable and no important source pixels are lost."
+        }
+      ]
+    },
+    {
+      "id": "native-captions",
+      "type": "text",
+      "role": "original-srt-captions",
+      "parent_id": "native-canvas",
+      "z_index": 5,
+      "content": {
+        "mode": "editable",
+        "binding": "native-captions-slot",
+        "asset_id": null,
+        "description": "Real supplied source SRT. Native original bounds are inside x86.4..993.6/y1106.4..1171.2 in1080-wide source coordinates; multiply4/3 for this canvas."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "contain",
+        "clip": "none",
+        "style": {
+          "authority": "Original package public control contract and selected timeline; the source native frame owns internal geometry.",
+          "font": "Frozen native package font set; no project font substitution.",
+          "font_size": "48 source pixels for captions; original native control measurement for kinetic text; output scales4/3.",
+          "max_lines": 5,
+          "overflow": "Original package capacity checks; reject or split supported controls without deleting words."
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 20
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Only active in its actual source-bound interval; retain native entrance, hold and exit clocks."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source-contract",
+          "target_id": null,
+          "rule": "Retain source clock and complete material; inspect actual preview after replacement."
+        }
+      ],
+      "fixed": [],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "actual-two-package-run"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-native-render",
+          "method": "Inspect actual preview and encoded transition phases",
+          "pass_condition": "Current user content is bound to the declared native control, captions remain readable and no important source pixels are lost."
+        }
+      ]
+    },
+    {
+      "id": "native-clock",
+      "type": "graphic",
+      "role": "native-clock-and-signature",
+      "parent_id": "native-canvas",
+      "z_index": 5,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Original native clock/signature alternate in their source-defined corner; the project does not replace the protected layer."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "contain",
+        "clip": "none",
+        "style": {
+          "authority": "Original package public control contract and selected timeline; the source native frame owns internal geometry."
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 20
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Only active in its actual source-bound interval; retain native entrance, hold and exit clocks."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source-contract",
+          "target_id": null,
+          "rule": "Retain source clock and complete material; inspect actual preview after replacement."
+        }
+      ],
+      "fixed": [],
+      "replaceable": [],
+      "evidence_ids": [
+        "actual-two-package-run"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-native-render",
+          "method": "Inspect actual preview and encoded transition phases",
+          "pass_condition": "Current user content is bound to the declared native control, captions remain readable and no important source pixels are lost."
+        }
+      ]
+    },
+    {
+      "id": "voiceover",
+      "type": "audio",
+      "role": "narration-master",
+      "parent_id": "native-canvas",
+      "z_index": 0,
+      "content": {
+        "mode": "editable",
+        "binding": "voiceover-slot",
+        "asset_id": null,
+        "description": "Existing original-speed narration20seconds; actual input WAV SHA frozen. No new TTS."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Original package public control contract and selected timeline; the source native frame owns internal geometry."
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 20
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Only active in its actual source-bound interval; retain native entrance, hold and exit clocks."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source-contract",
+          "target_id": null,
+          "rule": "Retain source clock and complete material; inspect actual preview after replacement."
+        }
+      ],
+      "fixed": [],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "actual-two-package-run"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-native-render",
+          "method": "Inspect actual preview and encoded transition phases",
+          "pass_condition": "Current user content is bound to the declared native control, captions remain readable and no important source pixels are lost."
+        }
+      ]
+    },
+    {
+      "id": "music",
+      "type": "audio",
+      "role": "background-music",
+      "parent_id": "native-canvas",
+      "z_index": 0,
+      "content": {
+        "mode": "editable",
+        "binding": "music-slot",
+        "asset_id": null,
+        "description": "User-selected existing music track, covering20seconds; native mix preserved and final AAC peak measured."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Original package public control contract and selected timeline; the source native frame owns internal geometry."
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 20
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Only active in its actual source-bound interval; retain native entrance, hold and exit clocks."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source-contract",
+          "target_id": null,
+          "rule": "Retain source clock and complete material; inspect actual preview after replacement."
+        }
+      ],
+      "fixed": [],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "actual-two-package-run"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-native-render",
+          "method": "Inspect actual preview and encoded transition phases",
+          "pass_condition": "Current user content is bound to the declared native control, captions remain readable and no important source pixels are lost."
+        }
+      ]
+    },
+    {
+      "id": "native-sfx",
+      "type": "audio",
+      "role": "native-motion-sounds",
+      "parent_id": "native-canvas",
+      "z_index": 0,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Retain the selected native controls motion sounds; no complete-silence assumption."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Original package public control contract and selected timeline; the source native frame owns internal geometry."
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 20
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Only active in its actual source-bound interval; retain native entrance, hold and exit clocks."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source-contract",
+          "target_id": null,
+          "rule": "Retain source clock and complete material; inspect actual preview after replacement."
+        }
+      ],
+      "fixed": [],
+      "replaceable": [],
+      "evidence_ids": [
+        "actual-two-package-run"
+      ],
+      "acceptance": [
+        {
+          "check": "source-bound-native-render",
+          "method": "Inspect actual preview and encoded transition phases",
+          "pass_condition": "Current user content is bound to the declared native control, captions remain readable and no important source pixels are lost."
+        }
+      ]
+    }
+  ],
+  "slots": [
+    {
+      "id": "timeline",
+      "element_id": "native-canvas",
+      "property": "content",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "schema": "Actual package poster-timeline.schema.json plus poster-kit.spec.json",
+        "tested_controls": [
+          "kinetic/wave",
+          "polaroid/drop",
+          "media/tilt",
+          "kinetic/beat"
+        ],
+        "duration": "Actual complete narration controls duration; this proof covers20seconds",
+        "layout": "portrait source + explicit4:5 viewport review",
+        "unknown_controls": "Declared70; every new control/input requires actual plan and preview; not all artistically accepted"
+      },
+      "missing": "Block the affected native plan and retain original package/draft.",
+      "overflow": "Recompose using supported controls and real speech boundaries; do not shorten or accelerate speech."
+    },
+    {
+      "id": "kinetic-opening-slot",
+      "element_id": "kinetic-opening",
+      "property": "content",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "path": "segments[0].props.lines/kicker and real cues",
+        "scope": "Current source-defined control and verified actual input"
+      },
+      "missing": "Block the affected scene and preserve original assets.",
+      "overflow": "Adjust declared content/geometry and inspect a new source-bound preview."
+    },
+    {
+      "id": "polaroid-photos-slot",
+      "element_id": "polaroid-photos",
+      "property": "content",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "path": "segments[1].props.items[].src/caption and cues",
+        "scope": "Current source-defined control and verified actual input"
+      },
+      "missing": "Block the affected scene and preserve original assets.",
+      "overflow": "Adjust declared content/geometry and inspect a new source-bound preview."
+    },
+    {
+      "id": "media-window-slot",
+      "element_id": "media-window",
+      "property": "content",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "path": "segments[2].props.src/title/sourceStart",
+        "scope": "Current source-defined control and verified actual input"
+      },
+      "missing": "Block the affected scene and preserve original assets.",
+      "overflow": "Adjust declared content/geometry and inspect a new source-bound preview."
+    },
+    {
+      "id": "kinetic-closing-slot",
+      "element_id": "kinetic-closing",
+      "property": "content",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "path": "segments[3].props.lines/kicker and cues",
+        "scope": "Current source-defined control and verified actual input"
+      },
+      "missing": "Block the affected scene and preserve original assets.",
+      "overflow": "Adjust declared content/geometry and inspect a new source-bound preview."
+    },
+    {
+      "id": "native-captions-slot",
+      "element_id": "native-captions",
+      "property": "content",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "path": "subtitles or actual sentence captions",
+        "scope": "Current source-defined control and verified actual input"
+      },
+      "missing": "Block the affected scene and preserve original assets.",
+      "overflow": "Adjust declared content/geometry and inspect a new source-bound preview."
+    },
+    {
+      "id": "voiceover-slot",
+      "element_id": "voiceover",
+      "property": "content",
+      "value_type": "asset",
+      "required": true,
+      "limits": {
+        "path": "voiceover",
+        "scope": "Source-bound input only"
+      },
+      "missing": "Block the affected production step.",
+      "overflow": "Preserve speech clock and produce a new reviewed version."
+    },
+    {
+      "id": "music-slot",
+      "element_id": "music",
+      "property": "content",
+      "value_type": "asset",
+      "required": true,
+      "limits": {
+        "path": "music",
+        "scope": "Source-bound input only"
+      },
+      "missing": "Block the affected production step.",
+      "overflow": "Preserve speech clock and produce a new reviewed version."
+    }
+  ],
+  "evidence": [
+    {
+      "id": "actual-two-package-run",
+      "source_kind": "measurement",
+      "source": "Actual frozen request, completed native queue job and encoded-output sampling.",
+      "locator": "studio-52bb5e0e7ec514b8 / motiongit-component-29d7d299456940bc0f22 / PQ-b1529033293c064ca266",
+      "method": "Actual1440x1800/60fps/1200frames/20seconds;20491168bps;AAC-15.16LUFS/-2.78dBTP;full decode. Viewed12 adapted previews and22 encoded phase frames; continuous listening/device/user-art review separate.",
+      "file": "../../../.local/motiongit-integration-20261027/REVIEW.json",
+      "sha256": "4212db2465b95ffc01ee782671ec6c68b575bf2df8ca07148e489659997d898d"
+    }
+  ],
+  "unknowns": [],
+  "validation": {
+    "structure": {
+      "status": "pass",
+      "evidence_ids": [
+        "actual-two-package-run"
+      ],
+      "note": "Public schemas/control contracts read through the verified official helper; frozen real inputs and source intervals validated."
+    },
+    "technical": {
+      "status": "pass",
+      "evidence_ids": [
+        "actual-two-package-run"
+      ],
+      "note": "Actual measured resolution, frame count, bitrate, decode and AAC peak passed for this output."
+    },
+    "visual": {
+      "status": "pass",
+      "evidence_ids": [
+        "actual-two-package-run"
+      ],
+      "note": "Bounded actual preview and encoded phase inspection only; no all-controls artistic acceptance."
+    },
+    "audio": {
+      "status": "pending",
+      "evidence_ids": [
+        "actual-two-package-run"
+      ],
+      "note": "Native encoded-mix comparison and final measurements passed; continuous listening and device sound remain pending."
+    },
+    "platform": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "No publication or device-platform validation in this task."
+    },
+    "user_review": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "Await review of the specific final files."
+    },
+    "production": {
+      "status": "pass",
+      "evidence_ids": [
+        "actual-two-package-run"
+      ],
+      "note": "Original unified queue and actual candidate work match outputSHA9509c86e25f1bb4d0fb149bb6e62de1583bf0fddc8e60ae12c5757485c6dc821; no publication."
+    }
+  },
+  "extensions": {
+    "custom": {
+      "source": "Original protected package remains intact. Project reads public contracts and executes verified official entry; no source extraction or automatic arbitrary-engine compatibility.",
+      "recovery": "Frozen requests, copied public previews/receipts, versioned drafts and exact assets remain in the project; full result identity is verified on resume.",
+      "viewport": "1080x1350 top viewport is specific to the reviewed current portrait composition; fresh content needs its own adapted preview review.",
+      "contract": "motiongit-component-render-v1",
+      "rules": "Only declared poster-kit controls and owned input files; preserve original speech clock; actual source-bound preview review and encoded output gates; source/runtime changes freeze a new version."
+    }
+  },
+  "operations": [
+    {
+      "id": "produce",
+      "input": "Verified original package, versioned complete timeline and owned media/audio/SRT.",
+      "action": "Freeze → unified queue preview → actually inspect adapted images → bound review → unified queue render → final measured encoding.",
+      "output": "Native project records, playable4:5 film, technical evidence and candidate work.",
+      "completion": "Original speech/captions and media complete; real transition phases viewed; output identities match; independent review dimensions remain truthful.",
+      "recovery": "Use motiongit.py resume with original frozen request. Completed hashes are reused; changed source/runtime requires a new frozen version. Preserve prior outputs.",
+      "entrypoint": "../../scripts/motiongit.py preview|review|render|resume"
+    }
+  ]
+}
