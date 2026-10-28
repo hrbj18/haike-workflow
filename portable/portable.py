@@ -287,8 +287,9 @@ def diagnose(full=False) -> dict:
     if missing:
         raise RuntimeError("发行包缺少必要文件：" + ", ".join(missing[:8]))
     models = list(local_path("runtime/models/whisper-small").glob("*/model.bin"))
-    if len(models) != 1 or not all((models[0].parent / n).is_file()
-                                 for n in ("config.json", "tokenizer.json", "vocabulary.txt")):
+    optional_model = read_json("RELEASE.json", {}).get("distribution") == "online" and not models
+    if not optional_model and (len(models) != 1 or not all((models[0].parent / n).is_file()
+                                 for n in ("config.json", "tokenizer.json", "vocabulary.txt"))):
         raise RuntimeError("离线 Whisper-small 模型不完整")
     bootstrap = ("import ctypes,os; "
                  "ctypes.windll.kernel32.SetErrorMode(0x8003) if os.name=='nt' else None; "
@@ -300,19 +301,21 @@ def diagnose(full=False) -> dict:
     for repo, code in imports.items():
         checks.append(run_probe(repo.split('/')[0], [str(ROOT / repo / ".venv/Scripts/python.exe"),
                                 "-S", "-c", bootstrap + code], cwd=ROOT / repo))
-    model_dir = local_path(models[0].parent.relative_to(ROOT.resolve()).as_posix())
     model_code = (bootstrap + "from faster_whisper.vad import get_vad_model; get_vad_model(); "
                   "from faster_whisper import WhisperModel; "
                   "WhisperModel(sys.argv[1],device='cpu',compute_type='int8',local_files_only=True,cpu_threads=1,num_workers=1)")
-    checks.append(run_probe("whisper-small", [str(ROOT / "Haike_video/.venv/Scripts/python.exe"),
-                            "-S", "-c", model_code, str(model_dir)]))
+    if not optional_model:
+        model_dir = local_path(models[0].parent.relative_to(ROOT.resolve()).as_posix())
+        checks.append(run_probe("whisper-small", [str(ROOT / "Haike_video/.venv/Scripts/python.exe"),
+                                "-S", "-c", model_code, str(model_dir)]))
     for name, command in (("node", [str(ROOT / "runtime/node/node.exe"), "--version"]),
                           ("ffmpeg", [str(ROOT / "runtime/ffmpeg/bin/ffmpeg.exe"), "-version"]),
                           ("browser", [str(ROOT / BROWSER), "--version"])):
         checks.append(run_probe(name, command))
     result = {"ok": True, "command": "diagnose", "root": str(ROOT), "full": full,
               "checks": checks, "file_count": integrity() if full else None,
-              "models": {"whisper_small": "loadable", "clean_install_default_asr": "gateway"},
+              "models": {"whisper_small": "optional_not_installed" if optional_model else "loadable",
+                         "clean_install_default_asr": "gateway"},
               "browsers": {"system_chrome": system_chrome() is not None,
                            "bundled_interactive_browser": bundled_login_browser() is not None},
               "network_install": False, "physical_new_machine_tested": False}

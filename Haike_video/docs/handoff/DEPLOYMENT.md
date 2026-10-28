@@ -2,7 +2,7 @@
 
 更新时间：2026-10-28
 
-v1.0.0发行范围见根docs/releases/v1.0.0.md：基于稳定main，仅应用更新功能与工具；其他开发窗口改动未纳入。根VERSION.json、portable/{app_update,update_service,update_worker}.py与studio_update_api.py提供版本、HTTPS检查、任务维护闸门和事务回退；AboutDialog.jsx为入口。首版完整包清单kind=full，后续兼容补丁kind=patch；源码副本不自动覆盖。附件、物理新机与真实付费/发布验收分别核对。
+v1.0.0发行范围见根docs/releases/v1.0.0.md：基于稳定main，仅应用更新功能与工具；其他开发窗口改动未纳入。根VERSION.json、portable/{app_update,update_service,update_worker}.py与studio_update_api.py提供版本、HTTPS检查、任务维护闸门和事务回退；AboutDialog.jsx为入口。首版改用轻量联网包（根docs/ONLINE_INSTALL.md），依赖从国内直连源下载，Whisper/Qwen可选；清单kind=full，后续补丁kind=patch；源码副本不自动覆盖。附件、物理新机与真实付费/发布验收分别核对。
 
 10/27：用户授权将已验收交付快照21d1ff2发布为main稳定版，旧main保留legacy-main-before-20261027，合入后固定stable-20261027；见根[稳定版说明](../../../docs/releases/20261027-stable.md)。模板[交付说明](../../../docs/TEMPLATE_DELIVERY.md)含40张本地ZIP截图/42目录及备份回退。发布不混入其他窗口新改动；未声称异机/付费/发布验收。
 

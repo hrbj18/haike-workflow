@@ -11,6 +11,11 @@ if ($ReplaceConfig -and -not $ConfigDocument) {
 $privateDocument = if ($ConfigDocument) {
     (Resolve-Path -LiteralPath $ConfigDocument -ErrorAction Stop).Path
 }
+$releaseIdentity = Join-Path (Split-Path -Parent $PSScriptRoot) 'RELEASE.json'
+if ((Test-Path -LiteralPath $releaseIdentity) -and
+    ((Get-Content -LiteralPath $releaseIdentity -Raw -Encoding UTF8 | ConvertFrom-Json).distribution -eq 'online')) {
+    & (Join-Path $PSScriptRoot 'setup-online.ps1')
+}
 . (Join-Path $PSScriptRoot 'portable-env.ps1')
 Set-Location -LiteralPath $bundleRoot
 if ($privateDocument) {
