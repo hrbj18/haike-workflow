@@ -100,7 +100,7 @@ class OnlineInstallTests(unittest.TestCase):
 
     def test_npm_cannot_select_an_ancestor_project_and_exact_version_is_reused(self):
         def installing(arguments, env, cwd):
-            self.assertEqual(cwd, self.root / 'runtime/hyperframes')
+            self.assertEqual(cwd, (self.root / 'runtime/hyperframes').resolve())
             boundary = runtime.read_json('runtime/hyperframes/package.json')
             self.assertTrue(boundary['private'])
             self.assertEqual(boundary['dependencies'], {'hyperframes': '0.8.34'})
