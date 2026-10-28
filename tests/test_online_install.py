@@ -98,6 +98,18 @@ class OnlineInstallTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, 'extracted online release'):
             online.hydrate()
 
+    def test_npm_cannot_select_an_ancestor_project_and_exact_version_is_reused(self):
+        def installing(arguments, env, cwd):
+            self.assertEqual(cwd, self.root / 'runtime/hyperframes')
+            boundary = runtime.read_json('runtime/hyperframes/package.json')
+            self.assertTrue(boundary['private'])
+            self.assertEqual(boundary['dependencies'], {'hyperframes': '0.8.34'})
+            runtime.write_json('runtime/hyperframes/node_modules/hyperframes/package.json', {'version': '0.8.34'})
+        with patch.object(online, 'command', side_effect=installing) as install:
+            online.install_hyperframes({'hyperframes': '0.8.34'}, {}, 'npm-fixture.cmd')
+            online.install_hyperframes({'hyperframes': '0.8.34'}, {}, 'npm-fixture.cmd')
+        install.assert_called_once()
+
     def test_only_online_distribution_can_omit_optional_whisper(self):
         required = ['runtime/python/python.exe', 'runtime/python/pythonw.exe', 'runtime/node/node.exe',
                     'runtime/ffmpeg/bin/ffmpeg.exe', 'runtime/ffmpeg/bin/ffprobe.exe', runtime.BROWSER,
