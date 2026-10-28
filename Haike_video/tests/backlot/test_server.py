@@ -110,10 +110,13 @@ class TestBacklotServerApi:
     def test_health(self, client):
         response = client.get("/api/health")
         assert response.status_code == 200
-        assert response.json() == {
+        assert response.json().items() >= {
             "ok": True, "app": "backlot", "edition": "haike-workflow-2",
             "workspace": str(Path(server_mod.__file__).resolve().parents[2]),
-        }
+        }.items()
+        assert response.json()["pid"] > 0
+        assert len(response.json()["instance_id"]) == 32
+        assert response.json()["version"]
 
     def test_source_audio_only_endpoint_forwards_versioned_contract(self, client, projects_root, monkeypatch):
         project = _make_project(projects_root, "source-audio-api")

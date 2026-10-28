@@ -802,6 +802,11 @@ async def _production_queue_loop(app: FastAPI) -> None:
 
     worker = app.state.production_queue_worker
     while True:
+        from backlot.studio_update_api import service as update_service, updates
+        update_status = updates.read_json(updates.private_path(update_service(app).root)).get("operation", {}).get("status")
+        if update_status in {"installing", "restarting"} or updates.core.pending_receipts(update_service(app).root):
+            await asyncio.sleep(0.6)
+            continue
         result = await asyncio.to_thread(worker.run_once)
         if isinstance(result, dict):
             project_id = str(result.get("project_id") or "")
@@ -1323,8 +1328,11 @@ async def _lifespan(app: FastAPI):
     app.state.review_preview_recovery_errors = {}
     queue = _ensure_production_queue(app)
     app.state.production_queue_worker = ProductionQueueWorker(queue, PROJECTS_DIR)
-    await _recover_avatar_background_jobs(app)
-    await _recover_workbench_background_jobs(app)
+    from backlot.studio_update_api import service as update_service, updates
+    update_status = updates.read_json(updates.private_path(update_service(app).root)).get("operation", {}).get("status")
+    if update_status not in {"installing", "restarting"} and not updates.core.pending_receipts(update_service(app).root):
+        await _recover_avatar_background_jobs(app)
+        await _recover_workbench_background_jobs(app)
     queue_task = asyncio.create_task(_production_queue_loop(app))
     app.state.production_queue_task = queue_task
     # Do not resume a daily production run merely because the web server was
@@ -1349,6 +1357,8 @@ async def _lifespan(app: FastAPI):
 
 def create_app() -> FastAPI:
     app = FastAPI(title="Backlot", docs_url=None, redoc_url=None, lifespan=_lifespan)
+    from backlot.studio_update_api import attach as attach_app_updater
+    attach_app_updater(app)
     from backlot.customer_surface import install as install_customer_surface
     install_customer_surface(app)
     app.include_router(published_clip_router)
@@ -1373,7 +1383,10 @@ def create_app() -> FastAPI:
 
     @app.get("/api/health")
     async def health() -> dict:
-        return {"ok": True, "app": "backlot", "workspace": str(Path(__file__).resolve().parents[2]), "edition": "haike-workflow-2"}
+        from portable.update_service import current_release
+        release = current_release(Path(__file__).resolve().parents[2])
+        return {"ok": True, "app": "backlot", "workspace": str(Path(__file__).resolve().parents[2]), "edition": "haike-workflow-2",
+                "version": release.get("version"), "pid": os.getpid(), "instance_id": app.state.update_instance_id}
 
     # ---- Unified cross-project production queue -----------------------
 
