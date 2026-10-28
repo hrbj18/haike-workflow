@@ -19,7 +19,8 @@ v1.0.0 公开附件只包含程序、模板、可分发资源和已编译界面�
 | --- | --- | --- |
 | Python 3.12.8 x64 ZIP | [华为云](https://mirrors.huaweicloud.com/python/3.12.8/python-3.12.8-amd64.zip) | [华为云备用域名](https://repo.huaweicloud.com/python/3.12.8/python-3.12.8-amd64.zip) |
 | Node 22.23.4 x64 ZIP | [npmmirror](https://registry.npmmirror.com/-/binary/node/v22.23.4/node-v22.23.4-win-x64.zip) | [华为云](https://mirrors.huaweicloud.com/nodejs/v22.23.4/node-v22.23.4-win-x64.zip) |
-| Python 库、uv、微软本地运行库 | [清华 PyPI](https://pypi.tuna.tsinghua.edu.cn/simple/) | [华为云 PyPI](https://repo.huaweicloud.com/repository/pypi/simple/)；具体 wheel 地址和校验值见清单 |
+| Python 库 | [阿里云 PyPI](https://mirrors.aliyun.com/pypi/simple/) | [清华 PyPI](https://pypi.tuna.tsinghua.edu.cn/simple/)、[华为云 PyPI](https://repo.huaweicloud.com/repository/pypi/simple/) 备用 |
+| uv、微软本地运行库 | [清华 PyPI](https://pypi.tuna.tsinghua.edu.cn/simple/) | [华为云 PyPI](https://repo.huaweicloud.com/repository/pypi/simple/)；具体 wheel 地址和校验值见清单 |
 | npm 库、Remotion、Hyperframes | [npmmirror npm](https://registry.npmmirror.com/) | 项目锁文件记录版本与包完整性 |
 | 渲染浏览器 149.0.7790.0 | [npmmirror Chrome Headless Shell](https://registry.npmmirror.com/-/binary/chrome-for-testing/149.0.7790.0/win64/chrome-headless-shell-win64.zip) | 与锁定 Remotion 版本匹配 |
 | FFmpeg / ffprobe 9.0.2 | [Gyan 固定版本 ZIP](https://www.gyan.dev/ffmpeg/builds/packages/ffmpeg-9.0.2-essentials_build.zip) | 发布者原站，本机可直连；[发布者 SHA256](https://www.gyan.dev/ffmpeg/builds/packages/ffmpeg-9.0.2-essentials_build.zip.sha256) |

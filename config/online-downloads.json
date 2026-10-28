@@ -46,7 +46,7 @@
     "sha256": "60f467265b1e312373dbcd92200c2618a74850f98d3d078e94296bb3fa2047ba",
     "urls": ["https://www.gyan.dev/ffmpeg/builds/packages/ffmpeg-9.0.2-essentials_build.zip"]
   },
-  "pypi": ["https://pypi.tuna.tsinghua.edu.cn/simple", "https://repo.huaweicloud.com/repository/pypi/simple"],
+  "pypi": ["https://mirrors.aliyun.com/pypi/simple", "https://pypi.tuna.tsinghua.edu.cn/simple", "https://repo.huaweicloud.com/repository/pypi/simple"],
   "npm": "https://registry.npmmirror.com",
   "hyperframes": "0.8.34"
 }

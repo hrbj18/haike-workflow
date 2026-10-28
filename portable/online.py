@@ -137,6 +137,21 @@ def command(arguments, env, cwd=None):
         raise RuntimeError('Dependency command failed; see .portable/logs/online-install.log')
 
 
+def install_hyperframes(spec, env, npm):
+    hyperframes = portable.local_path('runtime/hyperframes')
+    hyperframes.mkdir(parents=True, exist_ok=True)
+    # npm otherwise searches ancestor folders for a project. Establish an
+    # explicit package boundary before running any install command.
+    portable.write_json('runtime/hyperframes/package.json', {
+        'name': 'haike-hyperframes-runtime', 'private': True,
+        'dependencies': {'hyperframes': spec['hyperframes']},
+    })
+    installed = portable.read_json('runtime/hyperframes/node_modules/hyperframes/package.json', {})
+    if installed.get('version') != spec['hyperframes']:
+        command([npm, 'install', '--ignore-scripts', '--no-audit', '--no-fund',
+                 '--save-exact', 'hyperframes@' + spec['hyperframes']], env, hyperframes)
+
+
 def hydrate():
     if (portable.ROOT / '.git').exists() or portable.read_json('RELEASE.json', {}).get('distribution') != 'online':
         raise RuntimeError('Use 01-setup.cmd inside an extracted online release')
@@ -175,11 +190,7 @@ def hydrate():
     if portable.read_json('.portable/npm-composer.json', {}).get('lock_sha256') != digest(lock):
         command([npm, 'ci', '--no-audit', '--no-fund'], env, composer)
         portable.write_json('.portable/npm-composer.json', {'lock_sha256': digest(lock)})
-    hyperframes = portable.local_path('runtime/hyperframes')
-    hyperframes.mkdir(parents=True, exist_ok=True)
-    if not (hyperframes / 'node_modules/hyperframes/package.json').is_file():
-        command([npm, 'install', '--ignore-scripts', '--no-audit', '--no-fund',
-                 '--save-exact', 'hyperframes@' + spec['hyperframes']], env, hyperframes)
+    install_hyperframes(spec, env, npm)
     portable.prepare()
     result = portable.diagnose(full=True)
     portable.write_json('.portable/online-ready.json', {'ok': True, 'distribution': 'online'})
