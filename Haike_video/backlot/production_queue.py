@@ -36,6 +36,24 @@ class ProductionQueueError(ValueError):
     """A queue contract error safe to present to the user."""
 
 
+def _update_maintenance(*, claiming=False):
+    # Also protect CLI admission, which does not pass through HTTP middleware.
+    state = Path(__file__).resolve().parents[2] / ".local/app-updates/state.json"
+    try:
+        status = json.loads(state.read_text(encoding="utf-8" )).get("operation", {}).get("status")
+    except FileNotFoundError:
+        status = None
+    except (OSError, ValueError):
+        return True
+    try:
+        for receipt in state.parent.glob("*/receipt.json"):
+            if json.loads(receipt.read_text(encoding="utf-8")).get("status") in {"prepared", "installing", "applying", "checking"}:
+                return True
+    except (OSError, ValueError):
+        return True
+    return status in ({"installing", "restarting"} if claiming else {"waiting", "installing", "restarting"})
+
+
 class ProductionQueueConflict(ProductionQueueError):
     """A state transition or ownership conflict."""
 
@@ -219,6 +237,8 @@ class ProductionQueue:
         idempotency_key: str | None = None, revive: bool = False,
         start_paused: bool = False,
     ) -> dict[str, Any]:
+        if _update_maintenance():
+            raise ProductionQueueError("工作台正在准备更新，暂不接收新制作任务")
         # Admission shares the archival lock; no new producer can enter mid-delete.
         from backlot.work_catalog import WorkCatalog
         catalog = WorkCatalog(self.projects_root)
@@ -396,6 +416,8 @@ class ProductionQueue:
         }
 
     def claim_next(self, worker_id: str, *, lease_seconds: int = 120) -> dict[str, Any] | None:
+        if _update_maintenance(claiming=True):
+            return None
         worker_id = _validate_identifier(worker_id, "工作者编号", maximum=120)
         now = _now()
         with self._connection(immediate=True) as connection:
@@ -429,6 +451,8 @@ class ProductionQueue:
         return self._private_row(claimed)
 
     def claim_local_recompose(self, job_id: str, worker_id: str, *, lease_seconds: int = 7200) -> dict[str, Any]:
+        if _update_maintenance():
+            raise ProductionQueueError("工作台正在准备更新，暂不启动重合成任务")
         """Atomically take a paused local job without a queued compatibility gap."""
         worker_id = _validate_identifier(worker_id, "工作者编号", maximum=120)
         with self._connection(immediate=True) as connection:
@@ -527,6 +551,8 @@ class ProductionQueue:
         return self._transition(job_id, {"queued"}, "paused", "已暂停，等待恢复", "paused")
 
     def resume(self, job_id: str) -> dict[str, Any]:
+        if _update_maintenance():
+            raise ProductionQueueError("工作台正在准备更新，请完成更新后恢复原任务")
         return self._transition(job_id, {"paused"}, "queued", "等待统一调度", "resumed")
 
     def cancel(self, job_id: str) -> dict[str, Any]:
@@ -556,6 +582,8 @@ class ProductionQueue:
         return self._public_row(updated)
 
     def retry(self, job_id: str) -> dict[str, Any]:
+        if _update_maintenance():
+            raise ProductionQueueError("工作台正在准备更新，请完成更新后重试原任务")
         with self._connection(immediate=True) as connection:
             row = connection.execute("SELECT * FROM production_jobs WHERE job_id=?", (job_id,)).fetchone()
             if row is None:

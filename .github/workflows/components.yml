@@ -45,7 +45,7 @@ jobs:
       - name: Install media test runtime
         run: sudo apt-get update && sudo apt-get install -y ffmpeg
       - name: Studio, motion, queue and work regression
-        run: python -m pytest -q tests/backlot/test_studio_storyboard.py tests/backlot/test_studio_motion.py tests/backlot/test_studio.py tests/backlot/test_production_queue.py tests/backlot/test_production_queue_worker.py tests/backlot/test_production_queue_server.py tests/backlot/test_work_catalog.py
+        run: python -m pytest -q tests/backlot/test_studio_storyboard.py tests/backlot/test_studio_motion.py tests/backlot/test_studio.py tests/backlot/test_studio_update_api.py tests/backlot/test_production_queue.py tests/backlot/test_production_queue_worker.py tests/backlot/test_production_queue_server.py tests/backlot/test_work_catalog.py
   frontend:
     runs-on: ubuntu-latest
     timeout-minutes: 10

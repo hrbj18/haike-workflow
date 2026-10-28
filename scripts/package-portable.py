@@ -255,7 +255,8 @@ def stage(args):
         'runtime_source_name': args.runtime_archive.name, 'environments': environments,
         'local_tts': 'optional_not_installed', 'account_sessions': 'none', 'cloud_credentials': 'none',
     })
-    write_json(destination / 'RELEASE.json', {'edition': 'haike-workflow-2', 'source_commit': revision,
+    version = json.loads((destination / 'VERSION.json').read_text(encoding='utf-8'))
+    write_json(destination / 'RELEASE.json', {**version, 'source_commit': revision,
                'platform': 'windows-x64', 'setup': '01-setup.cmd', 'agent_entry': 'START_HERE.md'})
     clean_delivery(destination)
     manifest(destination)
