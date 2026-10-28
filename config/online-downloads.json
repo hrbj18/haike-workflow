@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "python": {
+    "version": "3.12.8",
+    "sha256": "348bb8d57d26c7d739bd7b145beff17cb9d40c45d03527869fc726f76c81e6c1",
+    "urls": [
+      "https://mirrors.huaweicloud.com/python/3.12.8/python-3.12.8-amd64.zip",
+      "https://repo.huaweicloud.com/python/3.12.8/python-3.12.8-amd64.zip"
+    ]
+  },
+  "node": {
+    "version": "22.23.4",
+    "sha256": "cbc74b5e0982c9dbb41525fd8fb5dcd32fbee237863f7829072f4639a1ce5f20",
+    "prefix": "node-v22.23.4-win-x64/",
+    "urls": [
+      "https://registry.npmmirror.com/-/binary/node/v22.23.4/node-v22.23.4-win-x64.zip",
+      "https://mirrors.huaweicloud.com/nodejs/v22.23.4/node-v22.23.4-win-x64.zip"
+    ]
+  },
+  "uv": {
+    "version": "0.11.16",
+    "sha256": "e901aafa5007beffafe57bfa44e5e248d99fb5d97036a3718fd65cf9723c5cd3",
+    "urls": [
+      "https://pypi.tuna.tsinghua.edu.cn/packages/8f/38/99627cb995a03389b227ce4b12b08e770565d0aa7850cd0420973194a638/uv-0.11.16-py3-none-win_amd64.whl",
+      "https://repo.huaweicloud.com/repository/pypi/packages/8f/38/99627cb995a03389b227ce4b12b08e770565d0aa7850cd0420973194a638/uv-0.11.16-py3-none-win_amd64.whl"
+    ]
+  },
+  "msvc": {
+    "version": "14.44.35112",
+    "sha256": "32f9c706009e16ccc319d6947ce3bffe20e5192bee52b18cf48313f9e7bedfbe",
+    "urls": [
+      "https://pypi.tuna.tsinghua.edu.cn/packages/21/3b/134d04268ab8e35853cd007582076429b45d60d6abb1036d159be9c50342/msvc_runtime-14.44.35112-cp312-cp312-win_amd64.whl",
+      "https://repo.huaweicloud.com/repository/pypi/packages/21/3b/134d04268ab8e35853cd007582076429b45d60d6abb1036d159be9c50342/msvc_runtime-14.44.35112-cp312-cp312-win_amd64.whl"
+    ]
+  },
+  "browser": {
+    "version": "149.0.7790.0",
+    "sha256": "8a112c0e768907ff382ff994dcde35cdbd0e1f5a3a475da93d3a83e3260e78c2",
+    "prefix": "chrome-headless-shell-win64/",
+    "urls": [
+      "https://registry.npmmirror.com/-/binary/chrome-for-testing/149.0.7790.0/win64/chrome-headless-shell-win64.zip"
+    ]
+  },
+  "ffmpeg": {
+    "version": "9.0.2-essentials",
+    "sha256": "60f467265b1e312373dbcd92200c2618a74850f98d3d078e94296bb3fa2047ba",
+    "urls": ["https://www.gyan.dev/ffmpeg/builds/packages/ffmpeg-9.0.2-essentials_build.zip"]
+  },
+  "pypi": ["https://pypi.tuna.tsinghua.edu.cn/simple", "https://repo.huaweicloud.com/repository/pypi/simple"],
+  "npm": "https://registry.npmmirror.com",
+  "hyperframes": "0.8.34"
+}
