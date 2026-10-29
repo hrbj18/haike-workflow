@@ -31,6 +31,22 @@ def test_local_origin_and_host_guards(tmp_path):
     assert response.status_code == 409
 
 
+def test_local_zip_upload_accepts_binary_but_retains_origin_and_type_guards(tmp_path, monkeypatch):
+    web, app = client(tmp_path)
+    monkeypatch.setattr(updates, 'capability', lambda *a: {'can_install':True})
+    received=[]
+    def imported(path):
+        received.append(path.read_bytes())
+        return {'update':{'status':'available','source':'local'}}
+    monkeypatch.setattr(app.state.app_update_service, 'import_archive', imported)
+    route='/api/studio/app-update/import'
+    raw={'Origin':'http://127.0.0.1','Content-Type':'application/octet-stream'}
+    assert web.post(route,content=b'zip',headers={**raw,'Origin':'https://other.test'}).status_code==403
+    assert web.post(route,json={},headers={'Origin':'http://127.0.0.1'}).status_code==415
+    response=web.post(route,content=b'zip',headers=raw)
+    assert response.status_code==200 and received==[b'zip']
+
+
 def test_maintenance_blocks_new_writes_and_retains_read_access(tmp_path):
     web, app = client(tmp_path)
     updates.set_operation(tmp_path, "waiting", "等待现有任务结束")

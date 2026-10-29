@@ -40,10 +40,11 @@ def local_request(request):
         raise HTTPException(403, "更新功能仅供本机使用")
 
 
-def mutation(request):
+def mutation(request, raw=False):
     from backlot.studio_api import mutation as studio_mutation
     local_request(request)
-    studio_mutation(request)
+    if not raw:
+        studio_mutation(request)
     if request.headers.get("origin") != str(request.base_url).rstrip("/"):
         raise HTTPException(403, "请从本机海客工作台确认更新")
 
@@ -73,7 +74,7 @@ async def install(request: Request, data: dict = Body(...)):
 
 @router.post('/import')
 async def import_package(request: Request):
-    mutation(request)
+    mutation(request, raw=True)
     updater = service(request.app)
     current = updates.current_release(updater.root)
     cap = updates.capability(updater.root, current)

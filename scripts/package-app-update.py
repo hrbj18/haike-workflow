@@ -5,6 +5,7 @@ This command only creates local artifacts. Publication is a separate operation.
 from __future__ import annotations
 
 import argparse
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 import hashlib
 import importlib.util
@@ -56,14 +57,21 @@ def audited_stage(root, update):
     entries, insensitive = {}, set()
     for entry in manifest['files']:
         name = entry['path']
-        path = update.safe_path(root, name)
+        update._parts(name)
         if name in entries or name.casefold() in insensitive:
             raise ValueError('便携包清单含重复文件：' + name)
-        if (not path.is_file() or path.stat().st_size != entry['size']
-                or update.digest(path) != entry['sha256']):
-            raise ValueError('stage 文件已偏离清单：' + name)
         entries[name] = entry
         insensitive.add(name.casefold())
+    def verify(entry):
+        path = update.safe_path(root, entry['path'])
+        if (not path.is_file() or path.stat().st_size != entry['size']
+                or update.digest(path) != entry['sha256']):
+            raise ValueError('stage 文件已偏离清单：' + entry['path'])
+    # Windows package trees contain tens of thousands of small dependency
+    # files. Bounded concurrent reads retain full path and SHA verification.
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        for _ in pool.map(verify, manifest['files']):
+            pass
     if 'RELEASE.json' not in entries:
         raise ValueError('便携包清单缺少 RELEASE.json')
     return root, release, entries
