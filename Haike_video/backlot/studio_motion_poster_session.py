@@ -19,7 +19,7 @@ ROOT = Path(__file__).resolve().parents[2]
 PROFILE = ROOT/'Haike_video/templates/motiongit-poster-v1/profile.json'
 DEFAULTS = ROOT/'.local/motion-poster/defaults.json'
 LAYOUTS = {'landscape': {'label': '原生横版 16:9', 'engine': 'native', 'width': 1920, 'height': 1080},
-           'portrait45': {'label': '海报重排 4:5（试制）', 'engine': 'component', 'width': 1440, 'height': 1800}}
+           'portrait45': {'label': '海报重排 4:5', 'engine': 'component', 'width': 1440, 'height': 1800}}
 
 
 def apply_layout(params, layout):

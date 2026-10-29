@@ -150,14 +150,14 @@ def catalog():
     except WorkError:poster_seed=None
     if poster_seed:
         result.append({'id':poster_session.ID,'name':'活力海报 · 口播讲解','version':'2.7.13 / poster-v1',
-            'status':'testing','status_label':'开发试制','description':'逐行巨字、胶片照片、扫描实拍、立体轮播与箭头行动收尾。',
+            'status':'ready','status_label':'可制作','description':'逐行巨字、胶片照片、扫描实拍、立体轮播与箭头行动收尾。',
             'original':None,'original_ratio':'16:9','layouts':deepcopy(poster_session.LAYOUTS),
             'presenter_modes':['auto','hidden'],'groups':[g['id'] for g in poster_session.fields()],
-            'presenter_auto_label':'原包圆窗人物（试制）',
+            'presenter_auto_label':'原包圆窗人物',
             'header_fields':True,'presenter_label_field':False,'brand_field':False,
             'duration_note':'跟随完整口播，在真实句间隙切换五组控件；保留原包动作与可读停留。无法容纳时明确提示重选编排。',
             'media_note':'前三槽为照片，后四槽为连续实拍；每段实拍须覆盖所在动作的完整时长。',
-            'note':'五组公开海报控件接入开发试制；4:5按原生竖屏控件区域重排，实际画面与正式第二期仍须验收。',
+            'note':'五组公开海报控件；4:5按原生竖屏控件区域重排。默认不出镜，每条视频仍需检查本期预览和成片。',
             'editable':['画面文案','照片','真实视频','完整口播','数字人','配乐'],
             'package_sha256':poster_sha,'fields':poster_session.fields()})
     for p in packages.packages()['packages']:

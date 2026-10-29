@@ -1110,6 +1110,11 @@ class VideoCompose(BaseTool):
         output_path.parent.mkdir(parents=True, exist_ok=True)
 
         cmd = ["npx", "remotion", "render", str(effective_entry), str(comp_id), str(output_path)]
+        browser_executable=os.environ.get('REMOTION_BROWSER_EXECUTABLE') or os.environ.get('CHROME_PATH')
+        if browser_executable:
+            if not Path(browser_executable).is_file():
+                return ToolResult(success=False,error='配置的本地浏览器不存在，请恢复首次部署的浏览器文件')
+            cmd.append(f'--browser-executable={browser_executable}')
 
         props_path = bespoke.get("props_path")
         if props_path:
@@ -2152,6 +2157,11 @@ class VideoCompose(BaseTool):
             # API Remotion recommends for file paths and is cross-platform safe.
             f"--props={props_path}",
         ]
+        browser_executable=os.environ.get('REMOTION_BROWSER_EXECUTABLE') or os.environ.get('CHROME_PATH')
+        if browser_executable:
+            if not Path(browser_executable).is_file():
+                return ToolResult(success=False,error='配置的本地浏览器不存在，请恢复首次部署的浏览器文件')
+            cmd.append(f'--browser-executable={browser_executable}')
         if public_dir is not None:
             cmd.append(f"--public-dir={public_dir}")
 

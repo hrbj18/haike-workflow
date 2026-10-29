@@ -13,7 +13,8 @@ const {selectComposition, renderStill, openBrowser} = projectRequire('@remotion/
   const inputProps = JSON.parse(fs.readFileSync(path.join(output, 'props.json'), 'utf8'));
   const serveUrl = await bundle({entryPoint: path.join(root, 'templates/motiongit-dark-full-v1/index.tsx'), publicDir,
     webpackOverride: config => ({...config, cache: {...config.cache, type: 'filesystem', cacheDirectory: path.join(output, 'webpack-cache')}})});
-  const browser = await openBrowser('chrome', {chromiumOptions: {gl: 'angle'}});
+  const browserExecutable = process.env.REMOTION_BROWSER_EXECUTABLE || process.env.CHROME_PATH;
+  const browser = await openBrowser('chrome', {browserExecutable, chromiumOptions: {gl: 'angle'}});
   try {
     const composition = await selectComposition({serveUrl, id: 'DarkFull', inputProps, puppeteerInstance: browser});
     for (const frame of frames) await renderStill({serveUrl, composition, inputProps, frame, scale: .5,

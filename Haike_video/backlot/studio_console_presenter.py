@@ -31,7 +31,8 @@ def policy(console, frames):
         raise WorkError('开场、结尾和隐藏人物当前只支持4:5')
     segments = console.get('segments', [])
     if mode == 'opening':
-        start, end = 0, min(segments[0]['durationFrames'], 300)
+        # Leave the native first-scene annotation clear as it appears late.
+        start, end = 0, min(segments[0]['durationFrames'], 180)
     elif mode == 'closing':
         start, end = frames - min(segments[-1]['durationFrames'], 300), frames
     else:

@@ -15,7 +15,7 @@ def inputs(mode):
 def test_appearance_uses_complete_scene_and_output_frames():
     opening=presenter.policy(inputs('opening'),1824)
     ending=presenter.policy(inputs('closing'),1824)
-    assert (opening['startFrame'],opening['endFrame'])==(0,215)
+    assert (opening['startFrame'],opening['endFrame'])==(0,180)
     assert (ending['startFrame'],ending['endFrame'])==(1524,1824)
     assert presenter.policy(inputs('hidden'),1824)['endFrame']==0
     with pytest.raises(WorkError):presenter.policy({**inputs('opening'),'layout':'landscape'},1824)
