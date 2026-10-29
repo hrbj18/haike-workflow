@@ -2,7 +2,7 @@
   "schema_version": 1,
   "standard_version": "video-template-v1",
   "template_id": "motiongit-native-story-v1",
-  "template_version": "v001",
+  "template_version": "v001/haike-1.1.7",
   "template_type": "custom",
   "spec_kind": "implementation",
   "stage": "ready",
@@ -1708,6 +1708,15 @@
       "method": "真实queue completed与输出/质量/原请求身份对应；不把新native冻结验证写成整片重渲，不回填旧v002冻结回执为新compiler SHA",
       "file": "reference/validation-summary.json",
       "sha256": "a38ecead4056372db40b947fa7cbd3d7a50f4fed19ae7b8f7f7884611b8817d5"
+    },
+    {
+      "id": "delivery-20261030",
+      "source_kind": "observation",
+      "source": "本轮隔离安装真实队列、完整质量记录与逐张实际编码画面检查",
+      "locator": "reference/delivery-20261030.json；原始文件和逐图审核留在所列本机私有证据根",
+      "method": "完整源和预览审核后实际导出；核对原请求/输出SHA、全解码、流参数，逐张查看编码状态；不冒称连续人耳听审或物理新机",
+      "file": "reference/delivery-20261030.json",
+      "sha256": "f4d92945be69f4ea5ce0d4127839245280e2711e33f952b7dc13610c3b8a4406"
     }
   ],
   "unknowns": [],
@@ -1715,52 +1724,51 @@
     "structure": {
       "status": "pass",
       "evidence_ids": [
-        "compiler-verified"
+        "delivery-20261030"
       ],
-      "note": "当前新规格/输入/CLI与源码身份、32compiler+33bridge/backend focused范围通过；示例是明确占位结构，不作为实际输入证据"
+      "note": "当前工作台/同一编译器与版本绑定，规格单独静态校验；运行源SHA见本轮摘要。"
     },
     "technical": {
       "status": "pass",
       "evidence_ids": [
-        "portrait-final-technical"
+        "delivery-20261030"
       ],
-      "note": "本期auto真4:5正式两输出通过完整技术检查；native新编译入口只验证到真实预览/manifest/freeze-only，旧native父队列完整片证据另列"
+      "note": "本轮1440x1800/60fps/视频流>=20Mbps/AAC48k双声道及完整解码通过，精确数值和输出SHA见摘要。"
     },
     "visual": {
       "status": "pass",
       "evidence_ids": [
-        "portrait-final-visual"
+        "delivery-20261030"
       ],
-      "note": "限本期auto最终编码32秒级/末帧、两接缝各31位置和11完整关键态的实际看图范围；small/hidden仅preflight，连续全片观看仍待验"
+      "note": "本轮来源、最终预览和76个实际编码状态已逐张查看；限本轮4:5及已开放参数。"
     },
     "audio": {
       "status": "pending",
       "evidence_ids": [
-        "portrait-final-technical"
+        "delivery-20261030"
       ],
-      "note": "原声时钟、单次人声/BGM与16项目cue音效、真峰值及信号测量通过；连续人耳听审、音素口型、普通外放仍待验"
+      "note": "完整时钟、编码、响度/真峰值技术测量通过；本轮未新做连续人耳听看或普通外放听审，不伪造通过。"
     },
     "platform": {
       "status": "pending",
       "evidence_ids": [
-        "design-contract"
+        "delivery-20261030"
       ],
-      "note": "待当前新模板范围验证，不继承旧模板结论"
+      "note": "本机独立路径/用户/PATH和禁止依赖下载环境实际制作通过；另一台物理电脑与平台呈现未验。"
     },
     "user_review": {
-      "status": "pending",
+      "status": "not_applicable",
       "evidence_ids": [
-        "design-contract"
+        "delivery-20261030"
       ],
-      "note": "待当前新模板范围验证，不继承旧模板结论"
+      "note": "用户下班前明确授权自主验收，不再等待逐片意见；不把此授权写成用户已播放三片。"
     },
     "production": {
       "status": "pass",
       "evidence_ids": [
-        "portrait-final-production",
-        "compiler-verified"
+        "delivery-20261030"
       ],
-      "note": "本期真4:5统一父队列真实完整输出、当前编译器等价构建通过；新native编译准备/freeze-only与旧native完整制作严格分开，不冒称新native全链重渲"
+      "note": "本轮隔离安装统一队列真实完整输出，原请求、job和输出SHA对应；无新增云调用或发布。"
     }
   },
   "extensions": {
@@ -1776,7 +1784,7 @@
       "element_instances": "wall-grid由本期wall views/collages生成可复用实例；category-card产生四实例，每实例封面/label/note独立绑定数组索引；native完整组内部叶布局由官方opaque运行时保持，project4:5由Story组件源码持有"
     },
     "avatar": {
-      "face_crop": "原生横版沿官方人物框；4:5由Story人物geometry在目标画布布置，bridge --presenter-mode auto随动作大卡/圆窗、small全圆窗、hidden不显示口播人物。同一完整avatar与原声不重生、不因显隐重置。本期auto正式编码抽样通过，small/hidden当前仅preflight，首次使用需相应视觉验证",
+      "face_crop": "原生横版沿官方人物框；项目4:5由Story geometry持有。opening在首场景wall_handoff前且<=5秒显示大人物，closing仅末5秒，auto/small/hidden保留。当前opening完整编码已实际验证；其它模式仍按各自历史/当期证据限定，不外推。完整avatar和原声不因显隐重置。",
       "synchronization": "avatar.voice_sha256必须绑定同一完整WAV；人物覆盖到精确帧钟，sourceTime=offset+(globalFrame-from)/fps。音素口型/全片听看另验"
     },
     "graphic": {

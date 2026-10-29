@@ -2,11 +2,11 @@
 
 私有开发迁移按根`docs/DEVELOPMENT_RECOVERY.md`恢复；有migration清单时以其必读记录核对最新.motion中断点，原冻结证据保留。
 
-更新时间：2026-10-28
+更新时间：2026-10-30
+
+10/30三模板：科技控制台、深色立体、活力海报，另带三原包，更新≤300MB。HaikeReady14760隔离用户/PATH、离线准备/全诊断、1.1.4→1.1.6更新与11配置保留通过；三整片技术及226编码状态实际查看通过，三变体网页重开参数一致。HaikeStable14758连续升级/保留/坏包拒绝/故障回滚通过。证据根`.local/stable-delivery-20261029/`；原包91640957B。1.1.7最终包与更新回执以D:/codex_work/haike-delivery-20261030/ACCEPTANCE.md为准。无新增云费用/远端发布；未新做人耳连续听审或物理异机测试。
 
 应用更新首版：根docs/APP_UPDATES.md，VERSION.json引入1.0.0产品编号，源码显示开发态。studio_update_api.py与根portable/{app_update,update_service,update_worker}.py负责HTTPS清单、兼容程序补丁、任务维护闸门、独立重启/回退；AboutDialog.jsx为入口。根test_*update*.py及test_studio_update_api.py覆盖数据保留和启动失败恢复。线上清单/包仍需正式发布，其他安装/云服务未同步。
-
-10/28运行修复：14756旧进程导致版本接口404，队列空闲后重启本副本，实读1.0.0开发版；关于弹窗区分本地版本读取失败与在线检查失败，停止持续“正在读取”提示。线上清单尚未发布。
 
 10/27：用户授权将已验收交付快照21d1ff2发布为main稳定版，旧main保留legacy-main-before-20261027，合入后固定stable-20261027；见根[稳定版说明](../../../docs/releases/20261027-stable.md)。模板[交付说明](../../../docs/TEMPLATE_DELIVERY.md)含40张本地ZIP截图/42目录及备份回退。发布不混入其他窗口新改动；未声称异机/付费/发布验收。
 
@@ -43,6 +43,6 @@ Agent素材分析通过Studio的`agent-materials`读写：真实音轨/ASR后提
 
 2026-10-17源码隔离回归：Studio及批次419项、根初始化84项、前端128项通过。N1可在明确关闭联网后使用Agent已审本地素材；开启联网仍要求采用真实网络来源，未找到素材不降级。证据在忽略目录`.local/portable-build/`，本轮未产生费用或真实发布。
 
-最终便携包源码固定`53f47b0`，交付`dist/Haike_videoflow_20261017_v2/`仅ZIP和私有配置文档。完整解压77,499项CRC/SHA及凭据扫描通过；新目录一键导入、419项隔离回归、本地渲染、报价、设置页和重复启动/初始化通过，7份配置保持字节一致。未搬账号或伪造云端验证，旧ZIP/main不动；最终证据`.local/portable-build/verification-agent-final.json`。这是本机独立目录验收，不是另一台物理机或真实收费发布验收。
+10/17便携包`53f47b0`本机验收及范围见`.local/portable-build/verification-agent-final.json`；未验另一台物理机、真实收费或发布。
 
 Git仅保存源码、测试、公开配置模板、可分发品牌资源与设计文档。凭据、账本、主密钥、Cookie、项目素材、成片及备份被忽略，另行加密备份。新机静态测试通过不代表真实供应商、付费结算或账号发布已经验收。

@@ -58,7 +58,7 @@ Haike_video/.venv/Scripts/python.exe Haike_video/scripts/native_story_portrait.p
 
 前两步的输入`layout`须为`portrait45`。布局来自 `studio_native_story_portrait.py` 的三组语义桥接和 `motiongit-dark-full-v1` 的 `native-story`组件；桥接的`--check`不是画面审核。正式产物仍须实际查看关键状态和源素材/人物/字幕避让。原请求恢复用既有`dark_full.py --request <dark-full-request.json>`，不重新调用数字人。
 
-人物模式使用桥接参数`--presenter-mode auto|small|hidden`：默认`auto`随动作使用大框/圆窗，`small`始终小圆窗，`hidden`不显示口播人物。三者都复用已验证完整数字人与同一原声，不产生新数字人费用。模式改变需独立输出路径；预检通过不证明该模式的视觉已验收。
+人物模式使用桥接参数`--presenter-mode auto|small|hidden|opening|closing`：`auto`随动作使用大框/圆窗，`small`始终小圆窗，`hidden`不显示口播人物。工作台新选4:5默认`opening`，只在首场景wall_handoff之前且最长5秒显示大人物；`closing`只在最后5秒显示。各模式都保留完整同声源人物与原声，不产生新数字人费用。模式改变需独立输出路径；预检通过不证明该模式的视觉已验收。本轮交付范围和本期完整编码记录见根`docs/STABLE_THREE_TEMPLATES.md`及交付回执。
 
 两引擎各自分配完整组：横版以`profile.json`的保护窗口及348/695/793帧基准调静止间隔，官方plan最终裁决；4:5以项目完整组下限8.3/11.5/8.2秒和权重1/1/3按完整原声分配，物理缓动保持固定秒数。本期30.6秒得到530/721/585帧，仅为本输入结果，不能写成下一期固定时间。两引擎不共用横版anchors，也不宣称动作时序相同；时长不足或静止容量不足会阻断，不能靠拉伸口播补齐。
 
@@ -81,3 +81,7 @@ Windows完整原生导出还需短实例路径。可选`native_instance_root`是
 时长不足以承载完整动作组时，预检应明确阻断并给出实际所需时长，不能快放整组或切掉结尾。素材不够时补素材或改变已支持槽的内容，保留现有付费产物。原生公开字段仍固定的章节小标题、角标和人物外框按当期差异说明保留。
 
 输出完成后保留本期输入、原生计划、预览审核、冻结请求、队列编号、质量与独立审查回执。正式操作契约和恢复命令见 runbook；本页不保存逐次制作日志。
+
+## 2026-10-30 受控交付范围
+
+当前规格为`implementation + ready`，限定本轮4:5、完整同声源、已开放文案和素材槽。来源、最终预览、统一队列整片、全解码及实际编码画面检查通过，版本/数值/源码与产物摘要见[本轮证据](reference/delivery-20261030.json)。三命名变体已从实际工作台重开并核对参数。不同新人物、新云源、连续人耳听看及物理异机不从本轮推定通过；更新、包体和移位范围见根`docs/STABLE_THREE_TEMPLATES.md`及交付验收报告。

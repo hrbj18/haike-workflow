@@ -2,10 +2,10 @@
   "schema_version": 1,
   "standard_version": "video-template-v1",
   "template_id": "motiongit-console-story-v1",
-  "template_version": "console-v1/2.7.20-alpha.3",
+  "template_version": "console-v1/2.7.20-alpha.3/haike-1.1.7",
   "template_type": "custom",
   "spec_kind": "implementation",
-  "stage": "specification",
+  "stage": "ready",
   "authority": {
     "runbook": "README.md",
     "implementation_paths": [
@@ -15,6 +15,8 @@
       "../../backlot/studio_motion_console_session.py",
       "../../backlot/studio_motion_native_viewport.py",
       "../../backlot/studio_motion_face_crop.py",
+      "../../backlot/studio_console_presenter.py",
+      "presenter.js",
       "../../backlot/studio_motion_presenter_framing.py",
       "../../backlot/studio_dark_native.py",
       "../../backlot/studio_motion_templates.py",
@@ -6010,67 +6012,67 @@
       "method": "当前6取景/7导入诊断/55预览/56编码状态实际查看，全解码及下载；早期失败保留；非连续听审",
       "file": "reference/validation-summary.json",
       "sha256": "b8d27ee8af8a2be35f5f8d59b45fe68095c2d4d38257cdd7b134a1f2095c0565"
-    }
-  ],
-  "unknowns": [
+    },
     {
-      "path": "/extensions/avatar/automatic_new_person_calibration",
-      "reason": "已有完整亲子源已通过6取景/7原生测量/55预览/56编码状态、全解码与下载，正常新建默认取景也已实跑；不同真实人物及完整新配音/ASR/人物API尚未实测。",
-      "evidence_plan": "新费用授权后按新脚本和不同形象走同一源交接/满幅/原生测量/计划/预览/队列，保留真实费用与换稿复用证据；连续声画和真机另验。",
-      "blocks": [
-        "production"
-      ]
+      "id": "delivery-20261030",
+      "source_kind": "observation",
+      "source": "本轮隔离安装真实队列、完整质量记录与逐张实际编码画面检查",
+      "locator": "reference/delivery-20261030.json；原始文件和逐图审核留在所列本机私有证据根",
+      "method": "完整源和预览审核后实际导出；核对原请求/输出SHA、全解码、流参数，逐张查看编码状态；不冒称连续人耳听审或物理新机",
+      "file": "reference/delivery-20261030.json",
+      "sha256": "258e1c69cbc9b4a44aa291e137004c4d826e9987cb0d043cdd1893cb1678ffce"
     }
   ],
+  "unknowns": [],
   "validation": {
     "structure": {
       "status": "pass",
       "evidence_ids": [
-        "local-validation"
+        "delivery-20261030"
       ],
-      "note": "单模板check_spec与154项当前相关回归通过；全量手册的既存错误另列。"
+      "note": "当前工作台/同一编译器与版本绑定，规格单独静态校验；运行源SHA见本轮摘要。"
     },
     "technical": {
       "status": "pass",
       "evidence_ids": [
-        "local-validation"
+        "delivery-20261030"
       ],
-      "note": "本机已有完整声源原生16:9与原生portrait到4:5均实际出片；后者30.4秒/1824帧/1440x1800/60fps/20.494Mbps，严格解码及两路version下载通过。"
+      "note": "本轮1440x1800/60fps/视频流>=20Mbps/AAC48k双声道及完整解码通过，精确数值和输出SHA见摘要。"
     },
     "visual": {
       "status": "pass",
       "evidence_ids": [
-        "local-validation"
+        "delivery-20261030"
       ],
-      "note": "限本期18句亲子文案/五原生组，实际看55个4:5预览及55个最终编码状态。没有顶部HUD残边或主要元素意外裁切。"
+      "note": "本轮来源、最终预览和75个实际编码状态已逐张查看；限本轮4:5及已开放参数。"
     },
     "audio": {
       "status": "pending",
       "evidence_ids": [
-        "public-contract"
+        "delivery-20261030"
       ],
-      "note": "开发规格；范围与逐次证据在README.md及reference/validation-summary.json，不能继承其他模板或未执行维度的通过结论。"
+      "note": "完整时钟、编码、响度/真峰值技术测量通过；本轮未新做连续人耳听看或普通外放听审，不伪造通过。"
     },
     "platform": {
       "status": "pending",
       "evidence_ids": [
-        "public-contract"
+        "delivery-20261030"
       ],
-      "note": "开发规格；范围与逐次证据在README.md及reference/validation-summary.json，不能继承其他模板或未执行维度的通过结论。"
+      "note": "本机独立路径/用户/PATH和禁止依赖下载环境实际制作通过；另一台物理电脑与平台呈现未验。"
     },
     "user_review": {
-      "status": "pending",
+      "status": "not_applicable",
       "evidence_ids": [
-        "public-contract"
+        "delivery-20261030"
       ],
-      "note": "开发规格；范围与逐次证据在README.md及reference/validation-summary.json，不能继承其他模板或未执行维度的通过结论。"
+      "note": "用户下班前明确授权自主验收，不再等待逐片意见；不把此授权写成用户已播放三片。"
     },
     "production": {
-      "status": "pending",
+      "status": "pass",
       "evidence_ids": [
-        "public-contract"
+        "delivery-20261030"
       ],
-      "note": "已有完整声源两画幅链路已实测；满幅源/原生圆窗55预览及56编码状态、全解码/下载通过。新源付费联调/不同人物/真正第二期仍待验，不宣称通用生产通过。"
+      "note": "本轮隔离安装统一队列真实完整输出，原请求、job和输出SHA对应；无新增云调用或发布。"
     }
   },
   "extensions": {
@@ -6086,13 +6088,12 @@
       "element_layout_authority": "source-contract.json与官方prepare产物；原生画布比例由console.layout求值。最终4:5几何只由studio_motion_native_viewport.CONSOLE_45持有。"
     },
     "avatar": {
-      "face_crop": "值来自本期input.console.presenterCrop，按实际导入后的720x1280人物帧解释；人物外框/运动由原版完整组持有。当前只开放auto，不把small/hidden当成原生能力。",
+      "face_crop": "值来自本期input.console.presenterCrop，按实际导入后的720x1280人物帧解释；auto由原版持有。4:5的opening/closing/hidden由项目studio_console_presenter.policy和presenter.js共同持有，开头最长180帧、结尾最长300帧；帧率60，15帧淡入淡出。该项目能力不冒充原包参数。",
       "source_framing": "input.console.presenterFraming绑定studio_motion_presenter_framing.py测量的六个原源帧、保留头部的最大9:16窗口和实际FFmpeg预览；编译器另制720x1280 talk，原源及同声源证据不变，再按官方导入帧校准圆窗。",
       "synchronization": "完整原声为主时钟；同声源人物覆盖全片，25fps输入对齐公共0.2秒帧时钟，原生60fps动作保持1x；校验字幕/人物同声源SHA，逐音素和连续听看另验。",
       "automatic_new_person_calibration": {
-        "status": "unknown",
-        "reason": "满幅/圆窗测量已在当前亲子源通过55预览及56编码状态；不同真实人物和新源API尚未实测。",
-        "evidence_plan": "测量真值为studio_motion_presenter_framing.py和studio_motion_face_crop.py；新增/clone默认重新测量，不同形象与新源联调分别留证。"
+        "scope": "本轮完整已授权同声源及本轮实际来源图；不同新人物的首次使用仍须单独来源/取景/预览审核",
+        "acceptance": "未声明所有新人物或新源云API已实测，检测无合法框时阻断，不能沿用旧裁切顶替"
       }
     },
     "graphic": {

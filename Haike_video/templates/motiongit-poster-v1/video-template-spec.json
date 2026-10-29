@@ -1,0 +1,928 @@
+{
+  "schema_version": 1,
+  "standard_version": "video-template-v1",
+  "template_id": "motiongit-poster-story-v1",
+  "template_version": "poster-v1/2.7.13/haike-1.1.7",
+  "template_type": "custom",
+  "spec_kind": "implementation",
+  "stage": "ready",
+  "authority": {
+    "runbook": "README.md",
+    "implementation_paths": [
+      "profile.json",
+      "../../backlot/studio_motion_poster_session.py",
+      "../../backlot/studio_motiongit_render.py",
+      "../../backlot/studio_motion_templates.py"
+    ],
+    "parameter_source": "../../backlot/studio_motion_poster_session.py"
+  },
+  "canvas": {
+    "width": 1440,
+    "height": 1800,
+    "fps": 60,
+    "duration_seconds": 30.330416666666668,
+    "clock": "数值为本期1820帧实例，非固定模板时长。后续以完整音频/真实ASR句间隙拟合五组公开minDur/cue hold/tail规则，ceil(seconds*60)帧；不伸缩原声。portrait公开控件先重排至1080x1350同视窗，再输出1440x1800。",
+    "coordinate_system": "top_left_pixels"
+  },
+  "narrative": {
+    "purpose": "以完整旁白讲解真实亲子实拍，保留五组公开海报动效并允许受控替换。",
+    "information_hierarchy": [
+      "本期语义与旁白",
+      "真实照片和实拍证据",
+      "主标题和说明",
+      "字幕",
+      "行动邀请"
+    ],
+    "structure": [
+      "逐行巨字",
+      "胶片照片",
+      "扫描实拍",
+      "立体轮播",
+      "行动收尾"
+    ]
+  },
+  "scenes": [
+    {
+      "id": "kinetic-stack",
+      "start": 0,
+      "end": 5.96,
+      "purpose": "逐行巨字",
+      "element_ids": [
+        "kinetic-stack",
+        "captions",
+        "master-audio",
+        "hud"
+      ],
+      "variant": "portrait45-current-instance; runtime params.segments are authoritative"
+    },
+    {
+      "id": "polaroid-film",
+      "start": 5.96,
+      "end": 16.2,
+      "purpose": "胶片照片",
+      "element_ids": [
+        "polaroid-film",
+        "captions",
+        "master-audio",
+        "hud"
+      ],
+      "variant": "portrait45-current-instance; runtime params.segments are authoritative"
+    },
+    {
+      "id": "media-scan",
+      "start": 16.2,
+      "end": 19.96,
+      "purpose": "扫描实拍",
+      "element_ids": [
+        "media-scan",
+        "captions",
+        "master-audio",
+        "hud"
+      ],
+      "variant": "portrait45-current-instance; runtime params.segments are authoritative"
+    },
+    {
+      "id": "gallery-carousel",
+      "start": 19.96,
+      "end": 25.6,
+      "purpose": "立体轮播",
+      "element_ids": [
+        "gallery-carousel",
+        "captions",
+        "master-audio",
+        "hud"
+      ],
+      "variant": "portrait45-current-instance; runtime params.segments are authoritative"
+    },
+    {
+      "id": "cta-arrow",
+      "start": 25.6,
+      "end": 30.330416666666668,
+      "purpose": "行动收尾",
+      "element_ids": [
+        "cta-arrow",
+        "captions",
+        "master-audio",
+        "hud"
+      ],
+      "variant": "portrait45-current-instance; runtime params.segments are authoritative"
+    }
+  ],
+  "assets": [],
+  "elements": [
+    {
+      "id": "kinetic-stack",
+      "type": "component",
+      "role": "逐行巨字",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "editable",
+        "binding": "kinetic-stack",
+        "asset_id": null,
+        "description": "原生公开kinetic-stack复合控件；公开子字段逐项见profile.json。素材槽与cue绑定由session编译，源图片横幅和人物为固化内容。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "logical_envelope": true,
+          "geometry_authority": "extensions.custom.element_layout_authority"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 5.96
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组时段外或原生进退场显隐"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "本组时段内依公开cue和控件规则求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "包络不能覆盖叶节点；叶节点位置、层级、遮罩、曲线和时间由绑定的公开控件及参数求值。"
+        }
+      ],
+      "fixed": [
+        "native_motion",
+        "voice_clock",
+        "layout_authority"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "逐行巨字关键状态",
+          "method": "查看本期进退场、落定和最长内容预览，再查完整编码帧",
+          "pass_condition": "标题、素材主体、说明、字幕相互避让，显隐有意，内容可读。"
+        }
+      ]
+    },
+    {
+      "id": "polaroid-film",
+      "type": "component",
+      "role": "胶片照片",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "editable",
+        "binding": "polaroid-film",
+        "asset_id": null,
+        "description": "原生公开polaroid-film复合控件；公开子字段逐项见profile.json。素材槽与cue绑定由session编译，源图片横幅和人物为固化内容。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "logical_envelope": true,
+          "geometry_authority": "extensions.custom.element_layout_authority"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 5.96,
+        "end": 16.2
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组时段外或原生进退场显隐"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "本组时段内依公开cue和控件规则求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "包络不能覆盖叶节点；叶节点位置、层级、遮罩、曲线和时间由绑定的公开控件及参数求值。"
+        }
+      ],
+      "fixed": [
+        "native_motion",
+        "voice_clock",
+        "layout_authority"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "胶片照片关键状态",
+          "method": "查看本期进退场、落定和最长内容预览，再查完整编码帧",
+          "pass_condition": "标题、素材主体、说明、字幕相互避让，显隐有意，内容可读。"
+        }
+      ]
+    },
+    {
+      "id": "media-scan",
+      "type": "component",
+      "role": "扫描实拍",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "editable",
+        "binding": "media-scan",
+        "asset_id": null,
+        "description": "原生公开media-scan复合控件；公开子字段逐项见profile.json。素材槽与cue绑定由session编译，源图片横幅和人物为固化内容。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "logical_envelope": true,
+          "geometry_authority": "extensions.custom.element_layout_authority"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 16.2,
+        "end": 19.96
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组时段外或原生进退场显隐"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "本组时段内依公开cue和控件规则求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "包络不能覆盖叶节点；叶节点位置、层级、遮罩、曲线和时间由绑定的公开控件及参数求值。"
+        }
+      ],
+      "fixed": [
+        "native_motion",
+        "voice_clock",
+        "layout_authority"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "扫描实拍关键状态",
+          "method": "查看本期进退场、落定和最长内容预览，再查完整编码帧",
+          "pass_condition": "标题、素材主体、说明、字幕相互避让，显隐有意，内容可读。"
+        }
+      ]
+    },
+    {
+      "id": "gallery-carousel",
+      "type": "component",
+      "role": "立体轮播",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "editable",
+        "binding": "gallery-carousel",
+        "asset_id": null,
+        "description": "原生公开gallery-carousel复合控件；公开子字段逐项见profile.json。素材槽与cue绑定由session编译，源图片横幅和人物为固化内容。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "logical_envelope": true,
+          "geometry_authority": "extensions.custom.element_layout_authority"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 19.96,
+        "end": 25.6
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组时段外或原生进退场显隐"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "本组时段内依公开cue和控件规则求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "包络不能覆盖叶节点；叶节点位置、层级、遮罩、曲线和时间由绑定的公开控件及参数求值。"
+        }
+      ],
+      "fixed": [
+        "native_motion",
+        "voice_clock",
+        "layout_authority"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "立体轮播关键状态",
+          "method": "查看本期进退场、落定和最长内容预览，再查完整编码帧",
+          "pass_condition": "标题、素材主体、说明、字幕相互避让，显隐有意，内容可读。"
+        }
+      ]
+    },
+    {
+      "id": "cta-arrow",
+      "type": "component",
+      "role": "行动收尾",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "editable",
+        "binding": "cta-arrow",
+        "asset_id": null,
+        "description": "原生公开cta-arrow复合控件；公开子字段逐项见profile.json。素材槽与cue绑定由session编译，源图片横幅和人物为固化内容。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "logical_envelope": true,
+          "geometry_authority": "extensions.custom.element_layout_authority"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 25.6,
+        "end": 30.330416666666668
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组时段外或原生进退场显隐"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "本组时段内依公开cue和控件规则求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "包络不能覆盖叶节点；叶节点位置、层级、遮罩、曲线和时间由绑定的公开控件及参数求值。"
+        }
+      ],
+      "fixed": [
+        "native_motion",
+        "voice_clock",
+        "layout_authority"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "行动收尾关键状态",
+          "method": "查看本期进退场、落定和最长内容预览，再查完整编码帧",
+          "pass_condition": "标题、素材主体、说明、字幕相互避让，显隐有意，内容可读。"
+        }
+      ]
+    },
+    {
+      "id": "captions",
+      "type": "text",
+      "role": "完整旁白字幕",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "editable",
+        "binding": "captions",
+        "asset_id": null,
+        "description": "真实ASR句时码；位置由apply_layout.captionPosition及同画布视窗求值"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "logical_envelope": true,
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "font": "本期input.tools.font所绑定字体；由官方poster-kit载入",
+          "font_size": "固定原包poster-kit字幕控件默认值与当前公开params求值，本规格不覆盖",
+          "max_lines": "真实ASR单句与官方字幕控件求值；超框必须改写或重分句后重新审核",
+          "overflow": "阻断交付并缩写或重新分句，不缩短完整旁白"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 30.330416666666668
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组时段外或原生进退场显隐"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "本组时段内依公开cue和控件规则求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "包络不能覆盖叶节点；叶节点位置、层级、遮罩、曲线和时间由绑定的公开控件及参数求值。"
+        }
+      ],
+      "fixed": [
+        "native_motion",
+        "voice_clock",
+        "layout_authority"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "完整旁白字幕关键状态",
+          "method": "查看本期进退场、落定和最长内容预览，再查完整编码帧",
+          "pass_condition": "标题、素材主体、说明、字幕相互避让，显隐有意，内容可读。"
+        }
+      ]
+    },
+    {
+      "id": "master-audio",
+      "type": "audio",
+      "role": "完整旁白与配乐",
+      "parent_id": null,
+      "z_index": 0,
+      "content": {
+        "mode": "editable",
+        "binding": "voice_music",
+        "asset_id": null,
+        "description": "完整原PCM为主时钟，配乐由原公开渲染混音，人物隐藏不截音轨"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "logical_envelope": true,
+          "geometry_authority": "extensions.custom.element_layout_authority"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 30.330416666666668
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组时段外或原生进退场显隐"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "本组时段内依公开cue和控件规则求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "包络不能覆盖叶节点；叶节点位置、层级、遮罩、曲线和时间由绑定的公开控件及参数求值。"
+        }
+      ],
+      "fixed": [
+        "native_motion",
+        "voice_clock",
+        "layout_authority"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "完整旁白与配乐关键状态",
+          "method": "查看本期进退场、落定和最长内容预览，再查完整编码帧",
+          "pass_condition": "标题、素材主体、说明、字幕相互避让，显隐有意，内容可读。"
+        }
+      ]
+    },
+    {
+      "id": "hud",
+      "type": "component",
+      "role": "顶部提示与计时",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "原生全局环境，轮播标题在area内下移避让；固定官方提示不是本期正文"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "logical_envelope": true,
+          "geometry_authority": "extensions.custom.element_layout_authority"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 30.330416666666668
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组时段外或原生进退场显隐"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "本组时段内依公开cue和控件规则求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "包络不能覆盖叶节点；叶节点位置、层级、遮罩、曲线和时间由绑定的公开控件及参数求值。"
+        }
+      ],
+      "fixed": [
+        "native_motion",
+        "voice_clock",
+        "layout_authority"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "顶部提示与计时关键状态",
+          "method": "查看本期进退场、落定和最长内容预览，再查完整编码帧",
+          "pass_condition": "标题、素材主体、说明、字幕相互避让，显隐有意，内容可读。"
+        }
+      ]
+    }
+  ],
+  "slots": [
+    {
+      "id": "captions",
+      "element_id": "captions",
+      "property": "content",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "source": "完整音轨对应的真实ASR句时码及SHA"
+      },
+      "missing": "补齐真实ASR后准备",
+      "overflow": "重分句并重新看齐，不能截旁白"
+    },
+    {
+      "id": "voice_music",
+      "element_id": "master-audio",
+      "property": "content",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "clock": "完整原PCM，禁止拉伸；音乐按本期合法绑定"
+      },
+      "missing": "补齐音轨与来源后准备",
+      "overflow": "重新拟合公开cue与停留规则，无法满足则阻断"
+    },
+    {
+      "id": "kinetic-stack",
+      "element_id": "kinetic-stack",
+      "property": "content",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "fields": [
+          "kicker",
+          "lines.0",
+          "lines.1"
+        ],
+        "authority": "profile.json各字段maxChars与公开控件合同；当前params.segments的props为唯一运行真值"
+      },
+      "missing": "停在prepare输入检查，补齐对应字段或素材",
+      "overflow": "拒绝超长字段；空间仍需实际字体预览，缩写后重审，不挤压字幕"
+    },
+    {
+      "id": "polaroid-film",
+      "element_id": "polaroid-film",
+      "property": "content",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "fields": [
+          "items.0.caption",
+          "items.1.caption",
+          "items.2.caption"
+        ],
+        "authority": "profile.json各字段maxChars与公开控件合同；当前params.segments的props为唯一运行真值"
+      },
+      "missing": "停在prepare输入检查，补齐对应字段或素材",
+      "overflow": "拒绝超长字段；空间仍需实际字体预览，缩写后重审，不挤压字幕"
+    },
+    {
+      "id": "media-scan",
+      "element_id": "media-scan",
+      "property": "content",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "fields": [
+          "title",
+          "callouts.0.text"
+        ],
+        "authority": "profile.json各字段maxChars与公开控件合同；当前params.segments的props为唯一运行真值"
+      },
+      "missing": "停在prepare输入检查，补齐对应字段或素材",
+      "overflow": "拒绝超长字段；空间仍需实际字体预览，缩写后重审，不挤压字幕"
+    },
+    {
+      "id": "gallery-carousel",
+      "element_id": "gallery-carousel",
+      "property": "content",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "fields": [
+          "title",
+          "items.0.caption",
+          "items.1.caption",
+          "items.2.caption"
+        ],
+        "authority": "profile.json各字段maxChars与公开控件合同；当前params.segments的props为唯一运行真值"
+      },
+      "missing": "停在prepare输入检查，补齐对应字段或素材",
+      "overflow": "拒绝超长字段；空间仍需实际字体预览，缩写后重审，不挤压字幕"
+    },
+    {
+      "id": "cta-arrow",
+      "element_id": "cta-arrow",
+      "property": "content",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "fields": [
+          "kicker",
+          "text",
+          "sub"
+        ],
+        "authority": "profile.json各字段maxChars与公开控件合同；当前params.segments的props为唯一运行真值"
+      },
+      "missing": "停在prepare输入检查，补齐对应字段或素材",
+      "overflow": "拒绝超长字段；空间仍需实际字体预览，缩写后重审，不挤压字幕"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "implementation",
+      "source_kind": "design",
+      "source": "Haike1.1.6项目适配器与官方poster-kit公开合同",
+      "locator": "apply_layout/fit_segments/compile及profile.json；本地本期H-preview实际45图记录",
+      "method": "读取固定版本源码与实际本期预览，不把全画布包络当叶节点坐标",
+      "file": "../../backlot/studio_motion_poster_session.py",
+      "sha256": "1db0b465bec7c71801d81f58a8c4fd7673dd823c8c2e69b002377715d67ec151"
+    },
+    {
+      "id": "delivery-20261030",
+      "source_kind": "observation",
+      "source": "本轮隔离安装真实队列、完整质量记录与逐张实际编码画面检查",
+      "locator": "reference/delivery-20261030.json；原始文件和逐图审核留在所列本机私有证据根",
+      "method": "完整源和预览审核后实际导出；核对原请求/输出SHA、全解码、流参数，逐张查看编码状态；不冒称连续人耳听审或物理新机",
+      "file": "reference/delivery-20261030.json",
+      "sha256": "8cfdd4a2a3fb0cfeeaaae25065cd46fccc3ddd8566cabb3e551376be675db2a5"
+    }
+  ],
+  "unknowns": [],
+  "validation": {
+    "structure": {
+      "status": "pass",
+      "evidence_ids": [
+        "delivery-20261030"
+      ],
+      "note": "当前工作台/同一编译器与版本绑定，规格单独静态校验；运行源SHA见本轮摘要。"
+    },
+    "technical": {
+      "status": "pass",
+      "evidence_ids": [
+        "delivery-20261030"
+      ],
+      "note": "本轮1440x1800/60fps/视频流>=20Mbps/AAC48k双声道及完整解码通过，精确数值和输出SHA见摘要。"
+    },
+    "visual": {
+      "status": "pass",
+      "evidence_ids": [
+        "delivery-20261030"
+      ],
+      "note": "本轮来源、最终预览和75个实际编码状态已逐张查看；限本轮4:5及已开放参数。"
+    },
+    "audio": {
+      "status": "pending",
+      "evidence_ids": [
+        "delivery-20261030"
+      ],
+      "note": "完整时钟、编码、响度/真峰值技术测量通过；本轮未新做连续人耳听看或普通外放听审，不伪造通过。"
+    },
+    "platform": {
+      "status": "pending",
+      "evidence_ids": [
+        "delivery-20261030"
+      ],
+      "note": "本机独立路径/用户/PATH和禁止依赖下载环境实际制作通过；另一台物理电脑与平台呈现未验。"
+    },
+    "user_review": {
+      "status": "not_applicable",
+      "evidence_ids": [
+        "delivery-20261030"
+      ],
+      "note": "用户下班前明确授权自主验收，不再等待逐片意见；不把此授权写成用户已播放三片。"
+    },
+    "production": {
+      "status": "pass",
+      "evidence_ids": [
+        "delivery-20261030"
+      ],
+      "note": "本轮隔离安装统一队列真实完整输出，原请求、job和输出SHA对应；无新增云调用或发布。"
+    }
+  },
+  "extensions": {
+    "custom": {
+      "contract": "vibrant-poster@2.7.13 / poster-kit / fixed official helper rc.50",
+      "rules": [
+        "原始.motion及官方控件源码保持原样，仅使用公开参数。",
+        "完整声音不拉伸，素材不足阻断，不靠循环补长度。",
+        "人物模式本期hidden，完整同声源来源合同仍核验。",
+        "更新仅替换兼容程序；原包、私有输入、缓存与预设独立。"
+      ],
+      "element_layout_authority": "同版本studio_motion_poster_session.apply_layout、当前params.segments及固定原包poster-kit控件；组box仅为逻辑包络，公开子叶几何/层级/缓动从其控件求值。"
+    },
+    "avatar": {
+      "face_crop": "本期人物hidden，无可见口型；来源仍保留完整同声源人物证明。",
+      "synchronization": "完整原PCM主时钟；ASR真实句时码驱动字幕，人物隐藏不影响音轨。"
+    },
+    "graphic": {
+      "text_policy": "profile声明逐字段maxChars；cue必须有完整读完时间，实际中文字体预览确认溢出。",
+      "asset_fit": "三照片等比嵌入胶片；四视频按公开媒体槽与完整可用区间求值，内嵌横幅和文字为固化内容。"
+    },
+    "material_edit": {
+      "source_ranges": "每期sourceStart和公开segment/cue映射；所有使用末端均须小于实际视频时长。",
+      "cut_policy": "只用真实句间隙切组；原生控件1x播放，旁白全程连续，素材不足停下补齐。"
+    }
+  },
+  "operations": [
+    {
+      "id": "source",
+      "input": "合法原包/helper、完整voice/ASR/同声源人物、三照片和四视频及BGM",
+      "action": "POST sessions绑定本期字段，source-frames取样，逐张查看再source-review",
+      "output": "同版本来源token与摘要",
+      "completion": "来源与时码完整，素材覆盖真实使用范围，本期费用授权明确",
+      "recovery": "保留已有源与原任务，仅补缺项；本轮无新增云调用",
+      "entrypoint": "../../docs/MOTION_TEMPLATE_STUDIO.md"
+    },
+    {
+      "id": "preview",
+      "input": "本期完整输入和4:5参数",
+      "action": "prepare生成五组计划；查看plan后plan-review经统一队列生成有界最终预览；看齐后preview-review冻结",
+      "output": "同画布预览、冻结请求SHA与命名变体",
+      "completion": "五组cue/进退、最长字段、标题/HUD/字幕避让均实际通过",
+      "recovery": "GET原session，修对应槽后重新审核；失败从原编号local-resume",
+      "entrypoint": "../../backlot/studio_motion_poster_session.py"
+    },
+    {
+      "id": "render",
+      "input": "已冻结请求和本期生产授权",
+      "action": "submit进入统一队列；GET原session/job追踪，失败resume原编号",
+      "output": "全片、质量报告与work/version",
+      "completion": "队列完成且全解码、帧数/尺寸/码率/音轨通过；实际查看编码状态，听看与真机分别登记",
+      "recovery": "保留源、preview和已有导出阶段，不重做已付费源",
+      "entrypoint": "../../scripts/motion_templates.py"
+    }
+  ]
+}
