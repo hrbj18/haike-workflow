@@ -60,8 +60,20 @@ def seed(*,check_sources=True):
     if not isinstance(defaults,dict) or not defaults.get('latest_example_input'):
         raise WorkError('此机器尚未配置控制台原包和合法参考输入','unavailable')
     path=Path(defaults['latest_example_input'])
+    if not path.is_absolute():path=(ROOT/path).resolve()
     if not path.is_absolute() or not path.is_file():raise WorkError('控制台本机参考输入不存在','unavailable')
     value=read_json(path)
+    # Private bundled inputs use paths relative to their seed document. The
+    # public session/production contract still receives absolute, SHA-bound files.
+    def relocate(item):
+        if isinstance(item,dict):
+            if isinstance(item.get('path'),str) and 'sha256' in item:
+                source=Path(item['path'])
+                if not source.is_absolute():item['path']=str((path.parent/source).resolve())
+            for child in item.values():relocate(child)
+        elif isinstance(item,list):
+            for child in item:relocate(child)
+    relocate(value)
     if check_sources:compiler.source(value)
     else:
         # Browsing the catalog must not decode/probe six large source videos.
@@ -84,7 +96,8 @@ def configured(value):
     result=deepcopy(value['input'])
     defaults=read_json(DEFAULTS)
     if defaults.get('native_dependency_cache'):
-        result['native_dependency_cache']=defaults['native_dependency_cache']
+        cache=Path(defaults['native_dependency_cache'])
+        result['native_dependency_cache']=str(cache if cache.is_absolute() else (ROOT/cache).resolve())
     result.update(title=value['title'],brand=value['brand'],script=value['script'])
     result['console']['layout']='portrait' if value['layout']=='portrait45' else 'landscape'
     result['console']['segments']=apply_content(result['console']['segments'],value['content'])

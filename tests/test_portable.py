@@ -71,6 +71,19 @@ class PortableTests(unittest.TestCase):
         self.assertTrue(override["user"])
         self.assertEqual(override["media_tools"]["ffmpeg"], "custom-tool")
 
+    def test_prepare_relocates_owned_console_cache_without_installing(self):
+        self.prepared_fixture()
+        self.file('.local/md/console-v1/.venv/Scripts/python.exe')
+        self.file('.local/md/console-v1/.venv/pyvenv.cfg','home = old-machine')
+        self.file('.local/motion-console/defaults.json',json.dumps({'native_dependency_cache':'.local/md/console-v1'}))
+        with patch.object(portable.subprocess,'run') as run:
+            result=portable.prepare()
+        run.assert_not_called()
+        self.assertIn('.local/md/console-v1',result['venvs'])
+        cfg=(self.root/'.local/md/console-v1/.venv/pyvenv.cfg').read_text()
+        self.assertIn(str(self.root/'runtime/python'),cfg)
+        self.assertNotIn('old-machine',cfg)
+
     def test_invalid_user_override_fails_and_preserves_file(self):
         self.prepared_fixture()
         path = self.file("copy_skill/copy_skill-main/config/content_intelligence.local.json", "[]")
