@@ -46,6 +46,7 @@ def install(project, console, frames):
     if settings['mode'] == 'auto':
         return
     folder = Path(project) / 'project'
+    composition = Path(project) / 'haike-composition'
     index = folder / 'index.html'
     receipt = Path(project) / 'haike-presenter.json'
     source = SCRIPT.read_bytes()
@@ -55,15 +56,16 @@ def install(project, console, frames):
         old = read_json(receipt)
         if (old.get('policy') != settings or old.get('script_sha256') != sha(SCRIPT)
                 or old.get('index_sha256') != sha(index)
-                or (folder / 'haike-presenter.js').read_bytes() != source
-                or (folder / 'haike-presenter-config.js').read_bytes() != config):
+                or (composition / 'haike-presenter.js').read_bytes() != source
+                or (composition / 'haike-presenter-config.js').read_bytes() != config):
             raise WorkError('出镜方案已变化，请另建本期预览版本')
         return
     if not index.is_file():
         raise WorkError('须先通过官方有界预览生成原生画面工程')
     expected['original_index_sha256'] = sha(index)
-    (folder / 'haike-presenter.js').write_bytes(source)
-    (folder / 'haike-presenter-config.js').write_bytes(config)
+    composition.mkdir(exist_ok=True)
+    (composition / 'haike-presenter.js').write_bytes(source)
+    (composition / 'haike-presenter-config.js').write_bytes(config)
     # Load the extension at capture time. Native HTML and its official receipt
     # remain byte-identical and can still use the official sound renderer.
     expected['index_sha256'] = sha(index)
@@ -74,8 +76,9 @@ def install(project, console, frames):
 def capture_page(project, browser):
     from playwright.sync_api import sync_playwright
     folder=Path(project)/'project'
+    composition=Path(project)/'haike-composition'
     receipt=read_json(Path(project)/'haike-presenter.json')
-    if receipt.get('script_sha256')!=sha(folder/'haike-presenter.js') or receipt.get('index_sha256')!=sha(folder/'index.html'):
+    if receipt.get('script_sha256')!=sha(composition/'haike-presenter.js') or receipt.get('index_sha256')!=sha(folder/'index.html'):
         raise WorkError('人物画面工程与审核版本不一致')
     class Quiet(SimpleHTTPRequestHandler):
         def log_message(self,*args):pass
@@ -90,7 +93,7 @@ def capture_page(project, browser):
                 page.goto(f'http://127.0.0.1:{server.server_port}/index.html',wait_until='load')
                 page.evaluate('async () => { await window.READY; await document.fonts.ready; }')
                 page.add_script_tag(content='window.HAIKE_PRESENTER='+json.dumps(receipt['policy'])+';')
-                page.add_script_tag(path=str(folder/'haike-presenter.js'))
+                page.add_script_tag(path=str(composition/'haike-presenter.js'))
                 page.evaluate('async () => await window.READY')
                 yield page
             finally:launched.close()

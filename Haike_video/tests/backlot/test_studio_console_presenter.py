@@ -26,15 +26,17 @@ def test_extension_is_idempotent_bound_and_does_not_edit_native_scenes(tmp_path)
     folder=tmp_path/'project';folder.mkdir()
     index=folder/'index.html';index.write_bytes(b'<html><body>native</body></html>')
     scene=folder/'scenes.js';scene.write_bytes(b'native-scene')
+    original={p.name:p.read_bytes() for p in folder.iterdir()}
     presenter.install(tmp_path,inputs('opening'),1824)
     before=index.read_bytes()
     presenter.install(tmp_path,inputs('opening'),1824)
     assert index.read_bytes()==before and scene.read_bytes()==b'native-scene'
     assert before==b'<html><body>native</body></html>'
+    assert {p.name:p.read_bytes() for p in folder.iterdir()}==original
     receipt=json.loads((tmp_path/'haike-presenter.json').read_bytes())
     assert receipt['original_index_sha256']==receipt['index_sha256']
     with pytest.raises(WorkError):presenter.install(tmp_path,inputs('closing'),1824)
-    (folder/'haike-presenter.js').write_bytes(b'changed')
+    (tmp_path/'haike-composition/haike-presenter.js').write_bytes(b'changed')
     with pytest.raises(WorkError):presenter.install(tmp_path,inputs('opening'),1824)
 
 
