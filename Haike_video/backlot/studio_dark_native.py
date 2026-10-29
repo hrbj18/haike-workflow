@@ -32,7 +32,7 @@ require=speech._require
 FIELDS={'title','projectDirectory','instanceDirectory','helper','package','node','ffmpeg','ffprobe',
         'audio','previewReceipt','visualReview','planReview','outputRoot'}
 FILE_FIELDS={'helper','package','node','ffmpeg','ffprobe','audio','previewReceipt','visualReview','planReview'}
-OPTIONAL_FIELDS={'expected','audio_mode','music','portrait_companion','profile_id','output_layout','layoutReview'}
+OPTIONAL_FIELDS={'expected','audio_mode','music','portrait_companion','profile_id','output_layout','layoutReview','presenter_composition'}
 REFERENCE_EXPECTED={'width':1920,'height':1080,'fps':60,'frames':7344,'seconds':122.4}
 GROUP_MIN_FRAMES={f'03-A:s{i:02}':n for i,n in enumerate([327,636,539,458,621,324,432,492,204],1)}
 GROUP_MIN_FRAMES['03-A:independent-artifact-review']=840
@@ -192,6 +192,11 @@ def prepare(queue,value):
         from backlot import studio_motion_native_viewport as viewport
         tools['viewport_adapter']={'path':str(Path(viewport.__file__).resolve()),'sha256':sha(viewport.__file__)}
     if music is not None:tools['music']={'path':str(paths['music']),'sha256':sha(paths['music'])}
+    if value.get('presenter_composition'):
+        from backlot import studio_console_presenter as presenter
+        require(value['presenter_composition'] is True and profile['profile_id']=='console04-v1'
+                and preview.get('schema')=='haike.console-presenter-preview/1', '人物合成须绑定科技控制台正式预览')
+        tools['presenter_adapter']={'path':str(Path(presenter.__file__).resolve()),'sha256':sha(presenter.__file__)}
     browser=_browser()
     if browser is not None:tools['browser']={'path':str(browser),'sha256':sha(browser)}
     if profile_path is not None:tools['native_profile']={'path':str(profile_path),'sha256':sha(profile_path)}
@@ -211,6 +216,7 @@ def prepare(queue,value):
     if 'portrait_companion' in value:core['portrait_companion']=value['portrait_companion']
     if profile is not None:core['native_profile']=profile['profile_id']
     if 'output_layout' in value:core['output_layout']=dict(value['output_layout'])
+    if value.get('presenter_composition'):core['presenter_composition']=True
     temporary=ROOT.parent/'.local/mt';temporary.mkdir(parents=True,exist_ok=True)
     require(not temporary.is_symlink() and len(str(temporary))<=80, '本地渲染临时根须为工作区内短普通目录')
     core['temporary_root']=str(temporary.resolve())
@@ -385,7 +391,15 @@ def run(queue,job):
             else:
                 master=_premixed_master(r,files,scratch)
             atomic_private(folder/'audio-receipt.json',master)
-            export=[str(files['ffmpeg']),'-nostdin','-y','-v','error','-i',str(raw),'-i',str(scratch/'master.wav'),
+            visual_source=raw
+            if r.get('presenter_composition'):
+                from backlot import studio_console_presenter as presenter
+                visual_source=scratch/'presenter-visual.mp4'
+                receipt=read_json(visual_source.with_suffix('.json'))
+                if not receipt:
+                    presenter.render(r['native_project'],visual_source,expected,files['ffmpeg'],files.get('browser'))
+                else:require(receipt.get('output_sha256')==sha(visual_source),'人物画面中间片身份已变化')
+            export=[str(files['ffmpeg']),'-nostdin','-y','-v','error','-i',str(visual_source),'-i',str(scratch/'master.wav'),
                     '-map','0:v:0','-map','1:a:0','-t',str(duration),'-c:v','libx264','-preset','slow','-b:v','20500k',
                     '-minrate','20500k','-maxrate','20500k','-bufsize','2000k','-x264-params','nal-hrd=cbr:force-cfr=1:filler=1',
                     '-pix_fmt','yuv420p','-c:a','aac','-b:a','192k','-ar','48000','-ac','2','-movflags','+faststart',str(output)]

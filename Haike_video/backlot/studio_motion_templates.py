@@ -118,7 +118,7 @@ def catalog():
     except WorkError:console_seed=None
     if console_seed:
         result.append({'id':console_session.ID,'name':'科技控制台 · 口播讲解','version':'2.7.20-alpha.3 / console-v1',
-            'status':'testing','status_label':'开发试制','description':'描边巨字、光环声明、扇形实拍、双面板比较与终端式收尾。',
+            'status':'ready','status_label':'可制作','description':'描边巨字、光环声明、扇形实拍、双面板比较与终端式收尾。',
             'original':None,'original_ratio':'16:9','layouts':deepcopy(console_session.LAYOUTS),
             'presenter_modes':['auto'],'groups':[g['id'] for g in console_session.fields()],
             'presenter_modes_by_layout':{'landscape':['auto'],'portrait45':['opening','closing','hidden','auto']},
@@ -127,8 +127,8 @@ def catalog():
             'header_fields':False,
             'duration_note':'按完整口播和真实句间隙分配五个完整组；超过原包容量时需重选编排，不变速、不截句。',
             'media_note':'六路扇形槽播放真实视频，需覆盖各自完整动作时长；替换后重新检查入点、中段与末段。',
-            'note':'五组原生动作；4:5由原包竖屏重排后取已审核视窗，省略顶部辅助状态条。当前开发试制，第二期验收待完成。',
-            'editable':['画面文案','六路真实视频','完整口播','数字人','配乐'],
+            'note':'五组原生动作；4:5由原包竖屏重排后取审核视窗，省略顶部辅助状态条。默认开头出镜；每条视频仍需检查本期预览和成片。',
+            'editable':['画面文案','六路真实视频','完整口播','数字人出镜','配乐'],
             'package_sha256':console_sha,'fields':console_session.fields()})
     poster_sha=None
     try:

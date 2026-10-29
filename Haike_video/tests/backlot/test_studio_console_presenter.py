@@ -30,17 +30,34 @@ def test_extension_is_idempotent_bound_and_does_not_edit_native_scenes(tmp_path)
     before=index.read_bytes()
     presenter.install(tmp_path,inputs('opening'),1824)
     assert index.read_bytes()==before and scene.read_bytes()==b'native-scene'
-    assert before.count(b'haike-presenter.js')==1
+    assert before==b'<html><body>native</body></html>'
     receipt=json.loads((tmp_path/'haike-presenter.json').read_bytes())
-    assert receipt['original_index_sha256']!=receipt['index_sha256']
+    assert receipt['original_index_sha256']==receipt['index_sha256']
     with pytest.raises(WorkError):presenter.install(tmp_path,inputs('closing'),1824)
     (folder/'haike-presenter.js').write_bytes(b'changed')
     with pytest.raises(WorkError):presenter.install(tmp_path,inputs('opening'),1824)
 
 
-def test_never_changes_already_previewed_project(tmp_path):
+def test_preserves_official_preview_and_native_html(tmp_path):
     (tmp_path/'project').mkdir()
     (tmp_path/'project/index.html').write_bytes(b'<body></body>')
     (tmp_path/'preview.json').write_bytes(b'{}')
-    with pytest.raises(WorkError):presenter.install(tmp_path,inputs('opening'),1824)
+    presenter.install(tmp_path,inputs('opening'),1824)
     assert (tmp_path/'project/index.html').read_bytes()==b'<body></body>'
+    assert (tmp_path/'preview.json').read_bytes()==b'{}'
+
+
+def test_script_change_invalidates_prepared_compiler_receipt(tmp_path, monkeypatch):
+    from backlot import studio_motion_console as compiler
+    script=tmp_path/'presenter.js';script.write_bytes(b'version-one')
+    monkeypatch.setattr(presenter,'SCRIPT',script)
+    before=presenter.identity()
+    receipt=tmp_path/'build.json'
+    receipt.write_text(json.dumps({'schema':compiler.SCHEMA,
+        'compiler_sha256':compiler.sha(compiler.__file__),
+        'contract_sha256':compiler.sha(compiler.PROFILE),
+        'presenter_identity':before}),encoding='utf-8')
+    script.write_bytes(b'version-two')
+    assert presenter.identity()!=before
+    with pytest.raises(WorkError,match='重新准备'):
+        compiler.load(receipt)

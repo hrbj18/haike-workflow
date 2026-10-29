@@ -20,6 +20,7 @@ from backlot.work_catalog import read_json,sha
 from backlot.studio_investment_recompose import fingerprint
 from backlot import studio_dark_native as native
 from backlot import studio_motiongit as packages
+from backlot import studio_console_presenter as presenter
 from backlot.studio_dark_full_script import spoken
 from backlot.studio_dark_native_content import _captions, _voice_proof
 
@@ -239,11 +240,15 @@ def reviewed_images(rows,allowed,minimum=1):
 
 def preview_images(preview,project):
     project=Path(project).resolve()
-    require(preview.get('schema')=='motiongit-preview/1' and isinstance(preview.get('stills'),list)
+    require(preview.get('schema') in {'motiongit-preview/1','haike.console-presenter-preview/1'} and isinstance(preview.get('stills'),list)
             and len(preview['stills'])>=5,'控制台官方预览回执结构不匹配')
     require(preview.get('parameterSha256')==sha(project/'parameters.json')
             and preview.get('sourceLockSha256')==read_json(project/'instance.json').get('sourceLockSha256'),
             '控制台预览不是本期准备工程或原包来源')
+    if preview.get('schema')=='haike.console-presenter-preview/1':
+        require(preview.get('native_preview_sha256')==sha(project/'preview.json')
+                and preview.get('presenter')==read_json(project/'haike-presenter.json'),
+                '人物预览与原生画面来源不一致')
     images=[];seen=set()
     for row in preview['stills']:
         name=row.get('path') if isinstance(row,dict) else None
@@ -254,6 +259,11 @@ def preview_images(preview,project):
                 '控制台预览图片逃逸或重复')
         image={'path':str(path),'sha256':row.get('sha256')};checked(image);images.append(image);seen.add(str(path))
     return images
+
+
+def preview_path(project):
+    project=Path(project)
+    return project/'haike-preview.json' if (project/'haike-preview.json').exists() else project/'preview.json'
 
 
 def acknowledge_nested_preview(project,actual):
@@ -339,7 +349,8 @@ def build(input_path,destination):
         if segment['recipe']=='result-inspector':segment['inputs']['media']={'bvid':{'path':evidence.name,'offset':lens['offset']}}
     atomic_private(destination/'params.json',params)
     package_key=tools['package']['sha256'][:12]
-    identity=fingerprint({'input':sha(input_path),'compiler':sha(__file__),'renderer':sha(native.__file__)})[:16]
+    identity=fingerprint({'input':sha(input_path),'compiler':sha(__file__),'renderer':sha(native.__file__),
+                          'presenter':presenter.identity()})[:16]
     # Keep new trials on the workspace volume; short owned paths also avoid the
     # Windows transaction-name limit. Frozen older C: projects keep their paths.
     instance=ROOT.parent/'.local/mc'/identity;instance.parent.mkdir(parents=True,exist_ok=True)
@@ -349,6 +360,7 @@ def build(input_path,destination):
             '控制台依赖缓存需要本机短绝对路径')
     copied['params.json']=bound(destination/'params.json')
     result={'schema':SCHEMA,'input_path':str(input_path),'input_sha256':sha(input_path),'compiler_sha256':sha(__file__),
+            'presenter_identity':presenter.identity(),
             'contract_sha256':sha(PROFILE),'directory':str(destination),'files':copied,'tools':deepcopy(tools),
             'frames':facts['frames'],'recipes':facts['recipes'],'layout':facts['layout'],'instance':str(instance),
             'cache':str(cache),'cloud_media_calls':0,'full_render_started':False}
@@ -358,6 +370,7 @@ def build(input_path,destination):
 def load(path):
     value=read_json(path)
     require(value.get('schema')==SCHEMA and value.get('compiler_sha256')==sha(__file__)
+            and value.get('presenter_identity')==presenter.identity()
             and value.get('contract_sha256')==sha(PROFILE),'控制台编译器或合同已更新，请保留原版本并重新准备')
     require(sha(value['input_path'])==value['input_sha256'],'控制台原输入已变化')
     for row in [*value['files'].values(),*value['tools'].values()]:checked(row)
@@ -417,8 +430,6 @@ def prepare_project(build_path,review_path):
     if not project.exists():official(b,'prepare',['@vault','--inputs','@vault','--plan',p,'--out',project])
     require((project/'instance.json').is_file() and (project/'parameters.json').is_file(),
             '控制台准备工程未完整生成，保留当前目录并重新准备新版本')
-    from backlot.studio_console_presenter import install
-    install(project, source_value.get('console', {}), b['frames'])
     return project
 
 
@@ -440,15 +451,20 @@ def prepare_and_preview(build_path,review_path,times,*,calibration_import=False)
     if c.get('cropCalibration'):
         from backlot import studio_motion_face_crop as face_crop
         face_crop.validate(c['cropCalibration'],inputs['avatar'],inputs['tools'],c['presenterCrop'],project)
-    return {'project':str(project),'preview':str(project/'preview.json'),'cloud_media_calls':0}
+    result=project/'preview.json'
+    if not calibration_import and c.get('presenterMode','auto')!='auto':
+        presenter.install(project,c,b['frames'])
+        result=presenter.preview(project,times,native._browser())
+        preview_images(read_json(result),project)
+    return {'project':str(project),'preview':str(result),'cloud_media_calls':0}
 
 
 def manifest(build_path,review_path):
     b=load(build_path);value=read_json(b['input_path']);inst=Path(b['instance']);folder=Path(b['directory'])
     if value['console'].get('cropCalibrationRequired'):
         require(value['console'].get('cropCalibration'),'新人物没有本期圆窗校准，不得冻结导出')
-    review=read_json(review_path);preview_path=inst/'project/preview.json';preview=read_json(preview_path)
-    require(review.get('status')=='pass' and sha(preview_path) in
+    review=read_json(review_path);preview_file=preview_path(inst/'project');preview=read_json(preview_file)
+    require(review.get('status')=='pass' and sha(preview_file) in
             {review.get('unreviewed_preview_sha256'),review.get('reviewed_preview_sha256')}
             and len(review.get('actual_images_viewed',[]))>=5,'控制台原生预览尚未完成本期实际看帧')
     actual=preview_images(preview,inst/'project');allowed={row['path']:row['sha256'] for row in actual}
@@ -458,16 +474,20 @@ def manifest(build_path,review_path):
         require(review.get('layout')==viewport.CONSOLE_45,'原生竖屏须实际检查4:5视窗')
         # The reviewer saw the final viewport, not the omitted auxiliary HUD.
         viewport.validate_review({'status':'pass','layout':review['layout'],'images':review.get('viewport_images'),
-                                  'source_preview_sha256':sha(preview_path)},actual,sha(preview_path))
+                                  'source_preview_sha256':sha(preview_file)},actual,sha(preview_file))
         cropped=[row['image'] for row in review['viewport_images']]
         require(review['actual_images_viewed']==cropped,'实际看帧须对应本期最终4:5视窗')
     else:
         seen=reviewed_images(review['actual_images_viewed'],allowed,minimum=len(actual))
         require(seen==set(allowed),'须实际查看本期全部控制台预览')
-    inner_review=acknowledge_nested_preview(inst/'project',actual)
-    preview['reviewed']=True;atomic_private(preview_path,preview)
-    review['reviewed_preview_sha256']=sha(preview_path);atomic_private(review_path,review)
-    visual={**review,'preview_sha256':sha(preview_path),'inner_preview_review':inner_review};atomic_private(folder/'visual-review.json',visual)
+    original=inst/'project/preview.json';original_preview=read_json(original)
+    native_images=preview_images(original_preview,inst/'project')
+    inner_review=acknowledge_nested_preview(inst/'project',native_images)
+    original_preview['reviewed']=True;atomic_private(original,original_preview)
+    if preview.get('schema')=='haike.console-presenter-preview/1':preview['native_preview_sha256']=sha(original)
+    preview['reviewed']=True;atomic_private(preview_file,preview)
+    review['reviewed_preview_sha256']=sha(preview_file);atomic_private(review_path,review)
+    visual={**review,'preview_sha256':sha(preview_file),'inner_preview_review':inner_review};atomic_private(folder/'visual-review.json',visual)
     params=read_json(folder/'params.json')
     p={'native_profile':'console04-v1','completeGroups':b['recipes'],
        'completeGroupFrames':{s['recipe']:s['durationFrames'] for s in params['segments']},'frames':b['frames'],'seconds':b['frames']/60}
@@ -475,7 +495,7 @@ def manifest(build_path,review_path):
     atomic_private(folder/'plan-review.json',p)
     result={'title':value['title'],'projectDirectory':str(inst/'project'),'instanceDirectory':str(inst),
             **{k:str(checked(value['tools'][k])) for k in ['helper','package','node','ffmpeg','ffprobe']},
-            'audio':str(checked(value['voice'])),'previewReceipt':str(preview_path),'visualReview':str(folder/'visual-review.json'),
+            'audio':str(checked(value['voice'])),'previewReceipt':str(preview_file),'visualReview':str(folder/'visual-review.json'),
             'planReview':str(folder/'plan-review.json'),'outputRoot':str(inst/'renders'),'profile_id':'console04-v1',
             'expected':{'width':1080 if portrait else 1920,'height':1920 if portrait else 1080,'fps':60,'frames':b['frames'],'seconds':b['frames']/60},
             'audio_mode':'native_plus_music','music':{'path':str(checked(value['music'])),
@@ -483,9 +503,10 @@ def manifest(build_path,review_path):
                 'offsetSeconds':value['music'].get('offsetSeconds',value['music'].get('offset',0)),
                 'loop':value['music'].get('loop',False)}}
     if portrait:
-        viewport_review={'status':'pass','layout':review['layout'],'source_preview_sha256':sha(preview_path),
+        viewport_review={'status':'pass','layout':review['layout'],'source_preview_sha256':sha(preview_file),
                          'images':review['viewport_images'],'scope':'final-viewport-only; original auxiliary top HUD omitted'}
         atomic_private(folder/'viewport-review.json',viewport_review)
         result.update(output_layout=review['layout'],layoutReview=str(folder/'viewport-review.json'))
+    if preview.get('schema')=='haike.console-presenter-preview/1':result['presenter_composition']=True
     atomic_private(folder/'native-queue-input.json',result)
     return result

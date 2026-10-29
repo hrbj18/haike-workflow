@@ -123,7 +123,8 @@ def prepare(store,value,queue):
     from backlot.studio_investment_recompose import fingerprint
     inputs=configured(value)
     folder=ROOT/'.local/ms'/value['id']/'versions'/fingerprint({'input':inputs,'compiler':sha(compiler.__file__),
-                                                           'strategy':sha(__file__)})[:24]
+                                                             'strategy':sha(__file__),
+                                                             'presenter':compiler.presenter.identity()})[:24]
     folder.mkdir(parents=True,exist_ok=True);input_path=folder/'input.json'
     atomic_private(input_path,inputs)
     built=compiler.build(input_path,folder/'build');build_path=folder/'build/console-build.json'
@@ -197,7 +198,8 @@ def approve_plan(store,value,token,seen):
         value['viewport_images']=pairs;value['preview_files']=[row['image'] for row in pairs]
         token=fingerprint({'source_preview_sha256':token,'layout':viewport.CONSOLE_45,'images':pairs})
     value['preview']={'token':token,'images':[{'id':i,'url':
-        f"/api/studio/motion-templates/sessions/{value['id']}/preview/{i}"} for i in range(len(files))],'engine':'native'}
+        f"/api/studio/motion-templates/sessions/{value['id']}/preview/{i}",
+        'label':preview['stills'][i].get('label','交付画面')} for i in range(len(files))],'engine':'native'}
     value['status']='preview_review'
     return store.put(value,value['revision'])
 
@@ -205,7 +207,7 @@ def approve_plan(store,value,token,seen):
 def approve_preview(store,value,token,queue):
     from backlot import studio_dark_native as native
     path=compiler.checked(value['build']);review_path=path.parent/'web-preview-review.json'
-    built=compiler.load(path);preview_path=Path(built['instance'])/'project/preview.json'
+    built=compiler.load(path);preview_path=compiler.preview_path(Path(built['instance'])/'project')
     review={'status':'pass','unreviewed_preview_sha256':token,'actual_images_viewed':value['preview_files']}
     if value['layout']=='portrait45':
         from backlot import studio_motion_native_viewport as viewport
