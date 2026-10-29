@@ -515,8 +515,13 @@ class Sessions:
         return target
 
     @staticmethod
-    def run(command, timeout=600, env=None):
-        r = subprocess.run(command, capture_output=True, timeout=timeout, creationflags=NO_WINDOW, env=env)
+    def run(command, timeout=600, env=None, log=None):
+        try:
+            r = subprocess.run(command, capture_output=True, timeout=timeout, creationflags=NO_WINDOW, env=env)
+        except subprocess.TimeoutExpired as exc:
+            if log:Path(log).write_bytes((exc.stdout or b'')+b'\n'+(exc.stderr or b''))
+            raise
+        if log:Path(log).write_bytes(r.stdout+b'\n'+r.stderr)
         require(r.returncode == 0, '本地准备未完成；保留原任务，请检查本期素材、依赖和私有日志')
         return r
 
@@ -677,7 +682,7 @@ class Sessions:
         frames = sorted({s['from']+max(0, min(s['frames']-1, round((s['cueTimes'][cue]+hold)*props['fps'])))
                          for s in props['scenes'] for cue, hold in key_states[s['group']]})
         command = [node, str(ROOT/'Haike_video/scripts/motion_template_preview.cjs'), str(output), frozen['asset_directory'], json.dumps(frames)]
-        self.run(command, 600)
+        self.run(command, 600, log=output/'preview.log')
         images = [binding(output/(str(f)+'.jpg')) for f in frames]
         value['preview'] = {'token': fingerprint(images), 'images': [{'id': i, 'url': f"/api/studio/motion-templates/sessions/{value['id']}/preview/{i}"} for i in range(len(images))], 'engine': 'adapted'}
         value['preview_files'] = images

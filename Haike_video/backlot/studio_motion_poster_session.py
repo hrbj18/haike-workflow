@@ -30,7 +30,7 @@ def apply_layout(params, layout):
         # Native areas size each control; they do not shrink a landscape film.
         for segment in params['segments']:
             y, height = {'kinetic': (280, 800), 'polaroid': (190, 880),
-                         'media': (180, 900)}.get(segment['control'], (80, 1020))
+                         'media': (180, 900), 'gallery':(180,920)}.get(segment['control'], (80, 1020))
             segment['area'] = {'x': 40, 'y': y, 'w': 1000, 'h': height}
         params['captionPosition'] = {'bottomRatio': .38, 'leftRatio': .08, 'rightRatio': .08}
     else:

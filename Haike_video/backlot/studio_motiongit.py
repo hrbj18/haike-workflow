@@ -244,7 +244,7 @@ def helper_command(value, *args, timeout=180, temporary_root=None):
     env = dict(os.environ, PYTHONUTF8='1', PYTHONIOENCODING='utf-8')
     if value.get('offline_dependencies') is True:
         require(Path(value.get('dependency_cache','')).is_dir(),'请恢复此模板随首次部署交付的离线运行环境')
-        env.update(PIP_NO_INDEX='1',UV_OFFLINE='1',PIP_DISABLE_PIP_VERSION_CHECK='1')
+        env.update(PIP_NO_INDEX='1',UV_OFFLINE='1',PIP_DISABLE_PIP_VERSION_CHECK='1',NPM_CONFIG_OFFLINE='true')
     if temporary_root is not None:
         temporary=Path(temporary_root).resolve()
         require(temporary.is_relative_to((ROOT/'.local').resolve()) and not temporary.is_symlink()
