@@ -62,7 +62,20 @@ def console_presenter(value, *, reset=False):
 
 
 def local_defaults():
-    return read_json(DEFAULTS)
+    value=read_json(DEFAULTS)
+    def absolute(raw):
+        path=Path(raw)
+        return str(path if path.is_absolute() else (ROOT/path).resolve())
+    def walk(item):
+        if isinstance(item,list):return [walk(child) for child in item]
+        if not isinstance(item,dict):return item
+        result={k:walk(v) for k,v in item.items()}
+        if isinstance(item.get('path'),str) and 'sha256' in item:result['path']=absolute(item['path'])
+        return result
+    value=walk(value)
+    for key in ['latest_example_input','native_dependency_cache']:
+        if value.get(key):value[key]=absolute(value[key])
+    return value
 
 
 def seed_input():
@@ -106,7 +119,8 @@ def catalog():
             'description': '人物讲解、级联素材墙、分类卡片、镜头推进与行动收尾。',
             'original': original.get('url'), 'original_ratio': '16:9', 'layouts': deepcopy(LAYOUTS),
             'presenter_modes': ['auto', 'small', 'hidden'], 'groups': ['s01', 's04', 's08'],
-            'presenter_modes_by_layout': {'landscape':['auto'], 'portrait45':['auto','small','hidden']},
+            'presenter_modes_by_layout': {'landscape':['auto'], 'portrait45':['opening','closing','hidden','auto','small']},
+            'presenter_default_by_layout':{'landscape':'auto','portrait45':'opening'},
             'minimum_seconds': {'landscape': 30.6, 'portrait45': 28},
             'note': '当前已接入三个完整动作组；4:5为独立重排。原生横版人物布局随原组。',
             'editable': ['文案', '真实素材', '完整口播', '数字人', '配乐', '画幅', '适配版人物显示'],
@@ -283,7 +297,7 @@ class Sessions:
             layouts=console_session.LAYOUTS if value['template_id']==console_session.ID else poster_session.LAYOUTS if value['template_id']==poster_session.ID else LAYOUTS
             if 'layout' in patch: require(patch['layout'] in layouts, '此版本尚不支持该画幅')
             if 'presenter_mode' in patch:
-                modes={'auto','opening','closing','hidden'} if value['template_id']==console_session.ID else {'auto','small','hidden'}
+                modes={'auto','opening','closing','hidden'} if value['template_id']==console_session.ID else {'auto','small','opening','closing','hidden'}
                 require(patch['presenter_mode'] in modes, '人物模式无效')
             if value['template_id']==console_session.ID:
                 require(patch.get('layout',value['layout'])=='portrait45' or patch.get('presenter_mode',value['presenter_mode'])=='auto',
@@ -643,10 +657,7 @@ class Sessions:
             value['status'] = 'plan_review'
         else:
             result = portrait.convert(build)
-            if value['presenter_mode'] == 'small':
-                p = result['props']['presenter']; p['modes'] = [{'from': p['from'], 'frames': p['frames'], 'mode': 'small'}]
-            elif value['presenter_mode'] == 'hidden':
-                p = result['props'].pop('presenter'); result['sources'].pop(p['src']); result['provenance']['presenterClips'] = []
+            portrait.apply_presenter_mode(result,value['presenter_mode'])
             dark.preflight(result)
             atomic_private(folder/'portrait-input.json', result)
             frozen = dark.prepare(queue, result)

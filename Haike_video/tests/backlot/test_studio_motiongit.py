@@ -41,6 +41,15 @@ def test_import_is_static_idempotent_and_private(store, monkeypatch):
     assert (motion.STORE / 'packages' / a['id'] / 'original.motion').read_bytes() == path.read_bytes()
 
 
+def test_registry_rebinds_only_digest_matching_package_after_move(store):
+    imported=motion.import_package(package(store));row=motion._get('packages',imported['id'])
+    row['path']='X:/retired-computer/original.motion';motion._put_package(row)
+    restored=motion._get('packages',imported['id'])
+    assert restored['path']==str(motion.STORE/'packages'/imported['id']/'original.motion')
+    (motion.STORE/'packages'/imported['id']/'original.motion').write_bytes(b'tampered')
+    assert motion._get('packages',imported['id'])['path']==row['path']
+
+
 @pytest.mark.parametrize('unsafe', ['../escape.txt','/abs.txt','C:/secret.txt','motion.JSON'])
 def test_archive_paths_and_case_duplicates_rejected(store, unsafe):
     with pytest.raises(WorkError): motion.inspect_package(package(store, extra=unsafe))

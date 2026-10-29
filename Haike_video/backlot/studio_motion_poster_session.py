@@ -77,7 +77,8 @@ def package(value):
 def seed(*, check_sources=True):
     from backlot.studio_motion_templates import verified
     defaults = read_json(DEFAULTS); path = Path(defaults.get('latest_example_input', ''))
-    require(path.is_absolute() and path.is_file(), '此机器尚未配置海报原包和合法参考输入', 'unavailable')
+    if not path.is_absolute():path=ROOT/path
+    require(path.is_file(), '此机器尚未配置海报原包和合法参考输入', 'unavailable')
     value = read_json(path); package(value)
     params = value['poster']['parameters']
     require([s['control']+'-'+s['variant'] for s in params['segments']] == [g['id'] for g in fields()],

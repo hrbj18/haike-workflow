@@ -169,14 +169,15 @@ def prepare() -> dict:
     repos = list(REPOS)
     if local_path(CRAWLER + "/.venv").is_dir():
         repos.append(CRAWLER)
-    console=read_json('.local/motion-console/defaults.json', {})
-    cache=console.get('native_dependency_cache') if isinstance(console,dict) else None
-    if isinstance(cache,str) and not Path(cache).is_absolute():
-        if not cache.replace('\\','/').startswith('.local/md/'):
-            raise ValueError('控制台离线依赖须位于本安装的.local/md目录')
-        if not local_path(cache+'/.venv/Scripts/python.exe').is_file():
-            raise RuntimeError('控制台离线依赖缺失，请恢复首次安装的运行环境')
-        repos.append(cache)
+    for template in ['motion-console','motion-native-story','motion-poster']:
+        config=read_json('.local/'+template+'/defaults.json', {})
+        cache=config.get('native_dependency_cache') if isinstance(config,dict) else None
+        if isinstance(cache,str) and not Path(cache).is_absolute():
+            if not cache.replace('\\','/').startswith('.local/md/'):
+                raise ValueError('模板离线依赖须位于本安装的.local/md目录')
+            if not local_path(cache+'/.venv/Scripts/python.exe').is_file():
+                raise RuntimeError('模板离线依赖缺失，请恢复首次安装的运行环境')
+            if cache not in repos:repos.append(cache)
     for repo in repos:
         if not local_path(repo + "/.venv/Scripts/python.exe").is_file():
             raise RuntimeError("离线环境缺失：" + repo)

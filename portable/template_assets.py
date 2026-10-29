@@ -6,6 +6,7 @@ import os
 import tempfile
 
 MANIFEST='.local/motion-console/portable-assets.json'
+MANIFESTS=(MANIFEST,'.local/motion-native-story/portable-assets.json','.local/motion-poster/portable-assets.json')
 
 
 def encoded(value):
@@ -14,8 +15,6 @@ def encoded(value):
 
 def materialize(root):
     root=Path(root).resolve()
-    manifest=root/MANIFEST
-    if not manifest.is_file():return 0
     def safe(raw):
         path=Path(raw)
         if not path.is_absolute():path=root/path
@@ -26,18 +25,20 @@ def materialize(root):
             if part.is_symlink() or (hasattr(part,'is_junction') and part.is_junction()):
                 raise ValueError('模板资产不能通过目录链接定位')
         return path
-    safe(manifest)
-    plan=json.loads(manifest.read_text(encoding='utf-8'))
-    if plan.get('schema')!=1 or not isinstance(plan.get('documents'),dict):
-        raise ValueError('模板迁移清单无效')
     documents={}
-    for name,value in plan['documents'].items():
-        path=safe(name)
-        if not path.is_relative_to(root/'.local/motion-console/assets') or path.suffix!='.json':
-            raise ValueError('模板迁移只能生成自有输入文档')
-        if not isinstance(value,str):raise ValueError('模板迁移文档必须保留原始 UTF-8 文本')
-        json.loads(value)
-        documents[path]=value
+    for name in MANIFESTS:
+        manifest=safe(name)
+        if not manifest.is_file():continue
+        plan=json.loads(manifest.read_text(encoding='utf-8'))
+        if plan.get('schema')!=1 or not isinstance(plan.get('documents'),dict):
+            raise ValueError('模板迁移清单无效')
+        for name,value in plan['documents'].items():
+            path=safe(name)
+            if not path.is_relative_to(manifest.parent/'assets') or path.suffix!='.json' or path in documents:
+                raise ValueError('模板迁移只能生成自有输入文档')
+            if not isinstance(value,str):raise ValueError('模板迁移文档必须保留原始 UTF-8 文本')
+            json.loads(value)
+            documents[path]=value
     generated={};active=set()
     def build(path):
         if path in generated:return generated[path]

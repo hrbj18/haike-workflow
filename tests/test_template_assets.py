@@ -48,6 +48,19 @@ class TemplateAssetsTests(unittest.TestCase):
                 materialize(root)
             self.assertEqual(before, {p: p.read_bytes() for p in folder.glob('*.json')})
 
+    def test_three_manifests_validate_together_before_writing(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);folder=self.fixture(root)
+            other=root/'.local/motion-poster';(other/'assets').mkdir(parents=True)
+            (other/'portable-assets.json').write_bytes(encoded({'schema':1,'documents':{
+                '.local/motion-poster/assets/seed.json':json.dumps({'image':{'path':'missing.png','sha256':'0'*64}})}}))
+            with self.assertRaisesRegex(ValueError,'缺失'):materialize(root)
+            self.assertFalse((folder/'seed.json').exists())
+            (other/'portable-assets.json').write_bytes(encoded({'schema':1,'documents':{
+                '.local/motion-poster/assets/seed.json':'{"template":"poster"}'}}))
+            self.assertEqual(materialize(root),3)
+            self.assertEqual(materialize(root),0)
+
     def test_document_tamper_and_escape_are_rejected(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

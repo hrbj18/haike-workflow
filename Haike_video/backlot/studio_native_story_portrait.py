@@ -91,6 +91,24 @@ def _text_gate(contents, fonts):
     fit(c['brandDescription'],29,1160,'门店地址')
 
 
+def apply_presenter_mode(result,mode):
+    require(mode in {'auto','small','opening','closing','hidden'},'人物模式无效')
+    p=result['props']['presenter']
+    if mode=='hidden':
+        result['props'].pop('presenter');result['sources'].pop(p['src'])
+        result['provenance']['presenterClips']=[]
+    elif mode=='small':p['modes']=[{'from':p['from'],'frames':p['frames'],'mode':'small'}]
+    elif mode in {'opening','closing'}:
+        total=p['frames'];base=p['from'];length=min(300,total)
+        if mode=='opening':
+            first=result['props']['scenes'][0]
+            length=min(length,round(first['cueTimes']['wall_handoff']*60))
+        start=0 if mode=='opening' else total-length
+        p['modes']=[{'from':base+a,'frames':b-a,'mode':m} for a,b,m in
+                    [(0,start,'hidden'),(start,start+length,'large'),(start+length,total,'hidden')] if b>a]
+    return result
+
+
 def convert(build):
     require(isinstance(build, dict) and build.get('schema') == 'haike.motion-native-content-build/1'
             and build.get('status') == 'built' and build.get('layout') == 'portrait45', '须先构建已验证的4:5模板输入')

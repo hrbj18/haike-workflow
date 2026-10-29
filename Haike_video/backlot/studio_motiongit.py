@@ -57,6 +57,20 @@ def _get(table, identity):
     require(row is not None, '模板包或草稿不存在')
     value = json.loads(row[0])
     if table == 'packages':
+        # Registry identities survive a portable directory move. Only files in
+        # this installation with the recorded digest can replace old paths.
+        package=STORE/'packages'/identity/'original.motion'
+        if value.get('path')!=str(package) and package.is_file() and sha(package)==value.get('sha256'):
+            value['path']=str(package)
+        helper=STORE/'tools'/HELPER_VERSION/'motion.mjs'
+        if value.get('helper') and value['helper']!=str(helper) and helper.is_file() and sha(helper)==HELPER_SHA:
+            value['helper']=str(helper)
+        cache=value.get('dependency_cache')
+        if isinstance(cache,str) and not Path(cache).is_absolute():
+            candidate=(ROOT/cache).resolve()
+            require(cache.replace('\\','/').startswith('.local/md/') and candidate.is_relative_to(ROOT.resolve())
+                    and candidate.is_dir() and not candidate.is_symlink(),'模板离线依赖位置无效')
+            value['dependency_cache']=str(candidate)
         _hum_workflow(value)
     return value
 
@@ -228,6 +242,9 @@ def helper_command(value, *args, timeout=180, temporary_root=None):
     node = shutil.which('node')
     require(node is not None, '需要Node.js 22或更新版本')
     env = dict(os.environ, PYTHONUTF8='1', PYTHONIOENCODING='utf-8')
+    if value.get('offline_dependencies') is True:
+        require(Path(value.get('dependency_cache','')).is_dir(),'请恢复此模板随首次部署交付的离线运行环境')
+        env.update(PIP_NO_INDEX='1',UV_OFFLINE='1',PIP_DISABLE_PIP_VERSION_CHECK='1')
     if temporary_root is not None:
         temporary=Path(temporary_root).resolve()
         require(temporary.is_relative_to((ROOT/'.local').resolve()) and not temporary.is_symlink()
