@@ -4,7 +4,7 @@
 
 更新时间：2026-10-30
 
-10/30三模板：科技控制台、深色立体、活力海报，另带三原包，更新≤300MB。HaikeReady14760隔离用户/PATH、离线准备/全诊断、1.1.4→1.1.6更新与11配置保留通过；三整片技术及226编码状态实际查看通过，三变体网页重开参数一致。HaikeStable14758连续升级/保留/坏包拒绝/故障回滚通过。证据根`.local/stable-delivery-20261029/`；原包91640957B。1.1.7最终包与更新回执以D:/codex_work/haike-delivery-20261030/ACCEPTANCE.md为准。无新增云费用/远端发布；未新做人耳连续听审或物理异机测试。
+10/30三模板：科技控制台、深色立体、活力海报。HaikeReady14760隔离用户/PATH与离线制作通过；三整片技术及226编码状态实际查看、三变体网页重开通过。HaikeStable14758连续升级/保留/坏包拒绝/故障回滚通过。证据根`.local/stable-delivery-20261029/`；三原包91640957B，更新≤300MB。1.1.8修正生产后临时编译缓存被误当固定发行文件；最终包与更新回执见D:/codex_work/haike-delivery-20261030/ACCEPTANCE.md。无新增云费用/远端发布；未新做人耳连续听审或物理异机测试。
 
 应用更新首版：根docs/APP_UPDATES.md，VERSION.json引入1.0.0产品编号，源码显示开发态。studio_update_api.py与根portable/{app_update,update_service,update_worker}.py负责HTTPS清单、兼容程序补丁、任务维护闸门、独立重启/回退；AboutDialog.jsx为入口。根test_*update*.py及test_studio_update_api.py覆盖数据保留和启动失败恢复。线上清单/包仍需正式发布，其他安装/云服务未同步。
 

@@ -121,6 +121,8 @@ def clean_runtime(name):
     composer = name.startswith('Haike_video/remotion-composer/node_modules/')
     if not (runtime or composer):
         return False
+    if composer and '.cache' in parts:
+        return False
     lower = parts[-1].lower()
     return not (private_path(name) or lower.endswith(('.pyc', '.pyo')))
 
