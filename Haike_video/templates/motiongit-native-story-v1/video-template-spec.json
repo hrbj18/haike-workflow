@@ -1,0 +1,1829 @@
+{
+  "schema_version": 1,
+  "standard_version": "video-template-v1",
+  "template_id": "motiongit-native-story-v1",
+  "template_version": "v001",
+  "template_type": "custom",
+  "spec_kind": "implementation",
+  "stage": "ready",
+  "authority": {
+    "runbook": "../../../Haike-Videohub/agent-runbooks/海客多屏口播模板.md",
+    "implementation_paths": [
+      "profile.json",
+      "../../backlot/studio_dark_native_content.py",
+      "../../scripts/dark_native_content.py",
+      "../../backlot/studio_dark_native.py",
+      "../../scripts/dark_native.py",
+      "../../scripts/native_story_portrait.py",
+      "../../backlot/studio_native_story_portrait.py",
+      "../motiongit-dark-full-v1/index.tsx",
+      "../motiongit-dark-full-v1/GroupsA.tsx",
+      "../motiongit-dark-full-v1/GroupsB.tsx",
+      "../motiongit-dark-full-v1/shared.tsx",
+      "../motiongit-dark-full-v1/presenter-clock.ts"
+    ],
+    "parameter_source": "../../backlot/studio_dark_native_content.py"
+  },
+  "canvas": {
+    "width": 1440,
+    "height": 1800,
+    "fps": 60,
+    "duration_seconds": 30.6,
+    "clock": "本规格scene数值为本期30.6秒portrait45实例，不是后续固定时序。全片以完整原PCM及25/60fps公共0.2秒时钟求值，最多2秒明确尾白，不拉伸口播。横版场景按profile保护窗口/静止gap；4:5场景按studio_native_story_portrait.py的plan_shots下限8.3/11.5/8.2秒及权重1/1/3求值；物理缓动固定秒数。landscape为官方1920×1080/60fps；portrait45为项目1440×1800/60fps独立排版。",
+    "coordinate_system": "top_left_pixels"
+  },
+  "narrative": {
+    "purpose": "把侯总亲子片固化为换口播、实拍、完整同声源人物即可复用的三组多屏模板，真实4:5与原生横版各自渲染。",
+    "information_hierarchy": [
+      "完整口播与当前语义",
+      "真实实拍证据",
+      "分层标题与整组动效",
+      "同声源人物",
+      "明确品牌与邀请"
+    ],
+    "structure": [
+      "S01开场比较与密集实拍墙",
+      "S04四类封面、墙展开、划线、镜头框与体验曲线",
+      "S08反思、体验动作步骤、CTA与门店邀请"
+    ]
+  },
+  "scenes": [
+    {
+      "id": "s01",
+      "start": 0,
+      "end": 8.833333333333334,
+      "purpose": "开场与作品墙",
+      "element_ids": [
+        "canvas",
+        "scene-background",
+        "chapter-title",
+        "main-title",
+        "timeline",
+        "wall-grid",
+        "wall-tile",
+        "presenter-window",
+        "captions",
+        "master-audio"
+      ],
+      "variant": "portrait45-30p6-instance; runtime ranges are portrait-input.props.scenes, distinct from native build.timeline.groups"
+    },
+    {
+      "id": "s04",
+      "start": 8.833333333333334,
+      "end": 20.85,
+      "purpose": "分类与镜头",
+      "element_ids": [
+        "canvas",
+        "scene-background",
+        "chapter-title",
+        "main-title",
+        "wall-grid",
+        "wall-tile",
+        "category-card",
+        "lens-video",
+        "lens-overlay",
+        "narrative-curve",
+        "presenter-window",
+        "captions",
+        "master-audio"
+      ],
+      "variant": "portrait45-30p6-instance; runtime ranges are portrait-input.props.scenes, distinct from native build.timeline.groups"
+    },
+    {
+      "id": "s08",
+      "start": 20.85,
+      "end": 30.6,
+      "purpose": "归纳与行动",
+      "element_ids": [
+        "canvas",
+        "scene-background",
+        "chapter-title",
+        "main-title",
+        "comparison-strip",
+        "invitation-card",
+        "presenter-window",
+        "captions",
+        "master-audio"
+      ],
+      "variant": "portrait45-30p6-instance; runtime ranges are portrait-input.props.scenes, distinct from native build.timeline.groups"
+    }
+  ],
+  "assets": [
+    {
+      "id": "episode-media",
+      "kind": "video",
+      "path": null,
+      "source": "每期media带稳定ID/source SHA/真实观看与源区间记录；墙和四卡可用实拍静帧，lens动态另声明",
+      "embedded_content": [
+        "实拍内部文字、人物与场景是固化内容，模板文字槽不能单独修改"
+      ],
+      "rights_status": "用户提供或明确授权的素材，来源/权利证据在本期输入"
+    },
+    {
+      "id": "episode-avatar",
+      "kind": "video",
+      "path": null,
+      "source": "每期完整同声源数字人MP4及头像，绑定voice_sha256与实际覆盖证据",
+      "embedded_content": [
+        "人物口型、造型和背景固化于视频；改变形象需现有数字人阶段新产物"
+      ],
+      "rights_status": "人物与声音按本期授权；不随模板公共分发"
+    },
+    {
+      "id": "episode-voice",
+      "kind": "audio",
+      "path": null,
+      "source": "每期完整PCM WAV、真实字幕，SHA绑定，不生成/拉伸/替换原声",
+      "embedded_content": [
+        "完整口播"
+      ],
+      "rights_status": "按本期用户提供或授权使用"
+    },
+    {
+      "id": "episode-music",
+      "kind": "audio",
+      "path": null,
+      "source": "每期显式配乐输入与动作SFX来源，native横版动作音效来自原生raw，4:5项目动作音效按cue求值",
+      "embedded_content": [
+        "配乐和音效"
+      ],
+      "rights_status": "已获本期使用权，不自动取得再分发权"
+    },
+    {
+      "id": "runtime-package",
+      "kind": "other",
+      "path": null,
+      "source": "本机已验签的官方包/helper，公开contract与版本冻结；project4:5的源码另列authority",
+      "embedded_content": [
+        "官方保护实现、固定章名和角标"
+      ],
+      "rights_status": "原生包不进入公开源码"
+    },
+    {
+      "id": "runtime-fonts",
+      "kind": "font",
+      "path": null,
+      "source": "每期冻结实际可用字体文件及SHA，布局按实际字宽复核",
+      "embedded_content": [
+        "字形"
+      ],
+      "rights_status": "系统/个人字体由执行环境提供，不随公共模板分发"
+    }
+  ],
+  "elements": [
+    {
+      "id": "canvas",
+      "type": "surface",
+      "role": "全画布与层级",
+      "parent_id": null,
+      "z_index": 0,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "全画布与层级；公共输入映射与生成实例以profile及当前build为准，素材内部文字人物为固化内容。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "parameter_source": "横版为profile.json及官方prepare；4:5为studio_native_story_portrait.py及../motiongit-dark-full-v1/Story组件",
+          "envelope_rule": "组件包络，叶节点几何按extensions.custom.element_layout_authority求值。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 30.6
+      },
+      "states": [
+        {
+          "id": "hidden",
+          "visible": false,
+          "description": "仅在所选组及其cue范围外隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在本期build的s01/s04/s08对应局部cue内显示；源时钟不因显隐重置"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "hidden",
+          "to": "active",
+          "trigger": "横版用build.timeline.groups局部anchors；4:5用portrait-input.props.scenes局部cueTimes，分别映射为globalFrame",
+          "start": 0,
+          "end": 30.6,
+          "properties": {
+            "driver": "原生:公开官方完整组；portrait45:S01Story/S04Story/S08Story组件，按60fps精确cue求值",
+            "geometry": "组件包络，叶节点几何按extensions.custom.element_layout_authority求值。"
+          },
+          "easing": "保护动作窗口原速；4:5项目组件固定曲线，不整体加速或裁组尾"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "组件包络，叶节点几何按extensions.custom.element_layout_authority求值。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "animation_geometry",
+        "source_clock"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "design-contract"
+      ],
+      "acceptance": [
+        {
+          "check": "全画布与层级完整状态",
+          "method": "实际查看该元素出现/落定/退出与最后一实例，绑定编码帧SHA",
+          "pass_condition": "内容与真实输入一致；无意外裁切、遮挡、截断；区别固化内容和可变槽"
+        }
+      ]
+    },
+    {
+      "id": "scene-background",
+      "type": "decoration",
+      "role": "紫黑/米白/黑色状态背景",
+      "parent_id": "canvas",
+      "z_index": 1,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "紫黑/米白/黑色状态背景；公共输入映射与生成实例以profile及当前build为准，素材内部文字人物为固化内容。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "parameter_source": "横版为profile.json及官方prepare；4:5为studio_native_story_portrait.py及../motiongit-dark-full-v1/Story组件",
+          "envelope_rule": "组件包络，叶节点几何按extensions.custom.element_layout_authority求值。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 30.6
+      },
+      "states": [
+        {
+          "id": "hidden",
+          "visible": false,
+          "description": "仅在所选组及其cue范围外隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在本期build的s01/s04/s08对应局部cue内显示；源时钟不因显隐重置"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "hidden",
+          "to": "active",
+          "trigger": "横版用build.timeline.groups局部anchors；4:5用portrait-input.props.scenes局部cueTimes，分别映射为globalFrame",
+          "start": 0,
+          "end": 30.6,
+          "properties": {
+            "driver": "原生:公开官方完整组；portrait45:S01Story/S04Story/S08Story组件，按60fps精确cue求值",
+            "geometry": "组件包络，叶节点几何按extensions.custom.element_layout_authority求值。"
+          },
+          "easing": "保护动作窗口原速；4:5项目组件固定曲线，不整体加速或裁组尾"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "组件包络，叶节点几何按extensions.custom.element_layout_authority求值。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "animation_geometry",
+        "source_clock"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "design-contract"
+      ],
+      "acceptance": [
+        {
+          "check": "紫黑/米白/黑色状态背景完整状态",
+          "method": "实际查看该元素出现/落定/退出与最后一实例，绑定编码帧SHA",
+          "pass_condition": "内容与真实输入一致；无意外裁切、遮挡、截断；区别固化内容和可变槽"
+        }
+      ]
+    },
+    {
+      "id": "chapter-title",
+      "type": "text",
+      "role": "章节小标题",
+      "parent_id": "canvas",
+      "z_index": 2,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "章节小标题；公共输入映射与生成实例以profile及当前build为准，素材内部文字人物为固化内容。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "parameter_source": "横版为profile.json及官方prepare；4:5为studio_native_story_portrait.py及../motiongit-dark-full-v1/Story组件",
+          "envelope_rule": "组件包络，叶节点几何按extensions.custom.element_layout_authority求值。",
+          "font": "按官方字体策略/项目冻结字体",
+          "font_size": "源码自适应字号及实际字宽测量",
+          "max_lines": "对应组件明确上限",
+          "overflow": "预检缩写/换行；实际看帧，截断阻断"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 30.6
+      },
+      "states": [
+        {
+          "id": "hidden",
+          "visible": false,
+          "description": "仅在所选组及其cue范围外隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在本期build的s01/s04/s08对应局部cue内显示；源时钟不因显隐重置"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "hidden",
+          "to": "active",
+          "trigger": "横版用build.timeline.groups局部anchors；4:5用portrait-input.props.scenes局部cueTimes，分别映射为globalFrame",
+          "start": 0,
+          "end": 30.6,
+          "properties": {
+            "driver": "原生:公开官方完整组；portrait45:S01Story/S04Story/S08Story组件，按60fps精确cue求值",
+            "geometry": "组件包络，叶节点几何按extensions.custom.element_layout_authority求值。"
+          },
+          "easing": "保护动作窗口原速；4:5项目组件固定曲线，不整体加速或裁组尾"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "组件包络，叶节点几何按extensions.custom.element_layout_authority求值。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "animation_geometry",
+        "source_clock"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "design-contract"
+      ],
+      "acceptance": [
+        {
+          "check": "章节小标题完整状态",
+          "method": "实际查看该元素出现/落定/退出与最后一实例，绑定编码帧SHA",
+          "pass_condition": "内容与真实输入一致；无意外裁切、遮挡、截断；区别固化内容和可变槽"
+        }
+      ]
+    },
+    {
+      "id": "main-title",
+      "type": "text",
+      "role": "分词标题与邀请说明",
+      "parent_id": "canvas",
+      "z_index": 3,
+      "content": {
+        "mode": "editable",
+        "binding": "content",
+        "asset_id": null,
+        "description": "分词标题与邀请说明；公共输入映射与生成实例以profile及当前build为准，素材内部文字人物为固化内容。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "parameter_source": "横版为profile.json及官方prepare；4:5为studio_native_story_portrait.py及../motiongit-dark-full-v1/Story组件",
+          "envelope_rule": "组件包络，叶节点几何按extensions.custom.element_layout_authority求值。",
+          "font": "按官方字体策略/项目冻结字体",
+          "font_size": "源码自适应字号及实际字宽测量",
+          "max_lines": "对应组件明确上限",
+          "overflow": "预检缩写/换行；实际看帧，截断阻断"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 30.6
+      },
+      "states": [
+        {
+          "id": "hidden",
+          "visible": false,
+          "description": "仅在所选组及其cue范围外隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在本期build的s01/s04/s08对应局部cue内显示；源时钟不因显隐重置"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "hidden",
+          "to": "active",
+          "trigger": "横版用build.timeline.groups局部anchors；4:5用portrait-input.props.scenes局部cueTimes，分别映射为globalFrame",
+          "start": 0,
+          "end": 30.6,
+          "properties": {
+            "driver": "原生:公开官方完整组；portrait45:S01Story/S04Story/S08Story组件，按60fps精确cue求值",
+            "geometry": "组件包络，叶节点几何按extensions.custom.element_layout_authority求值。"
+          },
+          "easing": "保护动作窗口原速；4:5项目组件固定曲线，不整体加速或裁组尾"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "组件包络，叶节点几何按extensions.custom.element_layout_authority求值。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "animation_geometry",
+        "source_clock"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "design-contract"
+      ],
+      "acceptance": [
+        {
+          "check": "分词标题与邀请说明完整状态",
+          "method": "实际查看该元素出现/落定/退出与最后一实例，绑定编码帧SHA",
+          "pass_condition": "内容与真实输入一致；无意外裁切、遮挡、截断；区别固化内容和可变槽"
+        }
+      ]
+    },
+    {
+      "id": "timeline",
+      "type": "group",
+      "role": "开场时间线、红线与重排",
+      "parent_id": "canvas",
+      "z_index": 4,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "开场时间线、红线与重排；公共输入映射与生成实例以profile及当前build为准，素材内部文字人物为固化内容。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "parameter_source": "横版为profile.json及官方prepare；4:5为studio_native_story_portrait.py及../motiongit-dark-full-v1/Story组件",
+          "envelope_rule": "组件包络，叶节点几何按extensions.custom.element_layout_authority求值。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 30.6
+      },
+      "states": [
+        {
+          "id": "hidden",
+          "visible": false,
+          "description": "仅在所选组及其cue范围外隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在本期build的s01对应局部cue内显示；源时钟不因显隐重置"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "hidden",
+          "to": "active",
+          "trigger": "横版用build.timeline.groups局部anchors；4:5用portrait-input.props.scenes局部cueTimes，分别映射为globalFrame",
+          "start": 0,
+          "end": 30.6,
+          "properties": {
+            "driver": "原生:公开官方完整组；portrait45:S01Story/S04Story/S08Story组件，按60fps精确cue求值",
+            "geometry": "组件包络，叶节点几何按extensions.custom.element_layout_authority求值。"
+          },
+          "easing": "保护动作窗口原速；4:5项目组件固定曲线，不整体加速或裁组尾"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "组件包络，叶节点几何按extensions.custom.element_layout_authority求值。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "animation_geometry",
+        "source_clock"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "design-contract"
+      ],
+      "acceptance": [
+        {
+          "check": "开场时间线、红线与重排完整状态",
+          "method": "实际查看该元素出现/落定/退出与最后一实例，绑定编码帧SHA",
+          "pass_condition": "内容与真实输入一致；无意外裁切、遮挡、截断；区别固化内容和可变槽"
+        }
+      ]
+    },
+    {
+      "id": "wall-grid",
+      "type": "group",
+      "role": "密集作品墙、分列和纵深运动",
+      "parent_id": "canvas",
+      "z_index": 5,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "密集作品墙、分列和纵深运动；公共输入映射与生成实例以profile及当前build为准，素材内部文字人物为固化内容。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "parameter_source": "横版为profile.json及官方prepare；4:5为studio_native_story_portrait.py及../motiongit-dark-full-v1/Story组件",
+          "envelope_rule": "组件包络，叶节点几何按extensions.custom.element_layout_authority求值。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 30.6
+      },
+      "states": [
+        {
+          "id": "hidden",
+          "visible": false,
+          "description": "仅在所选组及其cue范围外隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在本期build的s01/s04对应局部cue内显示；源时钟不因显隐重置"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "hidden",
+          "to": "active",
+          "trigger": "横版用build.timeline.groups局部anchors；4:5用portrait-input.props.scenes局部cueTimes，分别映射为globalFrame",
+          "start": 0,
+          "end": 30.6,
+          "properties": {
+            "driver": "原生:公开官方完整组；portrait45:S01Story/S04Story/S08Story组件，按60fps精确cue求值",
+            "geometry": "组件包络，叶节点几何按extensions.custom.element_layout_authority求值。"
+          },
+          "easing": "保护动作窗口原速；4:5项目组件固定曲线，不整体加速或裁组尾"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "组件包络，叶节点几何按extensions.custom.element_layout_authority求值。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "animation_geometry",
+        "source_clock"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "design-contract"
+      ],
+      "acceptance": [
+        {
+          "check": "密集作品墙、分列和纵深运动完整状态",
+          "method": "实际查看该元素出现/落定/退出与最后一实例，绑定编码帧SHA",
+          "pass_condition": "内容与真实输入一致；无意外裁切、遮挡、截断；区别固化内容和可变槽"
+        }
+      ]
+    },
+    {
+      "id": "wall-tile",
+      "type": "image",
+      "role": "墙格真实素材",
+      "parent_id": "canvas",
+      "z_index": 6,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": "episode-media",
+        "description": "墙格真实素材；公共输入映射与生成实例以profile及当前build为准，素材内部文字人物为固化内容。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "parameter_source": "横版为profile.json及官方prepare；4:5为studio_native_story_portrait.py及../motiongit-dark-full-v1/Story组件",
+          "envelope_rule": "组件包络，叶节点几何按extensions.custom.element_layout_authority求值。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 30.6
+      },
+      "states": [
+        {
+          "id": "hidden",
+          "visible": false,
+          "description": "仅在所选组及其cue范围外隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在本期build的s01/s04对应局部cue内显示；源时钟不因显隐重置"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "hidden",
+          "to": "active",
+          "trigger": "横版用build.timeline.groups局部anchors；4:5用portrait-input.props.scenes局部cueTimes，分别映射为globalFrame",
+          "start": 0,
+          "end": 30.6,
+          "properties": {
+            "driver": "原生:公开官方完整组；portrait45:S01Story/S04Story/S08Story组件，按60fps精确cue求值",
+            "geometry": "组件包络，叶节点几何按extensions.custom.element_layout_authority求值。"
+          },
+          "easing": "保护动作窗口原速；4:5项目组件固定曲线，不整体加速或裁组尾"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "组件包络，叶节点几何按extensions.custom.element_layout_authority求值。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "animation_geometry",
+        "source_clock"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "design-contract"
+      ],
+      "acceptance": [
+        {
+          "check": "墙格真实素材完整状态",
+          "method": "实际查看该元素出现/落定/退出与最后一实例，绑定编码帧SHA",
+          "pass_condition": "内容与真实输入一致；无意外裁切、遮挡、截断；区别固化内容和可变槽"
+        }
+      ]
+    },
+    {
+      "id": "category-card",
+      "type": "group",
+      "role": "四卡及独立标签、封面、说明",
+      "parent_id": "canvas",
+      "z_index": 7,
+      "content": {
+        "mode": "editable",
+        "binding": "categories",
+        "asset_id": null,
+        "description": "四卡及独立标签、封面、说明；公共输入映射与生成实例以profile及当前build为准，素材内部文字人物为固化内容。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "parameter_source": "横版为profile.json及官方prepare；4:5为studio_native_story_portrait.py及../motiongit-dark-full-v1/Story组件",
+          "envelope_rule": "组件包络，叶节点几何按extensions.custom.element_layout_authority求值。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 30.6
+      },
+      "states": [
+        {
+          "id": "hidden",
+          "visible": false,
+          "description": "仅在所选组及其cue范围外隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在本期build的s04对应局部cue内显示；源时钟不因显隐重置"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "hidden",
+          "to": "active",
+          "trigger": "横版用build.timeline.groups局部anchors；4:5用portrait-input.props.scenes局部cueTimes，分别映射为globalFrame",
+          "start": 0,
+          "end": 30.6,
+          "properties": {
+            "driver": "原生:公开官方完整组；portrait45:S01Story/S04Story/S08Story组件，按60fps精确cue求值",
+            "geometry": "组件包络，叶节点几何按extensions.custom.element_layout_authority求值。"
+          },
+          "easing": "保护动作窗口原速；4:5项目组件固定曲线，不整体加速或裁组尾"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "组件包络，叶节点几何按extensions.custom.element_layout_authority求值。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "animation_geometry",
+        "source_clock"
+      ],
+      "replaceable": [
+        "media.categories"
+      ],
+      "evidence_ids": [
+        "design-contract"
+      ],
+      "acceptance": [
+        {
+          "check": "四卡及独立标签、封面、说明完整状态",
+          "method": "实际查看该元素出现/落定/退出与最后一实例，绑定编码帧SHA",
+          "pass_condition": "内容与真实输入一致；无意外裁切、遮挡、截断；区别固化内容和可变槽"
+        }
+      ]
+    },
+    {
+      "id": "lens-video",
+      "type": "video",
+      "role": "连续实拍镜头窗",
+      "parent_id": "canvas",
+      "z_index": 8,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": "episode-media",
+        "description": "连续实拍镜头窗；公共输入映射与生成实例以profile及当前build为准，素材内部文字人物为固化内容。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "contain",
+        "clip": "self",
+        "style": {
+          "parameter_source": "横版为profile.json及官方prepare；4:5为studio_native_story_portrait.py及../motiongit-dark-full-v1/Story组件",
+          "envelope_rule": "组件包络，叶节点几何按extensions.custom.element_layout_authority求值。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 30.6
+      },
+      "states": [
+        {
+          "id": "hidden",
+          "visible": false,
+          "description": "仅在所选组及其cue范围外隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在本期build的s04对应局部cue内显示；源时钟不因显隐重置"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "hidden",
+          "to": "active",
+          "trigger": "横版用build.timeline.groups局部anchors；4:5用portrait-input.props.scenes局部cueTimes，分别映射为globalFrame",
+          "start": 0,
+          "end": 30.6,
+          "properties": {
+            "driver": "原生:公开官方完整组；portrait45:S01Story/S04Story/S08Story组件，按60fps精确cue求值",
+            "geometry": "组件包络，叶节点几何按extensions.custom.element_layout_authority求值。"
+          },
+          "easing": "保护动作窗口原速；4:5项目组件固定曲线，不整体加速或裁组尾"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "组件包络，叶节点几何按extensions.custom.element_layout_authority求值。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "animation_geometry",
+        "source_clock"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "design-contract"
+      ],
+      "acceptance": [
+        {
+          "check": "连续实拍镜头窗完整状态",
+          "method": "实际查看该元素出现/落定/退出与最后一实例，绑定编码帧SHA",
+          "pass_condition": "内容与真实输入一致；无意外裁切、遮挡、截断；区别固化内容和可变槽"
+        }
+      ]
+    },
+    {
+      "id": "lens-overlay",
+      "type": "decoration",
+      "role": "镜头框与推近/跟拍/特写标记",
+      "parent_id": "canvas",
+      "z_index": 9,
+      "content": {
+        "mode": "editable",
+        "binding": "lens-labels",
+        "asset_id": null,
+        "description": "镜头框与推近/跟拍/特写标记；公共输入映射与生成实例以profile及当前build为准，素材内部文字人物为固化内容。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "parameter_source": "横版为profile.json及官方prepare；4:5为studio_native_story_portrait.py及../motiongit-dark-full-v1/Story组件",
+          "envelope_rule": "组件包络，叶节点几何按extensions.custom.element_layout_authority求值。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 30.6
+      },
+      "states": [
+        {
+          "id": "hidden",
+          "visible": false,
+          "description": "仅在所选组及其cue范围外隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在本期build的s04对应局部cue内显示；源时钟不因显隐重置"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "hidden",
+          "to": "active",
+          "trigger": "横版用build.timeline.groups局部anchors；4:5用portrait-input.props.scenes局部cueTimes，分别映射为globalFrame",
+          "start": 0,
+          "end": 30.6,
+          "properties": {
+            "driver": "原生:公开官方完整组；portrait45:S01Story/S04Story/S08Story组件，按60fps精确cue求值",
+            "geometry": "组件包络，叶节点几何按extensions.custom.element_layout_authority求值。"
+          },
+          "easing": "保护动作窗口原速；4:5项目组件固定曲线，不整体加速或裁组尾"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "组件包络，叶节点几何按extensions.custom.element_layout_authority求值。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "animation_geometry",
+        "source_clock"
+      ],
+      "replaceable": [
+        "content.s04"
+      ],
+      "evidence_ids": [
+        "design-contract"
+      ],
+      "acceptance": [
+        {
+          "check": "镜头框与推近/跟拍/特写标记完整状态",
+          "method": "实际查看该元素出现/落定/退出与最后一实例，绑定编码帧SHA",
+          "pass_condition": "内容与真实输入一致；无意外裁切、遮挡、截断；区别固化内容和可变槽"
+        }
+      ]
+    },
+    {
+      "id": "narrative-curve",
+      "type": "group",
+      "role": "曲线与来/看/摸/用动作节点",
+      "parent_id": "canvas",
+      "z_index": 10,
+      "content": {
+        "mode": "editable",
+        "binding": "rhythm",
+        "asset_id": null,
+        "description": "曲线与来/看/摸/用动作节点；公共输入映射与生成实例以profile及当前build为准，素材内部文字人物为固化内容。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "parameter_source": "横版为profile.json及官方prepare；4:5为studio_native_story_portrait.py及../motiongit-dark-full-v1/Story组件",
+          "envelope_rule": "组件包络，叶节点几何按extensions.custom.element_layout_authority求值。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 30.6
+      },
+      "states": [
+        {
+          "id": "hidden",
+          "visible": false,
+          "description": "仅在所选组及其cue范围外隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在本期build的s04对应局部cue内显示；源时钟不因显隐重置"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "hidden",
+          "to": "active",
+          "trigger": "横版用build.timeline.groups局部anchors；4:5用portrait-input.props.scenes局部cueTimes，分别映射为globalFrame",
+          "start": 0,
+          "end": 30.6,
+          "properties": {
+            "driver": "原生:公开官方完整组；portrait45:S01Story/S04Story/S08Story组件，按60fps精确cue求值",
+            "geometry": "组件包络，叶节点几何按extensions.custom.element_layout_authority求值。"
+          },
+          "easing": "保护动作窗口原速；4:5项目组件固定曲线，不整体加速或裁组尾"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "组件包络，叶节点几何按extensions.custom.element_layout_authority求值。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "animation_geometry",
+        "source_clock"
+      ],
+      "replaceable": [
+        "content.s04"
+      ],
+      "evidence_ids": [
+        "design-contract"
+      ],
+      "acceptance": [
+        {
+          "check": "曲线与来/看/摸/用动作节点完整状态",
+          "method": "实际查看该元素出现/落定/退出与最后一实例，绑定编码帧SHA",
+          "pass_condition": "内容与真实输入一致；无意外裁切、遮挡、截断；区别固化内容和可变槽"
+        }
+      ]
+    },
+    {
+      "id": "comparison-strip",
+      "type": "group",
+      "role": "动作步骤对比、条形与frame框",
+      "parent_id": "canvas",
+      "z_index": 11,
+      "content": {
+        "mode": "editable",
+        "binding": "comparison",
+        "asset_id": null,
+        "description": "动作步骤对比、条形与frame框；公共输入映射与生成实例以profile及当前build为准，素材内部文字人物为固化内容。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "parameter_source": "横版为profile.json及官方prepare；4:5为studio_native_story_portrait.py及../motiongit-dark-full-v1/Story组件",
+          "envelope_rule": "组件包络，叶节点几何按extensions.custom.element_layout_authority求值。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 30.6
+      },
+      "states": [
+        {
+          "id": "hidden",
+          "visible": false,
+          "description": "仅在所选组及其cue范围外隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在本期build的s08对应局部cue内显示；源时钟不因显隐重置"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "hidden",
+          "to": "active",
+          "trigger": "横版用build.timeline.groups局部anchors；4:5用portrait-input.props.scenes局部cueTimes，分别映射为globalFrame",
+          "start": 0,
+          "end": 30.6,
+          "properties": {
+            "driver": "原生:公开官方完整组；portrait45:S01Story/S04Story/S08Story组件，按60fps精确cue求值",
+            "geometry": "组件包络，叶节点几何按extensions.custom.element_layout_authority求值。"
+          },
+          "easing": "保护动作窗口原速；4:5项目组件固定曲线，不整体加速或裁组尾"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "组件包络，叶节点几何按extensions.custom.element_layout_authority求值。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "animation_geometry",
+        "source_clock"
+      ],
+      "replaceable": [
+        "content.s08"
+      ],
+      "evidence_ids": [
+        "design-contract"
+      ],
+      "acceptance": [
+        {
+          "check": "动作步骤对比、条形与frame框完整状态",
+          "method": "实际查看该元素出现/落定/退出与最后一实例，绑定编码帧SHA",
+          "pass_condition": "内容与真实输入一致；无意外裁切、遮挡、截断；区别固化内容和可变槽"
+        }
+      ]
+    },
+    {
+      "id": "invitation-card",
+      "type": "group",
+      "role": "品牌头像、地址和结尾邀请",
+      "parent_id": "canvas",
+      "z_index": 12,
+      "content": {
+        "mode": "editable",
+        "binding": "invitation",
+        "asset_id": null,
+        "description": "品牌头像、地址和结尾邀请；公共输入映射与生成实例以profile及当前build为准，素材内部文字人物为固化内容。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "parameter_source": "横版为profile.json及官方prepare；4:5为studio_native_story_portrait.py及../motiongit-dark-full-v1/Story组件",
+          "envelope_rule": "组件包络，叶节点几何按extensions.custom.element_layout_authority求值。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 30.6
+      },
+      "states": [
+        {
+          "id": "hidden",
+          "visible": false,
+          "description": "仅在所选组及其cue范围外隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在本期build的s08对应局部cue内显示；源时钟不因显隐重置"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "hidden",
+          "to": "active",
+          "trigger": "横版用build.timeline.groups局部anchors；4:5用portrait-input.props.scenes局部cueTimes，分别映射为globalFrame",
+          "start": 0,
+          "end": 30.6,
+          "properties": {
+            "driver": "原生:公开官方完整组；portrait45:S01Story/S04Story/S08Story组件，按60fps精确cue求值",
+            "geometry": "组件包络，叶节点几何按extensions.custom.element_layout_authority求值。"
+          },
+          "easing": "保护动作窗口原速；4:5项目组件固定曲线，不整体加速或裁组尾"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "组件包络，叶节点几何按extensions.custom.element_layout_authority求值。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "animation_geometry",
+        "source_clock"
+      ],
+      "replaceable": [
+        "content.s08"
+      ],
+      "evidence_ids": [
+        "design-contract"
+      ],
+      "acceptance": [
+        {
+          "check": "品牌头像、地址和结尾邀请完整状态",
+          "method": "实际查看该元素出现/落定/退出与最后一实例，绑定编码帧SHA",
+          "pass_condition": "内容与真实输入一致；无意外裁切、遮挡、截断；区别固化内容和可变槽"
+        }
+      ]
+    },
+    {
+      "id": "presenter-window",
+      "type": "avatar",
+      "role": "同一完整口播的大卡/圆窗/小窗",
+      "parent_id": "canvas",
+      "z_index": 13,
+      "content": {
+        "mode": "editable",
+        "binding": "presenter",
+        "asset_id": "episode-avatar",
+        "description": "同一完整口播的大卡/圆窗/小窗；公共输入映射与生成实例以profile及当前build为准，素材内部文字人物为固化内容。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "contain",
+        "clip": "self",
+        "style": {
+          "parameter_source": "横版为profile.json及官方prepare；4:5为studio_native_story_portrait.py及../motiongit-dark-full-v1/Story组件",
+          "envelope_rule": "组件包络，叶节点几何按extensions.custom.element_layout_authority求值。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 30.6
+      },
+      "states": [
+        {
+          "id": "hidden",
+          "visible": false,
+          "description": "仅在所选组及其cue范围外隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在本期build的s01/s04/s08对应局部cue内显示；源时钟不因显隐重置"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "hidden",
+          "to": "active",
+          "trigger": "横版用build.timeline.groups局部anchors；4:5用portrait-input.props.scenes局部cueTimes，分别映射为globalFrame",
+          "start": 0,
+          "end": 30.6,
+          "properties": {
+            "driver": "原生:公开官方完整组；portrait45:S01Story/S04Story/S08Story组件，按60fps精确cue求值",
+            "geometry": "组件包络，叶节点几何按extensions.custom.element_layout_authority求值。"
+          },
+          "easing": "保护动作窗口原速；4:5项目组件固定曲线，不整体加速或裁组尾"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "组件包络，叶节点几何按extensions.custom.element_layout_authority求值。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "animation_geometry",
+        "source_clock"
+      ],
+      "replaceable": [
+        "avatar"
+      ],
+      "evidence_ids": [
+        "design-contract"
+      ],
+      "acceptance": [
+        {
+          "check": "同一完整口播的大卡/圆窗/小窗完整状态",
+          "method": "实际查看该元素出现/落定/退出与最后一实例，绑定编码帧SHA",
+          "pass_condition": "内容与真实输入一致；无意外裁切、遮挡、截断；区别固化内容和可变槽"
+        }
+      ]
+    },
+    {
+      "id": "captions",
+      "type": "subtitle",
+      "role": "真实词时码字幕",
+      "parent_id": "canvas",
+      "z_index": 14,
+      "content": {
+        "mode": "editable",
+        "binding": "captions",
+        "asset_id": null,
+        "description": "真实词时码字幕；公共输入映射与生成实例以profile及当前build为准，素材内部文字人物为固化内容。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "parameter_source": "横版为profile.json及官方prepare；4:5为studio_native_story_portrait.py及../motiongit-dark-full-v1/Story组件",
+          "envelope_rule": "组件包络，叶节点几何按extensions.custom.element_layout_authority求值。",
+          "font": "按官方字体策略/项目冻结字体",
+          "font_size": "源码自适应字号及实际字宽测量",
+          "max_lines": "对应组件明确上限",
+          "overflow": "预检缩写/换行；实际看帧，截断阻断"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 30.6
+      },
+      "states": [
+        {
+          "id": "hidden",
+          "visible": false,
+          "description": "仅在所选组及其cue范围外隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在本期build的s01/s04/s08对应局部cue内显示；源时钟不因显隐重置"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "hidden",
+          "to": "active",
+          "trigger": "横版用build.timeline.groups局部anchors；4:5用portrait-input.props.scenes局部cueTimes，分别映射为globalFrame",
+          "start": 0,
+          "end": 30.6,
+          "properties": {
+            "driver": "原生:公开官方完整组；portrait45:S01Story/S04Story/S08Story组件，按60fps精确cue求值",
+            "geometry": "组件包络，叶节点几何按extensions.custom.element_layout_authority求值。"
+          },
+          "easing": "保护动作窗口原速；4:5项目组件固定曲线，不整体加速或裁组尾"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "组件包络，叶节点几何按extensions.custom.element_layout_authority求值。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "animation_geometry",
+        "source_clock"
+      ],
+      "replaceable": [
+        "captions"
+      ],
+      "evidence_ids": [
+        "design-contract"
+      ],
+      "acceptance": [
+        {
+          "check": "真实词时码字幕完整状态",
+          "method": "实际查看该元素出现/落定/退出与最后一实例，绑定编码帧SHA",
+          "pass_condition": "内容与真实输入一致；无意外裁切、遮挡、截断；区别固化内容和可变槽"
+        }
+      ]
+    },
+    {
+      "id": "master-audio",
+      "type": "audio",
+      "role": "完整原声、单份配乐与动作音效",
+      "parent_id": "canvas",
+      "z_index": 15,
+      "content": {
+        "mode": "editable",
+        "binding": "voice",
+        "asset_id": "episode-voice",
+        "description": "完整原声、单份配乐与动作音效；公共输入映射与生成实例以profile及当前build为准，素材内部文字人物为固化内容。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "parameter_source": "横版为profile.json及官方prepare；4:5为studio_native_story_portrait.py及../motiongit-dark-full-v1/Story组件",
+          "envelope_rule": "组件包络，叶节点几何按extensions.custom.element_layout_authority求值。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 30.6
+      },
+      "states": [
+        {
+          "id": "hidden",
+          "visible": false,
+          "description": "仅在所选组及其cue范围外隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在本期build的s01/s04/s08对应局部cue内显示；源时钟不因显隐重置"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "组件包络，叶节点几何按extensions.custom.element_layout_authority求值。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "animation_geometry",
+        "source_clock"
+      ],
+      "replaceable": [
+        "voice"
+      ],
+      "evidence_ids": [
+        "design-contract"
+      ],
+      "acceptance": [
+        {
+          "check": "完整原声、单份配乐与动作音效完整状态",
+          "method": "实际查看该元素出现/落定/退出与最后一实例，绑定编码帧SHA",
+          "pass_condition": "内容与真实输入一致；无意外裁切、遮挡、截断；区别固化内容和可变槽"
+        }
+      ]
+    }
+  ],
+  "slots": [
+    {
+      "id": "content",
+      "element_id": "main-title",
+      "property": "content",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "contract": "haike.motion-native-content/1，具体类型、数量、哈希、时钟及文字边界以当前content CLI和profile为准",
+        "source": "本期真实音频/素材证据；native章节固定项单列差异"
+      },
+      "missing": "预检明确缺项并阻断对应制作，不能隐式调用付费补齐",
+      "overflow": "按实际语义精简或补源区间后重检，不裁语音/组尾、不循环或变速填充"
+    },
+    {
+      "id": "categories",
+      "element_id": "category-card",
+      "property": "media.categories",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "contract": "haike.motion-native-content/1，具体类型、数量、哈希、时钟及文字边界以当前content CLI和profile为准",
+        "source": "本期真实音频/素材证据；native章节固定项单列差异"
+      },
+      "missing": "预检明确缺项并阻断对应制作，不能隐式调用付费补齐",
+      "overflow": "按实际语义精简或补源区间后重检，不裁语音/组尾、不循环或变速填充"
+    },
+    {
+      "id": "lens-labels",
+      "element_id": "lens-overlay",
+      "property": "content.s04",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "contract": "haike.motion-native-content/1，具体类型、数量、哈希、时钟及文字边界以当前content CLI和profile为准",
+        "source": "本期真实音频/素材证据；native章节固定项单列差异"
+      },
+      "missing": "预检明确缺项并阻断对应制作，不能隐式调用付费补齐",
+      "overflow": "按实际语义精简或补源区间后重检，不裁语音/组尾、不循环或变速填充"
+    },
+    {
+      "id": "rhythm",
+      "element_id": "narrative-curve",
+      "property": "content.s04",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "contract": "haike.motion-native-content/1，具体类型、数量、哈希、时钟及文字边界以当前content CLI和profile为准",
+        "source": "本期真实音频/素材证据；native章节固定项单列差异"
+      },
+      "missing": "预检明确缺项并阻断对应制作，不能隐式调用付费补齐",
+      "overflow": "按实际语义精简或补源区间后重检，不裁语音/组尾、不循环或变速填充"
+    },
+    {
+      "id": "comparison",
+      "element_id": "comparison-strip",
+      "property": "content.s08",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "contract": "haike.motion-native-content/1，具体类型、数量、哈希、时钟及文字边界以当前content CLI和profile为准",
+        "source": "本期真实音频/素材证据；native章节固定项单列差异"
+      },
+      "missing": "预检明确缺项并阻断对应制作，不能隐式调用付费补齐",
+      "overflow": "按实际语义精简或补源区间后重检，不裁语音/组尾、不循环或变速填充"
+    },
+    {
+      "id": "invitation",
+      "element_id": "invitation-card",
+      "property": "content.s08",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "contract": "haike.motion-native-content/1，具体类型、数量、哈希、时钟及文字边界以当前content CLI和profile为准",
+        "source": "本期真实音频/素材证据；native章节固定项单列差异"
+      },
+      "missing": "预检明确缺项并阻断对应制作，不能隐式调用付费补齐",
+      "overflow": "按实际语义精简或补源区间后重检，不裁语音/组尾、不循环或变速填充"
+    },
+    {
+      "id": "presenter",
+      "element_id": "presenter-window",
+      "property": "avatar",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "contract": "haike.motion-native-content/1，具体类型、数量、哈希、时钟及文字边界以当前content CLI和profile为准",
+        "source": "本期真实音频/素材证据；native章节固定项单列差异"
+      },
+      "missing": "预检明确缺项并阻断对应制作，不能隐式调用付费补齐",
+      "overflow": "按实际语义精简或补源区间后重检，不裁语音/组尾、不循环或变速填充"
+    },
+    {
+      "id": "captions",
+      "element_id": "captions",
+      "property": "captions",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "contract": "haike.motion-native-content/1，具体类型、数量、哈希、时钟及文字边界以当前content CLI和profile为准",
+        "source": "本期真实音频/素材证据；native章节固定项单列差异"
+      },
+      "missing": "预检明确缺项并阻断对应制作，不能隐式调用付费补齐",
+      "overflow": "按实际语义精简或补源区间后重检，不裁语音/组尾、不循环或变速填充"
+    },
+    {
+      "id": "voice",
+      "element_id": "master-audio",
+      "property": "voice",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "contract": "haike.motion-native-content/1，具体类型、数量、哈希、时钟及文字边界以当前content CLI和profile为准",
+        "source": "本期真实音频/素材证据；native章节固定项单列差异"
+      },
+      "missing": "预检明确缺项并阻断对应制作，不能隐式调用付费补齐",
+      "overflow": "按实际语义精简或补源区间后重检，不裁语音/组尾、不循环或变速填充"
+    },
+    {
+      "id": "media",
+      "element_id": "global",
+      "property": "media",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "wall": "带来源SHA的真实视图，重复布局明确不等于独立源数量",
+        "categories": 4,
+        "lens": "显式连续真实区间，覆盖镜头窗口"
+      },
+      "missing": "缺少实拍时阻断，不用人物代替主画面",
+      "overflow": "静帧/动态明确区分；调整源区间后重验"
+    },
+    {
+      "id": "music",
+      "element_id": "global",
+      "property": "music",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "source": "显式本地配乐SHA",
+        "mix": "只叠一次；gainDb/offsetSeconds/loop固定并冻结"
+      },
+      "missing": "需要保留配乐时阻断，不能暗换来源",
+      "overflow": "只有显式loop可循环配乐；人声和实拍不可循环"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "design-contract",
+      "source_kind": "design",
+      "source": "用户2026-10-28要求：固定可复用输入与runbook、保留动作、真正4:5无全片横版留边",
+      "locator": "README.md和当前实现authority；native公开schema仅landscape/portrait，portrait45采用项目native-story重排",
+      "method": "区分两引擎及来源，锁定三组和本期完整时钟，以实际技术/画面证据更新就绪状态",
+      "file": null,
+      "sha256": null
+    },
+    {
+      "id": "compiler-verified",
+      "source_kind": "measurement",
+      "source": "当前内容编译器32项、桥接/backend33项及实际资源构建/源SHA核验；原始compiler-verification-v003.json另存本期私有证据",
+      "locator": "validation-summary.json authority/preparation/native_preparation",
+      "method": "当前源码/profile逐SHA核对、65 focused checks、2244准备文件与42来源SHA/规范化props和audio等价；native新入口实际至预览/manifest/freeze-only",
+      "file": "reference/validation-summary.json",
+      "sha256": "a38ecead4056372db40b947fa7cbd3d7a50f4fed19ae7b8f7f7884611b8817d5"
+    },
+    {
+      "id": "portrait-final-technical",
+      "source_kind": "measurement",
+      "source": "本期真4:5原请求与正式两份编码产物、quality/audio receipt以及独立final-review.json",
+      "locator": "validation-summary.json formal_portrait outputs/receipts/technical/audio_scope",
+      "method": "逐SHA、1440×1800/60fps/1836f/30.6s、实测20.494492Mbps、AAC48k双声道、真峰值-4.05/-4.07、两版完整解码与12个原声零偏移锚点",
+      "file": "reference/validation-summary.json",
+      "sha256": "a38ecead4056372db40b947fa7cbd3d7a50f4fed19ae7b8f7f7884611b8817d5"
+    },
+    {
+      "id": "portrait-final-visual",
+      "source_kind": "observation",
+      "source": "独立child_final_qa实际查看最终编码秒级总览、接缝条带及11关键态；root另实际查看key-states-2.jpg",
+      "locator": "validation-summary.json formal_portrait.output_review：32个秒级/末帧位置、两接缝各31位置/每2native帧、11关键态和全部联系图SHA",
+      "method": "按实际图片检查2×2四卡完整末卡、实拍墙、红划线、镜头/曲线、三动作计数、frame条、CTA/人物避让和字幕独立排布，无全片横版contain或pad；只覆盖本期auto抽样范围",
+      "file": "reference/validation-summary.json",
+      "sha256": "a38ecead4056372db40b947fa7cbd3d7a50f4fed19ae7b8f7f7884611b8817d5"
+    },
+    {
+      "id": "portrait-final-production",
+      "source_kind": "measurement",
+      "source": "当前正式4:5统一父队列PQ-d4962c9589cd4ebebb03与完整注册输出；native新入口freeze-only与旧完成父队列分别记录",
+      "locator": "validation-summary.json formal_portrait project/render/job与native_preparation新/旧身份",
+      "method": "真实queue completed与输出/质量/原请求身份对应；不把新native冻结验证写成整片重渲，不回填旧v002冻结回执为新compiler SHA",
+      "file": "reference/validation-summary.json",
+      "sha256": "a38ecead4056372db40b947fa7cbd3d7a50f4fed19ae7b8f7f7884611b8817d5"
+    }
+  ],
+  "unknowns": [],
+  "validation": {
+    "structure": {
+      "status": "pass",
+      "evidence_ids": [
+        "compiler-verified"
+      ],
+      "note": "当前新规格/输入/CLI与源码身份、32compiler+33bridge/backend focused范围通过；示例是明确占位结构，不作为实际输入证据"
+    },
+    "technical": {
+      "status": "pass",
+      "evidence_ids": [
+        "portrait-final-technical"
+      ],
+      "note": "本期auto真4:5正式两输出通过完整技术检查；native新编译入口只验证到真实预览/manifest/freeze-only，旧native父队列完整片证据另列"
+    },
+    "visual": {
+      "status": "pass",
+      "evidence_ids": [
+        "portrait-final-visual"
+      ],
+      "note": "限本期auto最终编码32秒级/末帧、两接缝各31位置和11完整关键态的实际看图范围；small/hidden仅preflight，连续全片观看仍待验"
+    },
+    "audio": {
+      "status": "pending",
+      "evidence_ids": [
+        "portrait-final-technical"
+      ],
+      "note": "原声时钟、单次人声/BGM与16项目cue音效、真峰值及信号测量通过；连续人耳听审、音素口型、普通外放仍待验"
+    },
+    "platform": {
+      "status": "pending",
+      "evidence_ids": [
+        "design-contract"
+      ],
+      "note": "待当前新模板范围验证，不继承旧模板结论"
+    },
+    "user_review": {
+      "status": "pending",
+      "evidence_ids": [
+        "design-contract"
+      ],
+      "note": "待当前新模板范围验证，不继承旧模板结论"
+    },
+    "production": {
+      "status": "pass",
+      "evidence_ids": [
+        "portrait-final-production",
+        "compiler-verified"
+      ],
+      "note": "本期真4:5统一父队列真实完整输出、当前编译器等价构建通过；新native编译准备/freeze-only与旧native完整制作严格分开，不冒称新native全链重渲"
+    }
+  },
+  "extensions": {
+    "custom": {
+      "element_layout_authority": "画布包络仅用于规格边界；实例/子节点精确坐标、遮罩、字号、层级与cue由authority源码和profile.json求值。横版官方opaque渲染器与项目4:5分别核验，不把此包络当测得叶节点矩形。",
+      "contract": "haike.motion-native-content/1 → haike.motion-native-content-build/1 → native官方横版或项目native-story portrait45",
+      "rules": [
+        "本版只支持s01/s04/s08三完整组；横版基准348/695/793帧，按profile静止gap容量分配且保护动作1x，官方plan裁决；4:5按项目完整组下限/权重分配，不共用横版时序",
+        "两引擎实际排版/媒体/音轨分别验证；4:5不能native横版pad",
+        "公开槽以外为新适配，任何新包需先核对契约",
+        "所有正式父片走统一production queue，保持SHA冻结与原任务恢复，不自动付费或发布"
+      ],
+      "element_instances": "wall-grid由本期wall views/collages生成可复用实例；category-card产生四实例，每实例封面/label/note独立绑定数组索引；native完整组内部叶布局由官方opaque运行时保持，project4:5由Story组件源码持有"
+    },
+    "avatar": {
+      "face_crop": "原生横版沿官方人物框；4:5由Story人物geometry在目标画布布置，bridge --presenter-mode auto随动作大卡/圆窗、small全圆窗、hidden不显示口播人物。同一完整avatar与原声不重生、不因显隐重置。本期auto正式编码抽样通过，small/hidden当前仅preflight，首次使用需相应视觉验证",
+      "synchronization": "avatar.voice_sha256必须绑定同一完整WAV；人物覆盖到精确帧钟，sourceTime=offset+(globalFrame-from)/fps。音素口型/全片听看另验"
+    },
+    "graphic": {
+      "text_policy": "每组语义内容由公共flat字段映射，字宽/行数以native公共校验或项目Story源码为准，实际看最长标题和末卡；固化在照片内部的字不能改",
+      "asset_fit": "真实源区间/封面取样显式声明；实际看脸/实拍主体与文字避让，不将全片contain算4:5适配"
+    },
+    "material_edit": {
+      "source_ranges": "media.wall/categories的at是静帧源秒；media.lens offset和实际时长为动态范围，冻结源SHA及全片映射",
+      "cut_policy": "口播不裁、变速或循环；短实拍不冻帧填充。每期明确镜头连续真实区间、静帧与重复布局含义"
+    }
+  },
+  "operations": [
+    {
+      "id": "preflight",
+      "input": "本期haike.motion-native-content/1输入、完整资源与来源证据、工具链和磁盘余量",
+      "action": "只读check，核对声源/字幕/人物SHA、完整时钟、素材区间、内容槽与画幅能力",
+      "output": "通过或具体中文缺项；无云调用、无入队",
+      "completion": "所有实际输入与当前profile可执行，费用与发布未被隐式触发",
+      "recovery": "只补本期缺项，复用已有同SHA产物",
+      "entrypoint": "../../scripts/dark_native_content.py check --input <input.json>"
+    },
+    {
+      "id": "build",
+      "input": "通过预检的本期输入",
+      "action": "build准备本期媒体、公共content-build与动态时钟；landscape再走官方public计划/准备/有界preview，portrait45走项目桥接预览",
+      "output": "新构建目录、content-build.json、受审预览及源码/资源身份",
+      "completion": "实际查看该画幅全部关键状态与替换边界，绑定预览和SHA；不把static布局演示当真实数字人口型",
+      "recovery": "依原build读回；只修公开槽并重验对应布局，不改保护core",
+      "entrypoint": "../../scripts/dark_native_content.py build --input <input.json> --out <本期目录>"
+    },
+    {
+      "id": "production",
+      "input": "已通过实际预览审查的build与对应ready门禁/本期授权",
+      "action": "landscape生成受审native manifest后dark_native统一queue；portrait45由native_story_portrait桥接dark_full统一queue",
+      "output": "唯一冻结request、job/work/version、完整MP4及quality/result",
+      "completion": "目标画幅/帧钟/20Mbps/48k双声道/真峰值和全解码通过，实际编码关键状态及语义复核，无全片横版pad",
+      "recovery": "查询原job/request/result，沿原request继续；不为本地失败重发TTS或avatar",
+      "entrypoint": "../../scripts/dark_native.py --input <manifest.json>; ../../scripts/native_story_portrait.py --build <content-build.json> --render"
+    },
+    {
+      "id": "review-delivery",
+      "input": "正式编码产物及本期请求、质量、来源与受控变化范围",
+      "action": "按模板验收量表逐项检查并绑定证据，交付可播放视频和原请求恢复位置",
+      "output": "验证矩阵及可播放产物；连续听看/真机/用户状态单列",
+      "completion": "技术和实际看帧通过适用范围，剩余待验不被冒称已验；不自动发布",
+      "recovery": "只修受影响槽/阶段并重验关联维度，保留历史产物与付费任务",
+      "entrypoint": "manual: 视频模板验收量表 + 本期final output review"
+    }
+  ]
+}

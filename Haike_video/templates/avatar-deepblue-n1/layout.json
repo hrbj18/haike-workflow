@@ -1,0 +1,17 @@
+{
+  "version": "avatar-deepblue-n1-v1",
+  "canvas": {"width": 1080, "height": 1920, "fps": 30},
+  "fontFamily": "\"Microsoft YaHei\",\"PingFang SC\",sans-serif",
+  "colors": {"top": "#1c3160", "middle": "#111d37", "bottom": "#060d1d", "yellow": "#ffd602", "white": "#ffffff"},
+  "title": {"left": 54, "width": 972, "tops": [201, 297, 368], "sizes": [81, 57, 57], "lineHeight": 1.22, "fadeSeconds": 0.6},
+  "source": {"left": 63, "top": 510, "size": 24, "lineHeight": 1.2},
+  "window": {"left": 0, "top": 566, "width": 1080, "height": 782, "radius": 18, "clearWidth": 624, "blurPixels": 28, "portraitY": 35, "screenshotCaptionReserve": 140},
+  "caption": {"left": 48, "width": 984, "bottom": 47, "size": 53, "lineHeight": 1.25, "maxChars": 18, "stroke": 3},
+  "circle": {"left": 429, "top": 1391, "diameter": 221, "border": 5, "portraitY": 30},
+  "brand": {"left": 290, "top": 1640, "width": 501, "height": 101, "radius": 51, "border": "#6a83a266", "markSize": 56, "markRadius": 14, "markFontSize": 30, "fontSize": 42, "gap": 20, "paddingAllowance": 70},
+  "english": {"left": 0, "top": 1770, "width": 1080, "size": 123, "lineHeight": 1.2, "opacity": 0.075},
+  "bottomLine": {"top": 1895, "height": 25},
+  "data": {"left": 71, "labelTop": 92, "labelSize": 41, "titleTop": 163, "titleSize": 60, "rowTop": 295, "rowStep": 97, "bulletSize": 20, "textLeft": 116, "rowSize": 51, "lineHeight": 1.2, "rowRevealSeconds": 0.22, "rowFadeSeconds": 0.16, "rowTravel": 10},
+  "highlight": {"color": "#f44342", "height": 8, "defaultSeconds": 0.45},
+  "curves": [{"left": -750, "top": 590, "width": 2000, "height": 1200, "rotation": -25, "opacity": 0.085}, {"left": 280, "top": 1060, "width": 1600, "height": 900, "rotation": -30, "opacity": 0.055}]
+}

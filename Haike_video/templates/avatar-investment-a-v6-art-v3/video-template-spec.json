@@ -1,0 +1,1886 @@
+{
+  "schema_version": 1,
+  "standard_version": "video-template-v1",
+  "template_id": "avatar-investment-a-v6-art-v3",
+  "template_version": "v003",
+  "template_type": "avatar",
+  "spec_kind": "implementation",
+  "stage": "ready",
+  "authority": {
+    "runbook": "../../../Haike-Videohub/agent-runbooks/数字人口播模板6-招商A.md",
+    "implementation_paths": [
+      "index.tsx",
+      "layout.json",
+      "README.md",
+      "assets/PROVENANCE.json",
+      "../../backlot/studio_investment_source_video.py",
+      "../../scripts/avatar_investment_source_video.py",
+      "../../backlot/studio_composition.py",
+      "../../backlot/production_queue_worker.py"
+    ],
+    "parameter_source": "layout.json"
+  },
+  "canvas": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "duration_seconds": 34.233333333333334,
+    "clock": "真实原视频第一音轨为主时钟，原速。通用输出round(prepared.duration*30)帧；此scenes/timing数值对应本期03 optical示例，其余输入见extensions.source_art.validation_inputs；ASR原点与源视频0秒一致；音轨不为封面/CTA拉伸。",
+    "coordinate_system": "top_left_pixels"
+  },
+  "narrative": {
+    "purpose": "将用户已有招商数字人原片制作三种艺术广告测试，复用人物与音轨，通过原稿语义章节与清晰关键词字幕组织信息。",
+    "information_hierarchy": [
+      "当前完整字幕与人物脸/嘴",
+      "每章唯一主标题",
+      "源稿对应说明/条件和语义要点",
+      "品牌、数字人标识",
+      "纯装饰背景与播放进度"
+    ],
+    "structure": [
+      "hook：原稿问题与内容切入",
+      "story：真实体验场景/内容素材",
+      "ai：只显示本条原稿中的AI产品或员工关系",
+      "offer：合作金额/本条面积/清单支持条件",
+      "cta：咨询资料与适配判断"
+    ]
+  },
+  "scenes": [
+    {
+      "id": "hook",
+      "start": 0,
+      "end": 5.38,
+      "purpose": "原稿痛点与真实门店内容切入",
+      "element_ids": [
+        "art_background",
+        "brand",
+        "category",
+        "chapter_heading",
+        "chapter_deck",
+        "presenter",
+        "presenter_shade",
+        "captions",
+        "chapter_points",
+        "disclosure",
+        "playback_progress",
+        "speech_audio"
+      ],
+      "variant": "optical-cinema"
+    },
+    {
+      "id": "story",
+      "start": 5.38,
+      "end": 17.88,
+      "purpose": "真实顾客、产品体验与内容素材关系",
+      "element_ids": [
+        "art_background",
+        "brand",
+        "category",
+        "chapter_heading",
+        "chapter_deck",
+        "presenter",
+        "presenter_shade",
+        "captions",
+        "chapter_points",
+        "disclosure",
+        "playback_progress",
+        "speech_audio"
+      ],
+      "variant": "optical-cinema"
+    },
+    {
+      "id": "ai",
+      "start": 17.88,
+      "end": 24.74,
+      "purpose": "原稿提及的AI产品/员工与经营关系",
+      "element_ids": [
+        "art_background",
+        "brand",
+        "category",
+        "chapter_heading",
+        "chapter_deck",
+        "presenter",
+        "presenter_shade",
+        "captions",
+        "chapter_points",
+        "disclosure",
+        "playback_progress",
+        "speech_audio"
+      ],
+      "variant": "optical-cinema"
+    },
+    {
+      "id": "offer",
+      "start": 24.74,
+      "end": 27.02,
+      "purpose": "完整合作信息与原稿条件",
+      "element_ids": [
+        "art_background",
+        "brand",
+        "category",
+        "chapter_heading",
+        "chapter_deck",
+        "presenter",
+        "presenter_shade",
+        "captions",
+        "chapter_points",
+        "disclosure",
+        "playback_progress",
+        "speech_audio"
+      ],
+      "variant": "optical-cinema"
+    },
+    {
+      "id": "cta",
+      "start": 27.02,
+      "end": 34.233333333333334,
+      "purpose": "咨询、了解与适配判断",
+      "element_ids": [
+        "art_background",
+        "brand",
+        "category",
+        "chapter_heading",
+        "chapter_deck",
+        "presenter",
+        "presenter_shade",
+        "captions",
+        "chapter_points",
+        "disclosure",
+        "playback_progress",
+        "speech_audio"
+      ],
+      "variant": "optical-cinema"
+    }
+  ],
+  "assets": [
+    {
+      "id": "source_video",
+      "kind": "video",
+      "path": null,
+      "source": "每期用户明确提供的原数字人口播MP4；本期01/02/03分别由import-manifest与SHA绑定",
+      "embedded_content": [
+        "人物脸、眼镜、头发、服装、原背景、自然动作和口型为固化内容"
+      ],
+      "rights_status": "仅本期用户提供并授权加工，不包含在模板可分发资源中。"
+    },
+    {
+      "id": "source_audio",
+      "kind": "audio",
+      "path": null,
+      "source": "同一原视频track0:a:0提取24kHz mono PCM16，提取增益0，播放原速1；最终封装仅一次-2.5dB",
+      "embedded_content": [
+        "完整既有口播语音及其已应用的供应商语速"
+      ],
+      "rights_status": "随本期原片授权复用，不打包用户语音。"
+    },
+    {
+      "id": "system_fonts",
+      "kind": "font",
+      "path": null,
+      "source": "本机已安装Microsoft YaHei、KaiTi、SimSun，字族选择见index.tsx",
+      "embedded_content": [],
+      "rights_status": "仅许可环境渲染，不将系统字体文件随模板打包。"
+    },
+    {
+      "id": "art_blue",
+      "kind": "image",
+      "path": "assets/blue-editorial.png",
+      "source": "Creative Production及configured Responses relay gpt-image-2生成的纯装饰PNG；来源、生成参数与原SHA见assets/PROVENANCE.json。已按原SHA复制到本模板assets，不包含用户人物或文字。",
+      "embedded_content": [
+        "抽象折纸/社区建筑/光学材质；纯装饰设计，不含人物或可编辑中文，不是门店实拍。"
+      ],
+      "rights_status": "用户本次授权生成的项目装饰资源；随模板仅分发此装饰PNG与来源记录，用户原片、语音和系统字体不打包。"
+    },
+    {
+      "id": "art_community",
+      "kind": "image",
+      "path": "assets/community-showcase.png",
+      "source": "Creative Production及configured Responses relay gpt-image-2生成的纯装饰PNG；来源、生成参数与原SHA见assets/PROVENANCE.json。已按原SHA复制到本模板assets，不包含用户人物或文字。",
+      "embedded_content": [
+        "抽象折纸/社区建筑/光学材质；纯装饰设计，不含人物或可编辑中文，不是门店实拍。"
+      ],
+      "rights_status": "用户本次授权生成的项目装饰资源；随模板仅分发此装饰PNG与来源记录，用户原片、语音和系统字体不打包。"
+    },
+    {
+      "id": "art_optical",
+      "kind": "image",
+      "path": "assets/optical-cinema.png",
+      "source": "Creative Production及configured Responses relay gpt-image-2生成的纯装饰PNG；来源、生成参数与原SHA见assets/PROVENANCE.json。已按原SHA复制到本模板assets，不包含用户人物或文字。",
+      "embedded_content": [
+        "抽象折纸/社区建筑/光学材质；纯装饰设计，不含人物或可编辑中文，不是门店实拍。"
+      ],
+      "rights_status": "用户本次授权生成的项目装饰资源；随模板仅分发此装饰PNG与来源记录，用户原片、语音和系统字体不打包。"
+    }
+  ],
+  "elements": [
+    {
+      "id": "art_background",
+      "type": "image",
+      "role": "纯装饰艺术底图，生成材质/建筑不代表真实门店",
+      "parent_id": null,
+      "z_index": 0,
+      "content": {
+        "mode": "embedded",
+        "binding": "background_slot",
+        "asset_id": "art_optical",
+        "description": "纯装饰艺术底图，生成材质/建筑不代表真实门店"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1080,
+          1920
+        ],
+        "fit": "cover",
+        "clip": "self",
+        "style": {
+          "source": "layout.json及index.tsx / Img",
+          "scale_rule": "1+(backgroundMaxScale-1)*frame/max(1,durationInFrames-1)",
+          "backgroundMaxScale": 1.015
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 34.233333333333334
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "按方向/当前章节/真实cue条件显示；全片秒为左闭右开区间。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "allow_overflow",
+          "target_id": null,
+          "rule": "背景1→1.015轻微放大为有意超画布，根AbsoluteFill统一裁切。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [
+        "content.asset_id"
+      ],
+      "evidence_ids": [
+        "art_implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "layout_content",
+          "method": "按当前方向/章节、长短文本、真实帧与运行props核对",
+          "pass_condition": "内容与冻结输入一致，字形可读、主体与字幕不意外遮挡，裁切及状态符合源码。"
+        }
+      ]
+    },
+    {
+      "id": "brand",
+      "type": "text",
+      "role": "可替换项目品牌",
+      "parent_id": null,
+      "z_index": 2,
+      "content": {
+        "mode": "editable",
+        "binding": "brand_slot",
+        "asset_id": null,
+        "description": "可替换项目品牌"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          80,
+          76,
+          570,
+          70
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "font": "index.tsx所选Windows Microsoft YaHei / KaiTi / SimSun；无字体文件打包",
+          "font_size": 35,
+          "max_lines": 1,
+          "overflow": "入口拒绝超上限字段，按确定性字号公式适配；最长实际帧需另验。",
+          "source": "index.tsx / header flex",
+          "box_semantics": "页眉分配区，实际字形边界由字体布局计算"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 34.233333333333334
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "按方向/当前章节/真实cue条件显示；全片秒为左闭右开区间。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "art_implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "layout_content",
+          "method": "按当前方向/章节、长短文本、真实帧与运行props核对",
+          "pass_condition": "内容与冻结输入一致，字形可读、主体与字幕不意外遮挡，裁切及状态符合源码。"
+        }
+      ]
+    },
+    {
+      "id": "category",
+      "type": "text",
+      "role": "固定主题：社区AI × 内容创作",
+      "parent_id": null,
+      "z_index": 2,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "固定主题：社区AI × 内容创作"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          650,
+          76,
+          350,
+          70
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "font": "index.tsx所选Windows Microsoft YaHei / KaiTi / SimSun；无字体文件打包",
+          "font_size": 26,
+          "max_lines": 1,
+          "overflow": "入口拒绝超上限字段，按确定性字号公式适配；最长实际帧需另验。",
+          "source": "index.tsx / header右侧主题",
+          "text": "社区AI × 内容创作",
+          "box_semantics": "页眉右侧分配区，实际flex边界由字体布局计算"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 34.233333333333334
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "按方向/当前章节/真实cue条件显示；全片秒为左闭右开区间。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "art_implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "layout_content",
+          "method": "按当前方向/章节、长短文本、真实帧与运行props核对",
+          "pass_condition": "内容与冻结输入一致，字形可读、主体与字幕不意外遮挡，裁切及状态符合源码。"
+        }
+      ]
+    },
+    {
+      "id": "chapter_heading",
+      "type": "text",
+      "role": "本期按章节替换的两行广告标题",
+      "parent_id": null,
+      "z_index": 3,
+      "content": {
+        "mode": "editable",
+        "binding": "heading_slot",
+        "asset_id": null,
+        "description": "本期按章节替换的两行广告标题"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          76,
+          196,
+          928,
+          300
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "font": "index.tsx所选Windows Microsoft YaHei / KaiTi / SimSun；无字体文件打包",
+          "font_size": "min(layout.type.headline,(green?928:920)/最长行码点数)",
+          "max_lines": 2,
+          "overflow": "入口拒绝超上限字段，按确定性字号公式适配；最长实际帧需另验。",
+          "source": "index.tsx / chapter.heading",
+          "line_height": "dark1.25，其他1.2",
+          "letter_spacing": "dark2，其他-2.5",
+          "box_semantics": "标题分配区域；精确字形和底边随主题/字符数确定"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 34.233333333333334
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "按方向/当前章节/真实cue条件显示；全片秒为左闭右开区间。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "art_implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "layout_content",
+          "method": "按当前方向/章节、长短文本、真实帧与运行props核对",
+          "pass_condition": "内容与冻结输入一致，字形可读、主体与字幕不意外遮挡，裁切及状态符合源码。"
+        }
+      ]
+    },
+    {
+      "id": "chapter_deck",
+      "type": "text",
+      "role": "标题下说明，保留原稿的条件与范围",
+      "parent_id": null,
+      "z_index": 3,
+      "content": {
+        "mode": "editable",
+        "binding": "deck_slot",
+        "asset_id": null,
+        "description": "标题下说明，保留原稿的条件与范围"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          76,
+          470,
+          928,
+          148
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "font": "index.tsx所选Windows Microsoft YaHei / KaiTi / SimSun；无字体文件打包",
+          "font_size": 44,
+          "max_lines": 2,
+          "overflow": "入口拒绝超上限字段，按确定性字号公式适配；最长实际帧需另验。",
+          "source": "index.tsx / chapter.deck",
+          "position_rule": "跟随标题自然排版，marginTop=26，lineHeight=1.45，maxWidth=920，textWrap=balance",
+          "box_semantics": "本期两行标题后的说明分配范围；不是已测DOM字形框"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 34.233333333333334
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "按方向/当前章节/真实cue条件显示；全片秒为左闭右开区间。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "art_implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "layout_content",
+          "method": "按当前方向/章节、长短文本、真实帧与运行props核对",
+          "pass_condition": "内容与冻结输入一致，字形可读、主体与字幕不意外遮挡，裁切及状态符合源码。"
+        }
+      ]
+    },
+    {
+      "id": "presenter",
+      "type": "avatar",
+      "role": "已有数字人口播原片及其固化人物/服装/背景",
+      "parent_id": null,
+      "z_index": 4,
+      "content": {
+        "mode": "embedded",
+        "binding": "source_video_slot",
+        "asset_id": "source_video",
+        "description": "已有数字人口播原片及其固化人物/服装/背景"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          132,
+          618,
+          816,
+          984
+        ],
+        "fit": "cover",
+        "clip": "self",
+        "style": {
+          "source": "layout.json / 各方向portrait; index.tsx / OffthreadVideo",
+          "representative_direction": "optical-cinema",
+          "variant_boxes": {
+            "blue-editorial": {
+              "left": 80,
+              "top": 618,
+              "width": 920,
+              "height": 984,
+              "radius": "6px",
+              "objectY": "52%"
+            },
+            "community-showcase": {
+              "left": 302,
+              "top": 618,
+              "width": 698,
+              "height": 984,
+              "radius": "300px 300px 32px 32px",
+              "objectY": "48%"
+            },
+            "optical-cinema": {
+              "left": 132,
+              "top": 618,
+              "width": 816,
+              "height": 984,
+              "radius": "170px 170px 8px 8px",
+              "objectY": "52%"
+            }
+          },
+          "object_position": "close-4x5固定50%48%；medium-9x16采用各主题objectY",
+          "close_scale": 1.02,
+          "source_muted": true,
+          "dark_filter": "saturate(.86) contrast(1.02)"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 34.233333333333334
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "按方向/当前章节/真实cue条件显示；全片秒为左闭右开区间。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "avoid",
+          "target_id": "captions",
+          "rule": "01近景和02/03中景分别校准头顶/下巴/眼镜/嘴与手势；意外遮挡需本地修正后重验。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [
+        "content.asset_id"
+      ],
+      "evidence_ids": [
+        "art_implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "layout_content",
+          "method": "按当前方向/章节、长短文本、真实帧与运行props核对",
+          "pass_condition": "内容与冻结输入一致，字形可读、主体与字幕不意外遮挡，裁切及状态符合源码。"
+        }
+      ]
+    },
+    {
+      "id": "presenter_shade",
+      "type": "gradient",
+      "role": "锐蓝与曜黑人物窗底部的字幕可读性渐变",
+      "parent_id": "presenter",
+      "z_index": 5,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "锐蓝与曜黑人物窗底部的字幕可读性渐变"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          816,
+          984
+        ],
+        "fit": "none",
+        "clip": "parent",
+        "style": {
+          "source": "index.tsx / 人物窗内渐变",
+          "rule": "community隐藏，blue与dark采用各自渐变停止点；不改源人物文件。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 34.233333333333334
+      },
+      "states": [
+        {
+          "id": "green_hidden",
+          "visible": false,
+          "description": "community-showcase没有窗内阴影层。"
+        },
+        {
+          "id": "blue_dark_visible",
+          "visible": true,
+          "description": "blue-editorial或optical-cinema按源码渐变显示。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "art_implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "layout_content",
+          "method": "按当前方向/章节、长短文本、真实帧与运行props核对",
+          "pass_condition": "内容与冻结输入一致，字形可读、主体与字幕不意外遮挡，裁切及状态符合源码。"
+        }
+      ]
+    },
+    {
+      "id": "captions",
+      "type": "subtitle",
+      "role": "真实cue字幕、确定性语义换行与关键词chips",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "editable",
+        "binding": "captions_slot",
+        "asset_id": null,
+        "description": "真实cue字幕、确定性语义换行与关键词chips"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          80,
+          1320,
+          920,
+          510
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "font": "index.tsx所选Windows Microsoft YaHei / KaiTi / SimSun；无字体文件打包",
+          "font_size": "min(56,available/最长行码点数)；outside856、blue810、dark708",
+          "max_lines": 2,
+          "overflow": "入口拒绝超上限字段，按确定性字号公式适配；最长实际帧需另验。",
+          "source": "layout.caption及index.tsx / Caption",
+          "max_line_characters": 14,
+          "max_keyword_chips": 2,
+          "stroke_px": 0,
+          "line_height": 1.5,
+          "placement_rule": "community全片left/right80、top1614；其他方向人物窗内left/right30、bottom32。",
+          "box_semantics": "跨方向可能位置的分配包络；实际面板高度由行数/字号/padding计算。",
+          "text_treatment": "blue浅底深蓝字；community/optical深底浅字；最多两处静态关键词芯片，不执行逐词卡拉OK。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 34.233333333333334
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "按方向/当前章节/真实cue条件显示；全片秒为左闭右开区间。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "art_implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "layout_content",
+          "method": "按当前方向/章节、长短文本、真实帧与运行props核对",
+          "pass_condition": "内容与冻结输入一致，字形可读、主体与字幕不意外遮挡，裁切及状态符合源码。"
+        }
+      ]
+    },
+    {
+      "id": "chapter_points",
+      "type": "component",
+      "role": "当前章节最多三个原稿语义要点与说明图标",
+      "parent_id": null,
+      "z_index": 6,
+      "content": {
+        "mode": "editable",
+        "binding": "points_slot",
+        "asset_id": null,
+        "description": "当前章节最多三个原稿语义要点与说明图标"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          80,
+          770,
+          920,
+          1030
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "index.tsx / chapter.points + PointIcon",
+          "placement_rule": "community左列left80、width180、top770/CTA830、gap34；其他主题底行left/right80、top1670。",
+          "icon_rule": "按素材/内容/设备/清单关键词选择固定SVG符号；属于设计说明，不编码事实数据。",
+          "box_semantics": "两个受控主题布局的分配包络；按当前主题实际位置计算。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 34.233333333333334
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "按方向/当前章节/真实cue条件显示；全片秒为左闭右开区间。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "art_implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "layout_content",
+          "method": "按当前方向/章节、长短文本、真实帧与运行props核对",
+          "pass_condition": "内容与冻结输入一致，字形可读、主体与字幕不意外遮挡，裁切及状态符合源码。"
+        }
+      ]
+    },
+    {
+      "id": "disclosure",
+      "type": "text",
+      "role": "固定数字人演绎标识",
+      "parent_id": null,
+      "z_index": 11,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "固定数字人演绎标识"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          80,
+          1810,
+          300,
+          60
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "font": "index.tsx所选Windows Microsoft YaHei / KaiTi / SimSun；无字体文件打包",
+          "font_size": 23,
+          "max_lines": 1,
+          "overflow": "入口拒绝超上限字段，按确定性字号公式适配；最长实际帧需另验。",
+          "source": "index.tsx / left80,bottom64",
+          "text": "数字人演绎",
+          "position_rule": "真实bottom=64，按字体自然行高计算top；当前box为底部文字分配范围。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 34.233333333333334
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "按方向/当前章节/真实cue条件显示；全片秒为左闭右开区间。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "art_implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "layout_content",
+          "method": "按当前方向/章节、长短文本、真实帧与运行props核对",
+          "pass_condition": "内容与冻结输入一致，字形可读、主体与字幕不意外遮挡，裁切及状态符合源码。"
+        }
+      ]
+    },
+    {
+      "id": "playback_progress",
+      "type": "vector",
+      "role": "只表示本片播放进度的细线装饰",
+      "parent_id": null,
+      "z_index": 7,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "只表示本片播放进度的细线装饰"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          80,
+          1810,
+          920,
+          2
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "index.tsx / bottom108,height2",
+          "rule": "blue/optical显示，width=100*frame/max(1,durationInFrames-1)%，community隐藏；不表示经营或收益趋势。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 34.233333333333334
+      },
+      "states": [
+        {
+          "id": "hidden_green",
+          "visible": false,
+          "description": "community主题隐藏。"
+        },
+        {
+          "id": "visible_other",
+          "visible": true,
+          "description": "其他主题随全片帧推进。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "art_implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "layout_content",
+          "method": "按当前方向/章节、长短文本、真实帧与运行props核对",
+          "pass_condition": "内容与冻结输入一致，字形可读、主体与字幕不意外遮挡，裁切及状态符合源码。"
+        }
+      ]
+    },
+    {
+      "id": "speech_audio",
+      "type": "audio",
+      "role": "原视频第一AAC音轨的同源原速口播",
+      "parent_id": null,
+      "z_index": -1,
+      "content": {
+        "mode": "embedded",
+        "binding": "audio_slot",
+        "asset_id": "source_audio",
+        "description": "原视频第一AAC音轨的同源原速口播"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "backlot/studio_investment_source_video.py / AUDIO_POLICY及index.tsx / Audio",
+          "visual_box": "1px占位仅为统一schema，音频不绘制画面",
+          "source_speed": 1,
+          "component_volume": 1,
+          "final_mux_gain_db": -2.5,
+          "music": "none"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 34.233333333333334
+      },
+      "states": [
+        {
+          "id": "playing",
+          "visible": false,
+          "description": "原速音频全程播放，源视频静音，最终混流只应用一次-2.5dB。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [
+        "content.asset_id"
+      ],
+      "evidence_ids": [
+        "art_implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "layout_content",
+          "method": "按当前方向/章节、长短文本、真实帧与运行props核对",
+          "pass_condition": "内容与冻结输入一致，字形可读、主体与字幕不意外遮挡，裁切及状态符合源码。"
+        }
+      ]
+    }
+  ],
+  "slots": [
+    {
+      "id": "source_video_slot",
+      "element_id": "presenter",
+      "property": "content.asset_id",
+      "value_type": "asset",
+      "required": true,
+      "limits": {
+        "format": "MP4 with AAC",
+        "duration_max_seconds": 121,
+        "source_SHA_required": true,
+        "source_framing": [
+          "close-4x5",
+          "medium-9x16"
+        ]
+      },
+      "missing": "缺少必需输入拒绝准备，保留来源与原任务；说明/points允许入口规定的空值。",
+      "overflow": "按normalize_cues/normalize_art明确拒绝，缩减原稿显示层或拆受控章节后重新冻结；不缩小时钟或编造字幕。"
+    },
+    {
+      "id": "audio_slot",
+      "element_id": "speech_audio",
+      "property": "content.asset_id",
+      "value_type": "asset",
+      "required": true,
+      "limits": {
+        "source": "same MP4 track 0:a:0",
+        "sample_rate": 24000,
+        "channels": 1,
+        "format": "PCM16",
+        "sourceSpeed": 1
+      },
+      "missing": "缺少必需输入拒绝准备，保留来源与原任务；说明/points允许入口规定的空值。",
+      "overflow": "按normalize_cues/normalize_art明确拒绝，缩减原稿显示层或拆受控章节后重新冻结；不缩小时钟或编造字幕。"
+    },
+    {
+      "id": "background_slot",
+      "element_id": "art_background",
+      "property": "content.asset_id",
+      "value_type": "asset",
+      "required": true,
+      "limits": {
+        "format": "PNG",
+        "direction_enum": [
+          "blue-editorial",
+          "community-showcase",
+          "optical-cinema"
+        ],
+        "SHA256_required": true
+      },
+      "missing": "缺少必需输入拒绝准备，保留来源与原任务；说明/points允许入口规定的空值。",
+      "overflow": "按normalize_cues/normalize_art明确拒绝，缩减原稿显示层或拆受控章节后重新冻结；不缩小时钟或编造字幕。"
+    },
+    {
+      "id": "brand_slot",
+      "element_id": "brand",
+      "property": "content",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "min_chars": 1,
+        "max_chars": 14
+      },
+      "missing": "缺少必需输入拒绝准备，保留来源与原任务；说明/points允许入口规定的空值。",
+      "overflow": "按normalize_cues/normalize_art明确拒绝，缩减原稿显示层或拆受控章节后重新冻结；不缩小时钟或编造字幕。"
+    },
+    {
+      "id": "heading_slot",
+      "element_id": "chapter_heading",
+      "property": "content",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "lines_min": 1,
+        "lines_max": 2,
+        "max_characters_per_line": 12
+      },
+      "missing": "缺少必需输入拒绝准备，保留来源与原任务；说明/points允许入口规定的空值。",
+      "overflow": "按normalize_cues/normalize_art明确拒绝，缩减原稿显示层或拆受控章节后重新冻结；不缩小时钟或编造字幕。"
+    },
+    {
+      "id": "deck_slot",
+      "element_id": "chapter_deck",
+      "property": "content",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "max_characters": 40,
+        "min_characters": 0
+      },
+      "missing": "缺少必需输入拒绝准备，保留来源与原任务；说明/points允许入口规定的空值。",
+      "overflow": "按normalize_cues/normalize_art明确拒绝，缩减原稿显示层或拆受控章节后重新冻结；不缩小时钟或编造字幕。"
+    },
+    {
+      "id": "captions_slot",
+      "element_id": "captions",
+      "property": "content",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "cue_min": 1,
+        "cue_max": 2000,
+        "lines_max": 2,
+        "max_characters_per_line": 14,
+        "source_video_sha256_each_cue": true,
+        "ordered_nonoverlap_ms": true
+      },
+      "missing": "缺少必需输入拒绝准备，保留来源与原任务；说明/points允许入口规定的空值。",
+      "overflow": "按normalize_cues/normalize_art明确拒绝，缩减原稿显示层或拆受控章节后重新冻结；不缩小时钟或编造字幕。"
+    },
+    {
+      "id": "points_slot",
+      "element_id": "chapter_points",
+      "property": "content",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "items_max": 3,
+        "max_characters_each": 12
+      },
+      "missing": "缺少必需输入拒绝准备，保留来源与原任务；说明/points允许入口规定的空值。",
+      "overflow": "按normalize_cues/normalize_art明确拒绝，缩减原稿显示层或拆受控章节后重新冻结；不缩小时钟或编造字幕。"
+    },
+    {
+      "id": "art_direction_slot",
+      "element_id": "global",
+      "property": "art.direction",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "enum": [
+          "blue-editorial",
+          "community-showcase",
+          "optical-cinema"
+        ]
+      },
+      "missing": "缺少必需输入拒绝准备，保留来源与原任务；说明/points允许入口规定的空值。",
+      "overflow": "按normalize_cues/normalize_art明确拒绝，缩减原稿显示层或拆受控章节后重新冻结；不缩小时钟或编造字幕。"
+    },
+    {
+      "id": "chapters_slot",
+      "element_id": "global",
+      "property": "art.chapters",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "items_min": 1,
+        "items_max": 40,
+        "fixed_kinds": [
+          "hook",
+          "story",
+          "ai",
+          "offer",
+          "cta"
+        ],
+        "contiguous_all_cues": true,
+        "this_test_chapters_each": 5
+      },
+      "missing": "缺少必需输入拒绝准备，保留来源与原任务；说明/points允许入口规定的空值。",
+      "overflow": "按normalize_cues/normalize_art明确拒绝，缩减原稿显示层或拆受控章节后重新冻结；不缩小时钟或编造字幕。"
+    },
+    {
+      "id": "highlights_slot",
+      "element_id": "global",
+      "property": "art.highlights",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "items_max": 24,
+        "text_min_chars": 2,
+        "text_max_chars": 10,
+        "bound_to_own_source_captions": true
+      },
+      "missing": "缺少必需输入拒绝准备，保留来源与原任务；说明/points允许入口规定的空值。",
+      "overflow": "按normalize_cues/normalize_art明确拒绝，缩减原稿显示层或拆受控章节后重新冻结；不缩小时钟或编造字幕。"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "art_implementation",
+      "source_kind": "design",
+      "source": "当前艺术实现TSX与layout设计规则；仅实现身份，不证明最终画面通过。",
+      "locator": "index.tsx / layout.json",
+      "method": "读取当前源码并绑定实现SHA；最终技术与实际视觉验收另由对应证据记录。",
+      "file": "index.tsx",
+      "sha256": "6b549eae6a1ae09723078410bee8219f3be7e46aac480ff7e6a08e576bb9584e"
+    },
+    {
+      "id": "source_clock",
+      "source_kind": "measurement",
+      "source": "本地离线small ASR真实词时钟，文字校正另存来源索引与原稿差异。",
+      "locator": "source-analysis/three-clips-caption-clocks.json；当前cue SHA以art-plans.json为准。",
+      "method": "实际Transcriber离线CPU int8；没有均分或拉伸词边界，不代表独立听辨通过。",
+      "file": "../../../.local/codex-runs/template6-art-direction-20261020/source-analysis/art-plans.json",
+      "sha256": "0f7fb41ddf8cf007b4ed31352a623e880d630b12edb4ae80dff8bda757e9157a"
+    },
+    {
+      "id": "semantic_review",
+      "source_kind": "observation",
+      "source": "唯一文案语义审阅，源稿、标题/说明/points/highlights与条件对应。",
+      "locator": "review/semantic-review.json",
+      "method": "原稿和AST常量只读对照；最终视频与视觉/听看不由此通过。",
+      "file": "../../../.local/codex-runs/template6-art-direction-20261020/review/semantic-review.json",
+      "sha256": "0691e0f921d6dd339a61b7b03aa594307b0dac08d0ed56d38505ac0b578aa922"
+    },
+    {
+      "id": "blue_editorial_decoration",
+      "source_kind": "design",
+      "source": "Creative Production与configured relay gpt-image-2/high/1024x1536，纯装饰，无人物/文字。",
+      "locator": "assets/PROVENANCE.json / blue-editorial.png",
+      "method": "保存初始生成PNG与SHA；最终复制时验证字节一致，不代表门店或设备实拍。",
+      "file": "assets/blue-editorial.png",
+      "sha256": "b8eb2b2445435a53e37efc07bef4db3f223600eb0345363aa9b3c7f0012ac7d9"
+    },
+    {
+      "id": "community_showcase_decoration",
+      "source_kind": "design",
+      "source": "Creative Production与configured relay gpt-image-2/high/1024x1536，纯装饰，无人物/文字。",
+      "locator": "assets/PROVENANCE.json / community-showcase.png",
+      "method": "保存初始生成PNG与SHA；最终复制时验证字节一致，不代表门店或设备实拍。",
+      "file": "assets/community-showcase.png",
+      "sha256": "b4c180bb73fed6df1b441282678cac84be6d49ca3862967ccbc6d9f4655e1102"
+    },
+    {
+      "id": "optical_cinema_decoration",
+      "source_kind": "design",
+      "source": "Creative Production与configured relay gpt-image-2/high/1024x1536，纯装饰，无人物/文字。",
+      "locator": "assets/PROVENANCE.json / optical-cinema.png",
+      "method": "保存初始生成PNG与SHA；最终复制时验证字节一致，不代表门店或设备实拍。",
+      "file": "assets/optical-cinema.png",
+      "sha256": "8b72be83d6702be6dae1dfee7ab2e30e95c45c828d6abc525c4e678b7e3c7b84"
+    },
+    {
+      "id": "native_queue_receipts",
+      "source_kind": "measurement",
+      "source": "三条原生统一队列完成；来源与渲染runtime SHA未变，cloud_calls=0。",
+      "locator": "queue/run-summary.json；原始qa_status=pending是渲染完成时快照，后续验收以final_technical与root_visual_review为准。",
+      "method": "核对三原请求、队列、作品/版本和最终输出SHA；原片未变；技术与视觉另列。",
+      "file": "../../../.local/codex-runs/template6-art-direction-20261020/queue/run-summary.json",
+      "sha256": "858068ff11245857eca13a100f8fd2b3d3429d655dedcf7f9c83f54f47a24bbb"
+    },
+    {
+      "id": "final_technical",
+      "source_kind": "measurement",
+      "source": "三条最终MP4唯一独立完整技术验收，每条37项通过，含HTTP同SHA绑定。",
+      "locator": "final-qa/aggregate.json及clip-01/02/03/technical-qa.json",
+      "method": "完整解码、尺寸/帧率/时长、同源音轨、单次-2.5dB、cue与props、来源、作品版本及HTTP媒体SHA检查；未修改批准状态。",
+      "file": "../../../.local/codex-runs/template6-art-direction-20261020/final-qa/aggregate.json",
+      "sha256": "77fb921c28f24f5d706bc66660227d1c4b6f36d164fd99f17ef8b5838891a140"
+    },
+    {
+      "id": "root_visual_review",
+      "source_kind": "observation",
+      "source": "根Agent实际查看三最终SHA的41条完整字幕裁图、每片章节/边界接触表、最长字幕原尺寸、01首帧及390px模拟。",
+      "locator": "final-visual-review.json；74个离散样本清单见各final-visuals/clip-*/visual-manifest.json。",
+      "method": "根Agent实际view_image查看并记录范围；仅本期3输入的实际视觉通过，连续听辨/音素、真机和用户确认保持pending。",
+      "file": "../../../.local/codex-runs/template6-art-direction-20261020/final-visual-review.json",
+      "sha256": "e97ea57272dc772c1a96058636db3f883f5feb2e7cdc92d4a0ba9ebe7772f578"
+    },
+    {
+      "id": "decorative_provenance",
+      "source_kind": "measurement",
+      "source": "三个装饰PNG从本期生成源按SHA逐字节复制到可分发模板assets。",
+      "locator": "assets/PROVENANCE.json",
+      "method": "源图与assets同SHA，未包含人物原片、声音或字体；装饰非门店实拍。",
+      "file": "assets/PROVENANCE.json",
+      "sha256": "07e2ea48a6264ee26005e2b6d6df4268ec78bc0350de2381ff7c99bdee7b05d2"
+    },
+    {
+      "id": "final_clip_01",
+      "source_kind": "measurement",
+      "source": "本期clip-01完整最终MP4，非中间数字人源。",
+      "locator": "job=PQ-daead1b5264b4a3c9969; work=work-4841d24ab69240ab78bf5ac5; version=v-76563f472081eab6fbee9bb9",
+      "method": "以最终37项技术报告与HTTP同SHA读回绑定当前输出；没有设置质量批准或发布状态。",
+      "file": "../../projects/studio-73885f2b3576cfe3/renders/local-source-art-56fd7f22fb2490c87d5b/avatar-preview.mp4",
+      "sha256": "76563f472081eab6fbee9bb96b11aafb5adc651a99266180dcdc30273bbbb18e"
+    },
+    {
+      "id": "visual_manifest_01",
+      "source_kind": "observation",
+      "source": "本期clip-01实际新视频的离散代表帧清单。",
+      "locator": "25个样本，14个字幕cue；实际看图范围以root_visual_review为准。",
+      "method": "保留原帧取样和SHA；实际观察由根Agent记录，不冒充连续听看。",
+      "file": "../../../.local/codex-runs/template6-art-direction-20261020/final-visuals/clip-01/visual-manifest.json",
+      "sha256": "b7c8d9fa27dac544a6c570485d7c70f36f157e2aaa01ece8dcc43f9c7d0303b2"
+    },
+    {
+      "id": "final_clip_02",
+      "source_kind": "measurement",
+      "source": "本期clip-02完整最终MP4，非中间数字人源。",
+      "locator": "job=PQ-124a8045c3dd9b8c60aa; work=work-4caa016a008b5e061957a2e8; version=v-fb957f600e4abd7479d95cc7",
+      "method": "以最终37项技术报告与HTTP同SHA读回绑定当前输出；没有设置质量批准或发布状态。",
+      "file": "../../projects/studio-09b0aca202f0eb18/renders/local-source-art-cf6be24e862483336039/avatar-preview.mp4",
+      "sha256": "fb957f600e4abd7479d95cc7618ab9c258a2ff83ee0f5cc89d44cd65c540481d"
+    },
+    {
+      "id": "visual_manifest_02",
+      "source_kind": "observation",
+      "source": "本期clip-02实际新视频的离散代表帧清单。",
+      "locator": "25个样本，14个字幕cue；实际看图范围以root_visual_review为准。",
+      "method": "保留原帧取样和SHA；实际观察由根Agent记录，不冒充连续听看。",
+      "file": "../../../.local/codex-runs/template6-art-direction-20261020/final-visuals/clip-02/visual-manifest.json",
+      "sha256": "7a0cd212325cc8894c03ff98112c2b3b1b7cc21601dc9393671d4bb98d2dfe06"
+    },
+    {
+      "id": "final_clip_03",
+      "source_kind": "measurement",
+      "source": "本期clip-03完整最终MP4，非中间数字人源。",
+      "locator": "job=PQ-6e959d90dfebc3717630; work=work-86661c9dae357d8583408ab7; version=v-4300c60033670e8d53704ce6",
+      "method": "以最终37项技术报告与HTTP同SHA读回绑定当前输出；没有设置质量批准或发布状态。",
+      "file": "../../projects/studio-c01e79a22a3c95c1/renders/local-source-art-0602926bb33018393af4/avatar-preview.mp4",
+      "sha256": "4300c60033670e8d53704ce63f24fc416a108b79b347b8e228b48e99b1dd68fe"
+    },
+    {
+      "id": "visual_manifest_03",
+      "source_kind": "observation",
+      "source": "本期clip-03实际新视频的离散代表帧清单。",
+      "locator": "24个样本，13个字幕cue；实际看图范围以root_visual_review为准。",
+      "method": "保留原帧取样和SHA；实际观察由根Agent记录，不冒充连续听看。",
+      "file": "../../../.local/codex-runs/template6-art-direction-20261020/final-visuals/clip-03/visual-manifest.json",
+      "sha256": "5bd80223e42f5511e7e6e884082387cfba086d17c00654687de107253e3f8cb4"
+    }
+  ],
+  "unknowns": [],
+  "validation": {
+    "structure": {
+      "status": "pass",
+      "evidence_ids": [
+        "native_queue_receipts",
+        "final_technical",
+        "decorative_provenance"
+      ],
+      "note": "当前艺术源、输入/配置/素材身份冻结和本地验收通过；本规格使用v1静态检查。ready仅限本期三输入和现有视频艺术开发测试，不改变默认v002。"
+    },
+    "technical": {
+      "status": "pass",
+      "evidence_ids": [
+        "final_technical",
+        "final_clip_01",
+        "final_clip_02",
+        "final_clip_03"
+      ],
+      "note": "三片1080×1920/30fps，995/1102/1027帧；每片37项与HTTP同SHA通过。视频时钟取整差在半帧范围内。技术音频检查通过不等于连续听辨。"
+    },
+    "visual": {
+      "status": "pass",
+      "evidence_ids": [
+        "root_visual_review",
+        "visual_manifest_01",
+        "visual_manifest_02",
+        "visual_manifest_03"
+      ],
+      "note": "仅本期三条最终SHA：41条完整字幕、30个章节/边界帧的接触表、3条最长字幕原尺寸、01首帧、390px模拟；共74个可追溯样本。4:5近景与9:16中景在此范围通过；其他字段上限/人物/组合需重新出样。"
+    },
+    "audio": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "完整技术音轨/峰值及一次-2.5dB处理已验；独立全片连续听辨、音素口型和主观同步仍pending。"
+    },
+    "platform": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "只实际查看本机390px缩放模拟；真实手机/平台UI/清晰度和播放尚未验证。"
+    },
+    "user_review": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "用户授权制作三条测试，尚未确认最终成片；不设置质量批准或发布状态。"
+    },
+    "production": {
+      "status": "pass",
+      "evidence_ids": [
+        "native_queue_receipts",
+        "final_technical"
+      ],
+      "note": "三原生source-art队列各完成并登记本地作品/版本，HTTP媒体与最终SHA匹配；仅已有视频零云艺术开发测试。没有新增Studio UI选择、付费人物路线或质量批准；发布为false。"
+    }
+  },
+  "extensions": {
+    "avatar": {
+      "face_crop": {
+        "mode": "cover",
+        "source": "layout.json / each direction portrait + art.portraitFraming",
+        "rule": "close-4x5固定50%48%、scale1.02；medium-9x16按主题objectY；01脸更近且源有窄灰边，02/03保留天空与手势。"
+      },
+      "synchronization": "同源视频静音，完整同源音轨原速1进入最终封装；字幕采用来源SHA绑定的真实ASR词边界，每行<=14字、最多2行；不凭标题/总时长造时间。",
+      "voice_rules": "已有素材的天亮猴哥1.15倍速属于本期输入；本地不再次加速或重生。"
+    },
+    "graphic": {
+      "text_policy": "brand1–14字；heading1–2行每行<=12；deck0–40；points<=3项每项<=12；高亮<=24条每条2–10字；字幕<=14字×2行；精确字级/字色/背景/字号公式见index.tsx和layout.json。",
+      "asset_fit": "装饰PNG整画布cover+微缩放；人物窗口cover且源背景固化；生成建筑和光学材质非实拍事实证明。"
+    },
+    "material_edit": {
+      "source_ranges": "每条完整原片从0原速连续使用，不剪掉句子，不重排原音轨；画面源静音，source音轨同原点；输出帧取整误差受一帧范围检查。",
+      "cut_policy": "只有章节图文按真实cue切换；背景和人物连续。没有第三方B-roll或网络素材。"
+    },
+    "source_art": {
+      "contract": "investment-source-video-art-v1；独立视觉实现avatar-investment-a-v6-art-v3/v003；Studio草稿适配器template_id仍avatar-investment-a-v6；kind=studio_investment_recompose，render前缀local-source-art-。",
+      "rules": [
+        "三固定方向blue-editorial/community-showcase/optical-cinema；本期01社区、02锐蓝、03曜黑。",
+        "章节fromCue/toCue为0起始连续索引，覆盖所有真实cue；首章start0，其余章start=首cue真实startMs/1000，end=下一章start，末章end=原音轨duration；源码区间左闭右开。",
+        "字幕显示时钟独立保留实际startMs/endMs，暂停区不强行拉长字幕。整cue5帧透明/8px入场；chips静态最多2个，不冒充逐字词时钟。",
+        "章节12帧从右侧16px归位（dark位移0），背景1→1.015慢缩放；进度线仅播放进度，不表示经营/收益数据。",
+        "AUDIO_POLICY source=原视频AAC 0:a:0，提取增益0、24kHz mono PCM16、sourceSpeed1、finalGainDb=-2.5且只在final mux一次；当前无BGM。",
+        "01/02源稿无AI员工，仅03提及员工协助；02没有面积。金额/面积显示可以等值排版，原稿所有查看清单/支持/判断条件保留。",
+        "prepare冻结原视频、cue、背景、art-config、draft及runtime SHA；同请求幂等提交paused统一队列，由worker认领；不构造付费SDK、不报价、不ASR/TTS/数字人调用。",
+        "单条原MP4需有AAC且0<duration<=121秒；提取音轨与源媒体长度差<=1秒；实际最终时长和同步仍须逐片QA。",
+        "来源和runtime变化阻断旧未渲染请求；成功回执先核对原request/output SHA再恢复作品登记，不新建供应商调用。",
+        "当前为development_test=true、publication=false、quality_passed=false，保留原视频与输出新版本。",
+        "三装饰PNG已按生成源原SHA复制到本模板assets供复用，PROVENANCE说明生成来源；不包含用户人物原片或语音。"
+      ],
+      "validation_inputs": [
+        {
+          "clip": 1,
+          "direction": "community-showcase",
+          "source_video_sha256": "dfb5cd26de93e69653da8d4742faff71259d2db028942104aa6a5e72ba4c329f",
+          "audio_duration_seconds": 33.18258333333333,
+          "planned_output_frames": 995,
+          "planned_output_duration_seconds": 33.166666666666664,
+          "caption_count": 14,
+          "chapters": [
+            {
+              "kind": "hook",
+              "fromCue": 0,
+              "toCue": 2,
+              "heading": [
+                "直播间",
+                "留不住人？"
+              ],
+              "deck": "需要一个让人愿意停下来的场景",
+              "points": [
+                "真实场景",
+                "现场体验"
+              ],
+              "start": 0,
+              "cueStartMs": 20,
+              "cueEndMs": 4460,
+              "end": 4.88
+            },
+            {
+              "kind": "story",
+              "fromCue": 3,
+              "toCue": 4,
+              "heading": [
+                "真实互动",
+                "就是好内容"
+              ],
+              "deck": "机器狗互动，邻居上手体验AI产品",
+              "points": [
+                "现场互动",
+                "产品体验",
+                "真实反应"
+              ],
+              "start": 4.88,
+              "cueStartMs": 4880,
+              "cueEndMs": 12100,
+              "end": 12.1
+            },
+            {
+              "kind": "ai",
+              "fromCue": 5,
+              "toCue": 10,
+              "heading": [
+                "一家社区店",
+                "带动一个账号"
+              ],
+              "deck": "线上拍视频，线下做服务",
+              "points": [
+                "内容素材",
+                "产品体验",
+                "社区服务"
+              ],
+              "start": 12.1,
+              "cueStartMs": 12100,
+              "cueEndMs": 25180,
+              "end": 25.18
+            },
+            {
+              "kind": "offer",
+              "fromCue": 11,
+              "toCue": 12,
+              "heading": [
+                "9.8万",
+                "合作方案"
+              ],
+              "deck": "设备、首批货、培训，先看清单",
+              "points": [
+                "设备",
+                "首批货",
+                "培训"
+              ],
+              "start": 25.18,
+              "cueStartMs": 25180,
+              "cueEndMs": 30480,
+              "end": 30.84
+            },
+            {
+              "kind": "cta",
+              "fromCue": 13,
+              "toCue": 13,
+              "heading": [
+                "点击下方",
+                "立即咨询"
+              ],
+              "deck": "了解合作方案，先看投入清单",
+              "points": [
+                "了解合作",
+                "先看清单"
+              ],
+              "start": 30.84,
+              "cueStartMs": 30840,
+              "cueEndMs": 32920,
+              "end": 33.18258333333333
+            }
+          ],
+          "captions_sha256": "64b09242e8ce9eca0fba045c1d3074026e63bc7502768840ef70f7105bfa5619",
+          "job_id": "PQ-daead1b5264b4a3c9969",
+          "work_id": "work-4841d24ab69240ab78bf5ac5",
+          "version_id": "v-76563f472081eab6fbee9bb9",
+          "final_output_sha256": "76563f472081eab6fbee9bb96b11aafb5adc651a99266180dcdc30273bbbb18e",
+          "final_media": {
+            "width": 1080,
+            "height": 1920,
+            "fps": "30",
+            "video_frames": 995,
+            "video_seconds": 33.166667,
+            "AAC_seconds": 33.166667,
+            "container_seconds": 33.166667,
+            "original_PCM_clock_seconds": 33.18258333333333,
+            "expected_frames": 995,
+            "video_clock_difference_seconds": -0.015916333333336752,
+            "AAC_clock_difference_seconds": -0.015916333333336752
+          },
+          "AAC_technical_measurements": {
+            "integrated_LUFS": -16.69,
+            "true_peak_dBTP": -2.29,
+            "LRA_LU": 2.9
+          },
+          "source_preserved": true,
+          "cloud_calls": 0
+        },
+        {
+          "clip": 2,
+          "direction": "blue-editorial",
+          "source_video_sha256": "f836cc8965afb0f3c68c3cb87251c999a8b55a3e9fda4a6fe07e90bacd7261bd",
+          "audio_duration_seconds": 36.73041666666666,
+          "planned_output_frames": 1102,
+          "planned_output_duration_seconds": 36.733333333333334,
+          "caption_count": 14,
+          "chapters": [
+            {
+              "kind": "hook",
+              "fromCue": 0,
+              "toCue": 1,
+              "heading": [
+                "账号经营",
+                "多一条变现路径"
+              ],
+              "deck": "接广告怕掉粉，带货佣金越来越薄",
+              "points": [
+                "账号经营",
+                "社区门店"
+              ],
+              "start": 0,
+              "cueStartMs": 400,
+              "cueEndMs": 6740,
+              "end": 6.74
+            },
+            {
+              "kind": "story",
+              "fromCue": 2,
+              "toCue": 2,
+              "heading": [
+                "把流量接到",
+                "自己的门店"
+              ],
+              "deck": "看看自己的社区门店",
+              "points": [
+                "线上内容",
+                "社区门店"
+              ],
+              "start": 6.74,
+              "cueStartMs": 6740,
+              "cueEndMs": 10000,
+              "end": 10
+            },
+            {
+              "kind": "ai",
+              "fromCue": 3,
+              "toCue": 9,
+              "heading": [
+                "内容与门店",
+                "互相承接"
+              ],
+              "deck": "居民身边的AI产品体验和购买服务",
+              "points": [
+                "真实场景",
+                "顾客体验",
+                "内容素材"
+              ],
+              "start": 10,
+              "cueStartMs": 10000,
+              "cueEndMs": 28380,
+              "end": 28.38
+            },
+            {
+              "kind": "offer",
+              "fromCue": 10,
+              "toCue": 12,
+              "heading": [
+                "9.8万",
+                "合作方案"
+              ],
+              "deck": "先看投入、选品和服务支持",
+              "points": [
+                "了解投入",
+                "选品方案",
+                "服务支持"
+              ],
+              "start": 28.38,
+              "cueStartMs": 28380,
+              "cueEndMs": 33600,
+              "end": 33.6
+            },
+            {
+              "kind": "cta",
+              "fromCue": 13,
+              "toCue": 13,
+              "heading": [
+                "先了解",
+                "再做判断"
+              ],
+              "deck": "点击下方立即咨询，了解合作详情",
+              "points": [
+                "点击下方",
+                "立即咨询"
+              ],
+              "start": 33.6,
+              "cueStartMs": 33600,
+              "cueEndMs": 36340,
+              "end": 36.73041666666666
+            }
+          ],
+          "captions_sha256": "a33fc71b283099b4f3a98feb53d08dc3deb1f12ed6a59ceca301c9dc6a19fc94",
+          "job_id": "PQ-124a8045c3dd9b8c60aa",
+          "work_id": "work-4caa016a008b5e061957a2e8",
+          "version_id": "v-fb957f600e4abd7479d95cc7",
+          "final_output_sha256": "fb957f600e4abd7479d95cc7618ab9c258a2ff83ee0f5cc89d44cd65c540481d",
+          "final_media": {
+            "width": 1080,
+            "height": 1920,
+            "fps": "30",
+            "video_frames": 1102,
+            "video_seconds": 36.733333,
+            "AAC_seconds": 36.730417,
+            "container_seconds": 36.733333,
+            "original_PCM_clock_seconds": 36.73041666666666,
+            "expected_frames": 1102,
+            "video_clock_difference_seconds": 0.0029163333333386277,
+            "AAC_clock_difference_seconds": 3.3333333959717493e-7
+          },
+          "AAC_technical_measurements": {
+            "integrated_LUFS": -17.24,
+            "true_peak_dBTP": -2.15,
+            "LRA_LU": 1.9
+          },
+          "source_preserved": true,
+          "cloud_calls": 0
+        },
+        {
+          "clip": 3,
+          "direction": "optical-cinema",
+          "source_video_sha256": "279ea1c879f47b9cb00f2d2e6daeb35f8e911c126a36ac94adeaa28260f0acdd",
+          "audio_duration_seconds": 34.226083333333335,
+          "planned_output_frames": 1027,
+          "planned_output_duration_seconds": 34.233333333333334,
+          "caption_count": 13,
+          "chapters": [
+            {
+              "kind": "hook",
+              "fromCue": 0,
+              "toCue": 1,
+              "heading": [
+                "越拍",
+                "越没东西讲？"
+              ],
+              "deck": "把镜头放到有真实顾客的店里",
+              "points": [
+                "真实顾客",
+                "内容现场"
+              ],
+              "start": 0,
+              "cueStartMs": 0,
+              "cueEndMs": 5380,
+              "end": 5.38
+            },
+            {
+              "kind": "story",
+              "fromCue": 2,
+              "toCue": 6,
+              "heading": [
+                "一家店",
+                "一座内容现场"
+              ],
+              "deck": "服务周边居民，也为账号积累素材",
+              "points": [
+                "真实顾客",
+                "体验互动",
+                "内容素材"
+              ],
+              "start": 5.38,
+              "cueStartMs": 5380,
+              "cueEndMs": 17100,
+              "end": 17.88
+            },
+            {
+              "kind": "ai",
+              "fromCue": 7,
+              "toCue": 8,
+              "heading": [
+                "AI数字员工",
+                "协助门店经营"
+              ],
+              "deck": "协助选品、宣传和客服",
+              "points": [
+                "选品",
+                "宣传",
+                "客服"
+              ],
+              "start": 17.88,
+              "cueStartMs": 17880,
+              "cueEndMs": 24340,
+              "end": 24.74
+            },
+            {
+              "kind": "offer",
+              "fromCue": 9,
+              "toCue": 9,
+              "heading": [
+                "20—50㎡",
+                "9.8万合作方案"
+              ],
+              "deck": "海客AI社区服务站",
+              "points": [
+                "社区AI服务",
+                "创作者合作"
+              ],
+              "start": 24.74,
+              "cueStartMs": 24740,
+              "cueEndMs": 27020,
+              "end": 27.02
+            },
+            {
+              "kind": "cta",
+              "fromCue": 10,
+              "toCue": 12,
+              "heading": [
+                "先拿资料",
+                "再做决定"
+              ],
+              "deck": "看看门店是什么样，了解具体怎么经营",
+              "points": [
+                "点击下方",
+                "立即咨询"
+              ],
+              "start": 27.02,
+              "cueStartMs": 27020,
+              "cueEndMs": 33920,
+              "end": 34.226083333333335
+            }
+          ],
+          "captions_sha256": "c4c85987a3731bf91a3f25edb1c5747204e91877c2f7e7091bf3a476148d3403",
+          "job_id": "PQ-6e959d90dfebc3717630",
+          "work_id": "work-86661c9dae357d8583408ab7",
+          "version_id": "v-4300c60033670e8d53704ce6",
+          "final_output_sha256": "4300c60033670e8d53704ce63f24fc416a108b79b347b8e228b48e99b1dd68fe",
+          "final_media": {
+            "width": 1080,
+            "height": 1920,
+            "fps": "30",
+            "video_frames": 1027,
+            "video_seconds": 34.233333,
+            "AAC_seconds": 34.226083,
+            "container_seconds": 34.233333,
+            "original_PCM_clock_seconds": 34.226083333333335,
+            "expected_frames": 1027,
+            "video_clock_difference_seconds": 0.007249666666666599,
+            "AAC_clock_difference_seconds": -3.3333333249174757e-7
+          },
+          "AAC_technical_measurements": {
+            "integrated_LUFS": -16.06,
+            "true_peak_dBTP": -2.12,
+            "LRA_LU": 3.8
+          },
+          "source_preserved": true,
+          "cloud_calls": 0
+        }
+      ],
+      "validation_scope": "implementation+ready仅覆盖本期三条已有原片艺术开发测试：01社区/4:5近景、02锐蓝/9:16中景、03曜黑/9:16中景及其冻结SHA。默认v002稳态不变。社区points仅<=4字、其余本期<=6字；入口允许的<=12字points和其他长度/组合未验，不泛化为所有输入可直接复用。",
+      "runtime_basis": {
+        "../../backlot/production_queue_worker.py": "832a6c18df8ae1160bc2403b9ea07df6dea9d94bd306a1b864d03362ced6dad6",
+        "../../backlot/studio_composition.py": "5816064c6489bccc927c6ba00e86fce6c487bcad50446ddf484a89dd438971af",
+        "../../backlot/studio_investment.py": "729169c41ec29577a912c27e8d3e16bff5ceff1d09486eb0879b19636df98aa3",
+        "../../backlot/studio_investment_source_video.py": "d18fb3b3f739fbf3acb404fe5642793c4e60607f0d7743abeed3126ea07deb55",
+        "index.tsx": "6b549eae6a1ae09723078410bee8219f3be7e46aac480ff7e6a08e576bb9584e",
+        "layout.json": "158de09fa3ba20d956c57b2dd2ac5567e488784535f6f127ca6d25dd5a5e28f7"
+      },
+      "runtime_basis_note": "此处绑定实际三片渲染时的视觉/执行源码SHA。渲染完成后新增assets/README/spec为分发与规格记录，未修改对应TSX/layout或视频；后续prepare重新冻结完整runtime。"
+    }
+  },
+  "operations": [
+    {
+      "id": "prepare_source_art",
+      "input": "用户明确指定完整MP4、每cue带source_video_sha256的真实字幕JSON、三固定方向art-config、背景PNG、title和brand。",
+      "action": "使用现有CLI --evidence-dir --source-video --cues --art-config --title --brand --base --prepare；检查工作区身份后导入原片/音轨并冻结SHA。",
+      "output": "request.json、import-manifest、同源PCM与真实cue、runtime/输入身份；无付费调用。",
+      "completion": "输入可解码、原片含AAC、cue来源SHA与有序时钟有效、配置合法、源码齐全；旧冻结项目已读回或明确新身份。",
+      "recovery": "相同evidence-dir复用同请求和固定源；冲突保留现场，按新的已明确输入重新冻结，不能覆盖原付费媒体。",
+      "entrypoint": "../../scripts/avatar_investment_source_video.py"
+    },
+    {
+      "id": "queue_source_art",
+      "input": "已达到限定范围ready的艺术实现、冻结原片/真实cue/art-config及本次已有视频零云测试授权；新输入超出已验范围时先做开发样片。",
+      "action": "同evidence-dir --submit，然后--run/--resume；只由ProductionQueueWorker.run_local_recompose在统一单lane认领本任务。",
+      "output": "原队列终态、独立avatar-preview.mp4、source-video-art-result.json、art-scene-plan.json、props及作品新版本。",
+      "completion": "来源/runtime仍匹配，cloud_calls=0、sources_unchanged=true、同一请求/队列/作品/输出SHA一致；未把终态当最终QA。",
+      "recovery": "全局lane忙时等待原任务认领，不绕过或重复submit；原任务失败按safe_resume_point恢复；完成回执核对后恢复登记。",
+      "entrypoint": "../../scripts/avatar_investment_source_video.py"
+    },
+    {
+      "id": "acceptance",
+      "input": "三条完整最终输出、冻结request/props/cues、原输入SHA、当前源码、技术/实际视觉和播放记录。",
+      "action": "同SHA进行唯一完整技术QA和覆盖性视觉/连续听看检查；核对-2.5dB一次、时长/帧、章节/cue、人物与标识、作品版本。",
+      "output": "每条最终SHA的分维度矩阵、可播放测试片与未验范围。",
+      "completion": "各适用维度有同SHA实际结果，技术/实际视觉/本地作品接入通过；连续听看、音素、平台真机及用户确认独立pending。三片测试不提升其他字段上限或组合，不写正式质量批准，不发布。",
+      "recovery": "保留原片与原任务，局部修改冻结新实现后仅重做受影响合成及相关QA；不重生数字人或音轨。",
+      "entrypoint": "../../scripts/codex_video_quality.py"
+    }
+  ]
+}

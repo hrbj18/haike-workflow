@@ -1,0 +1,534 @@
+"""Independent multimodal adapter for evidence-backed material descriptions.
+
+The adapter accepts ordered local evidence frames, never a whole video.  Model
+timestamps are intentionally ignored: the application owns time and maps frame IDs
+back to the source timeline after schema validation.
+"""
+
+from __future__ import annotations
+
+import base64
+import io
+import json
+import os
+import re
+from pathlib import Path
+from typing import Any, Callable
+
+from PIL import Image, ImageDraw
+
+from backlot.ai_text import (
+    _effective_value,
+    _parse_json_object,
+    _read_env_file,
+    _resolved_credentials,
+    _safe_provider_error,
+    _secrets_path,
+)
+
+
+VISION_PROMPT_VERSION = "material-shot-description-v2"
+VISION_SCHEMA_VERSION = 1
+OVERVIEW_PROMPT_VERSION = "material-contact-sheet-overview-v1"
+OVERVIEW_SCHEMA_VERSION = 1
+DETAIL_PROMPT_VERSION = "material-overview-detail-v1"
+DETAIL_SCHEMA_VERSION = 1
+MAX_SHOTS_PER_REQUEST = 4
+MAX_IMAGES_PER_REQUEST = 12
+MAX_SOURCE_IMAGE_BYTES = 32 * 1024 * 1024
+MAX_CONTACT_SHEETS_PER_REQUEST = 9
+
+
+class VisionAIError(RuntimeError):
+    def __init__(self, message: str, *, status: str = "failed") -> None:
+        super().__init__(message)
+        self.status = status
+
+
+def _vision_runtime(provider: str = "default", *, model_override: str | None = None) -> tuple[str, str, str]:
+    api_key, base_url, text_model = _resolved_credentials(provider)
+    if provider != "default":
+        raise VisionAIError("当前视觉理解只支持项目默认 AI 提供方")
+    _, values = _read_env_file(_secrets_path())
+    model = _effective_value("OPENAI_VISION_MODEL", values) or text_model
+    if model_override is not None:
+        if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._:/-]{0,159}", model_override):
+            raise VisionAIError("本次选择的视觉模型名称无效")
+        model = model_override
+    return api_key, base_url, model
+
+
+def vision_runtime_identity(provider: str = "default", *, model_override: str | None = None) -> dict[str, str]:
+    """Return a cache-safe identity without exposing credentials or endpoints."""
+    _, _, model = _vision_runtime(provider, **({"model_override": model_override} if model_override else {}))
+    return {
+        "provider": provider,
+        "model": model,
+        "prompt_version": VISION_PROMPT_VERSION,
+        "schema_version": str(VISION_SCHEMA_VERSION),
+        "image_detail": "auto",
+        "image_longest_edge": "768",
+    }
+
+
+def overview_runtime_identity(provider: str = "default", *, detailed: bool = False, model_override: str | None = None) -> dict[str, str]:
+    """Cache-safe identity for contact-sheet overview or its detail upgrade."""
+    _, _, model = _vision_runtime(provider, **({"model_override": model_override} if model_override else {}))
+    return {
+        "provider": provider,
+        "model": model,
+        "prompt_version": DETAIL_PROMPT_VERSION if detailed else OVERVIEW_PROMPT_VERSION,
+        "schema_version": str(DETAIL_SCHEMA_VERSION if detailed else OVERVIEW_SCHEMA_VERSION),
+        "image_detail": "auto",
+        "image_longest_edge": "1280" if detailed else "2048",
+    }
+
+
+def _jpeg_data_url(path: Path, *, longest_edge: int = 768) -> str:
+    source = path.resolve()
+    if not source.is_file():
+        raise VisionAIError(f"视觉证据帧不存在：{source.name}")
+    if source.stat().st_size > MAX_SOURCE_IMAGE_BYTES:
+        raise VisionAIError(f"视觉证据帧过大：{source.name}")
+    try:
+        with Image.open(source) as image:
+            image = image.convert("RGB")
+            image.thumbnail((longest_edge, longest_edge), Image.Resampling.LANCZOS)
+            output = io.BytesIO()
+            image.save(output, format="JPEG", quality=82, optimize=True)
+    except (OSError, ValueError) as exc:
+        raise VisionAIError(f"无法读取视觉证据帧：{source.name}") from exc
+    return "data:image/jpeg;base64," + base64.b64encode(output.getvalue()).decode("ascii")
+
+
+def _response_content(response: Any) -> str:
+    try:
+        data = response.json()
+    except Exception as exc:
+        raise VisionAIError("视觉服务没有返回可解析的 JSON 响应") from exc
+    choices = data.get("choices") if isinstance(data, dict) else None
+    if not isinstance(choices, list) or not choices or not isinstance(choices[0], dict):
+        raise VisionAIError("视觉服务没有返回可用结果")
+    message = choices[0].get("message") if isinstance(choices[0].get("message"), dict) else {}
+    content = message.get("content")
+    if isinstance(content, list):
+        content = "".join(str(item.get("text") or "") for item in content if isinstance(item, dict))
+    if not isinstance(content, str) or not content.strip():
+        raise VisionAIError("视觉服务返回了空结果")
+    return content
+
+
+def _post_vision_json(
+    system_prompt: str,
+    content: list[dict[str, Any]],
+    *,
+    provider: str = "default",
+    timeout_seconds: int = 120,
+    post: Callable[..., Any] | None = None,
+    model_override: str | None = None,
+) -> tuple[dict[str, Any], str]:
+    api_key, base_url, model = _vision_runtime(provider, **({"model_override": model_override} if model_override else {}))
+    endpoint = f"{(base_url or 'https://api.openai.com/v1').rstrip('/')}/chat/completions"
+    request = {
+        "model": model,
+        "temperature": 0,
+        "stream": False,
+        "messages": [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": content},
+        ],
+        "response_format": {"type": "json_object"},
+    }
+    headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
+    try:
+        if post is None:
+            import requests
+
+            post = requests.post
+        response = post(endpoint, headers=headers, json=request, timeout=max(20, int(timeout_seconds)))
+    except Exception as exc:
+        if "timeout" in type(exc).__name__.lower() or "timed out" in str(exc).lower():
+            raise VisionAIError("视觉服务响应超时，结果状态不明确；系统没有自动重试", status="ambiguous") from exc
+        raise VisionAIError(_safe_provider_error(exc)) from exc
+    if int(getattr(response, "status_code", 500)) >= 400:
+        message = str(getattr(response, "text", "") or "")[:500]
+        raise VisionAIError(_safe_provider_error(f"HTTP {response.status_code}: {message}"))
+    return _parse_json_object(_response_content(response)), model
+
+
+def _confidence(value: Any) -> float:
+    try:
+        number = float(value)
+    except (TypeError, ValueError) as exc:
+        raise VisionAIError("视觉描述包含无效置信度") from exc
+    if not 0 <= number <= 1:
+        raise VisionAIError("视觉描述置信度必须在 0 到 1 之间")
+    return round(number, 4)
+
+
+def _short_text(value: Any, maximum: int, *, required: bool = False) -> str:
+    text = " ".join(str(value or "").split()).strip()
+    if required and not text:
+        raise VisionAIError("视觉描述缺少必要文本字段")
+    return text[:maximum]
+
+
+def _normalize_evidence_items(values: Any, valid_frame_ids: set[str], label: str) -> list[dict[str, Any]]:
+    if not isinstance(values, list):
+        raise VisionAIError(f"视觉描述的{label}字段不是数组")
+    output: list[dict[str, Any]] = []
+    for value in values[:20]:
+        if not isinstance(value, dict):
+            raise VisionAIError(f"视觉描述的{label}条目无效")
+        frame_ids = [str(item) for item in value.get("evidence_frame_ids") or []]
+        if not frame_ids or not set(frame_ids).issubset(valid_frame_ids):
+            raise VisionAIError(f"视觉描述的{label}引用了未输入的证据帧")
+        item = {
+            "name": _short_text(value.get("name"), 80, required=True),
+            "confidence": _confidence(value.get("confidence")),
+            "evidence_frame_ids": list(dict.fromkeys(frame_ids)),
+        }
+        if label == "主体" and value.get("type"):
+            item["type"] = _short_text(value.get("type"), 60)
+        if label == "动作" and value.get("subject"):
+            item["subject"] = _short_text(value.get("subject"), 80)
+        output.append(item)
+    return output
+
+
+def _normalize_cell_evidence_items(values: Any, valid_cell_ids: set[str], label: str) -> list[dict[str, Any]]:
+    if not isinstance(values, list):
+        raise VisionAIError(f"快速概览的{label}字段不是数组")
+    output: list[dict[str, Any]] = []
+    for value in values[:20]:
+        if not isinstance(value, dict):
+            raise VisionAIError(f"快速概览的{label}条目无效")
+        cell_ids = [str(item) for item in value.get("evidence_cell_ids") or []]
+        if not cell_ids or not set(cell_ids).issubset(valid_cell_ids):
+            raise VisionAIError(f"快速概览的{label}引用了未输入的联系表单元格")
+        item = {
+            "name": _short_text(value.get("name"), 80, required=True),
+            "confidence": _confidence(value.get("confidence")),
+            "evidence_cell_ids": list(dict.fromkeys(cell_ids)),
+        }
+        if label == "动作" and value.get("subject"):
+            item["subject"] = _short_text(value.get("subject"), 80)
+        output.append(item)
+    return output
+
+
+def _normalize_description(raw: dict[str, Any], shot: dict[str, Any]) -> dict[str, Any]:
+    valid_frame_ids = {str(frame["frame_id"]) for frame in shot.get("frames") or [] if frame.get("selected_for_vision")}
+    if not valid_frame_ids:
+        raise VisionAIError(f"{shot['shot_id']} 没有送入视觉模型的证据帧")
+    state_changes = raw.get("state_changes") if isinstance(raw.get("state_changes"), list) else []
+    screen_text = raw.get("screen_text") if isinstance(raw.get("screen_text"), list) else []
+    unknowns = raw.get("unknowns") if isinstance(raw.get("unknowns"), list) else []
+    quality = raw.get("quality") if isinstance(raw.get("quality"), dict) else {}
+    return {
+        "summary": _short_text(raw.get("summary"), 240, required=True),
+        "entities": _normalize_evidence_items(raw.get("entities"), valid_frame_ids, "主体"),
+        "actions": _normalize_evidence_items(raw.get("actions"), valid_frame_ids, "动作"),
+        "environment": _short_text(raw.get("environment"), 120),
+        "shot_type": _short_text(raw.get("shot_type"), 80),
+        "camera_motion": _short_text(raw.get("camera_motion"), 80),
+        "state_changes": [_short_text(value, 160) for value in state_changes[:10] if _short_text(value, 160)],
+        "screen_text": [_short_text(value, 160) for value in screen_text[:20] if _short_text(value, 160)],
+        "quality": {
+            "blur": _short_text(quality.get("blur"), 40),
+            "occlusion": _short_text(quality.get("occlusion"), 80),
+            "notes": _short_text(quality.get("notes"), 160),
+        },
+        "unknowns": [_short_text(value, 160) for value in unknowns[:10] if _short_text(value, 160)],
+        "overall_confidence": _confidence(raw.get("overall_confidence")),
+        "evidence_frame_ids": sorted(valid_frame_ids),
+    }
+
+
+SHOT_SYSTEM_PROMPT = """你是视频素材证据分析器。输入由多个镜头及其按时间排序的证据帧组成。
+只描述图片直接支持的事实，不根据文件名、脚本或常识补全产品型号、人物身份、因果和用途。
+只输出 JSON：
+{"shots":[{"shot_id":"SHOT-0001","summary":"镜头事实摘要","entities":[{"name":"主体","type":"类别","confidence":0.0,"evidence_frame_ids":["FRAME-00001"]}],"actions":[{"name":"动作","subject":"主体","confidence":0.0,"evidence_frame_ids":["FRAME-00001"]}],"environment":"环境","shot_type":"景别","camera_motion":"摄像机运动","state_changes":["可观察变化"],"screen_text":["可见文字候选"],"quality":{"blur":"low|medium|high","occlusion":"遮挡情况","notes":"质量说明"},"unknowns":["无法确认的信息"],"overall_confidence":0.0}]}
+规则：必须为每个输入 shot_id 恰好返回一项；evidence_frame_ids 只能引用输入帧；不要输出时间戳；无法确认时写入 unknowns。
+同一镜头内要跨帧追踪主要运动主体，尽量使用证据支持的通用类别（如机器人、人物、动物、车辆），不要因为主体较小就只写“物体”；若形态仍不足以分类，保留通用描述并在 unknowns 说明。"""
+
+
+def describe_shots(
+    shots: list[dict[str, Any]],
+    *,
+    provider: str = "default",
+    post: Callable[..., Any] | None = None,
+    model_override: str | None = None,
+) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    if not shots:
+        raise VisionAIError("没有可供视觉理解的镜头")
+    descriptions: list[dict[str, Any]] = []
+    model = ""
+    request_count = 0
+    image_count = 0
+    batches: list[list[dict[str, Any]]] = []
+    batch: list[dict[str, Any]] = []
+    batch_images = 0
+    for shot in shots:
+        shot_images = sum(1 for frame in shot.get("frames") or [] if frame.get("selected_for_vision"))
+        if shot_images < 1:
+            raise VisionAIError(f"{shot.get('shot_id') or '镜头'} 没有可用证据帧")
+        if shot_images > MAX_IMAGES_PER_REQUEST:
+            raise VisionAIError(f"{shot.get('shot_id') or '镜头'} 的证据帧超过单请求上限")
+        if batch and (len(batch) >= MAX_SHOTS_PER_REQUEST or batch_images + shot_images > MAX_IMAGES_PER_REQUEST):
+            batches.append(batch)
+            batch = []
+            batch_images = 0
+        batch.append(shot)
+        batch_images += shot_images
+    if batch:
+        batches.append(batch)
+
+    for batch in batches:
+        selected = [frame for shot in batch for frame in shot.get("frames") or [] if frame.get("selected_for_vision")]
+        content: list[dict[str, Any]] = [{
+            "type": "text",
+            "text": "下面按 shot_id 和 frame_id 给出证据帧；同一镜头内顺序即时间顺序。",
+        }]
+        for shot in batch:
+            content.append({"type": "text", "text": f"镜头 {shot['shot_id']}"})
+            for frame in shot.get("frames") or []:
+                if not frame.get("selected_for_vision"):
+                    continue
+                content.append({"type": "text", "text": f"证据帧 {frame['frame_id']}"})
+                content.append({"type": "image_url", "image_url": {"url": _jpeg_data_url(Path(frame["path"])), "detail": "auto"}})
+        raw, model = _post_vision_json(SHOT_SYSTEM_PROMPT, content, provider=provider, post=post, model_override=model_override)
+        rows = raw.get("shots") if isinstance(raw.get("shots"), list) else None
+        if rows is None:
+            raise VisionAIError("视觉服务返回结果缺少 shots 数组")
+        supplied = {str(row.get("shot_id")): row for row in rows if isinstance(row, dict)}
+        expected = {str(shot["shot_id"]) for shot in batch}
+        if set(supplied) != expected or len(rows) != len(expected):
+            raise VisionAIError("视觉服务没有为每个输入镜头恰好返回一项描述")
+        for shot in batch:
+            descriptions.append({"shot_id": shot["shot_id"], **_normalize_description(supplied[shot["shot_id"]], shot)})
+        request_count += 1
+        image_count += len(selected)
+    return descriptions, {
+        "provider": provider,
+        "model": model,
+        "prompt_version": VISION_PROMPT_VERSION,
+        "schema_version": VISION_SCHEMA_VERSION,
+        "request_count": request_count,
+        "image_count": image_count,
+    }
+
+
+def normalize_agent_shot_descriptions(shots: list[dict[str, Any]], proposal: dict[str, Any]) -> list[dict[str, Any]]:
+    """Validate native-agent output with the same evidence rules as relay output."""
+    rows = proposal.get("shots") if isinstance(proposal, dict) else None
+    if not isinstance(rows, list):
+        raise VisionAIError("agent 镜头描述缺少 shots 数组")
+    supplied = {str(row.get("shot_id")): row for row in rows if isinstance(row, dict)}
+    expected = {str(shot.get("shot_id")) for shot in shots}
+    if set(supplied) != expected or len(rows) != len(expected):
+        raise VisionAIError("agent 没有为每个输入镜头恰好返回一项描述")
+    return [{"shot_id": shot["shot_id"], **_normalize_description(supplied[str(shot["shot_id"])], shot)} for shot in shots]
+
+
+CONTACT_SHEET_SYSTEM_PROMPT = """你是本地视频素材的快速概览分析器。输入是按时间顺序排列的联系表；每个格子都是离散采样，并不代表连续动作。
+只描述图片直接支持的事实，不根据文件名、脚本或常识补充人物身份、产品型号、因果或用途。
+只输出 JSON：
+{"chapters":[{"chapter_id":"CHAPTER-01","summary":"可见画面摘要","subjects":[{"name":"主体","confidence":0.0,"evidence_cell_ids":["SHEET-0001:R1C1"]}],"actions":[{"name":"动作","subject":"主体","confidence":0.0,"evidence_cell_ids":["SHEET-0001:R1C1"]}],"quality":{"blur":"low|medium|high","notes":"质量说明"},"usable_ranges":[{"label":"可用画面","confidence":0.0,"evidence_cell_ids":["SHEET-0001:R1C1"]}],"detail_candidates":[{"cell_id":"SHEET-0001:R1C1","reason":"small_subject|motion_ambiguity|visible_text|low_confidence"}],"unknowns":["无法确认的信息"]}]}
+规则：必须为每个输入 chapter_id 恰好返回一项；只能引用输入 cell_id；不要输出时间戳；没有证据时写入 unknowns。"""
+
+
+def _ranges_from_cells(values: Any, valid_cell_ids: set[str], cell_pts: dict[str, float]) -> list[dict[str, Any]]:
+    if not isinstance(values, list):
+        raise VisionAIError("快速概览的可用区间字段不是数组")
+    output: list[dict[str, Any]] = []
+    for value in values[:12]:
+        if not isinstance(value, dict):
+            raise VisionAIError("快速概览的可用区间条目无效")
+        cell_ids = [str(item) for item in value.get("evidence_cell_ids") or []]
+        if not cell_ids or not set(cell_ids).issubset(valid_cell_ids):
+            raise VisionAIError("快速概览的可用区间引用了未输入的联系表单元格")
+        points = sorted(float(cell_pts[cell_id]) for cell_id in cell_ids)
+        output.append({
+            "label": _short_text(value.get("label"), 80, required=True),
+            "confidence": _confidence(value.get("confidence")),
+            "evidence_cell_ids": list(dict.fromkeys(cell_ids)),
+            "start_seconds": round(points[0], 3),
+            "end_seconds": round(points[-1], 3),
+        })
+    return output
+
+
+def _normalize_contact_sheet_chapter(raw: dict[str, Any], chapter: dict[str, Any], cell_pts: dict[str, float]) -> dict[str, Any]:
+    valid_cell_ids = {str(item) for item in chapter.get("cell_ids") or []}
+    if not valid_cell_ids:
+        raise VisionAIError(f"{chapter['chapter_id']} 没有输入联系表证据")
+    quality = raw.get("quality") if isinstance(raw.get("quality"), dict) else {}
+    unknowns = raw.get("unknowns") if isinstance(raw.get("unknowns"), list) else []
+    candidates_raw = raw.get("detail_candidates") if isinstance(raw.get("detail_candidates"), list) else []
+    candidates: list[dict[str, str]] = []
+    for value in candidates_raw[:20]:
+        if not isinstance(value, dict):
+            raise VisionAIError("快速概览的精细化候选条目无效")
+        cell_id = str(value.get("cell_id") or "")
+        if cell_id not in valid_cell_ids:
+            raise VisionAIError("快速概览的精细化候选引用了未输入的联系表单元格")
+        candidates.append({"cell_id": cell_id, "reason": _short_text(value.get("reason"), 120, required=True)})
+    return {
+        "chapter_id": str(chapter["chapter_id"]),
+        "start_seconds": float(chapter["start_seconds"]),
+        "end_seconds": float(chapter["end_seconds"]),
+        "summary": _short_text(raw.get("summary"), 300, required=True),
+        "subjects": _normalize_cell_evidence_items(raw.get("subjects"), valid_cell_ids, "主体"),
+        "actions": _normalize_cell_evidence_items(raw.get("actions"), valid_cell_ids, "动作"),
+        "quality": {"blur": _short_text(quality.get("blur"), 40), "notes": _short_text(quality.get("notes"), 180)},
+        "usable_ranges": _ranges_from_cells(raw.get("usable_ranges"), valid_cell_ids, cell_pts),
+        "detail_candidates": candidates,
+        "unknowns": [_short_text(value, 180) for value in unknowns[:12] if _short_text(value, 180)],
+    }
+
+
+def describe_contact_sheets(
+    sheets: list[dict[str, Any]],
+    chapters: list[dict[str, Any]],
+    cells: list[dict[str, Any]],
+    *,
+    provider: str = "default",
+    post: Callable[..., Any] | None = None,
+    model_override: str | None = None,
+) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    """Describe only contact sheets; source frames and absolute paths stay local."""
+    if not sheets or not chapters:
+        raise VisionAIError("没有可供快速概览的联系表")
+    cell_pts = {str(cell.get("cell_id")): float(cell.get("actual_pts_seconds")) for cell in cells if isinstance(cell, dict) and cell.get("cell_id")}
+    sheets_by_chapter: dict[str, list[dict[str, Any]]] = {}
+    for sheet in sheets:
+        if isinstance(sheet, dict):
+            sheets_by_chapter.setdefault(str(sheet.get("chapter_id") or ""), []).append(sheet)
+    descriptions: list[dict[str, Any]] = []
+    model = ""
+    request_count = 0
+    image_count = 0
+    for offset in range(0, len(chapters), MAX_CONTACT_SHEETS_PER_REQUEST):
+        group = chapters[offset:offset + MAX_CONTACT_SHEETS_PER_REQUEST]
+        content: list[dict[str, Any]] = [{"type": "text", "text": "下列图片是联系表。每章的单元格编号已烘焙在图片中，只能引用这些编号。"}]
+        included: list[dict[str, Any]] = []
+        for chapter in group:
+            chapter_sheets = sheets_by_chapter.get(str(chapter.get("chapter_id") or ""), [])
+            if not chapter_sheets:
+                raise VisionAIError(f"{chapter.get('chapter_id') or '章节'} 缺少联系表")
+            content.append({"type": "text", "text": f"章节 {chapter['chapter_id']}"})
+            for sheet in chapter_sheets:
+                content.append({"type": "text", "text": f"联系表 {sheet['sheet_id']}"})
+                content.append({"type": "image_url", "image_url": {"url": _jpeg_data_url(Path(str(sheet["path"])), longest_edge=2048), "detail": "auto"}})
+                image_count += 1
+            included.append({**chapter, "cell_ids": [cell_id for sheet in chapter_sheets for cell_id in sheet.get("cell_ids") or []]})
+        raw, model = _post_vision_json(CONTACT_SHEET_SYSTEM_PROMPT, content, provider=provider, post=post, model_override=model_override)
+        rows = raw.get("chapters") if isinstance(raw.get("chapters"), list) else None
+        if rows is None:
+            raise VisionAIError("快速概览结果缺少 chapters 数组")
+        supplied = {str(row.get("chapter_id")): row for row in rows if isinstance(row, dict)}
+        expected = {str(chapter["chapter_id"]) for chapter in included}
+        if set(supplied) != expected or len(rows) != len(expected):
+            raise VisionAIError("快速概览没有为每个输入章节恰好返回一项")
+        for chapter in included:
+            descriptions.append(_normalize_contact_sheet_chapter(supplied[str(chapter["chapter_id"])], chapter, cell_pts))
+        request_count += 1
+    return descriptions, {"provider": provider, "model": model, "prompt_version": OVERVIEW_PROMPT_VERSION, "schema_version": OVERVIEW_SCHEMA_VERSION, "request_count": request_count, "image_count": image_count}
+
+
+def normalize_agent_contact_sheet_descriptions(index: dict[str, Any], proposal: dict[str, Any]) -> list[dict[str, Any]]:
+    """Check native-agent chapter IDs and cell evidence against local sheets."""
+    rows = proposal.get("chapters") if isinstance(proposal, dict) else None
+    if not isinstance(rows, list):
+        raise VisionAIError("agent 快速概览缺少 chapters 数组")
+    chapters = [item for item in (index.get("sampling") or {}).get("chapters") or [] if isinstance(item, dict)]
+    sheets = [item for item in index.get("sheets") or [] if isinstance(item, dict)]
+    cells = [item for item in index.get("cells") or [] if isinstance(item, dict)]
+    cell_pts = {str(cell["cell_id"]): float(cell["actual_pts_seconds"]) for cell in cells}
+    supplied = {str(row.get("chapter_id")): row for row in rows if isinstance(row, dict)}
+    expected = {str(chapter.get("chapter_id")) for chapter in chapters}
+    if set(supplied) != expected or len(rows) != len(expected):
+        raise VisionAIError("agent 没有为每个概览章节恰好返回一项描述")
+    normalized = []
+    for chapter in chapters:
+        chapter_id = str(chapter["chapter_id"])
+        chapter_cells = [cell_id for sheet in sheets if str(sheet.get("chapter_id")) == chapter_id for cell_id in sheet.get("cell_ids") or []]
+        normalized.append(_normalize_contact_sheet_chapter(supplied[chapter_id], {**chapter, "cell_ids": chapter_cells}, cell_pts))
+    return normalized
+
+
+DETAIL_SYSTEM_PROMPT = """你是视频素材精细化证据分析器。输入是从已标记联系表单元格回取的原始清晰帧。
+只描述图像直接支持的事实，不根据文件名、脚本或常识补全身份、产品型号、因果或用途。
+只输出 JSON：{"details":[{"detail_id":"DETAIL-001","summary":"可见细节","observations":["可见事实"],"unknowns":["无法确认的信息"],"confidence":0.0}]}。
+必须为每个输入 detail_id 恰好返回一项；不要输出时间戳。"""
+
+
+def describe_detail_frames(
+    frames: list[dict[str, Any]],
+    *,
+    provider: str = "default",
+    post: Callable[..., Any] | None = None,
+    model_override: str | None = None,
+) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    if not frames:
+        return [], {"provider": provider, "model": "", "prompt_version": DETAIL_PROMPT_VERSION, "schema_version": DETAIL_SCHEMA_VERSION, "request_count": 0, "image_count": 0}
+    content: list[dict[str, Any]] = [{"type": "text", "text": "以下是需要精细复核的原始证据帧，按 detail_id 输出。"}]
+    for frame in frames:
+        content.append({"type": "text", "text": f"证据 {frame['detail_id']}，来自 {frame['cell_id']}"})
+        content.append({"type": "image_url", "image_url": {"url": _jpeg_data_url(Path(str(frame["path"])), longest_edge=1280), "detail": "auto"}})
+    raw, model = _post_vision_json(DETAIL_SYSTEM_PROMPT, content, provider=provider, post=post, model_override=model_override)
+    rows = raw.get("details") if isinstance(raw.get("details"), list) else None
+    if rows is None:
+        raise VisionAIError("精细化结果缺少 details 数组")
+    supplied = {str(row.get("detail_id")): row for row in rows if isinstance(row, dict)}
+    expected = {str(frame["detail_id"]) for frame in frames}
+    if set(supplied) != expected or len(rows) != len(expected):
+        raise VisionAIError("精细化结果没有为每张输入证据帧恰好返回一项")
+    output = []
+    for frame in frames:
+        raw_row = supplied[str(frame["detail_id"])]
+        observations = raw_row.get("observations") if isinstance(raw_row.get("observations"), list) else []
+        unknowns = raw_row.get("unknowns") if isinstance(raw_row.get("unknowns"), list) else []
+        output.append({"detail_id": str(frame["detail_id"]), "cell_id": str(frame["cell_id"]), "summary": _short_text(raw_row.get("summary"), 300, required=True), "observations": [_short_text(value, 180) for value in observations[:12] if _short_text(value, 180)], "unknowns": [_short_text(value, 180) for value in unknowns[:12] if _short_text(value, 180)], "confidence": _confidence(raw_row.get("confidence"))})
+    return output, {"provider": provider, "model": model, "prompt_version": DETAIL_PROMPT_VERSION, "schema_version": DETAIL_SCHEMA_VERSION, "request_count": 1, "image_count": len(frames)}
+
+
+def test_vision_ai_connection(*, provider: str = "default", post: Callable[..., Any] | None = None, model_override: str | None = None) -> dict[str, Any]:
+    """Verify that a relay truly forwards ordered image input using synthetic data."""
+    colors = [(220, 35, 35), (35, 170, 70), (40, 90, 220)]
+    labels = ["K7", "M4", "R9"]
+    content: list[dict[str, Any]] = [{
+        "type": "text",
+        "text": "按图片顺序读取每张图中央的两字符代码和背景主色，只输出 JSON："
+                '{"sequence":[{"code":"","color":"red|green|blue"}]}。',
+    }]
+    for color, label in zip(colors, labels):
+        image = Image.new("RGB", (320, 180), color)
+        draw = ImageDraw.Draw(image)
+        draw.rectangle((105, 55, 215, 125), fill="white")
+        draw.text((145, 78), label, fill="black")
+        output = io.BytesIO()
+        image.save(output, format="JPEG", quality=92)
+        url = "data:image/jpeg;base64," + base64.b64encode(output.getvalue()).decode("ascii")
+        content.append({"type": "image_url", "image_url": {"url": url, "detail": "high"}})
+    raw, model = _post_vision_json(
+        "你是视觉连接测试器。只能根据图片内容作答，不要猜测。",
+        content,
+        provider=provider,
+        timeout_seconds=90,
+        post=post,
+        model_override=model_override,
+    )
+    sequence = raw.get("sequence") if isinstance(raw.get("sequence"), list) else []
+    received_codes = [str(item.get("code") or "").upper() for item in sequence if isinstance(item, dict)]
+    received_colors = [str(item.get("color") or "").lower() for item in sequence if isinstance(item, dict)]
+    if received_codes != labels or received_colors != ["red", "green", "blue"]:
+        raise VisionAIError("AI 服务已响应，但没有通过图片内容与顺序测试")
+    return {
+        "ok": True,
+        "status": "passed",
+        "message": "图片输入、多图顺序和结构化输出均可用",
+        "provider": provider,
+        "model": model,
+    }

@@ -1,0 +1,1114 @@
+{
+  "11": {
+    "class_type": "WanVideoModelLoader",
+    "inputs": {
+      "attention_mode": "sageattn",
+      "block_swap_args": [
+        "33",
+        0
+      ],
+      "lora": [
+        "15",
+        0
+      ],
+      "multitalk_model": [
+        "16",
+        0
+      ],
+      "rms_norm_function": "default",
+      "model": "wan2.1_i2v_480p_14B_bf16.safetensors",
+      "load_device": "offload_device",
+      "base_precision": "bf16",
+      "quantization": "disabled"
+    },
+    "_meta": {
+      "title": "官方Wan2.1 I2V 14B BF16主模型｜48G测试配置"
+    }
+  },
+  "33": {
+    "class_type": "WanVideoBlockSwap",
+    "inputs": {
+      "prefetch_blocks": 1,
+      "offload_img_emb": false,
+      "offload_txt_emb": false,
+      "block_swap_debug": false,
+      "vace_blocks_to_swap": 0,
+      "blocks_to_swap": 8,
+      "use_non_blocking": true
+    },
+    "_meta": {
+      "title": "显存管理：Block Swap（云端默认，请勿修改）"
+    }
+  },
+  "12": {
+    "class_type": "WanVideoTextEncode",
+    "inputs": {
+      "t5": [
+        "3",
+        0
+      ],
+      "negative_prompt": "唱歌，跳舞，比心，飞吻，夸张挥手，反复摆手，双手高举，手部遮挡面部，夸张肢体动作，身体剧烈摇摆，头部剧烈晃动，机械重复动作，镜头移动，镜头缩放，场景切换，身份变化，发型变化，服装变化，背景变化，额外人物，字幕，文字，水印，过度曝光，模糊，低质量，JPEG压缩残留，面部变形，五官错位，多余手指，手部畸形，身体畸形，闪烁，抽搐，静止画面，鲜红口红，深色嘴唇，口红颜色变化，过度饱和，磨皮，蜡像脸，锐化光晕。",
+      "use_disk_cache": true,
+      "positive_prompt": [
+        "30",
+        0
+      ],
+      "force_offload": true,
+      "device": "gpu"
+    },
+    "_meta": {
+      "title": "讲解提示词编码｜自然动作与人物一致性"
+    }
+  },
+  "34": {
+    "class_type": "LoadAudio",
+    "inputs": {
+      "audio": "sample_voice_117s.wav",
+      "audioUI": ""
+    },
+    "_meta": {
+      "title": "① 完整原配音｜天亮猴哥1.15倍速"
+    }
+  },
+  "13": {
+    "class_type": "WanVideoSampler",
+    "inputs": {
+      "add_noise_to_samples": true,
+      "denoise_strength": 1,
+      "text_embeds": [
+        "12",
+        0
+      ],
+      "seed": 857465038123108,
+      "cfg": 1.0,
+      "shift": 11.0,
+      "end_step": -1,
+      "riflex_freq_index": 0,
+      "multitalk_embeds": [
+        "18",
+        0
+      ],
+      "steps": 4,
+      "scheduler": "dpm++",
+      "start_step": 0,
+      "batched_cfg": false,
+      "rope_function": "comfy",
+      "image_embeds": [
+        "14",
+        0
+      ],
+      "force_offload": true,
+      "model": [
+        "11",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "原生画面采样｜四步CFG蒸馏｜每块内部81帧窗口"
+    }
+  },
+  "14": {
+    "class_type": "WanVideoImageToVideoMultiTalk",
+    "inputs": {
+      "motion_frame": 9,
+      "mode": "infinitetalk",
+      "clip_embeds": [
+        "7",
+        0
+      ],
+      "tiled_vae": false,
+      "width": [
+        "42",
+        0
+      ],
+      "colormatch": "disabled",
+      "output_path": "",
+      "force_offload": true,
+      "vae": [
+        "6",
+        0
+      ],
+      "frame_window_size": 81,
+      "height": [
+        "43",
+        0
+      ],
+      "start_image": [
+        "60",
+        4
+      ]
+    },
+    "_meta": {
+      "title": "InfiniteTalk条件｜关闭MKL，减轻全局亮度闪烁"
+    }
+  },
+  "36": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "portrait_4x5_pad_input.png"
+    },
+    "_meta": {
+      "title": "② 原始人物参考图｜四比例自动识别"
+    }
+  },
+  "15": {
+    "class_type": "WanVideoLoraSelect",
+    "inputs": {
+      "lora": "Wan21_I2V_14B_lightx2v_cfg_step_distill_lora_rank64.safetensors",
+      "strength": 1,
+      "low_mem_load": false,
+      "merge_loras": false
+    },
+    "_meta": {
+      "title": "单独使用LightX2V四步蒸馏｜移除额外rCM混合"
+    }
+  },
+  "26": {
+    "class_type": "GetImageSizeAndCount",
+    "inputs": {
+      "image": [
+        "2",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "读取预处理后图像尺寸（自动）"
+    }
+  },
+  "16": {
+    "class_type": "MultiTalkModelLoader",
+    "inputs": {
+      "model": "InfiniteTalk/Wan2_1-InfiniTetalk-Single_fp16.safetensors"
+    },
+    "_meta": {
+      "title": "InfiniteTalk 单人对口型模型（自动加载）"
+    }
+  },
+  "18": {
+    "class_type": "MultiTalkWav2VecEmbeds",
+    "inputs": {
+      "audio_cfg_scale": 1,
+      "add_noise_floor": false,
+      "audio_scale": 1,
+      "normalize_loudness": true,
+      "num_frames": [
+        "69",
+        0
+      ],
+      "fps": 25,
+      "wav2vec_model": [
+        "9",
+        0
+      ],
+      "multi_audio_type": "para",
+      "smooth_transients": false,
+      "audio_1": [
+        "68",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "音频驱动特征：同源干声 + 精确总帧数（自动）"
+    }
+  },
+  "19": {
+    "class_type": "WanVideoDecode",
+    "inputs": {
+      "tile_y": 272,
+      "normalization": "default",
+      "tile_x": 272,
+      "tile_stride_y": 128,
+      "vae": [
+        "6",
+        0
+      ],
+      "tile_stride_x": 144,
+      "samples": [
+        "13",
+        0
+      ],
+      "enable_vae_tiling": false
+    },
+    "_meta": {
+      "title": "视频解码（自动）"
+    }
+  },
+  "2": {
+    "class_type": "ImageResizeKJv2",
+    "inputs": {
+      "image": [
+        "36",
+        0
+      ],
+      "width": [
+        "42",
+        0
+      ],
+      "height": [
+        "43",
+        0
+      ],
+      "upscale_method": "lanczos",
+      "keep_proportion": "pad_edge",
+      "pad_color": "0, 0, 0",
+      "crop_position": "center",
+      "divisible_by": 1,
+      "device": "cpu"
+    },
+    "_meta": {
+      "title": "人物图保比例预处理｜避免内部16像素取整压缩"
+    }
+  },
+  "3": {
+    "class_type": "LoadWanVideoT5TextEncoder",
+    "inputs": {
+      "model_name": "umt5-xxl-enc-bf16.safetensors",
+      "precision": "bf16",
+      "load_device": "offload_device",
+      "quantization": "disabled"
+    },
+    "_meta": {
+      "title": "文本编码模型：T5（自动加载，请勿修改）"
+    }
+  },
+  "4": {
+    "class_type": "CLIPVisionLoader",
+    "inputs": {
+      "clip_name": "clip_vision_h.safetensors"
+    },
+    "_meta": {
+      "title": "图像理解模型：CLIP Vision（自动加载，请勿修改）"
+    }
+  },
+  "6": {
+    "class_type": "WanVideoVAELoader",
+    "inputs": {
+      "model_name": "Wan2_1_VAE_bf16.safetensors",
+      "precision": "bf16",
+      "use_cpu_cache": false,
+      "verbose": false
+    },
+    "_meta": {
+      "title": "Wan 视频 VAE（自动加载，请勿修改）"
+    }
+  },
+  "7": {
+    "class_type": "WanVideoClipVisionEncode",
+    "inputs": {
+      "strength_1": 1,
+      "tiles": 0,
+      "combine_embeds": "average",
+      "strength_2": 1,
+      "image_1": [
+        "26",
+        0
+      ],
+      "force_offload": true,
+      "clip_vision": [
+        "4",
+        0
+      ],
+      "crop": "center",
+      "ratio": 0.5
+    },
+    "_meta": {
+      "title": "参考图视觉特征编码（自动）"
+    }
+  },
+  "9": {
+    "class_type": "DownloadAndLoadWav2VecModel",
+    "inputs": {
+      "model": "TencentGameMate/chinese-wav2vec2-base",
+      "load_device": "main_device",
+      "base_precision": "fp16"
+    },
+    "_meta": {
+      "title": "语音特征模型：中文 Wav2Vec2（自动加载）"
+    }
+  },
+  "30": {
+    "class_type": "CR Prompt Text",
+    "inputs": {
+      "prompt": "参考图中的人物自然地面对镜头进行讲解，表达自信、亲切，有适度的交流感。保持与参考图一致的人物身份、面部比例、发型、服装、背景、光照和自然唇色。固定机位，保持原有构图。\n\n说话时自然眨眼，伴随适度点头、轻微肩部和上身运动。偶尔使用自然的小到中等幅度讲解手势，例如单手轻抬、手掌轻微展开、简短的强调动作。动作有停顿，手势结束后自然放松，避免持续重复。手部活动保持在画面范围内，不遮挡面部，不强求双手同时出现。\n\n保持真实皮肤纹理、稳定曝光和自然连贯的动作。"
+    },
+    "_meta": {
+      "title": "自然讲解手势｜适度抬手与强调，禁止比心飞吻"
+    }
+  },
+  "40": {
+    "class_type": "GetImageSizeAndCount",
+    "inputs": {
+      "image": [
+        "36",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "读取原图比例"
+    }
+  },
+  "41": {
+    "class_type": "MathExpression|pysssss",
+    "inputs": {
+      "expression": "iif(a/b>1.3,1,iif(a/b>0.9,2,iif(a/b<0.68,3,4)))",
+      "a": [
+        "40",
+        1
+      ],
+      "b": [
+        "40",
+        2
+      ]
+    },
+    "_meta": {
+      "title": "自动匹配四种比例：1横屏2方形3竖屏4四比五"
+    }
+  },
+  "42": {
+    "class_type": "MathExpression|pysssss",
+    "inputs": {
+      "expression": "iif(a==1,960,iif(a==2,768,iif(a==3,544,640)))",
+      "a": [
+        "41",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "原生宽度｜方图768，其余沿用V2"
+    }
+  },
+  "43": {
+    "class_type": "MathExpression|pysssss",
+    "inputs": {
+      "expression": "iif(a==1,544,iif(a==2,768,iif(a==3,960,800)))",
+      "a": [
+        "41",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "原生高度｜方图768，其余沿用V2"
+    }
+  },
+  "44": {
+    "class_type": "MathExpression|pysssss",
+    "inputs": {
+      "expression": "iif(a==1,1536,iif(a==2,1536,iif(a==3,864,1228)))",
+      "a": [
+        "41",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "交付宽度：长边1536"
+    }
+  },
+  "45": {
+    "class_type": "MathExpression|pysssss",
+    "inputs": {
+      "expression": "iif(a==1,864,iif(a==2,1536,1536))",
+      "a": [
+        "41",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "交付高度：长边1536"
+    }
+  },
+  "50": {
+    "class_type": "AudioInfo",
+    "inputs": {
+      "audio": [
+        "101",
+        0
+      ],
+      "frame_rate": 25
+    },
+    "_meta": {
+      "title": "音频样本级时钟｜25fps"
+    }
+  },
+  "51": {
+    "class_type": "MathExpression|pysssss",
+    "inputs": {
+      "expression": "floor((a*25+b-1)/b)",
+      "a": [
+        "50",
+        11
+      ],
+      "b": [
+        "50",
+        9
+      ]
+    },
+    "_meta": {
+      "title": "总帧数＝样本数×25/采样率，向上取整"
+    }
+  },
+  "52": {
+    "class_type": "MathExpression|pysssss",
+    "inputs": {
+      "expression": "ceil(a/1500)",
+      "a": [
+        "51",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "每60秒一块｜每次任务可生成多块"
+    }
+  },
+  "60": {
+    "class_type": "StartLoop",
+    "inputs": {
+      "mode": "simple",
+      "initial_iteration_value": [
+        "102",
+        0
+      ],
+      "mode.num_iterations": [
+        "52",
+        0
+      ],
+      "cache_iterations": false
+    },
+    "_meta": {
+      "title": "本任务仅处理45秒以内｜长视频必须新建独立任务续跑"
+    }
+  },
+  "61": {
+    "class_type": "MathExpression|pysssss",
+    "inputs": {
+      "expression": "a*1500",
+      "a": [
+        "60",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "本块起始帧"
+    }
+  },
+  "62": {
+    "class_type": "MathExpression|pysssss",
+    "inputs": {
+      "expression": "min(1500,a-b)",
+      "a": [
+        "51",
+        0
+      ],
+      "b": [
+        "61",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "本块有效帧数"
+    }
+  },
+  "63": {
+    "class_type": "MathExpression|pysssss",
+    "inputs": {
+      "expression": "a/25",
+      "a": [
+        "61",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "本块音频起点（秒）"
+    }
+  },
+  "64": {
+    "class_type": "MathExpression|pysssss",
+    "inputs": {
+      "expression": "a/25",
+      "a": [
+        "62",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "本块音频时长（秒）"
+    }
+  },
+  "65": {
+    "class_type": "TrimAudioDuration",
+    "inputs": {
+      "audio": [
+        "101",
+        0
+      ],
+      "start_index": [
+        "63",
+        1
+      ],
+      "duration": [
+        "64",
+        1
+      ]
+    },
+    "_meta": {
+      "title": "按帧时钟截取驱动音频"
+    }
+  },
+  "66": {
+    "class_type": "MathExpression|pysssss",
+    "inputs": {
+      "expression": "(a+2)/25",
+      "a": [
+        "62",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "仅驱动分支补静音，避免尾帧丢失"
+    }
+  },
+  "67": {
+    "class_type": "EmptyAudio",
+    "inputs": {
+      "duration": [
+        "66",
+        1
+      ],
+      "sample_rate": [
+        "50",
+        9
+      ],
+      "channels": [
+        "50",
+        10
+      ]
+    },
+    "_meta": {
+      "title": "驱动音频尾部静音容器"
+    }
+  },
+  "68": {
+    "class_type": "AudioMerge",
+    "inputs": {
+      "audio1": [
+        "67",
+        0
+      ],
+      "audio2": [
+        "65",
+        0
+      ],
+      "merge_method": "add"
+    },
+    "_meta": {
+      "title": "保留驱动幅度并补齐尾部"
+    }
+  },
+  "69": {
+    "class_type": "MathExpression|pysssss",
+    "inputs": {
+      "expression": "a+iif(floor(floor(a/25*16000)/16000*25)<a,1,0)",
+      "a": [
+        "62",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "浮点边界保护：仅必要时增加1帧"
+    }
+  },
+  "70": {
+    "class_type": "GetImageRangeFromBatch",
+    "inputs": {
+      "images": [
+        "19",
+        0
+      ],
+      "start_index": 0,
+      "num_frames": [
+        "62",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "裁掉内部窗口补齐的多余帧"
+    }
+  },
+  "71": {
+    "class_type": "GetImageRangeFromBatch",
+    "inputs": {
+      "images": [
+        "70",
+        0
+      ],
+      "start_index": -1,
+      "num_frames": 1
+    },
+    "_meta": {
+      "title": "末帧作为下一60秒块的起图"
+    }
+  },
+  "72": {
+    "class_type": "MathExpression|pysssss",
+    "inputs": {
+      "expression": "ceil(a/100)",
+      "a": [
+        "62",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "每100帧超分一次，减少单节点峰值内存"
+    }
+  },
+  "80": {
+    "class_type": "StartLoop",
+    "inputs": {
+      "mode": "simple",
+      "parent_iteration": [
+        "60",
+        0
+      ],
+      "mode.num_iterations": [
+        "72",
+        0
+      ],
+      "cache_iterations": false
+    },
+    "_meta": {
+      "title": "超分内循环｜每批最多100帧"
+    }
+  },
+  "81": {
+    "class_type": "MathExpression|pysssss",
+    "inputs": {
+      "expression": "a*100",
+      "a": [
+        "80",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "超分批次起点"
+    }
+  },
+  "82": {
+    "class_type": "MathExpression|pysssss",
+    "inputs": {
+      "expression": "min(100,a-b)",
+      "a": [
+        "62",
+        0
+      ],
+      "b": [
+        "81",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "超分批次帧数"
+    }
+  },
+  "83": {
+    "class_type": "GetImageRangeFromBatch",
+    "inputs": {
+      "images": [
+        "95",
+        1
+      ],
+      "start_index": [
+        "81",
+        0
+      ],
+      "num_frames": [
+        "82",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "取当前小批图像"
+    }
+  },
+  "84": {
+    "class_type": "ImageUpscaleWithModelBatched",
+    "inputs": {
+      "upscale_model": [
+        "96",
+        0
+      ],
+      "images": [
+        "83",
+        0
+      ],
+      "per_batch": 1,
+      "downscale_ratio": [
+        "97",
+        1
+      ],
+      "downscale_method": "lanczos",
+      "precision": "float16"
+    },
+    "_meta": {
+      "title": "RealESRGAN2倍｜同进程逐帧FP16半精度"
+    }
+  },
+  "85": {
+    "class_type": "ImageCrop",
+    "inputs": {
+      "image": [
+        "98",
+        0
+      ],
+      "width": [
+        "44",
+        0
+      ],
+      "height": [
+        "45",
+        0
+      ],
+      "x": [
+        "94",
+        0
+      ],
+      "y": [
+        "99",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "精确交付中心裁切｜横竖仅裁6像素，其余原尺寸视图"
+    }
+  },
+  "86": {
+    "class_type": "CreateVideo",
+    "inputs": {
+      "images": [
+        "85",
+        0
+      ],
+      "fps": 25,
+      "bit_depth": "auto",
+      "color_space": "sRGB",
+      "codec": "h264"
+    },
+    "_meta": {
+      "title": "当前小批立即编码H264｜25fps"
+    }
+  },
+  "87": {
+    "class_type": "easy saveVideo",
+    "inputs": {
+      "input_mode": "video",
+      "input_mode.video": [
+        "86",
+        0
+      ],
+      "output_mode": "save",
+      "output_mode.save_metadata": false,
+      "filename_prefix": "IT_AGENT/segment/sr"
+    },
+    "_meta": {
+      "title": "超分片段保存到任务本地｜合并不再回下载云端文件"
+    }
+  },
+  "88": {
+    "class_type": "EndLoop",
+    "inputs": {
+      "accumulate": true,
+      "output_value": [
+        "87",
+        1
+      ]
+    },
+    "_meta": {
+      "title": "只累计本地视频文件路径｜避开云端下载SSL故障"
+    }
+  },
+  "89": {
+    "class_type": "StringListToString",
+    "inputs": {
+      "string_list": [
+        "88",
+        0
+      ],
+      "join_with": "\\n"
+    },
+    "_meta": {
+      "title": "本块片段按时间顺序合并"
+    }
+  },
+  "90": {
+    "class_type": "EndLoop",
+    "inputs": {
+      "accumulate": true,
+      "output_value": [
+        "89",
+        0
+      ],
+      "next_iteration_value": [
+        "107",
+        1
+      ]
+    },
+    "_meta": {
+      "title": "只累计生成块地址｜传递末帧"
+    }
+  },
+  "91": {
+    "class_type": "StringListToString",
+    "inputs": {
+      "string_list": [
+        "90",
+        0
+      ],
+      "join_with": "\\n"
+    },
+    "_meta": {
+      "title": "全片片段按时间顺序合并"
+    }
+  },
+  "92": {
+    "class_type": "easy mergeVideosFromPaths",
+    "inputs": {
+      "paths": [
+        "91",
+        0
+      ],
+      "frame_count": [
+        "51",
+        0
+      ],
+      "audio_mode": "merge"
+    },
+    "_meta": {
+      "title": "只拼接已编码视频｜此处不附音轨，避免shortest截尾"
+    }
+  },
+  "93": {
+    "class_type": "SaveVideo",
+    "inputs": {
+      "video": [
+        "108",
+        0
+      ],
+      "filename_prefix": "IT_AGENT/segment/final",
+      "format": "mp4",
+      "format.codec": "auto"
+    },
+    "_meta": {
+      "title": "⑥ 本段完整成片｜这是分段输出，最终长片需另行拼接"
+    }
+  },
+  "94": {
+    "class_type": "MathExpression|pysssss",
+    "inputs": {
+      "expression": "floor((a-b)/2)",
+      "a": [
+        "98",
+        1
+      ],
+      "b": [
+        "44",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "根据超分实际宽度计算居中裁切X"
+    }
+  },
+  "95": {
+    "class_type": "VRAM_Debug",
+    "inputs": {
+      "empty_cache": true,
+      "gc_collect": true,
+      "unload_all_models": true,
+      "image_pass": [
+        "70",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "每60秒块同进程超分前卸载模型并清理显存"
+    }
+  },
+  "96": {
+    "class_type": "UpscaleModelLoader",
+    "inputs": {
+      "model_name": "RealESRGAN_x2plus.pth"
+    },
+    "_meta": {
+      "title": "官方RealESRGAN_x2plus｜RunningHub当前权重"
+    }
+  },
+  "97": {
+    "class_type": "MathExpression|pysssss",
+    "inputs": {
+      "expression": "iif(a==2,1.0,iif(a==4,0.96,0.8))",
+      "a": [
+        "41",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "超分后缩放比例｜方1.0，4:5为0.96，横竖0.8"
+    }
+  },
+  "98": {
+    "class_type": "GetImageSizeAndCount",
+    "inputs": {
+      "image": [
+        "84",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "读取超分实际输出尺寸｜图像原样透传"
+    }
+  },
+  "99": {
+    "class_type": "MathExpression|pysssss",
+    "inputs": {
+      "expression": "floor((a-b)/2)",
+      "a": [
+        "98",
+        2
+      ],
+      "b": [
+        "45",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "根据超分实际高度计算居中裁切Y"
+    }
+  },
+  "100": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "portrait_4x5_pad_input.png"
+    },
+    "_meta": {
+      "title": "③ 本段起始图｜首段用原图，续段用上段末帧PNG"
+    }
+  },
+  "102": {
+    "class_type": "ImageResizeKJv2",
+    "inputs": {
+      "image": [
+        "100",
+        0
+      ],
+      "width": [
+        "42",
+        0
+      ],
+      "height": [
+        "43",
+        0
+      ],
+      "upscale_method": "lanczos",
+      "keep_proportion": "pad_edge",
+      "pad_color": "0, 0, 0",
+      "crop_position": "center",
+      "divisible_by": 1,
+      "device": "cpu"
+    },
+    "_meta": {
+      "title": "起始图按原始参考画幅预处理"
+    }
+  },
+  "103": {
+    "class_type": "PrimitiveFloat",
+    "inputs": {
+      "value": 0
+    },
+    "_meta": {
+      "title": "④ 本段起点（秒）｜首段0，续段填累计已完成秒数"
+    }
+  },
+  "104": {
+    "class_type": "PrimitiveFloat",
+    "inputs": {
+      "value": 45.0
+    },
+    "_meta": {
+      "title": "⑤ 本段目标秒数｜建议45，超过45自动截为45"
+    }
+  },
+  "105": {
+    "class_type": "MathExpression|pysssss",
+    "inputs": {
+      "expression": "min(max(a,0.04),45.0)",
+      "a": [
+        "104",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "单任务最多45秒口播｜留出60分钟运行时限余量"
+    }
+  },
+  "106": {
+    "class_type": "MathExpression|pysssss",
+    "inputs": {
+      "expression": "floor(max(a,0)*25)/25",
+      "a": [
+        "103",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "起点对齐25fps，避免拼接累计时钟误差"
+    }
+  },
+  "101": {
+    "class_type": "TrimAudioDuration",
+    "inputs": {
+      "audio": [
+        "34",
+        0
+      ],
+      "start_index": [
+        "106",
+        1
+      ],
+      "duration": [
+        "105",
+        1
+      ]
+    },
+    "_meta": {
+      "title": "只提取本段原配音｜末段自动取剩余长度"
+    }
+  },
+  "107": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "images": [
+        "71",
+        0
+      ],
+      "filename_prefix": "IT_AGENT/segment/native_checkpoint"
+    },
+    "_meta": {
+      "title": "⑦ 保存原生末帧PNG｜下一任务接入③起始图"
+    }
+  },
+  "108": {
+    "class_type": "ConcatenateVideo",
+    "inputs": {
+      "videos.video0": [
+        "92",
+        0
+      ],
+      "codec": "auto",
+      "complete_audio": [
+        "101",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "原生封装本段完整原音｜保留末尾全部画面"
+    }
+  }
+}

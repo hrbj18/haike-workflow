@@ -1,0 +1,15 @@
+{
+  "ffmpeg": {
+    "provider": "BtbN/FFmpeg-Builds",
+    "asset": "ffmpeg-master-latest-win64-gpl.zip",
+    "url": "https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-win64-gpl.zip",
+    "checksums_url": "https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/checksums.sha256",
+    "homepage": "https://github.com/BtbN/FFmpeg-Builds",
+    "version_policy": "Resolve latest Windows x64 GPL build once; record SHA256 and reuse installed binaries."
+  },
+  "remotion": {
+    "command": "npx --no-install remotion browser ensure",
+    "documentation": "https://www.remotion.dev/docs/cli/browser/ensure",
+    "version_policy": "Use the Chrome Headless Shell selected by the project's locked Remotion dependencies."
+  }
+}

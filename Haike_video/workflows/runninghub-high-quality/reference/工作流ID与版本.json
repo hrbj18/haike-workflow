@@ -1,0 +1,19 @@
+{
+  "local_authoritative_workflow_version": "V5.3.1",
+  "local_ui_json": "workflows/InfiniteTalk_V5.3.1_导入RunningHub.json",
+  "local_api_json": "workflows/InfiniteTalk_V5.3.1_API.json",
+  "current_workflow_id": "2112180419025260546",
+  "current_workflow_url": "https://www.runninghub.cn/workflow/2112180419025260546?source=workspace",
+  "current_workflow_source": "用户本轮重新导入最新JSON后提供的新ID",
+  "remote_graph_independently_verified": false,
+  "remote_inspection_result": "只读网页通道提示Token已过期，未取得远端节点图；实际提交仍传入本包已校验的完整V5.3.1 API图",
+  "previous_test_launch_workflow_id": "2111285828600287234",
+  "previous_test_launch_workflow_url": "https://www.runninghub.cn/workflow/2111285828600287234",
+  "previous_test_launch_id_scope": "前轮测试提交使用的启动ID；提交同时传入完整本地API图。不能据此保证该ID网页当前保存的图就是本包V5.3.1。",
+  "original_448x560_workflow_id": "2094449979141218305",
+  "original_workflow_scope": "项目原版448×560精确帧时钟基线，不应仅凭该ID将远端原版认作最新优化版。",
+  "recipient_default_binding": "capability.json#/workflow_id",
+  "binding_policy": "默认绑定当前新工作流，忽略项目旧RUNNINGHUB_WORKFLOW_ID及旧环境绑定。两个历史ID仅供追溯且被脚本拒绝。不同账号无权访问当前ID时，明确导入本包UI JSON并用kit.local.json绑定同事新ID，不自动回落；实际提交始终包含完整本地API图。",
+  "workflow_id_is_not_an_api_key": true,
+  "recipient_permissions_verified": false
+}

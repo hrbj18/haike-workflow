@@ -1,0 +1,2370 @@
+{
+  "schema_version": 1,
+  "standard_version": "video-template-v1",
+  "template_id": "hum-production-v1",
+  "template_version": "v001",
+  "template_type": "custom",
+  "spec_kind": "implementation",
+  "stage": "ready",
+  "authority": {
+    "runbook": "README.md",
+    "implementation_paths": [
+      "index.tsx",
+      "types.ts",
+      "layout.json",
+      "../../backlot/studio_hum_production.py",
+      "../../scripts/hum_production.py"
+    ],
+    "parameter_source": "../../backlot/studio_hum_production.py"
+  },
+  "canvas": {
+    "width": 1440,
+    "height": 1800,
+    "fps": 30,
+    "duration_seconds": 32.266666666666666,
+    "clock": "Numeric extent is the final elder frozen example. Every production independently uses ceil((voice PCM samples/rate + tailSeconds)*30)/30; no speech stretch/reorder. Master has1600samples/channel per output frame. Final child example is separately recorded under extensions.custom.production_cases.",
+    "coordinate_system": "top_left_pixels"
+  },
+  "narrative": {
+    "purpose": "Reusable full-voice store-account motion template; Hum children cut paper and Coral warm paper for older audiences.",
+    "information_hierarchy": [
+      "Complete original voice meaning and actual captions",
+      "Relevant reviewed material",
+      "Short scene title and selected-card/focus motion",
+      "Optional same-clock presenter",
+      "Brand/footer"
+    ],
+    "structure": [
+      "weighted-shotPlan or explicit contiguous scenes",
+      "cascade/card-stack wall and same-card expand",
+      "focus or paper reveal",
+      "optional large/small/hidden presenter",
+      "invitation closing"
+    ]
+  },
+  "scenes": [
+    {
+      "id": "E01",
+      "start": 0.0,
+      "end": 3.933333333333333,
+      "purpose": "孩子上班 / 孙子上学",
+      "element_ids": [
+        "canvas",
+        "scene-surface",
+        "scene-title",
+        "scene-subtitle",
+        "wall-category",
+        "wall-card",
+        "wall-poster",
+        "wall-label",
+        "wall-video",
+        "wall-cursor",
+        "focus-frame",
+        "focus-video",
+        "focus-label",
+        "presenter-window",
+        "presenter-video",
+        "brand",
+        "footer",
+        "captions",
+        "master-audio",
+        "nomusic-audio"
+      ],
+      "variant": "coral-statement"
+    },
+    {
+      "id": "E02",
+      "start": 3.933333333333333,
+      "end": 9.833333333333334,
+      "purpose": "白天一个人在家 / 连个说话的都没有",
+      "element_ids": [
+        "canvas",
+        "scene-surface",
+        "scene-title",
+        "scene-subtitle",
+        "wall-category",
+        "wall-card",
+        "wall-poster",
+        "wall-label",
+        "wall-video",
+        "wall-cursor",
+        "focus-frame",
+        "focus-video",
+        "focus-label",
+        "presenter-window",
+        "presenter-video",
+        "brand",
+        "footer",
+        "captions",
+        "master-audio",
+        "nomusic-audio"
+      ],
+      "variant": "coral-statement"
+    },
+    {
+      "id": "E03",
+      "start": 9.833333333333334,
+      "end": 12.833333333333334,
+      "purpose": "日子过得下去 / 只是太安静了",
+      "element_ids": [
+        "canvas",
+        "scene-surface",
+        "scene-title",
+        "scene-subtitle",
+        "wall-category",
+        "wall-card",
+        "wall-poster",
+        "wall-label",
+        "wall-video",
+        "wall-cursor",
+        "focus-frame",
+        "focus-video",
+        "focus-label",
+        "presenter-window",
+        "presenter-video",
+        "brand",
+        "footer",
+        "captions",
+        "master-audio",
+        "nomusic-audio"
+      ],
+      "variant": "coral-statement"
+    },
+    {
+      "id": "E04",
+      "start": 12.833333333333334,
+      "end": 20.033333333333335,
+      "purpose": "来坐坐 / 也看看新鲜",
+      "element_ids": [
+        "canvas",
+        "scene-surface",
+        "scene-title",
+        "scene-subtitle",
+        "wall-category",
+        "wall-card",
+        "wall-poster",
+        "wall-label",
+        "wall-video",
+        "wall-cursor",
+        "focus-frame",
+        "focus-video",
+        "focus-label",
+        "presenter-window",
+        "presenter-video",
+        "brand",
+        "footer",
+        "captions",
+        "master-audio",
+        "nomusic-audio"
+      ],
+      "variant": "coral-wall-card-stack"
+    },
+    {
+      "id": "E05",
+      "start": 20.033333333333335,
+      "end": 23.233333333333334,
+      "purpose": "坐一坐 / 聊聊天",
+      "element_ids": [
+        "canvas",
+        "scene-surface",
+        "scene-title",
+        "scene-subtitle",
+        "wall-category",
+        "wall-card",
+        "wall-poster",
+        "wall-label",
+        "wall-video",
+        "wall-cursor",
+        "focus-frame",
+        "focus-video",
+        "focus-label",
+        "presenter-window",
+        "presenter-video",
+        "brand",
+        "footer",
+        "captions",
+        "master-audio",
+        "nomusic-audio"
+      ],
+      "variant": "coral-focus-paper-reveal"
+    },
+    {
+      "id": "E06",
+      "start": 23.233333333333334,
+      "end": 27.233333333333334,
+      "purpose": "陈家林路63号 / 未来汇一楼",
+      "element_ids": [
+        "canvas",
+        "scene-surface",
+        "scene-title",
+        "scene-subtitle",
+        "wall-category",
+        "wall-card",
+        "wall-poster",
+        "wall-label",
+        "wall-video",
+        "wall-cursor",
+        "focus-frame",
+        "focus-video",
+        "focus-label",
+        "presenter-window",
+        "presenter-video",
+        "brand",
+        "footer",
+        "captions",
+        "master-audio",
+        "nomusic-audio"
+      ],
+      "variant": "coral-focus"
+    },
+    {
+      "id": "E07",
+      "start": 27.233333333333334,
+      "end": 32.266666666666666,
+      "purpose": "明天，来坐坐 / 热闹热闹",
+      "element_ids": [
+        "canvas",
+        "scene-surface",
+        "scene-title",
+        "scene-subtitle",
+        "wall-category",
+        "wall-card",
+        "wall-poster",
+        "wall-label",
+        "wall-video",
+        "wall-cursor",
+        "focus-frame",
+        "focus-video",
+        "focus-label",
+        "presenter-window",
+        "presenter-video",
+        "brand",
+        "footer",
+        "captions",
+        "master-audio",
+        "nomusic-audio"
+      ],
+      "variant": "coral-statement"
+    }
+  ],
+  "assets": [
+    {
+      "id": "current-video",
+      "kind": "video",
+      "path": null,
+      "source": "Per-input actual reviewed source video and presenter segments.",
+      "embedded_content": [
+        "Per-input actual reviewed source video and presenter segments."
+      ],
+      "rights_status": "Per-input user-provided or upstream-authorized material; actual identity and use source recorded in frozen provenance."
+    },
+    {
+      "id": "current-posters",
+      "kind": "image",
+      "path": null,
+      "source": "Per-input original media posters and images.",
+      "embedded_content": [
+        "Per-input original media posters and images."
+      ],
+      "rights_status": "Per-input user-provided or upstream-authorized material; actual identity and use source recorded in frozen provenance."
+    },
+    {
+      "id": "current-master",
+      "kind": "audio",
+      "path": null,
+      "source": "Complete local narration plus declared music/SFX.",
+      "embedded_content": [
+        "Complete local narration plus declared music/SFX."
+      ],
+      "rights_status": "Per-input user-provided or upstream-authorized material; actual identity and use source recorded in frozen provenance."
+    },
+    {
+      "id": "current-nomusic",
+      "kind": "audio",
+      "path": null,
+      "source": "Same narration and SFX without background music.",
+      "embedded_content": [
+        "Same narration and SFX without background music."
+      ],
+      "rights_status": "Per-input user-provided or upstream-authorized material; actual identity and use source recorded in frozen provenance."
+    }
+  ],
+  "elements": [
+    {
+      "id": "canvas",
+      "type": "surface",
+      "role": "Full 4:5 canvas and style-dependent material",
+      "parent_id": null,
+      "z_index": 0,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "Canvas/background style and fixed-seed surfaces are defined by the renderer."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json and rendering source; full-canvas component boundary above, leaf geometry is source-owned"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 32.266666666666666
+      },
+      "states": [
+        {
+          "id": "source-owned",
+          "visible": true,
+          "description": "Visible only during the active scene/mode on the frozen narration clock. Canvas/background style and fixed-seed surfaces are defined by the renderer."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "Original voice playback rate1 and source video mute",
+        "Renderer geometry/motion formulas and sample-frame clock"
+      ],
+      "replaceable": [
+        "props.visualStyle",
+        "props.scenes or shotPlan"
+      ],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "Current exact input and encoded output",
+          "method": "Input hashes, actual module boundaries, transition midpoints, stable states and complete encoded playback",
+          "pass_condition": "No overflow, missing media or audio gaps; match declared global/source clocks; record listening and lip-sync separately."
+        }
+      ]
+    },
+    {
+      "id": "scene-surface",
+      "type": "surface",
+      "role": "Active scene surface",
+      "parent_id": "canvas",
+      "z_index": 1,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Scene theme, Hum paper or Coral material; no live source audio."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json and rendering source; full-canvas component boundary above, leaf geometry is source-owned"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 32.266666666666666
+      },
+      "states": [
+        {
+          "id": "source-owned",
+          "visible": true,
+          "description": "Visible only during the active scene/mode on the frozen narration clock. Scene theme, Hum paper or Coral material; no live source audio."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "Original voice playback rate1 and source video mute",
+        "Renderer geometry/motion formulas and sample-frame clock"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "Current exact input and encoded output",
+          "method": "Input hashes, actual module boundaries, transition midpoints, stable states and complete encoded playback",
+          "pass_condition": "No overflow, missing media or audio gaps; match declared global/source clocks; record listening and lip-sync separately."
+        }
+      ]
+    },
+    {
+      "id": "scene-title",
+      "type": "text",
+      "role": "Primary scene title",
+      "parent_id": "canvas",
+      "z_index": 20,
+      "content": {
+        "mode": "editable",
+        "binding": "title-slot",
+        "asset_id": null,
+        "description": "props.scenes[].title; line breaks retained and measured against bundled display font."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json and rendering source; full-canvas component boundary above, leaf geometry is source-owned",
+          "font": "props.fontAssets display/body role in index.tsx",
+          "font_size": "layout.json and source role",
+          "max_lines": 2,
+          "overflow": "Actual bundled font metrics then encoded-state review; no clipping words.",
+          "dynamicGeometry": "index.tsx current scene/style determines the exact box."
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 32.266666666666666
+      },
+      "states": [
+        {
+          "id": "source-owned",
+          "visible": true,
+          "description": "Visible only during the active scene/mode on the frozen narration clock. props.scenes[].title; line breaks retained and measured against bundled display font."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "Original voice playback rate1 and source video mute",
+        "Renderer geometry/motion formulas and sample-frame clock"
+      ],
+      "replaceable": [
+        "props.scenes[].title"
+      ],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "Current exact input and encoded output",
+          "method": "Input hashes, actual module boundaries, transition midpoints, stable states and complete encoded playback",
+          "pass_condition": "No overflow, missing media or audio gaps; match declared global/source clocks; record listening and lip-sync separately."
+        }
+      ]
+    },
+    {
+      "id": "scene-subtitle",
+      "type": "text",
+      "role": "Scene supporting text",
+      "parent_id": "canvas",
+      "z_index": 21,
+      "content": {
+        "mode": "editable",
+        "binding": "subtitle-slot",
+        "asset_id": null,
+        "description": "Optional scene subtitle: Coral card-stack and portrait focus use240px side-note width. Cascade subtitle exits during the8frames before expansion, avoiding the selected border."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json and rendering source; full-canvas component boundary above, leaf geometry is source-owned",
+          "font": "props.fontAssets display/body role in index.tsx",
+          "font_size": "layout.json and source role",
+          "max_lines": 2,
+          "overflow": "Actual bundled font metrics then encoded-state review; no clipping words.",
+          "dynamicGeometry": "index.tsx current scene/style determines the exact box."
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 32.266666666666666
+      },
+      "states": [
+        {
+          "id": "source-owned",
+          "visible": true,
+          "description": "Visible only during the active scene/mode on the frozen narration clock. props.scenes[].subtitle; short supporting copy."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "Original voice playback rate1 and source video mute",
+        "Renderer geometry/motion formulas and sample-frame clock"
+      ],
+      "replaceable": [
+        "props.scenes[].subtitle"
+      ],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "Current exact input and encoded output",
+          "method": "Input hashes, actual module boundaries, transition midpoints, stable states and complete encoded playback",
+          "pass_condition": "No overflow, missing media or audio gaps; match declared global/source clocks; record listening and lip-sync separately."
+        }
+      ]
+    },
+    {
+      "id": "wall-category",
+      "type": "text",
+      "role": "Wall category navigation",
+      "parent_id": "canvas",
+      "z_index": 22,
+      "content": {
+        "mode": "editable",
+        "binding": "wall-category-slot",
+        "asset_id": null,
+        "description": "props.wallCategories; capacity checked before freeze."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json and rendering source; full-canvas component boundary above, leaf geometry is source-owned",
+          "font": "props.fontAssets display/body role in index.tsx",
+          "font_size": 26,
+          "max_lines": 1,
+          "overflow": "Actual bundled font metrics then encoded-state review; no clipping words."
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 32.266666666666666
+      },
+      "states": [
+        {
+          "id": "source-owned",
+          "visible": true,
+          "description": "Visible only during the active scene/mode on the frozen narration clock. props.wallCategories; capacity checked before freeze."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "Original voice playback rate1 and source video mute",
+        "Renderer geometry/motion formulas and sample-frame clock"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "Current exact input and encoded output",
+          "method": "Input hashes, actual module boundaries, transition midpoints, stable states and complete encoded playback",
+          "pass_condition": "No overflow, missing media or audio gaps; match declared global/source clocks; record listening and lip-sync separately."
+        }
+      ]
+    },
+    {
+      "id": "wall-card",
+      "type": "group",
+      "role": "Repeated editable card and same-card expansion",
+      "parent_id": "canvas",
+      "z_index": 30,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Same editable card identity through cascade/card-stack distribution, selection and expansion; complete motion stage clipped at y1440 before subtitle y1460."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json and rendering source; full-canvas component boundary above, leaf geometry is source-owned"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 32.266666666666666
+      },
+      "states": [
+        {
+          "id": "source-owned",
+          "visible": true,
+          "description": "Visible only during the active scene/mode on the frozen narration clock. props.media and scene.wallMediaIds; cascade or card-stack distributes cards before selecting one."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "Original voice playback rate1 and source video mute",
+        "Renderer geometry/motion formulas and sample-frame clock"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "Current exact input and encoded output",
+          "method": "Input hashes, actual module boundaries, transition midpoints, stable states and complete encoded playback",
+          "pass_condition": "No overflow, missing media or audio gaps; match declared global/source clocks; record listening and lip-sync separately."
+        }
+      ]
+    },
+    {
+      "id": "wall-poster",
+      "type": "image",
+      "role": "Repeated card poster",
+      "parent_id": "wall-card",
+      "z_index": 1,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "current-posters",
+        "description": "props.media[].thumbnail; exact uploaded image, no editable interior text."
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "contain",
+        "clip": "self",
+        "style": {
+          "authority": "layout.json and rendering source; full-canvas component boundary above, leaf geometry is source-owned"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 32.266666666666666
+      },
+      "states": [
+        {
+          "id": "source-owned",
+          "visible": true,
+          "description": "Visible only during the active scene/mode on the frozen narration clock. props.media[].thumbnail; exact uploaded image, no editable interior text."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "Original voice playback rate1 and source video mute",
+        "Renderer geometry/motion formulas and sample-frame clock"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "Current exact input and encoded output",
+          "method": "Input hashes, actual module boundaries, transition midpoints, stable states and complete encoded playback",
+          "pass_condition": "No overflow, missing media or audio gaps; match declared global/source clocks; record listening and lip-sync separately."
+        }
+      ]
+    },
+    {
+      "id": "wall-label",
+      "type": "text",
+      "role": "Repeated card label",
+      "parent_id": "wall-card",
+      "z_index": 2,
+      "content": {
+        "mode": "editable",
+        "binding": "wall-label-slot",
+        "asset_id": null,
+        "description": "props.media[].label."
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json and rendering source; full-canvas component boundary above, leaf geometry is source-owned",
+          "font": "props.fontAssets display/body role in index.tsx",
+          "font_size": "layout.json and source role",
+          "max_lines": 3,
+          "overflow": "Actual bundled font metrics then encoded-state review; no clipping words."
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 32.266666666666666
+      },
+      "states": [
+        {
+          "id": "source-owned",
+          "visible": true,
+          "description": "Visible only during the active scene/mode on the frozen narration clock. props.media[].label."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "Original voice playback rate1 and source video mute",
+        "Renderer geometry/motion formulas and sample-frame clock"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "Current exact input and encoded output",
+          "method": "Input hashes, actual module boundaries, transition midpoints, stable states and complete encoded playback",
+          "pass_condition": "No overflow, missing media or audio gaps; match declared global/source clocks; record listening and lip-sync separately."
+        }
+      ]
+    },
+    {
+      "id": "wall-video",
+      "type": "video",
+      "role": "Selected full-frame footage",
+      "parent_id": "wall-card",
+      "z_index": 3,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "current-video",
+        "description": "Selected source begins at media.offset when scene-local expandFrom is reached; contain, muted, 1x."
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "contain",
+        "clip": "self",
+        "style": {
+          "authority": "layout.json and rendering source; full-canvas component boundary above, leaf geometry is source-owned"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 32.266666666666666
+      },
+      "states": [
+        {
+          "id": "source-owned",
+          "visible": true,
+          "description": "Visible only during the active scene/mode on the frozen narration clock. Selected source begins at media.offset when scene-local expandFrom is reached; contain, muted, 1x."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "Original voice playback rate1 and source video mute",
+        "Renderer geometry/motion formulas and sample-frame clock"
+      ],
+      "replaceable": [
+        "props.media"
+      ],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "Current exact input and encoded output",
+          "method": "Input hashes, actual module boundaries, transition midpoints, stable states and complete encoded playback",
+          "pass_condition": "No overflow, missing media or audio gaps; match declared global/source clocks; record listening and lip-sync separately."
+        }
+      ]
+    },
+    {
+      "id": "wall-cursor",
+      "type": "vector",
+      "role": "Selection cursor",
+      "parent_id": "canvas",
+      "z_index": 60,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Scene-local cursorFrom/selectFrom/expandFrom/holdFrom bind the selection motion."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json and rendering source; full-canvas component boundary above, leaf geometry is source-owned"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 32.266666666666666
+      },
+      "states": [
+        {
+          "id": "source-owned",
+          "visible": true,
+          "description": "Visible only during the active scene/mode on the frozen narration clock. Scene-local cursorFrom/selectFrom/expandFrom/holdFrom bind the selection motion."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "Original voice playback rate1 and source video mute",
+        "Renderer geometry/motion formulas and sample-frame clock"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "Current exact input and encoded output",
+          "method": "Input hashes, actual module boundaries, transition midpoints, stable states and complete encoded playback",
+          "pass_condition": "No overflow, missing media or audio gaps; match declared global/source clocks; record listening and lip-sync separately."
+        }
+      ]
+    },
+    {
+      "id": "focus-frame",
+      "type": "group",
+      "role": "Focus paper frame or reveal",
+      "parent_id": "canvas",
+      "z_index": 30,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Focus module; optional paper-reveal follows renderer frame-clock implementation."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json and rendering source; full-canvas component boundary above, leaf geometry is source-owned"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 32.266666666666666
+      },
+      "states": [
+        {
+          "id": "source-owned",
+          "visible": true,
+          "description": "Visible only during the active scene/mode on the frozen narration clock. Focus module; optional paper-reveal follows renderer frame-clock implementation."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "Original voice playback rate1 and source video mute",
+        "Renderer geometry/motion formulas and sample-frame clock"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "Current exact input and encoded output",
+          "method": "Input hashes, actual module boundaries, transition midpoints, stable states and complete encoded playback",
+          "pass_condition": "No overflow, missing media or audio gaps; match declared global/source clocks; record listening and lip-sync separately."
+        }
+      ]
+    },
+    {
+      "id": "focus-video",
+      "type": "video",
+      "role": "Focus full-frame footage or image",
+      "parent_id": "focus-frame",
+      "z_index": 1,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "current-video",
+        "description": "Source offset plus scene-local elapsed time; contain, muted, 1x, no loops or freezes."
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "contain",
+        "clip": "self",
+        "style": {
+          "authority": "layout.json and rendering source; full-canvas component boundary above, leaf geometry is source-owned"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 32.266666666666666
+      },
+      "states": [
+        {
+          "id": "source-owned",
+          "visible": true,
+          "description": "Visible only during the active scene/mode on the frozen narration clock. Source offset plus scene-local elapsed time; contain, muted, 1x, no loops or freezes."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "Original voice playback rate1 and source video mute",
+        "Renderer geometry/motion formulas and sample-frame clock"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "Current exact input and encoded output",
+          "method": "Input hashes, actual module boundaries, transition midpoints, stable states and complete encoded playback",
+          "pass_condition": "No overflow, missing media or audio gaps; match declared global/source clocks; record listening and lip-sync separately."
+        }
+      ]
+    },
+    {
+      "id": "focus-label",
+      "type": "text",
+      "role": "Focus material label",
+      "parent_id": "canvas",
+      "z_index": 35,
+      "content": {
+        "mode": "editable",
+        "binding": "focus-label-slot",
+        "asset_id": null,
+        "description": "Current media label."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json and rendering source; full-canvas component boundary above, leaf geometry is source-owned",
+          "font": "props.fontAssets display/body role in index.tsx",
+          "font_size": "layout.json and source role",
+          "max_lines": 3,
+          "overflow": "Actual bundled font metrics then encoded-state review; no clipping words."
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 32.266666666666666
+      },
+      "states": [
+        {
+          "id": "source-owned",
+          "visible": true,
+          "description": "Visible only during the active scene/mode on the frozen narration clock. Current media label."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "Original voice playback rate1 and source video mute",
+        "Renderer geometry/motion formulas and sample-frame clock"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "Current exact input and encoded output",
+          "method": "Input hashes, actual module boundaries, transition midpoints, stable states and complete encoded playback",
+          "pass_condition": "No overflow, missing media or audio gaps; match declared global/source clocks; record listening and lip-sync separately."
+        }
+      ]
+    },
+    {
+      "id": "presenter-window",
+      "type": "group",
+      "role": "Large/small/hidden same-clock presenter frame",
+      "parent_id": "canvas",
+      "z_index": 70,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "presenterModes changes geometry/visibility; all clip playback stays on one global frame clock."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json and rendering source; full-canvas component boundary above, leaf geometry is source-owned"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 32.266666666666666
+      },
+      "states": [
+        {
+          "id": "source-owned",
+          "visible": true,
+          "description": "Visible only during the active scene/mode on the frozen narration clock. presenterModes changes geometry/visibility; all clip playback stays on one global frame clock."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "Original voice playback rate1 and source video mute",
+        "Renderer geometry/motion formulas and sample-frame clock"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "Current exact input and encoded output",
+          "method": "Input hashes, actual module boundaries, transition midpoints, stable states and complete encoded playback",
+          "pass_condition": "No overflow, missing media or audio gaps; match declared global/source clocks; record listening and lip-sync separately."
+        }
+      ]
+    },
+    {
+      "id": "presenter-video",
+      "type": "video",
+      "role": "Voice-bound presenter segment",
+      "parent_id": "presenter-window",
+      "z_index": 1,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "current-video",
+        "description": "Optional voice-SHA-bound source: clip.offset+(global_frame-clip.from)/30, contain/muted/1x. Mode geometry keeps global playback continuous. Nonzero clip starts fade over10frames; clip end fades over8frames."
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "contain",
+        "clip": "self",
+        "style": {
+          "authority": "layout.json and rendering source; full-canvas component boundary above, leaf geometry is source-owned"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 32.266666666666666
+      },
+      "states": [
+        {
+          "id": "source-owned",
+          "visible": true,
+          "description": "Visible only during the active scene/mode on the frozen narration clock. clip.offset + (global_frame - clip.from)/30, contain/muted/1x; no reset at a mode transition."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "Original voice playback rate1 and source video mute",
+        "Renderer geometry/motion formulas and sample-frame clock"
+      ],
+      "replaceable": [
+        "props.presenterClips/props.presenterModes"
+      ],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "Current exact input and encoded output",
+          "method": "Input hashes, actual module boundaries, transition midpoints, stable states and complete encoded playback",
+          "pass_condition": "No overflow, missing media or audio gaps; match declared global/source clocks; record listening and lip-sync separately."
+        }
+      ]
+    },
+    {
+      "id": "brand",
+      "type": "text",
+      "role": "Brand identifier",
+      "parent_id": "canvas",
+      "z_index": 80,
+      "content": {
+        "mode": "editable",
+        "binding": "brand-slot",
+        "asset_id": null,
+        "description": "props.brand."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          88,
+          64,
+          1264,
+          48
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json and rendering source; full-canvas component boundary above, leaf geometry is source-owned",
+          "font": "props.fontAssets display/body role in index.tsx",
+          "font_size": "layout.json and source role",
+          "max_lines": 3,
+          "overflow": "Actual bundled font metrics then encoded-state review; no clipping words."
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 32.266666666666666
+      },
+      "states": [
+        {
+          "id": "source-owned",
+          "visible": true,
+          "description": "Visible only during the active scene/mode on the frozen narration clock. props.brand."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "Original voice playback rate1 and source video mute",
+        "Renderer geometry/motion formulas and sample-frame clock"
+      ],
+      "replaceable": [
+        "props.brand"
+      ],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "Current exact input and encoded output",
+          "method": "Input hashes, actual module boundaries, transition midpoints, stable states and complete encoded playback",
+          "pass_condition": "No overflow, missing media or audio gaps; match declared global/source clocks; record listening and lip-sync separately."
+        }
+      ]
+    },
+    {
+      "id": "footer",
+      "type": "text",
+      "role": "Neutral invitation footer",
+      "parent_id": "canvas",
+      "z_index": 80,
+      "content": {
+        "mode": "editable",
+        "binding": "footer-slot",
+        "asset_id": null,
+        "description": "props.footer."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          88,
+          120,
+          1264,
+          36
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json and rendering source; full-canvas component boundary above, leaf geometry is source-owned",
+          "font": "props.fontAssets display/body role in index.tsx",
+          "font_size": "layout.json and source role",
+          "max_lines": 3,
+          "overflow": "Actual bundled font metrics then encoded-state review; no clipping words."
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 32.266666666666666
+      },
+      "states": [
+        {
+          "id": "source-owned",
+          "visible": true,
+          "description": "Visible only during the active scene/mode on the frozen narration clock. props.footer."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "Original voice playback rate1 and source video mute",
+        "Renderer geometry/motion formulas and sample-frame clock"
+      ],
+      "replaceable": [
+        "props.footer"
+      ],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "Current exact input and encoded output",
+          "method": "Input hashes, actual module boundaries, transition midpoints, stable states and complete encoded playback",
+          "pass_condition": "No overflow, missing media or audio gaps; match declared global/source clocks; record listening and lip-sync separately."
+        }
+      ]
+    },
+    {
+      "id": "captions",
+      "type": "text",
+      "role": "Actual narration clock captions",
+      "parent_id": "canvas",
+      "z_index": 90,
+      "content": {
+        "mode": "editable",
+        "binding": "caption-slot",
+        "asset_id": null,
+        "description": "props.captions actual startMs/endMs bound to the exact full voice SHA."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          88,
+          1460,
+          1264,
+          140
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json and rendering source; full-canvas component boundary above, leaf geometry is source-owned",
+          "font": "props.fontAssets display/body role in index.tsx",
+          "font_size": 84,
+          "max_lines": 1,
+          "overflow": "Actual bundled font width must fit1264px; caption safe area remains below motion-stage y1440 with20px separation."
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 32.266666666666666
+      },
+      "states": [
+        {
+          "id": "source-owned",
+          "visible": true,
+          "description": "Visible only during the active scene/mode on the frozen narration clock. props.captions actual startMs/endMs bound to the exact full voice SHA."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "Original voice playback rate1 and source video mute",
+        "Renderer geometry/motion formulas and sample-frame clock"
+      ],
+      "replaceable": [
+        "props.captions"
+      ],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "Current exact input and encoded output",
+          "method": "Input hashes, actual module boundaries, transition midpoints, stable states and complete encoded playback",
+          "pass_condition": "No overflow, missing media or audio gaps; match declared global/source clocks; record listening and lip-sync separately."
+        }
+      ]
+    },
+    {
+      "id": "master-audio",
+      "type": "audio",
+      "role": "Complete voice with ducked music and real-time SFX",
+      "parent_id": "canvas",
+      "z_index": 0,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "current-master",
+        "description": "Generated master.wav; original complete voice sample clock, 48k PCM16 stereo, no speech stretch or reorder."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json and rendering source; full-canvas component boundary above, leaf geometry is source-owned"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 32.266666666666666
+      },
+      "states": [
+        {
+          "id": "source-owned",
+          "visible": true,
+          "description": "Visible only during the active scene/mode on the frozen narration clock. Generated master.wav; original complete voice sample clock, 48k PCM16 stereo, no speech stretch or reorder."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "Original voice playback rate1 and source video mute",
+        "Renderer geometry/motion formulas and sample-frame clock"
+      ],
+      "replaceable": [
+        "audio.voice",
+        "audio.music/audio.sfx"
+      ],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "Current exact input and encoded output",
+          "method": "Input hashes, actual module boundaries, transition midpoints, stable states and complete encoded playback",
+          "pass_condition": "No overflow, missing media or audio gaps; match declared global/source clocks; record listening and lip-sync separately."
+        }
+      ]
+    },
+    {
+      "id": "nomusic-audio",
+      "type": "audio",
+      "role": "No-BGM voice/SFX alternative",
+      "parent_id": "canvas",
+      "z_index": 0,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "current-nomusic",
+        "description": "nomusic.wav uses same voice and SFX events; alternative MP4 stream-copies primary video."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json and rendering source; full-canvas component boundary above, leaf geometry is source-owned"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 32.266666666666666
+      },
+      "states": [
+        {
+          "id": "source-owned",
+          "visible": true,
+          "description": "Visible only during the active scene/mode on the frozen narration clock. nomusic.wav uses same voice and SFX events; alternative MP4 stream-copies primary video."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "Original voice playback rate1 and source video mute",
+        "Renderer geometry/motion formulas and sample-frame clock"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "Current exact input and encoded output",
+          "method": "Input hashes, actual module boundaries, transition midpoints, stable states and complete encoded playback",
+          "pass_condition": "No overflow, missing media or audio gaps; match declared global/source clocks; record listening and lip-sync separately."
+        }
+      ]
+    }
+  ],
+  "slots": [
+    {
+      "id": "brand-slot",
+      "element_id": "brand",
+      "property": "props.brand",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "maxLength": 24
+      },
+      "missing": "Block affected required input; presenter may be entirely absent.",
+      "overflow": "Change the declared input, review actual material/ranges and freeze a new request."
+    },
+    {
+      "id": "footer-slot",
+      "element_id": "footer",
+      "property": "props.footer",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "maxLength": 50
+      },
+      "missing": "Block affected required input; presenter may be entirely absent.",
+      "overflow": "Change the declared input, review actual material/ranges and freeze a new request."
+    },
+    {
+      "id": "style-slot",
+      "element_id": "canvas",
+      "property": "props.visualStyle",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "enum": [
+          "hum",
+          "coral"
+        ]
+      },
+      "missing": "Block affected required input; presenter may be entirely absent.",
+      "overflow": "Change the declared input, review actual material/ranges and freeze a new request."
+    },
+    {
+      "id": "title-slot",
+      "element_id": "scene-title",
+      "property": "props.scenes[].title",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "maxLength": 42,
+        "maxLines": 2,
+        "maxCharactersPerLine": 16,
+        "actualFontBox": true
+      },
+      "missing": "Block affected required input; presenter may be entirely absent.",
+      "overflow": "Change the declared input, review actual material/ranges and freeze a new request."
+    },
+    {
+      "id": "subtitle-slot",
+      "element_id": "scene-subtitle",
+      "property": "props.scenes[].subtitle",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "maxLength": 50,
+        "maxLines": 2
+      },
+      "missing": "Block affected required input; presenter may be entirely absent.",
+      "overflow": "Change the declared input, review actual material/ranges and freeze a new request."
+    },
+    {
+      "id": "media-slot",
+      "element_id": "wall-video",
+      "property": "props.media",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "minItems": 1,
+        "maxItems": 24,
+        "fit": "contain",
+        "speed": 1,
+        "sourceAudio": "muted",
+        "actualReviewedRangeRequired": true
+      },
+      "missing": "Block affected required input; presenter may be entirely absent.",
+      "overflow": "Change the declared input, review actual material/ranges and freeze a new request."
+    },
+    {
+      "id": "caption-slot",
+      "element_id": "captions",
+      "property": "props.captions",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "maxCueCharacters": 22,
+        "actualFontBox": true,
+        "sameVoiceSha": true,
+        "orderedNonoverlapping": true
+      },
+      "missing": "Block affected required input; presenter may be entirely absent.",
+      "overflow": "Change the declared input, review actual material/ranges and freeze a new request."
+    },
+    {
+      "id": "voice-slot",
+      "element_id": "master-audio",
+      "property": "audio.voice",
+      "value_type": "asset",
+      "required": true,
+      "limits": {
+        "fullPCMWavSeconds": [
+          2,
+          600
+        ],
+        "frameRule": "ceil((samples/rate + tailSeconds)*30)",
+        "tailSeconds": [
+          0,
+          2
+        ]
+      },
+      "missing": "Block affected required input; presenter may be entirely absent.",
+      "overflow": "Change the declared input, review actual material/ranges and freeze a new request."
+    },
+    {
+      "id": "audio-slot",
+      "element_id": "master-audio",
+      "property": "audio.music/audio.sfx",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "sourceRequired": true,
+        "musicLoop": "only explicit loopMusic:true",
+        "sfxMaxSeconds": 10
+      },
+      "missing": "Block affected required input; presenter may be entirely absent.",
+      "overflow": "Change the declared input, review actual material/ranges and freeze a new request."
+    },
+    {
+      "id": "scene-slot",
+      "element_id": "canvas",
+      "property": "props.scenes or shotPlan",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "modules": [
+          "statement",
+          "wall",
+          "focus"
+        ],
+        "motion": [
+          "cascade",
+          "card-stack",
+          "paper-reveal"
+        ],
+        "continuousCoverage": true
+      },
+      "missing": "Block affected required input; presenter may be entirely absent.",
+      "overflow": "Change the declared input, review actual material/ranges and freeze a new request."
+    },
+    {
+      "id": "presenter-slot",
+      "element_id": "presenter-video",
+      "property": "props.presenterClips/props.presenterModes",
+      "value_type": "object",
+      "required": false,
+      "limits": {
+        "modes": [
+          "large",
+          "small",
+          "hidden"
+        ],
+        "optional": true,
+        "sameVoiceSha": true,
+        "clock": "offset+(globalFrame-clip.from)/30"
+      },
+      "missing": "Block affected required input; presenter may be entirely absent.",
+      "overflow": "Change the declared input, review actual material/ranges and freeze a new request."
+    },
+    {
+      "id": "wall-category-slot",
+      "element_id": "wall-category",
+      "property": "content",
+      "value_type": "string",
+      "required": false,
+      "limits": {
+        "actualInputBinding": "props.wallCategories; capacity checked before freeze.",
+        "actualFontBox": true
+      },
+      "missing": "Use renderer source-defined absence rules.",
+      "overflow": "Shorten the content or alter the declared layout and recheck actual encoded frames."
+    },
+    {
+      "id": "wall-label-slot",
+      "element_id": "wall-label",
+      "property": "content",
+      "value_type": "string",
+      "required": false,
+      "limits": {
+        "actualInputBinding": "props.media[].label.",
+        "actualFontBox": true
+      },
+      "missing": "Use renderer source-defined absence rules.",
+      "overflow": "Shorten the content or alter the declared layout and recheck actual encoded frames."
+    },
+    {
+      "id": "focus-label-slot",
+      "element_id": "focus-label",
+      "property": "content",
+      "value_type": "string",
+      "required": false,
+      "limits": {
+        "actualInputBinding": "Current media label.",
+        "actualFontBox": true
+      },
+      "missing": "Use renderer source-defined absence rules.",
+      "overflow": "Shorten the content or alter the declared layout and recheck actual encoded frames."
+    }
+  ],
+  "evidence": [
+    {
+      "id": "implementation-source",
+      "source_kind": "design",
+      "source": "Project-owned speech-clock production adapter; not a claim about completed films.",
+      "locator": "studio_hum_production.py and source-owned renderer/type/layout",
+      "method": "Read current controlled inputs, voice/source gates and open-effect minimum frame windows; completed films use their own frozen source identities.",
+      "file": "../../backlot/studio_hum_production.py",
+      "sha256": "396b834a7076881ba65417ec0596bdfc76929978eb7bf3cd95585fc5065418a6"
+    },
+    {
+      "id": "isolated-contract-tests",
+      "source_kind": "measurement",
+      "source": "Isolated source/clock tests plus genuine20/35/60-second FFmpeg tone mixes.",
+      "locator": "tests/backlot/test_studio_hum_production.py",
+      "method": "Exercise source lengths, sample clocks, modes, queue, MotionGit bindings; no real narration/avatar/visual acceptance.",
+      "file": "../../tests/backlot/test_studio_hum_production.py",
+      "sha256": "96180e5b359a09bfd9c624be5ff30a40636d7c3c66ac2c4e30220b862f04d410"
+    },
+    {
+      "id": "final-elder-frozen-request",
+      "source_kind": "measurement",
+      "source": "Actual final frozen local request; its existence certifies input identity and planned clocks only.",
+      "locator": "studio-6aec7c4a704a03fb / hum-production-v1-283efc09ec091a5f86bd / mgd-a0296fa325c6480a86a4ca62ddb4c51e",
+      "method": "Read actual request and verify project/render identity, full PCM clock, contiguous scenes and presenter mapping. Encoded film technical/visual acceptance pending.",
+      "file": "../../projects/studio-6aec7c4a704a03fb/artifacts/hum-production-v1-request.json",
+      "sha256": "553d8765ea69f426bbac0ea3cd21910bbc667b012879f1bbcbb05b00dfbef191"
+    },
+    {
+      "id": "final-child-frozen-request",
+      "source_kind": "measurement",
+      "source": "Actual final frozen local request; its existence certifies input identity and planned clocks only.",
+      "locator": "studio-e56a64dcfb2513b7 / hum-production-v1-7d8ffd312e8d5c5cae44 / mgd-1c0c38a49af94419bf6bdb936e1c099a",
+      "method": "Read actual request and verify project/render identity, full PCM clock, contiguous scenes and presenter mapping. Encoded film technical/visual acceptance pending.",
+      "file": "../../projects/studio-e56a64dcfb2513b7/artifacts/hum-production-v1-request.json",
+      "sha256": "d5eb5837527788981948ce660e1f4ef1657a66b18e725c49fca1d067e1fad005"
+    },
+    {
+      "id": "final-renderer-source",
+      "source_kind": "design",
+      "source": "Historical v001 frozen renderer; the v002 extension is separately recorded.",
+      "locator": "../../projects/studio-6aec7c4a704a03fb/renders/hum-production-v1-283efc09ec091a5f86bd/template/index.tsx",
+      "method": "Read exact source:1440px wall stage clip;240px Coral side note;cascade subtitle exit before expansion;84px safe captions;voice-clock presenter fades.",
+      "file": "../../projects/studio-6aec7c4a704a03fb/renders/hum-production-v1-283efc09ec091a5f86bd/template/index.tsx",
+      "sha256": "aae153ec34e28ee1b0712eea516182010c7584217a0f9f27dc51251cd346c118"
+    },
+    {
+      "id": "final-layout-source",
+      "source_kind": "design",
+      "source": "Project-owned final renderer or geometry; design authority rather than encoded-film acceptance.",
+      "locator": "layout.json",
+      "method": "Read exact source:1440px wall stage clip;240px Coral side note;cascade subtitle exit before expansion;84px safe captions;voice-clock presenter fades.",
+      "file": "layout.json",
+      "sha256": "fa3c420cd65d6102e0292e4d70d7b9f066d80126a7bf64fda1c85024025cd041"
+    },
+    {
+      "id": "final-independent-review",
+      "source_kind": "observation",
+      "source": "Independent final encoded-frame and temporal-strip review of both actual outputs.",
+      "locator": ".local\\hum-production-20261027\\qa\\final-independent-review.md",
+      "method": "Read final report and exact output SHAs. Sampled visual inspection only; continuous listening, full phoneme/lip and platform/user approval remain pending.",
+      "file": "../../../.local/hum-production-20261027/qa/final-independent-review.md",
+      "sha256": "0348bce4203c108eba958648df48e5f73cfb8cce9a27ee636618239bbb39493f"
+    },
+    {
+      "id": "final-independent-review-data",
+      "source_kind": "observation",
+      "source": "Structured independent review and per-film score/scope.",
+      "locator": ".local\\hum-production-20261027\\qa\\final-independent-review.json",
+      "method": "Both visual_sampling_status=pass and mandatory_fixes=[]; verify identities against delivered bytes.",
+      "file": "../../../.local/hum-production-20261027/qa/final-independent-review.json",
+      "sha256": "08c12752f2ffdeaf1e1151a831a41258bd57fcb1af602c5a052cfee38e0bdb2a"
+    },
+    {
+      "id": "elder-final-quality",
+      "source_kind": "measurement",
+      "source": "Actual encoded final media technical measurements.",
+      "locator": "Haike_video\\projects\\studio-6aec7c4a704a03fb\\renders\\hum-production-v1-283efc09ec091a5f86bd\\quality.json",
+      "method": "ffprobe dimensions/fps/frame count/video bitrate, full decode and encoded AAC loudness/true peak. Listening is separate.",
+      "file": "../../projects/studio-6aec7c4a704a03fb/renders/hum-production-v1-283efc09ec091a5f86bd/quality.json",
+      "sha256": "507e19b57a9c278ef5096c25f7aa8e7c2d4d834030fdab97151fec1880296489"
+    },
+    {
+      "id": "elder-final-output",
+      "source_kind": "measurement",
+      "source": "Final complete encoded video bytes.",
+      "locator": "Haike_video\\projects\\studio-6aec7c4a704a03fb\\renders\\hum-production-v1-283efc09ec091a5f86bd\\hum-production.mp4",
+      "method": "SHA independently matches delivery, queue result and independent review.",
+      "file": "../../projects/studio-6aec7c4a704a03fb/renders/hum-production-v1-283efc09ec091a5f86bd/hum-production.mp4",
+      "sha256": "7f0a360f92e96c291c8278f3cc88707341fd1a81957e774701ffd90b40951226"
+    },
+    {
+      "id": "elder-final-result",
+      "source_kind": "measurement",
+      "source": "Completed same-frozen-input local queue result.",
+      "locator": "Haike_video\\projects\\studio-6aec7c4a704a03fb\\renders\\hum-production-v1-283efc09ec091a5f86bd\\result.json",
+      "method": "Read request/output/quality identities; no provider call during rendering, primary/no-BGM variants preserved.",
+      "file": "../../projects/studio-6aec7c4a704a03fb/renders/hum-production-v1-283efc09ec091a5f86bd/result.json",
+      "sha256": "8151b1f71ec9f3f0387fcd33552089e9dc12d416464ed81b31f9d77d4a817aea"
+    },
+    {
+      "id": "child-final-quality",
+      "source_kind": "measurement",
+      "source": "Actual encoded final media technical measurements.",
+      "locator": "Haike_video\\projects\\studio-e56a64dcfb2513b7\\renders\\hum-production-v1-7d8ffd312e8d5c5cae44\\quality.json",
+      "method": "ffprobe dimensions/fps/frame count/video bitrate, full decode and encoded AAC loudness/true peak. Listening is separate.",
+      "file": "../../projects/studio-e56a64dcfb2513b7/renders/hum-production-v1-7d8ffd312e8d5c5cae44/quality.json",
+      "sha256": "e528b4a3b9ee750388b8d1c7f384d7870e4ada7df6aaebbf4a4ac565775406f1"
+    },
+    {
+      "id": "child-final-output",
+      "source_kind": "measurement",
+      "source": "Final complete encoded video bytes.",
+      "locator": "Haike_video\\projects\\studio-e56a64dcfb2513b7\\renders\\hum-production-v1-7d8ffd312e8d5c5cae44\\hum-production.mp4",
+      "method": "SHA independently matches delivery, queue result and independent review.",
+      "file": "../../projects/studio-e56a64dcfb2513b7/renders/hum-production-v1-7d8ffd312e8d5c5cae44/hum-production.mp4",
+      "sha256": "2d10b3b83aa801412675b1c42e1b74ea54dc6e99675893b8e97e70766bf3a2aa"
+    },
+    {
+      "id": "child-final-result",
+      "source_kind": "measurement",
+      "source": "Completed same-frozen-input local queue result.",
+      "locator": "Haike_video\\projects\\studio-e56a64dcfb2513b7\\renders\\hum-production-v1-7d8ffd312e8d5c5cae44\\result.json",
+      "method": "Read request/output/quality identities; no provider call during rendering, primary/no-BGM variants preserved.",
+      "file": "../../projects/studio-e56a64dcfb2513b7/renders/hum-production-v1-7d8ffd312e8d5c5cae44/result.json",
+      "sha256": "a3fdeaaa381dd93095060e5426617cc59f963f8e4a9adcab3143862a3336a364"
+    }
+  ],
+  "unknowns": [
+    {
+      "path": "/validation/audio",
+      "reason": "Continuous listening and complete phoneme lip-synchronization review have not been performed.",
+      "evidence_plan": "Listen/watch complete encoded outputs on the intended device; record only actual observations.",
+      "blocks": [
+        "audio"
+      ]
+    },
+    {
+      "path": "/validation/platform",
+      "reason": "Target publishing-platform and another physical device are untested.",
+      "evidence_plan": "Test actual platform playback separately; no automatic publishing.",
+      "blocks": [
+        "platform"
+      ]
+    },
+    {
+      "path": "/validation/user_review",
+      "reason": "User aesthetic approval is pending delivery.",
+      "evidence_plan": "Keep the delivered videos available for the user; no approval is inferred from technical success.",
+      "blocks": [
+        "user_review"
+      ]
+    }
+  ],
+  "validation": {
+    "structure": {
+      "status": "pass",
+      "evidence_ids": [
+        "final-elder-frozen-request",
+        "final-child-frozen-request"
+      ],
+      "note": "Exact complete narration clocks, source identities and contiguous scenes validated in two actual productions; 20/35/60-second contract cases additionally tested."
+    },
+    "technical": {
+      "status": "pass",
+      "evidence_ids": [
+        "elder-final-quality",
+        "child-final-quality"
+      ],
+      "note": "Both actual 1440x1800/30fps H264 outputs pass exact frames, >=20Mbps measured video, full decode and <=-1.5dBTP encoded AAC."
+    },
+    "visual": {
+      "status": "pass",
+      "evidence_ids": [
+        "final-independent-review",
+        "final-independent-review-data",
+        "elder-final-output",
+        "child-final-output"
+      ],
+      "note": "Independent sampled-frame and consecutive-strip review; found collisions resolved; no mandatory fixes in inspected scope. Does not certify full continuous watching or listening."
+    },
+    "audio": {
+      "status": "pending",
+      "evidence_ids": [
+        "final-independent-review",
+        "elder-final-quality",
+        "child-final-quality"
+      ],
+      "note": "Technical audio levels and source clock measured; continuous listening/phoneme lip synchronization, actual platform device playback and user aesthetic approval are separate and not claimed."
+    },
+    "platform": {
+      "status": "pending",
+      "evidence_ids": [
+        "final-independent-review",
+        "elder-final-quality",
+        "child-final-quality"
+      ],
+      "note": "Technical audio levels and source clock measured; continuous listening/phoneme lip synchronization, actual platform device playback and user aesthetic approval are separate and not claimed."
+    },
+    "user_review": {
+      "status": "pending",
+      "evidence_ids": [
+        "final-independent-review",
+        "elder-final-quality",
+        "child-final-quality"
+      ],
+      "note": "Technical audio levels and source clock measured; continuous listening/phoneme lip synchronization, actual platform device playback and user aesthetic approval are separate and not claimed."
+    },
+    "production": {
+      "status": "pass",
+      "evidence_ids": [
+        "elder-final-result",
+        "child-final-result"
+      ],
+      "note": "Same frozen requests completed through the real unified local queue; saved copyable MotionGit drafts and primary/no-BGM outputs. No publishing."
+    }
+  },
+  "extensions": {
+    "custom": {
+      "contract": "hum-production-v1",
+      "composition": "HumProduction",
+      "dynamicTiming": "Full PCM voice plus0–2second non-speech tail; all frozen scenes cover exact output frames.",
+      "durationScope": "Concrete frozen elder and child timelines above; reusable duration2–600s voice plus0–2s non-speech tail is guarded by samples, source coverage and exact frame allocation. Other actual lengths/layout/content require a new frozen request and per-film review.",
+      "rules": "Full PCM voice plus0–2second non-speech tail; all frozen scenes cover exact output frames.",
+      "production_cases": [
+        {
+          "id": "elder",
+          "title": "店长账号·长者社区相伴",
+          "style": "coral",
+          "project_id": "studio-6aec7c4a704a03fb",
+          "render_id": "hum-production-v1-283efc09ec091a5f86bd",
+          "draft_id": "mgd-a0296fa325c6480a86a4ca62ddb4c51e",
+          "request_path": "../../projects/studio-6aec7c4a704a03fb/artifacts/hum-production-v1-request.json",
+          "request_sha256": "283efc09ec091a5f86bd6d3d3034484b9a63855b9d54d6d42100f609b0d5f928",
+          "frozen_request_file_sha256": "553d8765ea69f426bbac0ea3cd21910bbc667b012879f1bbcbb05b00dfbef191",
+          "duration_frames": 968,
+          "duration_seconds": 32.266666666666666,
+          "voice_clock": {
+            "samples": 768000,
+            "sample_rate": 24000,
+            "channels": 1,
+            "sample_width": 2,
+            "duration_seconds": 32.0
+          },
+          "scenes": [
+            {
+              "id": "E01",
+              "from": 0,
+              "frames": 118,
+              "module": "statement",
+              "theme": "paper",
+              "title": "孩子上班\n孙子上学",
+              "subtitle": "给自己一点热闹"
+            },
+            {
+              "id": "E02",
+              "from": 118,
+              "frames": 177,
+              "module": "statement",
+              "theme": "paper",
+              "title": "白天一个人在家\n连个说话的都没有",
+              "subtitle": "电视开着，其实是听个响"
+            },
+            {
+              "id": "E03",
+              "from": 295,
+              "frames": 90,
+              "module": "statement",
+              "theme": "paper",
+              "title": "日子过得下去\n只是太安静了",
+              "subtitle": "走出去，换一点热闹"
+            },
+            {
+              "id": "E04",
+              "from": 385,
+              "frames": 216,
+              "module": "wall",
+              "theme": "paper",
+              "title": "来坐坐\n也看看新鲜",
+              "subtitle": "10月23日活动实拍",
+              "motion": "card-stack",
+              "wallMediaIds": [
+                "10-24_008",
+                "S023",
+                "S027"
+              ],
+              "mediaId": "S023",
+              "selection": {
+                "cursorFrom": 112,
+                "selectFrom": 132,
+                "expandFrom": 142,
+                "holdFrom": 160
+              }
+            },
+            {
+              "id": "E05",
+              "from": 601,
+              "frames": 96,
+              "module": "focus",
+              "theme": "paper",
+              "title": "坐一坐\n聊聊天",
+              "subtitle": "10月23日活动实拍",
+              "mediaId": "S027",
+              "motion": "paper-reveal"
+            },
+            {
+              "id": "E06",
+              "from": 697,
+              "frames": 120,
+              "module": "focus",
+              "theme": "paper",
+              "title": "陈家林路63号\n未来汇一楼",
+              "subtitle": "",
+              "mediaId": "10-24_008"
+            },
+            {
+              "id": "E07",
+              "from": 817,
+              "frames": 151,
+              "module": "statement",
+              "theme": "paper",
+              "title": "明天，来坐坐\n热闹热闹",
+              "subtitle": "陈家林路63号 · 未来汇一楼"
+            }
+          ],
+          "presenter_clips": [
+            {
+              "id": "elder-hq",
+              "src": "elder-presenter.mp4",
+              "from": 0,
+              "frames": 240,
+              "offset": 0,
+              "fit": "contain"
+            }
+          ],
+          "presenter_modes": [
+            {
+              "clipId": "elder-hq",
+              "from": 0,
+              "frames": 118,
+              "mode": "large"
+            },
+            {
+              "clipId": "elder-hq",
+              "from": 118,
+              "frames": 122,
+              "mode": "small"
+            }
+          ],
+          "technical": "pending-independent-report",
+          "visual_sampling": "pass",
+          "continuous_watching": "pending",
+          "full_listening": "pending",
+          "user_art_acceptance": "pending",
+          "output_path": "../../projects/studio-6aec7c4a704a03fb/renders/hum-production-v1-283efc09ec091a5f86bd/hum-production.mp4",
+          "output_sha256": "7f0a360f92e96c291c8278f3cc88707341fd1a81957e774701ffd90b40951226",
+          "quality_sha256": "507e19b57a9c278ef5096c25f7aa8e7c2d4d834030fdab97151fec1880296489",
+          "result_sha256": "8151b1f71ec9f3f0387fcd33552089e9dc12d416464ed81b31f9d77d4a817aea",
+          "independent_score": 84,
+          "continuous_listening": "pending",
+          "continuous_lipsync": "pending",
+          "platform_device": "pending",
+          "user_aesthetic": "pending"
+        },
+        {
+          "id": "child",
+          "title": "店长账号·孩子亲手体验AI",
+          "style": "hum",
+          "project_id": "studio-e56a64dcfb2513b7",
+          "render_id": "hum-production-v1-7d8ffd312e8d5c5cae44",
+          "draft_id": "mgd-1c0c38a49af94419bf6bdb936e1c099a",
+          "request_path": "../../projects/studio-e56a64dcfb2513b7/artifacts/hum-production-v1-request.json",
+          "request_sha256": "7d8ffd312e8d5c5cae444d5717b0307e0d474f9281c8d4db3e3d4e879222f9b6",
+          "frozen_request_file_sha256": "d5eb5837527788981948ce660e1f4ef1657a66b18e725c49fca1d067e1fad005",
+          "duration_frames": 918,
+          "duration_seconds": 30.6,
+          "voice_clock": {
+            "samples": 727930,
+            "sample_rate": 24000,
+            "channels": 1,
+            "sample_width": 2,
+            "duration_seconds": 30.330416666666668
+          },
+          "scenes": [
+            {
+              "id": "C01",
+              "from": 0,
+              "frames": 179,
+              "module": "wall",
+              "theme": "paper",
+              "title": "有人在看屏幕\n有人在亲手用",
+              "subtitle": "从知道AI，到亲手体验",
+              "motion": "cascade",
+              "mediaId": "S083",
+              "wallMediaIds": [
+                "S063",
+                "10-24_008",
+                "10-24_007",
+                "S068",
+                "S083"
+              ],
+              "selection": {
+                "cursorFrom": 96,
+                "selectFrom": 112,
+                "expandFrom": 120,
+                "holdFrom": 138
+              }
+            },
+            {
+              "id": "C02",
+              "from": 179,
+              "frames": 175,
+              "module": "statement",
+              "theme": "paper",
+              "title": "新闻里 · 课本里\n还是亲手体验过？",
+              "subtitle": "AI，也可以走近一点"
+            },
+            {
+              "id": "C03",
+              "from": 354,
+              "frames": 92,
+              "module": "focus",
+              "theme": "paper",
+              "title": "未来汇一楼\n海客AI社区服务店",
+              "subtitle": "",
+              "mediaId": "10-24_008"
+            },
+            {
+              "id": "C04",
+              "from": 446,
+              "frames": 92,
+              "module": "focus",
+              "theme": "paper",
+              "title": "机器人和机器狗\n就在孩子面前",
+              "subtitle": "",
+              "mediaId": "S068"
+            },
+            {
+              "id": "C05",
+              "from": 538,
+              "frames": 99,
+              "module": "focus",
+              "theme": "paper",
+              "title": "近距离看看\n亲手摸摸",
+              "subtitle": "",
+              "mediaId": "S063"
+            },
+            {
+              "id": "C06",
+              "from": 637,
+              "frames": 79,
+              "module": "statement",
+              "theme": "paper",
+              "title": "从知道AI\n到亲手体验一次",
+              "subtitle": ""
+            },
+            {
+              "id": "C07",
+              "from": 716,
+              "frames": 92,
+              "module": "statement",
+              "theme": "paper",
+              "title": "陈家林路63号\n未来汇一楼",
+              "subtitle": ""
+            },
+            {
+              "id": "C08",
+              "from": 808,
+              "frames": 110,
+              "module": "statement",
+              "theme": "paper",
+              "title": "这个周末\n亲手用一次真的AI",
+              "subtitle": "陈家林路63号 · 未来汇一楼"
+            }
+          ],
+          "presenter_clips": [
+            {
+              "id": "child-hq",
+              "src": "child-presenter.mp4",
+              "from": 684,
+              "frames": 226,
+              "offset": 0,
+              "fit": "contain"
+            }
+          ],
+          "presenter_modes": [
+            {
+              "clipId": "child-hq",
+              "from": 684,
+              "frames": 124,
+              "mode": "large"
+            },
+            {
+              "clipId": "child-hq",
+              "from": 808,
+              "frames": 102,
+              "mode": "small"
+            }
+          ],
+          "technical": "pending-independent-report",
+          "visual_sampling": "pass",
+          "continuous_watching": "pending",
+          "full_listening": "pending",
+          "user_art_acceptance": "pending",
+          "output_path": "../../projects/studio-e56a64dcfb2513b7/renders/hum-production-v1-7d8ffd312e8d5c5cae44/hum-production.mp4",
+          "output_sha256": "2d10b3b83aa801412675b1c42e1b74ea54dc6e99675893b8e97e70766bf3a2aa",
+          "quality_sha256": "e528b4a3b9ee750388b8d1c7f384d7870e4ada7df6aaebbf4a4ac565775406f1",
+          "result_sha256": "a3fdeaaa381dd93095060e5426617cc59f963f8e4a9adcab3143862a3336a364",
+          "independent_score": 87,
+          "continuous_listening": "pending",
+          "continuous_lipsync": "pending",
+          "platform_device": "pending",
+          "user_aesthetic": "pending"
+        }
+      ],
+      "ready_scope": "Local implementation readiness: speech-clock contract and two final Hum/Coral 4:5 real-footage samples, with independent sampled-visual and measured technical checks. Other46 Hallmark directions remain references. Bounds2–600s are an input contract, not a claim of all durations/media/device/provider combinations visually tested. Continuous listening/lipsync/platform/user review remain pending.",
+      "open_motion_v002": {
+        "manifest": "open-effects-manifest.json",
+        "entry": "OpenMotion.tsx",
+        "gpu_bridge": "OpenEffects.tsx",
+        "source_policy": "Pinned unmodified Remocn sources plus npm GL/Pixi effects. No copied upstream audio.",
+        "allowed_styles": [
+          "darkroom",
+          "carnival"
+        ],
+        "allowed_modules": [
+          "focus",
+          "statement"
+        ],
+        "effect_minimum_frames": {
+          "cloth": 50,
+          "parallax": 60,
+          "mondrian": 80,
+          "gl-film": 54,
+          "gl-circle": 54,
+          "pixi-shock": 60
+        },
+        "geometry": {
+          "portrait": [
+            720,
+            1180
+          ],
+          "landscape": [
+            1300,
+            735
+          ],
+          "caption": [
+            88,
+            1528,
+            1264,
+            145
+          ],
+          "caption_size": 76,
+          "presenter_large": [
+            650,
+            300,
+            660,
+            1130
+          ],
+          "presenter_small": [
+            1000,
+            970,
+            300,
+            510
+          ]
+        },
+        "production_cases": [
+          {
+            "style": "darkroom",
+            "project_id": "studio-decf1bde334763c2",
+            "render_id": "hum-production-v1-30e337abad41a84b0707",
+            "draft_id": "mgd-6e7f2de88b0944cb8575bb972e94fd17",
+            "request_sha256": "30e337abad41a84b0707faa2eb62de750cc35929bbc28c737404c2648010ae2a",
+            "output_sha256": "0bc796cf2e9a272e79ed5c1984fb12e282a5f1e898b935ecfaa20c9df3ea1dcd",
+            "frames": 968,
+            "width": 1440,
+            "height": 1800,
+            "video_bitrate": "20494394",
+            "audio": {
+              "integrated_lufs": -15.7,
+              "true_peak_dbtp": -3.11,
+              "loudness_range_lu": 2.5
+            },
+            "visual_sampling": "pass",
+            "continuous_listening": "pending",
+            "full_lip_sync": "pending",
+            "platform_device": "pending",
+            "user_aesthetic": "pending"
+          },
+          {
+            "style": "carnival",
+            "project_id": "studio-2c3dfe586dd3b8e0",
+            "render_id": "hum-production-v1-4bbf32bd3cbb4023e8e2",
+            "draft_id": "mgd-077ee0e47ec1486abfad2c69f8081906",
+            "request_sha256": "4bbf32bd3cbb4023e8e2a92ecf9f6500207dc342a8f34bdef9a17bbb3f8a9db6",
+            "output_sha256": "0572066ee03a7530e6ee9ab20083182f1218734ae07f156dc7614d0747d79cf2",
+            "frames": 918,
+            "width": 1440,
+            "height": 1800,
+            "video_bitrate": "20494072",
+            "audio": {
+              "integrated_lufs": -16.57,
+              "true_peak_dbtp": -4.05,
+              "loudness_range_lu": 2.2
+            },
+            "visual_sampling": "pass",
+            "continuous_listening": "pending",
+            "full_lip_sync": "pending",
+            "platform_device": "pending",
+            "user_aesthetic": "pending"
+          }
+        ],
+        "scope": "Both actual local 4:5 videos passed technical checks and author sampled-frame/temporal-strip review. Continuous listening, full lip synchronization, platform/device playback and user aesthetic review remain pending. Each case preserves its exact frozen source; other media and durations require per-film validation."
+      }
+    },
+    "graphic": {
+      "text_policy": "Actual bundled display/body font measurement and short captions; source image/video interior remains embedded content.",
+      "asset_fit": "contain, original full frame; muted videos; no speech time stretch."
+    },
+    "material_edit": {
+      "source_ranges": "wall selected footage starts at expandFrom; focus starts scene0; contain/muted/1x; range shortage blocks instead of loop/freeze.",
+      "cut_policy": "Continuous nonoverlapping scenes cover frozen durationFrames. Insufficient actual source length blocks."
+    },
+    "avatar": {
+      "face_crop": "contain source, current layout large/small boxes; original source-clock mapping.",
+      "synchronization": "Optional voice-SHA-bound segment map; source offset plus elapsed global clip time remains continuous across large/small/hidden. Nonzero global starts:10-frame visual fade-in; last8clip frames fade-out; source clock continues1x throughout fades and large/small geometry."
+    },
+    "narration": {
+      "rules": "Full local PCM source at original rate; rendered48k stereo master, ducked music/SFX; separate no-BGM alternative. Provider calls are upstream.",
+      "contract": "speech-clock-v1"
+    }
+  },
+  "operations": [
+    {
+      "id": "check-freeze",
+      "input": "title, props or shotPlan, audio, sources and actual provenance JSON.",
+      "action": "Read-only preflight; freeze matching files/runtime and idempotent request.",
+      "output": "Private assets and immutable request.",
+      "completion": "Exact voice sample clock, ordered captions, real media/presenter windows, source identities and loaded font metrics pass.",
+      "recovery": "Repair the affected input or restore original hashes; preserve upstream paid results.",
+      "entrypoint": "../../scripts/hum_production.py --input <input.json> --check"
+    },
+    {
+      "id": "queued-render",
+      "input": "Frozen request plus existing global local-recompose queue.",
+      "action": "VideoCompose/Remotion, CBR export and technical checks; produce primary and no-BGM alternative.",
+      "output": "H2641440x1800/30fps>=20Mbps; AAC48k stereo; quality/result/delivery records; candidate work version.",
+      "completion": "Expected frames/duration, full decode, measured bitrate and<=-1.5dBTP; separate actual visual/listening/lip/user gates remain.",
+      "recovery": "Resume original --request without regenerating voice/avatar; changed incomplete runtime requires new freeze.",
+      "entrypoint": "../../scripts/hum_production.py --request <frozen-request.json>"
+    },
+    {
+      "id": "review",
+      "input": "Actual complete encoded outputs and exact source-bound inputs.",
+      "action": "Inspect boundaries, in-flight/hold states, source full-frame layout, caption reading and presenter clocks; watch/listen separately.",
+      "output": "Dimension-specific evidence and ready scope with input/output hashes.",
+      "completion": "Current source/technical/visual evidence supports scope; unperformed continuous audio/device/user review retains pending.",
+      "recovery": "Identify element and global frame; repair source-owned input/implementation and rerun affected checks.",
+      "entrypoint": "README.md#4-作者验收"
+    }
+  ]
+}

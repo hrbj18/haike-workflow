@@ -1,0 +1,868 @@
+from __future__ import annotations
+
+import json
+import os
+import re
+from pathlib import Path
+
+import pytest
+
+from douyin_intelligence.exporter import atomic_write_json
+from douyin_intelligence.replication_delivery import (
+    CATALOG_NAME,
+    MAX_DELIVERY_FOLDER_BYTES,
+    build_manifest,
+    build_material_catalog,
+    ensure_delivery_tree,
+    is_signed_download_url,
+    publish_directory,
+    render_delivery_readme,
+    validate_delivery_manifest,
+    validate_material_catalog,
+    write_material_catalog,
+)
+
+
+def _manifest(**overrides) -> dict:
+    # ``keywords_requested`` / ``search_attribution`` must reach build_manifest
+    # itself (not be post-applied) so derived fields stay consistent.
+    forwarded = {key: overrides.pop(key) for key in ("keywords_requested", "search_attribution") if key in overrides}
+    manifest = build_manifest(
+        theme="苹果折叠屏手机",
+        folder="9.12苹果折叠屏复刻视频",
+        business_date="2026-09-12",
+        generated_at="2026-09-12T21:40:00+08:00",
+        keywords_used=["苹果折叠屏手机", "折叠屏 折痕"],
+        candidate_pool_size=80,
+        script_replica={"status": "found", "video_id": "7304", "author": "何同学", "heat_score": 0.91, "skeleton": "01-脚本思路/脚本骨架.json", "script_notes": "01-脚本思路/脚本思路.md"},
+        material_replica_sources=[],
+        main_materials=[{"clip_id": "main-01", "file": "02-主素材/a.mp4", "duration": 6.5, "face_class": "face_free", "suggested_use": "hook"}],
+        supporting_materials=[{"clip_id": "support-01", "file": "03-辅助素材/b.mp4", "duration": 5.2, "face_class": "low_face", "suggested_use": "key_points[1]"}],
+        counters={"candidates": 80, "clips_exported": 2},
+        face_backend="opencv_yunet",
+        face_backend_status="ok",
+        ffmpeg_status="ok",
+        degraded=False,
+        insufficient=False,
+        warnings=[],
+        **forwarded,
+    )
+    manifest.update(overrides)
+    return manifest
+
+
+def test_manifest_has_all_required_keys_and_disclaimer() -> None:
+    manifest = _manifest()
+    for key in ("schema_version", "evidence_disclaimer", "degraded", "insufficient", "warnings"):
+        assert key in manifest
+    assert manifest["evidence_disclaimer"]
+
+
+def test_validate_manifest_passes(tmp_path: Path) -> None:
+    path = tmp_path / "清单.json"
+    atomic_write_json(path, _manifest())
+    result = validate_delivery_manifest(path)
+    assert result["status"] == "pass"
+    assert result["errors"] == []
+
+
+def test_validate_manifest_allows_face_heavy_material(tmp_path: Path) -> None:
+    """Face is no longer a delivery gate (2026-09-18 strategy §3.3).
+
+    A ``face_heavy`` main material *and* a non-``face_free`` supporting material
+    must both be legal: ``face_class`` is a descriptive field now, not a
+    rejection reason.  Only the catalog / size contracts can fail a delivery.
+    """
+    path = tmp_path / "清单.json"
+    atomic_write_json(path, _manifest(
+        main_materials=[{"clip_id": "main-01", "file": "a.mp4", "duration": 6.0, "face_class": "face_heavy"}],
+        supporting_materials=[{"clip_id": "support-01", "file": "b.mp4", "duration": 5.0, "face_class": "low_face"}],
+    ))
+    result = validate_delivery_manifest(path)
+    assert result["status"] == "pass", result["errors"]
+    assert not any("face" in error for error in result["errors"])
+
+
+def test_validate_manifest_handles_missing_file(tmp_path: Path) -> None:
+    result = validate_delivery_manifest(tmp_path / "nope.json")
+    assert result["status"] == "fail"
+
+
+def test_publish_directory_replaces_atomically(tmp_path: Path) -> None:
+    stage = tmp_path / ".stage"
+    ensure_delivery_tree(stage)
+    (stage / "清单.json").write_text("{}", encoding="utf-8")
+    destination = tmp_path / "9.12苹果折叠屏复刻视频"
+    destination.mkdir()
+    (destination / "old.txt").write_text("old", encoding="utf-8")
+    publish_directory(stage, destination)
+    assert (destination / "清单.json").is_file()
+    assert not (destination / "old.txt").exists()
+    assert not stage.exists()
+    assert not list(tmp_path.glob(".*backup*"))
+
+
+def test_render_readme_contains_disclaimer_and_sections() -> None:
+    text = render_delivery_readme(_manifest())
+    assert "不得作为事实依据" in text
+    assert "脚本复刻视频" in text
+    assert "主素材" in text and "辅助素材" in text
+
+
+def test_manifest_separates_requested_from_searched_keywords_default() -> None:
+    # When no explicit request list is supplied the searched list is authoritative
+    # and nothing is flagged as truncated.
+    manifest = _manifest()
+    assert manifest["keywords_requested"] == manifest["keywords_used"]
+    assert manifest["keywords_truncated"] is False
+    assert manifest["search_attribution"] == {}
+
+
+def test_readme_reports_keyword_coverage_and_pool_target_when_truncated() -> None:
+    manifest = _manifest(
+        keywords_used=["苹果折叠屏", "Apple折叠屏", "iPhone折叠屏", "折叠屏 折痕"],
+        keywords_requested=[
+            "苹果折叠屏", "Apple折叠屏", "iPhone折叠屏", "折叠屏 折痕", "折叠屏 铰链", "折叠屏 开合",
+        ],
+        search_attribution={"min_pool_size": 40, "search_report_path": "05-过程数据/search_report.json"},
+    )
+    assert manifest["keywords_truncated"] is True
+    text = render_delivery_readme(manifest)
+    assert "关键词覆盖：请求 6 个 / 实际搜索 4 个（发生关键词截断，仅搜索前 4 个）" in text
+    assert "候选池规模：80（最小目标 40，达标）" in text
+    assert "搜索报告：05-过程数据/search_report.json" in text
+
+
+def test_readme_states_no_truncation_when_full_list_searched() -> None:
+    text = render_delivery_readme(_manifest())
+    assert "关键词覆盖：请求 2 个 / 实际搜索 2 个" in text
+    assert "发生关键词截断" not in text
+
+
+def test_readme_renders_download_section_for_download_only() -> None:
+    manifest = _manifest(
+        mode="download_only",
+        downloads=[
+            {
+                "video_id": "7301", "author": "作者A", "title": "标题" * 20, "duration_seconds": 60.0,
+                "size_bytes": 1536, "file": "04-原片/作者A_作品_7301.mp4",
+            },
+        ],
+        download_failures=[{"video_id": "7302", "stage": "not_video", "reason": "图文作品"}],
+    )
+    text = render_delivery_readme(manifest)
+    assert "模式：仅采集与下载（未做人脸筛选/切片/脚本复刻）" in text
+    assert "## 下载清单" in text
+    assert "7301｜作者A｜" in text
+    assert "1.5 KB" in text
+    assert "## 下载失败" in text
+    assert "not_video" in text
+
+
+def test_readme_download_section_absent_without_key() -> None:
+    text = render_delivery_readme(_manifest())
+    assert "## 下载清单" not in text
+    assert "模式：仅采集与下载" not in text
+
+
+def test_readme_renders_delivered_source_bytes_line() -> None:
+    # The volume-quota ledger lives in the machine-readable 清单.json
+    # (material_replica.delivered_bytes / min / max); this line makes it legible
+    # in the human 00-交付说明.md ("shipped 24 MiB against a 70 MiB floor").
+    manifest = _manifest(
+        material_replica={
+            "delivered_bytes": 25165824,       # 24 MiB shipped
+            "min_delivered_bytes": 73400320,    # 70 MiB floor
+            "max_delivered_bytes": 104857600,   # 100 MiB ceiling
+        },
+    )
+    text = render_delivery_readme(manifest)
+    assert (
+        "- 交付源片体积：24.0 MB（下限 70.0 MB / 上限 100.0 MB，仅计入选源片；8s 切片另占交付目录）"
+        in text
+    )
+    # It belongs to the 主素材 block, ahead of 辅助素材.
+    assert text.index("## 主素材") < text.index("- 交付源片体积：") < text.index("## 辅助素材")
+
+
+@pytest.mark.parametrize(
+    "material",
+    [None, {}, {"delivered_bytes": 0}, {"delivered_bytes": 0, "min_delivered_bytes": 73400320}],
+)
+def test_readme_omits_delivered_source_bytes_line_when_absent_or_zero(material) -> None:
+    # Tolerant by design: an older manifest, or the byte quota unset at 0,
+    # renders exactly as before (no line).
+    overrides = {} if material is None else {"material_replica": material}
+    text = render_delivery_readme(_manifest(**overrides))
+    assert "交付源片体积" not in text
+
+
+def test_publish_directory_retries_on_transient_permission_error(tmp_path: Path, monkeypatch) -> None:
+    stage = tmp_path / ".stage"
+    ensure_delivery_tree(stage)
+    (stage / "清单.json").write_text("{}", encoding="utf-8")
+    destination = tmp_path / "9.12苹果折叠屏复刻视频"
+
+    real_replace = os.replace
+    calls = {"count": 0}
+
+    def flaky_replace(src, dst):
+        calls["count"] += 1
+        if calls["count"] <= 2:
+            raise PermissionError(5, "拒绝访问")
+        return real_replace(src, dst)
+
+    monkeypatch.setattr(os, "replace", flaky_replace)
+    slept: list[float] = []
+    publish_directory(stage, destination, sleep=slept.append)
+
+    assert (destination / "清单.json").is_file()
+    assert not stage.exists()
+    assert calls["count"] == 3
+    assert len(slept) >= 2
+    assert slept == sorted(slept)
+    assert slept[1] > slept[0]
+
+
+def test_publish_directory_keeps_stage_when_permanently_locked(tmp_path: Path, monkeypatch) -> None:
+    stage = tmp_path / ".stage"
+    ensure_delivery_tree(stage)
+    (stage / "清单.json").write_text("stage-content", encoding="utf-8")
+    destination = tmp_path / "9.12苹果折叠屏复刻视频"
+    destination.mkdir()
+    (destination / "old.txt").write_text("old", encoding="utf-8")
+
+    def locked_replace(src, dst):
+        raise PermissionError(5, "拒绝访问")
+
+    monkeypatch.setattr(os, "replace", locked_replace)
+    with pytest.raises(RuntimeError) as captured:
+        publish_directory(stage, destination, sleep=lambda _: None)
+
+    message = str(captured.value)
+    assert str(destination) in message
+    assert "占用" in message
+    assert str(stage) in message
+    # Invariants: stage survives untouched so the caller can retry for free,
+    # and destination is never a half state (here: still the old version).
+    assert stage.exists()
+    assert (stage / "清单.json").read_text(encoding="utf-8") == "stage-content"
+    assert (destination / "old.txt").is_file()
+
+
+def test_publish_directory_rolls_back_when_second_replace_fails(tmp_path: Path, monkeypatch) -> None:
+    stage = tmp_path / ".stage"
+    ensure_delivery_tree(stage)
+    (stage / "清单.json").write_text("new", encoding="utf-8")
+    destination = tmp_path / "9.12苹果折叠屏复刻视频"
+    destination.mkdir()
+    (destination / "old.txt").write_text("old", encoding="utf-8")
+
+    real_replace = os.replace
+
+    def fail_publishing_stage(src, dst):
+        # dest -> backup and the backup rollback both succeed; only stage -> dest fails.
+        if Path(src) == stage and Path(dst) == destination:
+            raise PermissionError(5, "拒绝访问")
+        return real_replace(src, dst)
+
+    monkeypatch.setattr(os, "replace", fail_publishing_stage)
+    with pytest.raises(RuntimeError):
+        publish_directory(stage, destination, sleep=lambda _: None)
+
+    # Rollback restored the old complete version -- no half state.
+    assert (destination / "old.txt").is_file()
+    assert not (destination / "清单.json").exists()
+    # stage kept intact for a zero-cost retry.
+    assert stage.exists()
+    assert (stage / "清单.json").is_file()
+    assert not (tmp_path / ".9.12苹果折叠屏复刻视频.backup").exists()
+
+
+# --------------------------------------------------------------------------- #
+# P6: 「入选」 must list one row per distinct video (never double-count).
+# --------------------------------------------------------------------------- #
+def _budget_block_with_duplicates() -> dict:
+    row = {
+        "video_id": "v1", "title": "标题A", "author": "作者A",
+        "heat_score": 1.0, "relevance_score": 0.3, "size_bytes": 100,
+    }
+    return {
+        "enabled": True,
+        "limits": {"max_count": 12, "max_bytes": 157286400, "max_item_bytes": 31457280},
+        "used": {"count": 2, "bytes": 300, "delivered_bytes": 300, "transferred_bytes": 500},
+        "ranking": {"order": ["relevance", "heat_score", "video_id"], "note": "画面质量留待下载后"},
+        "stopped_by": "count",
+        "selected": [
+            {**row, "stage": "script", "stages": ["script"]},
+            {**row, "stage": "material", "stages": ["material"]},  # exact duplicate video
+            {"video_id": "v2", "title": "标题B", "author": "作者B", "heat_score": 0.5,
+             "relevance_score": 0.1, "size_bytes": 200, "stage": "material", "stages": ["material"]},
+        ],
+        "skipped": [],
+    }
+
+
+def test_readme_selection_list_is_deduped_by_video_id() -> None:
+    """Renderer dedupes independently of the budget (P6): one row per video."""
+    manifest = _manifest(download_budget=_budget_block_with_duplicates())
+    text = render_delivery_readme(manifest)
+    selected_rows = [line for line in text.splitlines() if line.startswith("- v")]
+    assert len(selected_rows) == 2, selected_rows
+    # The listed count equals the distinct count, not the raw row count.
+    assert "下载预算入选（2 条" in text
+    # The duplicate's stage tag is merged onto the single surviving row.
+    assert "［脚本］［素材］" in text
+    assert text.count("｜相关度") == 2
+
+
+def test_readme_selection_dedupe_does_not_depend_on_budget_idempotence() -> None:
+    """Feed *raw* duplicate rows (pre-P1 manifest) -- still one row each."""
+    block = _budget_block_with_duplicates()
+    block["used"]["count"] = 3  # a legacy ledger that double-counted
+    manifest = _manifest(download_budget=block)
+    text = render_delivery_readme(manifest)
+    assert "下载预算入选（2 条" in text
+    assert len([line for line in text.splitlines() if line.startswith("- v1")]) == 1
+
+
+# --------------------------------------------------------------------------- #
+# P7: every cross-reference the readme emits must resolve to a real section.
+# --------------------------------------------------------------------------- #
+def _validation_block(*, duration_checked: int) -> dict:
+    return {
+        "enabled": True,
+        "config": {
+            "duration_tolerance": 0.05, "full_decode": True, "decode_time_budget_seconds": 20,
+            "require_metadata_duration": False, "cache_attestation": True,
+        },
+        "counts": {
+            "validated": 3, "rejected": 0, "cache_attested": 0, "cache_attested_bad": 0,
+            "duration_checked": duration_checked, "by_conclusion": {},
+        },
+        "by_stage": {},
+    }
+
+
+def test_validation_duration_pointer_resolves_in_full_chain() -> None:
+    """Full-chain has no 「下载失败」 section -> the pointer must not dangle."""
+    manifest = _manifest(
+        validation=_validation_block(duration_checked=0),
+        counters={"candidates": 80, "validation_duration_window_rejected": 2},
+    )
+    text = render_delivery_readme(manifest)
+    assert "## 下载失败" not in text  # indeed no such section
+    assert "时长比对已跳过（元数据无时长）" in text
+    assert "见「下载失败」" not in text            # dangling reference removed
+    assert "时长窗口剔除 2 条" in text             # outcome stated inline
+    assert "05-过程数据/validation.json" in text    # points at a real artifact
+
+
+def test_validation_duration_pointer_uses_download_section_when_present() -> None:
+    """Download-only renders 「下载失败」 -> the pointer is valid there."""
+    manifest = _manifest(
+        mode="download_only",
+        validation=_validation_block(duration_checked=0),
+        downloads=[{"video_id": "7301", "author": "作者A", "title": "t", "duration_seconds": 60.0,
+                    "size_bytes": 1536, "file": "04-原片/a.mp4"}],
+        download_failures=[{"video_id": "7302", "stage": "duration_post", "reason": "时长不符"}],
+    )
+    text = render_delivery_readme(manifest)
+    assert "## 下载失败" in text
+    assert "见「下载失败」" in text
+
+
+# --------------------------------------------------------------------------- #
+# V5: the dangling-pointer class must be closed *generally*, not case by case.
+# A ``见「X」`` cross-reference is only valid if ``## X`` is actually rendered;
+# these tests assert that invariant over every readme shape that can emit it.
+# --------------------------------------------------------------------------- #
+_POINTER_RE = re.compile(r"见「([^」]+)」")
+
+
+def _missing_pointer_targets(readme: str) -> list[str]:
+    """Names referenced by ``见「X」`` that have no matching ``## X`` heading."""
+    headings = {line[3:].strip() for line in readme.splitlines() if line.startswith("## ")}
+    return [name for name in _POINTER_RE.findall(readme) if name not in headings]
+
+
+def test_readme_cross_references_never_dangle() -> None:
+    """Universal invariant: every ``见「X」`` resolves to a rendered ``## X``.
+
+    Covers every readme shape whose section set differs, so a future section that
+    becomes conditional cannot silently leave a pointer behind.
+    """
+    download = {"video_id": "7301", "author": "作者A", "title": "t",
+                "duration_seconds": 60.0, "size_bytes": 1536, "file": "04-原片/a.mp4"}
+    failure = {"video_id": "7302", "stage": "duration_post", "reason": "时长不符"}
+    pointer_validation = _validation_block(duration_checked=0)  # forces the pointer branch
+    variants = {
+        "full_chain": _manifest(validation=pointer_validation),
+        "download_only_no_downloads": _manifest(mode="download_only", validation=pointer_validation),
+        "download_only_no_failures": _manifest(
+            mode="download_only", validation=pointer_validation, downloads=[download],
+        ),
+        "download_only_with_failures": _manifest(
+            mode="download_only", validation=pointer_validation,
+            downloads=[download], download_failures=[failure],
+        ),
+        "download_only_failures_only": _manifest(
+            mode="download_only", validation=pointer_validation, download_failures=[failure],
+        ),
+    }
+    for name, manifest in variants.items():
+        readme = render_delivery_readme(manifest)
+        dangling = _missing_pointer_targets(readme)
+        assert dangling == [], f"{name}: 悬空指针 {dangling}"
+
+
+def test_download_only_without_failures_does_not_point_at_absent_section() -> None:
+    """V5 regression: successes but *no* failures -> 「下载失败」 is not rendered.
+
+    The pointer used to fire on ``downloads OR download_failures`` while the
+    section renders only for failures, so this exact shape dangled.
+    """
+    manifest = _manifest(
+        mode="download_only",
+        validation=_validation_block(duration_checked=0),
+        downloads=[{"video_id": "7301", "author": "作者A", "title": "t",
+                    "duration_seconds": 60.0, "size_bytes": 1536, "file": "04-原片/a.mp4"}],
+    )
+    text = render_delivery_readme(manifest)
+    assert "## 下载清单" in text
+    assert "## 下载失败" not in text       # no failures -> no such section
+    assert "见「下载失败」" not in text      # ... therefore no such pointer
+    assert "05-过程数据/validation.json" in text  # points at a real artifact instead
+    assert _missing_pointer_targets(text) == []
+
+
+# --------------------------------------------------------------------------- #
+# P4: the 04-原片 retention rule must be stated explicitly, not implicit.
+# --------------------------------------------------------------------------- #
+def test_readme_states_source_retention_rule() -> None:
+    manifest = _manifest(source_retention={
+        "keep_source_video": True,
+        "effective_keep": True,
+        "kept_count": 2,
+        "selected_count": 4,
+        "note": "04-原片 仅收录最终选用素材源片（每个最终选用源 1 份）；未选用的下载原片保留在持久化媒体库，不进入交付目录",
+        "reason": "04-原片 收录最终选用素材源片（每个最终选用源 1 份）",
+        "persistent_store": "data/media/material-replication",
+    })
+    text = render_delivery_readme(manifest)
+    assert "## 原片保留" in text
+    assert "retention.keep_source_video：True" in text
+    assert "实际收录原片视频：True" in text
+    assert "04-原片 收录 2 份" in text
+    assert "data/media/material-replication" in text
+    assert "仅收录最终选用素材源片" in text
+    # A: the retention note must not reuse the ambiguous 「入选」 -- in this same
+    # document 「入选」 names the *download budget's* set (7), a different set from
+    # the *material sources* kept in 04-原片 (4).
+    note_line = next(line for line in text.splitlines() if line.startswith("- 说明："))
+    assert "入选" not in note_line, note_line
+
+
+def test_readme_reports_effective_keep_when_direct_mode_replaces_source_copy() -> None:
+    """Direct mode: the configured switch is on but no *video* lands in 04-原片.
+
+    The readme must show *both* facts, otherwise ``keep_source_video: True`` alone
+    reads as a second copy (or, worse, as silent data loss when a reader sees an
+    empty 04-原片).
+    """
+    manifest = _manifest(source_retention={
+        "keep_source_video": True,
+        "effective_keep": False,
+        "kept_count": 0,
+        "selected_count": 3,
+        "note": "直投模式：02/03 已逐字节交付整片源片，04-原片 改为原片索引，不再重复收录视频",
+        "reason": "02/03 已逐字节交付整片源片，04-原片 改为索引以避免交付目录体积翻倍",
+        "persistent_store": "data/media/material-replication",
+    })
+    text = render_delivery_readme(manifest)
+    assert "retention.keep_source_video：True" in text
+    assert "实际收录原片视频：False" in text
+    assert "04-原片 收录 0 份" in text
+    assert "原片索引" in text
+    assert "原因：" in text and "避免交付目录体积翻倍" in text
+
+
+def test_readme_states_delivery_folder_size_against_ceiling() -> None:
+    """``## 交付体积`` reports the *whole* folder and whether it is over the cap."""
+    limit = 157286400
+    over = _manifest(delivery_folder={
+        "delivery_folder_bytes": limit + 1,
+        "max_delivery_folder_bytes": limit,
+    })
+    over_text = render_delivery_readme(over)
+    assert "## 交付体积" in over_text
+    assert "交付目录合计" in over_text
+    assert "已超限" in over_text
+
+    under = _manifest(delivery_folder={
+        "delivery_folder_bytes": 100,
+        "max_delivery_folder_bytes": limit,
+    })
+    assert "未超限" in render_delivery_readme(under)
+
+
+def test_delivery_folder_section_absent_without_block() -> None:
+    assert "## 交付体积" not in render_delivery_readme(_manifest())
+
+
+def test_source_retention_section_absent_without_block() -> None:
+    text = render_delivery_readme(_manifest())
+    assert "## 原片保留" not in text
+
+
+# --------------------------------------------------------------------------- #
+# P2 (follow-up): the delivery must state the visual gate's *real* semantics.
+# --------------------------------------------------------------------------- #
+def test_readme_states_visual_gate_only_blocks_near_static() -> None:
+    """The readme must not let a reader think the gate is a quality filter."""
+    manifest = _manifest(material_replica={"status": "done", "selected": 0, "rejected": []})
+    text = render_delivery_readme(manifest)
+    assert "## 画面代理判据" in text
+    assert "视觉合格 = 运动达标" in text
+    assert "只拦「近静止」片" in text
+    assert "不再拦「文字覆盖重」的片" in text
+
+
+def test_visual_proxy_section_absent_for_download_only() -> None:
+    """A download-only run never evaluates the visual proxy -> no section."""
+    manifest = _manifest(material_replica={"status": "skipped", "rejected": []})
+    text = render_delivery_readme(manifest)
+    assert "## 画面代理判据" not in text
+
+
+# --------------------------------------------------------------------------- #
+# C: a multi-line source title must never break a Markdown list.
+# The 9.13 delivery had the title ``"…帮助到大家\n如果记不住…"`` -- its 30th
+# character is ``\n`` -- so ``title[:30] + "…"`` rendered a bare ``…`` line that
+# severed the list.  The real fix is to fold whitespace *before* truncating.
+# --------------------------------------------------------------------------- #
+_MULTILINE_TITLE = (
+    "小米澎程N70/N90验车教学 希望这个视频能够帮助到大家\n"
+    "如果记不住的话车友们可以关注点赞，收藏起来！\n"
+    "#小米 #验车"
+)
+# A short multi-line title never reaches the 30-char cut, so it isolates the
+# other half of the bug: even an untruncated title kept its raw newline.
+_SHORT_MULTILINE_TITLE = "第一行标题\n第二行标题"
+
+
+def _sel_row(video_id: str, title: str) -> dict:
+    return {
+        "video_id": video_id, "title": title, "author": "小***0",
+        "heat_score": 0.2, "relevance_score": 0.5, "size_bytes": 1024,
+        "stage": "material", "stages": ["material"],
+    }
+
+
+def test_multiline_title_never_breaks_any_list() -> None:
+    """All three title-bearing row renderers must emit a single clean line."""
+    manifest = _manifest(
+        mode="download_only",
+        download_budget={
+            "enabled": True,
+            "limits": {"max_count": 12, "max_bytes": 0, "max_item_bytes": 0},
+            "used": {"count": 3, "bytes": 0, "delivered_bytes": 0, "transferred_bytes": 0},
+            "ranking": {"order": ["relevance"], "note": ""},
+            "stopped_by": "count",
+            "selected": [
+                _sel_row("v0", _MULTILINE_TITLE),
+                _sel_row("v1", _MULTILINE_TITLE),
+                _sel_row("v2", _SHORT_MULTILINE_TITLE),
+            ],
+            "skipped": [],
+        },
+        downloads=[
+            {"video_id": f"d{i}", "author": "小***0", "title": _MULTILINE_TITLE,
+             "duration_seconds": 23.8, "size_bytes": 1024, "file": f"04-原片/d{i}.mp4"}
+            for i in range(2)
+        ],
+        prefilter={
+            "enabled": True,
+            "config": {"exclude_terms": [], "min_seconds": 30, "max_seconds": 300,
+                       "heat_gate_percentile": 10, "allow_unknown_duration": True,
+                       "drop_non_video": True},
+            "pool_size": 4, "passed": 0, "rejected": 2,
+            "rejections": [
+                {"video_id": f"r{i}", "stage": "pre_duration", "reason": "时长不符",
+                 "duration_seconds": 10, "heat_score": 0.1, "author": "小***0",
+                 "title": _MULTILINE_TITLE}
+                for i in range(2)
+            ],
+        },
+    )
+    text = render_delivery_readme(manifest)
+    lines = text.splitlines()
+    # 1) no orphan 「…」 line anywhere -- the exact 9.13 defect.
+    assert [line for line in lines if line.strip() == "…"] == []
+    # 2) no list is severed: exactly one row per selected / download / rejected row.
+    assert len([line for line in lines if line.startswith("- v")]) == 3
+    assert len([line for line in lines if line.startswith("- d")]) == 2
+    assert len([line for line in lines if line.startswith("- 剔除 r")]) == 2
+    # 3) the newline became a single space (folding, not just truncation).
+    assert "第一行标题 第二行标题" in text
+    assert "\n第一行标题" not in text
+    assert "\n如果记不住" not in text
+    assert "\n#小米" not in text
+
+
+# --------------------------------------------------------------------------- #
+# A / B / D: one clear name per quantity in the download-cost sections.
+# --------------------------------------------------------------------------- #
+def _budget_wording_block() -> dict:
+    row = {"video_id": "v1", "title": "标题A", "author": "作者A",
+           "heat_score": 1.0, "relevance_score": 0.3, "size_bytes": 100,
+           "stage": "material", "stages": ["material"]}
+    return {
+        "enabled": True,
+        "limits": {"max_count": 12, "max_bytes": 157286400, "max_item_bytes": 31457280},
+        "used": {"count": 2, "bytes": 300, "delivered_bytes": 300, "transferred_bytes": 500},
+        "ranking": {"order": ["relevance"], "note": ""},
+        "stopped_by": "count",
+        "selected": [row],
+        "skipped": [],
+    }
+
+
+def _budget_wording_validation() -> dict:
+    by_stage = {
+        "script": {"validated": 1, "passed": 1, "rejected": 0},
+        "material": {"validated": 8, "passed": 8, "rejected": 0},
+    }
+    return {
+        "enabled": True,
+        "config": {"duration_tolerance": 0.05, "full_decode": True,
+                   "decode_time_budget_seconds": 20, "require_metadata_duration": False,
+                   "cache_attestation": True},
+        "counts": {"validated": 9, "rejected": 0, "cache_attested": 0,
+                   "cache_attested_bad": 0, "duration_checked": 1,
+                   "by_conclusion": {"ok": 9}, "by_stage": by_stage},
+        "by_stage": by_stage,
+    }
+
+
+def test_download_and_validation_wording_is_unambiguous() -> None:
+    manifest = _manifest(download_budget=_budget_wording_block(),
+                         validation=_budget_wording_validation())
+    text = render_delivery_readme(manifest)
+    # A: the budget list names its own scope, so 1 (budget) vs N (sources kept)
+    # can no longer read as a self-contradiction.
+    assert "下载预算入选（1 条，为什么这几条值得下）：" in text
+    # B: the delivered ledger is named a *download* ledger, not a directory size.
+    assert "实际使用：2 条 / 交付 300 B（下载文件账）/ 真实传输 500 B" in text
+    # D: validated counts *calls* and breaks down so it reconciles with 分阶段.
+    assert "校验 9 次（脚本 1 + 素材 8）：全片解码通过 9 条" in text
+    assert "脚本 校验 1 次（通过 1 / 剔除 0）；素材 校验 8 次（通过 8 / 剔除 0）" in text
+
+
+# --------------------------------------------------------------------------- #
+# 00-素材目录.json -- the machine-readable material catalog (strategy §3.4).
+# --------------------------------------------------------------------------- #
+_CATALOG_MAIN = "02-主素材/苹果折叠屏-主素材-01-开场.mp4"
+_CATALOG_SUPPORT = "03-辅助素材/苹果折叠屏-辅助素材-01-要点.mp4"
+_CATALOG_ENTRY_KEYS = (
+    "material_id", "file_path", "recommended_usage", "source_url", "title", "author",
+    "source_kind", "source_authority", "visual_role", "rights_status",
+    "relevance_score", "heat_score", "duration_seconds", "file_bytes", "face_class",
+)
+
+
+def _write_bytes(path: Path, size: int) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_bytes(b"x" * size)
+
+
+def _catalog_delivery(tmp_path: Path, *, main_bytes: int = 128, support_bytes: int = 256):
+    """A delivery folder with real media + catalog (plus its manifest)."""
+    root = tmp_path / "9.12苹果折叠屏复刻视频"
+    ensure_delivery_tree(root)
+    _write_bytes(root / _CATALOG_MAIN, main_bytes)
+    _write_bytes(root / _CATALOG_SUPPORT, support_bytes)
+    main = [{"clip_id": "main-01", "file": _CATALOG_MAIN, "duration": 6.0,
+             "face_class": "face_heavy", "suggested_use": "hook"}]
+    support = [{"clip_id": "support-01", "file": _CATALOG_SUPPORT, "duration": 5.0,
+                "face_class": "low_face", "suggested_use": "key_points[1]"}]
+    manifest = _manifest(main_materials=main, supporting_materials=support)
+    details = {
+        _CATALOG_MAIN: {
+            "video_id": "7301", "author": "作者A", "title": "标题A",
+            "source_url": "https://www.douyin.com/video/7301", "source": "douyin",
+            "heat_score": 0.9, "relevance_score": 0.5, "rights_status": "review_required",
+        },
+        _CATALOG_SUPPORT: {
+            "video_id": "7302", "author": "作者B", "title": "标题B",
+            "source_url": "https://www.douyin.com/video/7302", "source": "douyin",
+            "heat_score": 0.4, "relevance_score": 0.2,
+        },
+    }
+    catalog = build_material_catalog(
+        theme=manifest["theme"], folder=manifest["folder"], business_date=manifest["business_date"],
+        generated_at=manifest["generated_at"], main_materials=main, supporting_materials=support,
+        details=details, root=root,
+    )
+    write_material_catalog(root, catalog)
+    atomic_write_json(root / "清单.json", manifest)
+    return root, manifest, catalog
+
+
+def _mutate_catalog(root: Path, mutate) -> Path:
+    catalog_path = root / CATALOG_NAME
+    payload = json.loads(catalog_path.read_text(encoding="utf-8"))
+    mutate(payload)
+    atomic_write_json(catalog_path, payload)
+    return catalog_path
+
+
+def test_catalog_lists_every_entity_with_required_fields(tmp_path: Path) -> None:
+    root, manifest, catalog = _catalog_delivery(tmp_path)
+    listed = [entry["file_path"] for entry in catalog["entries"]]
+    # Both physical entities are covered, in main-then-support order, exactly once.
+    assert listed == [_CATALOG_MAIN, _CATALOG_SUPPORT]
+    assert catalog["count"] == 2
+    assert catalog["total_bytes"] == 128 + 256
+    for entry in catalog["entries"]:
+        for key in _CATALOG_ENTRY_KEYS:
+            assert key in entry, key
+        assert entry["material_id"]
+        assert entry["face_class"]  # face_class is carried through, descriptive only
+        assert (root / entry["file_path"]).stat().st_size == entry["file_bytes"]
+    # Tags that could not be judged fall back honestly rather than being invented.
+    assert catalog["entries"][0]["source_kind"] == "unknown"
+    assert catalog["entries"][0]["source_authority"] == "unknown"
+    assert catalog["entries"][0]["visual_role"] == "unknown"
+    assert catalog["entries"][0]["rights_status"] == "review_required"
+
+
+def test_catalog_delivery_with_face_heavy_material_validates(tmp_path: Path) -> None:
+    root, _, _ = _catalog_delivery(tmp_path)
+    result = validate_delivery_manifest(root / "清单.json")
+    assert result["status"] == "pass", result["errors"]
+
+
+def test_legacy_manifest_without_catalog_stays_valid(tmp_path: Path) -> None:
+    """Back-compat: an annotation-style legacy manifest has no current size block."""
+    root = tmp_path / "delivery"
+    ensure_delivery_tree(root)
+    atomic_write_json(root / "清单.json", _manifest())
+    assert validate_delivery_manifest(root / "清单.json")["status"] == "pass"
+
+
+def test_current_manifest_without_catalog_fails(tmp_path: Path) -> None:
+    """A folder produced by the current publisher must expose the downstream catalog."""
+    root = tmp_path / "delivery"
+    ensure_delivery_tree(root)
+    manifest = _manifest()
+    manifest["delivery_folder"] = {
+        "delivery_folder_bytes": 0,
+        "max_delivery_folder_bytes": MAX_DELIVERY_FOLDER_BYTES,
+    }
+    atomic_write_json(root / "清单.json", manifest)
+    result = validate_delivery_manifest(root / "清单.json")
+    assert result["status"] == "fail"
+    assert any(CATALOG_NAME in error for error in result["errors"])
+
+
+def test_catalog_missing_entity_fails(tmp_path: Path) -> None:
+    root, _, _ = _catalog_delivery(tmp_path)
+    # Drop the supporting entity both from disk and from the catalog: a listed
+    # main entity ``_CATALOG_SUPPORT`` must still be present -> coverage error.
+    (root / _CATALOG_SUPPORT).unlink()
+    result = validate_delivery_manifest(root / "清单.json")
+    assert result["status"] == "fail"
+    assert any("不存在" in error for error in result["errors"])
+
+
+def test_catalog_omitting_a_manifest_entity_fails(tmp_path: Path) -> None:
+    root, _, _ = _catalog_delivery(tmp_path)
+    _mutate_catalog(root, lambda payload: payload["entries"].pop())
+    result = validate_delivery_manifest(root / "清单.json")
+    assert result["status"] == "fail"
+    assert any("未列入素材目录" in error for error in result["errors"])
+
+
+def test_catalog_duplicate_file_path_fails(tmp_path: Path) -> None:
+    root, _, _ = _catalog_delivery(tmp_path)
+    _mutate_catalog(root, lambda payload: payload["entries"].append(dict(payload["entries"][0])))
+    result = validate_delivery_manifest(root / "清单.json")
+    assert result["status"] == "fail"
+    assert any("重复实体路径" in error for error in result["errors"])
+
+
+@pytest.mark.parametrize("unsafe", ["C:/tmp/evil.mp4", "/abs/evil.mp4", "../evil.mp4", "02-主素材/../../evil.mp4"])
+def test_catalog_unsafe_path_fails(tmp_path: Path, unsafe: str) -> None:
+    root, _, _ = _catalog_delivery(tmp_path)
+    _mutate_catalog(root, lambda payload: payload["entries"][0].__setitem__("file_path", unsafe))
+    result = validate_delivery_manifest(root / "清单.json")
+    assert result["status"] == "fail"
+    assert any("不安全" in error for error in result["errors"])
+
+
+def test_catalog_byte_mismatch_fails(tmp_path: Path) -> None:
+    root, _, _ = _catalog_delivery(tmp_path)
+    _mutate_catalog(root, lambda payload: payload["entries"][0].__setitem__("file_bytes", 1))
+    result = validate_delivery_manifest(root / "清单.json")
+    assert result["status"] == "fail"
+    assert any("file_bytes 与实体不符" in error for error in result["errors"])
+
+
+def test_catalog_signed_download_url_fails(tmp_path: Path) -> None:
+    root, _, _ = _catalog_delivery(tmp_path)
+    signed = "https://v3-web.douyinvod.com/abc?x-expires=1700000000&signature=deadbeef"
+    _mutate_catalog(root, lambda payload: payload["entries"][0].__setitem__("source_url", signed))
+    result = validate_delivery_manifest(root / "清单.json")
+    assert result["status"] == "fail"
+    assert any("签名下载 URL" in error for error in result["errors"])
+
+
+@pytest.mark.parametrize("key,value", [
+    ("source_kind", "made_up"), ("source_authority", "official_ish"),
+    ("visual_role", "portrait"), ("recommended_usage", "primary"), ("rights_status", "free"),
+])
+def test_catalog_illegal_label_fails(tmp_path: Path, key: str, value: str) -> None:
+    root, _, _ = _catalog_delivery(tmp_path)
+    _mutate_catalog(root, lambda payload: payload["entries"][0].__setitem__(key, value))
+    result = validate_delivery_manifest(root / "清单.json")
+    assert result["status"] == "fail"
+    assert any(f"{key}=" in error for error in result["errors"])
+
+
+def test_catalog_total_over_cap_fails(tmp_path: Path) -> None:
+    root, _, _ = _catalog_delivery(tmp_path)
+    result = validate_material_catalog(root / CATALOG_NAME, max_total_bytes=10)
+    assert result["status"] == "fail"
+    assert any("超过上限" in error for error in result["errors"])
+
+
+def test_delivery_folder_over_hard_cap_fails_manifest(tmp_path: Path) -> None:
+    """The 200,000,000-byte cap is enforced by the manifest validator itself."""
+    root, manifest, _ = _catalog_delivery(tmp_path)
+    manifest["delivery_folder"] = {
+        "delivery_folder_bytes": MAX_DELIVERY_FOLDER_BYTES + 1,
+        "max_delivery_folder_bytes": MAX_DELIVERY_FOLDER_BYTES,
+    }
+    atomic_write_json(root / "清单.json", manifest)
+    result = validate_delivery_manifest(root / "清单.json")
+    assert result["status"] == "fail"
+    assert any("超过上限" in error for error in result["errors"])
+
+
+def test_delivery_folder_at_hard_cap_passes(tmp_path: Path) -> None:
+    root, manifest, _ = _catalog_delivery(tmp_path)
+    manifest["delivery_folder"] = {
+        "delivery_folder_bytes": MAX_DELIVERY_FOLDER_BYTES,
+        "max_delivery_folder_bytes": MAX_DELIVERY_FOLDER_BYTES,
+    }
+    atomic_write_json(root / "清单.json", manifest)
+    assert validate_delivery_manifest(root / "清单.json")["status"] == "pass"
+
+
+def test_signed_download_url_detector() -> None:
+    assert is_signed_download_url("https://www.douyin.com/video/7301") is False
+    assert is_signed_download_url("") is False
+    assert is_signed_download_url("https://v3-web.douyinvod.com/a/b.mp4?x-expires=1") is True
+    assert is_signed_download_url("https://p3-sign.douyinpic.com/a?x-signature=z") is True
+    assert is_signed_download_url("https://example.com/a.mp4?a_bogus=1") is True

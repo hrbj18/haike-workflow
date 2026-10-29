@@ -1,0 +1,1750 @@
+{
+  "schema_version": 1,
+  "standard_version": "video-template-v1",
+  "template_id": "avatar-investment-a-v6",
+  "template_version": "v002",
+  "template_type": "avatar",
+  "spec_kind": "implementation",
+  "stage": "ready",
+  "authority": {
+    "runbook": "../../../Haike-Videohub/agent-runbooks/数字人口播模板6-招商A.md",
+    "implementation_paths": [
+      "index.tsx",
+      "layout.json",
+      "../../backlot/studio_investment.py",
+      "../../backlot/studio_composition.py",
+      "../../backlot/studio_avatar.py",
+      "../../scripts/avatar_investment_sample.py",
+      "../../backlot/studio_investment_recompose.py",
+      "../../scripts/avatar_investment_recompose.py"
+    ],
+    "parameter_source": "layout.json"
+  },
+  "canvas": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "duration_seconds": 32.06666666666667,
+    "clock": "每期真实驱动音轨为主时钟；本规格scenes/timing数值对应本次复用32.08秒驱动音轨的clear-v2验收输入，按30fps取整为962帧/32.066667秒，最终成片已核对为962帧/32.066667秒。实际输入按round(prepared.duration*30)/30输出，不拉伸语音适配封面；v001历史102秒与12秒证据独立保留。",
+    "coordinate_system": "top_left_pixels"
+  },
+  "narrative": {
+    "purpose": "复刻参考片可辨识的招商视觉模板，采用海客项目及用户授权数字人和稿件",
+    "information_hierarchy": [
+      "人物口播与完整字幕",
+      "项目品牌",
+      "当前句重点贴纸或条件完整的信息卡",
+      "封面招商主题与结尾行动引导",
+      "数字人演绎标识"
+    ],
+    "structure": [
+      "紫蓝金色招商封面覆盖口播起句",
+      "全幅原背景数字人口播",
+      "按真实语义时钟出现的强调层",
+      "可选已授权素材窗；当前范围未启用",
+      "结尾行动引导覆盖话尾"
+    ]
+  },
+  "scenes": [
+    {
+      "id": "opening",
+      "start": 0,
+      "end": 1.2,
+      "purpose": "展示主题和项目，同时语音及字幕继续",
+      "element_ids": [
+        "background",
+        "presenter",
+        "tint",
+        "company_brand",
+        "project_badge",
+        "emphasis",
+        "captions",
+        "disclosure",
+        "cover_background",
+        "cover_brand",
+        "cover_title",
+        "cover_panel",
+        "cover_chip",
+        "cover_english",
+        "lower_broll"
+      ],
+      "variant": "opening_cover"
+    },
+    {
+      "id": "presenter_body",
+      "start": 1.2,
+      "end": 29.56666666666667,
+      "purpose": "人物口播、真实字幕、语义贴纸与信息卡",
+      "element_ids": [
+        "background",
+        "presenter",
+        "tint",
+        "company_brand",
+        "project_badge",
+        "emphasis",
+        "captions",
+        "disclosure",
+        "lower_broll"
+      ],
+      "variant": "presenter"
+    },
+    {
+      "id": "closing",
+      "start": 29.56666666666667,
+      "end": 32.06666666666667,
+      "purpose": "结尾引导、当前字幕及原话尾",
+      "element_ids": [
+        "background",
+        "presenter",
+        "tint",
+        "company_brand",
+        "project_badge",
+        "emphasis",
+        "captions",
+        "disclosure",
+        "cover_background",
+        "cover_brand",
+        "cover_title",
+        "cover_panel",
+        "cover_chip",
+        "cover_english",
+        "lower_broll"
+      ],
+      "variant": "closing_cover"
+    }
+  ],
+  "assets": [
+    {
+      "id": "avatar_video",
+      "kind": "video",
+      "path": null,
+      "source": "每期项目public/avatar.mp4；来自已授权人物图与同源驱动音轨，预处理保留来源和SHA",
+      "embedded_content": [
+        "人物外貌、服装、原图背景与生成口型；不可当作可编辑办公室背景"
+      ],
+      "rights_status": "本期以用户明确提供的侯总人物图为输入；其他期重新核对授权与来源"
+    },
+    {
+      "id": "driving_audio",
+      "kind": "audio",
+      "path": null,
+      "source": "每期public/narration.wav，真实音色输出并在prepared记录中冻结",
+      "embedded_content": [
+        "完整口播语音，已应用供应商语速时本地不二次加速"
+      ],
+      "rights_status": "本期用户授权侯总高情绪1.1倍速；后续按本期选择和预算"
+    },
+    {
+      "id": "system_font",
+      "kind": "font",
+      "path": null,
+      "source": "Windows已安装Microsoft YaHei；源码备用PingFang SC/sans-serif不等于跨机已验收",
+      "embedded_content": [],
+      "rights_status": "系统字体仅在许可环境渲染，不将字体文件随模板打包"
+    }
+  ],
+  "elements": [
+    {
+      "id": "background",
+      "type": "video",
+      "role": "同源人物视频模糊延展背景",
+      "parent_id": null,
+      "z_index": 0,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": "avatar_video",
+        "description": "同一avatarSrc静音视频；源图背景和服装内嵌不可独立编辑；inset=-60为有意延展。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1080,
+          1920
+        ],
+        "fit": "cover",
+        "clip": "self",
+        "style": {
+          "source": "index.tsx",
+          "blur": 34,
+          "opacity": 0.7
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 32.06666666666667
+      },
+      "states": [
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "按当前组件条件显示，时间采用全片秒，左闭右开区间"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_design"
+      ],
+      "acceptance": [
+        {
+          "check": "visual_contract",
+          "method": "查看实际稳定帧、切换帧及最长输入",
+          "pass_condition": "固定几何符合layout.json，内容可读，未越界，主体与字幕关系符合当前实现"
+        }
+      ]
+    },
+    {
+      "id": "presenter",
+      "type": "avatar",
+      "role": "保留原图与背景的主口播窗口",
+      "parent_id": null,
+      "z_index": 1,
+      "content": {
+        "mode": "embedded",
+        "binding": "avatar_slot",
+        "asset_id": "avatar_video",
+        "description": "保留原图与背景的主口播窗口"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          240,
+          1080,
+          1350
+        ],
+        "fit": "contain",
+        "clip": "self",
+        "style": {
+          "source": "layout.json /portrait",
+          "object_fit": "contain"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 32.06666666666667
+      },
+      "states": [
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "按当前组件条件显示，时间采用全片秒，左闭右开区间"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [
+        "content.asset_id"
+      ],
+      "evidence_ids": [
+        "implementation_design"
+      ],
+      "acceptance": [
+        {
+          "check": "visual_contract",
+          "method": "查看实际稳定帧、切换帧及最长输入",
+          "pass_condition": "人物不拉伸，头顶与下巴完整；原背景比例保留，同源视频与独立音轨时钟一致。"
+        }
+      ]
+    },
+    {
+      "id": "tint",
+      "type": "gradient",
+      "role": "顶部与底部可读性渐变",
+      "parent_id": null,
+      "z_index": 2,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "顶部与底部可读性渐变"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1080,
+          1920
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "index.tsx",
+          "stops": "顶部#16052d75→26%透明→62%透明→82%#110b2c6b→底#110b2c"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 32.06666666666667
+      },
+      "states": [
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "按当前组件条件显示，时间采用全片秒，左闭右开区间"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_design"
+      ],
+      "acceptance": [
+        {
+          "check": "visual_contract",
+          "method": "查看实际稳定帧、切换帧及最长输入",
+          "pass_condition": "固定几何符合layout.json，内容可读，未越界，主体与字幕关系符合当前实现"
+        }
+      ]
+    },
+    {
+      "id": "company_brand",
+      "type": "text",
+      "role": "固定海客公司品牌",
+      "parent_id": null,
+      "z_index": 3,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "公司品牌固定在源码中，不随项目品牌槽更换。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          62,
+          102,
+          420,
+          90
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "font": "\"Microsoft YaHei\",\"PingFang SC\",sans-serif",
+          "font_size": 26,
+          "max_lines": 2,
+          "overflow": "按studio_investment边界拒绝或压短文本后重验，不能假设自动缩至任意小字",
+          "secondary_font_size": 18,
+          "color": "#f0e4ff",
+          "text": "海客科技 / AI COMMUNITY"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 32.06666666666667
+      },
+      "states": [
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "按当前组件条件显示，时间采用全片秒，左闭右开区间"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_design"
+      ],
+      "acceptance": [
+        {
+          "check": "visual_contract",
+          "method": "查看实际稳定帧、切换帧及最长输入",
+          "pass_condition": "固定几何符合layout.json，内容可读，未越界，主体与字幕关系符合当前实现"
+        }
+      ]
+    },
+    {
+      "id": "project_badge",
+      "type": "text",
+      "role": "右上紫色玻璃霓虹项目名称",
+      "parent_id": null,
+      "z_index": 4,
+      "content": {
+        "mode": "editable",
+        "binding": "brand_slot",
+        "asset_id": null,
+        "description": "右上紫色玻璃霓虹项目名称"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          568,
+          96,
+          448,
+          136
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "font": "\"Microsoft YaHei\",\"PingFang SC\",sans-serif",
+          "font_size": 39,
+          "max_lines": 2,
+          "overflow": "按studio_investment边界拒绝或压短文本后重验，不能假设自动缩至任意小字",
+          "source": "layout.json /projectBadge; index.tsx",
+          "padding": [
+            20,
+            22
+          ],
+          "border": "3px #f3a6ff",
+          "radius": 20,
+          "shadow": "粉色内光+青色右下边"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 32.06666666666667
+      },
+      "states": [
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "按当前组件条件显示，时间采用全片秒，左闭右开区间"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation_design"
+      ],
+      "acceptance": [
+        {
+          "check": "visual_contract",
+          "method": "查看实际稳定帧、切换帧及最长输入",
+          "pass_condition": "固定几何符合layout.json，内容可读，未越界，主体与字幕关系符合当前实现"
+        }
+      ]
+    },
+    {
+      "id": "lower_broll",
+      "type": "media_window",
+      "role": "可选已审核源素材的下半屏窗口",
+      "parent_id": null,
+      "z_index": 5,
+      "content": {
+        "mode": "generated",
+        "binding": "broll_slot",
+        "asset_id": null,
+        "description": "来自现有已审核storyboard的源图/视频；本期未启用，不能将稿件卡称为实拍"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          72,
+          896,
+          936,
+          527
+        ],
+        "fit": "contain",
+        "clip": "self",
+        "style": {
+          "source": "index.tsx optional scenes",
+          "border": "3px #a86cff",
+          "shadow": "4px 5px #59f8f4",
+          "generated_label": "AI示意画面",
+          "visual_source_muted": true
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 32.06666666666667
+      },
+      "states": [
+        {
+          "id": "hidden",
+          "visible": false,
+          "description": "没有当前已审核scene时隐藏"
+        },
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "当前scene.start<=t<scene.end显示；显示时emphasis隐藏；人物脸部保留"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "avoid",
+          "target_id": "captions",
+          "rule": "素材窗底部1423，字幕从1470开始，图像完整contain，不拉伸或放大裁掉源关键文字。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "states"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation_design"
+      ],
+      "acceptance": [
+        {
+          "check": "optional_material_window",
+          "method": "取得合法来源后核对源范围与最终帧",
+          "pass_condition": "来源、偏移、时长均真实可读；不循环或拉伸；本期未启用范围保持待验证"
+        }
+      ]
+    },
+    {
+      "id": "emphasis",
+      "type": "component",
+      "role": "真实字幕语义触发的贴纸或项目卡",
+      "parent_id": null,
+      "z_index": 5,
+      "content": {
+        "mode": "editable",
+        "binding": "emphasis_slot",
+        "asset_id": null,
+        "description": "真实字幕语义触发的贴纸或项目卡"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          72,
+          940,
+          936,
+          490
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "layout.json /emphasis; index.tsx /OverlayGroup",
+          "max_cards": 3,
+          "sticker_font_max": 106,
+          "sticker_font_rule": "min(fontSize,770/max(3,text.length))",
+          "kinds": [
+            "sticker",
+            "card"
+          ],
+          "allow_growth": "卡片minHeight=490，超长组合须以真实帧检查；不推断任意字段上限组合均可容纳",
+          "sticker_box": [
+            72,
+            1110,
+            936,
+            280
+          ],
+          "card_box": [
+            72,
+            940,
+            936,
+            490
+          ],
+          "card_header_font": 20,
+          "card_title_font": [
+            60,
+            36
+          ],
+          "card_detail_font": [
+            28,
+            16
+          ],
+          "card_footnote_font": [
+            20,
+            14
+          ],
+          "text_size_order": "single,multi",
+          "card_gap": 16,
+          "padding": [
+            18,
+            20
+          ],
+          "content_alignment": "display:flex,column,justifyContent:center"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 32.06666666666667
+      },
+      "states": [
+        {
+          "id": "hidden",
+          "visible": false,
+          "description": "无命中事件或事件区间外"
+        },
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "命中区间内，匹配回执保留ASR原边界与cue序号；同屏最多3条，第四条由适配器拒绝；有素材窗时隐藏重点层。"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "hidden",
+          "to": "visible",
+          "trigger": "到达真实ASR匹配的start",
+          "start": 0,
+          "end": 0.3,
+          "properties": {
+            "opacity": [
+              0,
+              1
+            ],
+            "scale": [
+              0.82,
+              1
+            ],
+            "local_clock": "相对每次事件起点；全片样本仅存动画时长"
+          },
+          "easing": "linear/clamped"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "avoid",
+          "target_id": "captions",
+          "rule": "重点主体位于字幕上方；最长标题、说明、注释须实际检查，不得以名义height推断全部正文已适配。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation_design"
+      ],
+      "acceptance": [
+        {
+          "check": "visual_contract",
+          "method": "查看实际稳定帧、切换帧及最长输入",
+          "pass_condition": "固定几何符合layout.json，内容可读，未越界，主体与字幕关系符合当前实现"
+        }
+      ]
+    },
+    {
+      "id": "captions",
+      "type": "subtitle",
+      "role": "逐句白字深色细描边字幕，阿拉伯数字组合黄色强调",
+      "parent_id": null,
+      "z_index": 30,
+      "content": {
+        "mode": "editable",
+        "binding": "captions_slot",
+        "asset_id": null,
+        "description": "clear-v2：白字、深色细描边与数字黄色强调；仅显示样式变化，文字、断行和真实ASR时钟保留"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          62,
+          1470,
+          956,
+          170
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "font": "\"Microsoft YaHei\",\"PingFang SC\",sans-serif",
+          "font_size": 61,
+          "max_lines": 2,
+          "overflow": "适配器拒绝超过28字；renderer按14字/行至多2行显示，换行不改写原始ASR startMs/endMs。",
+          "source": "layout.json /caption; index.tsx",
+          "line_height": 1.36,
+          "style_id": "clear-v2",
+          "font_weight": 700,
+          "color": "#ffffff",
+          "numeric_color": "#ffe05a",
+          "numeric_rule": "index.tsx /captionText；在已有显示行内按数字正则包裹span，仅改阿拉伯数字及相连的小数、乘数组合、万亿千百单位或百分号的颜色，原字符不变，不转写中文数字。",
+          "stroke": "3px #121526",
+          "paint_order": "stroke fill",
+          "shadow": "none",
+          "display_timing": "原始ASR startMs/endMs，查找首个活动cue"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 32.06666666666667
+      },
+      "states": [
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "存在活动cue时显示，开/尾封面上继续显示当前字幕；逐句静态显示，不是逐字卡拉OK。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation_design"
+      ],
+      "acceptance": [
+        {
+          "check": "visual_contract",
+          "method": "查看实际稳定帧、切换帧及最长输入",
+          "pass_condition": "生产字幕14字拆句可读，白字细边无旧彩色重影，数字强调不改写文字；ASR边界有效，开/尾封面与强调区间均未遮挡关键字幕。"
+        }
+      ]
+    },
+    {
+      "id": "disclosure",
+      "type": "text",
+      "role": "数字人演绎提示",
+      "parent_id": null,
+      "z_index": 40,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "数字人演绎提示"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          64,
+          1780,
+          350,
+          41
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "font": "\"Microsoft YaHei\",\"PingFang SC\",sans-serif",
+          "font_size": 22,
+          "max_lines": 1,
+          "overflow": "按studio_investment边界拒绝或压短文本后重验，不能假设自动缩至任意小字",
+          "color": "#eee6ffbd",
+          "letter_spacing": 3,
+          "text": "数字人演绎"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 32.06666666666667
+      },
+      "states": [
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "按当前组件条件显示，时间采用全片秒，左闭右开区间"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_design"
+      ],
+      "acceptance": [
+        {
+          "check": "visual_contract",
+          "method": "查看实际稳定帧、切换帧及最长输入",
+          "pass_condition": "固定几何符合layout.json，内容可读，未越界，主体与字幕关系符合当前实现"
+        }
+      ]
+    },
+    {
+      "id": "cover_background",
+      "type": "vector",
+      "role": "封面紫蓝科技底色与网格",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "封面紫蓝科技底色与网格"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1080,
+          1920
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "index.tsx /Cover /NeonGrid",
+          "fill": "紫蓝黑渐变+右侧粉紫光晕",
+          "rendering": "程序绘制，不取用参考底图"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 32.06666666666667
+      },
+      "states": [
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "opening=true时前1.2秒；closing=true时末2.5秒；短片长度取durationInFrames/3的较小值，首尾区间不延长音轨。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_design"
+      ],
+      "acceptance": [
+        {
+          "check": "visual_contract",
+          "method": "查看实际稳定帧、切换帧及最长输入",
+          "pass_condition": "固定几何符合layout.json，内容可读，未越界，主体与字幕关系符合当前实现"
+        }
+      ]
+    },
+    {
+      "id": "cover_brand",
+      "type": "text",
+      "role": "封面金橙斜条品牌",
+      "parent_id": null,
+      "z_index": 11,
+      "content": {
+        "mode": "editable",
+        "binding": "cover_brand_slot",
+        "asset_id": null,
+        "description": "封面金橙斜条品牌"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          68,
+          155,
+          944,
+          110
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "font": "\"Microsoft YaHei\",\"PingFang SC\",sans-serif",
+          "font_size": 48,
+          "max_lines": 1,
+          "overflow": "按studio_investment边界拒绝或压短文本后重验，不能假设自动缩至任意小字",
+          "source": "index.tsx /Cover",
+          "rotate_degrees": -5,
+          "fill": "linear-gradient(#ffe76c,#ff8e14)",
+          "color": "#291035"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 32.06666666666667
+      },
+      "states": [
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "随Cover显隐，文字来自同一investment.brand。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation_design"
+      ],
+      "acceptance": [
+        {
+          "check": "visual_contract",
+          "method": "查看实际稳定帧、切换帧及最长输入",
+          "pass_condition": "固定几何符合layout.json，内容可读，未越界，主体与字幕关系符合当前实现"
+        }
+      ]
+    },
+    {
+      "id": "cover_title",
+      "type": "text",
+      "role": "封面白青双行超粗主标题",
+      "parent_id": null,
+      "z_index": 12,
+      "content": {
+        "mode": "editable",
+        "binding": "headline_slot",
+        "asset_id": null,
+        "description": "封面白青双行超粗主标题"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          54,
+          370,
+          972,
+          360
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "font": "\"Microsoft YaHei\",\"PingFang SC\",sans-serif",
+          "font_size": 137,
+          "max_lines": 2,
+          "overflow": "按studio_investment边界拒绝或压短文本后重验，不能假设自动缩至任意小字",
+          "source": "layout.json /cover; index.tsx /Cover",
+          "fill": "首行#ffffff，次行palette.cyan",
+          "line_height": 1.18,
+          "font_rule": "titleLines:显式换行最多2行；无换行超过12字则二等分两行；font=min(layout.cover.headlineFontSize,928/最长行字符数)",
+          "letter_spacing": -5,
+          "shadow": "单一0 6px #321157，不使用transparent/gradient-clip"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 32.06666666666667
+      },
+      "states": [
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "随Cover显隐；开头局部0..10帧从y+25到0，clamped线性。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation_design"
+      ],
+      "acceptance": [
+        {
+          "check": "visual_contract",
+          "method": "查看实际稳定帧、切换帧及最长输入",
+          "pass_condition": "固定几何符合layout.json，内容可读，未越界，主体与字幕关系符合当前实现"
+        }
+      ]
+    },
+    {
+      "id": "cover_panel",
+      "type": "component",
+      "role": "封面项目说明与结尾加入引导",
+      "parent_id": null,
+      "z_index": 13,
+      "content": {
+        "mode": "editable",
+        "binding": "cta_slot",
+        "asset_id": null,
+        "description": "封面项目说明与结尾加入引导"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          74,
+          850,
+          932,
+          350
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "index.tsx /Cover",
+          "border": "3px #65efffb0",
+          "fill": "#24144980",
+          "padding": [
+            38,
+            30
+          ],
+          "text_policy": "项目品牌31px；开头固定‘招商合作 · 共创未来’53px；结尾CTA titleLines与min(67,850/最长行字符数)，最多2行。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 32.06666666666667
+      },
+      "states": [
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "随Cover显隐；closing状态使用cta，opening使用当前源码固定招商说明。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation_design"
+      ],
+      "acceptance": [
+        {
+          "check": "visual_contract",
+          "method": "查看实际稳定帧、切换帧及最长输入",
+          "pass_condition": "固定几何符合layout.json，内容可读，未越界，主体与字幕关系符合当前实现"
+        }
+      ]
+    },
+    {
+      "id": "cover_chip",
+      "type": "vector",
+      "role": "程序生成的等距AI芯片与透视网格",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "程序生成的等距AI芯片与透视网格"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          1120,
+          1080,
+          712
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "index.tsx /NeonGrid",
+          "embedded_text": "AI",
+          "drawing": "SVG path/text；无外部参考素材"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 32.06666666666667
+      },
+      "states": [
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "随Cover显隐"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_design"
+      ],
+      "acceptance": [
+        {
+          "check": "visual_contract",
+          "method": "查看实际稳定帧、切换帧及最长输入",
+          "pass_condition": "固定几何符合layout.json，内容可读，未越界，主体与字幕关系符合当前实现"
+        }
+      ]
+    },
+    {
+      "id": "cover_english",
+      "type": "text",
+      "role": "固定英文品牌尾标",
+      "parent_id": null,
+      "z_index": 14,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "固定英文品牌尾标"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          72,
+          1710,
+          936,
+          50
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "font": "\"Microsoft YaHei\",\"PingFang SC\",sans-serif",
+          "font_size": 25,
+          "max_lines": 1,
+          "overflow": "按studio_investment边界拒绝或压短文本后重验，不能假设自动缩至任意小字",
+          "source": "index.tsx",
+          "text": "HAIKE · AI COMMUNITY",
+          "letter_spacing": 7,
+          "color": "#d5c9f7"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 32.06666666666667
+      },
+      "states": [
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "随Cover显隐"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing",
+        "states",
+        "transitions"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_design"
+      ],
+      "acceptance": [
+        {
+          "check": "visual_contract",
+          "method": "查看实际稳定帧、切换帧及最长输入",
+          "pass_condition": "固定几何符合layout.json，内容可读，未越界，主体与字幕关系符合当前实现"
+        }
+      ]
+    }
+  ],
+  "slots": [
+    {
+      "id": "avatar_slot",
+      "element_id": "presenter",
+      "property": "content.asset_id",
+      "value_type": "asset",
+      "required": true,
+      "limits": {
+        "kind": "video",
+        "same_clock_as_audio": true,
+        "max_seconds": 120,
+        "fit": "contain",
+        "provenance": "用户授权人物图驱动所得或可复用同源master"
+      },
+      "missing": "停在素材输入gate，不将静态图称为已完成数字人口播",
+      "overflow": "保持固定窗口等比适配；时长不符先核对原供应商产物，不拉伸人物或重提付费任务"
+    },
+    {
+      "id": "brand_slot",
+      "element_id": "project_badge",
+      "property": "content",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "max_chars": 14,
+        "rule": "同一investment.brand供右上牌及封面使用",
+        "source": "studio_investment.settings()",
+        "single_line": true
+      },
+      "missing": "使用适配器当前明确默认；缺少合法标题时停在输入gate",
+      "overflow": "适配器拒绝超长输入，压短本期显示文字后重验，不修改口播原文或几何"
+    },
+    {
+      "id": "cover_brand_slot",
+      "element_id": "cover_brand",
+      "property": "content",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "max_chars": 14,
+        "rule": "绑定同一investment.brand，不独立改写",
+        "source": "studio_investment.settings()",
+        "single_line": true
+      },
+      "missing": "使用适配器当前明确默认；缺少合法标题时停在输入gate",
+      "overflow": "适配器拒绝超长输入，压短本期显示文字后重验，不修改口播原文或几何"
+    },
+    {
+      "id": "headline_slot",
+      "element_id": "cover_title",
+      "property": "content",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "max_chars": 32,
+        "rule": "封面标题允许换行；实际两行溢出须压短后重验",
+        "source": "studio_investment.settings()",
+        "max_explicit_lines": 2,
+        "blank_lines": "reject",
+        "auto_split": "无换行>12字二等分成2行"
+      },
+      "missing": "使用适配器当前明确默认；缺少合法标题时停在输入gate",
+      "overflow": "超过字符/行数或含空白行拒绝；显示按最长行动态字号；最长输入组合仍须本期实际帧检查。"
+    },
+    {
+      "id": "cta_slot",
+      "element_id": "cover_panel",
+      "property": "content",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "max_chars": 32,
+        "rule": "结尾引导允许换行，商业条件不自动省略",
+        "source": "studio_investment.settings()",
+        "max_explicit_lines": 2,
+        "blank_lines": "reject",
+        "auto_split": "无换行>12字二等分成2行"
+      },
+      "missing": "使用适配器当前明确默认；缺少合法标题时停在输入gate",
+      "overflow": "超过字符/行数或含空白行拒绝；显示按最长行动态字号；最长输入组合仍须本期实际帧检查。"
+    },
+    {
+      "id": "captions_slot",
+      "element_id": "captions",
+      "property": "content",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "fields": [
+          "text",
+          "startMs",
+          "endMs"
+        ],
+        "production_max_chars": 14,
+        "clock": "真实ASR",
+        "interval": "0<=startMs<endMs<=duration*1000+1",
+        "visual_max_lines": 2,
+        "max_display_chars": 28
+      },
+      "missing": "生产阶段恢复原ASR；开发手工字幕必须标记示意",
+      "overflow": "适配器超过28字拒绝；生产按现有ASR14字拆句，renderer每14字显式换行；不编造时间戳。"
+    },
+    {
+      "id": "emphasis_slot",
+      "element_id": "emphasis",
+      "property": "content",
+      "value_type": "array",
+      "required": false,
+      "limits": {
+        "max_items": 32,
+        "match_max_chars": 48,
+        "text_max_chars": 18,
+        "detail_max_chars": 48,
+        "footnote_max_chars": 64,
+        "kind": [
+          "sticker",
+          "card"
+        ],
+        "unique_normalized_match": true,
+        "match_policy": "第一次真实ASR命中，未命中回执unmatched，不均摊稿件",
+        "max_simultaneous": 3
+      },
+      "missing": "空数组合法，保留人物与字幕；未命中不伪造事件",
+      "overflow": "字段超限或同一时刻超过3条拒绝；合并该句重点卡后恢复原任务。"
+    },
+    {
+      "id": "cover_switches",
+      "element_id": "global",
+      "property": "input.investment",
+      "value_type": "object",
+      "required": false,
+      "limits": {
+        "opening": "boolean default true",
+        "closing": "boolean default true",
+        "fixed_duration": "layout.json",
+        "unknown_fields": "reject"
+      },
+      "missing": "采用明确默认值true",
+      "overflow": "拒绝非布尔或未知配置，不额外添加音轨时长"
+    },
+    {
+      "id": "audio_slot",
+      "element_id": "global",
+      "property": "audio",
+      "value_type": "asset",
+      "required": true,
+      "limits": {
+        "kind": "audio",
+        "max_seconds": 120,
+        "master_clock": true,
+        "bgm": "当前不新增BGM",
+        "prepared_upload_bytes": "当前SDK/网关与百炼本机导入5MiB；与Studio<=120秒及所选ASR限制同时满足"
+      },
+      "missing": "从当前已选音色生成并保存回执后继续；不凭估时生产",
+      "overflow": "保留原TTS，超限阻断所依赖阶段；分段适配另行验证"
+    },
+    {
+      "id": "broll_slot",
+      "element_id": "lower_broll",
+      "property": "content",
+      "value_type": "array",
+      "required": false,
+      "limits": {
+        "source": "现有已审核storyboard；不得直接填写不属于本项目的public路径",
+        "fields": [
+          "start",
+          "end",
+          "src",
+          "kind",
+          "generated",
+          "offset"
+        ],
+        "fit": "contain",
+        "audio": "muted",
+        "loop": false,
+        "source_ranges": "offset+scene.duration必须不超过源视频时长",
+        "provenance": "来源、SHA、rights和观察帧由原Agent素材合同核对"
+      },
+      "missing": "无素材正常保留人物/稿件重点层，不自动联网或盗用参考片内嵌素材",
+      "overflow": "源范围不足或归属不符拒绝；不循环、拉伸或伪造B-roll"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "implementation_design",
+      "source_kind": "design",
+      "source": "本模板当前实现",
+      "locator": "index.tsx / layout.json / studio_investment.py；最终版以源码与模板元数据身份为准",
+      "method": "将参考观察转换为可复用程序图形；独立重建，不复用参考人物、账号、控件和B-roll。几何为当前源码快照。",
+      "file": null,
+      "sha256": null
+    },
+    {
+      "id": "reference_overview",
+      "source_kind": "observation",
+      "source": "用户提供的参考MP4",
+      "locator": "reference/current-analysis.json → revision 2，model=codex-agent-current；38帧5张多宫格实际查看，另看5原帧",
+      "method": "video_understanding_cli prepare/read/submit；只支持离散画面布局判断，没有听音或连续播放",
+      "file": "../../../.local/codex-runs/avatar-template6-zhaoshangA-20261018/reference/current-analysis.json",
+      "sha256": null
+    },
+    {
+      "id": "reference_measurements",
+      "source_kind": "measurement",
+      "source": "参考录屏原尺寸代表帧",
+      "locator": "576x1280/24fps；FRAME-00003,00009,00010,00014,00021",
+      "method": "人工像素估读约±8px；去UI后的9:16映射是设计推定，不是原视频边界实测",
+      "file": "../../../.local/codex-runs/avatar-template6-zhaoshangA-20261018/reference/reference-measurements.json",
+      "sha256": null
+    },
+    {
+      "id": "development_visual_v1",
+      "source_kind": "measurement",
+      "source": "历史v001：12秒原生统一队列无声静态人物首轮开发样片",
+      "locator": "0.5s opening /2.4s presenter /4.2s sticker /6.8s card /10.5s closing；五张原尺寸帧均实际查看",
+      "method": "实际帧发现封面白青渐变大标题被深紫shadow覆盖，阻断视觉；其他短文字单卡样例可读。仅视觉抽样，没有听音或连续播放。",
+      "file": "../../../.local/template6-pipeline-recon-20261018/dev-visual-review-v1.json",
+      "sha256": null
+    },
+    {
+      "id": "development_technical_v2",
+      "source_kind": "measurement",
+      "source": "历史v001：原生统一队列12秒零云开发样片layout-v2",
+      "locator": "project studio-4070b2e28a998df9 / PQ-7686f781cbb80b23438e / 最终avatar-preview.mp4 SHA1d8778ae464dafaf771befd50a65e31d5fff276bc9d90d3f168afbf5d59b0b55",
+      "method": "ffprobe和完整解码：1080x1920/30fps/360帧/12秒；全零PCM音轨、cloud_calls=0、无供应商任务；不证明真实口型或ASR。",
+      "file": "../../../.local/codex-runs/avatar-template6-zhaoshangA-20261018/layout-v2/sample-evidence.json",
+      "sha256": "eebef791447da7be712b99c6718767b93ece86b82f158be5ccb2009f79892081"
+    },
+    {
+      "id": "development_visual_v2",
+      "source_kind": "measurement",
+      "source": "历史v001：12秒开发样片layout-v2的5张原尺寸输出帧",
+      "locator": "opening .5s/presenter2.4s/sticker4.2s/card6.8s/closing10.5s",
+      "method": "实际查看全部5帧；首版破碎标题已修复为白/青实色，人物/项目牌/贴纸/单卡/字幕可读且无意外越界；仅该短文字单卡样本范围。",
+      "file": "../../../.local/codex-runs/avatar-template6-zhaoshangA-20261018/layout-v2/visual-review.json",
+      "sha256": "29a3dc7d7308e3e2e55dd99b6171f65ef6bffb665621f65e0acc2bc3a9afaf10"
+    },
+    {
+      "id": "implementation_identity_v001",
+      "source_kind": "measurement",
+      "source": "历史v001基准源码与样片实际归档源码",
+      "locator": "index.tsx=49fd51be91f80f0e5bbc0776d1809b927d5c102ed051cd7adb2b7441f3d14717；layout=0907c4948bdbaa072cada72d031bebcfd27c6a9aa41c358c7097504422d64aae",
+      "method": "SHA256核对本期样片源码与基准逐字节一致，并执行schema与包内规格静态检查。",
+      "file": "../../../.local/codex-runs/avatar-template6-zhaoshangA-20261018/layout-v2/source-identity.json",
+      "sha256": "41b8d9127300f45a6134f82efd9bdb3d4a74036c77a7aa8b2f9ae6893cc0fc70"
+    },
+    {
+      "id": "source_identity_v001",
+      "source_kind": "measurement",
+      "source": "历史v001正式模板/Studio/本地脚注CLI源码",
+      "locator": "final-qa/source-identity.json；TSX仍49fd51be91f80f0e5bbc0776d1809b927d5c102ed051cd7adb2b7441f3d14717，matcher含中文十位数窄等价",
+      "method": "历史v001的8份源码SHA存档；正式原队列归档TSX与当时基准逐字节一致。本条不证明v002已验收。",
+      "file": "../../../.local/codex-runs/avatar-template6-zhaoshangA-20261018/final-qa/source-identity.json",
+      "sha256": "c8a46c6cc9ed958a33b21be6c42beaa8b48c1114713223099814c6482a131d8e"
+    },
+    {
+      "id": "full_technical",
+      "source_kind": "measurement",
+      "source": "历史v001：102秒正式本地脚注修正版的唯一完整技术QA",
+      "locator": "最终SHA95688198b9b94c5d0bd70c176083831ebc054687dce19b30bd6c3dd67f64913e；1080x1920/30fps/3064帧/102.133333秒",
+      "method": "codex_video_quality完整解码、视频音频流、尺寸帧率、主时钟、非静音、峰值和输出未改变均通过；最终AAC与实际mastered轨比对，不冒称人工听审。",
+      "file": "../../../.local/codex-runs/avatar-template6-zhaoshangA-20261018/final-qa/quality.json",
+      "sha256": "cb65d0a7f369b590f4f218bafe9f6e6b2de24e6756b5ab9023b8776394b3eac4"
+    },
+    {
+      "id": "full_visual",
+      "source_kind": "measurement",
+      "source": "历史v001：102秒正式最终修正版17状态联系表与重点原尺寸帧",
+      "locator": "43条真实字幕、12条实际事件；开头/最长字幕/全部事件中点/结尾话尾/尾帧附近；9万8脚注清空，回购条件保留",
+      "method": "实际查看整张17格联系表；最长字幕、30㎡、9万8、AI员工、回购、最长名额贴纸、话尾、尾帧共8张原尺寸帧及字幕裁图另查。离散抽样不等于连续听看。",
+      "file": "../../../.local/codex-runs/avatar-template6-zhaoshangA-20261018/final-qa/visual-review.json",
+      "sha256": "c40e4285f086271950b6b83999b86731a125401784e6ed819d64eff4f494c6dd"
+    },
+    {
+      "id": "full_production_queue",
+      "source_kind": "measurement",
+      "source": "历史v001：当时源码服务的正式队列读回",
+      "locator": "studio-3e19d8c922379036 / 源PQ-224f65818ce1522364b0 / 本地修正版PQ-7114571f8df7c498c2d2 completed",
+      "method": "核对edition/工作区后GET原队列，结果指向同一最终SHA与原work的新版本；仅制作链路完成，未代替正式批准或发布。",
+      "file": "../../../.local/codex-runs/avatar-template6-zhaoshangA-20261018/final-qa/production-receipt.json",
+      "sha256": "bbbe1fc7ecf7c1572a01d7776c1301415aac9907f811be298fba185d57524582"
+    },
+    {
+      "id": "full_workbench_binding",
+      "source_kind": "measurement",
+      "source": "历史v001：实际作品版本和HTTP局部播放读回",
+      "locator": "work-bd4cc542cc38a1ea2c1796da / v-95688198b9b94c5d0bd70c17；current_final_version_id=null",
+      "method": "作品latest版本SHA匹配修正版；显式该版本HTTP206读回前1024字节与本地MP4一致；尚未设置正式最终批准版本，不声明用户确认。",
+      "file": "../../../.local/codex-runs/avatar-template6-zhaoshangA-20261018/final-qa/http-workbench-binding.json",
+      "sha256": "a46ecc5cae2bdb3285e6ee6785b04ca27bebc98a45c2042ba59afaeb8a90a794"
+    },
+    {
+      "id": "full_local_recompose",
+      "source_kind": "measurement",
+      "source": "历史v001：实际受控零SDK脚注修正回执",
+      "locator": "原版SHA016fb23eaba298da90d68e3695092f27aaffa331385b81959c7113c250b941b1；修正版SHA95688198b9b94c5d0bd70c176083831ebc054687dce19b30bd6c3dd67f64913e",
+      "method": "只清空emphasis_index5 footnote；sources_unchanged=true、cloud_calls=0、无新provider_jobs；同work_id新版本，原稿/素材/音轨/字幕/时钟保留，原版未覆盖。",
+      "file": "../../projects/studio-3e19d8c922379036/renders/local-footnote-2ade50ef2be2d7535164/local-recompose-result.json",
+      "sha256": "03cb7605ef0cc81247b8212d63901209fa9892dbbeaa8f3838060a4d4afc15e9"
+    },
+    {
+      "id": "v001_history_snapshot",
+      "source_kind": "measurement",
+      "source": "字幕改版前v001原规格、runbook及原验收维度",
+      "locator": "history/history-manifest.json；原规格SHA2d112ec8c062046123d5d61eab95a7c8d0474cd76de9e5915f3524f6a3c3ff9c",
+      "method": "按原始字节保留规格与手册及SHA；v001已有技术、视觉、生产通过仅对应旧版，未因此将当前v002设为通过。",
+      "file": "../../../.local/codex-runs/avatar-template6-clear-captions-20261019/history/history-manifest.json",
+      "sha256": "4412101ff99a966601daa62185a34f6c768e3ddc5a91ebefc0053b3fee92c5b4"
+    },
+    {
+      "id": "caption_clear_v2_design",
+      "source_kind": "design",
+      "source": "用户授权的字幕清晰度修改及模板默认同步",
+      "locator": "layout.caption.styleId=clear-v2；index.tsx /captionText与活动cue显示",
+      "method": "核对冻结字幕源码：700字重、白字、3px深描边、无阴影、数字黄色；其余文字、几何和时间不变。实现合同与本期最终技术、实际视觉证据分列；新片仅改变字幕样式。",
+      "file": "../../../.local/codex-runs/avatar-template6-clear-captions-20261019/caption-style-contract-v002.json",
+      "sha256": "b2d47ac141dbdb07826255eb307a8ce010ce0372c1eec1b2b10b889b08ba7e4c"
+    },
+    {
+      "id": "source_identity_v002",
+      "source_kind": "measurement",
+      "source": "当前v002冻结字幕源码与本地修正入口",
+      "locator": "TSX=10285d01bb9f0eef84f08264588102863a4faf89a3620d801339bebc670ff6a9；layout=4364a65974cbe2ea5ced550c136eb08786d704fbefaed84403988df63bace0d5；requestSHA1b80254df1ac027c0721166c68cd5024d3f3f5346c97e3084b2dbb36d19bd073",
+      "method": "读取8份当前源码SHA，其中5份与正式固定clear-v2请求runtime逐一一致；TSX/layout另存字节快照。执行入口68项回归及实际prepare/noSDK证据另见本期validation.json；尚不以此替代真实成片。",
+      "file": "../../../.local/codex-runs/avatar-template6-clear-captions-20261019/source-identity-v002.json",
+      "sha256": "b398d4c44e2a7e52f6591052398fadada6ba17e68a969c6ac4f61c9d25fab613"
+    },
+    {
+      "id": "caption_clear_v2_technical",
+      "source_kind": "measurement",
+      "source": "32秒clear-v2最终成片唯一完整技术QA",
+      "locator": "最终SHA f97e9e099cf10368eb9953d2a00c7d78dd12881947056f381652069b09d6e6d9；1080x1920/30fps/962帧/32.066667秒",
+      "method": "完整解码、流/尺寸/帧率、主时钟、非静音和峰值检查通过；原AAC与新版AAC逐字节相同；不替代连续听辨。",
+      "file": "../../../.local/codex-runs/avatar-template6-clear-captions-20261019/final-qa/clear-caption-final-qa.json",
+      "sha256": "4f712f69e6dcb9405a1d76e27636752146f6129d30ab55ccd6382af15650a7f6"
+    },
+    {
+      "id": "caption_clear_v2_visual",
+      "source_kind": "measurement",
+      "source": "当前v002实际字幕、重点及首尾图像检查",
+      "locator": "11条字幕新旧矩阵、11状态联系表、最长原尺寸字幕crop、390px本地模拟cue0/2/3及话尾原图",
+      "method": "根Agent实际查看：白字、黄色数字、细深描边、无彩色重影；无明显裁切或意外遮挡。仅本期实际输入，真机/听看另列。",
+      "file": "../../../.local/codex-runs/avatar-template6-clear-captions-20261019/final-qa/visual-review.json",
+      "sha256": "458856b29d46f3e4930222f4f1a285749d5afb41679df96efa79634cbea0e568"
+    },
+    {
+      "id": "caption_clear_v2_contract",
+      "source_kind": "measurement",
+      "source": "本次仅字幕样式变化的源与时钟合同核对",
+      "locator": "原draft/revision/全部props/11cues/6events/public素材/mastered/AAC及非caption源码几何逐项相同",
+      "method": "原来源SHA、当前模板与实际归档TSX/layout身份匹配，固定clear-v2，原文件未覆盖。",
+      "file": "../../../.local/codex-runs/avatar-template6-clear-captions-20261019/final-qa/caption-revision-contract.json",
+      "sha256": "0619e01ccf71c99297921d18240a852ff3412e2108317b908d97d19ed1690556"
+    },
+    {
+      "id": "caption_clear_v2_pixels",
+      "source_kind": "measurement",
+      "source": "同时间原版与新版代表帧比较",
+      "locator": "11个cue中点和2张无字幕帧；字幕外区域及完整无字幕图像比较",
+      "method": "全部样本在记录的H264重新编码容差内；字幕变化区单独排除，非字幕结构另由源码/props/素材SHA核对。",
+      "file": "../../../.local/codex-runs/avatar-template6-clear-captions-20261019/final-qa/caption-frame-comparison.json",
+      "sha256": "dd5dfc6cdd3e527b59bb4a722e6e7335a4a63f5b491b9c252349b8cb4c5772dc"
+    },
+    {
+      "id": "caption_clear_v2_production",
+      "source_kind": "measurement",
+      "source": "同一受控本地队列实际完成回执",
+      "locator": "PQ-d8dbdefe58e7659cf37d completed/attempt1；原PQ-2067bbd054fa64ea0db4；contract=investment-caption-style-local-v2",
+      "method": "固定caption_style=clear-v2；cloud_calls=0、provider_jobs=[]、sources_unchanged=true；同work新版本，原版保留。",
+      "file": "../../projects/studio-e04b0de058894959/renders/local-caption-clear-1b80254df1ac027c0721/local-recompose-result.json",
+      "sha256": "7f03594a70dd6815e22e0b501a8ac5f17b62df26b84829e3edc3ae52ba084103"
+    },
+    {
+      "id": "caption_clear_v2_workbench",
+      "source_kind": "measurement",
+      "source": "当前源码服务同作品新版本HTTP局部播放身份",
+      "locator": "work-7f3f011fed4847406e6903d2 / v-f97e9e099cf10368eb9953d2；current_final_version_id=null",
+      "method": "核对edition/工作区、latest版本和SHA；显式新版本HTTP206 video/mp4前1024字节匹配本地成片。未代替用户最终确认。",
+      "file": "../../../.local/codex-runs/avatar-template6-clear-captions-20261019/final-qa/http-workbench-binding.json",
+      "sha256": "575d520d2fb9cb1c3daa0f7ad31205695ecb2dbae47376266650c2537edf528b"
+    }
+  ],
+  "unknowns": [],
+  "validation": {
+    "structure": {
+      "status": "pass",
+      "evidence_ids": [
+        "source_identity_v002",
+        "v001_history_snapshot"
+      ],
+      "note": "v002源码与请求runtime、实际归档TSX/layout一致；v1规格及本地引用静态检查通过。v001快照保留，v002技术/视觉/本地制作接入由本次新SHA证据独立核验。"
+    },
+    "technical": {
+      "status": "pass",
+      "evidence_ids": [
+        "caption_clear_v2_technical",
+        "caption_clear_v2_contract"
+      ],
+      "note": "同一最终SHA唯一完整技术QA通过；32.066667秒/962帧/1080x1920/30fps；原音轨、全部props与字幕/事件时钟保持一致。"
+    },
+    "visual": {
+      "status": "pass",
+      "evidence_ids": [
+        "caption_clear_v2_visual",
+        "caption_clear_v2_pixels",
+        "caption_clear_v2_contract"
+      ],
+      "note": "实际查看本期11条字幕、6条重点、首尾与最长字幕，clear-v2清晰可读；390px为本地模拟。未启用素材窗、三卡、未示双行边界和连续听看不外推。"
+    },
+    "audio": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "本次原AAC流与新版逐字节相同，驱动及mastered WAV同SHA；未连续听辨或逐音素口型复核，audio维度继续pending。"
+    },
+    "platform": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "没有目标平台真实设备播放证据"
+    },
+    "user_review": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "用户授权字幕修改与模板默认同步，尚未确认clear-v2已生成成片；不能将修改授权写成最终确认。"
+    },
+    "production": {
+      "status": "pass",
+      "evidence_ids": [
+        "caption_clear_v2_production",
+        "caption_clear_v2_workbench"
+      ],
+      "note": "仅受控零云字幕本地重合成链路：同PQ attempt1 completed，cloud_calls=0，同作品新版本及HTTP206身份已读回。未重新运行TTS/ASR/数字人；正式最终批准与发布不在本次证据范围。"
+    }
+  },
+  "extensions": {
+    "avatar": {
+      "face_crop": {
+        "mode": "contain",
+        "source": "layout.json /portrait",
+        "rule": "主人物完整contain；同源模糊视频只作画布延展。换人物必须检查头顶/下巴与源背景，无独立face-crop槽。"
+      },
+      "synchronization": "原始TTS语速只在供应商应用一次；prepare_audio将PCM16 mono24kHz补齐25fps边界；所有视觉源静音，独立音轨进入最终响度整理与AAC封装，输出按round(duration*30)/30秒；ASR毫秒边界驱动字幕与强调。",
+      "voice_rules": "本期侯总高情绪、cosyvoice-v3.5-flash、rate1.1；它是本期选择，不是模板固定默认。",
+      "acceptance": "连续听辨和口型判断需要实际播放；静帧或ASR不能通过audio gate。"
+    },
+    "graphic": {
+      "text_policy": "输入上限由studio_investment.settings决定；封面、玻璃牌、贴纸、卡片、注释、字幕的字体与溢出行为以index.tsx为唯一实现真值，最长输入须实际帧检查。",
+      "asset_fit": "科技背景、芯片、闪电为自绘SVG/CSS；人物为contain，背景cover+blur；不把信息卡当事实或实拍证明。"
+    },
+    "investment": {
+      "contract": "avatar-investment-a-v6/v002 implementation+ready：默认clear-v2字幕，其余图层、开放槽、文字、断行和时钟合同沿用。本次32秒修正版技术、实际字幕视觉与零云本地制作接入已通过，v001历史保留。每期仍按实际输入检查；听看、真机、用户确认及商业事实分别待验。",
+      "rules": [
+        "investment仅允许brand/headline/cta/emphasis/opening/closing；拒绝其他字段和通用motion混用。",
+        "semantic_events以规范化真实ASR文本首次匹配：start=首cue开始；end=min(duration,max(末cue结束+0.35,start+1.5))，下一不同起点事件截断上一结束；回执保留fromCue/toCue/asrStart/asrEnd。",
+        "没有匹配的条目记录unmatched，不均分稿件，不编造触发时刻。",
+        "cover起始最多1.2秒、结尾最多2.5秒，各受全片帧数1/3上限；淡化6帧。贴纸9帧0.82→1弹入，-5度倾斜；只用帧时钟无随机。",
+        "输入语音不被封面延长或压缩，无BGM自动添加；固定公司品牌和数字人标识不开放为随意替换槽。",
+        "可选下半源素材窗为(72,896,936,527)，来自现有已审核storyboard，静音且不循环、完整contain；本期未启用，验收范围独立pending。",
+        "规范化额外支持狭窄的10..99中文十位数与阿拉伯整数等价（例十四个月=14个月）；大单位、零前缀或小数不猜测换算。真实ASR毫秒边界不变。"
+      ]
+    },
+    "material_edit": {
+      "source_ranges": "当前可选scenes从已审核storyboard进入；每条start/end为全片秒，视频trimBefore=round(offset*fps)，Sequence from=round(scene.start*fps)，不循环。",
+      "cut_policy": "素材仅当前scene区间显示；静音视频/图片完整contain；active scene时隐藏emphasis；generated明确标AI示意画面。本期未启用，尚未由此证明可选素材窗验收。"
+    },
+    "local_footnote_recompose": {
+      "contract": "investment-footnote-local-v1；仅针对已完成、作品已登记的无AI/联网/通用动效正式studio_avatar",
+      "rules": [
+        "只能patch一个已有emphasis条目的footnote（0起始索引，至多64字），原draft/revision、文稿、声音、人物、字幕和触发时钟保留。",
+        "prepare冻结原source request、state/props/qa、音轨/人物/原版输出和源码SHA；submit以request_sha256幂等建立paused的studio_investment_recompose原生队列。",
+        "CLI --run/--resume由ProductionQueueWorker.run_local_recompose认领，模块不构造SDK、不报价、不转写、不调用数字人或TTS。",
+        "独立local-footnote目录产生新MP4和local-recompose-result.json，登记原work_id新版本；原版不覆盖，sources_unchanged与cloud_calls=0必须读回。",
+        "新SHA重新做技术/视觉验收，原审核不能沿用。v001清空9万8卡制作说明的历史原版与修正版独立保留，零SDK回执与同作品新版本已实测；它不证明当前字幕改版已通过。",
+        "未渲染请求遇runtime变化阻断；已有成功回执在requestSHA/outputSHA及全部来源SHA核对后可只读或恢复登记，不因后续源码维护重渲染。"
+      ]
+    },
+    "local_caption_recompose": {
+      "contract": "investment-caption-style-local-v2；采用模板已冻结的clear-v2字幕样式，本次同作品32秒新版本已零云完成并独立核验",
+      "rules": [
+        "与脚注模式互斥；patch固定为caption_style=clear-v2，原draft/revision、全部文稿/显示字段、人物、声音、真实字幕及重点时钟保留。",
+        "prepare须layout.caption.styleId=clear-v2，冻结原来源和TSX/layout/investment/composition/recompose的runtime SHA；无SDK、报价、ASR、TTS或数字人调用。",
+        "统一队列kind继续studio_investment_recompose，requestSHA幂等、初态paused，由worker认领；输出独立local-caption-clear-{指纹前20位}目录，原作品新增版本。",
+        "验收需新输出SHA、cloud_calls=0、sources_unchanged=true、全部props与事件/字幕相同及实际帧；新的技术、视觉、作品播放证据齐全后才更新ready。",
+        "未渲染请求遇runtime变化阻断；已有成功回执在requestSHA/outputSHA及全部来源SHA核对后可只读或恢复登记，不重渲染。"
+      ]
+    }
+  },
+  "operations": [
+    {
+      "id": "preflight",
+      "input": "本规格、冻结本期draft/revision、素材、investment和预算",
+      "action": "GET templates/原draft；POST drafts与assets保存合法本期输入，核对工作区与SHA",
+      "output": "冻结输入和现有任务复用结论",
+      "completion": "资产归属/版本/声音速度/真实音轨长度字节/配置与预算全部有效",
+      "recovery": "先读原draft/报价/队列；缺项补原版本，不新建重复付费意图",
+      "entrypoint": "../../backlot/studio_api.py: /api/studio/templates, /api/studio/drafts, /api/studio/assets"
+    },
+    {
+      "id": "development_sample",
+      "input": "implementation+specification、项目内同长人物视频与全零PCM16/24k mono音轨、明确手工示意字幕",
+      "action": "python scripts/avatar_investment_sample.py --portrait <授权PNG/JPEG> --evidence-dir <本工作区忽略目录> --base <已核对本机服务> 默认prepare；--submit入统一队列；--status/--resume跟随原任务；completed后--evidence完整解码并抽5帧。",
+      "output": "12秒360帧无声静态人物样片、sample-state/input/evidence与5种代表图；quotes={}、cloud_calls=0、frame_review仍需实际看图",
+      "completion": "覆盖开/尾封面、纯人物、贴纸/卡片/最长文本/字幕，完整解码且实际查看对应帧；不提升听辨或真实生产状态",
+      "recovery": "同一evidence-dir读取sample-state，保持人物SHA、原项目和原幂等队列；--resume仅恢复原失败可重试任务。不得新建替代付费或开发样片。",
+      "entrypoint": "../../scripts/avatar_investment_sample.py"
+    },
+    {
+      "id": "production",
+      "input": "达到对应ready gate的实现、本期真实音轨/人物/ASR、冻结草稿及本次费用授权",
+      "action": "POST quote核对模型/上限，POST generate提交同一revision；GET avatar-job与队列跟随原任务",
+      "output": "最终avatar-preview.mp4、真实ASR、触发回执和作品版本",
+      "completion": "同一冻结revision，原任务终态与最终文件同时存在，未匹配强调已解释；没有把中间avatar-render当成片",
+      "recovery": "只恢复原retryable任务；结果未知读原intent/job，已完成付费产物保留",
+      "entrypoint": "../../backlot/studio_api.py: /api/studio/drafts/{draft_id}/quote|generate|avatar-job; /api/production-queue/jobs/{job_id}"
+    },
+    {
+      "id": "local_footnote_recompose",
+      "input": "已完成本模板正式studio_avatar原队列、已登记作品、原素材/字幕/回执及单个脚注patch",
+      "action": "python scripts/avatar_investment_recompose.py --request <忽略目录JSON> --source-queue <原队列> --footnote-index <0起始索引> 默认prepare，省略--footnote即清空；同request依次--submit、--run，--status/--resume跟随原幂等队列。",
+      "output": "独立local-footnote目录、sources_unchanged/cloud_calls=0回执、原作品新版本与新SHA",
+      "completion": "原request/素材/字幕/源码SHA前后核对一致，仅脚注变化；同work_id新版本；新SHA重新完成技术与视觉检查",
+      "recovery": "复用原本地队列和冻结请求；已有回执核对输出后恢复登记；不改原文件、不提交供应商",
+      "entrypoint": "../../scripts/avatar_investment_recompose.py + ../../backlot/studio_investment_recompose.py"
+    },
+    {
+      "id": "local_caption_recompose",
+      "input": "已完成本模板正式studio_avatar原队列、原作品、真实字幕及全部原素材；当前已冻结clear-v2模板",
+      "action": "python scripts/avatar_investment_recompose.py --request <忽略目录JSON> --source-queue <原队列> --caption-style clear-v2 默认prepare；与脚注参数互斥。随后同request依次--submit、--run，--status/--resume跟随原幂等队列。",
+      "output": "独立local-caption-clear目录、新MP4与contract=investment-caption-style-local-v2回执；同作品新版本和新SHA",
+      "completion": "来源SHA、原draft/revision/全部props、真实字幕、事件及音轨/数字人均一致；cloud_calls=0且sources_unchanged=true；新SHA技术、实际字幕视觉及作品身份核对通过",
+      "recovery": "保留原请求和原队列；全局lane忙时未claim不算渲染失败，继续由worker领取原任务，不重新submit。未渲染请求runtime变化须重新准备新指纹；已有成功回执核对请求/输出/来源SHA后只读或恢复登记，不重渲染，不提交供应商",
+      "entrypoint": "../../scripts/avatar_investment_recompose.py + ../../backlot/studio_investment_recompose.py"
+    },
+    {
+      "id": "acceptance",
+      "input": "最终封装、原音轨、当前规格/props/触发回执、技术报告与实际帧",
+      "action": "运行codex_video_quality，实际看帧，按量表独立记录听看/平台/用户/生产状态",
+      "output": "同一最终SHA的验收矩阵与可播放成片/作品",
+      "completion": "尺寸帧率时长/完整解码/所有状态视觉有证据；声明不超出实际验证，制作授权不变为发布授权",
+      "recovery": "按时间段修本地元素；最终SHA变化后重做受影响验收",
+      "entrypoint": "../../scripts/codex_video_quality.py + ../../../Haike-Videohub/agent-runbooks/视频模板验收量表.md"
+    }
+  ]
+}

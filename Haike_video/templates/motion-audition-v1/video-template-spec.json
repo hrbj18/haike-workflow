@@ -1,0 +1,547 @@
+{
+  "schema_version": 1,
+  "standard_version": "video-template-v1",
+  "template_id": "motion-audition-v1",
+  "template_version": "v001",
+  "template_type": "custom",
+  "spec_kind": "implementation",
+  "stage": "specification",
+  "authority": {
+    "runbook": "README.md",
+    "implementation_paths": [
+      "index.tsx",
+      "gallery.html",
+      "render_auditions.py",
+      "serve_gallery.py",
+      "vendor/grid-wave.tsx"
+    ],
+    "parameter_source": "index.tsx"
+  },
+  "canvas": {
+    "width": 1440,
+    "height": 1800,
+    "fps": 30,
+    "duration_seconds": 4.5,
+    "clock": "135 frames; START=45; transition duration26/40/36; GPU sources use global frames; silent footage only.",
+    "coordinate_system": "top_left_pixels"
+  },
+  "narrative": {
+    "purpose": "Compare five open-source effects on actual store footage without avatars.",
+    "information_hierarchy": [
+      "Real footage",
+      "Selected effect",
+      "ID and name"
+    ],
+    "structure": [
+      "Footage context",
+      "Effect at calibrated frame",
+      "Stable next footage"
+    ]
+  },
+  "scenes": [
+    {
+      "id": "audition",
+      "start": 0,
+      "end": 4.5,
+      "purpose": "Five independent selectable auditions; active variant uses its own frozen props.",
+      "element_ids": [
+        "canvas",
+        "source-a",
+        "source-b",
+        "effect",
+        "tracking",
+        "label"
+      ],
+      "variant": "whip|push|tear|grid|touch"
+    }
+  ],
+  "assets": [
+    {
+      "id": "footage",
+      "kind": "video",
+      "path": null,
+      "source": "Private task sources.json binds original files and SHA256; props bind offsets.",
+      "embedded_content": [
+        "Real store activity, child handling robot, visitors watching robot dog"
+      ],
+      "rights_status": "User-provided local media for this authorized audition; not distributed with source."
+    }
+  ],
+  "elements": [
+    {
+      "id": "canvas",
+      "type": "shape",
+      "role": "Solid #101314 background",
+      "parent_id": null,
+      "z_index": 0,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Solid #101314 background"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {}
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 4.5
+      },
+      "states": [
+        {
+          "id": "render",
+          "visible": true,
+          "description": "Solid #101314 background; variant conditions from index.tsx."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "Frame-driven original-source time"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "current-frame",
+          "method": "Inspect encoded start, effect midpoint, and settled frame against original.",
+          "pass_condition": "No avatar; proper source identity, no broken texture or unintentional stretching."
+        }
+      ]
+    },
+    {
+      "id": "source-a",
+      "type": "video",
+      "role": "Props.a muted original footage, contain, original rate",
+      "parent_id": null,
+      "z_index": 1,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Props.a muted original footage, contain, original rate"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "contain",
+        "clip": "self",
+        "style": {}
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 4.5
+      },
+      "states": [
+        {
+          "id": "render",
+          "visible": true,
+          "description": "Props.a muted original footage, contain, original rate; variant conditions from index.tsx."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "Frame-driven original-source time"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "current-frame",
+          "method": "Inspect encoded start, effect midpoint, and settled frame against original.",
+          "pass_condition": "No avatar; proper source identity, no broken texture or unintentional stretching."
+        }
+      ]
+    },
+    {
+      "id": "source-b",
+      "type": "video",
+      "role": "Props.b muted original footage, contain; applicable in four transition variants",
+      "parent_id": null,
+      "z_index": 2,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Props.b muted original footage, contain; applicable in four transition variants"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "contain",
+        "clip": "self",
+        "style": {}
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 4.5
+      },
+      "states": [
+        {
+          "id": "render",
+          "visible": true,
+          "description": "Props.b muted original footage, contain; applicable in four transition variants; variant conditions from index.tsx."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "Frame-driven original-source time"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "current-frame",
+          "method": "Inspect encoded start, effect midpoint, and settled frame against original.",
+          "pass_condition": "No avatar; proper source identity, no broken texture or unintentional stretching."
+        }
+      ]
+    },
+    {
+      "id": "effect",
+      "type": "group",
+      "role": "Whitelist whip/push/tear/grid/touch; exact upstream parameter values in index.tsx",
+      "parent_id": null,
+      "z_index": 3,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Whitelist whip/push/tear/grid/touch; exact upstream parameter values in index.tsx"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {}
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 4.5
+      },
+      "states": [
+        {
+          "id": "render",
+          "visible": true,
+          "description": "Whitelist whip/push/tear/grid/touch; exact upstream parameter values in index.tsx; variant conditions from index.tsx."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "Frame-driven original-source time"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "current-frame",
+          "method": "Inspect encoded start, effect midpoint, and settled frame against original.",
+          "pass_condition": "No avatar; proper source identity, no broken texture or unintentional stretching."
+        }
+      ]
+    },
+    {
+      "id": "tracking",
+      "type": "shape",
+      "role": "Yellow manual point indicator, only touch trace mode frames0..54; normalized 9:16 input mapping",
+      "parent_id": null,
+      "z_index": 4,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Yellow manual point indicator, only touch trace mode frames0..54; normalized 9:16 input mapping"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {}
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 4.5
+      },
+      "states": [
+        {
+          "id": "render",
+          "visible": true,
+          "description": "Yellow manual point indicator, only touch trace mode frames0..54; normalized 9:16 input mapping; variant conditions from index.tsx."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "Frame-driven original-source time"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "current-frame",
+          "method": "Inspect encoded start, effect midpoint, and settled frame against original.",
+          "pass_condition": "No avatar; proper source identity, no broken texture or unintentional stretching."
+        }
+      ]
+    },
+    {
+      "id": "label",
+      "type": "text",
+      "role": "ID and name with optional baseline/trace suffix;30px Microsoft YaHei",
+      "parent_id": null,
+      "z_index": 5,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "ID and name with optional baseline/trace suffix;30px Microsoft YaHei"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          30,
+          28,
+          1350,
+          66
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "font": "Microsoft YaHei",
+          "font_size": 30,
+          "max_lines": 1,
+          "overflow": "Inspect real encoded label; fixed short names only."
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 4.5
+      },
+      "states": [
+        {
+          "id": "render",
+          "visible": true,
+          "description": "ID and name with optional baseline/trace suffix;30px Microsoft YaHei; variant conditions from index.tsx."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "Frame-driven original-source time"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "current-frame",
+          "method": "Inspect encoded start, effect midpoint, and settled frame against original.",
+          "pass_condition": "No avatar; proper source identity, no broken texture or unintentional stretching."
+        }
+      ]
+    }
+  ],
+  "slots": [
+    {
+      "id": "a",
+      "element_id": "source-a",
+      "property": "content",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "binding": "props.a",
+        "authority": "index.tsx Props; readonly current private inputs; track required for touch"
+      },
+      "missing": "Reject missing required media or touch track before rendering.",
+      "overflow": "Recalibrate actual footage and source coverage; never stretch or silently substitute."
+    },
+    {
+      "id": "b",
+      "element_id": "source-b",
+      "property": "content",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "binding": "props.b",
+        "authority": "index.tsx Props; readonly current private inputs; track required for touch"
+      },
+      "missing": "Reject missing required media or touch track before rendering.",
+      "overflow": "Recalibrate actual footage and source coverage; never stretch or silently substitute."
+    },
+    {
+      "id": "effect-choice",
+      "element_id": "effect",
+      "property": "content",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "binding": "props.effect",
+        "authority": "index.tsx Props; readonly current private inputs; track required for touch"
+      },
+      "missing": "Reject missing required media or touch track before rendering.",
+      "overflow": "Recalibrate actual footage and source coverage; never stretch or silently substitute."
+    },
+    {
+      "id": "track",
+      "element_id": "tracking",
+      "property": "content",
+      "value_type": "array",
+      "required": false,
+      "limits": {
+        "binding": "props.track",
+        "authority": "index.tsx Props; readonly current private inputs; track required for touch"
+      },
+      "missing": "Reject missing required media or touch track before rendering.",
+      "overflow": "Recalibrate actual footage and source coverage; never stretch or silently substitute."
+    }
+  ],
+  "evidence": [
+    {
+      "id": "implementation",
+      "source_kind": "design",
+      "source": "Pinned upstream effects plus project footage adapters.",
+      "locator": "index.tsx and upstream-manifest.json",
+      "method": "Read actual frame-clock bindings; encoded media verification recorded separately.",
+      "file": "index.tsx",
+      "sha256": "812f735eb3ded132ce008831eb68e824cfa5179747cccab65ac6a920a02f7542"
+    }
+  ],
+  "unknowns": [
+    {
+      "path": "/validation/production",
+      "reason": "Bounded development auditions only; not registered as a full production template.",
+      "evidence_plan": "If promoted, integrate and verify unified queue before full production.",
+      "blocks": [
+        "production"
+      ]
+    }
+  ],
+  "validation": {
+    "structure": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "See local audition acceptance.json; no automatic claim for production, platform or user preference."
+    },
+    "technical": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "See local audition acceptance.json; no automatic claim for production, platform or user preference."
+    },
+    "visual": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "See local audition acceptance.json; no automatic claim for production, platform or user preference."
+    },
+    "audio": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "See local audition acceptance.json; no automatic claim for production, platform or user preference."
+    },
+    "platform": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "See local audition acceptance.json; no automatic claim for production, platform or user preference."
+    },
+    "user_review": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "See local audition acceptance.json; no automatic claim for production, platform or user preference."
+    },
+    "production": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "See local audition acceptance.json; no automatic claim for production, platform or user preference."
+    }
+  },
+  "extensions": {
+    "custom": {
+      "contract": "motion-audition-v1",
+      "rules": "5 fixed IDs;135 frames each;silent;no avatar;no cloud;true footage shaders;manual9:16 point mapping;no fallback on WebGL failure."
+    }
+  },
+  "operations": [
+    {
+      "id": "render-dev",
+      "input": "Task cases.json, props/, public/, sources.json with original hashes.",
+      "action": "Render bounded auditions and matching baselines; encode and measure.",
+      "output": "gallery videos, posters, catalog and SHA receipts.",
+      "completion": "135 frames1440x1800, >=20Mbps, full decode; then inspect motion and selection UI separately.",
+      "recovery": "Preserve old outputs; changed source needs a new task directory.",
+      "entrypoint": "render_auditions.py --task <private-task>"
+    },
+    {
+      "id": "preview",
+      "input": "Completed gallery directory",
+      "action": "Serve only gallery on loopback and open page",
+      "output": "Selectable video preview and exportable IDs",
+      "completion": "All five clips play; compare/speed/trace/selection work",
+      "recovery": "Restart same loopback server; saved selection lives in browser",
+      "entrypoint": "serve_gallery.py --directory <gallery> --port 14877"
+    }
+  ]
+}

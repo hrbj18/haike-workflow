@@ -1,0 +1,391 @@
+# Haike Video â€" Skill Index
+
+> For the full agent onboarding guide, see [`AGENT_GUIDE.md`](../AGENT_GUIDE.md) in the project root.
+
+This file lists all available Layer 2 skills and documents the 3-layer knowledge architecture.
+
+Mac模板离线迁移/复刻：读[`template-kit/README.md`](../template-kit/README.md)和[维护契约](../template-kit/MAINTAINER.md)。用于授权的同事私下交付，不代替原生生产/发布队列，Mac真机另验。
+
+## Knowledge Architecture
+
+```
+Layer 1: tools/tool_registry.py          "What tools exist and what they can do"
+         tools/base_tool.py               Each tool declares: capabilities, tier, status,
+                                          dependencies, cost, and agent_skills[]
+
+         â†" agent_skills[] points to â†"
+
+Layer 2: skills/                          "How Haike Video uses these tools"
+         Project-specific conventions:     Pipeline integration, artifact mappings,
+         {core,creative,meta,pipelines}/   enhancement chain order, quality checklists
+
+         â†" references underlying tech in â†"
+
+Layer 3: .agents/skills/                  "How the technology itself works"
+         Generic API knowledge from        Correct import paths, code patterns,
+         skills.sh (47 installed skills)   constraints, parameters â€" tech-agnostic
+```
+
+**How the agent uses this:**
+1. The orchestrator queries Layer 1 (`tool_registry.support_envelope()`) to see what's available
+2. Each tool's `agent_skills[]` field names the Layer 3 skills it relies on
+3. Layer 2 skills (this directory) teach the agent Haike Video-specific conventions
+4. Layer 3 skills (`.agents/skills/`) provide generic API knowledge, loaded on-demand
+
+## Capability Families & Tool Discovery
+
+Every tool declares a `capability` (what it does) and a `provider` (who/what powers it). The registry groups tools by capability so agents can discover all options for a given task.
+
+### Selector / Provider Pattern
+
+For capability families with multiple providers (TTS, video generation), the architecture uses:
+- **Selector tool** (`tts_selector`, `video_selector`, `image_selector`) — routes to the best available provider based on requirements, API key availability, and cost. Selectors auto-discover providers from the registry. Agents should default to selectors when the user hasn't specified a provider.
+- **Provider tools** — call a specific provider directly. Agents use these when the user explicitly requests a provider or when the selector's routing isn't appropriate.
+
+### Capability Family Reference
+
+**Do not maintain a hardcoded tool list.** The registry is the single source of truth. Query it at runtime:
+
+```bash
+python -c "from tools.tool_registry import registry; import json; registry.discover(); print(json.dumps(registry.capability_catalog(), indent=2))"
+```
+
+Key capability families to look for in the output:
+
+| Capability | Selector | Discovery |
+|---|---|---|
+| `tts` | `tts_selector` | Auto-discovers all `capability="tts"` tools |
+| `video_generation` | `video_selector` | Auto-discovers all `capability="video_generation"` tools |
+| `image_generation` | `image_selector` | Auto-discovers all `capability="image_generation"` tools |
+| `audio_processing` | — | FFmpeg-based local tools |
+| `enhancement` | — | Mixed providers |
+| `analysis` | — | Mixed providers |
+| `character_animation` | — | Local character specs, SVG rigs, pose libraries, action timelines, previews, and QA |
+| `graphics` | — | Local rendering tools |
+| `music_library` | — | Discovers user-provided local tracks |
+| `music_search` | — | Discovers royalty-free search/download providers |
+| `music_generation` | — | Discovers paid/local generation providers |
+| `subtitle` | — | Pure Python |
+| `avatar` | — | Local GPU models |
+| `video_post` | — | FFmpeg-based local tools |
+
+### Adding New Tools
+
+1. Place the tool in the correct capability folder (or create a new one under `tools/`)
+2. Set `capability` and `provider` in the class definition
+3. If joining a multi-provider family, the existing selector discovers it automatically
+4. Attach relevant Layer 2 and Layer 3 skills via `agent_skills[]`
+5. The registry discovers tools automatically — no manual registration needed
+6. **No other files need updating** — selectors, manifests, and instructions all derive from the registry
+
+## Workflow Call Signs（工作流呼叫名）
+
+视频审美升级、Hallmark风格或MotionGit首次视觉适配：读 [Hallmark视频流程](creative/hallmark-video.md)；48种视觉参考可在工作台 `/motiongit` 浏览并保存到草稿，实际成片仍按对应模板制作。
+
+新建、修改或审查视频模板时，先读[视频模板编写标准](../../Haike-Videohub/agent-runbooks/视频模板编写标准.md)，再进入对应模板。
+
+A **call sign** is the short name the user says out loud to address an entire production line.
+When the user names one, read the mapped `SKILL.md` **completely and first**, before asking
+clarifying questions or inspecting the repository. Call signs are registered here so both the
+user and the agent resolve the same name to the same line.
+
+| Call sign | User must supply | Engine | Primary instructions | Cost |
+|-----------|------------------|--------|----------------------|------|
+| **店长动态素材** | 完整本期口播、真实字幕、已看源区间的实拍及配乐音效 | HumProduction的Archive/Playroom动态场景；既有统一队列 | [动态素材runbook](../templates/hum-production-v1/dynamic/README.md) | 本地已有素材复用；新增上游配音/人物另按授权 |
+| **深色立体完整模板** | 完整口播/真实字幕、已看帧实拍、可选同声源人物；脚本先走已配置音频阶段 | 完整十组或按内容选择整组，Hedgerow/Cobalt 4:5；现有统一队列 | [固定runbook](../../Haike-Videohub/agent-runbooks/深色立体完整模板.md) / [模板入口](../templates/motiongit-dark-full-v1/README.md) | 依规格当前stage与各维度，不继承旧墙模板验收；不默认发布 |
+| **高质量数字人工作流** | 本期文案或完整音频；默认侯总图片与侯总音色，可显式覆盖 | InfiniteTalk V5.3.1 独立测试附件；45秒分段续接 | [高质量数字人工作流](../docs/高质量数字人工作流.md) | RunningHub与新增配音按本期授权；正式父视频仍走统一队列 |
+| **数字人模板7 / 数字人口播模板7** | 同钟人物视频、素材、完整音轨、字幕与本期标题/品牌 | 项目原生 Remotion Atelier 开发短样；全片队列适配待验证 | [数字人模板7 runbook](../../Haike-Videohub/agent-runbooks/数字人模板7.md) | 本地复用零新增云调用；新配音/数字人另按报价 |
+| **招商视频模板3至10 / 招商视频模板3…招商视频模板10** | 已测四比例12秒原片、同源真实字幕、四拍标题与声音计划 | 独立 investment-style-lab-v1 合同；原生统一队列、20Mbps，八种视觉系统 | [系列入口及八份runbook](../templates/investment-style-lab-v1/README.md) | 本地复用零云调用；本轮不发布 |
+| **招商完整样片07蓝米 / 08青炭 / 09黑粉** | 独立原片、同源cue、整句EDL、图文分镜、实拍和声音计划 | 独立 investment-full-v1；30秒4:5、20M ABR，人物/实拍/图文三种章节 | [完整样片入口与规格](../templates/investment-full-v1/README.md) | 本地开发样片零云调用；不继承12秒lab或旧模板6的验证范围 |
+| **数字人口播模板6 / 数字人口播模板6-招商A / 招商A** | 本期完整口播、授权人物图、已有音色或完整音轨 | Studio 统一队列；全屏人物、霓虹项目牌、重点贴纸和卖点卡 | [招商A runbook](../../Haike-Videohub/agent-runbooks/数字人口播模板6-招商A.md) | 本地版式零；新增配音、ASR、数字人按本期报价与预算 |
+| **数字人口播模板3 / 数字人口播视频模板3 / 数字人口播模板3-卡片式讲解** | 本期口播、人物视频、同源音轨/字幕、章节素材 | 3:4 Remotion Atelier 样片；全片工作台接入待验证 | [卡片式讲解 runbook](../../Haike-Videohub/agent-runbooks/数字人口播模板3-卡片式讲解.md) | 本地复用零新增云调用；新素材生成按供应商计 |
+| **数字人口播视频 / 数字人口播模板** | 本期主题/口播稿、项目人物与配音 | 工作台生产；版本化圆框样板/背景工具 | `../Haike-Videohub/agent-runbooks/数字人口播视频.md` | 本地版式零；新增配音/数字人按供应商计 |
+| **素材解说视频 / 电影解说 / 直播切片解说** (`material-commentary`) | 素材与解说目标；先观察再定叙事 | `/material-commentary`；本地 FFmpeg、统一队列，V1 beta | `../Haike-Videohub/agent-runbooks/素材解说视频.md`；`pipelines/material-commentary/director.md` | 本地取证/合成零；新增 TTS/ASR 按冻结供应商计 |
+| **基于上下窗口的复刻优化** | 一条参考视频；保留中间画面与原声 | `window-remake` 兼容工作流 | `../Haike-Videohub/agent-runbooks/基于上下窗口的复刻优化.md` | 本地渲染零；转写按实际能力另计 |
+| **动作迁移复刻 / 角色替换复刻** | 原片表演视频＋自有角色参考图；恢复原声 | 用户指定 SCAIL-2 原生工作流 ID 的兼容操作；尚无正式父 pipeline 或专用一键 CLI | [动作迁移与角色替换复刻 runbook](../../Haike-Videohub/agent-runbooks/动作迁移与角色替换复刻.md) | 原生工作流计算计费；参考图另计；复用成功片段 |
+| **模板图文视频** (`template-graphic-video`) | ① 一个主题；用户可另给文案/来源限制 | 已实测 9 秒三景兼容工作流 | `../Haike-Videohub/agent-runbooks/模板图文视频.md` | 本地渲染零；素材下载另计 |
+| **窗口复刻** (window-remake) | ① 一条第三方参考片路径 ② N 层标题 ③ N 段字幕 | `scripts/remake_window_cli.py` (`measure` → `prep` → `final`) | `haike-video-window-remake`（另见 SOP `docs/SINGLE_DEVELOPMENT_GUIDE_WINDOW_REMAKE_V1_ZH-CN.md`） | 零 |
+| **素材复刻** (material-remake) | ① 一个素材目录 ② 一个主题 | `scripts/remake_*.py` + `copy_skill` 产物 | `haike-video-material-remake-script` + Layer 2 `creative/material-remake-workflow.md` | 零（ASR/下载另计） |
+
+Aliases of **窗口复刻** — same line, not a new one: `上下换板` / `夹心板` / `留中换板` /
+`保留中间画面只换上下`.
+
+**Disambiguation — resolve by input, never by the word 「复刻」 alone:**
+
+- Explicit **数字人模板7 / 数字人口播模板7** uses its interview-window runbook and local development-sample boundary before generic avatar inference.
+- Explicit **招商视频模板3…10** means the independent investment-style-lab series; do not confuse its numbered styles with the existing avatar-template3 or Template6/招商A contracts. Read its local README and numbered runbook; retain current sample-only gates.
+- Explicit **招商完整样片07蓝米 / 08青炭 / 09黑粉** uses investment-full-v1 and its own README/spec. It combines source-AV EDL, real store shots and cue-bound graphics in30s/4x5; it does not resize the12s lab contract or replace Template6/招商A.
+- Explicit **数字人口播模板6 / 招商A** uses the investment-A runbook and its current validation scope before generic avatar inference.
+- Explicit 「数字人口播模板3」 or 「数字人口播视频模板3」 takes precedence over the generic avatar call sign; use the card-explainer runbook and its verification limits.
+
+- an explicit **模板图文视频** request, with a topic and no reference-video retention requirement → **模板图文视频**; this exact name wins immediately
+- single circular presenter + official product visuals → **数字人口播视频**; reuse the approved layout preset and preserve workbench production gates
+- 素材解说、电影解说或直播切片解说 → **素材解说视频**；由证据决定段落/镜头/时长，先读专用 runbook
+- one third-party reference video, keep its footage → **窗口复刻**
+- a performance video + character references, replace the performer and retain source motion/audio → **动作迁移复刻**; read its runbook and live graph before submission, never substitute the default lip-sync workflow
+- a directory of other people's clips + a topic, produce your own script → **素材复刻**
+- a bare 「复刻」 with no input attached → **ask which one; do not guess**
+
+**模板图文视频 identity gate:** before rendering, the plan must say `template-graphic-video`,
+1080×1920 at 30fps, 9 seconds total, and exactly three 3-second B-roll scenes with owned
+top/bottom text plates. A plan that asks for a reference video, preserves one source for the full
+timeline, has one scene, or targets about 100 seconds is the wrong workflow and must be rerouted
+before production.
+
+## Core Skills
+
+Analysis-only entry: **视频理解 / 快速分析视频 / 多宫格分析 / 参考片拆解** →
+`../Haike-Videohub/agent-runbooks/视频快速理解与分层分析.md`.
+Standalone files use `scripts/video_understanding_cli.py prepare|read|submit`; production assets retain the workbench agent-vision/V2/window-QA contracts. This is an analysis route, not a production call sign.
+
+| Skill | File | Trigger | Agent Skills (Layer 3) |
+|-------|------|---------|----------------------|
+| FFmpeg | `core/ffmpeg.md` | Video encoding, filtering, composition | `ffmpeg`, `video-toolkit` |
+| Remotion | `core/remotion.md` | React-based composition, Phase 3+ | `remotion-best-practices`, `remotion` |
+| HyperFrames | `core/hyperframes.md` | HTML/CSS/GSAP composition runtime — kinetic typography, music-to-video, product promos, website capture. Vendored at v0.7.17 (2026-06-27). | `hyperframes` (router) → `hyperframes-core` (contract), `hyperframes-creative` (palette/type/narration), `hyperframes-media` (TTS/BGM/SFX/captions), `hyperframes-animation` (all motion), `hyperframes-cli`, `hyperframes-registry`, `media-use`, `motion-graphics`, `music-to-video` (beats-driven), `website-to-video`, `remotion-to-hyperframes` (migration), `gsap-core`, `gsap-timeline` |
+| WhisperX | `core/whisperx.md` | Transcription with word-level timestamps — default STT (offline, free) | `speech-to-text` |
+| Azure STT | (tool: `azure_stt`) | Optional cloud speech-to-text, word-level timestamps — preferred when `AZURE_SPEECH_KEY` is set | `azure-speech-to-text` |
+| Subtitle Sync | `core/subtitle-sync.md` | Subtitle timing and alignment | `remotion-best-practices` |
+| Color Grading | `core/color-grading.md` | FFmpeg color profiles, LUT workflow, accessibility | `ffmpeg` |
+
+## Creative Skills
+
+| Skill | File | Trigger | Agent Skills (Layer 3) |
+|-------|------|---------|----------------------|
+| Codex Native Video Production | `creative/agent-native-video-production.md` | User starts or approves a topic in Codex and wants agent-owned text/vision through review-ready video | — |
+| Video Editing | `creative/video-editing.md` | Cut decisions, pacing, rhythm | `ffmpeg`, `video-toolkit` |
+| Enhancement Strategy | `creative/enhancement-strategy.md` | Overlay placement and density | `ffmpeg` |
+| Data Visualization | `creative/data-visualization.md` | Chart type selection, animation, label placement | `d3-viz`, `remotion-best-practices` |
+| Video Stitching | `creative/video-stitching.md` | Multi-clip assembly, AI clip chaining, spatial composition | `ffmpeg`, `video-toolkit` |
+| Video Gen Prompting | `creative/video-gen-prompting.md` | Universal video generation prompt vocabulary; **canonical 5-aspect spec** (Subject / Motion / Scene / Spatial / Camera); ~200 cinematography primitives | `ai-video-gen`, `ltx2`, `create-video` |
+| â†³ Seedance Prompting | `creative/prompting/seedance-prompting.md` | **Preferred premium default.** Seedance 2.0 8-component structure, multi-shot, lip-sync, reference-to-video | `seedance-2-0`, `ai-video-gen` |
+| â†³ Grok Prompting | `creative/prompting/grok-prompting.md` | Grok image/video prompting, edit flows, reference-image video | `grok-media` |
+| â†³ Sora Prompting | `creative/prompting/sora-prompting.md` | Sora 2 structured template, advanced fields | `ai-video-gen` |
+| â†³ VEO Prompting | `creative/prompting/veo-prompting.md` | VEO 3.1 14-component structure, art movements | `ai-video-gen` |
+| â†³ LTX Prompting | `creative/prompting/ltx-prompting.md` | LTX-2 6-element structure, audio prompting | `ltx2` |
+| â†³ HunyuanVideo Prompting | `creative/prompting/hunyuan-prompting.md` | HunyuanVideo formula, I2V best practices | â€" |
+| Storytelling | `creative/storytelling.md` | Narrative structure, hooks, pacing, Mayer's principles | â€" |
+| Sound Design | `creative/sound-design.md` | Audio ducking, LUFS targets, SFX timing, AI TTS mixing | `elevenlabs` |
+| Typography | `creative/typography.md` | Font selection, text sizing, safe zones, caption styling | â€" |
+| ManimCE Usage | `creative/manim-usage.md` | Scene composition, animation timing, color usage | `manimce-best-practices` |
+| Image Gen Usage | `creative/image-gen-usage.md` | Prompt consistency, hero reference, batch strategy | `flux-best-practices`, `bfl-api` |
+| Image Provider Usage | `creative/image-provider-usage.md` | Provider selection (FLUX/Grok/OpenAI/Recraft/stock), cost-quality tradeoffs | `flux-best-practices`, `bfl-api`, `grok-media` |
+| B-Roll Planning | `creative/broll-planning.md` | Stock vs. generated decision, query construction, footage evaluation | — |
+| Stock Sourcing Usage | `creative/stock-sourcing-usage.md` | Pexels/Pixabay usage, parameters, licensing, integration | — |
+| Scene Detect Usage | `creative/scene-detect-usage.md` | Threshold tuning, algorithm selection, content presets | â€" |
+| Diagram Gen Usage | `creative/diagram-gen-usage.md` | Complexity limits, progressive building, themes | `beautiful-mermaid` |
+| Music Gen Usage | `creative/music-gen-usage.md` | BPM selection, prompt engineering, duration matching | `music`, `elevenlabs` |
+| Background Removal | `creative/bg-remove-usage.md` | Model selection, alpha matting, compositing workflows | â€" |
+| Upscaling | `creative/upscale-usage.md` | Scale factor, model selection, face-aware upscaling | â€" |
+| Face Restoration | `creative/face-restore-usage.md` | CodeFormer/GFPGAN selection, fidelity tuning, vs face_enhance | â€" |
+| Lip Sync | `creative/lip-sync-usage.md` | Wav2Lip model selection, dubbing workflows, input requirements | `faceswap` |
+| Talking Head Gen | `creative/talking-head-gen-usage.md` | SadTalker/MuseTalk, photo-to-video, expression tuning | `avatar-video` |
+| Video Understanding | `creative/video-understand-usage.md` | Visual QA, quality gating, scene classification | `video-understand` |
+
+## Pipeline Type Skills
+
+Pipeline type skills provide production guidance for specific video formats, independent of the animated-explainer or talking-head pipeline.
+
+| Skill | File | When to Use |
+|-------|------|-------------|
+| Short-Form | `creative/short-form.md` | TikTok, Reels, Shorts â€" vertical 9:16, under 60s |
+| Long-Form | `creative/long-form.md` | YouTube 10+ min â€" chapters, retention, end screens |
+| Screen Recording | `creative/screen-recording.md` | Code walkthroughs, tutorials, software demos |
+| Animation Pipeline | `creative/animation-pipeline.md` | Motion graphics, easing, transitions, composition |
+| Character Animation Pipeline | `pipelines/character-animation/` | Rigged local cartoon characters, pose libraries, action timelines, SVG/Canvas/Remotion/HyperFrames rendering |
+| Cinematic | `creative/cinematic.md` | Letterbox, film pacing, layered audio, color grading |
+| Material Remake Workflow | `creative/material-remake-workflow.md` | 外站素材复刻端到端：素材双筛（人脸 + 烧入字幕）、参考视频付费转写、时长实测、清洗母版 + 源区间绑定、数字人合成、生效窗口复检、局部换镜与零付费重出预览、**竖屏字幕安全区（防平台底部遮挡）**。脚本入口 `scripts/remake_material_screen.py`（screen/pick/verify/**audit**） / `scripts/remake_reference_transcript.py` / `scripts/remake_build_project.py` / `scripts/remake_retime_shots.py` / `scripts/remake_subtitle_safe_area.py`（probe/apply/measure） |
+
+## Pipeline Stage Director Skills
+
+成片二剪工作台：`pipelines/published-remix/director.md`，固定本地 FFmpeg，使用统一队列和冻结清单，输出待审 MP4。
+
+素材解说 V1 beta：`pipelines/material-commentary/director.md`；注册清单 `pipeline_defs/material-commentary.yaml`，合同 `docs/MATERIAL_COMMENTARY_V1.md`。当前 agent/人理解素材与决定叙事，程序处理版本、声音时钟和待审合成。
+
+Stage director skills teach the agent HOW to execute each pipeline stage. Each skill is a detailed markdown file with process steps, quality rubrics, and self-evaluation criteria.
+
+### Animated Explainer Pipeline (`pipelines/explainer/`) — v2.0
+
+| Skill | File | Stage | Key Capabilities |
+|-------|------|-------|-----------------|
+| **Executive Producer** | `pipelines/explainer/executive-producer.md` | `all` | **8-stage serial orchestration, quality gates, cross-stage checks, send-back** |
+| **Research Director** | `pipelines/explainer/research-director.md` | `research` | **Web research methodology, 5 search batches, landscape/trending/data/audience/expert analysis** |
+| **Proposal Director** | `pipelines/explainer/proposal-director.md` | `proposal` | **Concept options from research, production plan, cost estimate, approval gate** |
+| Script Director | `pipelines/explainer/script-director.md` | `script` | Narrative architecture, timing, enhancement cues, research integration |
+| Scene Director | `pipelines/explainer/scene-director.md` | `scene_plan` | Visual planning, technique library, feasibility |
+| Asset Director | `pipelines/explainer/asset-director.md` | `assets` | TTS, image gen, diagram gen, music, budget |
+| Edit Director | `pipelines/explainer/edit-director.md` | `edit` | Timeline assembly, subtitles, audio ducking |
+| Compose Director | `pipelines/explainer/compose-director.md` | `compose` | FFmpeg/Remotion render, audio mixing |
+| Publish Director | `pipelines/explainer/publish-director.md` | `publish` | SEO metadata, chapters, export packaging |
+
+> **Note:** The old `idea-director.md` still exists for reference but is superseded by the research + proposal two-stage flow in v2.0. The talking-head pipeline continues to use its own `idea-director`.
+
+### Talking Head Pipeline (`pipelines/talking-head/`)
+
+| Skill | File | Stage | Key Capabilities |
+|-------|------|-------|-----------------|
+| Idea Director | `pipelines/talking-head/idea-director.md` | `idea` | Footage inspection, content assessment |
+| Script Director | `pipelines/talking-head/script-director.md` | `script` | Transcription, section segmentation |
+| Scene Director | `pipelines/talking-head/scene-director.md` | `scene_plan` | Enhancement planning, overlay placement |
+| Asset Director | `pipelines/talking-head/asset-director.md` | `assets` | Subtitle gen, audio extraction |
+| Edit Director | `pipelines/talking-head/edit-director.md` | `edit` | Cut assembly, subtitle config |
+| Compose Director | `pipelines/talking-head/compose-director.md` | `compose` | Enhancement chain, render |
+| Publish Director | `pipelines/talking-head/publish-director.md` | `publish` | Metadata, export packaging |
+
+### Screen Demo Pipeline (`pipelines/screen-demo/`) — v2.0
+
+| Skill | File | Stage | Key Capabilities |
+|-------|------|-------|-----------------|
+| **Executive Producer** | `pipelines/screen-demo/executive-producer.md` | `all` | **7-stage serial orchestration, legibility gates, audio clarity, pacing checks** |
+| Idea Director | `pipelines/screen-demo/idea-director.md` | `idea` | Workflow scoping, UI density assessment, output-shape choice |
+| Script Director | `pipelines/screen-demo/script-director.md` | `script` | Action mapping, procedural narration, speed planning |
+| Scene Director | `pipelines/screen-demo/scene-director.md` | `scene_plan` | Crop planning, callout restraint, aspect-ratio viability |
+| Asset Director | `pipelines/screen-demo/asset-director.md` | `assets` | Subtitle-first asset kit, audio cleanup, reusable overlays |
+| Edit Director | `pipelines/screen-demo/edit-director.md` | `edit` | Tight timeline planning, speed notes, subtitle zone control |
+| Compose Director | `pipelines/screen-demo/compose-director.md` | `compose` | Legibility-first render, crisp screen output, verification |
+| Publish Director | `pipelines/screen-demo/publish-director.md` | `publish` | Searchable metadata, chapter packaging, thumbnail concepts |
+
+### Clip Factory Pipeline (`pipelines/clip-factory/`) — v2.0
+
+| Skill | File | Stage | Key Capabilities |
+|-------|------|-------|-----------------|
+| **Executive Producer** | `pipelines/clip-factory/executive-producer.md` | `all` | **7-stage serial orchestration, clip selection gates, batch consistency, hook placement** |
+| Idea Director | `pipelines/clip-factory/idea-director.md` | `idea` | Batch strategy, clip families, yield planning |
+| Script Director | `pipelines/clip-factory/script-director.md` | `script` | Transcript mining, ranking, standalone validation |
+| Scene Director | `pipelines/clip-factory/scene-director.md` | `scene_plan` | Platform framing, safe zones, crop-viability planning |
+| Asset Director | `pipelines/clip-factory/asset-director.md` | `assets` | Shared brand kit, rebased subtitles, batch audio consistency |
+| Edit Director | `pipelines/clip-factory/edit-director.md` | `edit` | Hook-first mini-edits, series consistency |
+| Compose Director | `pipelines/clip-factory/compose-director.md` | `compose` | Multi-job rendering, batch resilience, per-output verification |
+| Publish Director | `pipelines/clip-factory/publish-director.md` | `publish` | Posting order, platform copy, batch cataloging |
+
+### Podcast Repurpose Pipeline (`pipelines/podcast-repurpose/`) — v2.0
+
+| Skill | File | Stage | Key Capabilities |
+|-------|------|-------|-----------------|
+| **Executive Producer** | `pipelines/podcast-repurpose/executive-producer.md` | `all` | **7-stage serial orchestration, audio preservation gates, clip quality, multi-deliverable** |
+| Idea Director | `pipelines/podcast-repurpose/idea-director.md` | `idea` | Deliverable mix by source mode, realistic long-form planning |
+| Script Director | `pipelines/podcast-repurpose/script-director.md` | `script` | Diarized transcript truth, highlight ranking, chapter mapping |
+| Scene Director | `pipelines/podcast-repurpose/scene-director.md` | `scene_plan` | Source-faithful treatments, audiogram vs quote vs companion planning |
+| Asset Director | `pipelines/podcast-repurpose/asset-director.md` | `assets` | Subtitle-first packaging, speaker assets, optional topic art |
+| Edit Director | `pipelines/podcast-repurpose/edit-director.md` | `edit` | Hook-led podcast clips, quote hold time, companion simplicity |
+| Compose Director | `pipelines/podcast-repurpose/compose-director.md` | `compose` | Audio-first rendering, deliverable prioritization |
+| Publish Director | `pipelines/podcast-repurpose/publish-director.md` | `publish` | Episode cross-linking, guest attribution, staggered release logic |
+
+### Cinematic Pipeline (`pipelines/cinematic/`) — v2.0
+
+| Skill | File | Stage | Key Capabilities |
+|-------|------|-------|-----------------|
+| **Executive Producer** | `pipelines/cinematic/executive-producer.md` | `all` | **7-stage serial orchestration, emotional pacing gates, color consistency, audio dynamics** |
+| Idea Director | `pipelines/cinematic/idea-director.md` | `idea` | Emotional arc selection, source truth, delivery-shape planning |
+| Script Director | `pipelines/cinematic/script-director.md` | `script` | Beat mapping, dialogue selects, title-card restraint |
+| Scene Director | `pipelines/cinematic/scene-director.md` | `scene_plan` | Hero-frame planning, reveal structure, transition limits |
+| Asset Director | `pipelines/cinematic/asset-director.md` | `assets` | Source selects, support-insert discipline, music/ambience planning |
+| Edit Director | `pipelines/cinematic/edit-director.md` | `edit` | Emotion-first pacing, reveal timing, audio-driven rhythm |
+| Compose Director | `pipelines/cinematic/compose-director.md` | `compose` | Grade and mix finishing, frame-treatment judgment |
+| Publish Director | `pipelines/cinematic/publish-director.md` | `publish` | Hero vs teaser packaging, poster-frame concepts |
+
+### Animation Pipeline (`pipelines/animation/`) — v2.0
+
+| Skill | File | Stage | Key Capabilities |
+|-------|------|-------|-----------------|
+| **Executive Producer** | `pipelines/animation/executive-producer.md` | `all` | **8-stage serial orchestration, quality gates, motion consistency, math accuracy checks** |
+| **Research Director** | `pipelines/animation/research-director.md` | `research` | **Topic + animation technique research, visual reference scan, mode-informed angles** |
+| **Proposal Director** | `pipelines/animation/proposal-director.md` | `proposal` | **Animation mode selection (Manim/Remotion/AI/diagram), reuse strategy, cost estimate, approval gate** |
+| Script Director | `pipelines/animation/script-director.md` | `script` | Animation-ready beats, text restraint, research integration, mode-aware writing |
+| Scene Director | `pipelines/animation/scene-director.md` | `scene_plan` | Animatic planning, transition systems, tool-path mapping |
+| Asset Director | `pipelines/animation/asset-director.md` | `assets` | Deterministic asset choice, reusable motifs, feasibility truth |
+| Edit Director | `pipelines/animation/edit-director.md` | `edit` | Hold timing, stagger rules, readable motion planning |
+| Compose Director | `pipelines/animation/compose-director.md` | `compose` | Sharp render output, timing integrity, safe-zone checks |
+| Publish Director | `pipelines/animation/publish-director.md` | `publish` | Animation-mode packaging, thumbnail-system alignment |
+
+> **Note:** The old `idea-director.md` still exists for reference but is superseded by the research + proposal two-stage flow in v2.0.
+
+### Hybrid Pipeline (`pipelines/hybrid/`) — v2.0
+
+| Skill | File | Stage | Key Capabilities |
+|-------|------|-------|-----------------|
+| **Executive Producer** | `pipelines/hybrid/executive-producer.md` | `all` | **7-stage serial orchestration, source/support balance gates, overlay density, coherence** |
+| Idea Director | `pipelines/hybrid/idea-director.md` | `idea` | Anchor-medium selection, support-layer planning, fallback visibility |
+| Script Director | `pipelines/hybrid/script-director.md` | `script` | Source-vs-support beat mapping, dialogue retention, support justification |
+| Scene Director | `pipelines/hybrid/scene-director.md` | `scene_plan` | Source-primary layout rules, overlay density control, variant-safe planning |
+| Asset Director | `pipelines/hybrid/asset-director.md` | `assets` | Shared support kits, source-vs-generated asset tracking |
+| Edit Director | `pipelines/hybrid/edit-director.md` | `edit` | Anchor-cut-first workflow, layered support timing, readable variants |
+| Compose Director | `pipelines/hybrid/compose-director.md` | `compose` | Source/support balance checks, variant verification, coherent mix |
+| Publish Director | `pipelines/hybrid/publish-director.md` | `publish` | Master-vs-derivative packaging, source-mix metadata |
+
+### Avatar Spokesperson Pipeline (`pipelines/avatar-spokesperson/`) — v2.0
+
+| Skill | File | Stage | Key Capabilities |
+|-------|------|-------|-----------------|
+| **Executive Producer** | `pipelines/avatar-spokesperson/executive-producer.md` | `all` | **7-stage serial orchestration, lip-sync quality gates, presenter framing, CTA landing** |
+| Idea Director | `pipelines/avatar-spokesperson/idea-director.md` | `idea` | Avatar-path classification, CTA scoping, capability truth |
+| Script Director | `pipelines/avatar-spokesperson/script-director.md` | `script` | Spoken-copy shaping, scene-safe pacing, text restraint |
+| Scene Director | `pipelines/avatar-spokesperson/scene-director.md` | `scene_plan` | Presenter layout, background discipline, variant realism |
+| Asset Director | `pipelines/avatar-spokesperson/asset-director.md` | `assets` | Avatar-path locking, narration resolution, minimal support kits |
+| Edit Director | `pipelines/avatar-spokesperson/edit-director.md` | `edit` | Presenter-first cut planning, overlay timing, CTA landing |
+| Compose Director | `pipelines/avatar-spokesperson/compose-director.md` | `compose` | Lip-sync verification, subtitle-safe framing, clean render checks |
+| Publish Director | `pipelines/avatar-spokesperson/publish-director.md` | `publish` | Audience-led packaging, presenter-first thumbnail concepts |
+
+### Localization Dub Pipeline (`pipelines/localization-dub/`) — v2.0
+
+| Skill | File | Stage | Key Capabilities |
+|-------|------|-------|-----------------|
+| **Executive Producer** | `pipelines/localization-dub/executive-producer.md` | `all` | **7-stage serial orchestration, translation accuracy gates, timing preservation, per-locale QA** |
+| Idea Director | `pipelines/localization-dub/idea-director.md` | `idea` | Scope definition, locale planning, glossary and review capture |
+| Script Director | `pipelines/localization-dub/script-director.md` | `script` | Transcript truth, translated script packaging, term preservation |
+| Scene Director | `pipelines/localization-dub/scene-director.md` | `scene_plan` | Dub-mode selection, timing-risk mapping, on-screen text planning |
+| Asset Director | `pipelines/localization-dub/asset-director.md` | `assets` | Subtitle-first localization kit, dubbed audio generation, optional lip sync |
+| Edit Director | `pipelines/localization-dub/edit-director.md` | `edit` | Locale-specific timelines, coverage planning, timing adjustments |
+| Compose Director | `pipelines/localization-dub/compose-director.md` | `compose` | Per-locale rendering, subtitle-fit checks, output labeling |
+| Publish Director | `pipelines/localization-dub/publish-director.md` | `publish` | Locale packaging, metadata precision, QA-note retention |
+
+## Meta Skills
+
+Cross-cutting skills that apply to all pipelines:
+
+| Skill | File | Purpose |
+|-------|------|---------|
+| Onboarding | `meta/onboarding.md` | First-interaction greeting, capability discovery, starter prompts |
+| Reviewer | `meta/reviewer.md` | Self-review protocol after every stage |
+| Checkpoint Protocol | `meta/checkpoint-protocol.md` | When/how to checkpoint and request human approval |
+| Skill Creator | `meta/skill-creator.md` | Dynamically create new skills during pipeline runs |
+| Animation Runtime Selector | `meta/animation-runtime-selector.md` | Choose render runtime + animation library per scene |
+| Taste Direction | `meta/taste-direction.md` | Convert a brief into taste dials, anti-patterns, and reference strategy for proposal/playbook/atelier work |
+| Bespoke Composition (Atelier) | `meta/bespoke-composition.md` | Hand-author a composition from scratch (hero work) — no stock scene-types; routes art-direction → motion principles → engine mechanics → atelier render |
+
+## Style Playbooks
+
+Style playbooks (`styles/*.yaml`) define visual language, typography, motion, audio, and asset generation constraints. They are validated against `schemas/styles/playbook.schema.json`.
+
+| Playbook | Category | Mood | Best For |
+|----------|----------|------|----------|
+| `clean-professional` | motion-graphics | polished, trustworthy | Corporate, educational, SaaS |
+| `premium-minimalist` | minimalist | calm, editorial | Investor updates, expert explainers, product narratives |
+| `flat-motion-graphics` | motion-graphics | energetic, bold | Social media, TikTok, startups |
+| `minimalist-diagram` | whiteboard | focused, technical | Technical deep-dives, architecture |
+
+Load via `styles/playbook_loader.py`: `load_playbook("clean-professional")`
+
+## Installed Agent Skills (Layer 3)
+
+All agent skills live in `.agents/skills/` and are managed via `npx skills add`.
+Claude Code accesses them via symlinks in `.claude/skills/`.
+
+| Category | Installed Skills | Source |
+|----------|-----------------|--------|
+| **Video Composition** | `remotion-best-practices`, `remotion`, `hyperframes` (router), `hyperframes-core`, `hyperframes-creative`, `hyperframes-media`, `hyperframes-animation`, `hyperframes-cli`, `hyperframes-registry`, `media-use`, `motion-graphics`, `music-to-video`, `remotion-to-hyperframes`, `website-to-video` | `remotion-dev/skills`, `digitalsamba/claude-code-video-toolkit`, `heygen-com/hyperframes` (vendored v0.7.17, see `.agents/skills/hyperframes/PROVENANCE.md`) |
+| **Video Processing** | `ffmpeg`, `video-toolkit` | `digitalsamba/claude-code-video-toolkit` |
+| **TTS & Audio** | `text-to-speech`, `speech-to-text` (whisper, default STT), `azure-speech-to-text` (optional cloud STT), `music`, `sound-effects`, `elevenlabs`, `agents`, `setup-api-key` | `elevenlabs/skills`, `digitalsamba/claude-code-video-toolkit` |
+| **Image Generation** | `flux-best-practices`, `bfl-api`, `grok-media` | `black-forest-labs/skills`, local Haike Video skill |
+| **Math Animation** | `manimce-best-practices`, `manimgl-best-practices`, `manim-composer` | `adithya-s-k/manim_skill` |
+| **3D Graphics** | `threejs-animation`, `threejs-fundamentals`, `threejs-geometry`, `threejs-interaction`, `threejs-lighting`, `threejs-loaders`, `threejs-materials`, `threejs-postprocessing`, `threejs-shaders`, `threejs-textures` | `cloudai-x/threejs-skills` |
+| **Diagrams** | `beautiful-mermaid`, `d3-viz` | `intellectronica/agent-skills`, `davila7/claude-code-templates` |
+| **Animation** | `framer-motion`, `lottie-bodymovin` | `pproenca/dot-skills`, `dylantarre/animation-principles` |
+| **Design** | `tailwind-design-system`, `web-design-guidelines`, `vercel-react-best-practices`, `vercel-composition-patterns` | `wshobson/agents`, `vercel-labs/agent-skills` |
+| **AI Video (HeyGen)** | `heygen`, `avatar-video`, `create-video`, `faceswap`, `ai-video-gen`, `video-download`, `video-edit`, `video-translate`, `video-understand`, `visual-style` | `heygen-com/skills` |
+| **AI Video/Image/TTS/Avatar (Kling Official)** | `kling-official` - official direct API auth, Classic/Turbo/Omni task protocols, multi-reference Omni syntax, internal Elements/Account Usage helpers, callback notes, TTS voice parameters, avatar/lip-sync face selection, error handling, and cost governance for `kling_official_video` / `kling_official_image` / `kling_tts` / `kling_avatar` / `kling_lip_sync` | Local Haike Video skill |
+| **AI Video (Premium)** | `seedance-2-0` — preferred premium default (cinematic, trailer, multi-shot, lip-sync, synced audio); accessed via `seedance_video` (fal.ai) or `heygen_video` Avatar Shots | Local Haike Video skill |
+| **Infrastructure** | `acestep`, `ltx2`, `playwright-recording` | `digitalsamba/claude-code-video-toolkit` |
+
+- 招商11–13撞色5秒模板：[入口](../templates/investment-contrast-v1/README.md)、[本机测试范围](../templates/investment-contrast-v1/TEST-REVIEW.md)。
+- 店长账号风格13/11完整片：[入口](../templates/store-manager-contrast-v1/README.md)、[橙绿双实拍](../templates/store-manager-contrast-v1/variants/13/视觉Runbook.md)、[紫柠圆场](../templates/store-manager-contrast-v1/variants/11/视觉Runbook.md)。独立合同store-manager-contrast-v1，原片合成及实测20Mbps，验收范围以规格记录为准。

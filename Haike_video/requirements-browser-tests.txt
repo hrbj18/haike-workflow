@@ -1,0 +1,3 @@
+# Optional UI regression dependency; install after requirements-dev.txt.
+# Chromium revision 1228 is managed by this Playwright release.
+playwright==1.61.0

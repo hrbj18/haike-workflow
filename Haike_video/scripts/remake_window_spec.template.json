@@ -1,0 +1,61 @@
+{
+  "_readme": "【窗口复刻 window-remake】spec 模板。复制成 <期名>-spec.json 后填值。你只需提供三样：source.video（参考片路径）+ titles（N 层标题）+ subtitles.items（N 段字幕），其余全默认。板位先用 remake_window_cli.py measure 量出来，别拍脑袋。字段说明见 docs/SINGLE_DEVELOPMENT_GUIDE_WINDOW_REMAKE_V1_ZH-CN.md。别与「素材复刻」线混。",
+
+  "project_id": "REPLACE-me-remake-1",
+  "queue_preview": true,
+
+  "meta": {
+    "title": "项目标题（也是音轨标题）",
+    "style_playbook": "dark-tech-news",
+    "brief": "上下窗口轻量复刻：原片画面居中保留，上下换自有板 + 标题 / 字幕。无配音、纯 BGM。"
+  },
+
+  "source": {
+    "video": "D:/绝对/路径/到/原片.mp4",
+    "asset_label": "复刻原片",
+    "license": "用户自有复刻素材",
+    "clip_seconds": 12.8,
+    "start_seconds": 0.0,
+    "segments": 4,
+    "visual_query": "original footage"
+  },
+
+  "layout": {
+    "width": 1080,
+    "height": 1920,
+    "plate_color": "#0E1218",
+    "plate_top_h": 0.232,
+    "plate_bot_y": 0.652,
+    "title_gap": 0.004
+  },
+
+  "titles": [
+    { "text": "第一层·大字强调", "size": 68, "weight": 900, "color": "#FFD400" },
+    { "text": "第二层·副标题", "size": 50, "weight": 700, "color": "#FFFFFF" },
+    { "text": "第三层·补充", "size": 50, "weight": 700, "color": "#FFFFFF" },
+    { "text": "第四层·弱化说明（字号最小）", "size": 40, "weight": 500, "color": "#E8EDF2" }
+  ],
+
+  "subtitles": {
+    "style": {
+      "y": 0.755,
+      "size": 46,
+      "weight": 700,
+      "color": "#FFFFFF",
+      "stroke_color": "#07111F",
+      "stroke_width": 4,
+      "x": 0.05,
+      "width": 0.90
+    },
+    "items": [
+      { "text": "第一段字幕。不给时序就按时长均分。" },
+      { "text": "第二段字幕。" },
+      { "text": "第三段字幕。" },
+      { "text": "第四段字幕。" }
+    ]
+  },
+
+  "assets": {
+    "bgm": "song/压迫感.mp3"
+  }
+}

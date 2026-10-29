@@ -1,0 +1,11 @@
+# 模板图文视频流水线 · 额外依赖
+#
+# 本流水线的全部步骤（渲染 + OCR 门禁 + 人脸门禁）都在 Haike_video/.venv 里跑，
+# 不再跨仓借 copy_skill 的解释器。以下是该 venv 相对上游基线额外需要安装的包，
+# 版本为 2026-09-29 本机实测可用组合（与已发布批次 t16-t23 的 QC 行为一致）。
+#
+#   ../.venv/Scripts/python.exe -m pip install -r requirements.txt
+#
+rapidocr==3.9.2
+opencv-python==5.0.0.93
+onnxruntime==1.29.0

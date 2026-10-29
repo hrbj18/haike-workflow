@@ -1,0 +1,29 @@
+{
+  "schema": "haike.motion-poster-profile/1",
+  "template_id": "vibrant-poster",
+  "version": "2.7.13",
+  "workflow": "poster-kit",
+  "stage": "development",
+  "groups": [
+    {"id":"kinetic-stack","label":"逐行巨字开场","fields":[
+      {"key":"kicker","label":"上方小字","maxChars":28},
+      {"key":"lines.0","label":"第一行","maxChars":24},
+      {"key":"lines.1","label":"第二行","maxChars":24}]},
+    {"id":"polaroid-film","label":"胶片照片展陈","fields":[
+      {"key":"items.0.caption","label":"第一张说明","maxChars":10},
+      {"key":"items.1.caption","label":"第二张说明","maxChars":10},
+      {"key":"items.2.caption","label":"第三张说明","maxChars":10}]},
+    {"id":"media-scan","label":"扫描实拍窗口","fields":[
+      {"key":"title","label":"窗口标题","maxChars":24},
+      {"key":"callouts.0.text","label":"画面标注","maxChars":16}]},
+    {"id":"gallery-carousel","label":"立体素材轮播","fields":[
+      {"key":"title","label":"轮播标题","maxChars":20},
+      {"key":"items.0.caption","label":"第一段说明","maxChars":12},
+      {"key":"items.1.caption","label":"第二段说明","maxChars":12},
+      {"key":"items.2.caption","label":"第三段说明","maxChars":12}]},
+    {"id":"cta-arrow","label":"箭头行动收尾","fields":[
+      {"key":"kicker","label":"上方小字","maxChars":20},
+      {"key":"text","label":"行动文字","maxChars":10},
+      {"key":"sub","label":"补充说明","maxChars":24}]}
+  ]
+}

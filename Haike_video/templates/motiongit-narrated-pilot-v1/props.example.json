@@ -1,0 +1,231 @@
+{
+  "durationFrames": 600,
+  "audio": "master.wav",
+  "brand": "海客AI社区服务站",
+  "footer": "10月开业现场 · 实拍记录",
+  "palette": {
+    "paper": "#F4F5EC",
+    "ink": "#15151A",
+    "muted": "#65666D",
+    "blue": "#343AF6",
+    "orange": "#D8FF42",
+    "line": "#DADCD2",
+    "dark": "#101014",
+    "light": "#F4F5EC"
+  },
+  "fontAssets": {
+    "display": "display.ttf",
+    "body": "body.ttf"
+  },
+  "presenter": {
+    "src": "presenter.mp4",
+    "from": 462,
+    "frames": 102,
+    "offset": 0,
+    "fit": "contain"
+  },
+  "presenterModes": [
+    {
+      "from": 462,
+      "frames": 48,
+      "mode": "large"
+    },
+    {
+      "from": 510,
+      "frames": 54,
+      "mode": "small"
+    }
+  ],
+  "media": [
+    {
+      "id": "door",
+      "src": "a02.mp4",
+      "thumbnail": "a02.jpg",
+      "offset": 6.3,
+      "fit": "contain",
+      "label": "走进门店",
+      "orientation": "landscape"
+    },
+    {
+      "id": "family",
+      "src": "a04.mp4",
+      "thumbnail": "a04.jpg",
+      "offset": 5,
+      "fit": "contain",
+      "label": "亲子体验",
+      "orientation": "portrait"
+    },
+    {
+      "id": "robot",
+      "src": "a03.mp4",
+      "thumbnail": "a03.jpg",
+      "offset": 8.3,
+      "fit": "contain",
+      "label": "机器人现场",
+      "orientation": "landscape"
+    },
+    {
+      "id": "dog",
+      "src": "a05.mp4",
+      "thumbnail": "a05.jpg",
+      "offset": 8.2,
+      "fit": "contain",
+      "label": "桌边小互动",
+      "orientation": "portrait"
+    },
+    {
+      "id": "goods",
+      "src": "a07.mp4",
+      "thumbnail": "a07.jpg",
+      "offset": 0.8,
+      "fit": "contain",
+      "label": "店内日常",
+      "orientation": "portrait"
+    },
+    {
+      "id": "doorEnd",
+      "src": "a02.mp4",
+      "thumbnail": "a02-end.jpg",
+      "offset": 8.8,
+      "fit": "contain",
+      "label": "开业现场",
+      "orientation": "landscape"
+    }
+  ],
+  "scenes": [
+    {
+      "id": "opening",
+      "from": 0,
+      "frames": 120,
+      "module": "select",
+      "theme": "paper",
+      "title": "这家新店，\n吸引了谁？",
+      "mediaId": "door",
+      "secondaryMediaId": "family",
+      "selection": {
+        "cursorFrom": 24,
+        "selectFrom": 42,
+        "expandFrom": 50,
+        "holdFrom": 68
+      }
+    },
+    {
+      "id": "family-select",
+      "from": 120,
+      "frames": 150,
+      "module": "select",
+      "theme": "paper",
+      "title": "围着看，\n再凑近一点。",
+      "mediaId": "family",
+      "secondaryMediaId": "robot",
+      "selection": {
+        "cursorFrom": 24,
+        "selectFrom": 42,
+        "expandFrom": 50,
+        "holdFrom": 68
+      }
+    },
+    {
+      "id": "robot-focus",
+      "from": 270,
+      "frames": 54,
+      "module": "focus",
+      "theme": "paper",
+      "title": "人形机器人\n近距离看看。",
+      "mediaId": "robot"
+    },
+    {
+      "id": "dog-focus",
+      "from": 324,
+      "frames": 60,
+      "module": "focus",
+      "theme": "paper",
+      "title": "桌边的\n小互动。",
+      "mediaId": "dog"
+    },
+    {
+      "id": "goods-focus",
+      "from": 384,
+      "frames": 78,
+      "module": "focus",
+      "theme": "paper",
+      "title": "一家人，\n各有各的好奇。",
+      "mediaId": "goods"
+    },
+    {
+      "id": "presenter",
+      "from": 462,
+      "frames": 102,
+      "module": "statement",
+      "theme": "dark",
+      "title": "海客AI社区服务站\n新塘未来汇",
+      "subtitle": "店长介绍"
+    },
+    {
+      "id": "closing",
+      "from": 564,
+      "frames": 36,
+      "module": "focus",
+      "theme": "paper",
+      "title": "新店开业",
+      "mediaId": "doorEnd"
+    }
+  ],
+  "captions": [
+    {
+      "text": "这家新店",
+      "startMs": 640,
+      "endMs": 1360
+    },
+    {
+      "text": "把孩子和家长都吸引过来了",
+      "startMs": 1560,
+      "endMs": 3680
+    },
+    {
+      "text": "看看开业现场",
+      "startMs": 4200,
+      "endMs": 5240
+    },
+    {
+      "text": "小朋友围着机器人看",
+      "startMs": 5600,
+      "endMs": 7000
+    },
+    {
+      "text": "家长也跟着凑近了",
+      "startMs": 7360,
+      "endMs": 8760
+    },
+    {
+      "text": "人形机器人机器狗",
+      "startMs": 9240,
+      "endMs": 11120
+    },
+    {
+      "text": "还有桌边的小互动",
+      "startMs": 11280,
+      "endMs": 12640
+    },
+    {
+      "text": "一家人都能找到感兴趣的东西",
+      "startMs": 12960,
+      "endMs": 15000
+    },
+    {
+      "text": "我是新塘未来汇的",
+      "startMs": 15520,
+      "endMs": 16760
+    },
+    {
+      "text": "海客AI社区服务站店长",
+      "startMs": 16760,
+      "endMs": 18560
+    },
+    {
+      "text": "新店开业",
+      "startMs": 18920,
+      "endMs": 19720
+    }
+  ]
+}

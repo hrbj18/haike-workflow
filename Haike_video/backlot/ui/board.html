@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-haike-brand="2025">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>海客视频 · 旧版看板</title>
+<script>
+  // 旧看板仍复用原有观察逻辑；暖纸张为默认，深色仅在用户明确选择后显示。
+  try {
+    const themeKey = "backlot.theme";
+    const storedTheme = localStorage.getItem(themeKey);
+    const theme = storedTheme === "dark" ? "dark" : "light";
+    if (storedTheme !== theme) localStorage.setItem(themeKey, theme);
+    document.documentElement.dataset.theme = theme;
+  } catch (_) {
+    document.documentElement.dataset.theme = "light";
+  }
+</script>
+<link rel="stylesheet" href="/ui/board.css">
+<link rel="stylesheet" href="/ui/haike-brand.css">
+<link rel="stylesheet" href="/ui/navigation.css">
+<script type="module" src="/ui/navigation.js"></script>
+<link rel="icon" href="/ui/brand/haike-logo.png" type="image/png">
+</head>
+<body>
+<aside data-haike-navigation></aside>
+<div class="wrap" id="app"></div>
+<div class="modal-bg" id="modal"></div>
+<audio id="player"></audio>
+<script type="module" src="/ui/board.js"></script>
+</body>
+</html>

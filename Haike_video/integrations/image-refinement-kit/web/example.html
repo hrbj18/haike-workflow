@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>图片预设优化 · 宿主项目接入示例</title>
+<body><h1>图片预设优化</h1><p>本页面需由目标项目提供已鉴权的/refinement接口。API Key不进入浏览器。</p><div id="editor"></div>
+<script type="module">
+import {mountRefinement} from './refinement-widget.js';
+async function request(path,options){const r=await fetch(path,options);if(!r.ok)throw new Error('操作失败');return r;}
+mountRefinement(document.querySelector('#editor'),{
+  submit:async(file,{confirmed})=>(await request(`/refinement/jobs?confirmed=${confirmed}`,{method:'POST',headers:{'Content-Type':'application/octet-stream'},body:file})).json(),
+  get:async id=>(await request(`/refinement/jobs/${id}`)).json(),
+  file:async(id,kind)=>(await request(`/refinement/jobs/${id}/files/${kind}`)).blob(),
+  // Replace these with the host's original-ID/revision-checked adoption APIs.
+  onAdopt:async()=>{throw new Error('请接入宿主项目采用事务');},
+  onOriginal:async()=>{throw new Error('请接入宿主项目原图决策保存');},
+});
+</script></body></html>

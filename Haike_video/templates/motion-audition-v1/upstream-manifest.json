@@ -1,0 +1,47 @@
+{
+  "repository": "https://github.com/Remocn/remocn",
+  "commit": "7aebcbe6514ed9e54e3a4a6786f83f8425a4a9af",
+  "license": "MIT",
+  "files": [
+    {
+      "upstream": "registry/remocn/whip-pan/index.tsx",
+      "local": "vendor/whip-pan.tsx",
+      "adaptation": "Unmodified upstream source",
+      "upstream_sha256": "974565b00a48f8104f30fba964a86a5d394defd5c6b8f2b528ec49afc4f273b0",
+      "vendored_sha256": "f25be304013fb2c8923b4afdf9a37a5b12075ca5586b04b596b51493ca2f0e6c"
+    },
+    {
+      "upstream": "registry/remocn/push-through/index.tsx",
+      "local": "vendor/push-through.tsx",
+      "adaptation": "Unmodified upstream source",
+      "upstream_sha256": "94ef922d58afbdf3e2d32e45b2070fe33dc96d1ea3375e589c4e7691e5a5481a",
+      "vendored_sha256": "72d9d85c06e78ca5825653380bdf0cbe359bd5d1fcc55a5189a03370f318faa8"
+    },
+    {
+      "upstream": "registry/remocn/paper-tear/index.tsx",
+      "local": "vendor/paper-tear.tsx",
+      "adaptation": "Unmodified upstream source",
+      "upstream_sha256": "81f47a5f0fb4e34c58281f19b4622370a587160bd221ab01e3a6bd488f282930",
+      "vendored_sha256": "c52da634e34822d500e25796da410cc0b5fd71feb2d1328ba76f67e90536fd05"
+    },
+    {
+      "upstream": "registry/remocn/grid-wave/index.tsx",
+      "local": "vendor/grid-wave.tsx",
+      "adaptation": "Expose original shader; remove HTML-in-canvas presenter and fallback",
+      "upstream_sha256": "6a33812b146f4807544c0188b2e1cd0a215e0bf02880ed7019cbaad72b0711ac",
+      "vendored_sha256": "9aa553e0232f8ccb8db45401df993dd4770ab344678eb0e6c8bf96a7bbb71f84"
+    },
+    {
+      "upstream": "registry/remocn/canvas-presentation/index.tsx",
+      "local": "vendor/scene-shader.tsx",
+      "adaptation": "Extract scene shader renderer unchanged; remove unused React presenters",
+      "upstream_sha256": "8fc2e25751d4fd967a2ee1aed57248c59ea856f880b9fbc2466e3562371990c4",
+      "vendored_sha256": "95cc36ee579b7a542fc6d29addc9e2f6449f23fe0c222228b8c8ecd9ba7598f6"
+    }
+  ],
+  "dependencies": {
+    "pixi.js": "8.22.0",
+    "pixi-filters": "6.1.5"
+  },
+  "notes": "Original upstream bodies cached during preparation. Media and output hashes remain private in task receipts."
+}

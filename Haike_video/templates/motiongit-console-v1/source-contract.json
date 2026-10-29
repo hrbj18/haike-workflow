@@ -1,0 +1,1464 @@
+{
+  "schema": "haike.native-package-contract/1",
+  "profile_id": "console04-v1",
+  "template_id": "template-04-dark-console",
+  "versions": [
+    "2.7.20-alpha.3"
+  ],
+  "license": "MIT; own narration, presenter, footage and project music supplied separately",
+  "fps": 60,
+  "width": 1920,
+  "height": 1080,
+  "maximum_frames": 10800,
+  "groups": {
+    "keyword-slam": {
+      "minFrames": 147,
+      "maxHoldFrames": 150,
+      "requiredCues": [
+        "keyword"
+      ],
+      "minFollowingFrames": 54
+    },
+    "statement-orb": {
+      "minFrames": 201,
+      "maxHoldFrames": 300,
+      "requiredCues": [
+        "kicker",
+        "line-2",
+        "source"
+      ],
+      "minFollowingFrames": 60
+    },
+    "works-fan": {
+      "minFrames": 204,
+      "maxHoldFrames": 150,
+      "requiredCues": [
+        "fan"
+      ],
+      "minFollowingFrames": 78
+    },
+    "result-inspector": {
+      "minFrames": 570,
+      "maxHoldFrames": 0,
+      "requiredCues": [
+        "window"
+      ],
+      "minFollowingFrames": 60
+    },
+    "next-update-follow": {
+      "minFrames": 428,
+      "maxHoldFrames": 180,
+      "requiredCues": [
+        "panel"
+      ],
+      "minFollowingFrames": 78
+    },
+    "versus-panels": {
+      "minFrames": 360,
+      "maxHoldFrames": 300,
+      "requiredCues": [
+        "title",
+        "left",
+        "right",
+        "versus",
+        "verdict"
+      ],
+      "minFollowingFrames": 60
+    },
+    "readme-terminal": {
+      "minFrames": 167,
+      "maxHoldFrames": 600,
+      "requiredCues": [
+        "window"
+      ],
+      "minFollowingFrames": 0
+    }
+  },
+  "input_contracts": {
+    "keyword-slam": {
+      "type": "object",
+      "properties": {
+        "chapter": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 20,
+          "title": "章节"
+        },
+        "keyword": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 6,
+          "title": "关键词（≤6 字符，描边巨字）"
+        },
+        "question": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 7,
+          "title": "跟砸的问句/判断"
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 18,
+          "title": "打字注解"
+        }
+      },
+      "required": [
+        "chapter",
+        "keyword",
+        "question",
+        "note"
+      ],
+      "additionalProperties": false
+    },
+    "statement-orb": {
+      "type": "object",
+      "properties": {
+        "chapter": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 20,
+          "title": "章节"
+        },
+        "kicker": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 24,
+          "title": "小标题"
+        },
+        "lines": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 14,
+              "title": "上句"
+            },
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 12,
+              "title": "下句（强调）"
+            }
+          ],
+          "items": false,
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 24,
+          "title": "出处/补充"
+        }
+      },
+      "required": [
+        "chapter",
+        "kicker",
+        "lines",
+        "source"
+      ],
+      "additionalProperties": false
+    },
+    "works-fan": {
+      "type": "object",
+      "properties": {
+        "chapter": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 20,
+          "title": "章节"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 12,
+          "title": "标题"
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 16,
+          "title": "说明"
+        },
+        "works": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 10,
+                  "title": "作品 1 名称"
+                },
+                "kind": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 6,
+                  "title": "作品 1 类型"
+                }
+              },
+              "required": [
+                "name",
+                "kind"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 10,
+                  "title": "作品 2 名称"
+                },
+                "kind": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 6,
+                  "title": "作品 2 类型"
+                }
+              },
+              "required": [
+                "name",
+                "kind"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 10,
+                  "title": "作品 3 名称"
+                },
+                "kind": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 6,
+                  "title": "作品 3 类型"
+                }
+              },
+              "required": [
+                "name",
+                "kind"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 10,
+                  "title": "作品 4 名称"
+                },
+                "kind": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 6,
+                  "title": "作品 4 类型"
+                }
+              },
+              "required": [
+                "name",
+                "kind"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 10,
+                  "title": "作品 5 名称"
+                },
+                "kind": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 6,
+                  "title": "作品 5 类型"
+                }
+              },
+              "required": [
+                "name",
+                "kind"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 10,
+                  "title": "作品 6 名称"
+                },
+                "kind": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 6,
+                  "title": "作品 6 类型"
+                }
+              },
+              "required": [
+                "name",
+                "kind"
+              ],
+              "additionalProperties": false
+            }
+          ],
+          "items": false,
+          "minItems": 6,
+          "maxItems": 6
+        },
+        "media": {
+          "type": "object",
+          "properties": {
+            "w0": {
+              "type": "object",
+              "properties": {
+                "path": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 500
+                },
+                "offset": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 86400
+                }
+              },
+              "required": [
+                "path",
+                "offset"
+              ],
+              "additionalProperties": false
+            },
+            "w1": {
+              "type": "object",
+              "properties": {
+                "path": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 500
+                },
+                "offset": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 86400
+                }
+              },
+              "required": [
+                "path",
+                "offset"
+              ],
+              "additionalProperties": false
+            },
+            "w2": {
+              "type": "object",
+              "properties": {
+                "path": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 500
+                },
+                "offset": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 86400
+                }
+              },
+              "required": [
+                "path",
+                "offset"
+              ],
+              "additionalProperties": false
+            },
+            "w3": {
+              "type": "object",
+              "properties": {
+                "path": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 500
+                },
+                "offset": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 86400
+                }
+              },
+              "required": [
+                "path",
+                "offset"
+              ],
+              "additionalProperties": false
+            },
+            "w4": {
+              "type": "object",
+              "properties": {
+                "path": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 500
+                },
+                "offset": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 86400
+                }
+              },
+              "required": [
+                "path",
+                "offset"
+              ],
+              "additionalProperties": false
+            },
+            "w5": {
+              "type": "object",
+              "properties": {
+                "path": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 500
+                },
+                "offset": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 86400
+                }
+              },
+              "required": [
+                "path",
+                "offset"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "w0",
+            "w1",
+            "w2",
+            "w3",
+            "w4",
+            "w5"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "chapter",
+        "title",
+        "note",
+        "works",
+        "media"
+      ],
+      "additionalProperties": false
+    },
+    "result-inspector": {
+      "type": "object",
+      "properties": {
+        "chapter": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 20,
+          "title": "章节"
+        },
+        "window": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 16,
+              "title": "窗口标题"
+            },
+            "meta": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 18,
+              "title": "窗口右侧信息"
+            }
+          },
+          "required": [
+            "title",
+            "meta"
+          ],
+          "additionalProperties": false
+        },
+        "callouts": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 14,
+              "title": "标注 1（框选区域）"
+            },
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 14,
+              "title": "标注 2（焦点追踪）"
+            }
+          ],
+          "items": false,
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "stamp": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 5,
+          "title": "盖章"
+        },
+        "pills": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 10,
+              "title": "底部标签 1"
+            },
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 10,
+              "title": "底部标签 2"
+            },
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 12,
+              "title": "底部标签 3"
+            }
+          ],
+          "items": false,
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "panel": {
+          "type": "object",
+          "properties": {
+            "head": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 14,
+              "title": "面板标题"
+            },
+            "keys": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 10,
+              "title": "面板注记"
+            },
+            "tabs": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4,
+                  "title": "页签 1"
+                },
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4,
+                  "title": "页签 2"
+                },
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4,
+                  "title": "页签 3"
+                }
+              ],
+              "items": false,
+              "minItems": 3,
+              "maxItems": 3
+            }
+          },
+          "required": [
+            "head",
+            "keys",
+            "tabs"
+          ],
+          "additionalProperties": false
+        },
+        "checks": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 6,
+              "title": "质检 1"
+            },
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 6,
+              "title": "质检 2"
+            },
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 6,
+              "title": "质检 3"
+            },
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 6,
+              "title": "质检 4"
+            }
+          ],
+          "items": false,
+          "minItems": 4,
+          "maxItems": 4
+        },
+        "checkPass": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 7,
+          "title": "通过标记"
+        },
+        "focus": {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 0.9,
+              "title": "焦点框中心 x（0–1，相对成片画面）"
+            },
+            "y": {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 0.9,
+              "title": "焦点框中心 y（0–1）"
+            },
+            "size": {
+              "type": "number",
+              "minimum": 0.08,
+              "maximum": 0.4,
+              "title": "焦点框大小（0–1）"
+            }
+          },
+          "required": [
+            "x",
+            "y",
+            "size"
+          ],
+          "additionalProperties": false
+        },
+        "media": {
+          "type": "object",
+          "properties": {
+            "bvid": {
+              "type": "object",
+              "properties": {
+                "path": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 500
+                },
+                "offset": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 86400
+                }
+              },
+              "required": [
+                "path",
+                "offset"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "bvid"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "chapter",
+        "window",
+        "callouts",
+        "stamp",
+        "pills",
+        "panel",
+        "checks",
+        "checkPass",
+        "focus",
+        "media"
+      ],
+      "additionalProperties": false
+    },
+    "next-update-follow": {
+      "type": "object",
+      "properties": {
+        "chapter": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 20,
+          "title": "章节"
+        },
+        "panel": {
+          "type": "object",
+          "properties": {
+            "head": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 14,
+              "title": "面板标题"
+            },
+            "note": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 12,
+              "title": "面板注记"
+            }
+          },
+          "required": [
+            "head",
+            "note"
+          ],
+          "additionalProperties": false
+        },
+        "items": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 9,
+                  "title": "预告 1"
+                },
+                "note": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 14,
+                  "title": "预告 1 说明"
+                }
+              },
+              "required": [
+                "name",
+                "note"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 9,
+                  "title": "预告 2"
+                },
+                "note": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 14,
+                  "title": "预告 2 说明"
+                }
+              },
+              "required": [
+                "name",
+                "note"
+              ],
+              "additionalProperties": false
+            }
+          ],
+          "items": false,
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "cta": {
+          "type": "object",
+          "properties": {
+            "idle": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 5,
+              "title": "按钮文字"
+            },
+            "done": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 5,
+              "title": "点击后文字"
+            }
+          },
+          "required": [
+            "idle",
+            "done"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "chapter",
+        "panel",
+        "items",
+        "cta"
+      ],
+      "additionalProperties": false
+    },
+    "versus-panels": {
+      "type": "object",
+      "properties": {
+        "chapter": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 20,
+          "title": "章节"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 18,
+          "title": "标题"
+        },
+        "left": {
+          "type": "object",
+          "properties": {
+            "head": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 12,
+              "title": "左侧名称"
+            },
+            "tag": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 8,
+              "title": "左侧标签"
+            },
+            "points": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 22,
+                  "title": "左 1"
+                },
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 22,
+                  "title": "左 2"
+                },
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 22,
+                  "title": "左 3（可选）"
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 3
+            }
+          },
+          "required": [
+            "head",
+            "tag",
+            "points"
+          ],
+          "additionalProperties": false
+        },
+        "right": {
+          "type": "object",
+          "properties": {
+            "head": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 12,
+              "title": "右侧名称"
+            },
+            "tag": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 8,
+              "title": "右侧标签"
+            },
+            "points": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 22,
+                  "title": "右 1"
+                },
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 22,
+                  "title": "右 2"
+                },
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 22,
+                  "title": "右 3（可选）"
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 3
+            }
+          },
+          "required": [
+            "head",
+            "tag",
+            "points"
+          ],
+          "additionalProperties": false
+        },
+        "verdict": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 10,
+          "title": "盖章结论（winner=0 时不显示）"
+        },
+        "winner": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 2,
+          "title": "胜出方：1 左 / 2 右 / 0 不判"
+        }
+      },
+      "required": [
+        "chapter",
+        "title",
+        "left",
+        "right",
+        "verdict",
+        "winner"
+      ],
+      "additionalProperties": false
+    },
+    "readme-terminal": {
+      "type": "object",
+      "properties": {
+        "chapter": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 12,
+          "title": "章节"
+        },
+        "window": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 18,
+              "title": "窗口标题"
+            }
+          },
+          "required": [
+            "title"
+          ],
+          "additionalProperties": false
+        },
+        "body": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200,
+          "title": "打字正文（换行保留，≤7 行）"
+        }
+      },
+      "required": [
+        "chapter",
+        "window",
+        "body"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "segment_contracts": {
+    "keyword-slam": {
+      "type": "object",
+      "properties": {
+        "recipe": {
+          "type": "string",
+          "const": "keyword-slam"
+        },
+        "durationFrames": {
+          "type": "integer",
+          "minimum": 147,
+          "maximum": 297
+        },
+        "anchors": {
+          "type": "object",
+          "properties": {
+            "keyword": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 4.95
+            }
+          },
+          "required": [
+            "keyword"
+          ],
+          "additionalProperties": false
+        },
+        "inputs": {
+          "$ref": "#/$defs/keyword-slam"
+        }
+      },
+      "required": [
+        "recipe",
+        "durationFrames",
+        "anchors",
+        "inputs"
+      ],
+      "additionalProperties": false,
+      "x-motion-contract": {
+        "minFrames": 147,
+        "maxHoldFrames": 150,
+        "motionWindows": [
+          {
+            "id": "authored-action-1",
+            "start": 48.09,
+            "end": 50.35
+          }
+        ],
+        "minFollowingFrames": 54,
+        "cardinality": {}
+      }
+    },
+    "statement-orb": {
+      "type": "object",
+      "properties": {
+        "recipe": {
+          "type": "string",
+          "const": "statement-orb"
+        },
+        "durationFrames": {
+          "type": "integer",
+          "minimum": 201,
+          "maximum": 660
+        },
+        "anchors": {
+          "type": "object",
+          "properties": {
+            "kicker": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 11
+            },
+            "line-1": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 11
+            },
+            "line-2": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 11
+            },
+            "source": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 11
+            }
+          },
+          "required": [
+            "kicker",
+            "line-2",
+            "source"
+          ],
+          "additionalProperties": false
+        },
+        "inputs": {
+          "$ref": "#/$defs/statement-orb"
+        }
+      },
+      "required": [
+        "recipe",
+        "durationFrames",
+        "anchors",
+        "inputs"
+      ],
+      "additionalProperties": false,
+      "x-motion-contract": {
+        "minFrames": 201,
+        "maxHoldFrames": 300,
+        "motionWindows": [
+          {
+            "id": "authored-action-1",
+            "start": 200,
+            "end": 200.95
+          },
+          {
+            "id": "authored-action-2",
+            "start": 201.2,
+            "end": 202.1
+          },
+          {
+            "id": "authored-action-3",
+            "start": 202.3,
+            "end": 202.85
+          }
+        ],
+        "minFollowingFrames": 60,
+        "cardinality": {}
+      }
+    },
+    "works-fan": {
+      "type": "object",
+      "properties": {
+        "recipe": {
+          "type": "string",
+          "const": "works-fan"
+        },
+        "durationFrames": {
+          "type": "integer",
+          "minimum": 204,
+          "maximum": 354
+        },
+        "anchors": {
+          "type": "object",
+          "properties": {
+            "fan": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 5.9
+            }
+          },
+          "required": [
+            "fan"
+          ],
+          "additionalProperties": false
+        },
+        "inputs": {
+          "$ref": "#/$defs/works-fan"
+        }
+      },
+      "required": [
+        "recipe",
+        "durationFrames",
+        "anchors",
+        "inputs"
+      ],
+      "additionalProperties": false,
+      "x-motion-contract": {
+        "minFrames": 204,
+        "maxHoldFrames": 150,
+        "motionWindows": [
+          {
+            "id": "authored-action-1",
+            "start": 93.41,
+            "end": 95.8
+          }
+        ],
+        "minFollowingFrames": 78,
+        "cardinality": {
+          "works": {
+            "min": 6,
+            "max": 6
+          }
+        }
+      }
+    },
+    "result-inspector": {
+      "type": "object",
+      "properties": {
+        "recipe": {
+          "type": "string",
+          "const": "result-inspector"
+        },
+        "durationFrames": {
+          "type": "integer",
+          "minimum": 570,
+          "maximum": 571
+        },
+        "anchors": {
+          "type": "object",
+          "properties": {
+            "window": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 9.516666666666667
+            }
+          },
+          "required": [
+            "window"
+          ],
+          "additionalProperties": false
+        },
+        "inputs": {
+          "$ref": "#/$defs/result-inspector"
+        }
+      },
+      "required": [
+        "recipe",
+        "durationFrames",
+        "anchors",
+        "inputs"
+      ],
+      "additionalProperties": false,
+      "x-motion-contract": {
+        "minFrames": 570,
+        "maxHoldFrames": 0,
+        "motionWindows": [
+          {
+            "id": "authored-action-1",
+            "start": 3.9,
+            "end": 13.41
+          }
+        ],
+        "minFollowingFrames": 60,
+        "cardinality": {
+          "callouts": {
+            "min": 2,
+            "max": 2
+          },
+          "checks": {
+            "min": 4,
+            "max": 4
+          }
+        }
+      }
+    },
+    "next-update-follow": {
+      "type": "object",
+      "properties": {
+        "recipe": {
+          "type": "string",
+          "const": "next-update-follow"
+        },
+        "durationFrames": {
+          "type": "integer",
+          "minimum": 428,
+          "maximum": 608
+        },
+        "anchors": {
+          "type": "object",
+          "properties": {
+            "panel": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 10.133333333333333
+            }
+          },
+          "required": [
+            "panel"
+          ],
+          "additionalProperties": false
+        },
+        "inputs": {
+          "$ref": "#/$defs/next-update-follow"
+        }
+      },
+      "required": [
+        "recipe",
+        "durationFrames",
+        "anchors",
+        "inputs"
+      ],
+      "additionalProperties": false,
+      "x-motion-contract": {
+        "minFrames": 428,
+        "maxHoldFrames": 180,
+        "motionWindows": [
+          {
+            "id": "authored-action-1",
+            "start": 119.91,
+            "end": 126.9
+          }
+        ],
+        "minFollowingFrames": 78,
+        "cardinality": {
+          "items": {
+            "min": 2,
+            "max": 2
+          }
+        }
+      }
+    },
+    "versus-panels": {
+      "type": "object",
+      "properties": {
+        "recipe": {
+          "type": "string",
+          "const": "versus-panels"
+        },
+        "durationFrames": {
+          "type": "integer",
+          "minimum": 360,
+          "maximum": 720
+        },
+        "anchors": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 12
+            },
+            "left": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 12
+            },
+            "right": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 12
+            },
+            "versus": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 12
+            },
+            "verdict": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 12
+            }
+          },
+          "required": [
+            "title",
+            "left",
+            "right",
+            "versus",
+            "verdict"
+          ],
+          "additionalProperties": false
+        },
+        "inputs": {
+          "$ref": "#/$defs/versus-panels"
+        }
+      },
+      "required": [
+        "recipe",
+        "durationFrames",
+        "anchors",
+        "inputs"
+      ],
+      "additionalProperties": false,
+      "x-motion-contract": {
+        "minFrames": 360,
+        "maxHoldFrames": 300,
+        "motionWindows": [
+          {
+            "id": "authored-action-1",
+            "start": 230,
+            "end": 230.75
+          },
+          {
+            "id": "authored-action-2",
+            "start": 230.8,
+            "end": 232.35
+          },
+          {
+            "id": "authored-action-3",
+            "start": 232.4,
+            "end": 233.4
+          },
+          {
+            "id": "authored-action-4",
+            "start": 233.5,
+            "end": 234.45
+          },
+          {
+            "id": "authored-action-5",
+            "start": 234.8,
+            "end": 235.5
+          }
+        ],
+        "minFollowingFrames": 60,
+        "cardinality": {
+          "leftPoints": {
+            "min": 2,
+            "max": 3
+          },
+          "rightPoints": {
+            "min": 2,
+            "max": 3
+          }
+        }
+      }
+    },
+    "readme-terminal": {
+      "type": "object",
+      "properties": {
+        "recipe": {
+          "type": "string",
+          "const": "readme-terminal"
+        },
+        "durationFrames": {
+          "type": "integer",
+          "minimum": 167,
+          "maximum": 1187
+        },
+        "anchors": {
+          "type": "object",
+          "properties": {
+            "window": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 19.783333333333335
+            }
+          },
+          "required": [
+            "window"
+          ],
+          "additionalProperties": false
+        },
+        "inputs": {
+          "$ref": "#/$defs/readme-terminal"
+        }
+      },
+      "required": [
+        "recipe",
+        "durationFrames",
+        "anchors",
+        "inputs"
+      ],
+      "additionalProperties": false,
+      "x-motion-contract": {
+        "minFrames": 167,
+        "maxHoldFrames": 600,
+        "motionWindows": [
+          {
+            "id": "authored-action-1",
+            "start": 130.21,
+            "end": 133
+          }
+        ],
+        "minFollowingFrames": 0,
+        "cardinality": {}
+      }
+    }
+  },
+  "document_kind": "reference",
+  "extracted_document_sha256": {
+    "native.params.schema.json": "ee6a8c979e28a909f7ddab5bd2ada09e99d5f4e592f689b22adc8b3977bd6205",
+    "adapter/parameter-map.json": "ce7eaee6728844784f157b8c098be96272502ab3a380159ecf21047e66303d7f"
+  }
+}

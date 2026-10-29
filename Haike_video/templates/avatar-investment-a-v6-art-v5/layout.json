@@ -1,0 +1,25 @@
+{
+  "version": "art-v5",
+  "canvas": {"width": 1080, "height": 1920, "fps": 30},
+  "safe": {"left": 80, "right": 80, "top": 76, "bottom": 100},
+  "typography": {"sans": "Microsoft YaHei", "community": "KaiTi", "optical": "SimSun", "headline": 112, "deck": 42, "caption": 64, "minimumCaption": 56, "maxBeatCharacters": 13, "targetBeatCharacters": 9, "maxLines": 2},
+  "motion": {"chapterRevealFrames": 10, "captionRevealFrames": 10, "captionTravelPixels": 24, "frameRate": 30, "reducedAlternative": "Keep full captions and music, set transform and edge punctuation amplitudes to zero.",
+    "profiles": {
+      "community-showcase": {"startScale": 0.92, "overshoot": 1.035, "travel": 26, "sideTravel": 0, "tilt": -0.8, "wordPunch": 0.08, "pointPunch": 0.07},
+      "blue-editorial": {"startScale": 0.96, "overshoot": 1.03, "travel": 14, "sideTravel": -34, "tilt": 0, "wordPunch": 0.09, "pointPunch": 0.08},
+      "optical-cinema": {"startScale": 1.045, "overshoot": 0.995, "travel": 22, "sideTravel": 0, "tilt": 0, "wordPunch": 0.07, "pointPunch": 0.05},
+      "red-manifesto": {"startScale": 0.88, "overshoot": 1.065, "travel": 25, "sideTravel": -24, "tilt": -1.2, "wordPunch": 0.12, "pointPunch": 0.10},
+      "silver-launch": {"startScale": 0.94, "overshoot": 1.025, "travel": 30, "sideTravel": 0, "tilt": 0, "wordPunch": 0.075, "pointPunch": 0.06},
+      "documentary": {"startScale": 0.95, "overshoot": 1.025, "travel": 22, "sideTravel": 0, "tilt": 0, "wordPunch": 0.06, "pointPunch": 0.05}
+    }},
+  "palette": {
+    "community-showcase": {"base": "#f6f4e9", "ink": "#214c3b", "accent": "#f1bf48", "muted": "#53624b", "captionBase": "#214c3b", "captionText": "#fff5df"},
+    "blue-editorial": {"base": "#f7f6ef", "ink": "#173fc9", "accent": "#de4930", "muted": "#354c70", "captionBase": "#faf9f1", "captionText": "#173fc9"},
+    "optical-cinema": {"base": "#090d10", "ink": "#f3ecdf", "accent": "#d8b47c", "muted": "#c7beb0", "captionBase": "#0b1117", "captionText": "#f3ecdf"},
+    "red-manifesto": {"base": "#C42D28", "ink": "#fff1d7", "accent": "#FFD162", "muted": "#f0d7bf", "captionBase": "#1c1b1a", "captionText": "#fff1d7"},
+    "silver-launch": {"base": "#eef3f6", "ink": "#163647", "accent": "#00728b", "muted": "#455d69", "captionBase": "#f8fbfc", "captionText": "#163647"},
+    "documentary": {"base": "#1b201c", "ink": "#f2eee2", "accent": "#d1bd73", "muted": "#c1c7b8", "captionBase": "#151915", "captionText": "#fff5e2"}
+  },
+  "audio": {"speed": 1, "voiceGainDb": -2.5, "music": true, "mixProfile": "speech-led-v1", "master": "48kHz stereo; same frozen mixed-master in preview and native final mux; no second volume/loudnorm", "transientPatternSeconds": [0,0.12,0.24]},
+  "provenance": {"realMedia": "Every scene is source-SHA bound and caption-labeled; current real footage illustrates company product interaction, not an operating Haike shop.", "originalAvatar": "Original generated presenter and background are reused; no identity repainting."}
+}

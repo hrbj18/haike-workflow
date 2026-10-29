@@ -1,0 +1,2686 @@
+{
+  "schema_version": 1,
+  "standard_version": "video-template-v1",
+  "template_id": "motiongit-dark-full-v1",
+  "template_version": "v001",
+  "template_type": "custom",
+  "spec_kind": "implementation",
+  "stage": "ready",
+  "authority": {
+    "runbook": "README.md",
+    "implementation_paths": [
+      "index.tsx",
+      "GroupsA.tsx",
+      "GroupsB.tsx",
+      "shared.tsx",
+      "presenter-clock.ts",
+      "types.ts",
+      "catalog.json",
+      "../../backlot/studio_dark_full.py",
+      "../../backlot/studio_dark_native.py",
+      "../../scripts/dark_full.py",
+      "../../scripts/dark_native.py"
+    ],
+    "parameter_source": "catalog.json"
+  },
+  "canvas": {
+    "width": 1440,
+    "height": 1800,
+    "fps": 30,
+    "duration_seconds": 122.4,
+    "clock": "例示完整参考122.4s。reference为1920×1080/60fps/7344f；海客1440×1800/30fps，ceil((PCM原样本数/采样率+tailSeconds)*30)。动作启动映射自参考cue，动作easing保持固定秒数；不改语速。",
+    "coordinate_system": "top_left_pixels"
+  },
+  "narrative": {
+    "purpose": "完整十组前端排版、交互语法与多屏动作可编辑重建；原生全片对照独立保留。",
+    "information_hierarchy": [
+      "完整真实口播及同期语义",
+      "相关实拍与人物回应",
+      "分层短标题及完整动作组",
+      "可选人物窗",
+      "门店品牌"
+    ],
+    "structure": [
+      "完整原版保留catalog十组顺序和接缝",
+      "海客按实际语义/时长选择约3–4完整组",
+      "原声口播连续，素材与人物用声明窗口，不以播放器点击替代全部动作"
+    ]
+  },
+  "scenes": [
+    {
+      "id": "s01",
+      "start": 0,
+      "end": 8.8,
+      "purpose": "开场与作品墙",
+      "element_ids": [
+        "canvas",
+        "scene-grid",
+        "scene-heading",
+        "wall-grid",
+        "wall-tile",
+        "timeline",
+        "comparison-card",
+        "main-material",
+        "focus-frame",
+        "review-item",
+        "category-card",
+        "lens-overlay",
+        "narrative-curve",
+        "crack-title",
+        "software-window",
+        "competition-lane",
+        "iteration-timeline",
+        "account-card",
+        "process-bar",
+        "process-ring",
+        "comparison-strip",
+        "invitation-card",
+        "typed-prompt",
+        "artifact-review",
+        "presenter-window",
+        "reference-portrait",
+        "brand",
+        "captions",
+        "footer",
+        "master-audio"
+      ],
+      "variant": "reference; social weighted selected whole groups"
+    },
+    {
+      "id": "s02",
+      "start": 8.8,
+      "end": 25.9,
+      "purpose": "九屏分组比较",
+      "element_ids": [
+        "canvas",
+        "scene-grid",
+        "scene-heading",
+        "wall-grid",
+        "wall-tile",
+        "timeline",
+        "comparison-card",
+        "main-material",
+        "focus-frame",
+        "review-item",
+        "category-card",
+        "lens-overlay",
+        "narrative-curve",
+        "crack-title",
+        "software-window",
+        "competition-lane",
+        "iteration-timeline",
+        "account-card",
+        "process-bar",
+        "process-ring",
+        "comparison-strip",
+        "invitation-card",
+        "typed-prompt",
+        "artifact-review",
+        "presenter-window",
+        "reference-portrait",
+        "brand",
+        "captions",
+        "footer",
+        "master-audio"
+      ],
+      "variant": "reference; social weighted selected whole groups"
+    },
+    {
+      "id": "s03",
+      "start": 25.9,
+      "end": 40.4,
+      "purpose": "同卡聚焦与审阅",
+      "element_ids": [
+        "canvas",
+        "scene-grid",
+        "scene-heading",
+        "wall-grid",
+        "wall-tile",
+        "timeline",
+        "comparison-card",
+        "main-material",
+        "focus-frame",
+        "review-item",
+        "category-card",
+        "lens-overlay",
+        "narrative-curve",
+        "crack-title",
+        "software-window",
+        "competition-lane",
+        "iteration-timeline",
+        "account-card",
+        "process-bar",
+        "process-ring",
+        "comparison-strip",
+        "invitation-card",
+        "typed-prompt",
+        "artifact-review",
+        "presenter-window",
+        "reference-portrait",
+        "brand",
+        "captions",
+        "footer",
+        "master-audio"
+      ],
+      "variant": "reference; social weighted selected whole groups"
+    },
+    {
+      "id": "s04",
+      "start": 40.4,
+      "end": 52.7,
+      "purpose": "四类卡片到作品墙、镜头叙事",
+      "element_ids": [
+        "canvas",
+        "scene-grid",
+        "scene-heading",
+        "wall-grid",
+        "wall-tile",
+        "timeline",
+        "comparison-card",
+        "main-material",
+        "focus-frame",
+        "review-item",
+        "category-card",
+        "lens-overlay",
+        "narrative-curve",
+        "crack-title",
+        "software-window",
+        "competition-lane",
+        "iteration-timeline",
+        "account-card",
+        "process-bar",
+        "process-ring",
+        "comparison-strip",
+        "invitation-card",
+        "typed-prompt",
+        "artifact-review",
+        "presenter-window",
+        "reference-portrait",
+        "brand",
+        "captions",
+        "footer",
+        "master-audio"
+      ],
+      "variant": "reference; social weighted selected whole groups"
+    },
+    {
+      "id": "s05",
+      "start": 52.7,
+      "end": 69.4,
+      "purpose": "冲击身份与软件窗、路径展开",
+      "element_ids": [
+        "canvas",
+        "scene-grid",
+        "scene-heading",
+        "wall-grid",
+        "wall-tile",
+        "timeline",
+        "comparison-card",
+        "main-material",
+        "focus-frame",
+        "review-item",
+        "category-card",
+        "lens-overlay",
+        "narrative-curve",
+        "crack-title",
+        "software-window",
+        "competition-lane",
+        "iteration-timeline",
+        "account-card",
+        "process-bar",
+        "process-ring",
+        "comparison-strip",
+        "invitation-card",
+        "typed-prompt",
+        "artifact-review",
+        "presenter-window",
+        "reference-portrait",
+        "brand",
+        "captions",
+        "footer",
+        "master-audio"
+      ],
+      "variant": "reference; social weighted selected whole groups"
+    },
+    {
+      "id": "s06",
+      "start": 69.4,
+      "end": 78.1,
+      "purpose": "时间轴推进与账号卡",
+      "element_ids": [
+        "canvas",
+        "scene-grid",
+        "scene-heading",
+        "wall-grid",
+        "wall-tile",
+        "timeline",
+        "comparison-card",
+        "main-material",
+        "focus-frame",
+        "review-item",
+        "category-card",
+        "lens-overlay",
+        "narrative-curve",
+        "crack-title",
+        "software-window",
+        "competition-lane",
+        "iteration-timeline",
+        "account-card",
+        "process-bar",
+        "process-ring",
+        "comparison-strip",
+        "invitation-card",
+        "typed-prompt",
+        "artifact-review",
+        "presenter-window",
+        "reference-portrait",
+        "brand",
+        "captions",
+        "footer",
+        "master-audio"
+      ],
+      "variant": "reference; social weighted selected whole groups"
+    },
+    {
+      "id": "s07",
+      "start": 78.1,
+      "end": 89.7,
+      "purpose": "流程压缩与窗口接力",
+      "element_ids": [
+        "canvas",
+        "scene-grid",
+        "scene-heading",
+        "wall-grid",
+        "wall-tile",
+        "timeline",
+        "comparison-card",
+        "main-material",
+        "focus-frame",
+        "review-item",
+        "category-card",
+        "lens-overlay",
+        "narrative-curve",
+        "crack-title",
+        "software-window",
+        "competition-lane",
+        "iteration-timeline",
+        "account-card",
+        "process-bar",
+        "process-ring",
+        "comparison-strip",
+        "invitation-card",
+        "typed-prompt",
+        "artifact-review",
+        "presenter-window",
+        "reference-portrait",
+        "brand",
+        "captions",
+        "footer",
+        "master-audio"
+      ],
+      "variant": "reference; social weighted selected whole groups"
+    },
+    {
+      "id": "s08",
+      "start": 89.7,
+      "end": 102.92,
+      "purpose": "比较归纳与行动邀请",
+      "element_ids": [
+        "canvas",
+        "scene-grid",
+        "scene-heading",
+        "wall-grid",
+        "wall-tile",
+        "timeline",
+        "comparison-card",
+        "main-material",
+        "focus-frame",
+        "review-item",
+        "category-card",
+        "lens-overlay",
+        "narrative-curve",
+        "crack-title",
+        "software-window",
+        "competition-lane",
+        "iteration-timeline",
+        "account-card",
+        "process-bar",
+        "process-ring",
+        "comparison-strip",
+        "invitation-card",
+        "typed-prompt",
+        "artifact-review",
+        "presenter-window",
+        "reference-portrait",
+        "brand",
+        "captions",
+        "footer",
+        "master-audio"
+      ],
+      "variant": "reference; social weighted selected whole groups"
+    },
+    {
+      "id": "s09",
+      "start": 102.92,
+      "end": 108.4,
+      "purpose": "打字与署名",
+      "element_ids": [
+        "canvas",
+        "scene-grid",
+        "scene-heading",
+        "wall-grid",
+        "wall-tile",
+        "timeline",
+        "comparison-card",
+        "main-material",
+        "focus-frame",
+        "review-item",
+        "category-card",
+        "lens-overlay",
+        "narrative-curve",
+        "crack-title",
+        "software-window",
+        "competition-lane",
+        "iteration-timeline",
+        "account-card",
+        "process-bar",
+        "process-ring",
+        "comparison-strip",
+        "invitation-card",
+        "typed-prompt",
+        "artifact-review",
+        "presenter-window",
+        "reference-portrait",
+        "brand",
+        "captions",
+        "footer",
+        "master-audio"
+      ],
+      "variant": "reference; social weighted selected whole groups"
+    },
+    {
+      "id": "review",
+      "start": 108.4,
+      "end": 122.4,
+      "purpose": "独立实际成果审阅",
+      "element_ids": [
+        "canvas",
+        "scene-grid",
+        "scene-heading",
+        "wall-grid",
+        "wall-tile",
+        "timeline",
+        "comparison-card",
+        "main-material",
+        "focus-frame",
+        "review-item",
+        "category-card",
+        "lens-overlay",
+        "narrative-curve",
+        "crack-title",
+        "software-window",
+        "competition-lane",
+        "iteration-timeline",
+        "account-card",
+        "process-bar",
+        "process-ring",
+        "comparison-strip",
+        "invitation-card",
+        "typed-prompt",
+        "artifact-review",
+        "presenter-window",
+        "reference-portrait",
+        "brand",
+        "captions",
+        "footer",
+        "master-audio"
+      ],
+      "variant": "reference; social weighted selected whole groups"
+    }
+  ],
+  "assets": [
+    {
+      "id": "input-media",
+      "kind": "video",
+      "path": null,
+      "source": "每期source SHA、封面SHA、实际看帧区间与description",
+      "embedded_content": [
+        "实拍内部固化文字和人像不可通过模板活字字段修改"
+      ],
+      "rights_status": "用户提供或明确授权本期素材；授权和来源留在私有provenance。"
+    },
+    {
+      "id": "input-font",
+      "kind": "font",
+      "path": null,
+      "source": "每期fontAssets体与标题真实字体文件",
+      "embedded_content": [
+        "字形；未将系统字体或个人授权字体放入公开分发"
+      ],
+      "rights_status": "按本期本机字体授权使用；公共仓库仅引用槽。"
+    },
+    {
+      "id": "input-audio",
+      "kind": "audio",
+      "path": null,
+      "source": "每期完整WAV + 现有BGM/SFX；原生全片只合入原混合轨一次",
+      "embedded_content": [
+        "完整口播及既有音效"
+      ],
+      "rights_status": "用户授权复用，身份按SHA冻结。"
+    },
+    {
+      "id": "input-images",
+      "kind": "image",
+      "path": null,
+      "source": "本期真实封面/静态参考人物，按SHA和授权记录",
+      "embedded_content": [
+        "源图片内部文字不能由活字槽修改"
+      ],
+      "rights_status": "本期授权本机使用；不自动包含公共分发授权"
+    }
+  ],
+  "elements": [
+    {
+      "id": "canvas",
+      "type": "surface",
+      "role": "三套完整视觉主题与场景背景",
+      "parent_id": null,
+      "z_index": 0,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "三套完整视觉主题与场景背景。具体叶节点/数组实例的内容、几何和绘制先后由 index.tsx / shared.tsx 持有。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "index.tsx / shared.tsx",
+          "scope": "该包围框是组件全画布边界；真实叶节点坐标、父变换、遮罩与响应布局由声明源码唯一持有，横版另为1920×1080。字幕独立[88,1450,1264,165]，实拍舞台下沿≤1400。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 122.4
+      },
+      "states": [
+        {
+          "id": "frame-driven",
+          "visible": true,
+          "description": "仅在所属scene/显隐模式的半开帧区间绘制；sourceStart/sourceDuration将参考cue启动点映射到场景局部秒。媒体窗口独立且原速，不为适配整组时长缩放短动作easing。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "源码里的几何/缓动/层级",
+        "口播样本主时钟",
+        "动作组完整顺序"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "本期真实画面与时钟",
+          "method": "源SHA/字幕词时码/动作中间与落定状态/完整编码核对",
+          "pass_condition": "无溢出碰撞/缺素材/提前切断动作，源视频和人物播放区间保持原速同钟。连续听音、平台和用户结论独立记录。"
+        }
+      ]
+    },
+    {
+      "id": "scene-grid",
+      "type": "decoration",
+      "role": "固定细网格",
+      "parent_id": "canvas",
+      "z_index": 1,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "固定细网格。具体叶节点/数组实例的内容、几何和绘制先后由 GroupsA.tsx Grid / GroupsB.tsx Ground 持有。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "GroupsA.tsx Grid / GroupsB.tsx Ground",
+          "scope": "该包围框是组件全画布边界；真实叶节点坐标、父变换、遮罩与响应布局由声明源码唯一持有，横版另为1920×1080。字幕独立[88,1450,1264,165]，实拍舞台下沿≤1400。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 122.4
+      },
+      "states": [
+        {
+          "id": "frame-driven",
+          "visible": true,
+          "description": "仅在所属scene/显隐模式的半开帧区间绘制；sourceStart/sourceDuration将参考cue启动点映射到场景局部秒。媒体窗口独立且原速，不为适配整组时长缩放短动作easing。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "源码里的几何/缓动/层级",
+        "口播样本主时钟",
+        "动作组完整顺序"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "本期真实画面与时钟",
+          "method": "源SHA/字幕词时码/动作中间与落定状态/完整编码核对",
+          "pass_condition": "无溢出碰撞/缺素材/提前切断动作，源视频和人物播放区间保持原速同钟。连续听音、平台和用户结论独立记录。"
+        }
+      ]
+    },
+    {
+      "id": "scene-heading",
+      "type": "text",
+      "role": "各场景分词标题与说明",
+      "parent_id": "canvas",
+      "z_index": 2,
+      "content": {
+        "mode": "editable",
+        "binding": "scene-heading-text-slot",
+        "asset_id": null,
+        "description": "各场景分词标题与说明。具体叶节点/数组实例的内容、几何和绘制先后由 GroupsA.tsx / GroupsB.tsx 持有。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "GroupsA.tsx / GroupsB.tsx",
+          "scope": "该包围框是组件全画布边界；真实叶节点坐标、父变换、遮罩与响应布局由声明源码唯一持有，横版另为1920×1080。字幕独立[88,1450,1264,165]，实拍舞台下沿≤1400。",
+          "font": "fontAssets.display",
+          "font_size": 76,
+          "max_lines": 3,
+          "overflow": "reject input and review actual font; never crop"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 122.4
+      },
+      "states": [
+        {
+          "id": "frame-driven",
+          "visible": true,
+          "description": "仅在所属scene/显隐模式的半开帧区间绘制；sourceStart/sourceDuration将参考cue启动点映射到场景局部秒。媒体窗口独立且原速，不为适配整组时长缩放短动作easing。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "源码里的几何/缓动/层级",
+        "口播样本主时钟",
+        "动作组完整顺序"
+      ],
+      "replaceable": [
+        "props.scenes[].content"
+      ],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "本期真实画面与时钟",
+          "method": "源SHA/字幕词时码/动作中间与落定状态/完整编码核对",
+          "pass_condition": "无溢出碰撞/缺素材/提前切断动作，源视频和人物播放区间保持原速同钟。连续听音、平台和用户结论独立记录。"
+        }
+      ]
+    },
+    {
+      "id": "wall-grid",
+      "type": "group",
+      "role": "密集作品墙，海客复用真实封面",
+      "parent_id": "canvas",
+      "z_index": 3,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "密集作品墙，海客复用真实封面。具体叶节点/数组实例的内容、几何和绘制先后由 GroupsA.tsx PortfolioWall 持有。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "GroupsA.tsx PortfolioWall",
+          "scope": "该包围框是组件全画布边界；真实叶节点坐标、父变换、遮罩与响应布局由声明源码唯一持有，横版另为1920×1080。字幕独立[88,1450,1264,165]，实拍舞台下沿≤1400。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 122.4
+      },
+      "states": [
+        {
+          "id": "frame-driven",
+          "visible": true,
+          "description": "仅在所属scene/显隐模式的半开帧区间绘制；sourceStart/sourceDuration将参考cue启动点映射到场景局部秒。媒体窗口独立且原速，不为适配整组时长缩放短动作easing。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "源码里的几何/缓动/层级",
+        "口播样本主时钟",
+        "动作组完整顺序"
+      ],
+      "replaceable": [
+        "props.media",
+        "props.scenes[].mediaIds"
+      ],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "本期真实画面与时钟",
+          "method": "源SHA/字幕词时码/动作中间与落定状态/完整编码核对",
+          "pass_condition": "无溢出碰撞/缺素材/提前切断动作，源视频和人物播放区间保持原速同钟。连续听音、平台和用户结论独立记录。"
+        }
+      ]
+    },
+    {
+      "id": "wall-tile",
+      "type": "image",
+      "role": "每个独立封面和复用展示实例",
+      "parent_id": "canvas",
+      "z_index": 4,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "input-images",
+        "description": "每个独立封面和复用展示实例。具体叶节点/数组实例的内容、几何和绘制先后由 GroupsA.tsx PortfolioWall / shared.tsx Material 持有。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "contain",
+        "clip": "none",
+        "style": {
+          "authority": "GroupsA.tsx PortfolioWall / shared.tsx Material",
+          "scope": "该包围框是组件全画布边界；真实叶节点坐标、父变换、遮罩与响应布局由声明源码唯一持有，横版另为1920×1080。字幕独立[88,1450,1264,165]，实拍舞台下沿≤1400。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 122.4
+      },
+      "states": [
+        {
+          "id": "frame-driven",
+          "visible": true,
+          "description": "仅在所属scene/显隐模式的半开帧区间绘制；sourceStart/sourceDuration将参考cue启动点映射到场景局部秒。媒体窗口独立且原速，不为适配整组时长缩放短动作easing。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "源码里的几何/缓动/层级",
+        "口播样本主时钟",
+        "动作组完整顺序"
+      ],
+      "replaceable": [
+        "props.media"
+      ],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "本期真实画面与时钟",
+          "method": "源SHA/字幕词时码/动作中间与落定状态/完整编码核对",
+          "pass_condition": "无溢出碰撞/缺素材/提前切断动作，源视频和人物播放区间保持原速同钟。连续听音、平台和用户结论独立记录。"
+        }
+      ]
+    },
+    {
+      "id": "timeline",
+      "type": "group",
+      "role": "可编辑时间线、划除和滑动指针",
+      "parent_id": "canvas",
+      "z_index": 5,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "可编辑时间线、划除和滑动指针。具体叶节点/数组实例的内容、几何和绘制先后由 GroupsA.tsx Timeline 持有。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "GroupsA.tsx Timeline",
+          "scope": "该包围框是组件全画布边界；真实叶节点坐标、父变换、遮罩与响应布局由声明源码唯一持有，横版另为1920×1080。字幕独立[88,1450,1264,165]，实拍舞台下沿≤1400。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 122.4
+      },
+      "states": [
+        {
+          "id": "frame-driven",
+          "visible": true,
+          "description": "仅在所属scene/显隐模式的半开帧区间绘制；sourceStart/sourceDuration将参考cue启动点映射到场景局部秒。媒体窗口独立且原速，不为适配整组时长缩放短动作easing。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "源码里的几何/缓动/层级",
+        "口播样本主时钟",
+        "动作组完整顺序"
+      ],
+      "replaceable": [
+        "props.scenes[].content.timelineTitle"
+      ],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "本期真实画面与时钟",
+          "method": "源SHA/字幕词时码/动作中间与落定状态/完整编码核对",
+          "pass_condition": "无溢出碰撞/缺素材/提前切断动作，源视频和人物播放区间保持原速同钟。连续听音、平台和用户结论独立记录。"
+        }
+      ]
+    },
+    {
+      "id": "comparison-card",
+      "type": "group",
+      "role": "九格入场/选择/勾选/版本标签",
+      "parent_id": "canvas",
+      "z_index": 6,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "九格入场/选择/勾选/版本标签。具体叶节点/数组实例的内容、几何和绘制先后由 GroupsA.tsx S02 持有。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "GroupsA.tsx S02",
+          "scope": "该包围框是组件全画布边界；真实叶节点坐标、父变换、遮罩与响应布局由声明源码唯一持有，横版另为1920×1080。字幕独立[88,1450,1264,165]，实拍舞台下沿≤1400。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 122.4
+      },
+      "states": [
+        {
+          "id": "frame-driven",
+          "visible": true,
+          "description": "仅在所属scene/显隐模式的半开帧区间绘制；sourceStart/sourceDuration将参考cue启动点映射到场景局部秒。媒体窗口独立且原速，不为适配整组时长缩放短动作easing。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "源码里的几何/缓动/层级",
+        "口播样本主时钟",
+        "动作组完整顺序"
+      ],
+      "replaceable": [
+        "props.scenes[].content"
+      ],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "本期真实画面与时钟",
+          "method": "源SHA/字幕词时码/动作中间与落定状态/完整编码核对",
+          "pass_condition": "无溢出碰撞/缺素材/提前切断动作，源视频和人物播放区间保持原速同钟。连续听音、平台和用户结论独立记录。"
+        }
+      ]
+    },
+    {
+      "id": "main-material",
+      "type": "video",
+      "role": "唯一主素材节点与原速播放窗口",
+      "parent_id": "canvas",
+      "z_index": 7,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "input-media",
+        "description": "唯一主素材节点与原速播放窗口。具体叶节点/数组实例的内容、几何和绘制先后由 shared.tsx Material 持有。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "contain",
+        "clip": "none",
+        "style": {
+          "authority": "shared.tsx Material",
+          "scope": "该包围框是组件全画布边界；真实叶节点坐标、父变换、遮罩与响应布局由声明源码唯一持有，横版另为1920×1080。字幕独立[88,1450,1264,165]，实拍舞台下沿≤1400。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 122.4
+      },
+      "states": [
+        {
+          "id": "frame-driven",
+          "visible": true,
+          "description": "仅在所属scene/显隐模式的半开帧区间绘制；sourceStart/sourceDuration将参考cue启动点映射到场景局部秒。媒体窗口独立且原速，不为适配整组时长缩放短动作easing。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "源码里的几何/缓动/层级",
+        "口播样本主时钟",
+        "动作组完整顺序"
+      ],
+      "replaceable": [
+        "props.media",
+        "props.scenes[].mainMediaId",
+        "props.scenes[].videoWindows"
+      ],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "本期真实画面与时钟",
+          "method": "源SHA/字幕词时码/动作中间与落定状态/完整编码核对",
+          "pass_condition": "无溢出碰撞/缺素材/提前切断动作，源视频和人物播放区间保持原速同钟。连续听音、平台和用户结论独立记录。"
+        }
+      ]
+    },
+    {
+      "id": "focus-frame",
+      "type": "group",
+      "role": "同卡放大、并排、审阅与扫描线",
+      "parent_id": "canvas",
+      "z_index": 8,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "同卡放大、并排、审阅与扫描线。具体叶节点/数组实例的内容、几何和绘制先后由 GroupsA.tsx S03 持有。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "GroupsA.tsx S03",
+          "scope": "该包围框是组件全画布边界；真实叶节点坐标、父变换、遮罩与响应布局由声明源码唯一持有，横版另为1920×1080。字幕独立[88,1450,1264,165]，实拍舞台下沿≤1400。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 122.4
+      },
+      "states": [
+        {
+          "id": "frame-driven",
+          "visible": true,
+          "description": "仅在所属scene/显隐模式的半开帧区间绘制；sourceStart/sourceDuration将参考cue启动点映射到场景局部秒。媒体窗口独立且原速，不为适配整组时长缩放短动作easing。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "源码里的几何/缓动/层级",
+        "口播样本主时钟",
+        "动作组完整顺序"
+      ],
+      "replaceable": [
+        "props.scenes[].content"
+      ],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "本期真实画面与时钟",
+          "method": "源SHA/字幕词时码/动作中间与落定状态/完整编码核对",
+          "pass_condition": "无溢出碰撞/缺素材/提前切断动作，源视频和人物播放区间保持原速同钟。连续听音、平台和用户结论独立记录。"
+        }
+      ]
+    },
+    {
+      "id": "review-item",
+      "type": "text",
+      "role": "逐项审阅说明与计时环",
+      "parent_id": "canvas",
+      "z_index": 9,
+      "content": {
+        "mode": "editable",
+        "binding": "review-item-text-slot",
+        "asset_id": null,
+        "description": "逐项审阅说明与计时环。具体叶节点/数组实例的内容、几何和绘制先后由 GroupsA.tsx S03 / GroupsB.tsx Review 持有。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "GroupsA.tsx S03 / GroupsB.tsx Review",
+          "scope": "该包围框是组件全画布边界；真实叶节点坐标、父变换、遮罩与响应布局由声明源码唯一持有，横版另为1920×1080。字幕独立[88,1450,1264,165]，实拍舞台下沿≤1400。",
+          "font": "fontAssets.display",
+          "font_size": 76,
+          "max_lines": 3,
+          "overflow": "reject input and review actual font; never crop"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 122.4
+      },
+      "states": [
+        {
+          "id": "frame-driven",
+          "visible": true,
+          "description": "仅在所属scene/显隐模式的半开帧区间绘制；sourceStart/sourceDuration将参考cue启动点映射到场景局部秒。媒体窗口独立且原速，不为适配整组时长缩放短动作easing。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "源码里的几何/缓动/层级",
+        "口播样本主时钟",
+        "动作组完整顺序"
+      ],
+      "replaceable": [
+        "props.scenes[].content"
+      ],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "本期真实画面与时钟",
+          "method": "源SHA/字幕词时码/动作中间与落定状态/完整编码核对",
+          "pass_condition": "无溢出碰撞/缺素材/提前切断动作，源视频和人物播放区间保持原速同钟。连续听音、平台和用户结论独立记录。"
+        }
+      ]
+    },
+    {
+      "id": "category-card",
+      "type": "group",
+      "role": "四类卡片、标签和说明",
+      "parent_id": "canvas",
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "四类卡片、标签和说明。具体叶节点/数组实例的内容、几何和绘制先后由 GroupsA.tsx S04 持有。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "GroupsA.tsx S04",
+          "scope": "该包围框是组件全画布边界；真实叶节点坐标、父变换、遮罩与响应布局由声明源码唯一持有，横版另为1920×1080。字幕独立[88,1450,1264,165]，实拍舞台下沿≤1400。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 122.4
+      },
+      "states": [
+        {
+          "id": "frame-driven",
+          "visible": true,
+          "description": "仅在所属scene/显隐模式的半开帧区间绘制；sourceStart/sourceDuration将参考cue启动点映射到场景局部秒。媒体窗口独立且原速，不为适配整组时长缩放短动作easing。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "源码里的几何/缓动/层级",
+        "口播样本主时钟",
+        "动作组完整顺序"
+      ],
+      "replaceable": [
+        "props.scenes[].content",
+        "props.media"
+      ],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "本期真实画面与时钟",
+          "method": "源SHA/字幕词时码/动作中间与落定状态/完整编码核对",
+          "pass_condition": "无溢出碰撞/缺素材/提前切断动作，源视频和人物播放区间保持原速同钟。连续听音、平台和用户结论独立记录。"
+        }
+      ]
+    },
+    {
+      "id": "lens-overlay",
+      "type": "decoration",
+      "role": "镜头框、辅助线、推进/跟拍/特写标记",
+      "parent_id": "canvas",
+      "z_index": 11,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "镜头框、辅助线、推进/跟拍/特写标记。具体叶节点/数组实例的内容、几何和绘制先后由 GroupsA.tsx S04 持有。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "GroupsA.tsx S04",
+          "scope": "该包围框是组件全画布边界；真实叶节点坐标、父变换、遮罩与响应布局由声明源码唯一持有，横版另为1920×1080。字幕独立[88,1450,1264,165]，实拍舞台下沿≤1400。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 122.4
+      },
+      "states": [
+        {
+          "id": "frame-driven",
+          "visible": true,
+          "description": "仅在所属scene/显隐模式的半开帧区间绘制；sourceStart/sourceDuration将参考cue启动点映射到场景局部秒。媒体窗口独立且原速，不为适配整组时长缩放短动作easing。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "源码里的几何/缓动/层级",
+        "口播样本主时钟",
+        "动作组完整顺序"
+      ],
+      "replaceable": [
+        "props.scenes[].content.cameraLabels"
+      ],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "本期真实画面与时钟",
+          "method": "源SHA/字幕词时码/动作中间与落定状态/完整编码核对",
+          "pass_condition": "无溢出碰撞/缺素材/提前切断动作，源视频和人物播放区间保持原速同钟。连续听音、平台和用户结论独立记录。"
+        }
+      ]
+    },
+    {
+      "id": "narrative-curve",
+      "type": "group",
+      "role": "起承转合四点叙事曲线",
+      "parent_id": "canvas",
+      "z_index": 12,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "起承转合四点叙事曲线。具体叶节点/数组实例的内容、几何和绘制先后由 GroupsA.tsx S04 持有。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "GroupsA.tsx S04",
+          "scope": "该包围框是组件全画布边界；真实叶节点坐标、父变换、遮罩与响应布局由声明源码唯一持有，横版另为1920×1080。字幕独立[88,1450,1264,165]，实拍舞台下沿≤1400。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 122.4
+      },
+      "states": [
+        {
+          "id": "frame-driven",
+          "visible": true,
+          "description": "仅在所属scene/显隐模式的半开帧区间绘制；sourceStart/sourceDuration将参考cue启动点映射到场景局部秒。媒体窗口独立且原速，不为适配整组时长缩放短动作easing。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "源码里的几何/缓动/层级",
+        "口播样本主时钟",
+        "动作组完整顺序"
+      ],
+      "replaceable": [
+        "props.scenes[].content.rhythmParts"
+      ],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "本期真实画面与时钟",
+          "method": "源SHA/字幕词时码/动作中间与落定状态/完整编码核对",
+          "pass_condition": "无溢出碰撞/缺素材/提前切断动作，源视频和人物播放区间保持原速同钟。连续听音、平台和用户结论独立记录。"
+        }
+      ]
+    },
+    {
+      "id": "crack-title",
+      "type": "group",
+      "role": "冲击标题、裂纹与身份建立",
+      "parent_id": "canvas",
+      "z_index": 13,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "冲击标题、裂纹与身份建立。具体叶节点/数组实例的内容、几何和绘制先后由 GroupsB.tsx S05 持有。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "GroupsB.tsx S05",
+          "scope": "该包围框是组件全画布边界；真实叶节点坐标、父变换、遮罩与响应布局由声明源码唯一持有，横版另为1920×1080。字幕独立[88,1450,1264,165]，实拍舞台下沿≤1400。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 122.4
+      },
+      "states": [
+        {
+          "id": "frame-driven",
+          "visible": true,
+          "description": "仅在所属scene/显隐模式的半开帧区间绘制；sourceStart/sourceDuration将参考cue启动点映射到场景局部秒。媒体窗口独立且原速，不为适配整组时长缩放短动作easing。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "源码里的几何/缓动/层级",
+        "口播样本主时钟",
+        "动作组完整顺序"
+      ],
+      "replaceable": [
+        "props.scenes[].content"
+      ],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "本期真实画面与时钟",
+          "method": "源SHA/字幕词时码/动作中间与落定状态/完整编码核对",
+          "pass_condition": "无溢出碰撞/缺素材/提前切断动作，源视频和人物播放区间保持原速同钟。连续听音、平台和用户结论独立记录。"
+        }
+      ]
+    },
+    {
+      "id": "software-window",
+      "type": "group",
+      "role": "软件框、两步说明及中央素材",
+      "parent_id": "canvas",
+      "z_index": 14,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "软件框、两步说明及中央素材。具体叶节点/数组实例的内容、几何和绘制先后由 GroupsB.tsx S05 持有。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "GroupsB.tsx S05",
+          "scope": "该包围框是组件全画布边界；真实叶节点坐标、父变换、遮罩与响应布局由声明源码唯一持有，横版另为1920×1080。字幕独立[88,1450,1264,165]，实拍舞台下沿≤1400。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 122.4
+      },
+      "states": [
+        {
+          "id": "frame-driven",
+          "visible": true,
+          "description": "仅在所属scene/显隐模式的半开帧区间绘制；sourceStart/sourceDuration将参考cue启动点映射到场景局部秒。媒体窗口独立且原速，不为适配整组时长缩放短动作easing。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "源码里的几何/缓动/层级",
+        "口播样本主时钟",
+        "动作组完整顺序"
+      ],
+      "replaceable": [
+        "props.scenes[].content",
+        "props.media"
+      ],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "本期真实画面与时钟",
+          "method": "源SHA/字幕词时码/动作中间与落定状态/完整编码核对",
+          "pass_condition": "无溢出碰撞/缺素材/提前切断动作，源视频和人物播放区间保持原速同钟。连续听音、平台和用户结论独立记录。"
+        }
+      ]
+    },
+    {
+      "id": "competition-lane",
+      "type": "group",
+      "role": "三条路径接力展开",
+      "parent_id": "canvas",
+      "z_index": 15,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "三条路径接力展开。具体叶节点/数组实例的内容、几何和绘制先后由 GroupsB.tsx S05 持有。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "GroupsB.tsx S05",
+          "scope": "该包围框是组件全画布边界；真实叶节点坐标、父变换、遮罩与响应布局由声明源码唯一持有，横版另为1920×1080。字幕独立[88,1450,1264,165]，实拍舞台下沿≤1400。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 122.4
+      },
+      "states": [
+        {
+          "id": "frame-driven",
+          "visible": true,
+          "description": "仅在所属scene/显隐模式的半开帧区间绘制；sourceStart/sourceDuration将参考cue启动点映射到场景局部秒。媒体窗口独立且原速，不为适配整组时长缩放短动作easing。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "源码里的几何/缓动/层级",
+        "口播样本主时钟",
+        "动作组完整顺序"
+      ],
+      "replaceable": [
+        "props.scenes[].content.pathLabels"
+      ],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "本期真实画面与时钟",
+          "method": "源SHA/字幕词时码/动作中间与落定状态/完整编码核对",
+          "pass_condition": "无溢出碰撞/缺素材/提前切断动作，源视频和人物播放区间保持原速同钟。连续听音、平台和用户结论独立记录。"
+        }
+      ]
+    },
+    {
+      "id": "iteration-timeline",
+      "type": "group",
+      "role": "电蓝时间轴、速度线与过程标签",
+      "parent_id": "canvas",
+      "z_index": 16,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "电蓝时间轴、速度线与过程标签。具体叶节点/数组实例的内容、几何和绘制先后由 GroupsB.tsx S06 持有。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "GroupsB.tsx S06",
+          "scope": "该包围框是组件全画布边界；真实叶节点坐标、父变换、遮罩与响应布局由声明源码唯一持有，横版另为1920×1080。字幕独立[88,1450,1264,165]，实拍舞台下沿≤1400。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 122.4
+      },
+      "states": [
+        {
+          "id": "frame-driven",
+          "visible": true,
+          "description": "仅在所属scene/显隐模式的半开帧区间绘制；sourceStart/sourceDuration将参考cue启动点映射到场景局部秒。媒体窗口独立且原速，不为适配整组时长缩放短动作easing。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "源码里的几何/缓动/层级",
+        "口播样本主时钟",
+        "动作组完整顺序"
+      ],
+      "replaceable": [
+        "props.scenes[].content"
+      ],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "本期真实画面与时钟",
+          "method": "源SHA/字幕词时码/动作中间与落定状态/完整编码核对",
+          "pass_condition": "无溢出碰撞/缺素材/提前切断动作，源视频和人物播放区间保持原速同钟。连续听音、平台和用户结论独立记录。"
+        }
+      ]
+    },
+    {
+      "id": "account-card",
+      "type": "group",
+      "role": "账号白卡、开关及四格信息",
+      "parent_id": "canvas",
+      "z_index": 17,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "账号白卡、开关及四格信息。具体叶节点/数组实例的内容、几何和绘制先后由 GroupsB.tsx S06 持有。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "GroupsB.tsx S06",
+          "scope": "该包围框是组件全画布边界；真实叶节点坐标、父变换、遮罩与响应布局由声明源码唯一持有，横版另为1920×1080。字幕独立[88,1450,1264,165]，实拍舞台下沿≤1400。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 122.4
+      },
+      "states": [
+        {
+          "id": "frame-driven",
+          "visible": true,
+          "description": "仅在所属scene/显隐模式的半开帧区间绘制；sourceStart/sourceDuration将参考cue启动点映射到场景局部秒。媒体窗口独立且原速，不为适配整组时长缩放短动作easing。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "源码里的几何/缓动/层级",
+        "口播样本主时钟",
+        "动作组完整顺序"
+      ],
+      "replaceable": [
+        "props.scenes[].content"
+      ],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "本期真实画面与时钟",
+          "method": "源SHA/字幕词时码/动作中间与落定状态/完整编码核对",
+          "pass_condition": "无溢出碰撞/缺素材/提前切断动作，源视频和人物播放区间保持原速同钟。连续听音、平台和用户结论独立记录。"
+        }
+      ]
+    },
+    {
+      "id": "process-bar",
+      "type": "group",
+      "role": "三步骤压缩至体验块",
+      "parent_id": "canvas",
+      "z_index": 18,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "三步骤压缩至体验块。具体叶节点/数组实例的内容、几何和绘制先后由 GroupsB.tsx S07 持有。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "GroupsB.tsx S07",
+          "scope": "该包围框是组件全画布边界；真实叶节点坐标、父变换、遮罩与响应布局由声明源码唯一持有，横版另为1920×1080。字幕独立[88,1450,1264,165]，实拍舞台下沿≤1400。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 122.4
+      },
+      "states": [
+        {
+          "id": "frame-driven",
+          "visible": true,
+          "description": "仅在所属scene/显隐模式的半开帧区间绘制；sourceStart/sourceDuration将参考cue启动点映射到场景局部秒。媒体窗口独立且原速，不为适配整组时长缩放短动作easing。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "源码里的几何/缓动/层级",
+        "口播样本主时钟",
+        "动作组完整顺序"
+      ],
+      "replaceable": [
+        "props.scenes[].content"
+      ],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "本期真实画面与时钟",
+          "method": "源SHA/字幕词时码/动作中间与落定状态/完整编码核对",
+          "pass_condition": "无溢出碰撞/缺素材/提前切断动作，源视频和人物播放区间保持原速同钟。连续听音、平台和用户结论独立记录。"
+        }
+      ]
+    },
+    {
+      "id": "process-ring",
+      "type": "group",
+      "role": "窄视频与过程环、输出窗接力",
+      "parent_id": "canvas",
+      "z_index": 19,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "窄视频与过程环、输出窗接力。具体叶节点/数组实例的内容、几何和绘制先后由 GroupsB.tsx S07 持有。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "GroupsB.tsx S07",
+          "scope": "该包围框是组件全画布边界；真实叶节点坐标、父变换、遮罩与响应布局由声明源码唯一持有，横版另为1920×1080。字幕独立[88,1450,1264,165]，实拍舞台下沿≤1400。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 122.4
+      },
+      "states": [
+        {
+          "id": "frame-driven",
+          "visible": true,
+          "description": "仅在所属scene/显隐模式的半开帧区间绘制；sourceStart/sourceDuration将参考cue启动点映射到场景局部秒。媒体窗口独立且原速，不为适配整组时长缩放短动作easing。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "源码里的几何/缓动/层级",
+        "口播样本主时钟",
+        "动作组完整顺序"
+      ],
+      "replaceable": [
+        "props.scenes[].content",
+        "props.media"
+      ],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "本期真实画面与时钟",
+          "method": "源SHA/字幕词时码/动作中间与落定状态/完整编码核对",
+          "pass_condition": "无溢出碰撞/缺素材/提前切断动作，源视频和人物播放区间保持原速同钟。连续听音、平台和用户结论独立记录。"
+        }
+      ]
+    },
+    {
+      "id": "comparison-strip",
+      "type": "group",
+      "role": "增长条与逐帧条",
+      "parent_id": "canvas",
+      "z_index": 20,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "增长条与逐帧条。具体叶节点/数组实例的内容、几何和绘制先后由 GroupsB.tsx S08 持有。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "GroupsB.tsx S08",
+          "scope": "该包围框是组件全画布边界；真实叶节点坐标、父变换、遮罩与响应布局由声明源码唯一持有，横版另为1920×1080。字幕独立[88,1450,1264,165]，实拍舞台下沿≤1400。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 122.4
+      },
+      "states": [
+        {
+          "id": "frame-driven",
+          "visible": true,
+          "description": "仅在所属scene/显隐模式的半开帧区间绘制；sourceStart/sourceDuration将参考cue启动点映射到场景局部秒。媒体窗口独立且原速，不为适配整组时长缩放短动作easing。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "源码里的几何/缓动/层级",
+        "口播样本主时钟",
+        "动作组完整顺序"
+      ],
+      "replaceable": [
+        "props.scenes[].content",
+        "props.media"
+      ],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "本期真实画面与时钟",
+          "method": "源SHA/字幕词时码/动作中间与落定状态/完整编码核对",
+          "pass_condition": "无溢出碰撞/缺素材/提前切断动作，源视频和人物播放区间保持原速同钟。连续听音、平台和用户结论独立记录。"
+        }
+      ]
+    },
+    {
+      "id": "invitation-card",
+      "type": "group",
+      "role": "行动按钮、纸白邀请卡与署名",
+      "parent_id": "canvas",
+      "z_index": 21,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "行动按钮、纸白邀请卡与署名。具体叶节点/数组实例的内容、几何和绘制先后由 GroupsB.tsx S08 持有。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "GroupsB.tsx S08",
+          "scope": "该包围框是组件全画布边界；真实叶节点坐标、父变换、遮罩与响应布局由声明源码唯一持有，横版另为1920×1080。字幕独立[88,1450,1264,165]，实拍舞台下沿≤1400。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 122.4
+      },
+      "states": [
+        {
+          "id": "frame-driven",
+          "visible": true,
+          "description": "仅在所属scene/显隐模式的半开帧区间绘制；sourceStart/sourceDuration将参考cue启动点映射到场景局部秒。媒体窗口独立且原速，不为适配整组时长缩放短动作easing。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "源码里的几何/缓动/层级",
+        "口播样本主时钟",
+        "动作组完整顺序"
+      ],
+      "replaceable": [
+        "props.scenes[].content"
+      ],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "本期真实画面与时钟",
+          "method": "源SHA/字幕词时码/动作中间与落定状态/完整编码核对",
+          "pass_condition": "无溢出碰撞/缺素材/提前切断动作，源视频和人物播放区间保持原速同钟。连续听音、平台和用户结论独立记录。"
+        }
+      ]
+    },
+    {
+      "id": "typed-prompt",
+      "type": "text",
+      "role": "固定秒数的打字提示框",
+      "parent_id": "canvas",
+      "z_index": 22,
+      "content": {
+        "mode": "editable",
+        "binding": "typed-prompt-text-slot",
+        "asset_id": null,
+        "description": "固定秒数的打字提示框。具体叶节点/数组实例的内容、几何和绘制先后由 GroupsB.tsx S09 持有。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "GroupsB.tsx S09",
+          "scope": "该包围框是组件全画布边界；真实叶节点坐标、父变换、遮罩与响应布局由声明源码唯一持有，横版另为1920×1080。字幕独立[88,1450,1264,165]，实拍舞台下沿≤1400。",
+          "font": "fontAssets.display",
+          "font_size": 76,
+          "max_lines": 8,
+          "overflow": "reject input and review actual font; never crop"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 122.4
+      },
+      "states": [
+        {
+          "id": "frame-driven",
+          "visible": true,
+          "description": "仅在所属scene/显隐模式的半开帧区间绘制；sourceStart/sourceDuration将参考cue启动点映射到场景局部秒。媒体窗口独立且原速，不为适配整组时长缩放短动作easing。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "源码里的几何/缓动/层级",
+        "口播样本主时钟",
+        "动作组完整顺序"
+      ],
+      "replaceable": [
+        "props.scenes[].content.promptText",
+        "props.scenes[].content.typingSeconds"
+      ],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "本期真实画面与时钟",
+          "method": "源SHA/字幕词时码/动作中间与落定状态/完整编码核对",
+          "pass_condition": "无溢出碰撞/缺素材/提前切断动作，源视频和人物播放区间保持原速同钟。连续听音、平台和用户结论独立记录。"
+        }
+      ]
+    },
+    {
+      "id": "artifact-review",
+      "type": "group",
+      "role": "独立成果入场、三项扫描及结论",
+      "parent_id": "canvas",
+      "z_index": 23,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "独立成果入场、三项扫描及结论。具体叶节点/数组实例的内容、几何和绘制先后由 GroupsB.tsx Review 持有。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "GroupsB.tsx Review",
+          "scope": "该包围框是组件全画布边界；真实叶节点坐标、父变换、遮罩与响应布局由声明源码唯一持有，横版另为1920×1080。字幕独立[88,1450,1264,165]，实拍舞台下沿≤1400。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 122.4
+      },
+      "states": [
+        {
+          "id": "frame-driven",
+          "visible": true,
+          "description": "仅在所属scene/显隐模式的半开帧区间绘制；sourceStart/sourceDuration将参考cue启动点映射到场景局部秒。媒体窗口独立且原速，不为适配整组时长缩放短动作easing。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "源码里的几何/缓动/层级",
+        "口播样本主时钟",
+        "动作组完整顺序"
+      ],
+      "replaceable": [
+        "props.scenes[].content",
+        "props.media"
+      ],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "本期真实画面与时钟",
+          "method": "源SHA/字幕词时码/动作中间与落定状态/完整编码核对",
+          "pass_condition": "无溢出碰撞/缺素材/提前切断动作，源视频和人物播放区间保持原速同钟。连续听音、平台和用户结论独立记录。"
+        }
+      ]
+    },
+    {
+      "id": "presenter-window",
+      "type": "video",
+      "role": "同一源时钟的大框/小框/隐藏",
+      "parent_id": "canvas",
+      "z_index": 24,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "input-media",
+        "description": "同一源时钟的大框/小框/隐藏。具体叶节点/数组实例的内容、几何和绘制先后由 index.tsx Presenter / presenter-clock.ts 持有。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "contain",
+        "clip": "none",
+        "style": {
+          "authority": "index.tsx Presenter / presenter-clock.ts",
+          "scope": "该包围框是组件全画布边界；真实叶节点坐标、父变换、遮罩与响应布局由声明源码唯一持有，横版另为1920×1080。字幕独立[88,1450,1264,165]，实拍舞台下沿≤1400。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 122.4
+      },
+      "states": [
+        {
+          "id": "frame-driven",
+          "visible": true,
+          "description": "仅在所属scene/显隐模式的半开帧区间绘制；sourceStart/sourceDuration将参考cue启动点映射到场景局部秒。媒体窗口独立且原速，不为适配整组时长缩放短动作easing。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "源码里的几何/缓动/层级",
+        "口播样本主时钟",
+        "动作组完整顺序"
+      ],
+      "replaceable": [
+        "props.presenter"
+      ],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "本期真实画面与时钟",
+          "method": "源SHA/字幕词时码/动作中间与落定状态/完整编码核对",
+          "pass_condition": "无溢出碰撞/缺素材/提前切断动作，源视频和人物播放区间保持原速同钟。连续听音、平台和用户结论独立记录。"
+        }
+      ]
+    },
+    {
+      "id": "reference-portrait",
+      "type": "image",
+      "role": "原版参考静态人物大框/圆窗",
+      "parent_id": "canvas",
+      "z_index": 25,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "input-images",
+        "description": "原版参考静态人物大框/圆窗。具体叶节点/数组实例的内容、几何和绘制先后由 index.tsx ReferencePresenter 持有。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "contain",
+        "clip": "none",
+        "style": {
+          "authority": "index.tsx ReferencePresenter",
+          "scope": "该包围框是组件全画布边界；真实叶节点坐标、父变换、遮罩与响应布局由声明源码唯一持有，横版另为1920×1080。字幕独立[88,1450,1264,165]，实拍舞台下沿≤1400。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 122.4
+      },
+      "states": [
+        {
+          "id": "frame-driven",
+          "visible": true,
+          "description": "仅在所属scene/显隐模式的半开帧区间绘制；sourceStart/sourceDuration将参考cue启动点映射到场景局部秒。媒体窗口独立且原速，不为适配整组时长缩放短动作easing。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "源码里的几何/缓动/层级",
+        "口播样本主时钟",
+        "动作组完整顺序"
+      ],
+      "replaceable": [
+        "props.referencePortrait"
+      ],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "本期真实画面与时钟",
+          "method": "源SHA/字幕词时码/动作中间与落定状态/完整编码核对",
+          "pass_condition": "无溢出碰撞/缺素材/提前切断动作，源视频和人物播放区间保持原速同钟。连续听音、平台和用户结论独立记录。"
+        }
+      ]
+    },
+    {
+      "id": "brand",
+      "type": "text",
+      "role": "品牌与上方短说明",
+      "parent_id": "canvas",
+      "z_index": 26,
+      "content": {
+        "mode": "editable",
+        "binding": "brand-text-slot",
+        "asset_id": null,
+        "description": "品牌与上方短说明。具体叶节点/数组实例的内容、几何和绘制先后由 index.tsx 持有。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "index.tsx",
+          "scope": "该包围框是组件全画布边界；真实叶节点坐标、父变换、遮罩与响应布局由声明源码唯一持有，横版另为1920×1080。字幕独立[88,1450,1264,165]，实拍舞台下沿≤1400。",
+          "font": "fontAssets.display",
+          "font_size": 30,
+          "max_lines": 3,
+          "overflow": "reject input and review actual font; never crop"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 122.4
+      },
+      "states": [
+        {
+          "id": "frame-driven",
+          "visible": true,
+          "description": "仅在所属scene/显隐模式的半开帧区间绘制；sourceStart/sourceDuration将参考cue启动点映射到场景局部秒。媒体窗口独立且原速，不为适配整组时长缩放短动作easing。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "源码里的几何/缓动/层级",
+        "口播样本主时钟",
+        "动作组完整顺序"
+      ],
+      "replaceable": [
+        "props.brand",
+        "props.header"
+      ],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "本期真实画面与时钟",
+          "method": "源SHA/字幕词时码/动作中间与落定状态/完整编码核对",
+          "pass_condition": "无溢出碰撞/缺素材/提前切断动作，源视频和人物播放区间保持原速同钟。连续听音、平台和用户结论独立记录。"
+        }
+      ]
+    },
+    {
+      "id": "captions",
+      "type": "text",
+      "role": "与完整WAV同源的真实时间字幕",
+      "parent_id": "canvas",
+      "z_index": 27,
+      "content": {
+        "mode": "editable",
+        "binding": "captions-text-slot",
+        "asset_id": null,
+        "description": "与完整WAV同源的真实时间字幕。具体叶节点/数组实例的内容、几何和绘制先后由 index.tsx 持有。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "index.tsx",
+          "scope": "该包围框是组件全画布边界；真实叶节点坐标、父变换、遮罩与响应布局由声明源码唯一持有，横版另为1920×1080。字幕独立[88,1450,1264,165]，实拍舞台下沿≤1400。",
+          "font": "fontAssets.body",
+          "font_size": 70,
+          "max_lines": 3,
+          "overflow": "reject input and review actual font; never crop"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 122.4
+      },
+      "states": [
+        {
+          "id": "frame-driven",
+          "visible": true,
+          "description": "仅在所属scene/显隐模式的半开帧区间绘制；sourceStart/sourceDuration将参考cue启动点映射到场景局部秒。媒体窗口独立且原速，不为适配整组时长缩放短动作easing。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "源码里的几何/缓动/层级",
+        "口播样本主时钟",
+        "动作组完整顺序"
+      ],
+      "replaceable": [
+        "props.captions"
+      ],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "本期真实画面与时钟",
+          "method": "源SHA/字幕词时码/动作中间与落定状态/完整编码核对",
+          "pass_condition": "无溢出碰撞/缺素材/提前切断动作，源视频和人物播放区间保持原速同钟。连续听音、平台和用户结论独立记录。"
+        }
+      ]
+    },
+    {
+      "id": "footer",
+      "type": "text",
+      "role": "门店页脚",
+      "parent_id": "canvas",
+      "z_index": 28,
+      "content": {
+        "mode": "editable",
+        "binding": "footer-text-slot",
+        "asset_id": null,
+        "description": "门店页脚。具体叶节点/数组实例的内容、几何和绘制先后由 index.tsx 持有。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "index.tsx",
+          "scope": "该包围框是组件全画布边界；真实叶节点坐标、父变换、遮罩与响应布局由声明源码唯一持有，横版另为1920×1080。字幕独立[88,1450,1264,165]，实拍舞台下沿≤1400。",
+          "font": "fontAssets.display",
+          "font_size": 76,
+          "max_lines": 3,
+          "overflow": "reject input and review actual font; never crop"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 122.4
+      },
+      "states": [
+        {
+          "id": "frame-driven",
+          "visible": true,
+          "description": "仅在所属scene/显隐模式的半开帧区间绘制；sourceStart/sourceDuration将参考cue启动点映射到场景局部秒。媒体窗口独立且原速，不为适配整组时长缩放短动作easing。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "源码里的几何/缓动/层级",
+        "口播样本主时钟",
+        "动作组完整顺序"
+      ],
+      "replaceable": [
+        "props.footer"
+      ],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "本期真实画面与时钟",
+          "method": "源SHA/字幕词时码/动作中间与落定状态/完整编码核对",
+          "pass_condition": "无溢出碰撞/缺素材/提前切断动作，源视频和人物播放区间保持原速同钟。连续听音、平台和用户结论独立记录。"
+        }
+      ]
+    },
+    {
+      "id": "master-audio",
+      "type": "audio",
+      "role": "完整口播、侧链配乐与事件音效",
+      "parent_id": "canvas",
+      "z_index": 29,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "input-audio",
+        "description": "完整口播、侧链配乐与事件音效。具体叶节点/数组实例的内容、几何和绘制先后由 ../../backlot/studio_hum_production.py mix_master 持有。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "../../backlot/studio_hum_production.py mix_master",
+          "scope": "该包围框是组件全画布边界；真实叶节点坐标、父变换、遮罩与响应布局由声明源码唯一持有，横版另为1920×1080。字幕独立[88,1450,1264,165]，实拍舞台下沿≤1400。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 122.4
+      },
+      "states": [
+        {
+          "id": "frame-driven",
+          "visible": true,
+          "description": "仅在所属scene/显隐模式的半开帧区间绘制；sourceStart/sourceDuration将参考cue启动点映射到场景局部秒。媒体窗口独立且原速，不为适配整组时长缩放短动作easing。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "源码里的几何/缓动/层级",
+        "口播样本主时钟",
+        "动作组完整顺序"
+      ],
+      "replaceable": [
+        "audio",
+        "audio.voice"
+      ],
+      "evidence_ids": [
+        "implementation-source"
+      ],
+      "acceptance": [
+        {
+          "check": "本期真实画面与时钟",
+          "method": "源SHA/字幕词时码/动作中间与落定状态/完整编码核对",
+          "pass_condition": "无溢出碰撞/缺素材/提前切断动作，源视频和人物播放区间保持原速同钟。连续听音、平台和用户结论独立记录。"
+        }
+      ]
+    }
+  ],
+  "slots": [
+    {
+      "id": "brand-slot",
+      "element_id": "brand",
+      "property": "props.brand",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "maxLength": 50
+      },
+      "missing": "brand必需；header/footer可空",
+      "overflow": "缩短输入，再按实际字体预览；不能裁切。"
+    },
+    {
+      "id": "content-slot",
+      "element_id": "scene-heading",
+      "property": "props.scenes[].content",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "maxBytes": 100000,
+        "authority": "GroupsA.tsx / GroupsB.tsx 对应content字段"
+      },
+      "missing": "可使用声明默认参考/设计文字；海客必须逐字段填业务语义并核对",
+      "overflow": "按字段推荐长度缩写或拆行并复核，不缩放整片。"
+    },
+    {
+      "id": "media-slot",
+      "element_id": "main-material",
+      "property": "props.media",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "socialMin": 3,
+        "socialMax": 24,
+        "referenceMax": 400,
+        "fit": "contain"
+      },
+      "missing": "阻断实际制作；仅开发specification可用明确示意Study",
+      "overflow": "只换声明素材并重新看对应源区间；不循环/冻结。"
+    },
+    {
+      "id": "voice-slot",
+      "element_id": "master-audio",
+      "property": "audio.voice",
+      "value_type": "asset",
+      "required": true,
+      "limits": {
+        "kind": "PCM WAV",
+        "seconds": [
+          2,
+          600
+        ],
+        "tailSeconds": [
+          0,
+          2
+        ]
+      },
+      "missing": "script路线先进入项目既有音频中心，未完成不进入合成",
+      "overflow": "完整口播不截断，重选完整动作组；无法容纳则回镜头编排。"
+    },
+    {
+      "id": "captions-slot",
+      "element_id": "captions",
+      "property": "props.captions",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "maxCharsPerCue": 64,
+        "actualFontWidthPx": 1264,
+        "source": "same WAV measured timestamps"
+      },
+      "missing": "阻断；调用既有字幕阶段得到实际时码",
+      "overflow": "以真实词边界分句，禁止编造匀分时间码。"
+    },
+    {
+      "id": "presenter-slot",
+      "element_id": "presenter-window",
+      "property": "props.presenter",
+      "value_type": "object",
+      "required": false,
+      "limits": {
+        "modes": [
+          "large",
+          "small",
+          "hidden"
+        ],
+        "source": "current full voice SHA and exact global interval"
+      },
+      "missing": "无人物正常；不用假人代填",
+      "overflow": "修正实际同源窗口；模式切换不重播片源。"
+    },
+    {
+      "id": "scene-heading-text-slot",
+      "element_id": "scene-heading",
+      "property": "props.scenes[].content",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "authority": "对应源码的叶节点规则和实际字体测量"
+      },
+      "missing": "使用声明默认或阻断本期缺项；海客逐字段填写",
+      "overflow": "缩短/拆行并重新看帧，不能裁切"
+    },
+    {
+      "id": "review-item-text-slot",
+      "element_id": "review-item",
+      "property": "props.scenes[].content",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "authority": "对应源码的叶节点规则和实际字体测量"
+      },
+      "missing": "使用声明默认或阻断本期缺项；海客逐字段填写",
+      "overflow": "缩短/拆行并重新看帧，不能裁切"
+    },
+    {
+      "id": "typed-prompt-text-slot",
+      "element_id": "typed-prompt",
+      "property": "props.scenes[].content.promptText",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "authority": "对应源码的叶节点规则和实际字体测量"
+      },
+      "missing": "使用声明默认或阻断本期缺项；海客逐字段填写",
+      "overflow": "缩短/拆行并重新看帧，不能裁切"
+    },
+    {
+      "id": "brand-text-slot",
+      "element_id": "brand",
+      "property": "props.brand",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "authority": "对应源码的叶节点规则和实际字体测量"
+      },
+      "missing": "使用声明默认或阻断本期缺项；海客逐字段填写",
+      "overflow": "缩短/拆行并重新看帧，不能裁切"
+    },
+    {
+      "id": "captions-text-slot",
+      "element_id": "captions",
+      "property": "props.captions",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "authority": "对应源码的叶节点规则和实际字体测量"
+      },
+      "missing": "使用声明默认或阻断本期缺项；海客逐字段填写",
+      "overflow": "缩短/拆行并重新看帧，不能裁切"
+    },
+    {
+      "id": "footer-text-slot",
+      "element_id": "footer",
+      "property": "props.footer",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "authority": "对应源码的叶节点规则和实际字体测量"
+      },
+      "missing": "使用声明默认或阻断本期缺项；海客逐字段填写",
+      "overflow": "缩短/拆行并重新看帧，不能裁切"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "implementation-source",
+      "source_kind": "design",
+      "source": "项目可编辑十组实现与生产适配器",
+      "locator": "catalog/TSX/backend",
+      "method": "源码和完整输入合同；未将源码存在当作成片完成",
+      "file": "index.tsx",
+      "sha256": "526b7fd3b52fdbd1a220cbd04d96112a2ea86280b6af401779001d0c36507850"
+    },
+    {
+      "id": "reference-observation",
+      "source_kind": "observation",
+      "source": "原官方122.4秒预览",
+      "locator": "reference/observation.json 逐秒及边界定位",
+      "method": "实际原片关键状态与接缝抽帧；允许替代内嵌媒体并明示",
+      "file": "reference/observation.json",
+      "sha256": "afb397736b25028d1781fcd2d505a6912fa9c2ea03865e3df25f0be36819b27e"
+    },
+    {
+      "id": "delivery-structure",
+      "source_kind": "measurement",
+      "source": "Final2026-10-28 encoded deliveries and contract evidence",
+      "locator": "reference/validation-summary.json / structure",
+      "method": "Final source/state/slot coverage,controls and frozen identities",
+      "file": "reference/validation-summary.json",
+      "sha256": "1568d08a02e0d8ced227da2fa511671b5924996c32c41680053b04b06e3a7ef5"
+    },
+    {
+      "id": "delivery-technical",
+      "source_kind": "measurement",
+      "source": "Final2026-10-28 encoded deliveries and contract evidence",
+      "locator": "reference/validation-summary.json / technical",
+      "method": "Actual final codec/clock/full-decode/bitrate/peak receipts and verified file hashes",
+      "file": "reference/validation-summary.json",
+      "sha256": "1568d08a02e0d8ced227da2fa511671b5924996c32c41680053b04b06e3a7ef5"
+    },
+    {
+      "id": "delivery-visual",
+      "source_kind": "observation",
+      "source": "Final2026-10-28 encoded deliveries and contract evidence",
+      "locator": "reference/validation-summary.json / visual",
+      "method": "Actual final encoded authored reviews and independent social-film image review;scope and differences explicit",
+      "file": "reference/validation-summary.json",
+      "sha256": "1568d08a02e0d8ced227da2fa511671b5924996c32c41680053b04b06e3a7ef5"
+    },
+    {
+      "id": "delivery-production",
+      "source_kind": "measurement",
+      "source": "Final2026-10-28 encoded deliveries and contract evidence",
+      "locator": "reference/validation-summary.json / production",
+      "method": "Actual unified-queue outputs,completed request recovery and source14756 HTTP/range/version/CAS readbacks",
+      "file": "reference/validation-summary.json",
+      "sha256": "1568d08a02e0d8ced227da2fa511671b5924996c32c41680053b04b06e3a7ef5"
+    }
+  ],
+  "unknowns": [],
+  "validation": {
+    "structure": {
+      "status": "pass",
+      "evidence_ids": [
+        "delivery-structure"
+      ],
+      "note": "Ten editable/native groups, declared source authority, controlled slots and actual state coverage."
+    },
+    "technical": {
+      "status": "pass",
+      "evidence_ids": [
+        "delivery-technical"
+      ],
+      "note": "Final native-r3, editable-v2, both social outputs and functional script case have exact identity/codec/frame/bitrate/full-decode and measured audio evidence."
+    },
+    "visual": {
+      "status": "pass",
+      "evidence_ids": [
+        "delivery-visual"
+      ],
+      "note": "Exact explicitly listed encoded-frame/strip scopes. Native and editable authored self-reviews are distinct from independent two-social-film review; no whole-frame or continuous playback claim."
+    },
+    "audio": {
+      "status": "pending",
+      "evidence_ids": [
+        "delivery-technical"
+      ],
+      "note": "Sample clocks, original mix mapped once, encoded loudness/true peak and 15 native zero-lag anchors measured; continuous human listening, perceived BGM/SFX and phoneme lip sync not verified."
+    },
+    "platform": {
+      "status": "pending",
+      "evidence_ids": [
+        "delivery-production"
+      ],
+      "note": "No target phone/device/platform presentation verification."
+    },
+    "user_review": {
+      "status": "pending",
+      "evidence_ids": [
+        "delivery-production"
+      ],
+      "note": "The user has not yet accepted the final videos."
+    },
+    "production": {
+      "status": "pass",
+      "evidence_ids": [
+        "delivery-production"
+      ],
+      "note": "Actual source14756 HTTP final identities/range streams, durable copied drafts, adopt/clone/CAS/no-op behavior, same historical child CLI recovery, real queue works/versions and script-to-video case. Browser UI visual acceptance remains pending."
+    }
+  },
+  "extensions": {
+    "custom": {
+      "scope": "complete-ten-groups",
+      "group_authority": "catalog.json",
+      "scene_mapping": "scenes or shotPlan",
+      "controlled_fields": "types.ts / renderer content accessors",
+      "reference_render": "官方native准备工程经独立公开命令render，先真实preview艺术审核；不是复制下载原片。其原始内嵌媒体缺失时来源差异单列。",
+      "new_pack_policy": "先验签/公开contract/全片观察→动作/状态/依赖图→槽映射→有界真实素材验证→队列生产→规格ready。新包需一次适配；同包后续换口播/素材不改renderer。",
+      "stage_gate": "implementation+ready仅覆盖本期明示合同与技术/采样视觉/生产读回；新一期依输入门禁及实际容量检查执行，连续听音/音素/真机/用户/UI视觉独立待验。",
+      "publication": false,
+      "contract": "motiongit-dark-full-v1",
+      "rules": [
+        "catalog.json与renderer持有全部几何和时序参数",
+        "适配新包必须登记全组状态/输入槽/原生约束并以真实素材验证",
+        "统一队列、同源完整语音、不自动发布"
+      ],
+      "validation_report": "reference/validation-summary.json",
+      "reference_differences": "reference/reconstruction-differences.md"
+    }
+  },
+  "operations": [
+    {
+      "id": "capacity-check",
+      "input": "本期时长、输出组合、新上传素材大小与工程/缓存卷",
+      "action": "执行者读取真实磁盘余量，按README空间说明核对；不以素材/时钟preflight代替",
+      "output": "可执行或保留当前输入等待足够空间",
+      "completion": "满足本期预计最终文件、新素材和缓存需求；保留注册原作及历史版本",
+      "recovery": "不足时先保留输入与已完成片，不启动新生产或搬走注册原作",
+      "entrypoint": "PowerShell Get-PSDrive -PSProvider FileSystem; manual gate per README.md"
+    },
+    {
+      "id": "preflight",
+      "input": "完整口播/真实词时码/看帧素材/字体/shotPlan",
+      "action": "检查样本主时钟、动作最小时长、来源哈希及实际区间",
+      "output": "通过或中文缺项，尚无云调用/入队",
+      "completion": "全部依赖已确定；缺项阻断受影响动作",
+      "recovery": "只补本期缺槽，不重发已有付费任务",
+      "entrypoint": "../../scripts/dark_full.py --input <input.json> --check"
+    },
+    {
+      "id": "dev-validation",
+      "input": "本次已授权开发样片确定参数",
+      "action": "源码快照、真实关键姿态预览，再经统一queue全片渲染",
+      "output": "候选成片/技术回执/待复核作品版本",
+      "completion": "每期完成技术检查和适用关键状态/素材语义复核；本期ready不外推新输入、连续听音或平台结论。",
+      "recovery": "原request幂等恢复；未完成源码改变则新冻结身份",
+      "entrypoint": "../../scripts/dark_full.py --input <input.json>"
+    },
+    {
+      "id": "native-reference",
+      "input": "实际已看preview+已reviewed原生project和来源manifest",
+      "action": "单一queue调用官方render，再原混合轨一次合流",
+      "output": "1920×1080/60fps/7344f完整新渲染与差异清单",
+      "completion": "完整十组、原顺序、122.4s、≥20Mbps、完整解码及真实画面比对",
+      "recovery": "沿原native请求/原生输出receipt恢复，不绕开官方闸门",
+      "entrypoint": "../../scripts/dark_native.py --input <native-manifest.json>"
+    },
+    {
+      "id": "script-preparation",
+      "input": "完整脚本、真实素材配方和当前已配置音频服务",
+      "action": "按DARK_FULL_SCRIPT.md执行check/quote/confirmed阶段/resume/export，再进入统一模板输入",
+      "output": "同一WAV真实词时码与可预检input.json",
+      "completion": "本期真实音轨、词时码及源区间已核；付费边界沿原operation/预算，不重新提交未知结果",
+      "recovery": "按保存stage与同operation恢复，保留预算预留和原配音",
+      "entrypoint": "../../scripts/dark_full_script.py; ../../docs/DARK_FULL_SCRIPT.md"
+    }
+  ]
+}

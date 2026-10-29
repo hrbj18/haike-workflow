@@ -1,0 +1,246 @@
+{
+  "schema": "haike.motion-native-content/1",
+  "template_id": "motiongit-native-story-v1",
+  "title": "亲子探索 · 让孩子亲手体验AI",
+  "brand": "海客AI社区服务店",
+  "short_title": "孩子，亲手体验一次AI",
+  "presenter_label": "店长 · 海客AI",
+  "layout": "portrait45",
+  "provenance": {
+    "source": "示意结构：请替换为本期口播和素材的明确授权来源",
+    "authorized": true
+  },
+  "source_review": {
+    "path": "./assets/source-review.json",
+    "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "voice": {
+    "path": "./assets/voice.wav",
+    "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "captions": {
+    "path": "./assets/captions.json",
+    "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "voice_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "provenance": {
+      "path": "./assets/captions-provenance.json",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    }
+  },
+  "avatar": {
+    "path": "./assets/avatar-full.mp4",
+    "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "voice_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "same_voice_verified": true,
+    "evidence": {
+      "path": "./assets/avatar-evidence.json",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "badge": {
+      "path": "./assets/avatar-badge.jpg",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    }
+  },
+  "media": {
+    "wall": [
+      {
+        "id": "wall-1",
+        "source": {
+          "path": "./assets/footage-01.mp4",
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+        },
+        "at": 1
+      },
+      {
+        "id": "wall-2",
+        "source": {
+          "path": "./assets/footage-02.mp4",
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+        },
+        "at": 1
+      },
+      {
+        "id": "wall-3",
+        "source": {
+          "path": "./assets/footage-03.mp4",
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+        },
+        "at": 1
+      },
+      {
+        "id": "wall-4",
+        "source": {
+          "path": "./assets/footage-04.mp4",
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+        },
+        "at": 1
+      }
+    ],
+    "categories": [
+      {
+        "id": "category-1",
+        "source": {
+          "path": "./assets/footage-01.mp4",
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+        },
+        "at": 1
+      },
+      {
+        "id": "category-2",
+        "source": {
+          "path": "./assets/footage-02.mp4",
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+        },
+        "at": 1
+      },
+      {
+        "id": "category-3",
+        "source": {
+          "path": "./assets/footage-03.mp4",
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+        },
+        "at": 1
+      },
+      {
+        "id": "category-4",
+        "source": {
+          "path": "./assets/footage-04.mp4",
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+        },
+        "at": 1
+      }
+    ],
+    "lens": {
+      "id": "hands-on-lens",
+      "source": {
+        "path": "./assets/footage-lens.mp4",
+        "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "offset": 0.8
+    }
+  },
+  "content": {
+    "s01": {
+      "chapter": "亲子探索 · 亲手体验",
+      "claim.subject": "同样抱着屏幕",
+      "claim.connector": "不如",
+      "claim.destination": "亲手体验",
+      "context": "海客AI · 亲子探索",
+      "burden.heading": "从屏幕里，走到孩子面前",
+      "burden.claim": "亲手试试",
+      "burden.recordingLabel": "真实活动实拍",
+      "response.invitation": "孩子亲手用过吗",
+      "response.subject": "机器人就在面前",
+      "response.connector": "一起",
+      "response.conclusion": "来试试"
+    },
+    "s04": {
+      "chapter": "亲子探索 · 真实现场",
+      "scope.connector": "带孩子",
+      "scope.initial": "来海客，",
+      "scope.heading": "亲手体验",
+      "scope.conclusion": "AI",
+      "categories.0.label": "机器人互动",
+      "categories.0.note": "近距离看看",
+      "categories.1.label": "机器狗观察",
+      "categories.1.note": "真实活动实拍",
+      "categories.2.label": "亲子共学",
+      "categories.2.note": "家长孩子同行",
+      "categories.3.label": "门店现场",
+      "categories.3.note": "来店里体验",
+      "wall.attribution": "真实活动实拍",
+      "wall.countLabel": "组实拍拼图 · 真实镜头复用",
+      "claim.line1": "从知道AI",
+      "claim.line2": "到",
+      "claim.line3": "亲手体验",
+      "template.label": "隔着屏幕看",
+      "contrast.line1": "不止隔着屏幕看",
+      "contrast.line2": "来现场亲手试试",
+      "lens.wideLabel": "活动实拍",
+      "lens.connector": "来",
+      "lens.heading": "亲手试试",
+      "rhythm.heading": "体验步骤",
+      "rhythm.parts.0": "来",
+      "rhythm.parts.1": "看",
+      "rhythm.parts.2": "摸",
+      "rhythm.parts.3": "试",
+      "lens.pushLabel": "近距离看看",
+      "lens.trackLabel": "陪同下摸摸",
+      "lens.closeLabel": "亲手试试看"
+    },
+    "s08": {
+      "chapter": "亲子探索 · 周末邀请",
+      "reflection.context": "请填写本店真实地址",
+      "reflection.subject": "从知道AI",
+      "reflection.era": "到亲手体验",
+      "reflection.connector": "一起",
+      "reflection.conclusion": "来试试",
+      "capacity.heading": "体验步骤·三个动作",
+      "capacity.opponentLabel": "看看",
+      "capacity.augmentationLabel": "摸摸用用",
+      "capacity.selfLabel": "亲手体验",
+      "action.heading": "这个周末，带孩子来体验",
+      "brand.line1": "海客AI",
+      "brand.line2": "社区服务店",
+      "brand.description": "请填写本店真实地址",
+      "invitation.heading": "这个周末，来坐坐",
+      "invitation.note": "近距离看看 · 亲手试试",
+      "signoff": "期待见到你",
+      "capacity.factor": 3,
+      "reaction.label": "把好奇心带到现场"
+    }
+  },
+  "music": {
+    "path": "./assets/bgm.wav",
+    "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "gainDb": -3,
+    "offsetSeconds": 0,
+    "loop": true
+  },
+  "fonts": {
+    "body": {
+      "path": "./assets/fonts/body.ttf",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "display": {
+      "path": "./assets/fonts/display.ttf",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    }
+  },
+  "sfx": {
+    "tick": {
+      "path": "./assets/sfx/tick.wav",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "whoosh": {
+      "path": "./assets/sfx/whoosh.wav",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "dong": {
+      "path": "./assets/sfx/dong.wav",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    }
+  },
+  "tools": {
+    "node": {
+      "path": "./runtime/node.exe",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "helper": {
+      "path": "./runtime/motion.mjs",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "package": {
+      "path": "./runtime/licensed-template.motion",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "ffmpeg": {
+      "path": "./runtime/ffmpeg.exe",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "ffprobe": {
+      "path": "./runtime/ffprobe.exe",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    }
+  }
+}

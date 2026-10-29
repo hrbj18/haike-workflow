@@ -1,0 +1,18 @@
+* text=auto
+*.py text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.sh text eol=lf
+*.ps1 text eol=crlf
+*.cmd text eol=crlf
+*.bat text eol=crlf
+*.png binary
+*.jpg binary
+*.ttf binary
+*.woff2 binary
+Haike_video/templates/avatar-deepblue-n1/index.tsx text eol=lf
+Haike_video/templates/avatar-deepblue-n1/showcase/*.svg text eol=lf
+prototypes/haike-avatar-generator/public/assets/n1-public-sample-v1.mp4 binary
+

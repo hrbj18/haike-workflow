@@ -1,0 +1,943 @@
+{
+  "schema_version": 1,
+  "standard_version": "video-template-v1",
+  "template_id": "store-footage-18",
+  "template_version": "v002",
+  "template_type": "custom",
+  "spec_kind": "implementation",
+  "stage": "ready",
+  "authority": {
+    "runbook": "../../../../../Haike-Videohub/agent-runbooks/店长账号模板18-橙紫现场.md",
+    "implementation_paths": [
+      "../../index.tsx",
+      "../../../../backlot/studio_store_footage.py"
+    ],
+    "parameter_source": "../../index.tsx"
+  },
+  "canvas": {
+    "width": 1440,
+    "height": 1800,
+    "fps": 30,
+    "duration_seconds": 29.3,
+    "clock": "已确认完整配音主时钟，ceil秒数×30；不变速，实际ASR词时钟",
+    "coordinate_system": "top_left_pixels"
+  },
+  "narrative": {
+    "purpose": "店长账号完整片模板18，实拍主导，无数字人",
+    "information_hierarchy": [
+      "现场体验主题",
+      "门店真实素材",
+      "字幕与门店地址"
+    ],
+    "structure": [
+      "问题引子",
+      "现场体验",
+      "门店邀请"
+    ]
+  },
+  "scenes": [
+    {
+      "id": "chapter_0",
+      "start": 0.0,
+      "end": 9.266666666666667,
+      "purpose": "屏幕之外，见一面",
+      "element_ids": [
+        "background",
+        "title",
+        "panel",
+        "left",
+        "vertical",
+        "side",
+        "caption",
+        "address",
+        "master_audio"
+      ],
+      "variant": "18"
+    },
+    {
+      "id": "chapter_1",
+      "start": 9.266666666666667,
+      "end": 17.4,
+      "purpose": "新科技，就在身边",
+      "element_ids": [
+        "background",
+        "title",
+        "panel",
+        "left",
+        "vertical",
+        "side",
+        "caption",
+        "address",
+        "master_audio"
+      ],
+      "variant": "18"
+    },
+    {
+      "id": "chapter_2",
+      "start": 17.4,
+      "end": 24.366666666666667,
+      "purpose": "好奇，就来体验",
+      "element_ids": [
+        "background",
+        "title",
+        "panel",
+        "left",
+        "vertical",
+        "side",
+        "caption",
+        "address",
+        "master_audio"
+      ],
+      "variant": "18"
+    },
+    {
+      "id": "chapter_3",
+      "start": 24.366666666666667,
+      "end": 29.3,
+      "purpose": "下次路过，来看看",
+      "element_ids": [
+        "background",
+        "title",
+        "panel",
+        "left",
+        "vertical",
+        "side",
+        "caption",
+        "address",
+        "master_audio"
+      ],
+      "variant": "18"
+    }
+  ],
+  "assets": [],
+  "elements": [
+    {
+      "id": "background",
+      "type": "background",
+      "role": "background",
+      "parent_id": null,
+      "z_index": 0,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "background按index.tsx style=18；章节文本取冻结props.chapters，素材内文字固化"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "../../index.tsx",
+          "unit": "px",
+          "overflow": "原片contain；父框hidden；数字人仅指定短段替换主窗"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 29.3
+      },
+      "states": [
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "全片框架；字幕仅cue，章节取from之前最后一项，源画面按shots，主窗允许已授权avatar短段"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "actual_frames",
+          "method": "查看每章、切点、数字人入出、末帧",
+          "pass_condition": "主体完整，字幕清晰不遮挡，章节内容对应口播"
+        }
+      ]
+    },
+    {
+      "id": "title",
+      "type": "text",
+      "role": "title",
+      "parent_id": null,
+      "z_index": 1,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "title按index.tsx style=18；章节文本取冻结props.chapters，素材内文字固化"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          60,
+          55,
+          1320,
+          180
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "../../index.tsx",
+          "unit": "px",
+          "overflow": "原片contain；父框hidden；数字人仅指定短段替换主窗",
+          "font": "SimHei",
+          "font_size": 145,
+          "max_lines": 3
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 29.3
+      },
+      "states": [
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "全片框架；字幕仅cue，章节取from之前最后一项，源画面按shots，主窗允许已授权avatar短段"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout"
+      ],
+      "replaceable": [
+        "content",
+        "timing"
+      ],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "actual_frames",
+          "method": "查看每章、切点、数字人入出、末帧",
+          "pass_condition": "主体完整，字幕清晰不遮挡，章节内容对应口播"
+        }
+      ]
+    },
+    {
+      "id": "panel",
+      "type": "background",
+      "role": "panel",
+      "parent_id": null,
+      "z_index": 2,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "panel按index.tsx style=18；章节文本取冻结props.chapters，素材内文字固化"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          260,
+          1440,
+          1270
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "../../index.tsx",
+          "unit": "px",
+          "overflow": "原片contain；父框hidden；数字人仅指定短段替换主窗"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 29.3
+      },
+      "states": [
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "全片框架；字幕仅cue，章节取from之前最后一项，源画面按shots，主窗允许已授权avatar短段"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "actual_frames",
+          "method": "查看每章、切点、数字人入出、末帧",
+          "pass_condition": "主体完整，字幕清晰不遮挡，章节内容对应口播"
+        }
+      ]
+    },
+    {
+      "id": "left",
+      "type": "video",
+      "role": "left",
+      "parent_id": null,
+      "z_index": 3,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "left按index.tsx style=18；章节文本取冻结props.chapters，素材内文字固化"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          380,
+          295,
+          1005,
+          1200
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "../../index.tsx",
+          "unit": "px",
+          "overflow": "原片contain；父框hidden；数字人仅指定短段替换主窗"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 29.3
+      },
+      "states": [
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "全片框架；字幕仅cue，章节取from之前最后一项，源画面按shots，主窗允许已授权avatar短段"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout"
+      ],
+      "replaceable": [
+        "content",
+        "timing"
+      ],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "actual_frames",
+          "method": "查看每章、切点、数字人入出、末帧",
+          "pass_condition": "主体完整，字幕清晰不遮挡，章节内容对应口播"
+        }
+      ]
+    },
+    {
+      "id": "vertical",
+      "type": "text",
+      "role": "vertical",
+      "parent_id": null,
+      "z_index": 4,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "vertical按index.tsx style=18；章节文本取冻结props.chapters，素材内文字固化"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          68,
+          345,
+          250,
+          800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "../../index.tsx",
+          "unit": "px",
+          "overflow": "原片contain；父框hidden；数字人仅指定短段替换主窗",
+          "font": "SimHei",
+          "font_size": 205,
+          "max_lines": 3
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 29.3
+      },
+      "states": [
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "全片框架；字幕仅cue，章节取from之前最后一项，源画面按shots，主窗允许已授权avatar短段"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "actual_frames",
+          "method": "查看每章、切点、数字人入出、末帧",
+          "pass_condition": "主体完整，字幕清晰不遮挡，章节内容对应口播"
+        }
+      ]
+    },
+    {
+      "id": "side",
+      "type": "text",
+      "role": "side",
+      "parent_id": null,
+      "z_index": 5,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "side按index.tsx style=18；章节文本取冻结props.chapters，素材内文字固化"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          75,
+          1190,
+          300,
+          250
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "../../index.tsx",
+          "unit": "px",
+          "overflow": "原片contain；父框hidden；数字人仅指定短段替换主窗",
+          "font": "Microsoft YaHei",
+          "font_size": 63,
+          "max_lines": 3
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 29.3
+      },
+      "states": [
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "全片框架；字幕仅cue，章节取from之前最后一项，源画面按shots，主窗允许已授权avatar短段"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "actual_frames",
+          "method": "查看每章、切点、数字人入出、末帧",
+          "pass_condition": "主体完整，字幕清晰不遮挡，章节内容对应口播"
+        }
+      ]
+    },
+    {
+      "id": "caption",
+      "type": "text",
+      "role": "caption",
+      "parent_id": null,
+      "z_index": 6,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "caption按index.tsx style=18；章节文本取冻结props.chapters，素材内文字固化"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          55,
+          1560,
+          1330,
+          140
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "../../index.tsx",
+          "unit": "px",
+          "overflow": "原片contain；父框hidden；数字人仅指定短段替换主窗",
+          "font": "Microsoft YaHei",
+          "font_size": 58,
+          "max_lines": 1
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 29.3
+      },
+      "states": [
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "全片框架；字幕仅cue，章节取from之前最后一项，源画面按shots，主窗允许已授权avatar短段"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout"
+      ],
+      "replaceable": [
+        "content",
+        "timing"
+      ],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "actual_frames",
+          "method": "查看每章、切点、数字人入出、末帧",
+          "pass_condition": "主体完整，字幕清晰不遮挡，章节内容对应口播"
+        }
+      ]
+    },
+    {
+      "id": "address",
+      "type": "text",
+      "role": "address",
+      "parent_id": null,
+      "z_index": 7,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "address按index.tsx style=18；章节文本取冻结props.chapters，素材内文字固化"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          1720,
+          1440,
+          40
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "../../index.tsx",
+          "unit": "px",
+          "overflow": "原片contain；父框hidden；数字人仅指定短段替换主窗",
+          "font": "Microsoft YaHei",
+          "font_size": 30,
+          "max_lines": 1
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 29.3
+      },
+      "states": [
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "全片框架；字幕仅cue，章节取from之前最后一项，源画面按shots，主窗允许已授权avatar短段"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "actual_frames",
+          "method": "查看每章、切点、数字人入出、末帧",
+          "pass_condition": "主体完整，字幕清晰不遮挡，章节内容对应口播"
+        }
+      ]
+    },
+    {
+      "id": "master_audio",
+      "type": "audio",
+      "role": "master_audio",
+      "parent_id": null,
+      "z_index": 8,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "master_audio按index.tsx style=18；章节文本取冻结props.chapters，素材内文字固化"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "../../index.tsx",
+          "unit": "px",
+          "overflow": "原片contain；父框hidden；数字人仅指定短段替换主窗"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 29.3
+      },
+      "states": [
+        {
+          "id": "visible",
+          "visible": true,
+          "description": "全片框架；字幕仅cue，章节取from之前最后一项，源画面按shots，主窗允许已授权avatar短段"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout"
+      ],
+      "replaceable": [
+        "content",
+        "timing"
+      ],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "actual_frames",
+          "method": "查看每章、切点、数字人入出、末帧",
+          "pass_condition": "主体完整，字幕清晰不遮挡，章节内容对应口播"
+        }
+      ]
+    }
+  ],
+  "slots": [
+    {
+      "id": "title_slot",
+      "element_id": "title",
+      "property": "content",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "source": "冻结props及FULL-RUNBOOK.md",
+        "clock": "全片30fps，原音频不变速"
+      },
+      "missing": "必需输入缺失停止冻结；可选avatar缺失保持纯实拍",
+      "overflow": "按语义分句或重新选段；禁止缩速、拉伸和静帧补齐"
+    },
+    {
+      "id": "left_slot",
+      "element_id": "left",
+      "property": "content",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "source": "冻结props及FULL-RUNBOOK.md",
+        "clock": "全片30fps，原音频不变速",
+        "max_clip_frames": 120,
+        "coverage": "完整主时钟，无空隙或重叠"
+      },
+      "missing": "必需输入缺失停止冻结；可选avatar缺失保持纯实拍",
+      "overflow": "按语义分句或重新选段；禁止缩速、拉伸和静帧补齐"
+    },
+    {
+      "id": "caption_slot",
+      "element_id": "caption",
+      "property": "content",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "source": "冻结props及FULL-RUNBOOK.md",
+        "clock": "全片30fps，原音频不变速",
+        "max_chars": 21,
+        "max_width_pixels": 1270,
+        "font_pixels": 58
+      },
+      "missing": "必需输入缺失停止冻结；可选avatar缺失保持纯实拍",
+      "overflow": "按语义分句或重新选段；禁止缩速、拉伸和静帧补齐"
+    },
+    {
+      "id": "master_audio_slot",
+      "element_id": "master_audio",
+      "property": "content",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "source": "冻结props及FULL-RUNBOOK.md",
+        "clock": "全片30fps，原音频不变速"
+      },
+      "missing": "必需输入缺失停止冻结；可选avatar缺失保持纯实拍",
+      "overflow": "按语义分句或重新选段；禁止缩速、拉伸和静帧补齐"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "implementation",
+      "source_kind": "design",
+      "source": "用户确认四种配色与音频，授权完整片及两段店长出镜",
+      "locator": "index.tsx style=18; FULL-RUNBOOK.md",
+      "method": "冻结props与原片SHA，原生队列导出并验收",
+      "file": "../../index.tsx",
+      "sha256": "a87abdd71d8de9de6644b315eb157427d245338c2b8462d699515a93bdf26556"
+    },
+    {
+      "id": "full_review",
+      "source_kind": "measurement",
+      "source": "本轮原生导出、解码与实际成片帧审阅",
+      "locator": "FULL-REVIEW.md",
+      "method": "ffprobe+完整解码+多时点实际图片检查",
+      "file": "../../FULL-REVIEW.md",
+      "sha256": "ac40ecc84e26bb599e687f689366218bd1b0616bc2cab7e2299fda812a9edd70"
+    }
+  ],
+  "unknowns": [],
+  "validation": {
+    "structure": {
+      "status": "pass",
+      "evidence_ids": [
+        "full_review"
+      ],
+      "note": "本机本轮约30秒完整片；20/21含短段数字人；复用须遵循FULL-RUNBOOK"
+    },
+    "technical": {
+      "status": "pass",
+      "evidence_ids": [
+        "full_review"
+      ],
+      "note": "本机本轮约30秒完整片；20/21含短段数字人；复用须遵循FULL-RUNBOOK"
+    },
+    "visual": {
+      "status": "pass",
+      "evidence_ids": [
+        "full_review"
+      ],
+      "note": "本机本轮约30秒完整片；20/21含短段数字人；复用须遵循FULL-RUNBOOK"
+    },
+    "audio": {
+      "status": "pending",
+      "evidence_ids": [
+        "full_review"
+      ],
+      "note": "配音已获用户确认，混音技术通过；设备主观外放、平台、最终成片用户确认分别待验"
+    },
+    "platform": {
+      "status": "pending",
+      "evidence_ids": [
+        "full_review"
+      ],
+      "note": "配音已获用户确认，混音技术通过；设备主观外放、平台、最终成片用户确认分别待验"
+    },
+    "user_review": {
+      "status": "pending",
+      "evidence_ids": [
+        "full_review"
+      ],
+      "note": "配音已获用户确认，混音技术通过；设备主观外放、平台、最终成片用户确认分别待验"
+    },
+    "production": {
+      "status": "pass",
+      "evidence_ids": [
+        "full_review"
+      ],
+      "note": "本机本轮约30秒完整片；20/21含短段数字人；复用须遵循FULL-RUNBOOK"
+    }
+  },
+  "extensions": {
+    "custom": {
+      "contract": "store-footage-contrast-v1",
+      "rules": {
+        "geometry": "../../index.tsx",
+        "input": "30fps配音主时钟，1—60秒；chapters动态文字；20/21可选最多8秒avatar",
+        "export": "CRF1高保真母版后20.5M CBR/2M缓冲，视频流实测≥20M"
+      }
+    },
+    "audio": {
+      "contract": "speech-led-v1",
+      "rules": {
+        "mix": "人声−2.5dB、BGM−5dB、dong−15dB、whoosh−19dB",
+        "timing": "dong首cue，whoosh章节峰值，tick末cue；音乐淡入.18/淡出.65；本期精确事件在audio回执"
+      }
+    },
+    "material_edit": {
+      "source_ranges": [
+        {
+          "id": "left-0",
+          "lane": "left",
+          "src": "S052.mp4",
+          "from": 0,
+          "frames": 90,
+          "offset": 0,
+          "fit": "contain",
+          "path": "C:\\Users\\Administrator\\Videos\\10-23素材\\S052_门头下机器人与机器狗清晰同框.mp4",
+          "source_sha256": "b7de5023354825e0033084a21a9b5dce4eed614e6f00a6086cd2c7cbdb757b7d"
+        },
+        {
+          "id": "left-1",
+          "lane": "left",
+          "src": "S077.mp4",
+          "from": 90,
+          "frames": 90,
+          "offset": 0,
+          "fit": "contain",
+          "path": "C:\\Users\\Administrator\\Videos\\10-23素材\\S077_双机器狗与人形机器人门前同框.mp4",
+          "source_sha256": "549b018083d9ed0a56d343f58a8eb5763ccd2c2a7fcb4d1cf3fb354187632f71"
+        },
+        {
+          "id": "left-2",
+          "lane": "left",
+          "src": "S068.mp4",
+          "from": 180,
+          "frames": 90,
+          "offset": 0,
+          "fit": "contain",
+          "path": "C:\\Users\\Administrator\\Videos\\10-23素材\\S068_亲子近距离观看机器人.mp4",
+          "source_sha256": "187d2c62a5d832a47635c9923ae06eac61270b8a7a7b647a44c714b171746c32"
+        },
+        {
+          "id": "left-3",
+          "lane": "left",
+          "src": "S052.mp4",
+          "from": 270,
+          "frames": 90,
+          "offset": 3.3,
+          "fit": "contain",
+          "path": "C:\\Users\\Administrator\\Videos\\10-23素材\\S052_门头下机器人与机器狗清晰同框.mp4",
+          "source_sha256": "b7de5023354825e0033084a21a9b5dce4eed614e6f00a6086cd2c7cbdb757b7d"
+        },
+        {
+          "id": "left-4",
+          "lane": "left",
+          "src": "S069.mp4",
+          "from": 360,
+          "frames": 90,
+          "offset": 3.4,
+          "fit": "contain",
+          "path": "C:\\Users\\Administrator\\Videos\\10-23素材\\S069_门外亲子转入店内产品陈列.mp4",
+          "source_sha256": "d84fdf5631b5ecb029020adc36f73d26e521525de9d3df7f79c9bda0dbe3f2b0"
+        },
+        {
+          "id": "left-5",
+          "lane": "left",
+          "src": "S078.mp4",
+          "from": 450,
+          "frames": 90,
+          "offset": 2.6,
+          "fit": "contain",
+          "path": "C:\\Users\\Administrator\\Videos\\10-23素材\\S078_店内好物陈列与顾客交流.mp4",
+          "source_sha256": "f1b9ed528f1f2450fa30c6248f78ce80b433d95ce48ac7831a9b2106faf1d71a"
+        },
+        {
+          "id": "left-6",
+          "lane": "left",
+          "src": "S067.mp4",
+          "from": 540,
+          "frames": 90,
+          "offset": 3,
+          "fit": "contain",
+          "path": "C:\\Users\\Administrator\\Videos\\10-23素材\\S067_店内工作人员接待与产品体验.mp4",
+          "source_sha256": "3bbafab42484160720c1205f60e64e05db5edbfa81d290f8867b96ff27ec038b"
+        },
+        {
+          "id": "left-7",
+          "lane": "left",
+          "src": "S083.mp4",
+          "from": 630,
+          "frames": 90,
+          "offset": 10,
+          "fit": "contain",
+          "path": "C:\\Users\\Administrator\\Videos\\10-23素材\\S083_工作人员指导儿童操作小型设备.mp4",
+          "source_sha256": "9983a77be815422d12ffe042426570b69ecf8b3c3ed136ba38629958ef855989"
+        },
+        {
+          "id": "left-8",
+          "lane": "left",
+          "src": "S081.mp4",
+          "from": 720,
+          "frames": 90,
+          "offset": 1,
+          "fit": "contain",
+          "path": "C:\\Users\\Administrator\\Videos\\10-23素材\\S081_门头下工作人员迎接亲子顾客.mp4",
+          "source_sha256": "e6cdfd13f55ff5f8d7a1357fb0fa767724b4abe90cf2c9afab8456275ff40098"
+        },
+        {
+          "id": "left-9",
+          "lane": "left",
+          "src": "S082.mp4",
+          "from": 810,
+          "frames": 69,
+          "offset": 4,
+          "fit": "contain",
+          "path": "C:\\Users\\Administrator\\Videos\\10-23素材\\S082_围桌体验转向门头与机器狗.mp4",
+          "source_sha256": "d348018f4b76cf1fe64ac8d9f80bb573120df54195917d544a16ab8cf6344021"
+        }
+      ],
+      "cut_policy": "每镜≤4秒，本期3秒；原片contain，不变速不冻结；20/21按avatar短段替换主窗"
+    }
+  },
+  "operations": [
+    {
+      "id": "native_queue",
+      "input": "完整props及master/audio-receipt/asr/原实拍；20/21按需加avatar.mp4，先核对完整片Runbook",
+      "action": "prepare→submit→ProductionQueueWorker.run_local_recompose",
+      "output": "冻结request、MP4、quality.json、result.json",
+      "completion": "技术与字幕素材切换实际抽帧验证，听审用户确认独立",
+      "recovery": "先查已有任务；SHA校验复用，源码变化新冻结，不重发数字人",
+      "entrypoint": "../../../../backlot/studio_store_footage.py"
+    }
+  ]
+}

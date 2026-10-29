@@ -1,0 +1,31 @@
+{
+  "durationFrames": 738,
+  "audio": "master.wav",
+  "brand": "海客AI社区服务站",
+  "location": "门店现场 · 走近身边的AI",
+  "palette": {
+    "paper": "#F5F3EC",
+    "ink": "#18212A",
+    "muted": "#59616A",
+    "blue": "#294CEE",
+    "orange": "#FF6B35",
+    "line": "#D3D6D5"
+  },
+  "motion": {"enterFrames": 16, "exitFrames": 10, "lineFrames": 22},
+  "chapters": [
+    {"id": "arrival", "from": 0, "label": "走近海客"},
+    {"id": "robot", "from": 186, "label": "现场展示"},
+    {"id": "experience", "from": 240, "label": "亲子体验"},
+    {"id": "store", "from": 522, "label": "店内日常"}
+  ],
+  "shots": [
+    {"id": "door-robot", "src": "a01.mp4", "from": 0, "frames": 66, "offset": 0.3, "fit": "contain", "layout": "portrait-right", "title": "楼下，\n就有AI", "subtitle": "走近身边的科技", "kicker": "海客现场", "chapter": "arrival"},
+    {"id": "store-front", "src": "a02.mp4", "from": 66, "frames": 120, "offset": 6.3, "fit": "contain", "layout": "wide", "title": "走进海客", "subtitle": "AI社区服务站", "kicker": "门店实拍", "chapter": "arrival"},
+    {"id": "robot-show", "src": "a03.mp4", "from": 186, "frames": 54, "offset": 8.3, "fit": "contain", "layout": "wide", "title": "现场展示", "subtitle": "", "kicker": "看见科技", "chapter": "robot"},
+    {"id": "children-robot", "src": "a04.mp4", "from": 240, "frames": 114, "offset": 5.0, "fit": "contain", "layout": "portrait-left", "title": "靠近一点\n认识AI", "subtitle": "好奇，从现场开始", "kicker": "亲子体验", "chapter": "experience"},
+    {"id": "robot-dog", "src": "a05.mp4", "from": 354, "frames": 114, "offset": 8.2, "fit": "contain", "layout": "portrait-right", "title": "小小动作\n大大好奇", "subtitle": "看看机器狗的动作", "kicker": "近距离观察", "chapter": "experience"},
+    {"id": "table-experience", "src": "a06.mp4", "from": 468, "frames": 54, "offset": 0.3, "fit": "contain", "layout": "portrait-center", "title": "一起体验", "subtitle": "", "kicker": "围桌看看", "chapter": "experience"},
+    {"id": "product-shelf", "src": "a07.mp4", "from": 522, "frames": 108, "offset": 0.8, "fit": "contain", "layout": "portrait-left", "title": "身边的\nAI好物", "subtitle": "真实门店，日常相见", "kicker": "店内日常", "chapter": "store"},
+    {"id": "store-service", "src": "a08.mp4", "from": 630, "frames": 108, "offset": 2.0, "fit": "contain", "layout": "portrait-right", "title": "来店里，\n看看AI", "subtitle": "海客AI社区服务站", "kicker": "下次见", "chapter": "store"}
+  ]
+}

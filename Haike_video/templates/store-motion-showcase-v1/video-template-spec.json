@@ -1,0 +1,2087 @@
+{
+  "schema_version": 1,
+  "standard_version": "video-template-v1",
+  "template_id": "store-motion-showcase-v1",
+  "template_version": "v001",
+  "template_type": "material_edit",
+  "spec_kind": "implementation",
+  "stage": "ready",
+  "authority": {
+    "runbook": "README.md",
+    "implementation_paths": [
+      "index.tsx",
+      "types.ts",
+      "layout.json",
+      "../../backlot/studio_store_motion_showcase.py"
+    ],
+    "parameter_source": "layout.json"
+  },
+  "canvas": {
+    "width": 1440,
+    "height": 1800,
+    "fps": 30,
+    "duration_seconds": 24.6,
+    "clock": "props.durationFrames on the 30fps output grid; each frame maps to 1600 samples in master.wav. Source footage uses offset seconds + local frame/30 at original speed.",
+    "coordinate_system": "top_left_pixels"
+  },
+  "narrative": {
+    "purpose": "无口播展示真实海客门店、机器人与亲子体验，以可编辑短句连接现场画面。",
+    "information_hierarchy": [
+      "原片中的门头、机器人完整动作和顾客互动",
+      "本期短标题与独立辅助说明",
+      "品牌、章节和真实地点"
+    ],
+    "structure": [
+      "门前机器人",
+      "完整门头",
+      "现场展示",
+      "亲子观察",
+      "机器狗动作",
+      "共同体验",
+      "好物陈列",
+      "店内接待"
+    ]
+  },
+  "scenes": [
+    {
+      "id": "arrival-robot",
+      "start": 0,
+      "end": 2.2,
+      "purpose": "以门前机器人建立身边可见的AI现场",
+      "variant": "portrait-right",
+      "element_ids": [
+        "canvas",
+        "brand",
+        "brand-mark",
+        "brand-context",
+        "top-rule",
+        "chapter-label",
+        "chapter-dot",
+        "footage-card",
+        "footage",
+        "card-edge",
+        "chapter-title",
+        "chapter-subtitle",
+        "shot-kicker",
+        "guide-line",
+        "progress-track",
+        "progress-fill",
+        "progress-head",
+        "location",
+        "location-latin",
+        "master-audio"
+      ]
+    },
+    {
+      "id": "store-front",
+      "start": 2.2,
+      "end": 6.2,
+      "purpose": "完整门头与顾客建立门店身份",
+      "variant": "wide",
+      "element_ids": [
+        "canvas",
+        "brand",
+        "brand-mark",
+        "brand-context",
+        "top-rule",
+        "chapter-label",
+        "chapter-dot",
+        "footage-card",
+        "footage",
+        "card-edge",
+        "chapter-title",
+        "chapter-subtitle",
+        "shot-kicker",
+        "guide-line",
+        "progress-track",
+        "progress-fill",
+        "progress-head",
+        "location",
+        "location-latin",
+        "master-audio"
+      ]
+    },
+    {
+      "id": "robot-show",
+      "start": 6.2,
+      "end": 8,
+      "purpose": "人形机器人与机器狗同框展示",
+      "variant": "wide",
+      "element_ids": [
+        "canvas",
+        "brand",
+        "brand-mark",
+        "brand-context",
+        "top-rule",
+        "chapter-label",
+        "chapter-dot",
+        "footage-card",
+        "footage",
+        "card-edge",
+        "chapter-title",
+        "chapter-subtitle",
+        "shot-kicker",
+        "guide-line",
+        "progress-track",
+        "progress-fill",
+        "progress-head",
+        "location",
+        "location-latin",
+        "master-audio"
+      ]
+    },
+    {
+      "id": "children-robot",
+      "start": 8,
+      "end": 11.8,
+      "purpose": "儿童近距离观察机器人",
+      "variant": "portrait-left",
+      "element_ids": [
+        "canvas",
+        "brand",
+        "brand-mark",
+        "brand-context",
+        "top-rule",
+        "chapter-label",
+        "chapter-dot",
+        "footage-card",
+        "footage",
+        "card-edge",
+        "chapter-title",
+        "chapter-subtitle",
+        "shot-kicker",
+        "guide-line",
+        "progress-track",
+        "progress-fill",
+        "progress-head",
+        "location",
+        "location-latin",
+        "master-audio"
+      ]
+    },
+    {
+      "id": "robot-dog",
+      "start": 11.8,
+      "end": 15.6,
+      "purpose": "保留机器狗起身动作与儿童反应",
+      "variant": "portrait-right",
+      "element_ids": [
+        "canvas",
+        "brand",
+        "brand-mark",
+        "brand-context",
+        "top-rule",
+        "chapter-label",
+        "chapter-dot",
+        "footage-card",
+        "footage",
+        "card-edge",
+        "chapter-title",
+        "chapter-subtitle",
+        "shot-kicker",
+        "guide-line",
+        "progress-track",
+        "progress-fill",
+        "progress-head",
+        "location",
+        "location-latin",
+        "master-audio"
+      ]
+    },
+    {
+      "id": "table-experience",
+      "start": 15.6,
+      "end": 17.4,
+      "purpose": "围桌共同体验",
+      "variant": "portrait-center",
+      "element_ids": [
+        "canvas",
+        "brand",
+        "brand-mark",
+        "brand-context",
+        "top-rule",
+        "chapter-label",
+        "chapter-dot",
+        "footage-card",
+        "footage",
+        "card-edge",
+        "chapter-title",
+        "chapter-subtitle",
+        "shot-kicker",
+        "guide-line",
+        "progress-track",
+        "progress-fill",
+        "progress-head",
+        "location",
+        "location-latin",
+        "master-audio"
+      ]
+    },
+    {
+      "id": "product-shelf",
+      "start": 17.4,
+      "end": 21,
+      "purpose": "好物陈列与门店日常",
+      "variant": "portrait-left",
+      "element_ids": [
+        "canvas",
+        "brand",
+        "brand-mark",
+        "brand-context",
+        "top-rule",
+        "chapter-label",
+        "chapter-dot",
+        "footage-card",
+        "footage",
+        "card-edge",
+        "chapter-title",
+        "chapter-subtitle",
+        "shot-kicker",
+        "guide-line",
+        "progress-track",
+        "progress-fill",
+        "progress-head",
+        "location",
+        "location-latin",
+        "master-audio"
+      ]
+    },
+    {
+      "id": "store-service",
+      "start": 21,
+      "end": 24.6,
+      "purpose": "以真实接待结束并邀请了解",
+      "variant": "portrait-right",
+      "element_ids": [
+        "canvas",
+        "brand",
+        "brand-mark",
+        "brand-context",
+        "top-rule",
+        "chapter-label",
+        "chapter-dot",
+        "footage-card",
+        "footage",
+        "card-edge",
+        "chapter-title",
+        "chapter-subtitle",
+        "shot-kicker",
+        "guide-line",
+        "progress-track",
+        "progress-fill",
+        "progress-head",
+        "location",
+        "location-latin",
+        "master-audio"
+      ]
+    }
+  ],
+  "assets": [
+    {
+      "id": "current-footage",
+      "kind": "video",
+      "path": null,
+      "source": "Each production sources mapping binds original files to flat filenames and content SHA; private media stays in ignored project storage.",
+      "embedded_content": [
+        "固化店招/活动横幅",
+        "现场人物与产品动作"
+      ],
+      "rights_status": "用户指定素材用于本期制作；具体来源与范围由本期manifest/review记录，不由本示例扩展。"
+    },
+    {
+      "id": "current-master",
+      "kind": "audio",
+      "path": null,
+      "source": "Current production master.wav plus music/SFX provenance and exact source hashes.",
+      "embedded_content": [
+        "音乐",
+        "动效音效"
+      ],
+      "rights_status": "逐期核对音源使用依据，保留本地来源回执；本规格不携带媒体。"
+    }
+  ],
+  "elements": [
+    {
+      "id": "canvas",
+      "type": "background",
+      "role": "canvas",
+      "parent_id": null,
+      "z_index": 0,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "轻暖纸色画布，使用props.palette.paper；无模糊填充"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "parameter_source": "layout.json + index.tsx",
+          "box_scope": "nominal first-shot snapshot only; evaluate current layout/parent transforms each frame",
+          "palette": "props.palette"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24.6
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Visible or audible throughout declared global range; generated progress uses final output frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source_authority",
+          "target_id": null,
+          "rule": "All effective coordinates, sizes, parent transforms, visibility and timing use current layout.json/index.tsx; nominal snapshot is descriptive."
+        }
+      ],
+      "fixed": [
+        "source_clock_policy",
+        "source_audio_mute_policy"
+      ],
+      "replaceable": [
+        "layout.style.palette"
+      ],
+      "evidence_ids": [
+        "implementation",
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "current_encoded_output",
+          "method": "view beginning/moving midpoint/hold/end of each shot and final output; inspect complete audio separately",
+          "pass_condition": "readable intended text, preserved subjects, current material identity and deterministic motion; unperformed listening remains pending"
+        }
+      ]
+    },
+    {
+      "id": "brand",
+      "type": "group",
+      "role": "brand",
+      "parent_id": "canvas",
+      "z_index": 1,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "品牌栏，左品牌与右社区现场标签按flex计算"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          80,
+          62,
+          1280,
+          72
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "parameter_source": "layout.json + index.tsx",
+          "box_scope": "nominal first-shot snapshot only; evaluate current layout/parent transforms each frame"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24.6
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Visible or audible throughout declared global range; generated progress uses final output frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source_authority",
+          "target_id": null,
+          "rule": "All effective coordinates, sizes, parent transforms, visibility and timing use current layout.json/index.tsx; nominal snapshot is descriptive."
+        }
+      ],
+      "fixed": [
+        "source_clock_policy",
+        "source_audio_mute_policy"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation",
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "current_encoded_output",
+          "method": "view beginning/moving midpoint/hold/end of each shot and final output; inspect complete audio separately",
+          "pass_condition": "readable intended text, preserved subjects, current material identity and deterministic motion; unperformed listening remains pending"
+        }
+      ]
+    },
+    {
+      "id": "brand-mark",
+      "type": "text",
+      "role": "brand-mark",
+      "parent_id": "brand",
+      "z_index": 2,
+      "content": {
+        "mode": "editable",
+        "binding": "brand-slot",
+        "asset_id": null,
+        "description": "本期品牌文字"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1020,
+          72
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "parameter_source": "layout.json + index.tsx",
+          "box_scope": "nominal first-shot snapshot only; evaluate current layout/parent transforms each frame",
+          "font": "role from index.tsx; optional frozen fontAssets or declared system font",
+          "font_size": "source geometry/role; not a second numeric authority",
+          "max_lines": 1,
+          "overflow": "actual-font fit check and preview; no silent truncation"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24.6
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Visible or audible throughout declared global range; generated progress uses final output frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source_authority",
+          "target_id": null,
+          "rule": "All effective coordinates, sizes, parent transforms, visibility and timing use current layout.json/index.tsx; nominal snapshot is descriptive."
+        }
+      ],
+      "fixed": [
+        "source_clock_policy",
+        "source_audio_mute_policy"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation",
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "current_encoded_output",
+          "method": "view beginning/moving midpoint/hold/end of each shot and final output; inspect complete audio separately",
+          "pass_condition": "readable intended text, preserved subjects, current material identity and deterministic motion; unperformed listening remains pending"
+        }
+      ]
+    },
+    {
+      "id": "brand-context",
+      "type": "text",
+      "role": "brand-context",
+      "parent_id": "brand",
+      "z_index": 3,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "固定中性标签“社区现场”"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          1020,
+          0,
+          260,
+          72
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "parameter_source": "layout.json + index.tsx",
+          "box_scope": "nominal first-shot snapshot only; evaluate current layout/parent transforms each frame",
+          "font": "role from index.tsx; optional frozen fontAssets or declared system font",
+          "font_size": "source geometry/role; not a second numeric authority",
+          "max_lines": 1,
+          "overflow": "actual-font fit check and preview; no silent truncation"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24.6
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Visible or audible throughout declared global range; generated progress uses final output frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source_authority",
+          "target_id": null,
+          "rule": "All effective coordinates, sizes, parent transforms, visibility and timing use current layout.json/index.tsx; nominal snapshot is descriptive."
+        }
+      ],
+      "fixed": [
+        "source_clock_policy",
+        "source_audio_mute_policy"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation",
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "current_encoded_output",
+          "method": "view beginning/moving midpoint/hold/end of each shot and final output; inspect complete audio separately",
+          "pass_condition": "readable intended text, preserved subjects, current material identity and deterministic motion; unperformed listening remains pending"
+        }
+      ]
+    },
+    {
+      "id": "top-rule",
+      "type": "graphic",
+      "role": "top-rule",
+      "parent_id": "canvas",
+      "z_index": 4,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "稳定顶分隔线"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          80,
+          158,
+          1280,
+          2
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "parameter_source": "layout.json + index.tsx",
+          "box_scope": "nominal first-shot snapshot only; evaluate current layout/parent transforms each frame"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24.6
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Visible or audible throughout declared global range; generated progress uses final output frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source_authority",
+          "target_id": null,
+          "rule": "All effective coordinates, sizes, parent transforms, visibility and timing use current layout.json/index.tsx; nominal snapshot is descriptive."
+        }
+      ],
+      "fixed": [
+        "source_clock_policy",
+        "source_audio_mute_policy"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation",
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "current_encoded_output",
+          "method": "view beginning/moving midpoint/hold/end of each shot and final output; inspect complete audio separately",
+          "pass_condition": "readable intended text, preserved subjects, current material identity and deterministic motion; unperformed listening remains pending"
+        }
+      ]
+    },
+    {
+      "id": "chapter-label",
+      "type": "text",
+      "role": "chapter-label",
+      "parent_id": "canvas",
+      "z_index": 5,
+      "content": {
+        "mode": "editable",
+        "binding": "chapter-slot",
+        "asset_id": null,
+        "description": "按shot.chapter映射章节label"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          80,
+          190,
+          1280,
+          48
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "parameter_source": "layout.json + index.tsx",
+          "box_scope": "nominal first-shot snapshot only; evaluate current layout/parent transforms each frame",
+          "font": "role from index.tsx; optional frozen fontAssets or declared system font",
+          "font_size": "source geometry/role; not a second numeric authority",
+          "max_lines": 1,
+          "overflow": "actual-font fit check and preview; no silent truncation"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24.6
+      },
+      "states": [
+        {
+          "id": "entry",
+          "visible": true,
+          "description": "Current shot local age; source-selected clip/translation/reveal applies."
+        },
+        {
+          "id": "hold",
+          "visible": true,
+          "description": "After entry through shot end minus exit; reading text stable and original footage continues."
+        },
+        {
+          "id": "exit",
+          "visible": true,
+          "description": "Final exitFrames local interval; card lightly settles before next source cut."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source_authority",
+          "target_id": null,
+          "rule": "All effective coordinates, sizes, parent transforms, visibility and timing use current layout.json/index.tsx; nominal snapshot is descriptive."
+        }
+      ],
+      "fixed": [
+        "source_clock_policy",
+        "source_audio_mute_policy"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation",
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "current_encoded_output",
+          "method": "view beginning/moving midpoint/hold/end of each shot and final output; inspect complete audio separately",
+          "pass_condition": "readable intended text, preserved subjects, current material identity and deterministic motion; unperformed listening remains pending"
+        }
+      ]
+    },
+    {
+      "id": "chapter-dot",
+      "type": "graphic",
+      "role": "chapter-dot",
+      "parent_id": "chapter-label",
+      "z_index": 6,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "章节前小色块，跟随父行布局"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          19,
+          10,
+          10
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "parameter_source": "layout.json + index.tsx",
+          "box_scope": "nominal first-shot snapshot only; evaluate current layout/parent transforms each frame"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24.6
+      },
+      "states": [
+        {
+          "id": "entry",
+          "visible": true,
+          "description": "Current shot local age; source-selected clip/translation/reveal applies."
+        },
+        {
+          "id": "hold",
+          "visible": true,
+          "description": "After entry through shot end minus exit; reading text stable and original footage continues."
+        },
+        {
+          "id": "exit",
+          "visible": true,
+          "description": "Final exitFrames local interval; card lightly settles before next source cut."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source_authority",
+          "target_id": null,
+          "rule": "All effective coordinates, sizes, parent transforms, visibility and timing use current layout.json/index.tsx; nominal snapshot is descriptive."
+        }
+      ],
+      "fixed": [
+        "source_clock_policy",
+        "source_audio_mute_policy"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation",
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "current_encoded_output",
+          "method": "view beginning/moving midpoint/hold/end of each shot and final output; inspect complete audio separately",
+          "pass_condition": "readable intended text, preserved subjects, current material identity and deterministic motion; unperformed listening remains pending"
+        }
+      ]
+    },
+    {
+      "id": "footage-card",
+      "type": "group",
+      "role": "footage-card",
+      "parent_id": "canvas",
+      "z_index": 7,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "按shot.layout选择窗口，局部入场位移/遮罩，稳定阅读后轻收束"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          610,
+          305,
+          750,
+          1260
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "parameter_source": "layout.json + index.tsx",
+          "box_scope": "nominal first-shot snapshot only; evaluate current layout/parent transforms each frame",
+          "shot_layout": "props.shots[].layout"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24.6
+      },
+      "states": [
+        {
+          "id": "entry",
+          "visible": true,
+          "description": "Current shot local age; source-selected clip/translation/reveal applies."
+        },
+        {
+          "id": "hold",
+          "visible": true,
+          "description": "After entry through shot end minus exit; reading text stable and original footage continues."
+        },
+        {
+          "id": "exit",
+          "visible": true,
+          "description": "Final exitFrames local interval; card lightly settles before next source cut."
+        }
+      ],
+      "transitions": [
+        {
+          "from": "entry",
+          "to": "hold",
+          "trigger": "each shot at local frame0; interval evaluated relative to shot.from",
+          "start": 0,
+          "end": 0.5333333333333333,
+          "properties": {
+            "relative_to": "shot local frames",
+            "authority": "index.tsx and props.motion",
+            "behavior": "card translateY + inset, no footage speed change"
+          },
+          "easing": "cubic-bezier(.16,.78,.18,1)"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "source_authority",
+          "target_id": null,
+          "rule": "All effective coordinates, sizes, parent transforms, visibility and timing use current layout.json/index.tsx; nominal snapshot is descriptive."
+        }
+      ],
+      "fixed": [
+        "source_clock_policy",
+        "source_audio_mute_policy"
+      ],
+      "replaceable": [
+        "layout.style.shot_layout"
+      ],
+      "evidence_ids": [
+        "implementation",
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "current_encoded_output",
+          "method": "view beginning/moving midpoint/hold/end of each shot and final output; inspect complete audio separately",
+          "pass_condition": "readable intended text, preserved subjects, current material identity and deterministic motion; unperformed listening remains pending"
+        }
+      ]
+    },
+    {
+      "id": "footage",
+      "type": "video",
+      "role": "footage",
+      "parent_id": "footage-card",
+      "z_index": 8,
+      "content": {
+        "mode": "editable",
+        "binding": "footage-slot",
+        "asset_id": null,
+        "description": "真实原片、原速、静音；源内店招/人物/陈列为固化像素"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          750,
+          1260
+        ],
+        "fit": "contain",
+        "clip": "self",
+        "style": {
+          "parameter_source": "layout.json + index.tsx",
+          "box_scope": "nominal first-shot snapshot only; evaluate current layout/parent transforms each frame"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24.6
+      },
+      "states": [
+        {
+          "id": "entry",
+          "visible": true,
+          "description": "Current shot local age; source-selected clip/translation/reveal applies."
+        },
+        {
+          "id": "hold",
+          "visible": true,
+          "description": "After entry through shot end minus exit; reading text stable and original footage continues."
+        },
+        {
+          "id": "exit",
+          "visible": true,
+          "description": "Final exitFrames local interval; card lightly settles before next source cut."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source_authority",
+          "target_id": null,
+          "rule": "All effective coordinates, sizes, parent transforms, visibility and timing use current layout.json/index.tsx; nominal snapshot is descriptive."
+        }
+      ],
+      "fixed": [
+        "source_clock_policy",
+        "source_audio_mute_policy"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation",
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "current_encoded_output",
+          "method": "view beginning/moving midpoint/hold/end of each shot and final output; inspect complete audio separately",
+          "pass_condition": "readable intended text, preserved subjects, current material identity and deterministic motion; unperformed listening remains pending"
+        }
+      ]
+    },
+    {
+      "id": "card-edge",
+      "type": "graphic",
+      "role": "card-edge",
+      "parent_id": "footage-card",
+      "z_index": 9,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "随窗口大小与圆角变化的细描边"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          750,
+          1260
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "parameter_source": "layout.json + index.tsx",
+          "box_scope": "nominal first-shot snapshot only; evaluate current layout/parent transforms each frame"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24.6
+      },
+      "states": [
+        {
+          "id": "entry",
+          "visible": true,
+          "description": "Current shot local age; source-selected clip/translation/reveal applies."
+        },
+        {
+          "id": "hold",
+          "visible": true,
+          "description": "After entry through shot end minus exit; reading text stable and original footage continues."
+        },
+        {
+          "id": "exit",
+          "visible": true,
+          "description": "Final exitFrames local interval; card lightly settles before next source cut."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source_authority",
+          "target_id": null,
+          "rule": "All effective coordinates, sizes, parent transforms, visibility and timing use current layout.json/index.tsx; nominal snapshot is descriptive."
+        }
+      ],
+      "fixed": [
+        "source_clock_policy",
+        "source_audio_mute_policy"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation",
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "current_encoded_output",
+          "method": "view beginning/moving midpoint/hold/end of each shot and final output; inspect complete audio separately",
+          "pass_condition": "readable intended text, preserved subjects, current material identity and deterministic motion; unperformed listening remains pending"
+        }
+      ]
+    },
+    {
+      "id": "chapter-title",
+      "type": "text",
+      "role": "chapter-title",
+      "parent_id": "canvas",
+      "z_index": 10,
+      "content": {
+        "mode": "editable",
+        "binding": "title-slot",
+        "asset_id": null,
+        "description": "按语义显式分行的本期标题，逐行揭示后稳定停留"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          80,
+          500,
+          470,
+          560
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "parameter_source": "layout.json + index.tsx",
+          "box_scope": "nominal first-shot snapshot only; evaluate current layout/parent transforms each frame",
+          "font": "role from index.tsx; optional frozen fontAssets or declared system font",
+          "font_size": "source geometry/role; not a second numeric authority",
+          "max_lines": 3,
+          "overflow": "actual-font fit check and preview; no silent truncation",
+          "motion": "props.motion"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24.6
+      },
+      "states": [
+        {
+          "id": "entry",
+          "visible": true,
+          "description": "Current shot local age; source-selected clip/translation/reveal applies."
+        },
+        {
+          "id": "hold",
+          "visible": true,
+          "description": "After entry through shot end minus exit; reading text stable and original footage continues."
+        },
+        {
+          "id": "exit",
+          "visible": true,
+          "description": "Final exitFrames local interval; card lightly settles before next source cut."
+        }
+      ],
+      "transitions": [
+        {
+          "from": "entry",
+          "to": "hold",
+          "trigger": "each shot at local frame0; interval evaluated relative to shot.from",
+          "start": 0,
+          "end": 0.5333333333333333,
+          "properties": {
+            "relative_to": "shot local frames",
+            "authority": "index.tsx and props.motion",
+            "behavior": "line reveal with 3-frame stagger"
+          },
+          "easing": "cubic-bezier(.16,.78,.18,1)"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "source_authority",
+          "target_id": null,
+          "rule": "All effective coordinates, sizes, parent transforms, visibility and timing use current layout.json/index.tsx; nominal snapshot is descriptive."
+        }
+      ],
+      "fixed": [
+        "source_clock_policy",
+        "source_audio_mute_policy"
+      ],
+      "replaceable": [
+        "content",
+        "layout.style.motion"
+      ],
+      "evidence_ids": [
+        "implementation",
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "current_encoded_output",
+          "method": "view beginning/moving midpoint/hold/end of each shot and final output; inspect complete audio separately",
+          "pass_condition": "readable intended text, preserved subjects, current material identity and deterministic motion; unperformed listening remains pending"
+        }
+      ]
+    },
+    {
+      "id": "chapter-subtitle",
+      "type": "text",
+      "role": "chapter-subtitle",
+      "parent_id": "canvas",
+      "z_index": 11,
+      "content": {
+        "mode": "editable",
+        "binding": "subtitle-slot",
+        "asset_id": null,
+        "description": "辅助说明，可为空；不作为语音字幕"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          80,
+          1120,
+          470,
+          230
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "parameter_source": "layout.json + index.tsx",
+          "box_scope": "nominal first-shot snapshot only; evaluate current layout/parent transforms each frame",
+          "font": "role from index.tsx; optional frozen fontAssets or declared system font",
+          "font_size": "source geometry/role; not a second numeric authority",
+          "max_lines": 2,
+          "overflow": "actual-font fit check and preview; no silent truncation"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24.6
+      },
+      "states": [
+        {
+          "id": "entry",
+          "visible": true,
+          "description": "Current shot local age; source-selected clip/translation/reveal applies."
+        },
+        {
+          "id": "hold",
+          "visible": true,
+          "description": "After entry through shot end minus exit; reading text stable and original footage continues."
+        },
+        {
+          "id": "exit",
+          "visible": true,
+          "description": "Final exitFrames local interval; card lightly settles before next source cut."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source_authority",
+          "target_id": null,
+          "rule": "All effective coordinates, sizes, parent transforms, visibility and timing use current layout.json/index.tsx; nominal snapshot is descriptive."
+        }
+      ],
+      "fixed": [
+        "source_clock_policy",
+        "source_audio_mute_policy"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation",
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "current_encoded_output",
+          "method": "view beginning/moving midpoint/hold/end of each shot and final output; inspect complete audio separately",
+          "pass_condition": "readable intended text, preserved subjects, current material identity and deterministic motion; unperformed listening remains pending"
+        }
+      ]
+    },
+    {
+      "id": "shot-kicker",
+      "type": "text",
+      "role": "shot-kicker",
+      "parent_id": "canvas",
+      "z_index": 12,
+      "content": {
+        "mode": "editable",
+        "binding": "kicker-slot",
+        "asset_id": null,
+        "description": "短镜语义标签"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          80,
+          1420,
+          470,
+          55
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "parameter_source": "layout.json + index.tsx",
+          "box_scope": "nominal first-shot snapshot only; evaluate current layout/parent transforms each frame",
+          "font": "role from index.tsx; optional frozen fontAssets or declared system font",
+          "font_size": "source geometry/role; not a second numeric authority",
+          "max_lines": 1,
+          "overflow": "actual-font fit check and preview; no silent truncation"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24.6
+      },
+      "states": [
+        {
+          "id": "entry",
+          "visible": true,
+          "description": "Current shot local age; source-selected clip/translation/reveal applies."
+        },
+        {
+          "id": "hold",
+          "visible": true,
+          "description": "After entry through shot end minus exit; reading text stable and original footage continues."
+        },
+        {
+          "id": "exit",
+          "visible": true,
+          "description": "Final exitFrames local interval; card lightly settles before next source cut."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source_authority",
+          "target_id": null,
+          "rule": "All effective coordinates, sizes, parent transforms, visibility and timing use current layout.json/index.tsx; nominal snapshot is descriptive."
+        }
+      ],
+      "fixed": [
+        "source_clock_policy",
+        "source_audio_mute_policy"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation",
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "current_encoded_output",
+          "method": "view beginning/moving midpoint/hold/end of each shot and final output; inspect complete audio separately",
+          "pass_condition": "readable intended text, preserved subjects, current material identity and deterministic motion; unperformed listening remains pending"
+        }
+      ]
+    },
+    {
+      "id": "guide-line",
+      "type": "graphic",
+      "role": "guide-line",
+      "parent_id": "canvas",
+      "z_index": 13,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "从标题旁/素材下方描绘的重点引导线"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          80,
+          458,
+          140,
+          6
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "parameter_source": "layout.json + index.tsx",
+          "box_scope": "nominal first-shot snapshot only; evaluate current layout/parent transforms each frame"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24.6
+      },
+      "states": [
+        {
+          "id": "entry",
+          "visible": true,
+          "description": "Current shot local age; source-selected clip/translation/reveal applies."
+        },
+        {
+          "id": "hold",
+          "visible": true,
+          "description": "After entry through shot end minus exit; reading text stable and original footage continues."
+        },
+        {
+          "id": "exit",
+          "visible": true,
+          "description": "Final exitFrames local interval; card lightly settles before next source cut."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source_authority",
+          "target_id": null,
+          "rule": "All effective coordinates, sizes, parent transforms, visibility and timing use current layout.json/index.tsx; nominal snapshot is descriptive."
+        }
+      ],
+      "fixed": [
+        "source_clock_policy",
+        "source_audio_mute_policy"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation",
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "current_encoded_output",
+          "method": "view beginning/moving midpoint/hold/end of each shot and final output; inspect complete audio separately",
+          "pass_condition": "readable intended text, preserved subjects, current material identity and deterministic motion; unperformed listening remains pending"
+        }
+      ]
+    },
+    {
+      "id": "progress-track",
+      "type": "graphic",
+      "role": "progress-track",
+      "parent_id": "canvas",
+      "z_index": 14,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "全片进度基线"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          80,
+          1630,
+          1280,
+          4
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "parameter_source": "layout.json + index.tsx",
+          "box_scope": "nominal first-shot snapshot only; evaluate current layout/parent transforms each frame"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24.6
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Visible or audible throughout declared global range; generated progress uses final output frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source_authority",
+          "target_id": null,
+          "rule": "All effective coordinates, sizes, parent transforms, visibility and timing use current layout.json/index.tsx; nominal snapshot is descriptive."
+        }
+      ],
+      "fixed": [
+        "source_clock_policy",
+        "source_audio_mute_policy"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation",
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "current_encoded_output",
+          "method": "view beginning/moving midpoint/hold/end of each shot and final output; inspect complete audio separately",
+          "pass_condition": "readable intended text, preserved subjects, current material identity and deterministic motion; unperformed listening remains pending"
+        }
+      ]
+    },
+    {
+      "id": "progress-fill",
+      "type": "graphic",
+      "role": "progress-fill",
+      "parent_id": "progress-track",
+      "z_index": 15,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "输出帧归一化进度，不代表业务完成"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1280,
+          4
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "parameter_source": "layout.json + index.tsx",
+          "box_scope": "nominal first-shot snapshot only; evaluate current layout/parent transforms each frame"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24.6
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Visible or audible throughout declared global range; generated progress uses final output frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source_authority",
+          "target_id": null,
+          "rule": "All effective coordinates, sizes, parent transforms, visibility and timing use current layout.json/index.tsx; nominal snapshot is descriptive."
+        }
+      ],
+      "fixed": [
+        "source_clock_policy",
+        "source_audio_mute_policy"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation",
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "current_encoded_output",
+          "method": "view beginning/moving midpoint/hold/end of each shot and final output; inspect complete audio separately",
+          "pass_condition": "readable intended text, preserved subjects, current material identity and deterministic motion; unperformed listening remains pending"
+        }
+      ]
+    },
+    {
+      "id": "progress-head",
+      "type": "graphic",
+      "role": "progress-head",
+      "parent_id": "canvas",
+      "z_index": 16,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "随进度线移动的强调色小方块"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          74,
+          1626,
+          12,
+          12
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "parameter_source": "layout.json + index.tsx",
+          "box_scope": "nominal first-shot snapshot only; evaluate current layout/parent transforms each frame"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24.6
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Visible or audible throughout declared global range; generated progress uses final output frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source_authority",
+          "target_id": null,
+          "rule": "All effective coordinates, sizes, parent transforms, visibility and timing use current layout.json/index.tsx; nominal snapshot is descriptive."
+        },
+        {
+          "kind": "allow_overflow",
+          "target_id": "progress-track",
+          "rule": "12px accent intentionally extends 4px above the 4px progress track; canvas-contained."
+        }
+      ],
+      "fixed": [
+        "source_clock_policy",
+        "source_audio_mute_policy"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation",
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "current_encoded_output",
+          "method": "view beginning/moving midpoint/hold/end of each shot and final output; inspect complete audio separately",
+          "pass_condition": "readable intended text, preserved subjects, current material identity and deterministic motion; unperformed listening remains pending"
+        }
+      ]
+    },
+    {
+      "id": "location",
+      "type": "text",
+      "role": "location",
+      "parent_id": "canvas",
+      "z_index": 17,
+      "content": {
+        "mode": "editable",
+        "binding": "location-slot",
+        "asset_id": null,
+        "description": "本期地点文本，保留真实门店身份"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          80,
+          1680,
+          1280,
+          56
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "parameter_source": "layout.json + index.tsx",
+          "box_scope": "nominal first-shot snapshot only; evaluate current layout/parent transforms each frame",
+          "font": "role from index.tsx; optional frozen fontAssets or declared system font",
+          "font_size": "source geometry/role; not a second numeric authority",
+          "max_lines": 1,
+          "overflow": "actual-font fit check and preview; no silent truncation"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24.6
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Visible or audible throughout declared global range; generated progress uses final output frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source_authority",
+          "target_id": null,
+          "rule": "All effective coordinates, sizes, parent transforms, visibility and timing use current layout.json/index.tsx; nominal snapshot is descriptive."
+        }
+      ],
+      "fixed": [
+        "source_clock_policy",
+        "source_audio_mute_policy"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation",
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "current_encoded_output",
+          "method": "view beginning/moving midpoint/hold/end of each shot and final output; inspect complete audio separately",
+          "pass_condition": "readable intended text, preserved subjects, current material identity and deterministic motion; unperformed listening remains pending"
+        }
+      ]
+    },
+    {
+      "id": "location-latin",
+      "type": "text",
+      "role": "location-latin",
+      "parent_id": "location",
+      "z_index": 18,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "固定英文品牌HAIKE AI"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          1000,
+          0,
+          280,
+          56
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "parameter_source": "layout.json + index.tsx",
+          "box_scope": "nominal first-shot snapshot only; evaluate current layout/parent transforms each frame",
+          "font": "role from index.tsx; optional frozen fontAssets or declared system font",
+          "font_size": "source geometry/role; not a second numeric authority",
+          "max_lines": 1,
+          "overflow": "actual-font fit check and preview; no silent truncation"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24.6
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Visible or audible throughout declared global range; generated progress uses final output frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source_authority",
+          "target_id": null,
+          "rule": "All effective coordinates, sizes, parent transforms, visibility and timing use current layout.json/index.tsx; nominal snapshot is descriptive."
+        }
+      ],
+      "fixed": [
+        "source_clock_policy",
+        "source_audio_mute_policy"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation",
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "current_encoded_output",
+          "method": "view beginning/moving midpoint/hold/end of each shot and final output; inspect complete audio separately",
+          "pass_condition": "readable intended text, preserved subjects, current material identity and deterministic motion; unperformed listening remains pending"
+        }
+      ]
+    },
+    {
+      "id": "master-audio",
+      "type": "audio",
+      "role": "master-audio",
+      "parent_id": null,
+      "z_index": 19,
+      "content": {
+        "mode": "editable",
+        "binding": "audio-slot",
+        "asset_id": null,
+        "description": "单一48kHz立体声PCM16母带；音乐与音效，零旁白"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "parameter_source": "layout.json + index.tsx",
+          "box_scope": "nominal first-shot snapshot only; evaluate current layout/parent transforms each frame"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24.6
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Visible or audible throughout declared global range; generated progress uses final output frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source_authority",
+          "target_id": null,
+          "rule": "All effective coordinates, sizes, parent transforms, visibility and timing use current layout.json/index.tsx; nominal snapshot is descriptive."
+        }
+      ],
+      "fixed": [
+        "source_clock_policy",
+        "source_audio_mute_policy"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation",
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "current_encoded_output",
+          "method": "view beginning/moving midpoint/hold/end of each shot and final output; inspect complete audio separately",
+          "pass_condition": "readable intended text, preserved subjects, current material identity and deterministic motion; unperformed listening remains pending"
+        }
+      ]
+    }
+  ],
+  "slots": [
+    {
+      "id": "brand-slot",
+      "element_id": "brand-mark",
+      "property": "content",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "path": "props.brand",
+        "authority": "types.ts + adapter validate_props",
+        "characters": 24
+      },
+      "missing": "阻断输入冻结",
+      "overflow": "修订本期品牌显示稿并重新查看；不截断"
+    },
+    {
+      "id": "chapter-slot",
+      "element_id": "chapter-label",
+      "property": "content",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "path": "props.chapters",
+        "clock": "global 30fps frames",
+        "references": "shot.chapter must identify an existing chapter"
+      },
+      "missing": "阻断输入冻结",
+      "overflow": "拆分语义章节并重验实际阅读"
+    },
+    {
+      "id": "footage-slot",
+      "element_id": "footage",
+      "property": "content",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "path": "props.shots",
+        "source": "flat local filenames",
+        "frame_range": "30..120 frames per shot",
+        "speed": 1,
+        "loop": false,
+        "source_audio": "muted",
+        "coverage": "contiguous [0,durationFrames)"
+      },
+      "missing": "登记待补镜头，阻断渲染",
+      "overflow": "调整真实源区间或增加独立镜头，保持原速"
+    },
+    {
+      "id": "title-slot",
+      "element_id": "chapter-title",
+      "property": "content",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "path": "props.shots[].title",
+        "lines": 3,
+        "reading": "adapter guard plus actual-font visual proof",
+        "side_layout": "explicit short semantic lines; no automatic shrink"
+      },
+      "missing": "阻断输入冻结",
+      "overflow": "按语义换行或改本期上屏稿，保留事实和限定词"
+    },
+    {
+      "id": "subtitle-slot",
+      "element_id": "chapter-subtitle",
+      "property": "content",
+      "value_type": "array",
+      "required": false,
+      "limits": {
+        "path": "props.shots[].subtitle",
+        "lines": 2,
+        "characters": 48
+      },
+      "missing": "保留为空，不生成占位内容",
+      "overflow": "拆句或缩减辅助信息后重验"
+    },
+    {
+      "id": "kicker-slot",
+      "element_id": "shot-kicker",
+      "property": "content",
+      "value_type": "array",
+      "required": false,
+      "limits": {
+        "path": "props.shots[].kicker",
+        "characters": 24
+      },
+      "missing": "保留为空",
+      "overflow": "使用更短语义标签并重验"
+    },
+    {
+      "id": "location-slot",
+      "element_id": "location",
+      "property": "content",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "path": "props.location",
+        "characters": 48
+      },
+      "missing": "阻断输入冻结",
+      "overflow": "核对真实地点并重新组织可读显示"
+    },
+    {
+      "id": "audio-slot",
+      "element_id": "master-audio",
+      "property": "content",
+      "value_type": "asset",
+      "required": true,
+      "limits": {
+        "path": "props.audio",
+        "filename": "master.wav",
+        "sample_rate": 48000,
+        "channels": 2,
+        "sample_width_bits": 16,
+        "samples_per_frame": 1600,
+        "narration": "none"
+      },
+      "missing": "阻断渲染，保留素材和方案",
+      "overflow": "音乐/音效按确定主时钟重新混音，保留原文件"
+    },
+    {
+      "id": "palette-slot",
+      "element_id": "canvas",
+      "property": "layout.style.palette",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "path": "props.palette",
+        "fields": [
+          "paper",
+          "ink",
+          "muted",
+          "blue",
+          "orange",
+          "line"
+        ],
+        "format": "#RRGGBB"
+      },
+      "missing": "阻断输入冻结",
+      "overflow": "调整合法颜色并重验对比"
+    },
+    {
+      "id": "layout-slot",
+      "element_id": "footage-card",
+      "property": "layout.style.shot_layout",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "path": "props.shots[].layout",
+        "enum": [
+          "wide",
+          "portrait-left",
+          "portrait-right",
+          "portrait-center"
+        ],
+        "authority": "layout.json + index.tsx"
+      },
+      "missing": "阻断输入冻结",
+      "overflow": "在已实现布局内重选，新增布局先开发复验"
+    },
+    {
+      "id": "motion-slot",
+      "element_id": "chapter-title",
+      "property": "layout.style.motion",
+      "value_type": "object",
+      "required": false,
+      "limits": {
+        "path": "props.motion",
+        "authority": "adapter validate_props and index.tsx",
+        "unit": "frames"
+      },
+      "missing": "使用实现默认值",
+      "overflow": "修订合法时长并保证稳定阅读"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "design",
+      "source_kind": "design",
+      "source": "用户明确要求项目自有可编辑模板及无口播店长实拍短样。",
+      "locator": "README input/operation contract; props.example is illustrative only.",
+      "method": "把实际任务映射到受控替换槽；独立实现，受保护原包保持不变。",
+      "file": "README.md",
+      "sha256": null
+    },
+    {
+      "id": "implementation",
+      "source_kind": "design",
+      "source": "Project-owned Remotion and queue adapter.",
+      "locator": "index.tsx / layout.json / adapter source",
+      "method": "源码说明状态、时钟和边界；它本身不证明实际渲染/视觉通过。",
+      "file": "index.tsx",
+      "sha256": null
+    },
+    {
+      "id": "sample-technical",
+      "source_kind": "measurement",
+      "source": "2026-10-26本机v001，24.6秒738帧，8镜冻结原片；1440×1800/30fps、20.492Mbps、全解码，-14.21LUFS/-2.16dBTP。仅该输入范围。",
+      "locator": "quality.json",
+      "method": "ffprobe、FFmpeg全片解码、loudnorm；不代替主观听审或真机。",
+      "file": "../../projects/studio-4faceefd8b32ee25/renders/store-motion-1ba5c437fcf82dc9e1a0/quality.json",
+      "sha256": "66a862cccb9083500e5d7c5f9ccea6021743318cb2925892fb5bbf51136b3ede"
+    },
+    {
+      "id": "sample-visual",
+      "source_kind": "observation",
+      "source": "本机v001实际编码帧，全部8镜共40帧；wide及portrait-left/right已抽样，portrait-center本期未用。",
+      "locator": "review/review-record.json及四张实际查看接触表",
+      "method": "逐镜开头、运动中点、入场稳定、停留中点、末帧实际看图；文字区域差分，不代表连续观看。",
+      "file": "../../projects/studio-4faceefd8b32ee25/renders/store-motion-1ba5c437fcf82dc9e1a0/review/review-record.json",
+      "sha256": "768fdfd18ca437a5beecfa61bdfb2f2e919d2d7b7095ccd664e24f3eb01f0bf1"
+    },
+    {
+      "id": "sample-queue",
+      "source_kind": "measurement",
+      "source": "本机统一队列PQ-2292d58eacc039f04a2f，completed，attempt_count=1；作品候选未确认或发布。",
+      "locator": "queue-result.json",
+      "method": "读回真实队列终态、作品版本和SHA；再次运行原请求复用完成产物。",
+      "file": "../../projects/studio-4faceefd8b32ee25/renders/store-motion-1ba5c437fcf82dc9e1a0/queue-result.json",
+      "sha256": "fb0254b7229ec3c868762ee1d0d9f2320c7073f1755bce0a2dd893933332ca3b"
+    }
+  ],
+  "unknowns": [],
+  "validation": {
+    "structure": {
+      "status": "pass",
+      "evidence_ids": ["sample-queue"],
+      "note": "本规格单独check_spec、公开示例参数及62项新合同/队列测试通过；工作区其他旧手册的问题单列。"
+    },
+    "technical": {
+      "status": "pass",
+      "evidence_ids": ["sample-technical"],
+      "note": "本机v001完整解码、帧数/尺寸/时长/码率/音轨及峰值通过；不扩大到新输入或异机。"
+    },
+    "visual": {
+      "status": "pass",
+      "evidence_ids": ["sample-visual"],
+      "note": "实际查看8镜40个编码帧，主体、文案、入场与切口抽样通过；连续观看、未使用的portrait-center和新文案需另验。"
+    },
+    "audio": {
+      "status": "pending",
+      "evidence_ids": ["sample-technical"],
+      "note": "无口播母带及编码音频测量通过；音乐与音效的连续听审、设备外放尚待确认。"
+    },
+    "platform": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "本轮未发布；目标平台UI与真实设备待独立验收。"
+    },
+    "user_review": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "待用户对实际短样版本确认。"
+    },
+    "production": {
+      "status": "pass",
+      "evidence_ids": ["sample-queue"],
+      "note": "本机真实统一队列到成片、作品候选登记及同请求恢复通过；未发布、未用户确认，异机待验。"
+    }
+  },
+  "extensions": {
+    "material_edit": {
+      "source_ranges": "shots[].offset is source seconds; from/frames are global output frames. Sources are SHA-bound, original-rate and muted; source length and actual reviewed interval must contain every selected frame.",
+      "cut_policy": "Continuous complete main timeline with half-open [from,from+frames) ranges; no freeze, loop or speed change; each shot1–4seconds. Motion occurs on the card and reading layers, not by time-stretching source."
+    },
+    "graphic": {
+      "text_policy": "Explicit semantic title lines, editable current text; preserve names, negation, numbers and qualifiers. Validate legal capacity then actual-font fit and encoded readability.",
+      "asset_fit": "contain is the sample default to preserve full robots and storefronts. cover/objectPosition are controlled fields requiring actual-frame review after crop change."
+    },
+    "speech_free": {
+      "contract": "store-motion-showcase-v1",
+      "rules": "No narration, source speech, ASR, TTS or avatar slots. Only the current music+SFX master audio is rendered; all source videos muted."
+    }
+  },
+  "operations": [
+    {
+      "id": "freeze",
+      "input": "Current props + source mapping + title, actual original files, audio receipt and reviewed source windows.",
+      "action": "Validate current source/clock/text fields; prepare freezes props, original media hashes and implementation identity.",
+      "output": "Project artifacts/store-motion-request.json and verified source copies.",
+      "completion": "All required slots valid, master sample count exact, original intervals and review hashes match, zero-cloud and no-publication boundaries frozen.",
+      "recovery": "Repair missing input or review exact new interval; preserve original files and start a new frozen revision for changed inputs.",
+      "entrypoint": "../../scripts/store_motion_showcase.py --input <current-input.json>"
+    },
+    {
+      "id": "render",
+      "input": "Original frozen request and queue job.",
+      "action": "Submit idempotently through studio_investment_recompose/store-motion-showcase-v1; registered worker invokes VideoCompose/Remotion and final encoding.",
+      "output": "showcase.mp4, quality.json, result.json and candidate work record.",
+      "completion": "Queue status and media both complete; full decode, exact output grid, video stream>=20Mbps, audio true peak<=-1.5dBTP and current hashes pass.",
+      "recovery": "Read original job/request; reuse completed artifacts, resume original failed local stage. Runtime changes require a fresh frozen request.",
+      "entrypoint": "../../scripts/store_motion_showcase.py --request <frozen-request.json> --output-dir <delivery>"
+    },
+    {
+      "id": "verify",
+      "input": "Current encoded sample, frozen props, source review, audio tracks and QA.",
+      "action": "Check all shot starts/moving midpoints/holds/endpoints, complete playback and separately recorded sound/target-device checks.",
+      "output": "Actual inspected-frame list, review scope, final identity and playable handoff.",
+      "completion": "Every applicable dimension has a fact-bound result; technical, sampled visual, continuous listening, platform and user acceptance remain distinct.",
+      "recovery": "Localize failing field and output time; fix source of truth, render fresh version and recheck affected/related dimensions.",
+      "entrypoint": "README.md#4-视觉动效与声音交付"
+    }
+  ]
+}

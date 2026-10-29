@@ -1,0 +1,13 @@
+{
+  "version": "investment-style-lab-v1",
+  "fps": 30,
+  "durationInFrames": 360,
+  "beatStartFrames": [0, 72, 162, 270],
+  "dimensions": {"9x16": [1080, 1920], "4x5": [1440, 1800], "1x1": [1536, 1536], "16x9": [1920, 1080]},
+  "export": {"codec": "h264", "videoBitrate": "20M", "rateControl": "abr", "crf": null, "imageFormat": "png", "preset": "slow", "pixelFormat": "yuv420p"},
+  "styles": {"3": "榛砂建筑", "4": "紫电声场", "5": "森林图鉴", "6": "琥珀票据", "7": "暗幕剧场", "8": "珊瑚折纸", "9": "黑白字阵", "10": "酒红画册"},
+  "footerDisclosure": false,
+  "sourceFit": "contain",
+  "speed": 1,
+  "textClock": "observed cue intervals in seconds, mapped onto 30fps; no synthesized per-character clock"
+}

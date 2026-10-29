@@ -1,0 +1,5 @@
+[Unit]
+Description=Load renewed shared IP certificate into Haike API proxy
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/systemctl reload haike-api-proxy.service

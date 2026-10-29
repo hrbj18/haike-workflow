@@ -1,0 +1,633 @@
+{
+  "schema": "haike.motion-native-story-profile/1",
+  "template_id": "motiongit-native-story-v1",
+  "version": 1,
+  "source": "MotionGit template-03-native@2.7.18-alpha.2 public guide/capabilities; checked canonical 60fps action schedule",
+  "native_layout": "landscape",
+  "fps": 60,
+  "clock_quantum_frames": 12,
+  "max_silence_tail_seconds": 2,
+  "wall": {
+    "display_sheets": 389,
+    "sheet_width": 640,
+    "sheet_height": 360,
+    "columns": 4,
+    "rows": 4,
+    "collages_per_view": 3
+  },
+  "categories": {
+    "count": 4,
+    "sequence_fps": 30,
+    "sequence_frames": 360
+  },
+  "lens": {
+    "sequence_fps": 30,
+    "sequence_frames": 369
+  },
+  "groups": [
+    {
+      "id": "s01",
+      "native_id": "03-A:s01",
+      "intent": "problem-showcase",
+      "phases": [
+        "hook",
+        "burden",
+        "reversal",
+        "portfolio",
+        "payoff"
+      ],
+      "counts": {},
+      "baseline_frames": 348,
+      "source_frames": 528,
+      "max_quiet_frames": 180,
+      "manifest_digest": "525f2216532222b56e6f69f451d011a7f688208e71b0e0ac4004bcfbec073f16",
+      "cues": {
+        "opening": 0,
+        "title_slam": 78,
+        "timeline": 150,
+        "strike": 197,
+        "wall_handoff": 234,
+        "statement_1": 327,
+        "statement_2": 366,
+        "payoff": 465
+      },
+      "clock_parts": [
+        {
+          "kind": "protected",
+          "from": 0,
+          "to": 144,
+          "baseline_frames": 144
+        },
+        {
+          "kind": "quiet",
+          "from": 144,
+          "to": 150,
+          "baseline_frames": 1
+        },
+        {
+          "kind": "protected",
+          "from": 150,
+          "to": 288,
+          "baseline_frames": 138
+        },
+        {
+          "kind": "quiet",
+          "from": 288,
+          "to": 462,
+          "baseline_frames": 27
+        },
+        {
+          "kind": "protected",
+          "from": 462,
+          "to": 495,
+          "baseline_frames": 33
+        },
+        {
+          "kind": "quiet",
+          "from": 495,
+          "to": 528,
+          "baseline_frames": 5
+        }
+      ],
+      "fields": [
+        {
+          "inputPath": "chapter",
+          "type": "text",
+          "required": true,
+          "maxChars": 20
+        },
+        {
+          "inputPath": "claim.subject",
+          "type": "text",
+          "required": true,
+          "maxChars": 10
+        },
+        {
+          "inputPath": "claim.connector",
+          "type": "text",
+          "required": true,
+          "maxChars": 8
+        },
+        {
+          "inputPath": "claim.destination",
+          "type": "text",
+          "required": true,
+          "maxChars": 8
+        },
+        {
+          "inputPath": "context",
+          "type": "text",
+          "required": true,
+          "maxChars": 25
+        },
+        {
+          "inputPath": "burden.heading",
+          "type": "text",
+          "required": true,
+          "maxChars": 27
+        },
+        {
+          "inputPath": "burden.claim",
+          "type": "text",
+          "required": true,
+          "maxChars": 8
+        },
+        {
+          "inputPath": "burden.recordingLabel",
+          "type": "text",
+          "required": true,
+          "maxChars": 13
+        },
+        {
+          "inputPath": "response.invitation",
+          "type": "text",
+          "required": true,
+          "maxChars": 10
+        },
+        {
+          "inputPath": "response.subject",
+          "type": "text",
+          "required": true,
+          "maxChars": 14
+        },
+        {
+          "inputPath": "response.connector",
+          "type": "text",
+          "required": true,
+          "maxChars": 8
+        },
+        {
+          "inputPath": "response.conclusion",
+          "type": "text",
+          "required": true,
+          "maxChars": 8
+        }
+      ]
+    },
+    {
+      "id": "s04",
+      "native_id": "03-A:s04",
+      "intent": "category-showcase",
+      "phases": [
+        "categories",
+        "portfolio",
+        "quality",
+        "rejection",
+        "camera-language",
+        "narrative"
+      ],
+      "counts": {
+        "categories": 4
+      },
+      "baseline_frames": 695,
+      "source_frames": 738,
+      "max_quiet_frames": 180,
+      "manifest_digest": "525f2216532222b56e6f69f451d011a7f688208e71b0e0ac4004bcfbec073f16",
+      "cues": {
+        "category_title": 0,
+        "category_1": 166,
+        "category_2": 201,
+        "category_3": 236,
+        "category_4": 282,
+        "wall_expand": 309,
+        "quality": 414,
+        "cross_out": 516,
+        "camera_demo": 561,
+        "narrative_arc": 639
+      },
+      "clock_parts": [
+        {
+          "kind": "protected",
+          "from": 0,
+          "to": 138,
+          "baseline_frames": 138
+        },
+        {
+          "kind": "quiet",
+          "from": 138,
+          "to": 166,
+          "baseline_frames": 10
+        },
+        {
+          "kind": "protected",
+          "from": 166,
+          "to": 528,
+          "baseline_frames": 362
+        },
+        {
+          "kind": "quiet",
+          "from": 528,
+          "to": 561,
+          "baseline_frames": 12
+        },
+        {
+          "kind": "protected",
+          "from": 561,
+          "to": 732,
+          "baseline_frames": 171
+        },
+        {
+          "kind": "quiet",
+          "from": 732,
+          "to": 738,
+          "baseline_frames": 2
+        }
+      ],
+      "fields": [
+        {
+          "inputPath": "chapter",
+          "type": "text",
+          "required": true,
+          "maxChars": 17
+        },
+        {
+          "inputPath": "scope.connector",
+          "type": "text",
+          "required": true,
+          "maxChars": 8
+        },
+        {
+          "inputPath": "scope.initial",
+          "type": "text",
+          "required": true,
+          "maxChars": 8
+        },
+        {
+          "inputPath": "scope.heading",
+          "type": "text",
+          "required": true,
+          "maxChars": 8
+        },
+        {
+          "inputPath": "scope.conclusion",
+          "type": "text",
+          "required": true,
+          "maxChars": 9
+        },
+        {
+          "inputPath": "categories.0.label",
+          "type": "text",
+          "required": true,
+          "maxChars": 8
+        },
+        {
+          "inputPath": "categories.0.note",
+          "type": "text",
+          "required": true,
+          "maxChars": 18
+        },
+        {
+          "inputPath": "categories.1.label",
+          "type": "text",
+          "required": true,
+          "maxChars": 8
+        },
+        {
+          "inputPath": "categories.1.note",
+          "type": "text",
+          "required": true,
+          "maxChars": 20
+        },
+        {
+          "inputPath": "categories.2.label",
+          "type": "text",
+          "required": true,
+          "maxChars": 8
+        },
+        {
+          "inputPath": "categories.2.note",
+          "type": "text",
+          "required": true,
+          "maxChars": 20
+        },
+        {
+          "inputPath": "categories.3.label",
+          "type": "text",
+          "required": true,
+          "maxChars": 9
+        },
+        {
+          "inputPath": "categories.3.note",
+          "type": "text",
+          "required": true,
+          "maxChars": 21
+        },
+        {
+          "inputPath": "wall.attribution",
+          "type": "text",
+          "required": true,
+          "maxChars": 28
+        },
+        {
+          "inputPath": "wall.countLabel",
+          "type": "text",
+          "required": true,
+          "maxChars": 27
+        },
+        {
+          "inputPath": "claim.line1",
+          "type": "text",
+          "required": true,
+          "maxChars": 10
+        },
+        {
+          "inputPath": "claim.line2",
+          "type": "text",
+          "required": true,
+          "maxChars": 8
+        },
+        {
+          "inputPath": "claim.line3",
+          "type": "text",
+          "required": true,
+          "maxChars": 10
+        },
+        {
+          "inputPath": "template.label",
+          "type": "text",
+          "required": true,
+          "maxChars": 17
+        },
+        {
+          "inputPath": "contrast.line1",
+          "type": "text",
+          "required": true,
+          "maxChars": 10
+        },
+        {
+          "inputPath": "contrast.line2",
+          "type": "text",
+          "required": true,
+          "maxChars": 8
+        },
+        {
+          "inputPath": "lens.wideLabel",
+          "type": "text",
+          "required": true,
+          "maxChars": 11
+        },
+        {
+          "inputPath": "lens.connector",
+          "type": "text",
+          "required": true,
+          "maxChars": 8
+        },
+        {
+          "inputPath": "lens.heading",
+          "type": "text",
+          "required": true,
+          "maxChars": 8
+        },
+        {
+          "inputPath": "rhythm.heading",
+          "type": "text",
+          "required": true,
+          "maxChars": 8
+        },
+        {
+          "inputPath": "rhythm.parts.0",
+          "type": "text",
+          "required": true,
+          "maxChars": 8
+        },
+        {
+          "inputPath": "rhythm.parts.1",
+          "type": "text",
+          "required": true,
+          "maxChars": 8
+        },
+        {
+          "inputPath": "rhythm.parts.2",
+          "type": "text",
+          "required": true,
+          "maxChars": 8
+        },
+        {
+          "inputPath": "rhythm.parts.3",
+          "type": "text",
+          "required": true,
+          "maxChars": 8
+        },
+        {
+          "inputPath": "lens.pushLabel",
+          "type": "dynamicText",
+          "required": true,
+          "maxChars": 14
+        },
+        {
+          "inputPath": "lens.trackLabel",
+          "type": "dynamicText",
+          "required": true,
+          "maxChars": 17
+        },
+        {
+          "inputPath": "lens.closeLabel",
+          "type": "dynamicText",
+          "required": true,
+          "maxChars": 11
+        }
+      ]
+    },
+    {
+      "id": "s08",
+      "native_id": "03-A:s08",
+      "intent": "warning-to-action",
+      "phases": [
+        "closing",
+        "change",
+        "warning",
+        "growth",
+        "friction",
+        "action",
+        "comments"
+      ],
+      "counts": {
+        "comparison": 2
+      },
+      "baseline_frames": 793,
+      "source_frames": 793,
+      "max_quiet_frames": 180,
+      "manifest_digest": "525f2216532222b56e6f69f451d011a7f688208e71b0e0ac4004bcfbec073f16",
+      "cues": {
+        "closing": 0,
+        "era": 129,
+        "warning": 234,
+        "growth": 342,
+        "frame_work": 408,
+        "call_to_action": 534,
+        "comments": 624
+      },
+      "clock_parts": [
+        {
+          "kind": "quiet",
+          "from": 0,
+          "to": 129,
+          "baseline_frames": 129
+        },
+        {
+          "kind": "protected",
+          "from": 129,
+          "to": 228,
+          "baseline_frames": 99
+        },
+        {
+          "kind": "quiet",
+          "from": 228,
+          "to": 234,
+          "baseline_frames": 6
+        },
+        {
+          "kind": "protected",
+          "from": 234,
+          "to": 528,
+          "baseline_frames": 294
+        },
+        {
+          "kind": "quiet",
+          "from": 528,
+          "to": 534,
+          "baseline_frames": 6
+        },
+        {
+          "kind": "protected",
+          "from": 534,
+          "to": 618,
+          "baseline_frames": 84
+        },
+        {
+          "kind": "quiet",
+          "from": 618,
+          "to": 624,
+          "baseline_frames": 6
+        },
+        {
+          "kind": "protected",
+          "from": 624,
+          "to": 792,
+          "baseline_frames": 168
+        },
+        {
+          "kind": "quiet",
+          "from": 792,
+          "to": 793,
+          "baseline_frames": 1
+        }
+      ],
+      "fields": [
+        {
+          "inputPath": "chapter",
+          "type": "text",
+          "required": true,
+          "maxChars": 16
+        },
+        {
+          "inputPath": "reflection.context",
+          "type": "text",
+          "required": true,
+          "maxChars": 17
+        },
+        {
+          "inputPath": "reflection.subject",
+          "type": "text",
+          "required": true,
+          "maxChars": 9
+        },
+        {
+          "inputPath": "reflection.era",
+          "type": "text",
+          "required": true,
+          "maxChars": 8
+        },
+        {
+          "inputPath": "reflection.connector",
+          "type": "text",
+          "required": true,
+          "maxChars": 8
+        },
+        {
+          "inputPath": "reflection.conclusion",
+          "type": "text",
+          "required": true,
+          "maxChars": 8
+        },
+        {
+          "inputPath": "capacity.heading",
+          "type": "text",
+          "required": true,
+          "maxChars": 11
+        },
+        {
+          "inputPath": "capacity.opponentLabel",
+          "type": "text",
+          "required": true,
+          "maxChars": 8
+        },
+        {
+          "inputPath": "capacity.augmentationLabel",
+          "type": "text",
+          "required": true,
+          "maxChars": 8
+        },
+        {
+          "inputPath": "capacity.selfLabel",
+          "type": "text",
+          "required": true,
+          "maxChars": 8
+        },
+        {
+          "inputPath": "action.heading",
+          "type": "text",
+          "required": true,
+          "maxChars": 18
+        },
+        {
+          "inputPath": "brand.line1",
+          "type": "text",
+          "required": true,
+          "maxChars": 8
+        },
+        {
+          "inputPath": "brand.line2",
+          "type": "text",
+          "required": true,
+          "maxChars": 8
+        },
+        {
+          "inputPath": "brand.description",
+          "type": "text",
+          "required": true,
+          "maxChars": 21
+        },
+        {
+          "inputPath": "invitation.heading",
+          "type": "text",
+          "required": true,
+          "maxChars": 14
+        },
+        {
+          "inputPath": "invitation.note",
+          "type": "text",
+          "required": true,
+          "maxChars": 14
+        },
+        {
+          "inputPath": "signoff",
+          "type": "text",
+          "required": true,
+          "maxChars": 8
+        },
+        {
+          "inputPath": "capacity.factor",
+          "type": "number",
+          "required": true
+        },
+        {
+          "inputPath": "reaction.label",
+          "type": "dynamicText",
+          "required": true,
+          "maxChars": 16
+        }
+      ]
+    }
+  ]
+}

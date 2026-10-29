@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920" role="img" aria-label="深蓝视窗N1 screenshot版式示意">
+<!-- Original vector layout reference. No private image, recording or external asset. -->
+<defs><linearGradient id="bg" x2="0" y2="1"><stop stop-color="#1b3158"/><stop offset="1" stop-color="#080f1c"/></linearGradient></defs>
+<rect width="1080" height="1920" fill="url(#bg)"/>
+<g font-family="Microsoft YaHei,sans-serif"><text x="540" y="280" fill="#ffd602" text-anchor="middle" font-size="78" font-weight="bold">深蓝视窗 N1</text><text x="540" y="360" fill="white" text-anchor="middle" font-size="60" font-weight="bold">一套版式 · 四种画面</text><text x="540" y="435" fill="white" text-anchor="middle" font-size="54">放入你的人物与内容</text>
+<text x="60" y="530" fill="#b4c5dd" font-size="28">版式示意 · 通用人物与内容</text><rect y="566" width="1080" height="782" rx="20" fill="#0b1d30"/>
+<rect x="120" y="640" width="840" height="620" rx="18" fill="#f4f7fc"/><text x="175" y="745" fill="#203c61" font-size="44">来源截图</text><g fill="#a2b0c1"><rect x="175" y="800" width="690" height="20" rx="8"/><rect x="175" y="860" width="610" height="20" rx="8"/><rect x="175" y="920" width="690" height="20" rx="8"/><rect x="175" y="980" width="560" height="20" rx="8"/></g><path d="M175 1016H735" stroke="#ed604a" stroke-width="9"/><text x="175" y="1165" fill="#60758f" font-size="30">通用说明卡 · 非真实新闻引用</text>
+<circle cx="210" cy="1510" r="102" fill="#244463" stroke="#9ab1d1" stroke-width="5"/><circle cx="210" cy="1478" r="30" fill="#c1cee0"/><path d="M152 1565v-23c0-30 25-45 58-45s58 15 58 45v23" fill="#8da7c9"/>
+<rect x="290" y="1640" width="500" height="104" rx="52" fill="#1c3658" stroke="#385678"/>
+<rect x="415" y="1665" width="54" height="54" rx="14" fill="#ffd602"/><text x="442" y="1705" text-anchor="middle" fill="#112747" font-size="40" font-weight="bold">H</text><text x="495" y="1710" fill="white" font-size="42" font-weight="bold">海客科技</text>
+<text x="540" y="1878" fill="#ffffff" opacity=".07" text-anchor="middle" font-size="110" font-weight="bold">HAIKE</text></g><rect y="1895" width="1080" height="25" fill="#ffd602"/>
+</svg>

@@ -1,0 +1,181 @@
+{
+  "schema": "videohub-capability-matrix-v1",
+  "updated_at": "2026-09-21",
+  "purpose": "机读版能力矩阵，供 Agent 与 verify/check_all.py 消费。",
+  "tiers": {
+    "base": {
+      "label": "基础服务",
+      "keys_required": 0,
+      "capabilities": [
+        {
+          "id": "bilibili_collect",
+          "name": "B站搜索与下载",
+          "requires": [],
+          "evidence": "copy_skill/src/douyin_intelligence/sources/bilibili.py 模块 docstring: 'Standard library only ... no login is required'",
+          "cost": "free"
+        },
+        {
+          "id": "remotion_render",
+          "name": "Remotion 本地渲染",
+          "requires": [],
+          "evidence": "Haike_video/remotion-composer/",
+          "cost": "free"
+        },
+        {
+          "id": "local_finalize",
+          "name": "本地成片输出",
+          "requires": [],
+          "evidence": "Haike backlot 用 static-ffmpeg",
+          "cost": "free"
+        }
+      ]
+    },
+    "must_for_voiceover": {
+      "label": "要配音就必须",
+      "keys_required": 1,
+      "capabilities": [
+        {
+          "id": "tts_doubao",
+          "name": "豆包云端 TTS（本机默认）",
+          "requires": ["DOUBAO_SPEECH_API_KEY"],
+          "optional_env": [
+            "DOUBAO_SPEECH_VOICE_TYPE",
+            "DOUBAO_SPEECH_PUBLIC_VOICE_TYPE",
+            "DOUBAO_SPEECH_PUBLIC_RESOURCE_ID",
+            "DOUBAO_SPEECH_YAYA_VOICE_TYPE",
+            "DOUBAO_SPEECH_MENGMENG_VOICE_TYPE",
+            "DOUBAO_SPEECH_PUBLIC_MALE_VOICE_TYPE"
+          ],
+          "evidence": "Haike_video/.env.example:69-87 + docs/handoff/DECISIONS.md:13",
+          "cost": "paid_per_character"
+        },
+        {
+          "id": "tts_tencent",
+          "name": "腾讯 TTS（备选）",
+          "requires": ["VOLC_ACCESSKEY", "VOLC_SECRETKEY"],
+          "evidence": "Haike_video/.env.example:140,142",
+          "cost": "paid_per_character"
+        }
+      ]
+    },
+    "recommended": {
+      "label": "提质量",
+      "keys_required": 1,
+      "capabilities": [
+        {
+          "id": "broll_pexels",
+          "name": "Pexels B-roll 素材",
+          "requires": ["PEXELS_API_KEY"],
+          "get_key_at": "https://www.pexels.com/api/",
+          "evidence": "Haike_video/.env.example:152",
+          "cost": "free_tier"
+        },
+        {
+          "id": "broll_pixabay",
+          "name": "Pixabay B-roll 素材",
+          "requires": ["PIXABAY_API_KEY"],
+          "get_key_at": "https://pixabay.com/api/docs/",
+          "evidence": "Haike_video/.env.example:154",
+          "cost": "free_tier"
+        },
+        {
+          "id": "asr_doubao",
+          "name": "语音识别加字幕",
+          "requires": ["DOUBAO_ASR_API_KEY"],
+          "optional_env": ["DOUBAO_ASR_MODE", "BACKLOT_PUBLIC_BASE_URL", "DOUBAO_ASR_MEDIA_SIGNING_SECRET"],
+          "evidence": "Haike_video/.env.example:92-100",
+          "cost": "paid_per_minute"
+        }
+      ]
+    },
+    "requires_human_not_key": {
+      "label": "需要人工但不是密钥",
+      "capabilities": [
+        {
+          "id": "douyin_login",
+          "name": "抖音采集登录态",
+          "requires": ["首次扫码（--lt qrcode）"],
+          "config_key": "media_crawler.user_data_dir",
+          "config_value": "third_party/MediaCrawler/browser_data/cdp_dy_user_data_dir",
+          "evidence": "copy_skill/config/content_intelligence.json media_crawler 段",
+          "notes": [
+            "keep_open_on_needs_login: true",
+            "reuse_persistent_profile: true —— 扫一次可长期复用"
+          ]
+        },
+        {
+          "id": "publish_login",
+          "name": "四平台发布登录态",
+          "requires": ["在 creatorhub 面板逐个扫码"],
+          "platforms": ["douyin", "kuaishou", "shipinhao", "xhs"],
+          "evidence": "creatorhub/app/main.py:9107-9126",
+          "warning": "视频号每条作品只允许改一次封面/描述且不可撤回"
+        }
+      ]
+    },
+    "advanced": {
+      "label": "进阶 AI 生成（全部可选）",
+      "capabilities": [
+        {
+          "id": "runninghub",
+          "name": "RunningHub ComfyUI 工作流",
+          "requires": ["RUNNINGHUB_API_KEY"],
+          "optional_env": ["RUNNINGHUB_WORKFLOW_ID", "RUNNINGHUB_BASE_URL", "RUNNINGHUB_WORKFLOW_TEMPLATE"],
+          "evidence": "Haike_video/.env.example:114-120",
+          "cost": "paid"
+        },
+        {
+          "id": "google",
+          "name": "Google 一把 key 解锁生图+TTS+视频",
+          "requires": ["GOOGLE_API_KEY"],
+          "alternative_auth": ["GOOGLE_APPLICATION_CREDENTIALS"],
+          "optional_env": ["GOOGLE_CLOUD_PROJECT", "GOOGLE_CLOUD_LOCATION"],
+          "get_key_at": "https://aistudio.google.com/apikey",
+          "evidence": "Haike_video/.env.example:31-44",
+          "cost": "paid"
+        },
+        {
+          "id": "video_gen",
+          "name": "视频生成平台",
+          "requires_any": ["FAL_KEY", "REPLICATE_API_TOKEN", "KLING_API_KEY", "RUNWAY_API_KEY", "HEYGEN_API_KEY"],
+          "evidence": "Haike_video/.env.example:7-30,136-138",
+          "cost": "paid"
+        },
+        {
+          "id": "llm_text",
+          "name": "文本/台词模型",
+          "requires_any": ["DOUBAO_API_KEY", "OPENAI_API_KEY", "XAI_API_KEY", "DASHSCOPE_API_KEY"],
+          "evidence": "Haike_video/.env.example:50-110",
+          "notes": ["豆包文本模型未配置时自动回落主模型，不影响生产"],
+          "cost": "paid"
+        }
+      ]
+    }
+  },
+  "secret_storage": {
+    "haike": {
+      "files": [".env.local", ".env.secrets.local"],
+      "template": ".env.example",
+      "gitignored": true
+    },
+    "copyskill": {
+      "files": [],
+      "warning": "config/content_intelligence.json 是入库文件，禁止写入 key。必须用环境变量覆盖。",
+      "gitignored": false
+    },
+    "creatorhub": {
+      "files": ["config.yaml"],
+      "template": "config.example.yaml",
+      "gitignored": true
+    }
+  },
+  "zero_cost_path": {
+    "description": "完全免费的完整链路",
+    "steps": [
+      "B站免登录采集",
+      "Remotion 本地渲染",
+      "不加 AI 配音（用字幕或原声）"
+    ],
+    "verification": "不产生任何付费调用"
+  }
+}

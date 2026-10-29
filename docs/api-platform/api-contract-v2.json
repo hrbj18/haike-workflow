@@ -1,0 +1,114 @@
+{
+  "contract_version": "haike-api-v2-draft",
+  "status": "design-only-not-implemented",
+  "production_verified": false,
+  "purpose": "客户一个Key接入已上架的多供应商能力；资金和报价以云端为准。无激活或设备授权接口。",
+  "money": {"currency": "CNY", "unit": "integer-micros", "wire_type": "decimal-string", "micros_per_yuan": "1000000", "micros_per_fen": "10000", "payment_channel_unit": "integer-fen", "rounding": "aggregate-exact-components-then-half-up-to-one-micro-per-job"},
+  "authentication": {
+    "model_api": {"scheme": "Bearer user-api-key", "transport": "HTTPS", "scopes": ["capabilities:read", "account.summary:read", "usage:key:read", "quotes:create", "jobs:create", "jobs:read", "jobs:cancel", "files:own", "voices:own"], "excluded_permissions": ["key-management", "cash-refunds", "password-change", "admin-pricing"]},
+    "portal_api": {"scheme": "web-session", "cookie": "HttpOnly; Secure", "writes": "CSRF-and-Origin-check", "reauthenticate_for": ["create-key", "cash-refund", "account-security-change"]},
+    "admin_api": {"scheme": "admin-session-and-operation-permission", "audited": true},
+    "payment_webhook": {"scheme": "payment-provider-signature-on-raw-body", "durable_event_before_success_ack": true},
+    "account_authority": "derive-from-verified-identity-never-trust-request-account-id"
+  },
+  "compatibility": {"legacy_contract": "haike-relay-v1-draft", "legacy_present_in_latest_repository": false, "legacy_minor_unit": "integer-fen", "legacy_reference": "previous-offline-package/portable/relay", "policy": "do-not-reinterpret-minor-fields; explicit-v2-client"},
+  "endpoints": [
+    {"method": "GET", "path": "/v2/capabilities", "auth": "model_api", "paid": false, "response": "capabilities; exact provider/model/profile, meter, availability and constraints"},
+    {"method": "GET", "path": "/v2/prices", "auth": "model_api", "paid": false, "response": "customer unit price components only; never supplier cost or markup"},
+    {"method": "GET", "path": "/v2/account/summary", "auth": "model_api", "paid": false, "response": "account display name, wallet available/reserved/paid/promotional micros, current-key budget; no credential management"},
+    {"method": "GET", "path": "/v2/usage", "auth": "model_api", "paid": false, "query": "cursor/from/to/status/model/project_ref", "response": "current-key scoped usage; cursor page; no other customers or keys"},
+    {"method": "POST", "path": "/v2/files", "auth": "model_api", "paid": false, "request": "bounded multipart upload + declared purpose + media type", "response": "tenant-owned opaque file_id, bytes, sha256, expiration"},
+    {"method": "POST", "path": "/v2/uploads", "auth": "model_api", "paid": false, "phase": "large-media-extension", "request": "upload initialization; multipart chunks then authenticated completion", "response": "private tenant-bound upload session; never supplier credentials"},
+    {"method": "GET", "path": "/v2/files/{file_id}/content", "auth": "model_api", "paid": false, "response": "owned artifact binary; streaming download, hash, expiration, no credential-bearing redirects"},
+    {"method": "GET", "path": "/v2/voices", "auth": "model_api", "paid": false, "response": "owned gateway_voice_id, provider/model, status; upstream ownership remains server-side"},
+    {"method": "POST", "path": "/v2/quotes", "auth": "model_api", "paid": false, "request_schema": "QuoteRequest", "response": "quote_id; immutable input/hash; price_version; estimated and reservation_limit_micros; currency; expires_at; complete-delivery rule; meter"},
+    {"method": "POST", "path": "/v2/jobs", "auth": "model_api", "idempotency_required": true, "request_schema": "JobAcceptRequest", "response": "job and reservation; repeat returns original job", "transaction": "quote acceptance + budget + reserve + job + outbox atomically"},
+    {"method": "GET", "path": "/v2/requests/{idempotency_key}", "auth": "model_api", "paid": false, "response": "original accepted job by account-scoped intent after lost submit response"},
+    {"method": "GET", "path": "/v2/jobs/{job_id}", "auth": "model_api", "paid": false, "response": "job status; children; artifact; measured usage; billing status and bill_id"},
+    {"method": "POST", "path": "/v2/jobs/{job_id}/cancel", "auth": "model_api", "idempotency_required": true, "response": "cancel_pending until supplier confirmation; not automatic release or refund"},
+    {"method": "POST", "path": "/v2/jobs/{job_id}/reconcile", "auth": "model_api", "idempotency_required": true, "request": "query/reconciliation request, optional client evidence for investigation", "response": "server verifies stored terminal delivery evidence; user cannot self-authorize a refund"},
+    {"method": "POST", "path": "/v2/chat/completions", "auth": "model_api", "phase": "M4-reserved-not-MVP", "request": "OpenAI-compatible text/vision, bounded output, recorded usage and budget", "response": "JSON/SSE; documented partial-delivery billing policy"},
+    {"method": "GET", "path": "/portal/v1/me", "auth": "portal_api", "response": "signed-in customer profile and account"},
+    {"method": "GET", "path": "/portal/v1/wallet", "auth": "portal_api", "response": "full own wallet including paid/promotional availability and reservations"},
+    {"method": "GET", "path": "/portal/v1/ledger", "auth": "portal_api", "response": "cursor-paged immutable wallet entries; separate from model usage"},
+    {"method": "POST", "path": "/portal/v1/recharges", "auth": "portal_api", "idempotency_required": true, "request_schema": "RechargeRequest", "response": "server recharge_order_id, amount_fen, channel QR data, expires_at; creating order does not credit wallet"},
+    {"method": "GET", "path": "/portal/v1/recharges/{order_id}", "auth": "portal_api", "response": "own payment status; server-verified credited state"},
+    {"method": "POST", "path": "/portal/v1/cash-refund-applications", "auth": "portal_api", "idempotency_required": true, "request": "own recharge reference and eligible amount", "response": "application; eligibility and approval before provider refund; never API-key auth"},
+    {"method": "GET", "path": "/portal/v1/api-keys", "auth": "portal_api", "response": "own key list with masks and scopes; no plaintext"},
+    {"method": "POST", "path": "/portal/v1/api-keys", "auth": "portal_api", "idempotency_required": true, "request": "name, allowed scopes/models, daily/monthly budget_micros, expiration", "response": "new key_id + secret_once; lost response requires safe replacement, never retrieving stored plaintext"},
+    {"method": "PATCH", "path": "/portal/v1/api-keys/{key_id}", "auth": "portal_api", "request": "own name, model scope, budget, expiration", "response": "masked key metadata; no secret; changes audited"},
+    {"method": "POST", "path": "/portal/v1/api-keys/{key_id}/revoke", "auth": "portal_api", "idempotency_required": true, "response": "revoked; new calls denied, accepted jobs keep original settlement"},
+    {"method": "GET", "path": "/portal/v1/bills", "auth": "portal_api", "response": "all own-account usage, filter and cursor page"},
+    {"method": "GET", "path": "/portal/v1/bills/export", "auth": "portal_api", "response": "own-account bounded CSV with formula-injection protection; same filters"},
+    {"method": "GET", "path": "/portal/v1/bills/{bill_id}", "auth": "portal_api", "response": "price-version, units, gross charge, refund, net charge, children and settlement evidence"},
+    {"method": "POST", "path": "/webhooks/payments/wechat", "auth": "payment_webhook", "response": "200/204 only after signature verification and durable event; async business validation and unique credit"},
+    {"method": "POST", "path": "/webhooks/payments/wechat/refunds", "auth": "payment_webhook", "response": "verified durable refund event; correlate original refund ID, merchant, currency and amount; settle or release refund reservation once"},
+    {"method": "POST", "path": "/admin/v1/price-versions", "auth": "admin_api", "request": "draft pricing components, source and strategy", "response": "draft; never changes accepted jobs"},
+    {"method": "POST", "path": "/admin/v1/price-versions/{id}/preview", "auth": "admin_api", "request": "example usage quantities", "response": "customer price, internal estimated cost and margin; not customer endpoint"},
+    {"method": "POST", "path": "/admin/v1/price-versions/{id}/publish", "auth": "admin_api", "idempotency_required": true, "response": "immutable published version; only subsequent quotes use it"},
+    {"method": "GET", "path": "/admin/v1/cost-reconciliation", "auth": "admin_api", "response": "confirmed/pending supplier costs and failed-job company losses"},
+    {"method": "POST", "path": "/admin/v1/ledger-adjustments", "auth": "admin_api", "idempotency_required": true, "request": "reason, original event, balanced compensating entries", "response": "audited adjustment; never direct balance overwrite"}
+  ],
+  "request_schemas": {
+    "QuoteRequest": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object", "additionalProperties": false,
+      "required": ["capability", "input", "model"],
+      "properties": {
+        "capability": {"type": "string", "enum": ["audio.tts", "audio.clone", "audio.asr", "avatar.generate", "image.generate", "video.generate", "audio.music_generate", "text.generate", "vision.describe"]},
+        "model": {"type": "string", "minLength": 1, "maxLength": 160},
+        "service_profile": {"type": "string", "minLength": 1, "maxLength": 160},
+        "input": {"type": "object", "description": "Each available capability adapter must further reject unsupported fields and validate ownership/media/usage bounds."},
+        "project_ref": {"type": "string", "maxLength": 160},
+        "local_parent_job_ref": {"type": "string", "maxLength": 160}
+      }
+    },
+    "JobAcceptRequest": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object", "additionalProperties": false,
+      "required": ["quote_id", "confirmed", "currency", "max_charge_micros", "call_intent_id"],
+      "properties": {
+        "quote_id": {"type": "string", "pattern": "^[A-Za-z0-9_-]{1,128}$"},
+        "confirmed": {"const": true},
+        "currency": {"const": "CNY"},
+        "max_charge_micros": {"type": "string", "pattern": "^(0|[1-9][0-9]{0,17})$"},
+        "call_intent_id": {"type": "string", "pattern": "^[A-Za-z0-9_-]{1,128}$"}
+      }
+    },
+    "RechargeRequest": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object", "additionalProperties": false,
+      "required": ["amount_fen", "currency", "channel"],
+      "properties": {
+        "amount_fen": {"type": "integer", "minimum": 100, "maximum": 1000000, "description": "Proposed policy 1-10000 yuan; server-configured allowed amounts remain authoritative."},
+        "currency": {"const": "CNY"},
+        "channel": {"const": "wechat_native"}
+      }
+    }
+  },
+  "states": {
+    "job": ["queued", "submitting", "running", "delivering", "submission_unknown", "reconciliation_pending", "succeeded", "failed", "cancel_pending", "cancelled"],
+    "billing": ["reserved", "settled", "released", "refunded", "reconciliation_pending"],
+    "recharge": ["created", "pending", "paid", "credited", "closed", "reconciliation_pending"],
+    "supplier_cost": ["estimated", "accrued", "confirmed", "unknown"],
+    "capability": ["planned", "testing", "available", "disabled"]
+  },
+  "idempotency": {"scope": "verified-account + operation + key", "same_body": "original-result", "different_body": "409-idempotency-conflict", "quote_acceptance": "unique-quote-id-even-with-different-key", "supplier_unknown": "persist-and-reconcile-never-blindly-resubmit", "key_rotation": "same-account-recovery-does-not-depend-on-old-key-id"},
+  "billing_fields": {
+    "reservation_limit_micros": "original accepted reservation ceiling",
+    "reserved_micros": "currently frozen remaining funds",
+    "charged_micros": "gross customer settlement before adjustments",
+    "refunded_micros": "credits returned after settlement",
+    "net_charged_micros": "charged minus refunded; never count reservation twice",
+    "price_version_id": "immutable accepted version",
+    "usage_items": "non-overlapping meter quantities and frozen customer unit prices"
+  },
+  "errors": ["invalid_key", "key_revoked", "scope_denied", "insufficient_balance", "budget_exceeded", "unsupported_capability", "unsupported_model", "unsupported_profile", "voice_model_mismatch", "quote_expired", "quote_already_accepted", "idempotency_conflict", "account_mismatch", "file_expired", "input_contract_drift", "transport_interrupted", "delivery_unconfirmed", "reconciliation_pending"],
+  "examples": {
+    "quote_request": {"capability": "audio.tts", "model": "cosyvoice-v3.5-flash", "input": {"text": "这是演示文本", "voice_id": "voice_demo_001", "rate": 1.0}, "project_ref": "project_demo_001"},
+    "job_accept_request": {"quote_id": "quote_demo_001", "confirmed": true, "currency": "CNY", "max_charge_micros": "200000", "call_intent_id": "intent_demo_001"},
+    "recharge_request": {"amount_fen": 10000, "currency": "CNY", "channel": "wechat_native"},
+    "wallet_snapshot": {"currency": "CNY", "paid_available_micros": "90000000", "paid_reserved_micros": "10000000", "promo_available_micros": "0", "promo_reserved_micros": "0"},
+    "bill": {"bill_id": "bill_demo_001", "model": "cosyvoice-v3.5-flash", "price_version_id": "demo-cosyvoice-p004", "billing_status": "settled", "usage_items": [{"meter": "characters", "quantity": "1200", "unit_quantity": "10000", "unit_price_micros": "1040000"}], "reserved_micros": "0", "charged_micros": "124800", "refunded_micros": "0", "net_charged_micros": "124800"}
+  }
+}

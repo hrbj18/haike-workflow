@@ -1,0 +1,3906 @@
+{
+  "schema_version": 1,
+  "document_type": "reference-observation",
+  "spec_kind": "reference",
+  "stage": "specification",
+  "date": "2026-10-28",
+  "canvas": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 60,
+    "frames": 7344,
+    "duration_seconds": 122.4
+  },
+  "source": {
+    "preview_url": "https://media.openaicut.com/previews/609/draft-zh-a33d6dc67131.mp4",
+    "preview_sha256": "196fecfaadae37056f5fa26a3c706aa4291e089283f58ac79159d0b7d0cad361",
+    "guide_versions": [
+      "2.7.17-alpha.3",
+      "2.7.18-alpha.2"
+    ],
+    "all_group_objects_equal": true,
+    "current_guide_sha256": "188302b979287aab84aa075762aaef7864e1c3c7f2cbe64525d7d6ac60e1228d"
+  },
+  "inspection": {
+    "every_second_times": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97,
+      98,
+      99,
+      100,
+      101,
+      102,
+      103,
+      104,
+      105,
+      106,
+      107,
+      108,
+      109,
+      110,
+      111,
+      112,
+      113,
+      114,
+      115,
+      116,
+      117,
+      118,
+      119,
+      120,
+      121,
+      122
+    ],
+    "scene_boundary_seconds": [
+      8.8,
+      25.9,
+      40.4,
+      52.7,
+      69.4,
+      78.1,
+      89.7,
+      102.92,
+      108.4
+    ],
+    "scene_boundary_offsets": [
+      -0.25,
+      0,
+      0.25,
+      0.5
+    ],
+    "full_resolution_times": [
+      2,
+      10,
+      27,
+      44,
+      58,
+      76,
+      84,
+      95,
+      106,
+      114
+    ],
+    "actual_opened_overview_boards": 11,
+    "actual_opened_boundary_boards": 9,
+    "scope": "Encoded sampled frames and decoded group boundary progressions. No native-output or continuous-listening assertion."
+  },
+  "groups": [
+    {
+      "id": "03-A:s01",
+      "scene_id": "s01",
+      "name": "开场与作品墙",
+      "role": "开场钩子→剪辑负担→作品墙与人像缩窗",
+      "preview_seconds": {
+        "start": 0,
+        "end": 8.8
+      },
+      "preview_frames": [
+        0,
+        528
+      ],
+      "source_seconds": {
+        "end": 8.8,
+        "start": 0
+      },
+      "source_to_preview_offset_seconds": 0,
+      "min_frames": 327,
+      "min_seconds_at_60fps": 5.45,
+      "split_policy": {
+        "mode": "atomic",
+        "reason": "真人缩窗与作品墙是同一次交接；保留完整钩子、负担、反转和结论，尚无可独立调用的作品墙子场。"
+      },
+      "entry": {
+        "mode": "independent"
+      },
+      "exit": {},
+      "audio": {
+        "mode": "source-remap",
+        "notes": "动作音效随真实关键词锚点与受保护动作映射，保留持续时间及尾音；新相邻组的重叠、音乐起伏与最终编码声画需逐段审核。",
+        "tailPolicy": "preserve"
+      },
+      "required_phases": [
+        "hook",
+        "burden",
+        "reversal",
+        "portfolio",
+        "payoff"
+      ],
+      "cardinality": {},
+      "effects": [
+        "title-impact",
+        "timeline-crossout",
+        "presenter-reframe",
+        "portfolio-wall"
+      ],
+      "palette_states": [
+        "purple-blue-gradient",
+        "lavender-on-white-type"
+      ],
+      "cues": [
+        {
+          "at": 0,
+          "id": "opening",
+          "kind": "第一帧出现人物与标题",
+          "required": false,
+          "source_seconds": 0,
+          "preview_seconds": 0,
+          "preview_frame": 0,
+          "local_seconds": 0
+        },
+        {
+          "at": 1.3,
+          "id": "title_slam",
+          "kind": "关键词标题砸入",
+          "required": true,
+          "source_seconds": 1.3,
+          "preview_seconds": 1.3,
+          "preview_frame": 78,
+          "local_seconds": 1.3
+        },
+        {
+          "at": 2.5,
+          "id": "timeline",
+          "kind": "手动工作时间线",
+          "required": false,
+          "source_seconds": 2.5,
+          "preview_seconds": 2.5,
+          "preview_frame": 150,
+          "local_seconds": 2.5
+        },
+        {
+          "at": 3.28,
+          "id": "strike",
+          "kind": "划掉与红色章",
+          "required": false,
+          "source_seconds": 3.28,
+          "preview_seconds": 3.28,
+          "preview_frame": 197,
+          "local_seconds": 3.28
+        },
+        {
+          "at": 3.9,
+          "id": "wall_handoff",
+          "kind": "人物缩窗且作品墙入场",
+          "required": true,
+          "source_seconds": 3.9,
+          "preview_seconds": 3.9,
+          "preview_frame": 234,
+          "local_seconds": 3.9
+        },
+        {
+          "at": 5.45,
+          "id": "statement_1",
+          "kind": "第一句逐字",
+          "required": false,
+          "source_seconds": 5.45,
+          "preview_seconds": 5.45,
+          "preview_frame": 327,
+          "local_seconds": 5.45
+        },
+        {
+          "at": 6.1,
+          "id": "statement_2",
+          "kind": "第二句逐字",
+          "required": false,
+          "source_seconds": 6.1,
+          "preview_seconds": 6.1,
+          "preview_frame": 366,
+          "local_seconds": 6.1
+        },
+        {
+          "at": 7.75,
+          "id": "payoff",
+          "kind": "结论砸字",
+          "required": true,
+          "source_seconds": 7.75,
+          "preview_seconds": 7.75,
+          "preview_frame": 465,
+          "local_seconds": 7.75
+        }
+      ],
+      "slots": [
+        {
+          "id": "text_00",
+          "inputPath": "chapter",
+          "label": "章节",
+          "type": "text",
+          "required": true,
+          "sourceText": "// 01 — 下一个阶段",
+          "maxChars": 20
+        },
+        {
+          "id": "text_05",
+          "inputPath": "claim.subject",
+          "label": "主张 · 主题",
+          "type": "text",
+          "required": true,
+          "sourceText": "视频内容创作",
+          "maxChars": 10
+        },
+        {
+          "id": "text_06",
+          "inputPath": "claim.connector",
+          "label": "主张 · 连接句",
+          "type": "text",
+          "required": true,
+          "sourceText": "进入",
+          "maxChars": 8
+        },
+        {
+          "id": "text_07",
+          "inputPath": "claim.destination",
+          "label": "主张 · 目标",
+          "type": "text",
+          "required": true,
+          "sourceText": "下一阶段",
+          "maxChars": 8
+        },
+        {
+          "id": "text_08",
+          "inputPath": "context",
+          "label": "背景说明",
+          "type": "text",
+          "required": true,
+          "sourceText": "AI · VIDEO · 2026",
+          "maxChars": 25
+        },
+        {
+          "id": "text_12",
+          "inputPath": "burden.heading",
+          "label": "负担 · 标题",
+          "type": "text",
+          "required": true,
+          "sourceText": "// 手动剪辑 · timeline",
+          "maxChars": 27
+        },
+        {
+          "id": "text_14",
+          "inputPath": "burden.claim",
+          "label": "负担 · 主张",
+          "type": "text",
+          "required": true,
+          "sourceText": "别再死磕",
+          "maxChars": 8
+        },
+        {
+          "id": "text_15",
+          "inputPath": "burden.recordingLabel",
+          "label": "负担 · 录屏说明",
+          "type": "text",
+          "required": true,
+          "sourceText": "REC · 示意",
+          "maxChars": 13
+        },
+        {
+          "id": "text_16",
+          "inputPath": "response.invitation",
+          "label": "回应 · 邀请",
+          "type": "text",
+          "required": true,
+          "sourceText": "看完你就知道",
+          "maxChars": 10
+        },
+        {
+          "id": "text_17",
+          "inputPath": "response.subject",
+          "label": "回应 · 主题",
+          "type": "text",
+          "required": true,
+          "sourceText": "现在的 AI 剪辑",
+          "maxChars": 14
+        },
+        {
+          "id": "text_18",
+          "inputPath": "response.connector",
+          "label": "回应 · 连接句",
+          "type": "text",
+          "required": true,
+          "sourceText": "有多",
+          "maxChars": 8
+        },
+        {
+          "id": "text_19",
+          "inputPath": "response.conclusion",
+          "label": "回应 · 结论",
+          "type": "text",
+          "required": true,
+          "sourceText": "离谱。",
+          "maxChars": 8
+        },
+        {
+          "id": "wall",
+          "inputPath": "evidence.wall",
+          "label": "证据 · 作品墙",
+          "type": "wall-sprites",
+          "required": true,
+          "sourceAsset": "sc/wall/{000..388}.jpg"
+        }
+      ],
+      "slot_default_text_status": "Historical public sourceText; does not equal the current official preview copy. Bind the actual demo recipe or observed copy for fidelity.",
+      "aesthetic": {
+        "score": 91,
+        "parts": [
+          24,
+          23,
+          17,
+          18,
+          9
+        ],
+        "rank": 7,
+        "subjective": true
+      }
+    },
+    {
+      "id": "03-A:s02",
+      "scene_id": "s02",
+      "name": "九屏接力",
+      "role": "九宫格对比→分组高亮→全选→指标滚动",
+      "preview_seconds": {
+        "start": 8.8,
+        "end": 25.9
+      },
+      "preview_frames": [
+        528,
+        1554
+      ],
+      "source_seconds": {
+        "end": 25.9,
+        "start": 8.8
+      },
+      "source_to_preview_offset_seconds": 0,
+      "min_frames": 636,
+      "min_seconds_at_60fps": 10.6,
+      "split_policy": {
+        "mode": "atomic",
+        "reason": "九格素材全场源时钟播放，末尾中央格放大交接 s03，必须全程1x、连续相邻并绑定同一真实媒体实体。"
+      },
+      "entry": {
+        "mode": "native-transition"
+      },
+      "exit": {
+        "requiresNext": [
+          "s03"
+        ]
+      },
+      "audio": {
+        "mode": "source-remap",
+        "notes": "保留24.9→25.9的音乐riser并接到s03入场，不能在比较组结束时截断上升气氛；九格媒体全程1x。",
+        "tailPolicy": "preserve"
+      },
+      "required_phases": [
+        "comparison",
+        "groups",
+        "versions",
+        "coverage",
+        "quality",
+        "metrics"
+      ],
+      "cardinality": {
+        "comparison": {
+          "max": 9,
+          "min": 9
+        },
+        "groups": {
+          "max": 2,
+          "min": 2
+        },
+        "versions": {
+          "max": 4,
+          "min": 4
+        }
+      },
+      "effects": [
+        "nine-grid-cascade",
+        "group-highlight",
+        "check-cascade",
+        "metric-slider",
+        "counter-roll"
+      ],
+      "palette_states": [
+        "near-black",
+        "cobalt-accent"
+      ],
+      "cues": [
+        {
+          "at": 8.8,
+          "id": "grid",
+          "kind": "九格依次弹入",
+          "required": false,
+          "source_seconds": 8.8,
+          "preview_seconds": 8.8,
+          "preview_frame": 528,
+          "local_seconds": 0.0
+        },
+        {
+          "at": 12.13,
+          "id": "group_b",
+          "kind": "第一组高亮",
+          "required": false,
+          "source_seconds": 12.13,
+          "preview_seconds": 12.13,
+          "preview_frame": 728,
+          "local_seconds": 3.33
+        },
+        {
+          "at": 13.37,
+          "id": "group_a",
+          "kind": "第二组高亮",
+          "required": true,
+          "source_seconds": 13.37,
+          "preview_seconds": 13.37,
+          "preview_frame": 802,
+          "local_seconds": 4.57
+        },
+        {
+          "at": 15.2,
+          "id": "version_chips",
+          "kind": "版本标签依次出现",
+          "required": false,
+          "source_seconds": 15.2,
+          "preview_seconds": 15.2,
+          "preview_frame": 912,
+          "local_seconds": 6.4
+        },
+        {
+          "at": 19.35,
+          "id": "all_checked",
+          "kind": "九格逐个打钩",
+          "required": true,
+          "source_seconds": 19.35,
+          "preview_seconds": 19.35,
+          "preview_frame": 1161,
+          "local_seconds": 10.55
+        },
+        {
+          "at": 20.25,
+          "id": "quality",
+          "kind": "评价字卡",
+          "required": false,
+          "source_seconds": 20.25,
+          "preview_seconds": 20.25,
+          "preview_frame": 1215,
+          "local_seconds": 11.45
+        },
+        {
+          "at": 22,
+          "id": "reasoning",
+          "kind": "指标卡入场",
+          "required": false,
+          "source_seconds": 22,
+          "preview_seconds": 22,
+          "preview_frame": 1320,
+          "local_seconds": 13.2
+        },
+        {
+          "at": 23.8,
+          "id": "cost",
+          "kind": "计数与成本滚动",
+          "required": true,
+          "source_seconds": 23.8,
+          "preview_seconds": 23.8,
+          "preview_frame": 1428,
+          "local_seconds": 15.0
+        }
+      ],
+      "slots": [
+        {
+          "id": "text_00",
+          "inputPath": "chapter",
+          "label": "章节",
+          "type": "text",
+          "required": true,
+          "sourceText": "// 02 — 示意 · 同一段口播 · 9 个展示卡片",
+          "maxChars": 41
+        },
+        {
+          "id": "text_03",
+          "inputPath": "comparison.items.0.label",
+          "label": "对比 · 条目 · 1 · 名称",
+          "type": "text",
+          "required": true,
+          "sourceText": "示例方案 A",
+          "maxChars": 10
+        },
+        {
+          "id": "text_04",
+          "inputPath": "comparison.items.0.note",
+          "label": "对比 · 条目 · 1 · 说明",
+          "type": "text",
+          "required": true,
+          "sourceText": "详细提示词",
+          "maxChars": 9
+        },
+        {
+          "id": "text_06",
+          "inputPath": "comparison.items.1.label",
+          "label": "对比 · 条目 · 2 · 名称",
+          "type": "text",
+          "required": true,
+          "sourceText": "示例方案 B",
+          "maxChars": 10
+        },
+        {
+          "id": "text_08",
+          "inputPath": "comparison.items.2.label",
+          "label": "对比 · 条目 · 3 · 名称",
+          "type": "text",
+          "required": true,
+          "sourceText": "示例方案 C",
+          "maxChars": 10
+        },
+        {
+          "id": "text_10",
+          "inputPath": "comparison.items.3.label",
+          "label": "对比 · 条目 · 4 · 名称",
+          "type": "text",
+          "required": true,
+          "sourceText": "示例方案 D",
+          "maxChars": 10
+        },
+        {
+          "id": "text_13",
+          "inputPath": "comparison.items.4.note",
+          "label": "对比 · 条目 · 5 · 说明",
+          "type": "text",
+          "required": true,
+          "sourceText": "一句话提示词",
+          "maxChars": 10
+        },
+        {
+          "id": "text_15",
+          "inputPath": "comparison.items.5.label",
+          "label": "对比 · 条目 · 6 · 名称",
+          "type": "text",
+          "required": true,
+          "sourceText": "示例方案 E",
+          "maxChars": 10
+        },
+        {
+          "id": "text_17",
+          "inputPath": "comparison.items.6.label",
+          "label": "对比 · 条目 · 7 · 名称",
+          "type": "text",
+          "required": true,
+          "sourceText": "示例方案 F",
+          "maxChars": 10
+        },
+        {
+          "id": "text_19",
+          "inputPath": "comparison.items.7.label",
+          "label": "对比 · 条目 · 8 · 名称",
+          "type": "text",
+          "required": true,
+          "sourceText": "示例方案 G",
+          "maxChars": 10
+        },
+        {
+          "id": "text_21",
+          "inputPath": "comparison.items.8.label",
+          "label": "对比 · 条目 · 9 · 名称",
+          "type": "text",
+          "required": true,
+          "sourceText": "示例方案 H",
+          "maxChars": 10
+        },
+        {
+          "id": "text_22",
+          "inputPath": "comparison.context",
+          "label": "对比 · 背景说明",
+          "type": "text",
+          "required": true,
+          "sourceText": "// 同一段口播 · 9 个模型",
+          "maxChars": 24
+        },
+        {
+          "id": "text_23",
+          "inputPath": "comparison.groups.1",
+          "label": "对比 · 组别 · 2",
+          "type": "text",
+          "required": true,
+          "sourceText": "对比组 B",
+          "maxChars": 9
+        },
+        {
+          "id": "text_24",
+          "inputPath": "comparison.groups.0",
+          "label": "对比 · 组别 · 1",
+          "type": "text",
+          "required": true,
+          "sourceText": "对比组 A",
+          "maxChars": 9
+        },
+        {
+          "id": "text_25",
+          "inputPath": "comparison.versions.0",
+          "label": "对比 · 版本 · 1",
+          "type": "text",
+          "required": true,
+          "sourceText": "5.6",
+          "maxChars": 8
+        },
+        {
+          "id": "text_26",
+          "inputPath": "comparison.versions.1",
+          "label": "对比 · 版本 · 2",
+          "type": "text",
+          "required": true,
+          "sourceText": "6",
+          "maxChars": 8
+        },
+        {
+          "id": "text_27",
+          "inputPath": "comparison.versions.2",
+          "label": "对比 · 版本 · 3",
+          "type": "text",
+          "required": true,
+          "sourceText": "Pro",
+          "maxChars": 8
+        },
+        {
+          "id": "text_28",
+          "inputPath": "comparison.versions.3",
+          "label": "对比 · 版本 · 4",
+          "type": "text",
+          "required": true,
+          "sourceText": "Ultra",
+          "maxChars": 9
+        },
+        {
+          "id": "text_30",
+          "inputPath": "coverage.claim",
+          "label": "覆盖范围 · 主张",
+          "type": "text",
+          "required": true,
+          "sourceText": "所有的，全部试了",
+          "maxChars": 13
+        },
+        {
+          "id": "text_31",
+          "inputPath": "quality.context",
+          "label": "质量 · 背景说明",
+          "type": "text",
+          "required": true,
+          "sourceText": "总的来说 ·",
+          "maxChars": 10
+        },
+        {
+          "id": "text_32",
+          "inputPath": "quality.conclusion",
+          "label": "质量 · 结论",
+          "type": "text",
+          "required": true,
+          "sourceText": "还可以",
+          "maxChars": 8
+        },
+        {
+          "id": "text_33",
+          "inputPath": "metrics.reasoningLabel",
+          "label": "指标 · 推理说明",
+          "type": "text",
+          "required": true,
+          "sourceText": "// 推理程度",
+          "maxChars": 11
+        },
+        {
+          "id": "text_35",
+          "inputPath": "metrics.lowLabel",
+          "label": "指标 · 下界名称",
+          "type": "text",
+          "required": true,
+          "sourceText": "low",
+          "maxChars": 8
+        },
+        {
+          "id": "text_36",
+          "inputPath": "metrics.tokenLabel",
+          "label": "指标 · 词元说明",
+          "type": "text",
+          "required": true,
+          "sourceText": "// token 消耗",
+          "maxChars": 17
+        },
+        {
+          "id": "text_38",
+          "inputPath": "metrics.costLabel",
+          "label": "指标 · 代价说明",
+          "type": "text",
+          "required": true,
+          "sourceText": "成本",
+          "maxChars": 8
+        },
+        {
+          "id": "reasoning_level",
+          "inputPath": "metrics.reasoning",
+          "label": "指标 · 推理",
+          "type": "dynamicText",
+          "required": true,
+          "sourceText": "medium",
+          "maxChars": 12
+        },
+        {
+          "id": "token_ceiling",
+          "inputPath": "metrics.tokens",
+          "label": "指标 · 词元数量",
+          "type": "number",
+          "required": true
+        },
+        {
+          "id": "grid_opus55p",
+          "inputPath": "comparison.items.0.media",
+          "label": "对比 · 条目 · 1 · 媒体素材",
+          "type": "sequence",
+          "required": true,
+          "aspect": "16:9",
+          "sourceAsset": "sc/g_opus55p/f_%04d.jpg"
+        },
+        {
+          "id": "grid_gpt6pro",
+          "inputPath": "comparison.items.1.media",
+          "label": "对比 · 条目 · 2 · 媒体素材",
+          "type": "sequence",
+          "required": true,
+          "aspect": "16:9",
+          "sourceAsset": "sc/g_gpt6pro/f_%04d.jpg"
+        },
+        {
+          "id": "grid_gpt6astra",
+          "inputPath": "comparison.items.2.media",
+          "label": "对比 · 条目 · 3 · 媒体素材",
+          "type": "sequence",
+          "required": true,
+          "aspect": "16:9",
+          "sourceAsset": "sc/g_gpt6astra/f_%04d.jpg"
+        },
+        {
+          "id": "grid_grok47",
+          "inputPath": "comparison.items.3.media",
+          "label": "对比 · 条目 · 4 · 媒体素材",
+          "type": "sequence",
+          "required": true,
+          "aspect": "16:9",
+          "sourceAsset": "sc/g_grok47/f_%04d.jpg"
+        },
+        {
+          "id": "grid_opus55",
+          "inputPath": "comparison.items.4.media",
+          "label": "对比 · 条目 · 5 · 媒体素材",
+          "type": "sequence",
+          "required": true,
+          "aspect": "16:9",
+          "sourceAsset": "sc/g_opus55/f_%04d.jpg"
+        },
+        {
+          "id": "grid_gpt6sol",
+          "inputPath": "comparison.items.5.media",
+          "label": "对比 · 条目 · 6 · 媒体素材",
+          "type": "sequence",
+          "required": true,
+          "aspect": "16:9",
+          "sourceAsset": "sc/g_gpt6sol/f_%04d.jpg"
+        },
+        {
+          "id": "grid_gpt56sol",
+          "inputPath": "comparison.items.6.media",
+          "label": "对比 · 条目 · 7 · 媒体素材",
+          "type": "sequence",
+          "required": true,
+          "aspect": "16:9",
+          "sourceAsset": "sc/g_gpt56sol/f_%04d.jpg"
+        },
+        {
+          "id": "grid_gpt56",
+          "inputPath": "comparison.items.7.media",
+          "label": "对比 · 条目 · 8 · 媒体素材",
+          "type": "sequence",
+          "required": true,
+          "aspect": "16:9",
+          "sourceAsset": "sc/g_gpt56/f_%04d.jpg"
+        },
+        {
+          "id": "grid_claude50",
+          "inputPath": "comparison.items.8.media",
+          "label": "对比 · 条目 · 9 · 媒体素材",
+          "type": "sequence",
+          "required": true,
+          "aspect": "16:9",
+          "sourceAsset": "sc/g_claude50/f_%04d.jpg"
+        },
+        {
+          "id": "unit_cost_rate",
+          "inputPath": "metrics.unitCost",
+          "label": "指标 · 单位成本",
+          "type": "number",
+          "required": true
+        },
+        {
+          "id": "counter_alert_threshold",
+          "inputPath": "metrics.alertThreshold",
+          "label": "指标 · 提示阈值",
+          "type": "number",
+          "required": true
+        },
+        {
+          "id": "grid_05_name",
+          "inputPath": "comparison.items.4.label",
+          "label": "对比 · 条目 · 5 · 名称",
+          "type": "text",
+          "required": true,
+          "sourceText": "示例方案 A",
+          "maxChars": 10
+        },
+        {
+          "id": "reasoning_high",
+          "inputPath": "metrics.highLabel",
+          "label": "指标 · 上界名称",
+          "type": "dynamicText",
+          "required": true,
+          "sourceText": "high",
+          "maxChars": 8
+        },
+        {
+          "id": "reasoning_ultra",
+          "inputPath": "metrics.ultraLabel",
+          "label": "指标 · 范围强调",
+          "type": "dynamicText",
+          "required": true,
+          "sourceText": "Ultra",
+          "maxChars": 9
+        }
+      ],
+      "slot_default_text_status": "Historical public sourceText; does not equal the current official preview copy. Bind the actual demo recipe or observed copy for fidelity.",
+      "aesthetic": {
+        "score": 94,
+        "parts": [
+          24,
+          24,
+          18,
+          19,
+          9
+        ],
+        "rank": 4,
+        "subjective": true
+      }
+    },
+    {
+      "id": "03-A:s03",
+      "scene_id": "s03",
+      "name": "聚焦审阅",
+      "role": "重点成果由九宫格放大→结论砸字→审片报告",
+      "preview_seconds": {
+        "start": 25.9,
+        "end": 40.4
+      },
+      "preview_frames": [
+        1554,
+        2424
+      ],
+      "source_seconds": {
+        "end": 40.4,
+        "start": 25.9
+      },
+      "source_to_preview_offset_seconds": 0,
+      "min_frames": 539,
+      "min_seconds_at_60fps": 8.983333333333333,
+      "split_policy": {
+        "mode": "atomic",
+        "reason": "首帧继承 s02 中央格的画面与位置；不能脱离 s02 独立选择，hero素材全场1x，审片到作品卡仍为完整组。"
+      },
+      "entry": {
+        "continuityBindings": [
+          {
+            "previousSceneId": "s02",
+            "previousSlot": "grid_opus55",
+            "requireEntityId": true,
+            "slot": "opus_hero"
+          }
+        ],
+        "mode": "match-cut",
+        "requiresPrevious": [
+          "s02"
+        ]
+      },
+      "exit": {},
+      "audio": {
+        "mode": "source-remap",
+        "notes": "接住s02末音乐riser与25.9入场whoosh，hero与九格中心须来自同一真实素材身份；全程1x，原出场尾音继续交付。",
+        "tailPolicy": "preserve"
+      },
+      "required_phases": [
+        "focus",
+        "conclusion",
+        "comparison",
+        "review",
+        "precision",
+        "previous-work"
+      ],
+      "cardinality": {
+        "comparison": {
+          "max": 2,
+          "min": 2
+        },
+        "review": {
+          "max": 3,
+          "min": 3
+        }
+      },
+      "effects": [
+        "grid-to-hero",
+        "keyword-impact",
+        "comparison-board",
+        "review-scan"
+      ],
+      "palette_states": [
+        "near-black",
+        "graphite-media",
+        "cobalt-review"
+      ],
+      "cues": [
+        {
+          "at": 25.9,
+          "id": "hero_from_grid",
+          "kind": "中间格放大接上场",
+          "required": false,
+          "source_seconds": 25.9,
+          "preview_seconds": 25.9,
+          "preview_frame": 1554,
+          "local_seconds": 0.0
+        },
+        {
+          "at": 29,
+          "id": "slam_word_a",
+          "kind": "结论第一词",
+          "required": true,
+          "source_seconds": 29,
+          "preview_seconds": 29,
+          "preview_frame": 1740,
+          "local_seconds": 3.1
+        },
+        {
+          "at": 30.3,
+          "id": "slam_word_b",
+          "kind": "结论第二词",
+          "required": false,
+          "source_seconds": 30.3,
+          "preview_seconds": 30.3,
+          "preview_frame": 1818,
+          "local_seconds": 4.4
+        },
+        {
+          "at": 31.4,
+          "id": "comparison_board",
+          "kind": "比较卡",
+          "required": false,
+          "source_seconds": 31.4,
+          "preview_seconds": 31.4,
+          "preview_frame": 1884,
+          "local_seconds": 5.5
+        },
+        {
+          "at": 33.15,
+          "id": "review_start",
+          "kind": "计时圈与报告",
+          "required": true,
+          "source_seconds": 33.15,
+          "preview_seconds": 33.15,
+          "preview_frame": 1989,
+          "local_seconds": 7.25
+        },
+        {
+          "at": 33.9,
+          "id": "review_note_1",
+          "kind": "审片细节一",
+          "required": false,
+          "source_seconds": 33.9,
+          "preview_seconds": 33.9,
+          "preview_frame": 2034,
+          "local_seconds": 8.0
+        },
+        {
+          "at": 34.6,
+          "id": "review_note_2",
+          "kind": "审片细节二",
+          "required": false,
+          "source_seconds": 34.6,
+          "preview_seconds": 34.6,
+          "preview_frame": 2076,
+          "local_seconds": 8.7
+        },
+        {
+          "at": 35.7,
+          "id": "review_note_3",
+          "kind": "审片细节三",
+          "required": false,
+          "source_seconds": 35.7,
+          "preview_seconds": 35.7,
+          "preview_frame": 2142,
+          "local_seconds": 9.8
+        },
+        {
+          "at": 37.7,
+          "id": "precision",
+          "kind": "评价砸字",
+          "required": true,
+          "source_seconds": 37.7,
+          "preview_seconds": 37.7,
+          "preview_frame": 2262,
+          "local_seconds": 11.8
+        },
+        {
+          "at": 38.5,
+          "id": "previous_work",
+          "kind": "作品卡入场",
+          "required": false,
+          "source_seconds": 38.5,
+          "preview_seconds": 38.5,
+          "preview_frame": 2310,
+          "local_seconds": 12.6
+        }
+      ],
+      "slots": [
+        {
+          "id": "text_00",
+          "inputPath": "chapter",
+          "label": "章节",
+          "type": "text",
+          "required": true,
+          "sourceText": "// 03 — 示例方案 A",
+          "maxChars": 21
+        },
+        {
+          "id": "text_02",
+          "inputPath": "artifact.label",
+          "label": "成果 · 名称",
+          "type": "text",
+          "required": true,
+          "sourceText": "示例方案 A · 一句话提示词 · 成片",
+          "maxChars": 30
+        },
+        {
+          "id": "text_03",
+          "inputPath": "conclusion.line1",
+          "label": "结论 · 第一行",
+          "type": "text",
+          "required": true,
+          "sourceText": "终结",
+          "maxChars": 8
+        },
+        {
+          "id": "text_04",
+          "inputPath": "conclusion.line2",
+          "label": "结论 · 第二行",
+          "type": "text",
+          "required": true,
+          "sourceText": "比赛。",
+          "maxChars": 8
+        },
+        {
+          "id": "text_06",
+          "inputPath": "comparison.groupLabel",
+          "label": "对比 · 组别名称",
+          "type": "text",
+          "required": true,
+          "sourceText": "对比组 A",
+          "maxChars": 9
+        },
+        {
+          "id": "text_07",
+          "inputPath": "artifact.name",
+          "label": "成果 · 名称",
+          "type": "text",
+          "required": true,
+          "sourceText": "方案 A",
+          "maxChars": 8
+        },
+        {
+          "id": "text_09",
+          "inputPath": "comparison.referenceContext",
+          "label": "对比 · 参考背景",
+          "type": "text",
+          "required": true,
+          "sourceText": "// 多年专业剪辑师",
+          "maxChars": 16
+        },
+        {
+          "id": "text_10",
+          "inputPath": "comparison.referenceLabel",
+          "label": "对比 · 参考名称",
+          "type": "text",
+          "required": true,
+          "sourceText": "人类 · 专业",
+          "maxChars": 11
+        },
+        {
+          "id": "text_11",
+          "inputPath": "comparison.direction",
+          "label": "对比 · 比较方向",
+          "type": "text",
+          "required": true,
+          "sourceText": "完全不输",
+          "maxChars": 8
+        },
+        {
+          "id": "text_12",
+          "inputPath": "comparison.artifactContext",
+          "label": "对比 · 成果背景",
+          "type": "text",
+          "required": true,
+          "sourceText": "// AI",
+          "maxChars": 9
+        },
+        {
+          "id": "text_15",
+          "inputPath": "metrics.minutesLabel",
+          "label": "指标 · 分钟说明",
+          "type": "text",
+          "required": true,
+          "sourceText": "分钟 · 出片",
+          "maxChars": 11
+        },
+        {
+          "id": "text_16",
+          "inputPath": "review.heading",
+          "label": "审阅 · 标题",
+          "type": "text",
+          "required": true,
+          "sourceText": "// 审片报告",
+          "maxChars": 11
+        },
+        {
+          "id": "text_18",
+          "inputPath": "review.checks.0.label",
+          "label": "审阅 · 检查项 · 1 · 名称",
+          "type": "text",
+          "required": true,
+          "sourceText": "转场细节",
+          "maxChars": 8
+        },
+        {
+          "id": "text_21",
+          "inputPath": "review.checks.1.label",
+          "label": "审阅 · 检查项 · 2 · 名称",
+          "type": "text",
+          "required": true,
+          "sourceText": "画面流畅度",
+          "maxChars": 9
+        },
+        {
+          "id": "text_24",
+          "inputPath": "review.checks.2.label",
+          "label": "审阅 · 检查项 · 3 · 名称",
+          "type": "text",
+          "required": true,
+          "sourceText": "文案 · 情绪逻辑",
+          "maxChars": 14
+        },
+        {
+          "id": "text_26",
+          "inputPath": "evaluation.line1",
+          "label": "评价 · 第一行",
+          "type": "text",
+          "required": true,
+          "sourceText": "精准得",
+          "maxChars": 8
+        },
+        {
+          "id": "text_27",
+          "inputPath": "evaluation.line2",
+          "label": "评价 · 第二行",
+          "type": "text",
+          "required": true,
+          "sourceText": "离谱。",
+          "maxChars": 8
+        },
+        {
+          "id": "text_28",
+          "inputPath": "previousWork.label",
+          "label": "上期作品 · 名称",
+          "type": "text",
+          "required": true,
+          "sourceText": "// 上一条作品 · 感兴趣可以翻",
+          "maxChars": 25
+        },
+        {
+          "id": "review_minutes",
+          "inputPath": "metrics.minutes",
+          "label": "指标 · 分钟数",
+          "type": "number",
+          "required": true
+        },
+        {
+          "id": "opus_hero",
+          "inputPath": "artifact.media",
+          "label": "成果 · 媒体素材",
+          "type": "sequence",
+          "required": true,
+          "aspect": "16:9",
+          "sourceAsset": "sc/opus_hero/f_%04d.jpg"
+        },
+        {
+          "id": "prev",
+          "inputPath": "previousWork.media",
+          "label": "上期作品 · 媒体素材",
+          "type": "sequence",
+          "required": true,
+          "aspect": "16:9",
+          "sourceAsset": "sc/prev/f_%04d.jpg"
+        },
+        {
+          "id": "demo_disclaimer",
+          "inputPath": "comparison.disclaimer",
+          "label": "对比 · 性质说明",
+          "type": "text",
+          "required": true,
+          "sourceText": "DEMO · 示意比较",
+          "maxChars": 15
+        },
+        {
+          "id": "rank_label",
+          "inputPath": "comparison.resultLabel",
+          "label": "对比 · 结果名称",
+          "type": "text",
+          "required": true,
+          "sourceText": "No.1",
+          "maxChars": 8
+        },
+        {
+          "id": "review_status",
+          "inputPath": "review.statusLabel",
+          "label": "审阅 · 状态说明",
+          "type": "text",
+          "required": true,
+          "sourceText": "PASS",
+          "maxChars": 8
+        }
+      ],
+      "slot_default_text_status": "Historical public sourceText; does not equal the current official preview copy. Bind the actual demo recipe or observed copy for fidelity.",
+      "aesthetic": {
+        "score": 95,
+        "parts": [
+          24,
+          25,
+          19,
+          18,
+          9
+        ],
+        "rank": 3,
+        "subjective": true
+      }
+    },
+    {
+      "id": "03-A:s04",
+      "scene_id": "s04",
+      "name": "分类与镜头",
+      "role": "跨品类四卡→大作品墙→反模板→镜头语言",
+      "preview_seconds": {
+        "start": 40.4,
+        "end": 52.7
+      },
+      "preview_frames": [
+        2424,
+        3162
+      ],
+      "source_seconds": {
+        "end": 52.7,
+        "start": 40.4
+      },
+      "source_to_preview_offset_seconds": 0,
+      "min_frames": 458,
+      "min_seconds_at_60fps": 7.633333333333334,
+      "split_policy": {
+        "mode": "atomic",
+        "reason": "四类作品→作品墙→质量结论→反命题→镜头语言共用一次主张展开；未提供数量或子段初始化变体。"
+      },
+      "entry": {
+        "mode": "native-transition"
+      },
+      "exit": {},
+      "audio": {
+        "mode": "source-remap",
+        "notes": "动作音效随真实关键词锚点与受保护动作映射，保留持续时间及尾音；新相邻组的重叠、音乐起伏与最终编码声画需逐段审核。",
+        "tailPolicy": "preserve"
+      },
+      "required_phases": [
+        "categories",
+        "portfolio",
+        "quality",
+        "rejection",
+        "camera-language",
+        "narrative"
+      ],
+      "cardinality": {
+        "categories": {
+          "max": 4,
+          "min": 4
+        }
+      },
+      "effects": [
+        "four-card-cascade",
+        "portfolio-wall",
+        "crossout",
+        "camera-demo",
+        "narrative-arc"
+      ],
+      "palette_states": [
+        "mineral-paper",
+        "near-black-wall",
+        "cobalt-accent"
+      ],
+      "cues": [
+        {
+          "at": 40.4,
+          "id": "category_title",
+          "kind": "跨品类标题",
+          "required": true,
+          "source_seconds": 40.4,
+          "preview_seconds": 40.4,
+          "preview_frame": 2424,
+          "local_seconds": 0.0
+        },
+        {
+          "at": 43.17,
+          "id": "category_1",
+          "kind": "第一张作品卡",
+          "required": false,
+          "source_seconds": 43.17,
+          "preview_seconds": 43.17,
+          "preview_frame": 2590,
+          "local_seconds": 2.77
+        },
+        {
+          "at": 43.75,
+          "id": "category_2",
+          "kind": "第二张作品卡",
+          "required": false,
+          "source_seconds": 43.75,
+          "preview_seconds": 43.75,
+          "preview_frame": 2625,
+          "local_seconds": 3.35
+        },
+        {
+          "at": 44.33,
+          "id": "category_3",
+          "kind": "第三张作品卡",
+          "required": false,
+          "source_seconds": 44.33,
+          "preview_seconds": 44.33,
+          "preview_frame": 2660,
+          "local_seconds": 3.93
+        },
+        {
+          "at": 45.1,
+          "id": "category_4",
+          "kind": "第四张作品卡",
+          "required": false,
+          "source_seconds": 45.1,
+          "preview_seconds": 45.1,
+          "preview_frame": 2706,
+          "local_seconds": 4.7
+        },
+        {
+          "at": 45.55,
+          "id": "wall_expand",
+          "kind": "满屏作品墙",
+          "required": true,
+          "source_seconds": 45.55,
+          "preview_seconds": 45.55,
+          "preview_frame": 2733,
+          "local_seconds": 5.15
+        },
+        {
+          "at": 47.3,
+          "id": "quality",
+          "kind": "质量结论",
+          "required": false,
+          "source_seconds": 47.3,
+          "preview_seconds": 47.3,
+          "preview_frame": 2838,
+          "local_seconds": 6.9
+        },
+        {
+          "at": 49,
+          "id": "cross_out",
+          "kind": "划掉流水线",
+          "required": false,
+          "source_seconds": 49,
+          "preview_seconds": 49,
+          "preview_frame": 2940,
+          "local_seconds": 8.6
+        },
+        {
+          "at": 49.75,
+          "id": "camera_demo",
+          "kind": "镜头语言演示",
+          "required": true,
+          "source_seconds": 49.75,
+          "preview_seconds": 49.75,
+          "preview_frame": 2985,
+          "local_seconds": 9.35
+        },
+        {
+          "at": 51.05,
+          "id": "narrative_arc",
+          "kind": "起承转合弧线",
+          "required": false,
+          "source_seconds": 51.05,
+          "preview_seconds": 51.05,
+          "preview_frame": 3063,
+          "local_seconds": 10.65
+        }
+      ],
+      "slots": [
+        {
+          "id": "text_00",
+          "inputPath": "chapter",
+          "label": "章节",
+          "type": "text",
+          "required": true,
+          "sourceText": "// 04 — 全品类",
+          "maxChars": 17
+        },
+        {
+          "id": "text_02",
+          "inputPath": "scope.connector",
+          "label": "范围 · 连接句",
+          "type": "text",
+          "required": true,
+          "sourceText": "不止",
+          "maxChars": 8
+        },
+        {
+          "id": "text_03",
+          "inputPath": "scope.initial",
+          "label": "范围 · 起始项",
+          "type": "text",
+          "required": true,
+          "sourceText": "口播。",
+          "maxChars": 8
+        },
+        {
+          "id": "text_04",
+          "inputPath": "scope.heading",
+          "label": "范围 · 标题",
+          "type": "text",
+          "required": true,
+          "sourceText": "全品类",
+          "maxChars": 8
+        },
+        {
+          "id": "text_05",
+          "inputPath": "scope.conclusion",
+          "label": "范围 · 结论",
+          "type": "text",
+          "required": true,
+          "sourceText": "测了个遍。",
+          "maxChars": 9
+        },
+        {
+          "id": "text_06",
+          "inputPath": "categories.0.label",
+          "label": "分类 · 1 · 名称",
+          "type": "text",
+          "required": true,
+          "sourceText": "知识讲解",
+          "maxChars": 8
+        },
+        {
+          "id": "text_07",
+          "inputPath": "categories.0.note",
+          "label": "分类 · 1 · 说明",
+          "type": "text",
+          "required": true,
+          "sourceText": "// explainer",
+          "maxChars": 18
+        },
+        {
+          "id": "text_08",
+          "inputPath": "categories.1.label",
+          "label": "分类 · 2 · 名称",
+          "type": "text",
+          "required": true,
+          "sourceText": "趣味解说",
+          "maxChars": 8
+        },
+        {
+          "id": "text_09",
+          "inputPath": "categories.1.note",
+          "label": "分类 · 2 · 说明",
+          "type": "text",
+          "required": true,
+          "sourceText": "// commentary",
+          "maxChars": 20
+        },
+        {
+          "id": "text_10",
+          "inputPath": "categories.2.label",
+          "label": "分类 · 3 · 名称",
+          "type": "text",
+          "required": true,
+          "sourceText": "剧情短片",
+          "maxChars": 8
+        },
+        {
+          "id": "text_11",
+          "inputPath": "categories.2.note",
+          "label": "分类 · 3 · 说明",
+          "type": "text",
+          "required": true,
+          "sourceText": "// short film",
+          "maxChars": 20
+        },
+        {
+          "id": "text_12",
+          "inputPath": "categories.3.label",
+          "label": "分类 · 4 · 名称",
+          "type": "text",
+          "required": true,
+          "sourceText": "音乐 MV",
+          "maxChars": 9
+        },
+        {
+          "id": "text_13",
+          "inputPath": "categories.3.note",
+          "label": "分类 · 4 · 说明",
+          "type": "text",
+          "required": true,
+          "sourceText": "// music video",
+          "maxChars": 21
+        },
+        {
+          "id": "text_14",
+          "inputPath": "wall.attribution",
+          "label": "作品墙 · 来源说明",
+          "type": "text",
+          "required": true,
+          "sourceText": "// 网络优秀作品收集 · 非个人原创",
+          "maxChars": 28
+        },
+        {
+          "id": "text_16",
+          "inputPath": "wall.countLabel",
+          "label": "作品墙 · 数量说明",
+          "type": "text",
+          "required": true,
+          "sourceText": "条 · 示例素材 · 请填写实际来源",
+          "maxChars": 27
+        },
+        {
+          "id": "text_17",
+          "inputPath": "claim.line1",
+          "label": "主张 · 第一行",
+          "type": "text",
+          "required": true,
+          "sourceText": "全能靠 AI",
+          "maxChars": 10
+        },
+        {
+          "id": "text_18",
+          "inputPath": "claim.line2",
+          "label": "主张 · 第二行",
+          "type": "text",
+          "required": true,
+          "sourceText": "共创出",
+          "maxChars": 8
+        },
+        {
+          "id": "text_19",
+          "inputPath": "claim.line3",
+          "label": "主张 · 第三行",
+          "type": "text",
+          "required": true,
+          "sourceText": "高质量成片。",
+          "maxChars": 10
+        },
+        {
+          "id": "text_20",
+          "inputPath": "template.label",
+          "label": "模板 · 名称",
+          "type": "text",
+          "required": true,
+          "sourceText": "template_01",
+          "maxChars": 17
+        },
+        {
+          "id": "text_38",
+          "inputPath": "contrast.line1",
+          "label": "对照 · 第一行",
+          "type": "text",
+          "required": true,
+          "sourceText": "不是套模板的",
+          "maxChars": 10
+        },
+        {
+          "id": "text_39",
+          "inputPath": "contrast.line2",
+          "label": "对照 · 第二行",
+          "type": "text",
+          "required": true,
+          "sourceText": "流水线",
+          "maxChars": 8
+        },
+        {
+          "id": "text_40",
+          "inputPath": "lens.wideLabel",
+          "label": "镜头 · 范围名称",
+          "type": "text",
+          "required": true,
+          "sourceText": "远景 · WS",
+          "maxChars": 11
+        },
+        {
+          "id": "text_41",
+          "inputPath": "lens.connector",
+          "label": "镜头 · 连接句",
+          "type": "text",
+          "required": true,
+          "sourceText": "有",
+          "maxChars": 8
+        },
+        {
+          "id": "text_42",
+          "inputPath": "lens.heading",
+          "label": "镜头 · 标题",
+          "type": "text",
+          "required": true,
+          "sourceText": "镜头语言",
+          "maxChars": 8
+        },
+        {
+          "id": "text_44",
+          "inputPath": "rhythm.heading",
+          "label": "节奏 · 标题",
+          "type": "text",
+          "required": true,
+          "sourceText": "叙事节奏",
+          "maxChars": 8
+        },
+        {
+          "id": "text_45",
+          "inputPath": "rhythm.parts.0",
+          "label": "节奏 · 拆解项 · 1",
+          "type": "text",
+          "required": true,
+          "sourceText": "起",
+          "maxChars": 8
+        },
+        {
+          "id": "text_46",
+          "inputPath": "rhythm.parts.1",
+          "label": "节奏 · 拆解项 · 2",
+          "type": "text",
+          "required": true,
+          "sourceText": "承",
+          "maxChars": 8
+        },
+        {
+          "id": "text_47",
+          "inputPath": "rhythm.parts.2",
+          "label": "节奏 · 拆解项 · 3",
+          "type": "text",
+          "required": true,
+          "sourceText": "转",
+          "maxChars": 8
+        },
+        {
+          "id": "text_48",
+          "inputPath": "rhythm.parts.3",
+          "label": "节奏 · 拆解项 · 4",
+          "type": "text",
+          "required": true,
+          "sourceText": "合",
+          "maxChars": 8
+        },
+        {
+          "id": "cat_explain",
+          "inputPath": "categories.0.media",
+          "label": "分类 · 1 · 媒体素材",
+          "type": "sequence",
+          "required": true,
+          "aspect": "16:9",
+          "sourceAsset": "sc/cat_explain/f_%04d.jpg"
+        },
+        {
+          "id": "cat_fun",
+          "inputPath": "categories.1.media",
+          "label": "分类 · 2 · 媒体素材",
+          "type": "sequence",
+          "required": true,
+          "aspect": "16:9",
+          "sourceAsset": "sc/cat_fun/f_%04d.jpg"
+        },
+        {
+          "id": "cat_story",
+          "inputPath": "categories.2.media",
+          "label": "分类 · 3 · 媒体素材",
+          "type": "sequence",
+          "required": true,
+          "aspect": "16:9",
+          "sourceAsset": "sc/cat_story/f_%04d.jpg"
+        },
+        {
+          "id": "cat_mv",
+          "inputPath": "categories.3.media",
+          "label": "分类 · 4 · 媒体素材",
+          "type": "sequence",
+          "required": true,
+          "aspect": "16:9",
+          "sourceAsset": "sc/cat_mv/f_%04d.jpg"
+        },
+        {
+          "id": "wall",
+          "inputPath": "wall.media",
+          "label": "作品墙 · 媒体素材",
+          "type": "wall-sprites",
+          "required": true,
+          "sourceAsset": "sc/wall/{000..388}.jpg"
+        },
+        {
+          "id": "mv_lens",
+          "inputPath": "lens.media",
+          "label": "镜头 · 媒体素材",
+          "type": "sequence",
+          "required": true,
+          "aspect": "16:9",
+          "sourceAsset": "sc/mv_lens/f_%04d.jpg"
+        },
+        {
+          "id": "lens_push",
+          "inputPath": "lens.pushLabel",
+          "label": "镜头 · 推进说明",
+          "type": "dynamicText",
+          "required": true,
+          "sourceText": "推镜 · Dolly",
+          "maxChars": 14
+        },
+        {
+          "id": "lens_track",
+          "inputPath": "lens.trackLabel",
+          "label": "镜头 · 路线标签",
+          "type": "dynamicText",
+          "required": true,
+          "sourceText": "跟拍 · Tracking",
+          "maxChars": 17
+        },
+        {
+          "id": "lens_close",
+          "inputPath": "lens.closeLabel",
+          "label": "镜头 · 收束说明",
+          "type": "dynamicText",
+          "required": true,
+          "sourceText": "特写 · CU",
+          "maxChars": 11
+        },
+        {
+          "id": "wall_badge_icon",
+          "inputPath": "wall.icon",
+          "label": "作品墙 · 图标",
+          "type": "image",
+          "required": true,
+          "aspect": "1:1",
+          "sourceAsset": "assets/wall-badge.png"
+        }
+      ],
+      "slot_default_text_status": "Historical public sourceText; does not equal the current official preview copy. Bind the actual demo recipe or observed copy for fidelity.",
+      "aesthetic": {
+        "score": 96,
+        "parts": [
+          24,
+          24,
+          19,
+          20,
+          9
+        ],
+        "rank": 2,
+        "subjective": true
+      }
+    },
+    {
+      "id": "03-A:s05",
+      "scene_id": "s05",
+      "name": "转折与接力",
+      "role": "情绪反转→身份卡→软件录屏→竞赛道",
+      "preview_seconds": {
+        "start": 52.7,
+        "end": 69.4
+      },
+      "preview_frames": [
+        3162,
+        4164
+      ],
+      "source_seconds": {
+        "end": 69.4,
+        "start": 52.7
+      },
+      "source_to_preview_offset_seconds": 0,
+      "min_frames": 621,
+      "min_seconds_at_60fps": 10.35,
+      "split_policy": {
+        "mode": "atomic",
+        "reason": "57.4–66.3软件子段包含真人缩窗、两段录屏和结果接管；人物、窗口及输出接力不可剪开，2.4倍细节展示须保留披露。"
+      },
+      "entry": {
+        "mode": "native-transition"
+      },
+      "exit": {},
+      "audio": {
+        "mode": "source-remap",
+        "notes": "保留54.87裂纹打击、录屏功能切换、65.4→66.37riser及66.37结果接管音效；软件子段和人物接力不能剪开。",
+        "tailPolicy": "preserve"
+      },
+      "required_phases": [
+        "emotional-reversal",
+        "identity",
+        "software",
+        "features",
+        "competition",
+        "result"
+      ],
+      "cardinality": {
+        "competitors": {
+          "max": 3,
+          "min": 3
+        },
+        "features": {
+          "max": 2,
+          "min": 2
+        }
+      },
+      "effects": [
+        "crack-impact",
+        "identity-card",
+        "presenter-reframe",
+        "software-window",
+        "competitive-lanes"
+      ],
+      "palette_states": [
+        "near-black",
+        "white-media",
+        "cobalt-tracks"
+      ],
+      "cues": [
+        {
+          "at": 52.7,
+          "id": "shock",
+          "kind": "震惊画面",
+          "required": false,
+          "source_seconds": 52.7,
+          "preview_seconds": 52.7,
+          "preview_frame": 3162,
+          "local_seconds": 0.0
+        },
+        {
+          "at": 54.87,
+          "id": "crack",
+          "kind": "红色裂纹与打击",
+          "required": true,
+          "source_seconds": 54.87,
+          "preview_seconds": 54.87,
+          "preview_frame": 3292,
+          "local_seconds": 2.17
+        },
+        {
+          "at": 55.4,
+          "id": "identity",
+          "kind": "人物身份卡",
+          "required": false,
+          "source_seconds": 55.4,
+          "preview_seconds": 55.4,
+          "preview_frame": 3324,
+          "local_seconds": 2.7
+        },
+        {
+          "at": 57.9,
+          "id": "software_window",
+          "kind": "软件录屏窗口",
+          "required": true,
+          "source_seconds": 57.9,
+          "preview_seconds": 57.9,
+          "preview_frame": 3474,
+          "local_seconds": 5.2
+        },
+        {
+          "at": 61.3,
+          "id": "software_detail",
+          "kind": "切换录屏功能与加速",
+          "required": false,
+          "source_seconds": 61.3,
+          "preview_seconds": 61.3,
+          "preview_frame": 3678,
+          "local_seconds": 8.6
+        },
+        {
+          "at": 66.37,
+          "id": "competition",
+          "kind": "竞争对象入场",
+          "required": true,
+          "source_seconds": 66.37,
+          "preview_seconds": 66.37,
+          "preview_frame": 3982,
+          "local_seconds": 13.67
+        },
+        {
+          "at": 68.3,
+          "id": "lane_result",
+          "kind": "赛道结果砸字",
+          "required": false,
+          "source_seconds": 68.3,
+          "preview_seconds": 68.3,
+          "preview_frame": 4098,
+          "local_seconds": 15.6
+        }
+      ],
+      "slots": [
+        {
+          "id": "text_00",
+          "inputPath": "chapter",
+          "label": "章节",
+          "type": "text",
+          "required": true,
+          "sourceText": "// 05 — 震撼，也是打击",
+          "maxChars": 23
+        },
+        {
+          "id": "text_04",
+          "inputPath": "reaction.connector",
+          "label": "感受 · 连接句",
+          "type": "text",
+          "required": true,
+          "sourceText": "不仅是",
+          "maxChars": 8
+        },
+        {
+          "id": "text_05",
+          "inputPath": "reaction.positive",
+          "label": "感受 · 积极感受",
+          "type": "text",
+          "required": true,
+          "sourceText": "震撼，",
+          "maxChars": 8
+        },
+        {
+          "id": "text_06",
+          "inputPath": "reaction.negative",
+          "label": "感受 · 消极感受",
+          "type": "text",
+          "required": true,
+          "sourceText": "也是打击。",
+          "maxChars": 9
+        },
+        {
+          "id": "text_07",
+          "inputPath": "identity.context",
+          "label": "身份 · 背景说明",
+          "type": "text",
+          "required": true,
+          "sourceText": "// 示例身份标签",
+          "maxChars": 14
+        },
+        {
+          "id": "text_08",
+          "inputPath": "identity.name",
+          "label": "身份 · 名称",
+          "type": "text",
+          "required": true,
+          "sourceText": "示例创作者",
+          "maxChars": 9
+        },
+        {
+          "id": "text_09",
+          "inputPath": "software.name",
+          "label": "软件 · 名称",
+          "type": "text",
+          "required": true,
+          "sourceText": "示例软件 · Example App",
+          "maxChars": 27
+        },
+        {
+          "id": "text_10",
+          "inputPath": "software.features.0.label",
+          "label": "软件 · 功能 · 1 · 名称",
+          "type": "text",
+          "required": true,
+          "sourceText": "AI 匹配",
+          "maxChars": 9
+        },
+        {
+          "id": "text_11",
+          "inputPath": "software.features.0.description",
+          "label": "软件 · 功能 · 1 · 说明",
+          "type": "text",
+          "required": true,
+          "sourceText": "镜头 · 动画 · 音效 · 素材 · 一键自动匹配",
+          "maxChars": 38
+        },
+        {
+          "id": "text_12",
+          "inputPath": "software.features.1.label",
+          "label": "软件 · 功能 · 2 · 名称",
+          "type": "text",
+          "required": true,
+          "sourceText": "模板库",
+          "maxChars": 8
+        },
+        {
+          "id": "text_13",
+          "inputPath": "software.features.1.description",
+          "label": "软件 · 功能 · 2 · 说明",
+          "type": "text",
+          "required": true,
+          "sourceText": "预设 / 素材模板 / Lottie 动效 / 定制动画",
+          "maxChars": 41
+        },
+        {
+          "id": "text_14",
+          "inputPath": "software.playbackLabel",
+          "label": "软件 · 播放说明",
+          "type": "text",
+          "required": true,
+          "sourceText": "▶▶ 2.4×",
+          "maxChars": 11
+        },
+        {
+          "id": "text_15",
+          "inputPath": "work.context",
+          "label": "作品 · 背景说明",
+          "type": "text",
+          "required": true,
+          "sourceText": "// 今年年初 · 一直在死磕",
+          "maxChars": 23
+        },
+        {
+          "id": "text_16",
+          "inputPath": "work.title",
+          "label": "作品 · 标题",
+          "type": "text",
+          "required": true,
+          "sourceText": "AI 自动剪辑工具",
+          "maxChars": 14
+        },
+        {
+          "id": "text_17",
+          "inputPath": "pain.context",
+          "label": "困难 · 背景说明",
+          "type": "text",
+          "required": true,
+          "sourceText": "示例痛点 · 制作",
+          "maxChars": 14
+        },
+        {
+          "id": "text_18",
+          "inputPath": "pain.claim",
+          "label": "困难 · 主张",
+          "type": "text",
+          "required": true,
+          "sourceText": "太费时间",
+          "maxChars": 8
+        },
+        {
+          "id": "text_19",
+          "inputPath": "competition.context",
+          "label": "比较 · 背景说明",
+          "type": "text",
+          "required": true,
+          "sourceText": "对比组 A · 这波版本更新",
+          "maxChars": 21
+        },
+        {
+          "id": "text_20",
+          "inputPath": "competition.participants.0",
+          "label": "比较 · 参与者 · 1",
+          "type": "text",
+          "required": true,
+          "sourceText": "示例方案 A",
+          "maxChars": 10
+        },
+        {
+          "id": "text_22",
+          "inputPath": "competition.participants.1",
+          "label": "比较 · 参与者 · 2",
+          "type": "text",
+          "required": true,
+          "sourceText": "示例软件",
+          "maxChars": 8
+        },
+        {
+          "id": "text_24",
+          "inputPath": "competition.participants.2",
+          "label": "比较 · 参与者 · 3",
+          "type": "text",
+          "required": true,
+          "sourceText": "传统剪辑",
+          "maxChars": 8
+        },
+        {
+          "id": "text_26",
+          "inputPath": "conclusion.line1",
+          "label": "结论 · 第一行",
+          "type": "text",
+          "required": true,
+          "sourceText": "赛道格局，",
+          "maxChars": 9
+        },
+        {
+          "id": "text_27",
+          "inputPath": "conclusion.line2",
+          "label": "结论 · 第二行",
+          "type": "text",
+          "required": true,
+          "sourceText": "改写。",
+          "maxChars": 8
+        },
+        {
+          "id": "app_logo",
+          "inputPath": "software.logo",
+          "label": "软件 · 标识",
+          "type": "image",
+          "required": true,
+          "aspect": "1:1",
+          "sourceAsset": "assets/app-logo.png"
+        },
+        {
+          "id": "soft_match",
+          "inputPath": "software.features.0.media",
+          "label": "软件 · 功能 · 1 · 媒体素材",
+          "type": "sequence",
+          "required": true,
+          "aspect": "preserve",
+          "sourceAsset": "sc/soft_match/f_%04d.jpg"
+        },
+        {
+          "id": "soft_tpl",
+          "inputPath": "software.features.1.media",
+          "label": "软件 · 功能 · 2 · 媒体素材",
+          "type": "sequence",
+          "required": true,
+          "aspect": "preserve",
+          "sourceAsset": "sc/soft_tpl/f_%04d.jpg"
+        },
+        {
+          "id": "opus_hero",
+          "inputPath": "competition.artifact",
+          "label": "比较 · 成果",
+          "type": "sequence",
+          "required": true,
+          "aspect": "16:9",
+          "sourceAsset": "sc/opus_hero/f_%04d.jpg"
+        }
+      ],
+      "slot_default_text_status": "Historical public sourceText; does not equal the current official preview copy. Bind the actual demo recipe or observed copy for fidelity.",
+      "aesthetic": {
+        "score": 93,
+        "parts": [
+          23,
+          23,
+          19,
+          19,
+          9
+        ],
+        "rank": 5,
+        "subjective": true
+      }
+    },
+    {
+      "id": "03-A:s06",
+      "scene_id": "s06",
+      "name": "时间推进",
+      "role": "时间轴迭代→竞争者进场→账号卡",
+      "preview_seconds": {
+        "start": 69.4,
+        "end": 78.1
+      },
+      "preview_frames": [
+        4164,
+        4686
+      ],
+      "source_seconds": {
+        "end": 78.1,
+        "start": 69.4
+      },
+      "source_to_preview_offset_seconds": 0,
+      "min_frames": 324,
+      "min_seconds_at_60fps": 5.4,
+      "split_policy": {
+        "mode": "atomic",
+        "reason": "时间线加密、三车道与账号切换组成因果链，不能只为效果数量摘掉中间阶段；原刻度是示意，不能伪称14次实测。"
+      },
+      "entry": {
+        "mode": "native-transition"
+      },
+      "exit": {},
+      "audio": {
+        "mode": "source-remap",
+        "notes": "动作音效随真实关键词锚点与受保护动作映射，保留持续时间及尾音；新相邻组的重叠、音乐起伏与最终编码声画需逐段审核。",
+        "tailPolicy": "preserve"
+      },
+      "required_phases": [
+        "iteration",
+        "timeline",
+        "competitors",
+        "acceleration",
+        "account"
+      ],
+      "cardinality": {
+        "accountMetrics": {
+          "max": 4,
+          "min": 4
+        },
+        "competitors": {
+          "max": 3,
+          "min": 3
+        }
+      },
+      "effects": [
+        "timeline-acceleration",
+        "competitive-lanes",
+        "account-switch",
+        "counter-roll"
+      ],
+      "palette_states": [
+        "full-electric-blue",
+        "white-account-card"
+      ],
+      "cues": [
+        {
+          "at": 69.4,
+          "id": "iteration",
+          "kind": "迭代速度",
+          "required": true,
+          "source_seconds": 69.4,
+          "preview_seconds": 69.4,
+          "preview_frame": 4164,
+          "local_seconds": 0.0
+        },
+        {
+          "at": 70.2,
+          "id": "timeline",
+          "kind": "时间轴变化",
+          "required": false,
+          "source_seconds": 70.2,
+          "preview_seconds": 70.2,
+          "preview_frame": 4212,
+          "local_seconds": 0.8
+        },
+        {
+          "at": 71,
+          "id": "competitors",
+          "kind": "竞品进入",
+          "required": false,
+          "source_seconds": 71,
+          "preview_seconds": 71,
+          "preview_frame": 4260,
+          "local_seconds": 1.6
+        },
+        {
+          "at": 73.4,
+          "id": "fast_lane",
+          "kind": "快车道",
+          "required": true,
+          "source_seconds": 73.4,
+          "preview_seconds": 73.4,
+          "preview_frame": 4404,
+          "local_seconds": 4.0
+        },
+        {
+          "at": 75.85,
+          "id": "account",
+          "kind": "账号卡",
+          "required": true,
+          "source_seconds": 75.85,
+          "preview_seconds": 75.85,
+          "preview_frame": 4551,
+          "local_seconds": 6.45
+        },
+        {
+          "at": 77.05,
+          "id": "account_commit",
+          "kind": "账号动作确认",
+          "required": false,
+          "source_seconds": 77.05,
+          "preview_seconds": 77.05,
+          "preview_frame": 4623,
+          "local_seconds": 7.65
+        }
+      ],
+      "slots": [
+        {
+          "id": "text_00",
+          "inputPath": "chapter",
+          "label": "章节",
+          "type": "text",
+          "required": true,
+          "sourceText": "// 06 — 快车道",
+          "maxChars": 17
+        },
+        {
+          "id": "text_02",
+          "inputPath": "timeline.subject",
+          "label": "时间轴 · 主题",
+          "type": "text",
+          "required": true,
+          "sourceText": "大模型的",
+          "maxChars": 8
+        },
+        {
+          "id": "text_03",
+          "inputPath": "timeline.heading",
+          "label": "时间轴 · 标题",
+          "type": "text",
+          "required": true,
+          "sourceText": "迭代速度",
+          "maxChars": 8
+        },
+        {
+          "id": "text_04",
+          "inputPath": "timeline.startLabel",
+          "label": "时间轴 · 起始标签",
+          "type": "text",
+          "required": true,
+          "sourceText": "2023",
+          "maxChars": 8
+        },
+        {
+          "id": "text_05",
+          "inputPath": "timeline.endLabel",
+          "label": "时间轴 · 末端标签",
+          "type": "text",
+          "required": true,
+          "sourceText": "NOW",
+          "maxChars": 8
+        },
+        {
+          "id": "text_07",
+          "inputPath": "competitors.0",
+          "label": "比较对象 · 1",
+          "type": "text",
+          "required": true,
+          "sourceText": "示例方案 A",
+          "maxChars": 10
+        },
+        {
+          "id": "text_09",
+          "inputPath": "competitors.1",
+          "label": "比较对象 · 2",
+          "type": "text",
+          "required": true,
+          "sourceText": "对比组 B",
+          "maxChars": 9
+        },
+        {
+          "id": "text_11",
+          "inputPath": "competitors.2",
+          "label": "比较对象 · 3",
+          "type": "text",
+          "required": true,
+          "sourceText": "对比组 C",
+          "maxChars": 9
+        },
+        {
+          "id": "text_12",
+          "inputPath": "conclusion.line1",
+          "label": "结论 · 第一行",
+          "type": "text",
+          "required": true,
+          "sourceText": "AI + 内容创作，",
+          "maxChars": 16
+        },
+        {
+          "id": "text_13",
+          "inputPath": "conclusion.line2",
+          "label": "结论 · 第二行",
+          "type": "text",
+          "required": true,
+          "sourceText": "驶入快车道。",
+          "maxChars": 10
+        },
+        {
+          "id": "text_14",
+          "inputPath": "account.context",
+          "label": "账号 · 背景说明",
+          "type": "text",
+          "required": true,
+          "sourceText": "// 第一时间 · 启动",
+          "maxChars": 18
+        },
+        {
+          "id": "text_15",
+          "inputPath": "brand.line1",
+          "label": "本期品牌 · 第一行",
+          "type": "text",
+          "required": true,
+          "sourceText": "示例",
+          "maxChars": 8
+        },
+        {
+          "id": "text_16",
+          "inputPath": "brand.line2",
+          "label": "本期品牌 · 第二行",
+          "type": "text",
+          "required": true,
+          "sourceText": "品牌",
+          "maxChars": 8
+        },
+        {
+          "id": "text_17",
+          "inputPath": "account.description",
+          "label": "账号 · 说明",
+          "type": "text",
+          "required": true,
+          "sourceText": "创作者简介 · 请按本期内容填写",
+          "maxChars": 24
+        },
+        {
+          "id": "text_18",
+          "inputPath": "account.startLabel",
+          "label": "账号 · 起始标签",
+          "type": "text",
+          "required": true,
+          "sourceText": "开始时间",
+          "maxChars": 11
+        },
+        {
+          "id": "text_19",
+          "inputPath": "account.dayPrefix",
+          "label": "账号 · 天数前缀",
+          "type": "text",
+          "required": true,
+          "sourceText": "第",
+          "maxChars": 8
+        },
+        {
+          "id": "text_21",
+          "inputPath": "account.dayUnit",
+          "label": "账号 · 天数单位",
+          "type": "text",
+          "required": true,
+          "sourceText": "天",
+          "maxChars": 8
+        },
+        {
+          "id": "text_22",
+          "inputPath": "account.hoursLabel",
+          "label": "账号 · 小时说明",
+          "type": "text",
+          "required": true,
+          "sourceText": "消耗时间",
+          "maxChars": 11
+        },
+        {
+          "id": "text_24",
+          "inputPath": "account.hoursUnit",
+          "label": "账号 · 小时单位",
+          "type": "text",
+          "required": true,
+          "sourceText": "小时",
+          "maxChars": 8
+        },
+        {
+          "id": "text_25",
+          "inputPath": "account.followersLabel",
+          "label": "账号 · 关注数说明",
+          "type": "text",
+          "required": true,
+          "sourceText": "粉丝数",
+          "maxChars": 10
+        },
+        {
+          "id": "text_27",
+          "inputPath": "account.incomeLabel",
+          "label": "账号 · 收入说明",
+          "type": "text",
+          "required": true,
+          "sourceText": "收入",
+          "maxChars": 9
+        },
+        {
+          "id": "text_28",
+          "inputPath": "account.currency",
+          "label": "账号 · 金额单位",
+          "type": "text",
+          "required": true,
+          "sourceText": "¥",
+          "maxChars": 8
+        },
+        {
+          "id": "account_days",
+          "inputPath": "account.days",
+          "label": "账号 · 天数",
+          "type": "number",
+          "required": true
+        },
+        {
+          "id": "account_hours",
+          "inputPath": "account.hours",
+          "label": "账号 · 小时数",
+          "type": "number",
+          "required": true
+        },
+        {
+          "id": "account_followers",
+          "inputPath": "account.followers",
+          "label": "账号 · 关注数",
+          "type": "number",
+          "required": true
+        },
+        {
+          "id": "presenter",
+          "inputPath": "account.avatar",
+          "label": "账号 · 头像",
+          "type": "image",
+          "required": true,
+          "aspect": "1:1",
+          "sourceAsset": "assets/presenter.png"
+        },
+        {
+          "id": "account_income",
+          "inputPath": "account.income",
+          "label": "账号 · 收入数值",
+          "type": "number",
+          "required": true
+        }
+      ],
+      "slot_default_text_status": "Historical public sourceText; does not equal the current official preview copy. Bind the actual demo recipe or observed copy for fidelity.",
+      "aesthetic": {
+        "score": 89,
+        "parts": [
+          23,
+          23,
+          17,
+          17,
+          9
+        ],
+        "rank": 8,
+        "subjective": true
+      }
+    },
+    {
+      "id": "03-A:s07",
+      "scene_id": "s07",
+      "name": "过程与成果",
+      "role": "旧工作流→时间压缩→工作/代码录屏",
+      "preview_seconds": {
+        "start": 78.1,
+        "end": 89.7
+      },
+      "preview_frames": [
+        4686,
+        5382
+      ],
+      "source_seconds": {
+        "end": 89.7,
+        "start": 78.1
+      },
+      "source_to_preview_offset_seconds": 0,
+      "min_frames": 432,
+      "min_seconds_at_60fps": 7.2,
+      "split_policy": {
+        "mode": "atomic",
+        "reason": "旧流程条与时间压缩是同一物体；工作与代码录屏接续解释产出，不能把压缩动作切作无前因的独立动画。"
+      },
+      "entry": {
+        "mode": "native-transition"
+      },
+      "exit": {},
+      "audio": {
+        "mode": "source-remap",
+        "notes": "动作音效随真实关键词锚点与受保护动作映射，保留持续时间及尾音；新相邻组的重叠、音乐起伏与最终编码声画需逐段审核。",
+        "tailPolicy": "preserve"
+      },
+      "required_phases": [
+        "before",
+        "steps",
+        "compression",
+        "work",
+        "output",
+        "code"
+      ],
+      "cardinality": {
+        "outputs": {
+          "max": 2,
+          "min": 2
+        },
+        "steps": {
+          "max": 3,
+          "min": 3
+        }
+      },
+      "effects": [
+        "workflow-build",
+        "same-object-compression",
+        "time-ring",
+        "video-relay"
+      ],
+      "palette_states": [
+        "mineral-paper",
+        "black-ui",
+        "graphite-media"
+      ],
+      "cues": [
+        {
+          "at": 78.1,
+          "id": "before",
+          "kind": "过去流程",
+          "required": true,
+          "source_seconds": 78.1,
+          "preview_seconds": 78.1,
+          "preview_frame": 4686,
+          "local_seconds": 0.0
+        },
+        {
+          "at": 80.3,
+          "id": "process",
+          "kind": "写稿拍摄剪辑",
+          "required": false,
+          "source_seconds": 80.3,
+          "preview_seconds": 80.3,
+          "preview_frame": 4818,
+          "local_seconds": 2.2
+        },
+        {
+          "at": 82.15,
+          "id": "time_shift",
+          "kind": "一小时目标",
+          "required": true,
+          "source_seconds": 82.15,
+          "preview_seconds": 82.15,
+          "preview_frame": 4929,
+          "local_seconds": 4.05
+        },
+        {
+          "at": 83.3,
+          "id": "work_video",
+          "kind": "工作录屏",
+          "required": false,
+          "source_seconds": 83.3,
+          "preview_seconds": 83.3,
+          "preview_frame": 4998,
+          "local_seconds": 5.2
+        },
+        {
+          "at": 85.1,
+          "id": "output",
+          "kind": "每天产出",
+          "required": true,
+          "source_seconds": 85.1,
+          "preview_seconds": 85.1,
+          "preview_frame": 5106,
+          "local_seconds": 7.0
+        },
+        {
+          "at": 87.4,
+          "id": "code_video",
+          "kind": "代码录屏",
+          "required": false,
+          "source_seconds": 87.4,
+          "preview_seconds": 87.4,
+          "preview_frame": 5244,
+          "local_seconds": 9.3
+        }
+      ],
+      "slots": [
+        {
+          "id": "text_00",
+          "inputPath": "chapter",
+          "label": "章节",
+          "type": "text",
+          "required": true,
+          "sourceText": "// 07 — 一小时",
+          "maxChars": 17
+        },
+        {
+          "id": "text_02",
+          "inputPath": "before.context",
+          "label": "变化前 · 背景说明",
+          "type": "text",
+          "required": true,
+          "sourceText": "放在以前，",
+          "maxChars": 9
+        },
+        {
+          "id": "text_03",
+          "inputPath": "before.subject",
+          "label": "变化前 · 主题",
+          "type": "text",
+          "required": true,
+          "sourceText": "做一条视频",
+          "maxChars": 9
+        },
+        {
+          "id": "text_04",
+          "inputPath": "comparison.durationUnit",
+          "label": "对比 · 时间单位",
+          "type": "text",
+          "required": true,
+          "sourceText": "1h",
+          "maxChars": 8
+        },
+        {
+          "id": "text_05",
+          "inputPath": "workflow.steps.0",
+          "label": "工作流 · 步骤 · 1",
+          "type": "text",
+          "required": true,
+          "sourceText": "写稿",
+          "maxChars": 8
+        },
+        {
+          "id": "text_06",
+          "inputPath": "workflow.steps.1",
+          "label": "工作流 · 步骤 · 2",
+          "type": "text",
+          "required": true,
+          "sourceText": "拍摄",
+          "maxChars": 8
+        },
+        {
+          "id": "text_07",
+          "inputPath": "workflow.steps.2",
+          "label": "工作流 · 步骤 · 3",
+          "type": "text",
+          "required": true,
+          "sourceText": "剪辑",
+          "maxChars": 8
+        },
+        {
+          "id": "text_08",
+          "inputPath": "before.durationLabel",
+          "label": "变化前 · 时间说明",
+          "type": "text",
+          "required": true,
+          "sourceText": "≈ 1–2 天",
+          "maxChars": 11
+        },
+        {
+          "id": "text_09",
+          "inputPath": "after.context",
+          "label": "变化后 · 背景说明",
+          "type": "text",
+          "required": true,
+          "sourceText": "现在 →",
+          "maxChars": 8
+        },
+        {
+          "id": "text_10",
+          "inputPath": "after.durationLabel",
+          "label": "变化后 · 时间说明",
+          "type": "text",
+          "required": true,
+          "sourceText": "1 小时",
+          "maxChars": 8
+        },
+        {
+          "id": "text_11",
+          "inputPath": "schedule.context",
+          "label": "日程 · 背景说明",
+          "type": "text",
+          "required": true,
+          "sourceText": "// 每天 24h",
+          "maxChars": 14
+        },
+        {
+          "id": "text_12",
+          "inputPath": "schedule.workLabel",
+          "label": "日程 · 作品名称",
+          "type": "text",
+          "required": true,
+          "sourceText": "AI 开发工作",
+          "maxChars": 11
+        },
+        {
+          "id": "text_13",
+          "inputPath": "schedule.creationLabel",
+          "label": "日程 · 创作说明",
+          "type": "text",
+          "required": true,
+          "sourceText": "+ 1h 示例创作者",
+          "maxChars": 16
+        },
+        {
+          "id": "text_14",
+          "inputPath": "outputs.0.context",
+          "label": "输出 · 1 · 背景说明",
+          "type": "text",
+          "required": true,
+          "sourceText": "// 日常 · AI 开发工作",
+          "maxChars": 23
+        },
+        {
+          "id": "text_15",
+          "inputPath": "outputs.1.context",
+          "label": "输出 · 2 · 背景说明",
+          "type": "text",
+          "required": true,
+          "sourceText": "// 工作的日常",
+          "maxChars": 13
+        },
+        {
+          "id": "text_16",
+          "inputPath": "outputs.heading",
+          "label": "输出 · 标题",
+          "type": "text",
+          "required": true,
+          "sourceText": "每天一小时，输出：",
+          "maxChars": 14
+        },
+        {
+          "id": "text_18",
+          "inputPath": "outputs.0.label",
+          "label": "输出 · 1 · 名称",
+          "type": "text",
+          "required": true,
+          "sourceText": "前沿 AI 技术分享",
+          "maxChars": 16
+        },
+        {
+          "id": "text_20",
+          "inputPath": "outputs.1.label",
+          "label": "输出 · 2 · 名称",
+          "type": "text",
+          "required": true,
+          "sourceText": "工作的日常",
+          "maxChars": 9
+        },
+        {
+          "id": "work",
+          "inputPath": "outputs.0.media",
+          "label": "输出 · 1 · 媒体素材",
+          "type": "sequence",
+          "required": true,
+          "aspect": "9:16",
+          "sourceAsset": "sc/work/f_%04d.jpg"
+        },
+        {
+          "id": "coding",
+          "inputPath": "outputs.1.media",
+          "label": "输出 · 2 · 媒体素材",
+          "type": "sequence",
+          "required": true,
+          "aspect": "16:9",
+          "sourceAsset": "sc/coding/f_%04d.jpg"
+        }
+      ],
+      "slot_default_text_status": "Historical public sourceText; does not equal the current official preview copy. Bind the actual demo recipe or observed copy for fidelity.",
+      "aesthetic": {
+        "score": 97,
+        "parts": [
+          24,
+          25,
+          19,
+          19,
+          10
+        ],
+        "rank": 1,
+        "subjective": true
+      }
+    },
+    {
+      "id": "03-A:s08",
+      "scene_id": "s08",
+      "name": "归纳与行动",
+      "role": "情绪收束→产能对比→逐帧焦虑→行动号召",
+      "preview_seconds": {
+        "start": 89.7,
+        "end": 102.92
+      },
+      "preview_frames": [
+        5382,
+        6175
+      ],
+      "source_seconds": {
+        "end": 102.92,
+        "start": 89.7
+      },
+      "source_to_preview_offset_seconds": 0,
+      "min_frames": 492,
+      "min_seconds_at_60fps": 8.2,
+      "split_policy": {
+        "mode": "atomic",
+        "reason": "真人持续在场并随反思、产能对比和号召移动；chime尾音越过102.92场界，不能按画面场界截短声音。"
+      },
+      "entry": {
+        "mode": "native-transition"
+      },
+      "exit": {},
+      "audio": {
+        "mode": "source-remap",
+        "notes": "101.4的chime持续至场界之后，并叠加混响尾音；102.92画面切场不能截音。与下一场的重叠或片尾延伸必须实听。",
+        "tailPolicy": "preserve"
+      },
+      "required_phases": [
+        "closing",
+        "change",
+        "warning",
+        "growth",
+        "friction",
+        "action",
+        "comments"
+      ],
+      "cardinality": {
+        "comparison": {
+          "max": 2,
+          "min": 2
+        }
+      },
+      "effects": [
+        "presenter-reframe",
+        "growth-comparison",
+        "frame-strip",
+        "action-button",
+        "closing-card"
+      ],
+      "palette_states": [
+        "near-black",
+        "cobalt-button",
+        "mineral-paper-ending"
+      ],
+      "cues": [
+        {
+          "at": 89.7,
+          "id": "closing",
+          "kind": "人物大卡回归",
+          "required": false,
+          "source_seconds": 89.7,
+          "preview_seconds": 89.7,
+          "preview_frame": 5382,
+          "local_seconds": 0.0
+        },
+        {
+          "at": 91.85,
+          "id": "era",
+          "kind": "新时代逐词入场",
+          "required": true,
+          "source_seconds": 91.85,
+          "preview_seconds": 91.85,
+          "preview_frame": 5511,
+          "local_seconds": 2.15
+        },
+        {
+          "at": 93.6,
+          "id": "warning",
+          "kind": "竞争警告",
+          "required": false,
+          "source_seconds": 93.6,
+          "preview_seconds": 93.6,
+          "preview_frame": 5616,
+          "local_seconds": 3.9
+        },
+        {
+          "at": 95.4,
+          "id": "growth",
+          "kind": "产能对比增长",
+          "required": true,
+          "source_seconds": 95.4,
+          "preview_seconds": 95.4,
+          "preview_frame": 5724,
+          "local_seconds": 5.7
+        },
+        {
+          "at": 96.5,
+          "id": "frame_work",
+          "kind": "逐帧烦恼",
+          "required": false,
+          "source_seconds": 96.5,
+          "preview_seconds": 96.5,
+          "preview_frame": 5790,
+          "local_seconds": 6.8
+        },
+        {
+          "at": 98.6,
+          "id": "call_to_action",
+          "kind": "行动按钮",
+          "required": true,
+          "source_seconds": 98.6,
+          "preview_seconds": 98.6,
+          "preview_frame": 5916,
+          "local_seconds": 8.9
+        },
+        {
+          "at": 100.1,
+          "id": "comments",
+          "kind": "评论提示",
+          "required": false,
+          "source_seconds": 100.1,
+          "preview_seconds": 100.1,
+          "preview_frame": 6006,
+          "local_seconds": 10.4
+        }
+      ],
+      "slots": [
+        {
+          "id": "text_00",
+          "inputPath": "chapter",
+          "label": "章节",
+          "type": "text",
+          "required": true,
+          "sourceText": "// 08 — 行动",
+          "maxChars": 16
+        },
+        {
+          "id": "text_04",
+          "inputPath": "reflection.context",
+          "label": "回顾 · 背景说明",
+          "type": "text",
+          "required": true,
+          "sourceText": "// 最后，掏句心窝子",
+          "maxChars": 17
+        },
+        {
+          "id": "text_05",
+          "inputPath": "reflection.subject",
+          "label": "回顾 · 主题",
+          "type": "text",
+          "required": true,
+          "sourceText": "内容创作的",
+          "maxChars": 9
+        },
+        {
+          "id": "text_06",
+          "inputPath": "reflection.era",
+          "label": "回顾 · 时期",
+          "type": "text",
+          "required": true,
+          "sourceText": "新时代，",
+          "maxChars": 8
+        },
+        {
+          "id": "text_07",
+          "inputPath": "reflection.connector",
+          "label": "回顾 · 连接句",
+          "type": "text",
+          "required": true,
+          "sourceText": "真的",
+          "maxChars": 8
+        },
+        {
+          "id": "text_08",
+          "inputPath": "reflection.conclusion",
+          "label": "回顾 · 结论",
+          "type": "text",
+          "required": true,
+          "sourceText": "来了。",
+          "maxChars": 8
+        },
+        {
+          "id": "text_09",
+          "inputPath": "capacity.heading",
+          "label": "产能 · 标题",
+          "type": "text",
+          "required": true,
+          "sourceText": "// 产能对比",
+          "maxChars": 11
+        },
+        {
+          "id": "text_10",
+          "inputPath": "capacity.opponentLabel",
+          "label": "产能 · 对照方名称",
+          "type": "text",
+          "required": true,
+          "sourceText": "你的对手",
+          "maxChars": 8
+        },
+        {
+          "id": "text_11",
+          "inputPath": "capacity.augmentationLabel",
+          "label": "产能 · 辅助说明",
+          "type": "text",
+          "required": true,
+          "sourceText": "+ AI",
+          "maxChars": 8
+        },
+        {
+          "id": "text_13",
+          "inputPath": "capacity.selfLabel",
+          "label": "产能 · 本方名称",
+          "type": "text",
+          "required": true,
+          "sourceText": "你",
+          "maxChars": 8
+        },
+        {
+          "id": "text_16",
+          "inputPath": "action.heading",
+          "label": "动作 · 标题",
+          "type": "text",
+          "required": true,
+          "sourceText": "和 AI 一起，行动起来",
+          "maxChars": 18
+        },
+        {
+          "id": "text_17",
+          "inputPath": "brand.line1",
+          "label": "本期品牌 · 第一行",
+          "type": "text",
+          "required": true,
+          "sourceText": "示例",
+          "maxChars": 8
+        },
+        {
+          "id": "text_18",
+          "inputPath": "brand.line2",
+          "label": "本期品牌 · 第二行",
+          "type": "text",
+          "required": true,
+          "sourceText": "品牌",
+          "maxChars": 8
+        },
+        {
+          "id": "text_19",
+          "inputPath": "brand.description",
+          "label": "本期品牌 · 说明",
+          "type": "text",
+          "required": true,
+          "sourceText": "创作与技术 · 示例品牌说明",
+          "maxChars": 21
+        },
+        {
+          "id": "text_21",
+          "inputPath": "invitation.heading",
+          "label": "邀请 · 标题",
+          "type": "text",
+          "required": true,
+          "sourceText": "有问题，评论区留言",
+          "maxChars": 14
+        },
+        {
+          "id": "text_22",
+          "inputPath": "invitation.note",
+          "label": "邀请 · 说明",
+          "type": "text",
+          "required": true,
+          "sourceText": "// 我会尽量解答",
+          "maxChars": 14
+        },
+        {
+          "id": "text_23",
+          "inputPath": "signoff",
+          "label": "结束语",
+          "type": "text",
+          "required": true,
+          "sourceText": "拜拜",
+          "maxChars": 8
+        },
+        {
+          "id": "growth_factor",
+          "inputPath": "capacity.factor",
+          "label": "产能 · 倍数",
+          "type": "number",
+          "required": true
+        },
+        {
+          "id": "frame_label",
+          "inputPath": "reaction.label",
+          "label": "感受 · 名称",
+          "type": "dynamicText",
+          "required": true,
+          "sourceText": "还在一帧一帧地磕",
+          "maxChars": 16
+        },
+        {
+          "id": "presenter",
+          "inputPath": "brand.avatar",
+          "label": "本期品牌 · 头像",
+          "type": "image",
+          "required": true,
+          "aspect": "1:1",
+          "sourceAsset": "assets/presenter.png"
+        }
+      ],
+      "slot_default_text_status": "Historical public sourceText; does not equal the current official preview copy. Bind the actual demo recipe or observed copy for fidelity.",
+      "aesthetic": {
+        "score": 88,
+        "parts": [
+          23,
+          22,
+          16,
+          18,
+          9
+        ],
+        "rank": 9,
+        "subjective": true
+      }
+    },
+    {
+      "id": "03-A:s09",
+      "scene_id": "s09",
+      "name": "制作说明",
+      "role": "制作说明→逐字提示词→签名",
+      "preview_seconds": {
+        "start": 102.92,
+        "end": 108.4
+      },
+      "preview_frames": [
+        6175,
+        6504
+      ],
+      "source_seconds": {
+        "end": 108.4,
+        "start": 102.92
+      },
+      "source_to_preview_offset_seconds": 0,
+      "min_frames": 204,
+      "min_seconds_at_60fps": 3.4,
+      "split_policy": {
+        "mode": "atomic",
+        "reason": "制作信息、提示词打字和签名共同收束；不能截断打字音或把工具来源文字留作本期事实。"
+      },
+      "entry": {
+        "mode": "native-transition"
+      },
+      "exit": {},
+      "audio": {
+        "mode": "source-remap",
+        "notes": "动作音效随真实关键词锚点与受保护动作映射，保留持续时间及尾音；新相邻组的重叠、音乐起伏与最终编码声画需逐段审核。",
+        "tailPolicy": "preserve"
+      },
+      "required_phases": [
+        "production",
+        "tool",
+        "prompt",
+        "signature"
+      ],
+      "cardinality": {},
+      "effects": [
+        "production-card",
+        "typewriter",
+        "signature-reveal"
+      ],
+      "palette_states": [
+        "dark-charcoal-grid",
+        "white-type",
+        "cobalt-cursor"
+      ],
+      "cues": [
+        {
+          "at": 102.92,
+          "id": "production",
+          "kind": "制作信息",
+          "required": true,
+          "source_seconds": 102.92,
+          "preview_seconds": 102.92,
+          "preview_frame": 6175,
+          "local_seconds": 0.0
+        },
+        {
+          "at": 103.45,
+          "id": "tool",
+          "kind": "工具名称",
+          "required": false,
+          "source_seconds": 103.45,
+          "preview_seconds": 103.45,
+          "preview_frame": 6207,
+          "local_seconds": 0.53
+        },
+        {
+          "at": 104.35,
+          "id": "prompt",
+          "kind": "打字机提示词",
+          "required": true,
+          "source_seconds": 104.35,
+          "preview_seconds": 104.35,
+          "preview_frame": 6261,
+          "local_seconds": 1.43
+        },
+        {
+          "at": 107,
+          "id": "signature",
+          "kind": "片尾签名",
+          "required": false,
+          "source_seconds": 107,
+          "preview_seconds": 107,
+          "preview_frame": 6420,
+          "local_seconds": 4.08
+        }
+      ],
+      "slots": [
+        {
+          "id": "text_00",
+          "inputPath": "chapter",
+          "label": "章节",
+          "type": "text",
+          "required": true,
+          "sourceText": "// 09 — 制作说明",
+          "maxChars": 18
+        },
+        {
+          "id": "text_02",
+          "inputPath": "production.toolLabel",
+          "label": "制作说明 · 工具标签",
+          "type": "text",
+          "required": true,
+          "sourceText": "制作工具：",
+          "maxChars": 9
+        },
+        {
+          "id": "text_03",
+          "inputPath": "production.toolName",
+          "label": "制作说明 · 工具名称",
+          "type": "text",
+          "required": true,
+          "sourceText": "示例方案 A",
+          "maxChars": 10
+        },
+        {
+          "id": "text_04",
+          "inputPath": "production.action",
+          "label": "制作说明 · 动作",
+          "type": "text",
+          "required": true,
+          "sourceText": "制作",
+          "maxChars": 8
+        },
+        {
+          "id": "text_05",
+          "inputPath": "production.methodName",
+          "label": "制作说明 · 方法名称",
+          "type": "text",
+          "required": true,
+          "sourceText": "adu-motion-video",
+          "maxChars": 24
+        },
+        {
+          "id": "text_06",
+          "inputPath": "production.description",
+          "label": "制作说明 · 说明",
+          "type": "text",
+          "required": true,
+          "sourceText": "动画 · 配乐 · 音效 全部由代码生成",
+          "maxChars": 30
+        },
+        {
+          "id": "text_07",
+          "inputPath": "prompt.heading",
+          "label": "提示词 · 标题",
+          "type": "text",
+          "required": true,
+          "sourceText": "// 核心提示词 · prompt",
+          "maxChars": 25
+        },
+        {
+          "id": "text_09",
+          "inputPath": "brand.line1",
+          "label": "本期品牌 · 第一行",
+          "type": "text",
+          "required": true,
+          "sourceText": "示例",
+          "maxChars": 8
+        },
+        {
+          "id": "text_10",
+          "inputPath": "brand.line2",
+          "label": "本期品牌 · 第二行",
+          "type": "text",
+          "required": true,
+          "sourceText": "品牌",
+          "maxChars": 8
+        },
+        {
+          "id": "text_11",
+          "inputPath": "prompt.note",
+          "label": "提示词 · 说明",
+          "type": "text",
+          "required": true,
+          "sourceText": "// 提示词可以直接复制去试",
+          "maxChars": 21
+        },
+        {
+          "id": "typed_prompt",
+          "inputPath": "prompt.text",
+          "label": "提示词 · 文字",
+          "type": "dynamicText",
+          "required": true,
+          "sourceText": "使用 adu-motion-video，根据提供的文案、口播与素材制作横屏视频。选择现代图文动效，按语义编排动作，保留清楚的中英字幕，先检查短片再导出成片。",
+          "maxChars": 150
+        },
+        {
+          "id": "presenter",
+          "inputPath": "brand.avatar",
+          "label": "本期品牌 · 头像",
+          "type": "image",
+          "required": true,
+          "aspect": "1:1",
+          "sourceAsset": "assets/presenter.png"
+        }
+      ],
+      "slot_default_text_status": "Historical public sourceText; does not equal the current official preview copy. Bind the actual demo recipe or observed copy for fidelity.",
+      "aesthetic": {
+        "score": 84,
+        "parts": [
+          24,
+          20,
+          14,
+          17,
+          9
+        ],
+        "rank": 10,
+        "subjective": true
+      }
+    },
+    {
+      "id": "03-A:independent-artifact-review",
+      "scene_id": "independent-artifact-review",
+      "name": "独立成果审阅",
+      "role": "单项实际成果独立建立 → 三项真实审阅 → 有依据的结论",
+      "preview_seconds": {
+        "start": 108.4,
+        "end": 122.4
+      },
+      "preview_frames": [
+        6504,
+        7344
+      ],
+      "source_seconds": {
+        "end": 124,
+        "start": 110
+      },
+      "source_to_preview_offset_seconds": -1.6,
+      "min_frames": 840,
+      "min_seconds_at_60fps": 14.0,
+      "split_policy": {
+        "mode": "atomic",
+        "reason": "同一成果的建立、审阅与有依据的结论"
+      },
+      "entry": {
+        "mode": "independent"
+      },
+      "exit": {},
+      "audio": {
+        "mode": "source-remap",
+        "tailPolicy": "preserve"
+      },
+      "required_phases": [
+        "establish",
+        "review",
+        "conclusion"
+      ],
+      "cardinality": {
+        "artifacts": {
+          "max": 1,
+          "min": 1
+        },
+        "checks": {
+          "max": 3,
+          "min": 3
+        }
+      },
+      "effects": [
+        "depth-establish",
+        "artifact-focus",
+        "review-scan",
+        "note-cascade"
+      ],
+      "palette_states": [
+        "near-black",
+        "light-artifact",
+        "cobalt-review"
+      ],
+      "cues": [
+        {
+          "at": 110,
+          "id": "entry",
+          "required": true,
+          "source_seconds": 110,
+          "preview_seconds": 108.4,
+          "preview_frame": 6504,
+          "local_seconds": 0
+        },
+        {
+          "at": 114,
+          "id": "review",
+          "required": true,
+          "source_seconds": 114,
+          "preview_seconds": 112.4,
+          "preview_frame": 6744,
+          "local_seconds": 4
+        },
+        {
+          "at": 118.6,
+          "id": "conclusion",
+          "required": true,
+          "source_seconds": 118.6,
+          "preview_seconds": 117.0,
+          "preview_frame": 7020,
+          "local_seconds": 8.6
+        }
+      ],
+      "slots": [
+        {
+          "id": "named-0",
+          "inputPath": "chapter",
+          "label": "章节",
+          "type": "text",
+          "required": true,
+          "sourceText": "// 本期成果审阅",
+          "maxChars": 28
+        },
+        {
+          "id": "named-1",
+          "inputPath": "artifact.title",
+          "label": "成果 · 标题",
+          "type": "text",
+          "required": true,
+          "sourceText": "本期实际成果",
+          "maxChars": 14
+        },
+        {
+          "id": "named-2",
+          "inputPath": "review.heading",
+          "label": "审阅 · 标题",
+          "type": "text",
+          "required": true,
+          "sourceText": "审阅依据",
+          "maxChars": 14
+        },
+        {
+          "id": "named-3",
+          "inputPath": "review.checks.0",
+          "label": "审阅 · 检查项 · 1",
+          "type": "text",
+          "required": true,
+          "sourceText": "观察一",
+          "maxChars": 24
+        },
+        {
+          "id": "named-4",
+          "inputPath": "review.checks.1",
+          "label": "审阅 · 检查项 · 2",
+          "type": "text",
+          "required": true,
+          "sourceText": "观察二",
+          "maxChars": 24
+        },
+        {
+          "id": "named-5",
+          "inputPath": "review.checks.2",
+          "label": "审阅 · 检查项 · 3",
+          "type": "text",
+          "required": true,
+          "sourceText": "观察三",
+          "maxChars": 24
+        },
+        {
+          "id": "named-6",
+          "inputPath": "conclusion",
+          "label": "结论",
+          "type": "text",
+          "required": true,
+          "sourceText": "依据本次实际检查",
+          "maxChars": 18
+        },
+        {
+          "id": "artifact",
+          "inputPath": "artifact.media",
+          "label": "成果 · 媒体素材",
+          "type": "video",
+          "required": true,
+          "aspect": "16:9",
+          "sourceAsset": "single_artifact"
+        }
+      ],
+      "slot_default_text_status": "Historical public sourceText; does not equal the current official preview copy. Bind the actual demo recipe or observed copy for fidelity.",
+      "aesthetic": {
+        "score": 92,
+        "parts": [
+          24,
+          23,
+          18,
+          18,
+          9
+        ],
+        "rank": 6,
+        "subjective": true
+      }
+    }
+  ],
+  "common_layout_observations": {
+    "unit": "pixels at1920x1080",
+    "method": "Visual estimate from actual decoded full-resolution states; not official CSS",
+    "box_tolerance_pixels": 12,
+    "font_size_tolerance_pixels": 8,
+    "chapter_box": [
+      84,
+      56,
+      600,
+      36
+    ],
+    "clock_box": [
+      1748,
+      56,
+      110,
+      36
+    ],
+    "progress_line": [
+      146,
+      1058,
+      1630,
+      2
+    ],
+    "caption_box": [
+      260,
+      968,
+      1400,
+      72
+    ],
+    "large_presenter_box": [
+      1358,
+      134,
+      424,
+      752
+    ],
+    "circle_presenter_diameter_range": [
+      200,
+      224
+    ],
+    "display_size_range": [
+      160,
+      192
+    ],
+    "caption_size_estimate": 48
+  },
+  "encoded_color_measurements": {
+    "method": "Most common encoded RGB in labeled flat crops of full-2/10/27/76/84.png; gradients/compression remain",
+    "near_black": "#030303",
+    "mineral_paper": "#F5F5F2",
+    "electric_blue": "#1453E6",
+    "opening_lavender": "#9F9AFD",
+    "hero_graphite": "#040A12"
+  },
+  "unknowns": [
+    {
+      "field": "exact_font_family",
+      "known": "Official doctor says bundled-gb2312-woff2-1; original portable fonts should be used by native renderer. No verified public family name."
+    },
+    {
+      "field": "exact_transition_curves_and_CSS",
+      "known": "Public cue/source contracts plus encoded boundary observations; do not promote pixel estimates into exact implementation truth."
+    },
+    {
+      "field": "complete_original_asset_identity",
+      "known": "Native runtime agent verifies actual available assets independently; this reference does not prove bundle completeness."
+    }
+  ],
+  "evidence": [
+    {
+      "file": ".local/motion-full-20261028/reference/overview-000.jpg",
+      "sha256": "a9f2ffcc59e8d366bf92b62d2bf8413861cb4dbc0c67f4ddf635c1dcbd71afaf"
+    },
+    {
+      "file": ".local/motion-full-20261028/reference/overview-012.jpg",
+      "sha256": "c367314b1f12d673164d06f8ac3f8b3c3643e4687462d092086b2e1b20566b2b"
+    },
+    {
+      "file": ".local/motion-full-20261028/reference/overview-024.jpg",
+      "sha256": "db0161f28b873fc718faf8e657a7395c50190c727561b8c2b693a4190cb113f1"
+    },
+    {
+      "file": ".local/motion-full-20261028/reference/overview-036.jpg",
+      "sha256": "092e4c2b1c7aee587f617ac2299263a6bef59943192d7c74c52e9cac088aedc3"
+    },
+    {
+      "file": ".local/motion-full-20261028/reference/overview-048.jpg",
+      "sha256": "1e789411fcb6d4c31e743908227cdc4d30e44e30dc69eec72e769cc329d52e29"
+    },
+    {
+      "file": ".local/motion-full-20261028/reference/overview-060.jpg",
+      "sha256": "72df208854a7beeccb583cd94d54e0dd5fd0a1c1d8632d1bca36b8014b72a151"
+    },
+    {
+      "file": ".local/motion-full-20261028/reference/overview-072.jpg",
+      "sha256": "c37b70886c31f92455bcdc6bb3b872bcc4cb9513b01651116a22ec8d05d135e0"
+    },
+    {
+      "file": ".local/motion-full-20261028/reference/overview-084.jpg",
+      "sha256": "fdf9c7e403db45e3b11deea0c5744090ec15d5c5d8c02750afac4634785eb281"
+    },
+    {
+      "file": ".local/motion-full-20261028/reference/overview-096.jpg",
+      "sha256": "fc4609f1b0cf4ca5924e0bec2ca004a330697b5ca1813c2e93b1754c59488992"
+    },
+    {
+      "file": ".local/motion-full-20261028/reference/overview-108.jpg",
+      "sha256": "a9b0063aae4419733a6ec0d29e9593f28e0a39e93913ad8856385e85a7154b26"
+    },
+    {
+      "file": ".local/motion-full-20261028/reference/overview-120.jpg",
+      "sha256": "6dc5d84b41dc1516cf8f14839143c8cdf94bbafd1a951006d04829d8e29c0388"
+    },
+    {
+      "file": ".local/motion-full-20261028/reference/boundary-102.92.jpg",
+      "sha256": "e699b6cdfe34ac3e31088455f51508f1d1947c4fbc1f2943878608bb705d68fa"
+    },
+    {
+      "file": ".local/motion-full-20261028/reference/boundary-108.4.jpg",
+      "sha256": "e253587c5462e7c115f5b3cc9f6d66d4683fb98f9fb77a68e8a68e8dc9fa040b"
+    },
+    {
+      "file": ".local/motion-full-20261028/reference/boundary-25.9.jpg",
+      "sha256": "4d7e2e307239b895a8e4561f08cdd1fc977b62cd69a8cc79804206270b0f6620"
+    },
+    {
+      "file": ".local/motion-full-20261028/reference/boundary-40.4.jpg",
+      "sha256": "8d860789bbf01deb262612a554ac423b823b7f30d5c668069789c65032e710f0"
+    },
+    {
+      "file": ".local/motion-full-20261028/reference/boundary-52.7.jpg",
+      "sha256": "1fecc1cf06092e9c1742cdbf5f92ee1ca64acd50a7e88f36c5d5951bc41fd988"
+    },
+    {
+      "file": ".local/motion-full-20261028/reference/boundary-69.4.jpg",
+      "sha256": "4c2a4e3dd662055a63cbd0be1c4cf8e8bb9379966736b79953f2d584763c13fb"
+    },
+    {
+      "file": ".local/motion-full-20261028/reference/boundary-78.1.jpg",
+      "sha256": "94fbb427d800cadff4adc5dddfaec8c386fe394a80c02aa45f095177569e7963"
+    },
+    {
+      "file": ".local/motion-full-20261028/reference/boundary-8.8.jpg",
+      "sha256": "ca816845dd80f4de776944bc6ff92695940e567d85adea3d8df3e6b692aa2c33"
+    },
+    {
+      "file": ".local/motion-full-20261028/reference/boundary-89.7.jpg",
+      "sha256": "27b04c405ef5b0a677194085eb3395920bfd6b7de9d92fc424c140b73584e984"
+    },
+    {
+      "file": ".local/motion-full-20261028/reference/full-10.png",
+      "sha256": "b5a1ffc05efb2ba0d8b5e919aa6209ee2c26b20c960077e75816b74dc8acc1da"
+    },
+    {
+      "file": ".local/motion-full-20261028/reference/full-106.png",
+      "sha256": "52ce6492785028cbdfc5e784df0067eb38d31720249bc329da664f17fdf45576"
+    },
+    {
+      "file": ".local/motion-full-20261028/reference/full-114.png",
+      "sha256": "ba49358635a9f772a9faa4bed7c373b805ff4d90086f608b4dd45190f970af5e"
+    },
+    {
+      "file": ".local/motion-full-20261028/reference/full-2.png",
+      "sha256": "0b9f9b704db16306c903d44668cb9c5226a5e40dfe531502f2b5d4b23b60891d"
+    },
+    {
+      "file": ".local/motion-full-20261028/reference/full-27.png",
+      "sha256": "8d40bfc60ccd2f11a825c66139f8586091366a0cd9b76071f13d98aed838fc61"
+    },
+    {
+      "file": ".local/motion-full-20261028/reference/full-44.png",
+      "sha256": "474a92e11a5a4d5489ca75f85c9cdf42135e81152fccaf25ac2cf356f6b01b8d"
+    },
+    {
+      "file": ".local/motion-full-20261028/reference/full-58.png",
+      "sha256": "4f17b0d753ab4cb0ea61b29e4d11054c31db941b797467c6d5d41ebd2d68fae8"
+    },
+    {
+      "file": ".local/motion-full-20261028/reference/full-76.png",
+      "sha256": "7ddf84a0af5fd7125409922340d250bedcd0f0fd2010a035ee6033765848f264"
+    },
+    {
+      "file": ".local/motion-full-20261028/reference/full-84.png",
+      "sha256": "5b18a91fad45e93d9cafeac092eef5c328077f89806cb65c7efeffdf793afc2f"
+    },
+    {
+      "file": ".local/motion-full-20261028/reference/full-95.png",
+      "sha256": "abda6131eb6efb04af10dc3301e2e313fdd1ccb4652d6106013c3aa4c9016429"
+    }
+  ],
+  "rights": "Downloaded official preview is reference evidence only. Original likeness/media/audio are not made redistributable by the code MIT license.",
+  "validation": {
+    "structure": "reference-observation-only",
+    "technical": "source-preview-probed",
+    "visual": "actual-sampled-reference-frames-inspected",
+    "native_render": "not-certified-here",
+    "continuous_listening": "pending",
+    "user_review": "pending"
+  }
+}

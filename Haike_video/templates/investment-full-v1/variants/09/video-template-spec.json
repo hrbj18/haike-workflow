@@ -1,0 +1,5547 @@
+{
+  "schema_version": 1,
+  "standard_version": "video-template-v1",
+  "template_id": "investment-full-09-black-pink",
+  "template_version": "v001",
+  "template_type": "avatar",
+  "spec_kind": "implementation",
+  "stage": "ready",
+  "authority": {
+    "runbook": "招商完整样片09-黑粉.md",
+    "implementation_paths": [
+      "../../index.tsx",
+      "../../Full.tsx",
+      "../../Shared.tsx",
+      "../../Graphics.tsx",
+      "../../geometry.ts",
+      "../../palettes.ts",
+      "../../types.ts",
+      "../../layout.json",
+      "../../../../backlot/studio_investment_full.py",
+      "../../../../scripts/investment_full.py",
+      "../../../../backlot/production_queue_worker.py",
+      "../../../../backlot/studio_investment_audio_v5.py"
+    ],
+    "parameter_source": "../../layout.json"
+  },
+  "canvas": {
+    "width": 1440,
+    "height": 1800,
+    "fps": 30,
+    "duration_seconds": 30,
+    "clock": "全片[0,900)帧/30fps；source_edits-v1源AV编辑钟同一30fps，真实source cue整体平移至target钟；原人物/人声1倍速，无独立逐字估时钟。 当前选择原AV共887帧，显式offer静音尾卡13帧；源PCM gate不允许隐式补零。",
+    "coordinate_system": "top_left_pixels"
+  },
+  "narrative": {
+    "purpose": "新investment-full-v1的09黑粉完整招商开发样片：同源数字人口播、真实本地图文/门店实拍、BGM与声效；固定30秒4x5，不继承旧12秒模板。",
+    "information_hierarchy": [
+      "完整保留的真实口播与语义",
+      "当前真实字幕",
+      "人物/门店/图文按当前章组织",
+      "章节标题与品牌",
+      "来源标签与装饰"
+    ],
+    "structure": [
+      "本期冻结storyboard的presenter/media/graphic章连续覆盖900帧；媒体章由单条≤120帧原素材完整覆盖",
+      "图文数据绑定EDL保留原cue，未伪造收益、限量、门店成交或人物背书",
+      "原声、BGM与SFX一条母带连续；显式尾卡只放offer图文和BGM淡出，人物/实拍不延长或循环"
+    ]
+  },
+  "scenes": [
+    {
+      "id": "hook",
+      "start": 0.0,
+      "end": 5.333333333333333,
+      "purpose": "presenter：别再硬憋选题／把镜头放进现场",
+      "element_ids": [
+        "canvas",
+        "solid_sound_sidebar",
+        "top_rule",
+        "presenter_ambient_ai",
+        "bottom_rule",
+        "presenter_window",
+        "avatar_segment_0",
+        "heading_hook",
+        "presenter_notes_hook",
+        "presenter_deck_hook",
+        "presenter_point_hook_0",
+        "presenter_point_hook_1",
+        "brand",
+        "caption_plate",
+        "caption_text",
+        "master_audio"
+      ],
+      "variant": "investment-full-09-black-pink/presenter"
+    },
+    {
+      "id": "real-content",
+      "start": 5.333333333333333,
+      "end": 13.6,
+      "purpose": "media：互动、体验、产品／都是内容",
+      "element_ids": [
+        "canvas",
+        "solid_sound_sidebar",
+        "top_rule",
+        "presenter_ambient_ai",
+        "bottom_rule",
+        "presenter_window",
+        "avatar_segment_0",
+        "heading_real_content",
+        "brand",
+        "caption_plate",
+        "caption_text",
+        "master_audio",
+        "shot_dog_reference_window",
+        "shot_dog_reference_source",
+        "shot_dog_reference_label",
+        "shot_brand_boxes_window",
+        "shot_brand_boxes_source",
+        "shot_brand_boxes_label",
+        "shot_robot_hands_window",
+        "shot_robot_hands_source",
+        "shot_robot_hands_label",
+        "shot_brand_close_window",
+        "shot_brand_close_source",
+        "shot_brand_close_label"
+      ],
+      "variant": "investment-full-09-black-pink/media"
+    },
+    {
+      "id": "ai-team",
+      "start": 13.6,
+      "end": 20.1,
+      "purpose": "graphic：AI数字员工／协助日常经营",
+      "element_ids": [
+        "canvas",
+        "solid_sound_sidebar",
+        "top_rule",
+        "presenter_ambient_ai",
+        "bottom_rule",
+        "presenter_window",
+        "avatar_segment_1",
+        "heading_ai_team",
+        "graphic_ai_division",
+        "graphic_ai_division_deck",
+        "graphic_ai_division_subheading",
+        "graphic_ai_division_connector",
+        "graphic_ai_division_item_0",
+        "graphic_ai_division_item_0_text",
+        "graphic_ai_division_item_0_mark",
+        "graphic_ai_division_item_1",
+        "graphic_ai_division_item_1_text",
+        "graphic_ai_division_item_1_mark",
+        "graphic_ai_division_item_2",
+        "graphic_ai_division_item_2_text",
+        "graphic_ai_division_item_2_mark",
+        "graphic_ai_division_bottom_rule",
+        "brand",
+        "caption_plate",
+        "caption_text",
+        "master_audio"
+      ],
+      "variant": "investment-full-09-black-pink/graphic"
+    },
+    {
+      "id": "cooperation",
+      "start": 20.1,
+      "end": 23.2,
+      "purpose": "media：20—50㎡／9.8万合作方案",
+      "element_ids": [
+        "canvas",
+        "solid_sound_sidebar",
+        "top_rule",
+        "presenter_ambient_ai",
+        "bottom_rule",
+        "presenter_window",
+        "avatar_segment_2",
+        "heading_cooperation",
+        "brand",
+        "caption_plate",
+        "caption_text",
+        "master_audio",
+        "shot_brand_wide_window",
+        "shot_brand_wide_source",
+        "shot_brand_wide_label"
+      ],
+      "variant": "investment-full-09-black-pink/media"
+    },
+    {
+      "id": "return",
+      "start": 23.2,
+      "end": 25.666666666666668,
+      "purpose": "presenter：门店什么样？／具体怎么经营？",
+      "element_ids": [
+        "canvas",
+        "solid_sound_sidebar",
+        "top_rule",
+        "presenter_ambient_ai",
+        "bottom_rule",
+        "presenter_window",
+        "avatar_segment_2",
+        "heading_return",
+        "presenter_notes_return",
+        "presenter_deck_return",
+        "brand",
+        "caption_plate",
+        "caption_text",
+        "master_audio"
+      ],
+      "variant": "investment-full-09-black-pink/presenter"
+    },
+    {
+      "id": "consult",
+      "start": 25.666666666666668,
+      "end": 30.0,
+      "purpose": "graphic：先拿资料／再做决定",
+      "element_ids": [
+        "canvas",
+        "solid_sound_sidebar",
+        "top_rule",
+        "presenter_ambient_ai",
+        "bottom_rule",
+        "presenter_window",
+        "avatar_segment_2",
+        "heading_consult",
+        "graphic_consult_offer",
+        "graphic_consult_offer_deck",
+        "graphic_consult_offer_subheading",
+        "graphic_consult_offer_item_0",
+        "graphic_consult_offer_item_0_text",
+        "graphic_consult_offer_item_0_mark",
+        "graphic_consult_offer_item_1",
+        "graphic_consult_offer_item_1_text",
+        "graphic_consult_offer_item_1_mark",
+        "graphic_consult_offer_bottom_rule",
+        "brand",
+        "caption_plate",
+        "caption_text",
+        "master_audio"
+      ],
+      "variant": "investment-full-09-black-pink/graphic"
+    }
+  ],
+  "assets": [
+    {
+      "id": "source_avatar",
+      "kind": "video",
+      "path": null,
+      "source": "本期新request.origins绑定原MP4绝对路径/SHA；原字节导入，sourceEdits定义完整AV选择段。",
+      "embedded_content": [
+        "人物身份、眼镜、衣服、原背景与源内像素固定；不是重新生成人物。"
+      ],
+      "rights_status": "用户授权本次本地制作；不推定其他未授权用途"
+    },
+    {
+      "id": "mixed_master",
+      "kind": "audio",
+      "path": null,
+      "source": "本期edited-voice/真实sound-motion-v1计划，经原生v5混音与回执冻结。",
+      "embedded_content": [
+        "人声一次−2.5dB、BGM、SFX、实际ducking及安全余量；只播放一条母带。"
+      ],
+      "rights_status": "历史本地原创分轨与DSP音效来源台账；原口播来自用户指定素材"
+    },
+    {
+      "id": "source_cues",
+      "kind": "data",
+      "path": null,
+      "source": "source-cues.json与source-edits-v1的SHA绑定，真实cue/目标平移记录在新request.cue_map。",
+      "embedded_content": [],
+      "rights_status": "本次生产输入，不作出厂商业承诺"
+    },
+    {
+      "id": "font_yahei",
+      "kind": "font",
+      "path": "C:/Windows/Fonts/msyh.ttc",
+      "source": "本机已安装Windows字体，运行时核验SHA。",
+      "embedded_content": [],
+      "rights_status": "仅本机调用，不随公开资源分发"
+    },
+    {
+      "id": "font_simsun",
+      "kind": "font",
+      "path": "C:/Windows/Fonts/simsun.ttc",
+      "source": "07标题/图文局部使用本机SimSun，运行时核验。",
+      "embedded_content": [],
+      "rights_status": "仅本机调用，不分发字体"
+    },
+    {
+      "id": "shot_dog_reference_asset",
+      "kind": "video",
+      "path": "D:\\刘宇钊\\粤仔视频\\原素材\\_Oh my goodness. You are so gorgeous！_ 法国模特姐姐一出现，粤仔眼睛都直了😍 得知姐姐来自法国，立刻开启多语言模式：英语、西班牙语 _Hola_、意大利语 _Ciao_ 轮番上阵，把两个.mp4",
+      "source": "本期冻结storyboard.shots[id=dog-reference]；源文件SHA256=1292e9331b953591f4a737aeb30a7cfdff0d41c820fd27080d67718518bf82ff；Machine-dog interaction reference only; not claimed as a Haike store, residents, customers or a transaction.；视频源音静音、完整contain；只作本素材范围说明。",
+      "embedded_content": [
+        "素材内人物、品牌、门头、图中文字与标记为固化像素，保留完整来源；标签为独立层。"
+      ],
+      "rights_status": "用户提供本地素材；场景参考不冒称海客门店或实际成交"
+    },
+    {
+      "id": "shot_brand_boxes_asset",
+      "kind": "video",
+      "path": "C:\\Users\\Administrator\\Videos\\线下门店\\DSCF4992.MP4",
+      "source": "本期冻结storyboard.shots[id=brand-boxes]；源文件SHA256=b60a0c5540a573641eede26215602e691bb1c9ef9949fa969e176afd1acc0734；4K横向海客AI地摊铺全景，AI智能玩伴立幅、产品盒和成人理货清楚。；视频源音静音、完整contain；只作本素材范围说明。",
+      "embedded_content": [
+        "素材内人物、品牌、门头、图中文字与标记为固化像素，保留完整来源；标签为独立层。"
+      ],
+      "rights_status": "用户提供本地素材；场景参考不冒称海客门店或实际成交"
+    },
+    {
+      "id": "shot_robot_hands_asset",
+      "kind": "video",
+      "path": "C:\\Users\\Administrator\\Videos\\线下门店\\DJI_20260705190320_0012_D.MP4",
+      "source": "本期冻结storyboard.shots[id=robot-hands]；源文件SHA256=3dfd4d66c852ff0be381a2145605031e681b46d05aa8c2da136d8b2b3b1c8192；近景成人手持/查看黄色桌面机器人，台面毛绒产品丰富，较少无关人群。；视频源音静音、完整contain；只作本素材范围说明。",
+      "embedded_content": [
+        "素材内人物、品牌、门头、图中文字与标记为固化像素，保留完整来源；标签为独立层。"
+      ],
+      "rights_status": "用户提供本地素材；场景参考不冒称海客门店或实际成交"
+    },
+    {
+      "id": "shot_brand_close_asset",
+      "kind": "image",
+      "path": "C:\\Users\\Administrator\\Videos\\线下门店\\71feddde040e7dc1bd62788907d51f31.jpg",
+      "source": "本期冻结storyboard.shots[id=brand-close]；源文件SHA256=a9d407f2d948869cf9bc006b99af886e07212e1e180e3244c3526765260bbf80；海客AI站灯牌与新店开业/免费试玩AI产品横幅清楚，柜台与陈列可见。；视频源音静音、完整contain；只作本素材范围说明。",
+      "embedded_content": [
+        "素材内人物、品牌、门头、图中文字与标记为固化像素，保留完整来源；标签为独立层。"
+      ],
+      "rights_status": "用户提供本地素材；场景参考不冒称海客门店或实际成交"
+    },
+    {
+      "id": "shot_brand_wide_asset",
+      "kind": "image",
+      "path": "C:\\Users\\Administrator\\Videos\\线下门店\\ff873af402b76766617549ae4ef2c569.jpg",
+      "source": "本期冻结storyboard.shots[id=brand-wide]；源文件SHA256=a8a7926087097dcb7f07d6cb3ca13fdc3cba37028a2139313ccbc54fdc9eefad；清楚海客AI站门头、AI智能玩伴立牌、产品台及成人背影；门店品牌建立镜头首选。；视频源音静音、完整contain；只作本素材范围说明。",
+      "embedded_content": [
+        "素材内人物、品牌、门头、图中文字与标记为固化像素，保留完整来源；标签为独立层。"
+      ],
+      "rights_status": "用户提供本地素材；场景参考不冒称海客门店或实际成交"
+    }
+  ],
+  "elements": [
+    {
+      "id": "canvas",
+      "type": "group",
+      "role": "黑粉完整片根画布",
+      "parent_id": null,
+      "z_index": 0,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "黑粉完整片根画布"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "按当前章节/全片状态求值",
+          "rule": "背景tokens.PALETTES['black-pink'].canvas=#0E0E0E；overflow hidden"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 30
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "按当前章节/全片状态求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source",
+        "storyboard_source"
+      ],
+      "acceptance": [
+        {
+          "check": "黑粉完整片根画布",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "solid_sound_sidebar",
+      "type": "vector",
+      "role": "黑粉背景独立对象solid_sound_sidebar",
+      "parent_id": "canvas",
+      "z_index": 5,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "黑粉背景独立对象solid_sound_sidebar"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "仅本风格分支；presenter_outline/elbow/ambient仅presenter章节",
+          "rule": "Full.Background对应分支JSX/SVG；声效脉冲由真实soundEvents.startFrame触发，age0..7按(1−age/8)^2*min(1,strength*2)收敛，不能给字幕或人物加闪动。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 30
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "仅本风格分支；presenter_outline/elbow/ambient仅presenter章节"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source",
+        "storyboard_source"
+      ],
+      "acceptance": [
+        {
+          "check": "黑粉背景独立对象solid_sound_sidebar",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "top_rule",
+      "type": "vector",
+      "role": "黑粉背景独立对象top_rule",
+      "parent_id": "canvas",
+      "z_index": 5,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "黑粉背景独立对象top_rule"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "仅本风格分支；presenter_outline/elbow/ambient仅presenter章节",
+          "rule": "Full.Background对应分支JSX/SVG；声效脉冲由真实soundEvents.startFrame触发，age0..7按(1−age/8)^2*min(1,strength*2)收敛，不能给字幕或人物加闪动。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 30
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "仅本风格分支；presenter_outline/elbow/ambient仅presenter章节"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source"
+      ],
+      "acceptance": [
+        {
+          "check": "黑粉背景独立对象top_rule",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "presenter_ambient_ai",
+      "type": "text",
+      "role": "黑粉背景独立对象presenter_ambient_ai",
+      "parent_id": "canvas",
+      "z_index": 5,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "固定环境主题字AI，非收益或经营数据；允许画布裁边。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "仅本风格分支；presenter_outline/elbow/ambient仅presenter章节",
+          "rule": "Full.Background对应分支JSX/SVG；声效脉冲由真实soundEvents.startFrame触发，age0..7按(1−age/8)^2*min(1,strength*2)收敛，不能给字幕或人物加闪动。",
+          "font": "SimSun用于07指定标题/图文，其余Microsoft YaHei；以TSX为准",
+          "font_size": "09环境AI=404px，letterSpacing−36",
+          "max_lines": 1,
+          "overflow": "输入超限拒绝；显示完整字形，实际帧仍须验收"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 30
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "仅本风格分支；presenter_outline/elbow/ambient仅presenter章节"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source"
+      ],
+      "acceptance": [
+        {
+          "check": "黑粉背景独立对象presenter_ambient_ai",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "bottom_rule",
+      "type": "vector",
+      "role": "黑粉背景独立对象bottom_rule",
+      "parent_id": "canvas",
+      "z_index": 5,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "黑粉背景独立对象bottom_rule"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "仅本风格分支；presenter_outline/elbow/ambient仅presenter章节",
+          "rule": "Full.Background对应分支JSX/SVG；声效脉冲由真实soundEvents.startFrame触发，age0..7按(1−age/8)^2*min(1,strength*2)收敛，不能给字幕或人物加闪动。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 30
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "仅本风格分支；presenter_outline/elbow/ambient仅presenter章节"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source"
+      ],
+      "acceptance": [
+        {
+          "check": "黑粉背景独立对象bottom_rule",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "presenter_window",
+      "type": "group",
+      "role": "完整数字人显示窗",
+      "parent_id": "canvas",
+      "z_index": 20,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "完整数字人显示窗"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          560,
+          440,
+          760,
+          1012
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "chapter.kind=presenter 且frame<contentEndFrame",
+          "rule": "Shared.Avatar；仅presenter章节且frame<contentEndFrame；mount底，contain，不滤色。07细框/09粉框按组件"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 30
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "chapter.kind=presenter 且frame<contentEndFrame"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source"
+      ],
+      "acceptance": [
+        {
+          "check": "完整数字人显示窗",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "avatar_segment_0",
+      "type": "avatar",
+      "role": "同源AV剪接段1",
+      "parent_id": "presenter_window",
+      "z_index": 21,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "source_avatar",
+        "description": "Sequence本目标区间内OffthreadVideo(startFrom=0)；源30fps编辑钟，不是25fps帧号；人物源muted。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          560,
+          440,
+          760,
+          1012
+        ],
+        "fit": "contain",
+        "clip": "self",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "该EDL段与presenter章节交集可见，绝不进入尾卡",
+          "rule": "sourceStartFrame与target startFrame来自同一EDL，原视频不预先转码；每个presenter章不重新从源0播放。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0.0,
+        "end": 13.6
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "该EDL段与presenter章节交集可见，绝不进入尾卡"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source"
+      ],
+      "acceptance": [
+        {
+          "check": "同源AV剪接段1",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "avatar_segment_1",
+      "type": "avatar",
+      "role": "同源AV剪接段2",
+      "parent_id": "presenter_window",
+      "z_index": 21,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "source_avatar",
+        "description": "Sequence本目标区间内OffthreadVideo(startFrom=536)；源30fps编辑钟，不是25fps帧号；人物源muted。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          560,
+          440,
+          760,
+          1012
+        ],
+        "fit": "contain",
+        "clip": "self",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "该EDL段与presenter章节交集可见，绝不进入尾卡",
+          "rule": "sourceStartFrame与target startFrame来自同一EDL，原视频不预先转码；每个presenter章不重新从源0播放。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 13.6,
+        "end": 20.1
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "该EDL段与presenter章节交集可见，绝不进入尾卡"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source"
+      ],
+      "acceptance": [
+        {
+          "check": "同源AV剪接段2",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "avatar_segment_2",
+      "type": "avatar",
+      "role": "同源AV剪接段3",
+      "parent_id": "presenter_window",
+      "z_index": 21,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "source_avatar",
+        "description": "Sequence本目标区间内OffthreadVideo(startFrom=742)；源30fps编辑钟，不是25fps帧号；人物源muted。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          560,
+          440,
+          760,
+          1012
+        ],
+        "fit": "contain",
+        "clip": "self",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "该EDL段与presenter章节交集可见，绝不进入尾卡",
+          "rule": "sourceStartFrame与target startFrame来自同一EDL，原视频不预先转码；每个presenter章不重新从源0播放。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 20.1,
+        "end": 29.566666666666666
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "该EDL段与presenter章节交集可见，绝不进入尾卡"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source"
+      ],
+      "acceptance": [
+        {
+          "check": "同源AV剪接段3",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "shot_dog_reference_window",
+      "type": "group",
+      "role": "实拍/图片显示窗dog-reference",
+      "parent_id": "canvas",
+      "z_index": 30,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "实拍/图片显示窗dog-reference"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          442,
+          1232,
+          900
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "当前shot[startFrame,endFrame)",
+          "rule": "Shared.Shots；目标Sequence精确起止，背景/边框按tokens/TSX，media章节逐条完整覆盖。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 5.333333333333333,
+        "end": 7.2
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "当前shot[startFrame,endFrame)"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source"
+      ],
+      "acceptance": [
+        {
+          "check": "实拍/图片显示窗dog-reference",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "shot_dog_reference_source",
+      "type": "video",
+      "role": "完整本地素材dog-reference",
+      "parent_id": "shot_dog_reference_window",
+      "z_index": 31,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "shot_dog_reference_asset",
+        "description": "props.shots[id=dog-reference]；offset=2850编辑帧；视频muted，图片offset0；本期fit=contain。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          442,
+          1232,
+          900
+        ],
+        "fit": "contain",
+        "clip": "self",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "当前shot目标区间",
+          "rule": "单原素材可见1..120帧，最长4秒；源时间戳须被原片覆盖，不循环/补尾/变速。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 5.333333333333333,
+        "end": 7.2
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "当前shot目标区间"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source"
+      ],
+      "acceptance": [
+        {
+          "check": "完整本地素材dog-reference",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "shot_dog_reference_label",
+      "type": "text",
+      "role": "素材来源标签dog-reference",
+      "parent_id": "canvas",
+      "z_index": 35,
+      "content": {
+        "mode": "editable",
+        "binding": "shot_dog_reference_label_slot",
+        "asset_id": null,
+        "description": "从本期受控输入读取：props.shots[id=dog-reference].sourceLabel"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          1363,
+          1232,
+          45
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "按当前章节/全片状态求值",
+          "rule": "来源标签在素材窗外；机器狗参考与海客现场按真实来源命名",
+          "font": "SimSun用于07指定标题/图文，其余Microsoft YaHei；以TSX为准",
+          "font_size": "29px，lineHeight1.4",
+          "max_lines": 1,
+          "overflow": "输入超限拒绝；显示完整字形，实际帧仍须验收"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 5.333333333333333,
+        "end": 7.2
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "按当前章节/全片状态求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [
+        "content.text"
+      ],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source",
+        "storyboard_source"
+      ],
+      "acceptance": [
+        {
+          "check": "素材来源标签dog-reference",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "shot_brand_boxes_window",
+      "type": "group",
+      "role": "实拍/图片显示窗brand-boxes",
+      "parent_id": "canvas",
+      "z_index": 30,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "实拍/图片显示窗brand-boxes"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          442,
+          1232,
+          900
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "当前shot[startFrame,endFrame)",
+          "rule": "Shared.Shots；目标Sequence精确起止，背景/边框按tokens/TSX，media章节逐条完整覆盖。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 7.2,
+        "end": 9.6
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "当前shot[startFrame,endFrame)"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source",
+        "storyboard_source"
+      ],
+      "acceptance": [
+        {
+          "check": "实拍/图片显示窗brand-boxes",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "shot_brand_boxes_source",
+      "type": "video",
+      "role": "完整本地素材brand-boxes",
+      "parent_id": "shot_brand_boxes_window",
+      "z_index": 31,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "shot_brand_boxes_asset",
+        "description": "props.shots[id=brand-boxes]；offset=5编辑帧；视频muted，图片offset0；本期fit=contain。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          442,
+          1232,
+          900
+        ],
+        "fit": "contain",
+        "clip": "self",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "当前shot目标区间",
+          "rule": "单原素材可见1..120帧，最长4秒；源时间戳须被原片覆盖，不循环/补尾/变速。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 7.2,
+        "end": 9.6
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "当前shot目标区间"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source",
+        "storyboard_source"
+      ],
+      "acceptance": [
+        {
+          "check": "完整本地素材brand-boxes",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "shot_brand_boxes_label",
+      "type": "text",
+      "role": "素材来源标签brand-boxes",
+      "parent_id": "canvas",
+      "z_index": 35,
+      "content": {
+        "mode": "editable",
+        "binding": "shot_brand_boxes_label_slot",
+        "asset_id": null,
+        "description": "从本期受控输入读取：props.shots[id=brand-boxes].sourceLabel"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          1363,
+          1232,
+          45
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "按当前章节/全片状态求值",
+          "rule": "来源标签在素材窗外；机器狗参考与海客现场按真实来源命名",
+          "font": "SimSun用于07指定标题/图文，其余Microsoft YaHei；以TSX为准",
+          "font_size": "29px，lineHeight1.4",
+          "max_lines": 1,
+          "overflow": "输入超限拒绝；显示完整字形，实际帧仍须验收"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 7.2,
+        "end": 9.6
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "按当前章节/全片状态求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [
+        "content.text"
+      ],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source",
+        "storyboard_source"
+      ],
+      "acceptance": [
+        {
+          "check": "素材来源标签brand-boxes",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "shot_robot_hands_window",
+      "type": "group",
+      "role": "实拍/图片显示窗robot-hands",
+      "parent_id": "canvas",
+      "z_index": 30,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "实拍/图片显示窗robot-hands"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          442,
+          1232,
+          900
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "当前shot[startFrame,endFrame)",
+          "rule": "Shared.Shots；目标Sequence精确起止，背景/边框按tokens/TSX，media章节逐条完整覆盖。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 9.6,
+        "end": 12.0
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "当前shot[startFrame,endFrame)"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source",
+        "storyboard_source"
+      ],
+      "acceptance": [
+        {
+          "check": "实拍/图片显示窗robot-hands",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "shot_robot_hands_source",
+      "type": "video",
+      "role": "完整本地素材robot-hands",
+      "parent_id": "shot_robot_hands_window",
+      "z_index": 31,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "shot_robot_hands_asset",
+        "description": "props.shots[id=robot-hands]；offset=534编辑帧；视频muted，图片offset0；本期fit=contain。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          442,
+          1232,
+          900
+        ],
+        "fit": "contain",
+        "clip": "self",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "当前shot目标区间",
+          "rule": "单原素材可见1..120帧，最长4秒；源时间戳须被原片覆盖，不循环/补尾/变速。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 9.6,
+        "end": 12.0
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "当前shot目标区间"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source",
+        "storyboard_source"
+      ],
+      "acceptance": [
+        {
+          "check": "完整本地素材robot-hands",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "shot_robot_hands_label",
+      "type": "text",
+      "role": "素材来源标签robot-hands",
+      "parent_id": "canvas",
+      "z_index": 35,
+      "content": {
+        "mode": "editable",
+        "binding": "shot_robot_hands_label_slot",
+        "asset_id": null,
+        "description": "从本期受控输入读取：props.shots[id=robot-hands].sourceLabel"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          1363,
+          1232,
+          45
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "按当前章节/全片状态求值",
+          "rule": "来源标签在素材窗外；机器狗参考与海客现场按真实来源命名",
+          "font": "SimSun用于07指定标题/图文，其余Microsoft YaHei；以TSX为准",
+          "font_size": "29px，lineHeight1.4",
+          "max_lines": 1,
+          "overflow": "输入超限拒绝；显示完整字形，实际帧仍须验收"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 9.6,
+        "end": 12.0
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "按当前章节/全片状态求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [
+        "content.text"
+      ],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source",
+        "storyboard_source"
+      ],
+      "acceptance": [
+        {
+          "check": "素材来源标签robot-hands",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "shot_brand_close_window",
+      "type": "group",
+      "role": "实拍/图片显示窗brand-close",
+      "parent_id": "canvas",
+      "z_index": 30,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "实拍/图片显示窗brand-close"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          442,
+          1232,
+          900
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "当前shot[startFrame,endFrame)",
+          "rule": "Shared.Shots；目标Sequence精确起止，背景/边框按tokens/TSX，media章节逐条完整覆盖。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 12.0,
+        "end": 13.6
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "当前shot[startFrame,endFrame)"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source",
+        "storyboard_source"
+      ],
+      "acceptance": [
+        {
+          "check": "实拍/图片显示窗brand-close",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "shot_brand_close_source",
+      "type": "image",
+      "role": "完整本地素材brand-close",
+      "parent_id": "shot_brand_close_window",
+      "z_index": 31,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "shot_brand_close_asset",
+        "description": "props.shots[id=brand-close]；offset=0编辑帧；视频muted，图片offset0；本期fit=contain。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          442,
+          1232,
+          900
+        ],
+        "fit": "contain",
+        "clip": "self",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "当前shot目标区间",
+          "rule": "单原素材可见1..120帧，最长4秒；源时间戳须被原片覆盖，不循环/补尾/变速。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 12.0,
+        "end": 13.6
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "当前shot目标区间"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source",
+        "storyboard_source"
+      ],
+      "acceptance": [
+        {
+          "check": "完整本地素材brand-close",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "shot_brand_close_label",
+      "type": "text",
+      "role": "素材来源标签brand-close",
+      "parent_id": "canvas",
+      "z_index": 35,
+      "content": {
+        "mode": "editable",
+        "binding": "shot_brand_close_label_slot",
+        "asset_id": null,
+        "description": "从本期受控输入读取：props.shots[id=brand-close].sourceLabel"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          1363,
+          1232,
+          45
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "按当前章节/全片状态求值",
+          "rule": "来源标签在素材窗外；机器狗参考与海客现场按真实来源命名",
+          "font": "SimSun用于07指定标题/图文，其余Microsoft YaHei；以TSX为准",
+          "font_size": "29px，lineHeight1.4",
+          "max_lines": 1,
+          "overflow": "输入超限拒绝；显示完整字形，实际帧仍须验收"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 12.0,
+        "end": 13.6
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "按当前章节/全片状态求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [
+        "content.text"
+      ],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source",
+        "storyboard_source"
+      ],
+      "acceptance": [
+        {
+          "check": "素材来源标签brand-close",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "shot_brand_wide_window",
+      "type": "group",
+      "role": "实拍/图片显示窗brand-wide",
+      "parent_id": "canvas",
+      "z_index": 30,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "实拍/图片显示窗brand-wide"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          442,
+          1232,
+          900
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "当前shot[startFrame,endFrame)",
+          "rule": "Shared.Shots；目标Sequence精确起止，背景/边框按tokens/TSX，media章节逐条完整覆盖。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 20.1,
+        "end": 23.2
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "当前shot[startFrame,endFrame)"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source",
+        "storyboard_source"
+      ],
+      "acceptance": [
+        {
+          "check": "实拍/图片显示窗brand-wide",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "shot_brand_wide_source",
+      "type": "image",
+      "role": "完整本地素材brand-wide",
+      "parent_id": "shot_brand_wide_window",
+      "z_index": 31,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "shot_brand_wide_asset",
+        "description": "props.shots[id=brand-wide]；offset=0编辑帧；视频muted，图片offset0；本期fit=contain。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          442,
+          1232,
+          900
+        ],
+        "fit": "contain",
+        "clip": "self",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "当前shot目标区间",
+          "rule": "单原素材可见1..120帧，最长4秒；源时间戳须被原片覆盖，不循环/补尾/变速。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 20.1,
+        "end": 23.2
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "当前shot目标区间"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source",
+        "storyboard_source"
+      ],
+      "acceptance": [
+        {
+          "check": "完整本地素材brand-wide",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "shot_brand_wide_label",
+      "type": "text",
+      "role": "素材来源标签brand-wide",
+      "parent_id": "canvas",
+      "z_index": 35,
+      "content": {
+        "mode": "editable",
+        "binding": "shot_brand_wide_label_slot",
+        "asset_id": null,
+        "description": "从本期受控输入读取：props.shots[id=brand-wide].sourceLabel"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          1363,
+          1232,
+          45
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "按当前章节/全片状态求值",
+          "rule": "来源标签在素材窗外；机器狗参考与海客现场按真实来源命名",
+          "font": "SimSun用于07指定标题/图文，其余Microsoft YaHei；以TSX为准",
+          "font_size": "29px，lineHeight1.4",
+          "max_lines": 1,
+          "overflow": "输入超限拒绝；显示完整字形，实际帧仍须验收"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 20.1,
+        "end": 23.2
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "按当前章节/全片状态求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [
+        "content.text"
+      ],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source",
+        "storyboard_source"
+      ],
+      "acceptance": [
+        {
+          "check": "素材来源标签brand-wide",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "heading_hook",
+      "type": "text",
+      "role": "章节标题hook",
+      "parent_id": "canvas",
+      "z_index": 50,
+      "content": {
+        "mode": "editable",
+        "binding": "heading_hook_slot",
+        "asset_id": null,
+        "description": "从本期受控输入读取：props.chapters[id=hook].heading.join(newline)"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          196,
+          1210,
+          224
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "按当前章节/全片状态求值",
+          "rule": "Shared.Headline；1–2行，每行≤10.5CJK em units；localFrame0..8 translateY12→0，outCubic，入场后稳定。",
+          "font": "SimSun用于07指定标题/图文，其余Microsoft YaHei；以TSX为准",
+          "font_size": "07请求94／08为100／09为112，再按textUnits宽与box高度限小",
+          "max_lines": 2,
+          "overflow": "输入超限拒绝；显示完整字形，实际帧仍须验收"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0.0,
+        "end": 5.333333333333333
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "按当前章节/全片状态求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [
+        "content.text"
+      ],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source"
+      ],
+      "acceptance": [
+        {
+          "check": "章节标题hook",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "presenter_notes_hook",
+      "type": "group",
+      "role": "口播侧注组hook",
+      "parent_id": "canvas",
+      "z_index": 42,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "口播侧注组hook"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          580,
+          374,
+          820
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "仅该presenter章节且真实人物显示",
+          "rule": "Shared.PresenterNotes按deck与最多3条points垂直自然布局；字体46/48，行高1.5/1.45，边线/间距见源码"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0.0,
+        "end": 5.333333333333333
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "仅该presenter章节且真实人物显示"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source"
+      ],
+      "acceptance": [
+        {
+          "check": "口播侧注组hook",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "presenter_deck_hook",
+      "type": "text",
+      "role": "口播侧注文案",
+      "parent_id": "presenter_notes_hook",
+      "z_index": 43,
+      "content": {
+        "mode": "editable",
+        "binding": "presenter_deck_hook_slot",
+        "asset_id": null,
+        "description": "从本期受控输入读取：props.chapters[id=hook].deck；当前实际文字“把体验变成内容”。窄栏侧注收紧为完整短语，其他heading/cue/帧钟不变。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          580,
+          374,
+          200
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "按当前章节/全片状态求值",
+          "rule": "按原组件自然换行，未写入额外经营事实",
+          "font": "SimSun用于07指定标题/图文，其余Microsoft YaHei；以TSX为准",
+          "font_size": "46px，lineHeight1.5",
+          "max_lines": 4,
+          "overflow": "输入超限拒绝；显示完整字形，实际帧仍须验收"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0.0,
+        "end": 5.333333333333333
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "按当前章节/全片状态求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [
+        "content.text"
+      ],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source",
+        "storyboard_source"
+      ],
+      "acceptance": [
+        {
+          "check": "口播侧注文案",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "presenter_point_hook_0",
+      "type": "text",
+      "role": "口播侧注条目1",
+      "parent_id": "presenter_notes_hook",
+      "z_index": 43,
+      "content": {
+        "mode": "editable",
+        "binding": "presenter_point_hook_0_slot",
+        "asset_id": null,
+        "description": "从本期受控输入读取：props.chapters[id=hook].points[0]"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          580,
+          374,
+          820
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "按当前章节/全片状态求值",
+          "rule": "源码natural flow；marginBottom27/paddingTop18，顶边线09为5其余1px；box为流式作用域",
+          "font": "SimSun用于07指定标题/图文，其余Microsoft YaHei；以TSX为准",
+          "font_size": "48px，lineHeight1.45",
+          "max_lines": 3,
+          "overflow": "输入超限拒绝；显示完整字形，实际帧仍须验收"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0.0,
+        "end": 5.333333333333333
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "按当前章节/全片状态求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [
+        "content.text"
+      ],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source"
+      ],
+      "acceptance": [
+        {
+          "check": "口播侧注条目1",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "presenter_point_hook_1",
+      "type": "text",
+      "role": "口播侧注条目2",
+      "parent_id": "presenter_notes_hook",
+      "z_index": 43,
+      "content": {
+        "mode": "editable",
+        "binding": "presenter_point_hook_1_slot",
+        "asset_id": null,
+        "description": "从本期受控输入读取：props.chapters[id=hook].points[1]"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          580,
+          374,
+          820
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "按当前章节/全片状态求值",
+          "rule": "源码natural flow；marginBottom27/paddingTop18，顶边线09为5其余1px；box为流式作用域",
+          "font": "SimSun用于07指定标题/图文，其余Microsoft YaHei；以TSX为准",
+          "font_size": "48px，lineHeight1.45",
+          "max_lines": 3,
+          "overflow": "输入超限拒绝；显示完整字形，实际帧仍须验收"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0.0,
+        "end": 5.333333333333333
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "按当前章节/全片状态求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [
+        "content.text"
+      ],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source"
+      ],
+      "acceptance": [
+        {
+          "check": "口播侧注条目2",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "heading_real_content",
+      "type": "text",
+      "role": "章节标题real-content",
+      "parent_id": "canvas",
+      "z_index": 50,
+      "content": {
+        "mode": "editable",
+        "binding": "heading_real_content_slot",
+        "asset_id": null,
+        "description": "从本期受控输入读取：props.chapters[id=real-content].heading.join(newline)"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          192,
+          1210,
+          212
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "按当前章节/全片状态求值",
+          "rule": "Shared.Headline；1–2行，每行≤10.5CJK em units；localFrame0..8 translateY12→0，outCubic，入场后稳定。",
+          "font": "SimSun用于07指定标题/图文，其余Microsoft YaHei；以TSX为准",
+          "font_size": "07请求94／08为100／09为112，再按textUnits宽与box高度限小",
+          "max_lines": 2,
+          "overflow": "输入超限拒绝；显示完整字形，实际帧仍须验收"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 5.333333333333333,
+        "end": 13.6
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "按当前章节/全片状态求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [
+        "content.text"
+      ],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source"
+      ],
+      "acceptance": [
+        {
+          "check": "章节标题real-content",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "heading_ai_team",
+      "type": "text",
+      "role": "章节标题ai-team",
+      "parent_id": "canvas",
+      "z_index": 50,
+      "content": {
+        "mode": "editable",
+        "binding": "heading_ai_team_slot",
+        "asset_id": null,
+        "description": "从本期受控输入读取：props.chapters[id=ai-team].heading.join(newline)"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          196,
+          1210,
+          224
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "按当前章节/全片状态求值",
+          "rule": "Shared.Headline；1–2行，每行≤10.5CJK em units；localFrame0..8 translateY12→0，outCubic，入场后稳定。",
+          "font": "SimSun用于07指定标题/图文，其余Microsoft YaHei；以TSX为准",
+          "font_size": "07请求94／08为100／09为112，再按textUnits宽与box高度限小",
+          "max_lines": 2,
+          "overflow": "输入超限拒绝；显示完整字形，实际帧仍须验收"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 13.6,
+        "end": 20.1
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "按当前章节/全片状态求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [
+        "content.text"
+      ],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source"
+      ],
+      "acceptance": [
+        {
+          "check": "章节标题ai-team",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "heading_cooperation",
+      "type": "text",
+      "role": "章节标题cooperation",
+      "parent_id": "canvas",
+      "z_index": 50,
+      "content": {
+        "mode": "editable",
+        "binding": "heading_cooperation_slot",
+        "asset_id": null,
+        "description": "从本期受控输入读取：props.chapters[id=cooperation].heading.join(newline)"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          192,
+          1210,
+          212
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "按当前章节/全片状态求值",
+          "rule": "Shared.Headline；1–2行，每行≤10.5CJK em units；localFrame0..8 translateY12→0，outCubic，入场后稳定。",
+          "font": "SimSun用于07指定标题/图文，其余Microsoft YaHei；以TSX为准",
+          "font_size": "07请求94／08为100／09为112，再按textUnits宽与box高度限小",
+          "max_lines": 2,
+          "overflow": "输入超限拒绝；显示完整字形，实际帧仍须验收"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 20.1,
+        "end": 23.2
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "按当前章节/全片状态求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [
+        "content.text"
+      ],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source"
+      ],
+      "acceptance": [
+        {
+          "check": "章节标题cooperation",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "heading_return",
+      "type": "text",
+      "role": "章节标题return",
+      "parent_id": "canvas",
+      "z_index": 50,
+      "content": {
+        "mode": "editable",
+        "binding": "heading_return_slot",
+        "asset_id": null,
+        "description": "从本期受控输入读取：props.chapters[id=return].heading.join(newline)"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          196,
+          1210,
+          224
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "按当前章节/全片状态求值",
+          "rule": "Shared.Headline；1–2行，每行≤10.5CJK em units；localFrame0..8 translateY12→0，outCubic，入场后稳定。",
+          "font": "SimSun用于07指定标题/图文，其余Microsoft YaHei；以TSX为准",
+          "font_size": "07请求94／08为100／09为112，再按textUnits宽与box高度限小",
+          "max_lines": 2,
+          "overflow": "输入超限拒绝；显示完整字形，实际帧仍须验收"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 23.2,
+        "end": 25.666666666666668
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "按当前章节/全片状态求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [
+        "content.text"
+      ],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source"
+      ],
+      "acceptance": [
+        {
+          "check": "章节标题return",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "presenter_notes_return",
+      "type": "group",
+      "role": "口播侧注组return",
+      "parent_id": "canvas",
+      "z_index": 42,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "口播侧注组return"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          580,
+          374,
+          820
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "仅该presenter章节且真实人物显示",
+          "rule": "Shared.PresenterNotes按deck与最多3条points垂直自然布局；字体46/48，行高1.5/1.45，边线/间距见源码"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 23.2,
+        "end": 25.666666666666668
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "仅该presenter章节且真实人物显示"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source"
+      ],
+      "acceptance": [
+        {
+          "check": "口播侧注组return",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "presenter_deck_return",
+      "type": "text",
+      "role": "口播侧注文案",
+      "parent_id": "presenter_notes_return",
+      "z_index": 43,
+      "content": {
+        "mode": "editable",
+        "binding": "presenter_deck_return_slot",
+        "asset_id": null,
+        "description": "从本期受控输入读取：props.chapters[id=return].deck"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          580,
+          374,
+          200
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "按当前章节/全片状态求值",
+          "rule": "按原组件自然换行，未写入额外经营事实",
+          "font": "SimSun用于07指定标题/图文，其余Microsoft YaHei；以TSX为准",
+          "font_size": "46px，lineHeight1.5",
+          "max_lines": 4,
+          "overflow": "输入超限拒绝；显示完整字形，实际帧仍须验收"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 23.2,
+        "end": 25.666666666666668
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "按当前章节/全片状态求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [
+        "content.text"
+      ],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source"
+      ],
+      "acceptance": [
+        {
+          "check": "口播侧注文案",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "heading_consult",
+      "type": "text",
+      "role": "章节标题consult",
+      "parent_id": "canvas",
+      "z_index": 50,
+      "content": {
+        "mode": "editable",
+        "binding": "heading_consult_slot",
+        "asset_id": null,
+        "description": "从本期受控输入读取：props.chapters[id=consult].heading.join(newline)"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          196,
+          1210,
+          224
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "按当前章节/全片状态求值",
+          "rule": "Shared.Headline；1–2行，每行≤10.5CJK em units；localFrame0..8 translateY12→0，outCubic，入场后稳定。",
+          "font": "SimSun用于07指定标题/图文，其余Microsoft YaHei；以TSX为准",
+          "font_size": "07请求94／08为100／09为112，再按textUnits宽与box高度限小",
+          "max_lines": 2,
+          "overflow": "输入超限拒绝；显示完整字形，实际帧仍须验收"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 25.666666666666668,
+        "end": 30.0
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "按当前章节/全片状态求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [
+        "content.text"
+      ],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source"
+      ],
+      "acceptance": [
+        {
+          "check": "章节标题consult",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "graphic_ai_division",
+      "type": "group",
+      "role": "字阵图文主体ai-division",
+      "parent_id": "canvas",
+      "z_index": 40,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "字阵图文主体ai-division"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          454,
+          1232,
+          948
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "按当前章节/全片状态求值",
+          "rule": "Graphics.tsx::TypefieldGraphic；kind=process，items1..3；全部文字由保留sourceCueIndices支持，不增加收益或购买证明。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 13.6,
+        "end": 20.1
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "按当前章节/全片状态求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source"
+      ],
+      "acceptance": [
+        {
+          "check": "字阵图文主体ai-division",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "graphic_ai_division_deck",
+      "type": "text",
+      "role": "图文引导句",
+      "parent_id": "graphic_ai_division",
+      "z_index": 41,
+      "content": {
+        "mode": "editable",
+        "binding": "graphic_ai_division_deck_slot",
+        "asset_id": null,
+        "description": "从本期受控输入读取：props.chapters[id=ai-team].deck"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          454,
+          1232,
+          948
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "按当前章节/全片状态求值",
+          "rule": "intro顶部y0，实际layout以TSX为真值",
+          "font": "SimSun用于07指定标题/图文，其余Microsoft YaHei；以TSX为准",
+          "font_size": "44px，lineHeight1.5",
+          "max_lines": 2,
+          "overflow": "输入超限拒绝；显示完整字形，实际帧仍须验收"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 13.6,
+        "end": 20.1
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "按当前章节/全片状态求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [
+        "content.text"
+      ],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source"
+      ],
+      "acceptance": [
+        {
+          "check": "图文引导句",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "graphic_ai_division_subheading",
+      "type": "text",
+      "role": "图文副标题",
+      "parent_id": "graphic_ai_division",
+      "z_index": 41,
+      "content": {
+        "mode": "editable",
+        "binding": "graphic_ai_division_subheading_slot",
+        "asset_id": null,
+        "description": "从本期受控输入读取：props.graphics[id=ai-division].heading"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          454,
+          1232,
+          948
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "按当前章节/全片状态求值",
+          "rule": "intro y114；不裁字，超限修输入",
+          "font": "SimSun用于07指定标题/图文，其余Microsoft YaHei；以TSX为准",
+          "font_size": "offer78px，其余64；lineHeight1.2",
+          "max_lines": 1,
+          "overflow": "输入超限拒绝；显示完整字形，实际帧仍须验收"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 13.6,
+        "end": 20.1
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "按当前章节/全片状态求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [
+        "content.text"
+      ],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source"
+      ],
+      "acceptance": [
+        {
+          "check": "图文副标题",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "graphic_ai_division_connector",
+      "type": "vector",
+      "role": "图文流程连接/顶部线",
+      "parent_id": "graphic_ai_division",
+      "z_index": 41,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "图文流程连接/顶部线"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          454,
+          1232,
+          948
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "按当前章节/全片状态求值",
+          "rule": "07双卡间SVG连接线与箭头／09三列上实体线；表达输入流程关系，不编码转化率"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 13.6,
+        "end": 20.1
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "按当前章节/全片状态求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source"
+      ],
+      "acceptance": [
+        {
+          "check": "图文流程连接/顶部线",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "graphic_ai_division_item_0",
+      "type": "group",
+      "role": "图文独立条目1",
+      "parent_id": "graphic_ai_division",
+      "z_index": 42,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "图文独立条目1"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          454,
+          1232,
+          948
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "按当前章节/全片状态求值",
+          "rule": "Graphics按kind/count/style决定列或逐行、边板与padding；作用域非第二套绝对几何。入场按localFrame与条目index错开：07每5帧/12帧ease，08每4帧/10帧，09每4帧/9或10帧；稳定后不跳字。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 13.6,
+        "end": 20.1
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "按当前章节/全片状态求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source"
+      ],
+      "acceptance": [
+        {
+          "check": "图文独立条目1",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "graphic_ai_division_item_0_text",
+      "type": "text",
+      "role": "图文条目文字1",
+      "parent_id": "graphic_ai_division_item_0",
+      "z_index": 43,
+      "content": {
+        "mode": "editable",
+        "binding": "graphic_ai_division_item_0_text_slot",
+        "asset_id": null,
+        "description": "从本期受控输入读取：props.graphics[id=ai-division].items[0]"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          454,
+          1232,
+          948
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "按当前章节/全片状态求值",
+          "rule": "每条去换行≤18字；字/底从tokens.graph角色或字阵首条反白式深字亮底取得",
+          "font": "SimSun用于07指定标题/图文，其余Microsoft YaHei；以TSX为准",
+          "font_size": "itemSize依据textUnits与实际行宽，07请求76/80/88/108，08为78/84/112，09为84/110/112/150；详见TSX",
+          "max_lines": 2,
+          "overflow": "输入超限拒绝；显示完整字形，实际帧仍须验收"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 13.6,
+        "end": 20.1
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "按当前章节/全片状态求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [
+        "content.text"
+      ],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source"
+      ],
+      "acceptance": [
+        {
+          "check": "图文条目文字1",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "graphic_ai_division_item_0_mark",
+      "type": "vector",
+      "role": "图文条目标记/折角/序号",
+      "parent_id": "graphic_ai_division_item_0",
+      "z_index": 44,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "图文条目标记/折角/序号"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          454,
+          1232,
+          948
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "按当前章节/全片状态求值",
+          "rule": "07方形marker或流程序号；08折角+三角或流程序号；09流程序号或行底边；均源于组件，不代表虚构经营数量。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 13.6,
+        "end": 20.1
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "按当前章节/全片状态求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source"
+      ],
+      "acceptance": [
+        {
+          "check": "图文条目标记/折角/序号",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "graphic_ai_division_item_1",
+      "type": "group",
+      "role": "图文独立条目2",
+      "parent_id": "graphic_ai_division",
+      "z_index": 42,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "图文独立条目2"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          454,
+          1232,
+          948
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "按当前章节/全片状态求值",
+          "rule": "Graphics按kind/count/style决定列或逐行、边板与padding；作用域非第二套绝对几何。入场按localFrame与条目index错开：07每5帧/12帧ease，08每4帧/10帧，09每4帧/9或10帧；稳定后不跳字。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 13.6,
+        "end": 20.1
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "按当前章节/全片状态求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source"
+      ],
+      "acceptance": [
+        {
+          "check": "图文独立条目2",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "graphic_ai_division_item_1_text",
+      "type": "text",
+      "role": "图文条目文字2",
+      "parent_id": "graphic_ai_division_item_1",
+      "z_index": 43,
+      "content": {
+        "mode": "editable",
+        "binding": "graphic_ai_division_item_1_text_slot",
+        "asset_id": null,
+        "description": "从本期受控输入读取：props.graphics[id=ai-division].items[1]"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          454,
+          1232,
+          948
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "按当前章节/全片状态求值",
+          "rule": "每条去换行≤18字；字/底从tokens.graph角色或字阵首条反白式深字亮底取得",
+          "font": "SimSun用于07指定标题/图文，其余Microsoft YaHei；以TSX为准",
+          "font_size": "itemSize依据textUnits与实际行宽，07请求76/80/88/108，08为78/84/112，09为84/110/112/150；详见TSX",
+          "max_lines": 2,
+          "overflow": "输入超限拒绝；显示完整字形，实际帧仍须验收"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 13.6,
+        "end": 20.1
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "按当前章节/全片状态求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [
+        "content.text"
+      ],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source"
+      ],
+      "acceptance": [
+        {
+          "check": "图文条目文字2",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "graphic_ai_division_item_1_mark",
+      "type": "vector",
+      "role": "图文条目标记/折角/序号",
+      "parent_id": "graphic_ai_division_item_1",
+      "z_index": 44,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "图文条目标记/折角/序号"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          454,
+          1232,
+          948
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "按当前章节/全片状态求值",
+          "rule": "07方形marker或流程序号；08折角+三角或流程序号；09流程序号或行底边；均源于组件，不代表虚构经营数量。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 13.6,
+        "end": 20.1
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "按当前章节/全片状态求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source"
+      ],
+      "acceptance": [
+        {
+          "check": "图文条目标记/折角/序号",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "graphic_ai_division_item_2",
+      "type": "group",
+      "role": "图文独立条目3",
+      "parent_id": "graphic_ai_division",
+      "z_index": 42,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "图文独立条目3"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          454,
+          1232,
+          948
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "按当前章节/全片状态求值",
+          "rule": "Graphics按kind/count/style决定列或逐行、边板与padding；作用域非第二套绝对几何。入场按localFrame与条目index错开：07每5帧/12帧ease，08每4帧/10帧，09每4帧/9或10帧；稳定后不跳字。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 13.6,
+        "end": 20.1
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "按当前章节/全片状态求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source"
+      ],
+      "acceptance": [
+        {
+          "check": "图文独立条目3",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "graphic_ai_division_item_2_text",
+      "type": "text",
+      "role": "图文条目文字3",
+      "parent_id": "graphic_ai_division_item_2",
+      "z_index": 43,
+      "content": {
+        "mode": "editable",
+        "binding": "graphic_ai_division_item_2_text_slot",
+        "asset_id": null,
+        "description": "从本期受控输入读取：props.graphics[id=ai-division].items[2]"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          454,
+          1232,
+          948
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "按当前章节/全片状态求值",
+          "rule": "每条去换行≤18字；字/底从tokens.graph角色或字阵首条反白式深字亮底取得",
+          "font": "SimSun用于07指定标题/图文，其余Microsoft YaHei；以TSX为准",
+          "font_size": "itemSize依据textUnits与实际行宽，07请求76/80/88/108，08为78/84/112，09为84/110/112/150；详见TSX",
+          "max_lines": 2,
+          "overflow": "输入超限拒绝；显示完整字形，实际帧仍须验收"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 13.6,
+        "end": 20.1
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "按当前章节/全片状态求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [
+        "content.text"
+      ],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source"
+      ],
+      "acceptance": [
+        {
+          "check": "图文条目文字3",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "graphic_ai_division_item_2_mark",
+      "type": "vector",
+      "role": "图文条目标记/折角/序号",
+      "parent_id": "graphic_ai_division_item_2",
+      "z_index": 44,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "图文条目标记/折角/序号"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          454,
+          1232,
+          948
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "按当前章节/全片状态求值",
+          "rule": "07方形marker或流程序号；08折角+三角或流程序号；09流程序号或行底边；均源于组件，不代表虚构经营数量。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 13.6,
+        "end": 20.1
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "按当前章节/全片状态求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source"
+      ],
+      "acceptance": [
+        {
+          "check": "图文条目标记/折角/序号",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "graphic_ai_division_bottom_rule",
+      "type": "vector",
+      "role": "图文底部收束短线",
+      "parent_id": "graphic_ai_division",
+      "z_index": 41,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "图文底部收束短线"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          454,
+          1232,
+          948
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "按当前章节/全片状态求值",
+          "rule": "Graphics底部短线，颜色accent；07底24/宽.20body，09底26/宽156/高10"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 13.6,
+        "end": 20.1
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "按当前章节/全片状态求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source"
+      ],
+      "acceptance": [
+        {
+          "check": "图文底部收束短线",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "graphic_consult_offer",
+      "type": "group",
+      "role": "字阵图文主体consult-offer",
+      "parent_id": "canvas",
+      "z_index": 40,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "字阵图文主体consult-offer"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          454,
+          1232,
+          948
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "按当前章节/全片状态求值",
+          "rule": "Graphics.tsx::TypefieldGraphic；kind=offer，items1..3；全部文字由保留sourceCueIndices支持，不增加收益或购买证明。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 25.666666666666668,
+        "end": 30.0
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "按当前章节/全片状态求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source"
+      ],
+      "acceptance": [
+        {
+          "check": "字阵图文主体consult-offer",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "graphic_consult_offer_deck",
+      "type": "text",
+      "role": "图文引导句",
+      "parent_id": "graphic_consult_offer",
+      "z_index": 41,
+      "content": {
+        "mode": "editable",
+        "binding": "graphic_consult_offer_deck_slot",
+        "asset_id": null,
+        "description": "从本期受控输入读取：props.chapters[id=consult].deck"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          454,
+          1232,
+          948
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "按当前章节/全片状态求值",
+          "rule": "intro顶部y0，实际layout以TSX为真值",
+          "font": "SimSun用于07指定标题/图文，其余Microsoft YaHei；以TSX为准",
+          "font_size": "44px，lineHeight1.5",
+          "max_lines": 2,
+          "overflow": "输入超限拒绝；显示完整字形，实际帧仍须验收"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 25.666666666666668,
+        "end": 30.0
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "按当前章节/全片状态求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [
+        "content.text"
+      ],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source"
+      ],
+      "acceptance": [
+        {
+          "check": "图文引导句",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "graphic_consult_offer_subheading",
+      "type": "text",
+      "role": "图文副标题",
+      "parent_id": "graphic_consult_offer",
+      "z_index": 41,
+      "content": {
+        "mode": "editable",
+        "binding": "graphic_consult_offer_subheading_slot",
+        "asset_id": null,
+        "description": "从本期受控输入读取：props.graphics[id=consult-offer].heading"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          454,
+          1232,
+          948
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "按当前章节/全片状态求值",
+          "rule": "intro y114；不裁字，超限修输入",
+          "font": "SimSun用于07指定标题/图文，其余Microsoft YaHei；以TSX为准",
+          "font_size": "offer78px，其余64；lineHeight1.2",
+          "max_lines": 1,
+          "overflow": "输入超限拒绝；显示完整字形，实际帧仍须验收"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 25.666666666666668,
+        "end": 30.0
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "按当前章节/全片状态求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [
+        "content.text"
+      ],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source"
+      ],
+      "acceptance": [
+        {
+          "check": "图文副标题",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "graphic_consult_offer_item_0",
+      "type": "group",
+      "role": "图文独立条目1",
+      "parent_id": "graphic_consult_offer",
+      "z_index": 42,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "图文独立条目1"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          454,
+          1232,
+          948
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "按当前章节/全片状态求值",
+          "rule": "Graphics按kind/count/style决定列或逐行、边板与padding；作用域非第二套绝对几何。入场按localFrame与条目index错开：07每5帧/12帧ease，08每4帧/10帧，09每4帧/9或10帧；稳定后不跳字。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 25.666666666666668,
+        "end": 30.0
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "按当前章节/全片状态求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source"
+      ],
+      "acceptance": [
+        {
+          "check": "图文独立条目1",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "graphic_consult_offer_item_0_text",
+      "type": "text",
+      "role": "图文条目文字1",
+      "parent_id": "graphic_consult_offer_item_0",
+      "z_index": 43,
+      "content": {
+        "mode": "editable",
+        "binding": "graphic_consult_offer_item_0_text_slot",
+        "asset_id": null,
+        "description": "从本期受控输入读取：props.graphics[id=consult-offer].items[0]"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          454,
+          1232,
+          948
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "按当前章节/全片状态求值",
+          "rule": "每条去换行≤18字；字/底从tokens.graph角色或字阵首条反白式深字亮底取得",
+          "font": "SimSun用于07指定标题/图文，其余Microsoft YaHei；以TSX为准",
+          "font_size": "itemSize依据textUnits与实际行宽，07请求76/80/88/108，08为78/84/112，09为84/110/112/150；详见TSX",
+          "max_lines": 2,
+          "overflow": "输入超限拒绝；显示完整字形，实际帧仍须验收"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 25.666666666666668,
+        "end": 30.0
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "按当前章节/全片状态求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [
+        "content.text"
+      ],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source"
+      ],
+      "acceptance": [
+        {
+          "check": "图文条目文字1",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "graphic_consult_offer_item_0_mark",
+      "type": "vector",
+      "role": "图文条目标记/折角/序号",
+      "parent_id": "graphic_consult_offer_item_0",
+      "z_index": 44,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "图文条目标记/折角/序号"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          454,
+          1232,
+          948
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "按当前章节/全片状态求值",
+          "rule": "07方形marker或流程序号；08折角+三角或流程序号；09流程序号或行底边；均源于组件，不代表虚构经营数量。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 25.666666666666668,
+        "end": 30.0
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "按当前章节/全片状态求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source"
+      ],
+      "acceptance": [
+        {
+          "check": "图文条目标记/折角/序号",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "graphic_consult_offer_item_1",
+      "type": "group",
+      "role": "图文独立条目2",
+      "parent_id": "graphic_consult_offer",
+      "z_index": 42,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "图文独立条目2"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          454,
+          1232,
+          948
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "按当前章节/全片状态求值",
+          "rule": "Graphics按kind/count/style决定列或逐行、边板与padding；作用域非第二套绝对几何。入场按localFrame与条目index错开：07每5帧/12帧ease，08每4帧/10帧，09每4帧/9或10帧；稳定后不跳字。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 25.666666666666668,
+        "end": 30.0
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "按当前章节/全片状态求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source"
+      ],
+      "acceptance": [
+        {
+          "check": "图文独立条目2",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "graphic_consult_offer_item_1_text",
+      "type": "text",
+      "role": "图文条目文字2",
+      "parent_id": "graphic_consult_offer_item_1",
+      "z_index": 43,
+      "content": {
+        "mode": "editable",
+        "binding": "graphic_consult_offer_item_1_text_slot",
+        "asset_id": null,
+        "description": "从本期受控输入读取：props.graphics[id=consult-offer].items[1]"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          454,
+          1232,
+          948
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "按当前章节/全片状态求值",
+          "rule": "每条去换行≤18字；字/底从tokens.graph角色或字阵首条反白式深字亮底取得",
+          "font": "SimSun用于07指定标题/图文，其余Microsoft YaHei；以TSX为准",
+          "font_size": "itemSize依据textUnits与实际行宽，07请求76/80/88/108，08为78/84/112，09为84/110/112/150；详见TSX",
+          "max_lines": 2,
+          "overflow": "输入超限拒绝；显示完整字形，实际帧仍须验收"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 25.666666666666668,
+        "end": 30.0
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "按当前章节/全片状态求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [
+        "content.text"
+      ],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source"
+      ],
+      "acceptance": [
+        {
+          "check": "图文条目文字2",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "graphic_consult_offer_item_1_mark",
+      "type": "vector",
+      "role": "图文条目标记/折角/序号",
+      "parent_id": "graphic_consult_offer_item_1",
+      "z_index": 44,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "图文条目标记/折角/序号"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          454,
+          1232,
+          948
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "按当前章节/全片状态求值",
+          "rule": "07方形marker或流程序号；08折角+三角或流程序号；09流程序号或行底边；均源于组件，不代表虚构经营数量。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 25.666666666666668,
+        "end": 30.0
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "按当前章节/全片状态求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source"
+      ],
+      "acceptance": [
+        {
+          "check": "图文条目标记/折角/序号",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "graphic_consult_offer_bottom_rule",
+      "type": "vector",
+      "role": "图文底部收束短线",
+      "parent_id": "graphic_consult_offer",
+      "z_index": 41,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "图文底部收束短线"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          104,
+          454,
+          1232,
+          948
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "按当前章节/全片状态求值",
+          "rule": "Graphics底部短线，颜色accent；07底24/宽.20body，09底26/宽156/高10"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 25.666666666666668,
+        "end": 30.0
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "按当前章节/全片状态求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source"
+      ],
+      "acceptance": [
+        {
+          "check": "图文底部收束短线",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "brand",
+      "type": "text",
+      "role": "全片品牌",
+      "parent_id": "canvas",
+      "z_index": 55,
+      "content": {
+        "mode": "editable",
+        "binding": "brand_slot",
+        "asset_id": null,
+        "description": "从本期受控输入读取：props.brand"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          100,
+          74,
+          1240,
+          58
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "按当前章节/全片状态求值",
+          "rule": "全片持续，位于素材/标题/图文外的固定品牌区",
+          "font": "SimSun用于07指定标题/图文，其余Microsoft YaHei；以TSX为准",
+          "font_size": "layout.brand.fontSize=38，lineHeight1.35",
+          "max_lines": 1,
+          "overflow": "输入超限拒绝；显示完整字形，实际帧仍须验收"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 30
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "按当前章节/全片状态求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [
+        "content.text"
+      ],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source"
+      ],
+      "acceptance": [
+        {
+          "check": "全片品牌",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "caption_plate",
+      "type": "group",
+      "role": "稳定高对比字幕背板",
+      "parent_id": "canvas",
+      "z_index": 70,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "稳定高对比字幕背板"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          78,
+          1502,
+          1284,
+          222
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "time在某条cue[start,end)，无cue时完全不存在",
+          "rule": "Shared.CaptionPlate；仅真实当前target cue显示，背景tokens.captionSurface，padding18/24，不透明。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 30
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "time在某条cue[start,end)，无cue时完全不存在"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source"
+      ],
+      "acceptance": [
+        {
+          "check": "稳定高对比字幕背板",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "caption_text",
+      "type": "subtitle",
+      "role": "真实目标字幕",
+      "parent_id": "caption_plate",
+      "z_index": 71,
+      "content": {
+        "mode": "editable",
+        "binding": "caption_text_slot",
+        "asset_id": null,
+        "description": "从本期受控输入读取：props.cues当前真实cue.text"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          78,
+          1502,
+          1284,
+          222
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "当前cue可见；文字不跟背景声效脉冲闪烁",
+          "rule": "每行≤18字；cue<30帧直接显示，其余6帧outCubic translateY10→0；不裁切逐字、不更改词钟。字/底为深字亮底，高对比取tokens。",
+          "font": "SimSun用于07指定标题/图文，其余Microsoft YaHei；以TSX为准",
+          "font_size": "layout.caption.fontSize=68，weight900，lineHeight1.23，letterSpacing−.6",
+          "max_lines": 2,
+          "overflow": "输入超限拒绝；显示完整字形，实际帧仍须验收"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 30
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": true,
+          "description": "当前cue可见；文字不跟背景声效脉冲闪烁"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [
+        "content.text"
+      ],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source"
+      ],
+      "acceptance": [
+        {
+          "check": "真实目标字幕",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    },
+    {
+      "id": "master_audio",
+      "type": "audio",
+      "role": "原声+BGM+SFX单一母带",
+      "parent_id": "canvas",
+      "z_index": 0,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "mixed_master",
+        "description": "Shared.MasterAudio(Audio mixed-master volume1)；所有人物/实拍源muted，最终mux相同母带且无额外gain。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json几何与TSX为唯一执行参数；本文box为当前作用域审查快照，不作为renderer输入",
+          "condition": "按当前章节/全片状态求值",
+          "rule": "source-AV同一EDL，原声一次−2.5dB；BGM计划gain与ducking/限幅真实回执；尾卡仅静音人声+BGM0.8s淡出，不冻结人物。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 30
+      },
+      "states": [
+        {
+          "id": "in_scope",
+          "visible": false,
+          "description": "按当前章节/全片状态求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "新request→EDL目标钟/chapters→layout/tokens→TSX；真实paint按DOM顺序，z_index仅审查层级。"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "style_system"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation_source",
+        "layout_source"
+      ],
+      "acceptance": [
+        {
+          "check": "原声+BGM+SFX单一母带",
+          "method": "查看本期同SHA实际成片的场景、边界与最长内容；音频另连续听审",
+          "pass_condition": "与本期冻结输入/源码一致、文字完整可读、人脸无遮挡；本条是待验判据。"
+        }
+      ]
+    }
+  ],
+  "slots": [
+    {
+      "id": "shot_dog_reference_label_slot",
+      "element_id": "shot_dog_reference_label",
+      "property": "content.text",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "binding": "props.shots[id=dog-reference].sourceLabel",
+        "max_lines": 1,
+        "semantics": "只沿storyboard/cue已开放字段替换，保持源cue支持，不逐字改写经营事实"
+      },
+      "missing": "所属组件按其实际可选字段规则隐藏；必需heading/items/cue缺失由prepare拒绝",
+      "overflow": "超出组件/几何限制则修改本期输入并新prepare，不截字、不改全局字号躲避"
+    },
+    {
+      "id": "shot_brand_boxes_label_slot",
+      "element_id": "shot_brand_boxes_label",
+      "property": "content.text",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "binding": "props.shots[id=brand-boxes].sourceLabel",
+        "max_lines": 1,
+        "semantics": "只沿storyboard/cue已开放字段替换，保持源cue支持，不逐字改写经营事实"
+      },
+      "missing": "所属组件按其实际可选字段规则隐藏；必需heading/items/cue缺失由prepare拒绝",
+      "overflow": "超出组件/几何限制则修改本期输入并新prepare，不截字、不改全局字号躲避"
+    },
+    {
+      "id": "shot_robot_hands_label_slot",
+      "element_id": "shot_robot_hands_label",
+      "property": "content.text",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "binding": "props.shots[id=robot-hands].sourceLabel",
+        "max_lines": 1,
+        "semantics": "只沿storyboard/cue已开放字段替换，保持源cue支持，不逐字改写经营事实"
+      },
+      "missing": "所属组件按其实际可选字段规则隐藏；必需heading/items/cue缺失由prepare拒绝",
+      "overflow": "超出组件/几何限制则修改本期输入并新prepare，不截字、不改全局字号躲避"
+    },
+    {
+      "id": "shot_brand_close_label_slot",
+      "element_id": "shot_brand_close_label",
+      "property": "content.text",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "binding": "props.shots[id=brand-close].sourceLabel",
+        "max_lines": 1,
+        "semantics": "只沿storyboard/cue已开放字段替换，保持源cue支持，不逐字改写经营事实"
+      },
+      "missing": "所属组件按其实际可选字段规则隐藏；必需heading/items/cue缺失由prepare拒绝",
+      "overflow": "超出组件/几何限制则修改本期输入并新prepare，不截字、不改全局字号躲避"
+    },
+    {
+      "id": "shot_brand_wide_label_slot",
+      "element_id": "shot_brand_wide_label",
+      "property": "content.text",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "binding": "props.shots[id=brand-wide].sourceLabel",
+        "max_lines": 1,
+        "semantics": "只沿storyboard/cue已开放字段替换，保持源cue支持，不逐字改写经营事实"
+      },
+      "missing": "所属组件按其实际可选字段规则隐藏；必需heading/items/cue缺失由prepare拒绝",
+      "overflow": "超出组件/几何限制则修改本期输入并新prepare，不截字、不改全局字号躲避"
+    },
+    {
+      "id": "heading_hook_slot",
+      "element_id": "heading_hook",
+      "property": "content.text",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "binding": "props.chapters[id=hook].heading.join(newline)",
+        "max_lines": 2,
+        "semantics": "只沿storyboard/cue已开放字段替换，保持源cue支持，不逐字改写经营事实"
+      },
+      "missing": "所属组件按其实际可选字段规则隐藏；必需heading/items/cue缺失由prepare拒绝",
+      "overflow": "超出组件/几何限制则修改本期输入并新prepare，不截字、不改全局字号躲避"
+    },
+    {
+      "id": "presenter_deck_hook_slot",
+      "element_id": "presenter_deck_hook",
+      "property": "content.text",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "binding": "props.chapters[id=hook].deck",
+        "max_lines": 4,
+        "semantics": "只沿storyboard/cue已开放字段替换，保持源cue支持，不逐字改写经营事实"
+      },
+      "missing": "所属组件按其实际可选字段规则隐藏；必需heading/items/cue缺失由prepare拒绝",
+      "overflow": "超出组件/几何限制则修改本期输入并新prepare，不截字、不改全局字号躲避"
+    },
+    {
+      "id": "presenter_point_hook_0_slot",
+      "element_id": "presenter_point_hook_0",
+      "property": "content.text",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "binding": "props.chapters[id=hook].points[0]",
+        "max_lines": 3,
+        "semantics": "只沿storyboard/cue已开放字段替换，保持源cue支持，不逐字改写经营事实"
+      },
+      "missing": "所属组件按其实际可选字段规则隐藏；必需heading/items/cue缺失由prepare拒绝",
+      "overflow": "超出组件/几何限制则修改本期输入并新prepare，不截字、不改全局字号躲避"
+    },
+    {
+      "id": "presenter_point_hook_1_slot",
+      "element_id": "presenter_point_hook_1",
+      "property": "content.text",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "binding": "props.chapters[id=hook].points[1]",
+        "max_lines": 3,
+        "semantics": "只沿storyboard/cue已开放字段替换，保持源cue支持，不逐字改写经营事实"
+      },
+      "missing": "所属组件按其实际可选字段规则隐藏；必需heading/items/cue缺失由prepare拒绝",
+      "overflow": "超出组件/几何限制则修改本期输入并新prepare，不截字、不改全局字号躲避"
+    },
+    {
+      "id": "heading_real_content_slot",
+      "element_id": "heading_real_content",
+      "property": "content.text",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "binding": "props.chapters[id=real-content].heading.join(newline)",
+        "max_lines": 2,
+        "semantics": "只沿storyboard/cue已开放字段替换，保持源cue支持，不逐字改写经营事实"
+      },
+      "missing": "所属组件按其实际可选字段规则隐藏；必需heading/items/cue缺失由prepare拒绝",
+      "overflow": "超出组件/几何限制则修改本期输入并新prepare，不截字、不改全局字号躲避"
+    },
+    {
+      "id": "heading_ai_team_slot",
+      "element_id": "heading_ai_team",
+      "property": "content.text",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "binding": "props.chapters[id=ai-team].heading.join(newline)",
+        "max_lines": 2,
+        "semantics": "只沿storyboard/cue已开放字段替换，保持源cue支持，不逐字改写经营事实"
+      },
+      "missing": "所属组件按其实际可选字段规则隐藏；必需heading/items/cue缺失由prepare拒绝",
+      "overflow": "超出组件/几何限制则修改本期输入并新prepare，不截字、不改全局字号躲避"
+    },
+    {
+      "id": "heading_cooperation_slot",
+      "element_id": "heading_cooperation",
+      "property": "content.text",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "binding": "props.chapters[id=cooperation].heading.join(newline)",
+        "max_lines": 2,
+        "semantics": "只沿storyboard/cue已开放字段替换，保持源cue支持，不逐字改写经营事实"
+      },
+      "missing": "所属组件按其实际可选字段规则隐藏；必需heading/items/cue缺失由prepare拒绝",
+      "overflow": "超出组件/几何限制则修改本期输入并新prepare，不截字、不改全局字号躲避"
+    },
+    {
+      "id": "heading_return_slot",
+      "element_id": "heading_return",
+      "property": "content.text",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "binding": "props.chapters[id=return].heading.join(newline)",
+        "max_lines": 2,
+        "semantics": "只沿storyboard/cue已开放字段替换，保持源cue支持，不逐字改写经营事实"
+      },
+      "missing": "所属组件按其实际可选字段规则隐藏；必需heading/items/cue缺失由prepare拒绝",
+      "overflow": "超出组件/几何限制则修改本期输入并新prepare，不截字、不改全局字号躲避"
+    },
+    {
+      "id": "presenter_deck_return_slot",
+      "element_id": "presenter_deck_return",
+      "property": "content.text",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "binding": "props.chapters[id=return].deck",
+        "max_lines": 4,
+        "semantics": "只沿storyboard/cue已开放字段替换，保持源cue支持，不逐字改写经营事实"
+      },
+      "missing": "所属组件按其实际可选字段规则隐藏；必需heading/items/cue缺失由prepare拒绝",
+      "overflow": "超出组件/几何限制则修改本期输入并新prepare，不截字、不改全局字号躲避"
+    },
+    {
+      "id": "heading_consult_slot",
+      "element_id": "heading_consult",
+      "property": "content.text",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "binding": "props.chapters[id=consult].heading.join(newline)",
+        "max_lines": 2,
+        "semantics": "只沿storyboard/cue已开放字段替换，保持源cue支持，不逐字改写经营事实"
+      },
+      "missing": "所属组件按其实际可选字段规则隐藏；必需heading/items/cue缺失由prepare拒绝",
+      "overflow": "超出组件/几何限制则修改本期输入并新prepare，不截字、不改全局字号躲避"
+    },
+    {
+      "id": "graphic_ai_division_deck_slot",
+      "element_id": "graphic_ai_division_deck",
+      "property": "content.text",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "binding": "props.chapters[id=ai-team].deck",
+        "max_lines": 2,
+        "semantics": "只沿storyboard/cue已开放字段替换，保持源cue支持，不逐字改写经营事实"
+      },
+      "missing": "所属组件按其实际可选字段规则隐藏；必需heading/items/cue缺失由prepare拒绝",
+      "overflow": "超出组件/几何限制则修改本期输入并新prepare，不截字、不改全局字号躲避"
+    },
+    {
+      "id": "graphic_ai_division_subheading_slot",
+      "element_id": "graphic_ai_division_subheading",
+      "property": "content.text",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "binding": "props.graphics[id=ai-division].heading",
+        "max_lines": 1,
+        "semantics": "只沿storyboard/cue已开放字段替换，保持源cue支持，不逐字改写经营事实"
+      },
+      "missing": "所属组件按其实际可选字段规则隐藏；必需heading/items/cue缺失由prepare拒绝",
+      "overflow": "超出组件/几何限制则修改本期输入并新prepare，不截字、不改全局字号躲避"
+    },
+    {
+      "id": "graphic_ai_division_item_0_text_slot",
+      "element_id": "graphic_ai_division_item_0_text",
+      "property": "content.text",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "binding": "props.graphics[id=ai-division].items[0]",
+        "max_lines": 2,
+        "semantics": "只沿storyboard/cue已开放字段替换，保持源cue支持，不逐字改写经营事实"
+      },
+      "missing": "所属组件按其实际可选字段规则隐藏；必需heading/items/cue缺失由prepare拒绝",
+      "overflow": "超出组件/几何限制则修改本期输入并新prepare，不截字、不改全局字号躲避"
+    },
+    {
+      "id": "graphic_ai_division_item_1_text_slot",
+      "element_id": "graphic_ai_division_item_1_text",
+      "property": "content.text",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "binding": "props.graphics[id=ai-division].items[1]",
+        "max_lines": 2,
+        "semantics": "只沿storyboard/cue已开放字段替换，保持源cue支持，不逐字改写经营事实"
+      },
+      "missing": "所属组件按其实际可选字段规则隐藏；必需heading/items/cue缺失由prepare拒绝",
+      "overflow": "超出组件/几何限制则修改本期输入并新prepare，不截字、不改全局字号躲避"
+    },
+    {
+      "id": "graphic_ai_division_item_2_text_slot",
+      "element_id": "graphic_ai_division_item_2_text",
+      "property": "content.text",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "binding": "props.graphics[id=ai-division].items[2]",
+        "max_lines": 2,
+        "semantics": "只沿storyboard/cue已开放字段替换，保持源cue支持，不逐字改写经营事实"
+      },
+      "missing": "所属组件按其实际可选字段规则隐藏；必需heading/items/cue缺失由prepare拒绝",
+      "overflow": "超出组件/几何限制则修改本期输入并新prepare，不截字、不改全局字号躲避"
+    },
+    {
+      "id": "graphic_consult_offer_deck_slot",
+      "element_id": "graphic_consult_offer_deck",
+      "property": "content.text",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "binding": "props.chapters[id=consult].deck",
+        "max_lines": 2,
+        "semantics": "只沿storyboard/cue已开放字段替换，保持源cue支持，不逐字改写经营事实"
+      },
+      "missing": "所属组件按其实际可选字段规则隐藏；必需heading/items/cue缺失由prepare拒绝",
+      "overflow": "超出组件/几何限制则修改本期输入并新prepare，不截字、不改全局字号躲避"
+    },
+    {
+      "id": "graphic_consult_offer_subheading_slot",
+      "element_id": "graphic_consult_offer_subheading",
+      "property": "content.text",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "binding": "props.graphics[id=consult-offer].heading",
+        "max_lines": 1,
+        "semantics": "只沿storyboard/cue已开放字段替换，保持源cue支持，不逐字改写经营事实"
+      },
+      "missing": "所属组件按其实际可选字段规则隐藏；必需heading/items/cue缺失由prepare拒绝",
+      "overflow": "超出组件/几何限制则修改本期输入并新prepare，不截字、不改全局字号躲避"
+    },
+    {
+      "id": "graphic_consult_offer_item_0_text_slot",
+      "element_id": "graphic_consult_offer_item_0_text",
+      "property": "content.text",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "binding": "props.graphics[id=consult-offer].items[0]",
+        "max_lines": 2,
+        "semantics": "只沿storyboard/cue已开放字段替换，保持源cue支持，不逐字改写经营事实"
+      },
+      "missing": "所属组件按其实际可选字段规则隐藏；必需heading/items/cue缺失由prepare拒绝",
+      "overflow": "超出组件/几何限制则修改本期输入并新prepare，不截字、不改全局字号躲避"
+    },
+    {
+      "id": "graphic_consult_offer_item_1_text_slot",
+      "element_id": "graphic_consult_offer_item_1_text",
+      "property": "content.text",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "binding": "props.graphics[id=consult-offer].items[1]",
+        "max_lines": 2,
+        "semantics": "只沿storyboard/cue已开放字段替换，保持源cue支持，不逐字改写经营事实"
+      },
+      "missing": "所属组件按其实际可选字段规则隐藏；必需heading/items/cue缺失由prepare拒绝",
+      "overflow": "超出组件/几何限制则修改本期输入并新prepare，不截字、不改全局字号躲避"
+    },
+    {
+      "id": "brand_slot",
+      "element_id": "brand",
+      "property": "content.text",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "binding": "props.brand",
+        "max_lines": 1,
+        "semantics": "只沿storyboard/cue已开放字段替换，保持源cue支持，不逐字改写经营事实"
+      },
+      "missing": "所属组件按其实际可选字段规则隐藏；必需heading/items/cue缺失由prepare拒绝",
+      "overflow": "超出组件/几何限制则修改本期输入并新prepare，不截字、不改全局字号躲避"
+    },
+    {
+      "id": "caption_text_slot",
+      "element_id": "caption_text",
+      "property": "content.text",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "binding": "props.cues当前真实cue.text",
+        "max_lines": 2,
+        "semantics": "只沿storyboard/cue已开放字段替换，保持源cue支持，不逐字改写经营事实"
+      },
+      "missing": "所属组件按其实际可选字段规则隐藏；必需heading/items/cue缺失由prepare拒绝",
+      "overflow": "超出组件/几何限制则修改本期输入并新prepare，不截字、不改全局字号躲避"
+    },
+    {
+      "id": "source_video_slot",
+      "element_id": "global",
+      "property": "source_video",
+      "value_type": "asset",
+      "required": true,
+      "limits": {
+        "suffix": "mp4",
+        "preserve": "原字节，时间戳与PCM均覆盖EDL，原速1倍"
+      },
+      "missing": "必需输入缺失则prepare拒绝；不拿旧12秒合同或虚构素材兜底",
+      "overflow": "拒绝超范围，修正本期输入/来源后新prepare；不改旧request"
+    },
+    {
+      "id": "source_cues_slot",
+      "element_id": "global",
+      "property": "source_cues",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "fields": "source_video_sha256/timing_basis/evidence/cues(start/end/text)",
+        "clock": "真实源钟，有序无重叠，最多2行/行18字"
+      },
+      "missing": "必需输入缺失则prepare拒绝；不拿旧12秒合同或虚构素材兜底",
+      "overflow": "拒绝超范围，修正本期输入/来源后新prepare；不改旧request"
+    },
+    {
+      "id": "source_edits_slot",
+      "element_id": "global",
+      "property": "source_edits",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "version": "source-edits-v1",
+        "fps": 30,
+        "frames": 900,
+        "tail_hold_frames": [
+          0,
+          60
+        ],
+        "segments": "id/source_start_frame/source_end_frame/fromCue/toCue/reason；完整保留选cue，目标钟累计，段外邻cue<1帧交集样本静音另记"
+      },
+      "missing": "必需输入缺失则prepare拒绝；不拿旧12秒合同或虚构素材兜底",
+      "overflow": "拒绝超范围，修正本期输入/来源后新prepare；不改旧request"
+    },
+    {
+      "id": "storyboard_slot",
+      "element_id": "global",
+      "property": "storyboard",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "version": "investment-full-storyboard-v1",
+        "chapters": "连续0..900，presenter/media/graphic，标题1–2行，每行≤10.5CJK em，points≤3",
+        "shots": "media章完整覆盖，1..120帧/单素材；path/SHA/offset/fit/sourceLabel/evidence明确",
+        "graphics": "graphic章恰1图形，items1..3且去换行≤18字，sourceCueIndices为保留原cue并与对应章重叠"
+      },
+      "missing": "必需输入缺失则prepare拒绝；不拿旧12秒合同或虚构素材兜底",
+      "overflow": "拒绝超范围，修正本期输入/来源后新prepare；不改旧request"
+    },
+    {
+      "id": "audio_plan_slot",
+      "element_id": "global",
+      "property": "audio_plan",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "version": "sound-motion-v1",
+        "mix_profile": "speech-led-v1",
+        "duration": 30,
+        "anchors": "target cue或chapter；无真实word钟不支持word锚点",
+        "music": "本期30秒原创BGM，无硬循环，fade_out.8，gain按各自计划"
+      },
+      "missing": "必需输入缺失则prepare拒绝；不拿旧12秒合同或虚构素材兜底",
+      "overflow": "拒绝超范围，修正本期输入/来源后新prepare；不改旧request"
+    },
+    {
+      "id": "identity_slot",
+      "element_id": "global",
+      "property": "identity",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "template_number": 9,
+        "palette_variant": "black-pink",
+        "ratio": "4x5",
+        "template_id": "investment-full-09-black-pink",
+        "metadata_title_max_length": 120
+      },
+      "missing": "必需输入缺失则prepare拒绝；不拿旧12秒合同或虚构素材兜底",
+      "overflow": "拒绝超范围，修正本期输入/来源后新prepare；不改旧request"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "implementation_source",
+      "source_kind": "design",
+      "source": "当前新30秒模板源码声明，不证明编码媒体已通过。",
+      "locator": "Full/Shared/Graphics实际组件，几何由layout/geometry求值，色由tokens取得。",
+      "method": "实际读取当前源码；prepare冻结执行SHA，文档补证不改旧冻结请求。",
+      "file": "../../Full.tsx",
+      "sha256": "4c59ec30588eb000fe53f2163b3280b05a1993f960a8d3341b0db6fe60a5275b"
+    },
+    {
+      "id": "layout_source",
+      "source_kind": "design",
+      "source": "当前新模板画布/字号/安全分区设计。",
+      "locator": "layout.json与geometry.readingBoxes/assertProps",
+      "method": "唯一数字真值从layout/TSX读取，本规格box仅为当前审查快照。",
+      "file": "../../layout.json",
+      "sha256": "8132ad2939b21b0ce0fa4997efcdfecaa8d6963e6a7486665cbd0f8d1e4eebc8"
+    },
+    {
+      "id": "backend_contract",
+      "source_kind": "design",
+      "source": "本任务新接口冻结说明，不是生产通过记录。",
+      "locator": "EDL、chapter/shot/graphic、audio及新props接口",
+      "method": "读取BACKEND-CONTRACT与实际adapter/CLI，对应本次独立合同。",
+      "file": "../../../../../.local/codex-runs/investment-full-three-20261021/BACKEND-CONTRACT.md",
+      "sha256": "a93ceefca11cf4d769f565ca3f0aaa94284c677d9bc3ec5891d1218d340f54c1"
+    },
+    {
+      "id": "cue_clock_source",
+      "method": "实际读取source-edits-v1并检查所选cue包含；原生PCM覆盖由prepare gate另验。",
+      "sha256": "f0baa915027f013298d6018de183496b315f621ec9141809898468f73f20af0e",
+      "source_kind": "design",
+      "file": "../../../../../.local/codex-runs/investment-full-three-20261021/source-recon/clip-03/source-edits.json",
+      "source": "本次最后源段减一帧的PCM安全EDL身份；全部真实cue时钟未动，非新成片/听审通过。",
+      "locator": "source-edits-v1 最末源段PCM安全边界及显式tail_hold_frames"
+    },
+    {
+      "id": "storyboard_source",
+      "source_kind": "design",
+      "source": "本次最终冻结分镜输入：受控替换/重排实拍源与图片，保留完整contain；章节/全部shot帧钟、deck修订、heading、源cue、EDL与音乐不变。非新编码媒体通过。",
+      "locator": "clip-03.json chapters/5条shots的原文件SHA/offset/kind/fit/sourceLabel/evidence",
+      "method": "只同步Root已看且冻结的当前storyboard身份/素材登记，不做另一次素材review；实际成片仍由Root另验。",
+      "file": "../../../../../.local/codex-runs/investment-full-three-20261021/storyboards/clip-03.json",
+      "sha256": "46dc77ab4f09e42c014f2e4dfa71ef6a7e5d8dd103d1e22adae73db713fd0fd7"
+    },
+    {
+      "id": "full_current_output",
+      "source_kind": "measurement",
+      "source": "This exact native round-4 output with technical evidence and Root actual encoded-frame/HTTP/desktop-browser review.",
+      "locator": "Output SHA256 21e1b389ccc848735e7026f54aaada23bcab4e2053b04512ed5091846223294a; root visual scope: Root actually viewed encoded-output timeline, all5 shot first/mid/end samples, all12 cue samples, edit-edge and final-tail contacts using view_image; selected individual full frames separately. Discrete sampled visual review, not subjective continuous hearing/phoneme/real-phone/platform approval.",
+      "method": "Bind four actual reports, native IDs, source/EDL/storyboard, archived runtime, actual frame manifest and measured audio to one output SHA. Does not replace pending listening/phone/user review.",
+      "file": "../../../../../.local/codex-runs/investment-full-three-20261021/spec-evidence/09-black-pink.json",
+      "sha256": "0b84f70f65b4363513fa51210832fbe3513a64efe848985884a44934ae5fbe28"
+    }
+  ],
+  "unknowns": [],
+  "validation": {
+    "structure": {
+      "status": "pass",
+      "evidence_ids": [
+        "full_current_output"
+      ],
+      "note": "Only this exact round-4 frozen 4x5/900-frame output. Native checks/identity and exact output evidence are bound; pending quality/unpublished, not platform/user approval."
+    },
+    "technical": {
+      "status": "pass",
+      "evidence_ids": [
+        "full_current_output"
+      ],
+      "note": "Only this exact round-4 frozen 4x5/900-frame output. Native checks/identity and exact output evidence are bound; pending quality/unpublished, not platform/user approval."
+    },
+    "visual": {
+      "status": "pass",
+      "evidence_ids": [
+        "full_current_output"
+      ],
+      "note": "Only this exact round-4 frozen 4x5/900-frame output. Root actually inspected this discrete encoded-frame scope: Root actually viewed encoded-output timeline, all5 shot first/mid/end samples, all12 cue samples, edit-edge and final-tail contacts using view_image; selected individual full frames separately. Discrete sampled visual review, not subjective continuous hearing/phoneme/real-phone/platform approval.; not every frame."
+    },
+    "audio": {
+      "status": "pending",
+      "evidence_ids": [
+        "full_current_output"
+      ],
+      "note": "Actual source-EDL voice preservation, one -2.5dB voice gain, cue-bound SFX/BGM, real duck buses and final master/AAC safety are technically verified. Subjective continuous listening and phoneme/mouth-sync checks are not certified."
+    },
+    "platform": {
+      "status": "pending",
+      "evidence_ids": [
+        "full_current_output"
+      ],
+      "note": "Full local HTTP byte identity/Range and actual desktop browser playback passed; no phone or target-platform test is claimed."
+    },
+    "user_review": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "The user's production authorization is not finished-video aesthetic approval."
+    },
+    "production": {
+      "status": "pass",
+      "evidence_ids": [
+        "full_current_output"
+      ],
+      "note": "Only this exact round-4 frozen 4x5/900-frame output. Native checks/identity and exact output evidence are bound; pending quality/unpublished, not platform/user approval."
+    }
+  },
+  "extensions": {
+    "avatar": {
+      "face_crop": {
+        "mode": "完整contain；SourceEdits与presenter章节交集可见",
+        "authority": "layout.styles.presenter与Shared.Avatar",
+        "constraint": "人物身份/肤色/眼镜/嘴/服装固化像素保持，图片原背景不裁脸；章节不能把人物源重新从0起播"
+      },
+      "synchronization": {
+        "master": "同一source-edits源AV段，目标30秒，voice一次−2.5dB，source与Broll muted",
+        "cues": "完整真实源cue按累计段长平移，target cue锚点声效；不按字数均分",
+        "tail": "0..60帧显式静音offer端卡，禁人物冻结或循环；边缘被删邻cue不足1帧交集只按ASR样本mask，真实回执另记"
+      }
+    },
+    "graphic": {
+      "text_policy": {
+        "source": "chapters与graphics.sourceCueIndices绑定保留原cue，Root语义审查；不能新增承诺",
+        "headline": "1–2行/每行≤10.5CJK em units；字号按Shared.Headline与box限宽",
+        "caption": "68px主字幕，≤2行/行18字，整句6帧位移入场后稳定；无cue留白",
+        "items": "1–3项，每项去换行≤18字；07剧场双流程/行式，08错位折面，09三列流程/条式"
+      },
+      "asset_fit": {
+        "main": "原数字人完整contain，不调色",
+        "broll": "本期shots全部按真实输入contain保留原画；视频静音，图片可用，来源标签窗外；单原素材≤4秒",
+        "fonts": "本机YaHei/SimSun运行时SHA，不分发字体"
+      }
+    },
+    "material_edit": {
+      "source_ranges": {
+        "identity": "源MP4、source_cues、EDL与每条shot路径/SHA/来源证据在新request",
+        "avatar": "source_start_frame/source_end_frame为30fps编辑钟，左右闭开；完整选cue，顺序递增，源PCM实际覆盖，不隐式补零",
+        "broll": "目标start/end、sourceOffsetFrames及最长120帧，实际源时间戳覆盖；media章无空白/重叠"
+      },
+      "cut_policy": {
+        "voice": "与视频同EDL、不变速/不重生；选择句子语义，不靠实拍遮断词",
+        "audio": "仅单一混音母带；边界交集mask与静音尾卡严格回执，BGM30秒并尾淡出.8s",
+        "scope": "切点/词/画面连续性仍待实际听看；原图文/场景参考不伪称海客顾客或成交"
+      }
+    },
+    "full_contract": {
+      "contract": "investment-full-v1",
+      "rules": {
+        "template_number": 9,
+        "palette_variant": "black-pink",
+        "composition": "HaikeInvestmentFull",
+        "render_profile": "investment-full-4x5-20mbps-v1；H26420M ABR目标、CRF null、PNG、slow、yuv420p、scale1；最终视频stream-copy，实测码率独立记",
+        "caption_roles": {
+          "foreground": "#0E0E0E",
+          "surface": "#FD7B99",
+          "contrast": "07约7.87/08约7.89/09约7.79：HEX理论值，实际编码另验"
+        },
+        "layout_authority": "layout.json、geometry.ts、Full/Shared/Graphics.tsx；本规格box为审查作用域",
+        "storyboard_snapshot": {
+          "chapters": [
+            {
+              "id": "hook",
+              "startFrame": 0,
+              "endFrame": 160,
+              "kind": "presenter"
+            },
+            {
+              "id": "real-content",
+              "startFrame": 160,
+              "endFrame": 408,
+              "kind": "media"
+            },
+            {
+              "id": "ai-team",
+              "startFrame": 408,
+              "endFrame": 603,
+              "kind": "graphic"
+            },
+            {
+              "id": "cooperation",
+              "startFrame": 603,
+              "endFrame": 696,
+              "kind": "media"
+            },
+            {
+              "id": "return",
+              "startFrame": 696,
+              "endFrame": 770,
+              "kind": "presenter"
+            },
+            {
+              "id": "consult",
+              "startFrame": 770,
+              "endFrame": 900,
+              "kind": "graphic"
+            }
+          ],
+          "content_end_frame": 887,
+          "tail_hold_frames": 13,
+          "source_sha256": "46dc77ab4f09e42c014f2e4dfa71ef6a7e5d8dd103d1e22adae73db713fd0fd7",
+          "presenter_deck_snapshot": {
+            "hook": "把体验变成内容"
+          },
+          "shots": [
+            {
+              "id": "dog-reference",
+              "path": "D:\\刘宇钊\\粤仔视频\\原素材\\_Oh my goodness. You are so gorgeous！_ 法国模特姐姐一出现，粤仔眼睛都直了😍 得知姐姐来自法国，立刻开启多语言模式：英语、西班牙语 _Hola_、意大利语 _Ciao_ 轮番上阵，把两个.mp4",
+              "sha256": "1292e9331b953591f4a737aeb30a7cfdff0d41c820fd27080d67718518bf82ff",
+              "kind": "video",
+              "startFrame": 160,
+              "endFrame": 216,
+              "sourceOffsetFrames": 2850,
+              "fit": "contain",
+              "sourceLabel": "机器狗互动 · 场景参考",
+              "evidence": {
+                "contact_sheet": "D:\\刘宇钊\\codex_work\\haike-workflow-2\\.local\\codex-runs\\template6-blue-cleanmix-20261020\\source-review\\windows\\dog-france\\contact-sheet.jpg",
+                "scope": "Machine-dog interaction reference only; not claimed as a Haike store, residents, customers or a transaction.",
+                "origin": "user_provided_local_material",
+                "source_audio": "muted",
+                "whole_source_retained": true
+              }
+            },
+            {
+              "id": "brand-boxes",
+              "path": "C:\\Users\\Administrator\\Videos\\线下门店\\DSCF4992.MP4",
+              "sha256": "b60a0c5540a573641eede26215602e691bb1c9ef9949fa969e176afd1acc0734",
+              "kind": "video",
+              "startFrame": 216,
+              "endFrame": 288,
+              "sourceOffsetFrames": 5,
+              "fit": "contain",
+              "sourceLabel": "海客AI线下现场 · 用户提供",
+              "evidence": {
+                "contact_sheet": "D:\\刘宇钊\\codex_work\\haike-workflow-2\\.local\\codex-runs\\investment-full-three-20261021\\materials\\windows\\brand-boxes\\contact-sheet.jpg",
+                "scope": "4K横向海客AI地摊铺全景，AI智能玩伴立幅、产品盒和成人理货清楚。",
+                "origin": "user_provided_local_material",
+                "source_audio": "muted",
+                "whole_source_retained": true
+              }
+            },
+            {
+              "id": "robot-hands",
+              "path": "C:\\Users\\Administrator\\Videos\\线下门店\\DJI_20260705190320_0012_D.MP4",
+              "sha256": "3dfd4d66c852ff0be381a2145605031e681b46d05aa8c2da136d8b2b3b1c8192",
+              "kind": "video",
+              "startFrame": 288,
+              "endFrame": 360,
+              "sourceOffsetFrames": 534,
+              "fit": "contain",
+              "sourceLabel": "海客AI线下现场 · 用户提供",
+              "evidence": {
+                "contact_sheet": "D:\\刘宇钊\\codex_work\\haike-workflow-2\\.local\\codex-runs\\investment-full-three-20261021\\materials\\windows\\robot-hands\\contact-sheet.jpg",
+                "scope": "近景成人手持/查看黄色桌面机器人，台面毛绒产品丰富，较少无关人群。",
+                "origin": "user_provided_local_material",
+                "source_audio": "muted",
+                "whole_source_retained": true
+              }
+            },
+            {
+              "id": "brand-close",
+              "path": "C:\\Users\\Administrator\\Videos\\线下门店\\71feddde040e7dc1bd62788907d51f31.jpg",
+              "sha256": "a9d407f2d948869cf9bc006b99af886e07212e1e180e3244c3526765260bbf80",
+              "kind": "image",
+              "startFrame": 360,
+              "endFrame": 408,
+              "sourceOffsetFrames": 0,
+              "fit": "contain",
+              "sourceLabel": "海客AI线下现场 · 用户提供",
+              "evidence": {
+                "contact_sheet": "D:\\刘宇钊\\codex_work\\haike-workflow-2\\.local\\codex-runs\\investment-full-three-20261021\\materials\\windows\\brand-close\\contact-sheet.jpg",
+                "scope": "海客AI站灯牌与新店开业/免费试玩AI产品横幅清楚，柜台与陈列可见。",
+                "origin": "user_provided_local_material",
+                "source_audio": "muted",
+                "whole_source_retained": true
+              }
+            },
+            {
+              "id": "brand-wide",
+              "path": "C:\\Users\\Administrator\\Videos\\线下门店\\ff873af402b76766617549ae4ef2c569.jpg",
+              "sha256": "a8a7926087097dcb7f07d6cb3ca13fdc3cba37028a2139313ccbc54fdc9eefad",
+              "kind": "image",
+              "startFrame": 603,
+              "endFrame": 696,
+              "sourceOffsetFrames": 0,
+              "fit": "contain",
+              "sourceLabel": "海客AI线下现场 · 用户提供",
+              "evidence": {
+                "contact_sheet": "D:\\刘宇钊\\codex_work\\haike-workflow-2\\.local\\codex-runs\\investment-full-three-20261021\\materials\\windows\\brand-wide\\contact-sheet.jpg",
+                "scope": "清楚海客AI站门头、AI智能玩伴立牌、产品台及成人背影；门店品牌建立镜头首选。",
+                "origin": "user_provided_local_material",
+                "source_audio": "muted",
+                "whole_source_retained": true
+              }
+            }
+          ]
+        },
+        "queue": "现有studio_investment_recompose paused+全局single-lane，contract独立分派；WorkCatalog质量待审，不发布",
+        "runtime_freeze": "新可执行源/工具/字体实际SHA与输入冻结；spec/runbook/README只做prepare时规格快照，补证不重签旧request",
+        "excluded_evidence": "旧investment-style-lab-v1的12秒规格/媒体/ready/HTTP或source-verification不能充作本30秒新输出通过",
+        "input_clock_snapshot": {
+          "source_video_sha256": "279ea1c879f47b9cb00f2d2e6daeb35f8e911c126a36ac94adeaa28260f0acdd",
+          "source_cues_sha256": "cf821d82a4f0f347404d445d00e0e8386bb113d7bbbbf3b59b7f96f6e7f1b7d5",
+          "source_edits_sha256": "f0baa915027f013298d6018de183496b315f621ec9141809898468f73f20af0e",
+          "target_cues_sha256": "99a88e8010103aaee7513771c0f36d55813ea90e5c28d54f6365f1a777bc2d5c",
+          "selected_final_source_end_frame": 1026,
+          "content_end_frame": 887,
+          "tail_hold_frames": 13,
+          "correction": "源PCM实际比视频短不足一帧，只删除无cue尾余量一帧；全部所选cue/任何前段/源起点与音效锚点不变，静音offer尾卡加一帧；原生PCM gate待重验。"
+        },
+        "verified_scope": {
+          "ratios": [
+            "4x5"
+          ],
+          "width": 1440,
+          "height": 1800,
+          "fps": 30,
+          "duration_in_frames": 900,
+          "duration_seconds": 30,
+          "request_sha256": "6a4d7a0929c791526d311b7bcb0805fb57fdee24d1878ca6be79c1da87cd7219",
+          "output_sha256": "21e1b389ccc848735e7026f54aaada23bcab4e2053b04512ed5091846223294a",
+          "original_source_sha256": "279ea1c879f47b9cb00f2d2e6daeb35f8e911c126a36ac94adeaa28260f0acdd",
+          "source_edits_sha256": "f0baa915027f013298d6018de183496b315f621ec9141809898468f73f20af0e",
+          "storyboard_sha256": "46dc77ab4f09e42c014f2e4dfa71ef6a7e5d8dd103d1e22adae73db713fd0fd7",
+          "evidence_id": "full_current_output",
+          "replacement_inputs": "pending revalidation",
+          "quality": "pending",
+          "publication": false
+        }
+      }
+    }
+  },
+  "operations": [
+    {
+      "id": "preflight",
+      "input": "本新规格/runbook、当前runtime、本次源MP4/source-cues/edits/storyboard/audio-plan、授权与已有任务。",
+      "action": "核对14756 health工作区/edition及investment_full.py --help；严格编号配色4x5；原片/真实cue/EDL和素材SHA，句子语义及素材来源由Root核实。",
+      "output": "本次完整输入身份和已有任务结论。",
+      "completion": "全部必需参数与实际能力明确，EDL version有效，图文/素材/声效引用有来源；不以旧12秒状态代替。",
+      "recovery": "缺项补对应输入/实现；已有请求先status，禁止改旧冻结身份。",
+      "entrypoint": "../../../../scripts/investment_full.py --help/--status"
+    },
+    {
+      "id": "prepare",
+      "input": "本次已核对的源视频、source-cues、EDL、storyboard和30秒audio-plan。",
+      "action": "--prepare --evidence-dir <本次独立目录> --source-video <原MP4> --source-cues <JSON> --edits <JSON> --storyboard <JSON> --audio-plan <JSON> --template-number 9 --palette-variant black-pink --ratio 4x5 --title <作品名> [--brand]；Root负责正式prepare。",
+      "output": "独立request、sourceEdits/cue_map、原音/EDL/边缘mask回执、素材原字节public、真实混音/回执及props；未入队零云。",
+      "completion": "同原片/源cue/EDL/素材/母带/可执行身份，30秒900帧，所选cue完整且单一原声，无隐式末尾补源片；独立spec/template身份正确。",
+      "recovery": "原目录有不同请求则新prepare；缺素材/PCM越界报错，不能隐式loop/atempo补救。",
+      "entrypoint": "../../../../scripts/investment_full.py --prepare"
+    },
+    {
+      "id": "submit_render",
+      "input": "原冻结request、已导入资源、统一队列与空闲全局单lane。",
+      "action": "同evidence-dir先--submit(start_paused=True)再--run，专属原生worker领取；不直接调用旁路全片渲染。",
+      "output": "原job终态、新MP4/props/quality/result与质量待审WorkCatalog版本。",
+      "completion": "原任务completed且真实成片可读；900帧/30秒/1440×1800/30fps/20M设置/音轨/全解码，视频stream-copy最终同母带；此步不证明实际视觉或听审。",
+      "recovery": "不明先--status与原任务读回，retryable用--resume；源码变更新prepare，不重写旧请求、不并发父视频。",
+      "entrypoint": "../../../../scripts/investment_full.py --submit/--run/--resume/--status"
+    },
+    {
+      "id": "review",
+      "input": "同新输出SHA的完整媒体、真实帧、混音/声效/EDL回执与原生queue/work/version/HTTP。",
+      "action": "覆盖所有章节、素材切换、字幕、最长图文与端卡实际查看；连续听审另检查删句衔接、SFX/BGM/人声与口型适用范围，目标平台/用户确认分别记录。",
+      "output": "本30秒变体新验证矩阵、实际文件SHA及交付范围。",
+      "completion": "技术与实际视觉有新文件证据才讨论ready；听审/真机/用户未完成保持pending，不能外推其他源/比例或旧短样。",
+      "recovery": "定位元素/时间点，修受影响真值后新SHA复验，保留旧产物与请求。",
+      "entrypoint": "manual actual full encoded-media review plus native CLI --status"
+    }
+  ]
+}

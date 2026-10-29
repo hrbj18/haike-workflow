@@ -1,0 +1,224 @@
+{
+  "schema": "videohub-versions-v1",
+  "description": "三仓在本机已验证的精确版本快照，以及必须由人工完成的推送待办。本文件是『可复刻』的版本基线。",
+  "updated_at": "2026-09-22",
+  "snapshot_date": "2026-09-22",
+  "repos": {
+    "haike": {
+      "path": "Haike_video",
+      "upstream_url": "https://github.com/hrbj18/Haike_video.git",
+      "local_branch": "dev",
+      "local_commit": "395890c",
+      "local_commit_subject": "feat(backlot): 发布适配器入库（G1 探活/G2 零字节/G3 显式确认三道闸）——体检 adapter.* 4 项依赖此文件随仓分发",
+      "version_file": {
+        "path": "VERSION",
+        "value": "0.1.1"
+      },
+      "push_status": "unknown_at_snapshot",
+      "push_note": "本快照未执行推送。若本地 dev 领先 origin/dev，需人工推送（可能弹凭据窗）。",
+      "runtime": {
+        "python": "3.12 (64-bit) —— 注意：不是 3.10+，README 与脚本都要求 3.12",
+        "python_installed_at": "C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "node": "22+",
+        "notes": [
+          "pytest 必须带 --import-mode=importlib --basetemp=.p",
+          "工作台端口默认 4754，只允许一个实例",
+          "内置 TTS 端口 127.0.0.1:17494"
+        ]
+      },
+      "setup_entrypoints": [
+        "scripts/setup.ps1",
+        "scripts/preflight.ps1",
+        "scripts/start_backlot.ps1",
+        "启动工作台.bat",
+        "scripts/launch_backlot.py"
+      ]
+    },
+    "copyskill": {
+      "path": "copy_skill/copy_skill-main",
+      "upstream_url": "https://github.com/hrbj18/copy_skill.git",
+      "local_branch": "main",
+      "local_commit": "294d32d",
+      "version_source": {
+        "path": "pyproject.toml",
+        "value": "0.3.0 (project.version, name = douyin-content-intelligence)",
+        "note": "本仓无 VERSION 文件，版本号写在 pyproject.toml"
+      },
+      "push_status": "unknown_at_snapshot",
+      "runtime": {
+        "python": ">= 3.11",
+        "package_manager": "uv（不是 pip）—— 命令为 uv sync --dev / uv run douyin-intelligence",
+        "test_command": "uv run pytest -p no:cacheprovider"
+      }
+    },
+    "creatorhub": {
+      "path": "creatorhub",
+      "upstream_url": "https://github.com/3441293738/creatorhub.git",
+      "local_branch": "main",
+      "local_commit": "922d5e4",
+      "local_commit_subject": "chore: 定版快照 2026-09-21 —— 三平台封面链路修复 + 运维脚本归档",
+      "remotes": {
+        "origin": null,
+        "upstream": "https://github.com/3441293738/creatorhub.git",
+        "problem": "本仓只有 upstream，没有 origin。因此本地二次开发的提交没有任何可推送的目标仓库。"
+      },
+      "push_status": "NEVER_PUSHED",
+      "push_note": "本地 main 的二次开发提交从未推送到任何仓库。别人 clone 上游只能拿到官方版，拿不到抖音封面等本地能力。",
+      "acquisition": {
+        "kind": "人工预置依赖（与 cookies 同级，不是随仓库分发的代码）",
+        "anchor_commit": "922d5e4",
+        "anchor_branch": "main",
+        "main_route": "从负责人本机拷贝本仓，或按负责人提供的私有远端获取（版本锚点 = 922d5e4）。",
+        "upstream_not_a_source": "https://github.com/3441293738/creatorhub.git",
+        "warning": "从上游 clone 将导致 cover_path 契约落空、发布链路不可用：上游不含本地 10 个提交（含发布契约必需的 d2a55c7 cover_path 能力）。",
+        "contract_dependency": "contracts/publish-v1.md 的 cover_path 字段依赖 d2a55c7，该提交仅存在于本地 main，从未推送。",
+        "upgrade_path": "待 docs/pending-manual-checks.md 第 1 项（推送私有远端）完成后，此处可换成负责人提供的私有远端 URL；在此之前不得虚构任何远端 URL。",
+        "distribution_note": "该仓是别人的 fork，上游 LICENSE 404、不可分发；仅作内部使用。"
+      },
+      "unpushed_commits_relative_to_upstream_v0.2.3": {
+        "count": 10,
+        "base": "02232e67 (refs/tags/v0.2.3 = 上游最新 tag)",
+        "list": [
+          "922d5e4 chore: 定版快照 2026-09-21 —— 三平台封面链路修复 + 运维脚本归档",
+          "8783ef3 test(douyin): 对抗套件补落盘隔离,单独运行不再污染 data/debug",
+          "e2b95b8 test(douyin): 封面测试落盘改到临时目录，不再污染 data/debug",
+          "13f3e52 test(qa): ADV-7b 转正 —— 失败路径样式泄漏已修复",
+          "baac3c2 fix(douyin): 封面失败路径撤掉注入的 hover-show 样式",
+          "fb8713f test(qa): 抖音封面独立对抗验证",
+          "d2a55c7 feat(douyin): 发布时支持设置竖封面 3:4（任务级 cover_path，best-effort）",
+          "99b59b3 test: 修正两条原理上不可能成立的既有断言（上游遗留，非本次合并引入）",
+          "f704ce9 Merge upstream v0.2.2 (3d7698f) into 本地二次开发",
+          "973c44b feat: 二次开发 —— 发布结果落真、登录态判定对齐业务码、消除窗口打扰"
+        ],
+        "high_value_commits": [
+          {
+            "sha": "d2a55c7",
+            "what": "抖音发布支持竖封面 3:4（任务级 cover_path）",
+            "why_matters": "这是 creatorhub 上游没有的能力，也是 Haike 侧发布适配器要对接的字段。丢掉这个提交 = 发布链路少一块。"
+          },
+          {
+            "sha": "973c44b",
+            "what": "发布结果落真、登录态判定对齐业务码、消除窗口打扰",
+            "why_matters": "决定了发布任务的成功/失败判定是否可信。"
+          }
+        ]
+      },
+      "local_ahead_behind_vs_upstream": {
+        "upstream_latest_tag": "v0.2.3 (02232e67)",
+        "behind": {
+          "count": 4,
+          "commits": [
+            "f48ff93 完善 Windows 客户端升级与旧库迁移",
+            "a71f2c4 忽略测试与临时产物",
+            "081c348 修复抖音粉丝接口并支持大规模关注列表",
+            "b72706d feat: 实现抖音陌生人私信 API"
+          ],
+          "note": "这 4 个上游提交都不在本地。是否合并由人工决定 —— 它们主要是客户端升级与私信/粉丝功能，与发布链路关系不大，因此不合并也可接受。"
+        },
+        "ahead": {
+          "count": 10,
+          "note": "见上 unpushed_commits_relative_to_upstream_v0.2.3.list"
+        },
+        "divergence_scale": "git diff --stat 02232e67..HEAD = 184 files changed, 24923 insertions(+), 2457 deletions(-)"
+      },
+      "tags": {
+        "note": "v1.0.0 是本地打的 tag，指向 7dc9462d（≠ HEAD 922d5e4）。",
+        "local_tags": [
+          "v0.1.0",
+          "v0.2.0",
+          "v0.2.1",
+          "v0.2.2",
+          "v0.2.3",
+          "v1.0.0"
+        ],
+        "v1.0.0_sha": "7dc9462d24d4516caee9a1cb7aa5614a2fece54f"
+      },
+      "runtime": {
+        "python": "3.11+",
+        "install": "pip install -r requirements.txt",
+        "server": "127.0.0.1:8000（见 config.example.yaml）",
+        "config": "复制 config.example.yaml 为 config.yaml（config.yaml 已被 .gitignore 排除）"
+      }
+    }
+  },
+  "cross_repo_contracts": {
+    "research_pack": {
+      "contract": "episode-research-pack-v1",
+      "manifest_schema": "episode-research-pack-manifest-v1",
+      "producer": "copy_skill/src/douyin_intelligence/episode_research_pack.py",
+      "consumer": "Haike_video/backlot/copy_skill_research_pack.py",
+      "frozen_content_sha256": "e5bc839ff60a91f29474c9bec50c8afca41fdaf367dc5e6978eae620b1cbaab8",
+      "note": "消费端校验不得严于冻结合同（见 Haike docs/handoff/DECISIONS.md:47-51）"
+    },
+    "candidate_pool": {
+      "contract": "daily-hot-candidate-pool-v2",
+      "contract_version": "2.0",
+      "producer": "copy_skill/src/douyin_intelligence/daily_hot_candidate_pool.py",
+      "consumer": "Haike_video/backlot/copy_skill_hotspot_feed.py",
+      "required_package_files": [
+        "_READY.json",
+        "package-manifest.json",
+        "candidate-pool.json",
+        "raw-videos.json",
+        "run-report.json",
+        "昨日抖音科技热点候选.md"
+      ],
+      "note": "package_manifest_sha256 需在 current.json / _READY.json / 实际文件三方一致"
+    }
+  },
+  "verification_command": "python verify/check_all.py --level=1",
+  "hub": {
+    "name": "haike-videohub",
+    "role": "第四仓：三仓统一装配与可复刻部署枢纽。只放契约/依赖/步骤/校验，不放业务代码。",
+    "location": "D://刘宇钊//codex_work//Haike-Videohub",
+    "layout_requirement": "必须与三仓同级（兄弟目录），不能放进任一仓内部",
+    "remote": {
+      "origin": null,
+      "problem": "尚未创建远端仓库，也尚未推送。用户已确定名称 haike-videohub 且要求公开。",
+      "action_required": "创建公开远端并推送（人工，可能弹凭据窗）",
+      "blocking": false,
+      "note": "本仓不推送不影响三仓本地工作流，但『可复刻交付』必须有远端才能被别人 clone。"
+    },
+    "commits": [
+      {
+        "sha": "8b6765b",
+        "msg": "chore: 初始化集成枢纽仓库（haike-videohub）首个快照"
+      },
+      {
+        "sha": "01fed85",
+        "msg": "docs: 补入单次开发指导文档（目标/任务拆分/验收标准/测试方法）"
+      },
+      {
+        "sha": "ed5da38",
+        "msg": "fix(verify): 反例测试后自动重建夹具，消除状态残留"
+      },
+      {
+        "sha": "8622310",
+        "msg": "docs: 关闭第 0 项 id=78 核对（后台查无此作品）"
+      },
+      {
+        "sha": "6de2054",
+        "msg": "fix(verify): MediaCrawler 未启用降级为 WARN，夹具缺失补生成指引，新增 --runtime 机械校验"
+      },
+      {
+        "sha": "60e92ba",
+        "msg": "docs: 体检项数 34→38 并逐项对齐 steps/08 §8.3 期望清单"
+      },
+      {
+        "sha": "92a2760",
+        "msg": "docs: creatorhub 改记人工预置依赖，补 clone 凭据预案、Node 安装与 keys 变量表"
+      }
+    ],
+    "commits_note": "as of 2026-09-22，之后提交以 git log 为准",
+    "self_check": {
+      "command": "python verify/check_all.py --all",
+      "expected": "38 项 0 FAIL（启用抖音采集/MediaCrawler 就位时）；未启用时 36 项 0 FAIL + 2 条 WARN（config.mc.* 降级，属设计允许）。另要求 Haike_video ≥ 395890c（发布适配器已入库），否则 adapter.* 4 项塌为 1 条 WARN、总数 33",
+      "counterexamples": [
+        "python verify/check_all.py --all --mutate layout",
+        "python verify/check_all.py --all --mutate sha256"
+      ],
+      "counterexample_pass_criteria": "输出含『反例测试符合预期：注入的错误被捕获』",
+      "why_counterexamples_matter": "只跑正向用例无法区分『校验通过』与『校验根本没在跑』。"
+    }
+  }
+}

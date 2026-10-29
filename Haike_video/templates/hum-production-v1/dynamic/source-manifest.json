@@ -1,0 +1,23 @@
+{
+  "react_bits": {
+    "repository": "https://github.com/DavidHDev/react-bits",
+    "commit": "e12c22192ac7b4b452c5e2feb9b586d74765d696",
+    "license": "MIT + Commons Clause; application integration only",
+    "upstream": {
+      "CardSwap.tsx": "5f13eaeb45c901fbaf3a8ed2c53be31e276645b75c613520c040f46589755cb4",
+      "DomeGallery.tsx": "4a02ec7985551d35dc82dcad1a17572cf17a140495c9ab18127c93f6575bb702",
+      "Masonry.tsx": "f33ff330c649e17a682eb8d3843100e7501cd56538816fd9ed26a8b77a3c5d3c"
+    },
+    "adaptation": "Retain masonry layout and DomeGallery spherical projection; replace real-time gesture/RAF clock with deterministic frame-driven GSAP; add actual video carriers,4:5 layout and selected-card continuity."
+  },
+  "gsap": {
+    "version": "3.13.0",
+    "installation": "package-lock.json"
+  },
+  "motiongit_probe": {
+    "template": "template-03-native2.7.17-alpha.3",
+    "operation": "setup --workflow motion-kit",
+    "result": "Frozen component library changed; refused execution; no bypass"
+  },
+  "clock": "GSAP paused timeline sampled at scene-local frame/30; no browser RAF or CSS transitions driving output"
+}

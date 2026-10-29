@@ -1,0 +1,15 @@
+{
+  "id": "douyin-safe-circle-v1",
+  "version": 1,
+  "frame": {"width": 1080, "height": 1920, "fps": 30},
+  "status": "three_second_sample_user_approved; full_length_and_live_platform_pending",
+  "coordinate_contract": "Origin top-left. Presenter x/width use canvas width; y uses canvas height. Circle diameter is rounded down to an even pixel by workbench. Other boxes use pixels on this fixed canvas.",
+  "top_reserved_fraction": 0.15,
+  "presenter": {"geometry": {"x": 0.64, "y": 0.16, "width": 0.22}, "shape": "circle", "ring_width": 5, "ring_color": [30, 171, 221]},
+  "title": {"x": 125, "y": 420, "font_size": 68, "max_width": 540, "max_bottom": 555, "color": [250, 253, 255], "anchor": "Pillow default; verify actual textbbox"},
+  "card": {"x": 110, "y": 625, "width": 690, "height": 620, "fit": "cover_center", "outer_radius": 40, "inner_radius": 36, "outer_color": [24, 124, 218], "inner_color": [243, 249, 253]},
+  "test_subtitle": {"y": 1342, "font_size": 48, "stroke_width": 4, "stroke_color": [3, 9, 20], "max_width": 700, "max_bottom": 1498, "align": "center_canvas", "anchor": "Pillow default; single timed cue covering test only"},
+  "font": {"family": "Microsoft YaHei Bold", "windows_file": "msyhbd.ttc", "missing": "error; explicit --font required on other hosts"},
+  "background": {"base_rgb": [6, 17, 34], "glow_y": 900, "glow_span": 1000, "side_x": 220, "side_span": 1050, "glow_rgb": [2, 12, 25], "side_rgb": [0, 4, 8], "arcs": [{"box": [-410, 260, 1220, 1510], "start": 13, "end": 172, "color": [12, 75, 139], "width": 4}, {"box": [-250, 450, 1330, 1680], "start": 9, "end": 166, "color": [9, 48, 90], "width": 3}]},
+  "qa": {"phone_viewport": [922, 2048], "fit": "cover_center_stress_test", "right_rail_start_px": 800, "bottom_metadata_start_px": 1660, "platform_ui_verified": false, "note": "Design buffer, not an official Douyin standard. Validate actual device fit/crop and UI. Mock controls must never be burned into production video."}
+}

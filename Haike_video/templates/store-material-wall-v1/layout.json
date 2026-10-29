@@ -1,0 +1,20 @@
+{
+  "width": 1920,
+  "height": 1080,
+  "fps": 30,
+  "brand": [88, 36, 1744, 42],
+  "title": [88, 102, 1744, 100],
+  "tabs": [88, 238, 1744, 52],
+  "grid": {"x": 88, "y": 330, "columns": 4, "width": 418, "height": 296, "gapX": 24, "gapY": 32},
+  "expanded": [285, 190, 1350, 820],
+  "footer": [88, 1016, 1744, 40],
+  "cardFooter": 61,
+  "radius": 18,
+  "cascadeFrames": 18,
+  "cascadeStagger": 5,
+  "tabTransitionFrames": 24,
+  "closingLeadFrames": 90,
+  "titleSize": 70,
+  "tabSize": 28,
+  "cardTitleSize": 26
+}

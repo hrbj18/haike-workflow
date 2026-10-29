@@ -1,0 +1,2246 @@
+{
+  "schema_version": 1,
+  "standard_version": "video-template-v1",
+  "template_id": "investment-template-06",
+  "template_version": "v001",
+  "template_type": "avatar",
+  "spec_kind": "implementation",
+  "stage": "ready",
+  "authority": {
+    "runbook": "招商视频模板6.md",
+    "implementation_paths": [
+      "../../index.tsx",
+      "../../shared.tsx",
+      "../../types.ts",
+      "../../styles03to06.tsx",
+      "../../layout.json",
+      "../../../../backlot/studio_investment_style_lab.py",
+      "../../../../scripts/investment_style_lab.py",
+      "../../../../backlot/production_queue_worker.py",
+      "../../../../backlot/studio_investment_audio_v5.py",
+      "../../../../tools/video/video_compose.py"
+    ],
+    "parameter_source": "../../layout.json"
+  },
+  "canvas": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "duration_seconds": 12,
+    "clock": "历史完整12秒原声/原片从0秒起为实时时钟；输出30fps360帧，视觉四拍只换版面，不移动语音/字幕。canvas宽高是9:16名义审查基准，另三ratio从render_profile与calculateMetadata取真实尺寸。",
+    "coordinate_system": "top_left_pixels"
+  },
+  "narrative": {
+    "purpose": "招商视频模板6 · 琥珀票据；琥珀底上的奶油票据；虚线撕口、四个圆形冲孔、章节索引及细横线构成票面，直角人物窗与深棕字幕条稳定落位，不添加价格或虚构条款。本轮是八模板四比例风格比较，不新增商业承诺。",
+    "information_hierarchy": [
+      "原口播和完整人物",
+      "当前实际字幕",
+      "本拍语义短标题",
+      "品牌",
+      "装饰媒介结构"
+    ],
+    "structure": [
+      "四拍版式状态与源语音同一时钟；每拍标题从本期beat_titles读取",
+      "本期不添加独立无声封面、业务数字、证据插图或原稿没有的末拍CTA；非空cta覆盖第四拍标题的可选能力未测",
+      "cue间可留字空白，人物/背景/完整原声持续；末帧不全黑"
+    ]
+  },
+  "scenes": [
+    {
+      "id": "beat_0",
+      "start": 0,
+      "end": 2.4,
+      "purpose": "第1拍：读取beat_titles[0]；视觉状态不等于新语音剪辑",
+      "element_ids": [
+        "canvas",
+        "ticket_sheet",
+        "perforation",
+        "punch_0_left",
+        "punch_0_right",
+        "punch_1_left",
+        "punch_1_right",
+        "kicker",
+        "phase_index",
+        "ticket_divider",
+        "accent_rule",
+        "source_window",
+        "source_video",
+        "brand",
+        "headline",
+        "caption_panel",
+        "caption_text",
+        "audio_master"
+      ],
+      "variant": "Style06/phase=0"
+    },
+    {
+      "id": "beat_1",
+      "start": 2.4,
+      "end": 5.4,
+      "purpose": "第2拍：读取beat_titles[1]；视觉状态不等于新语音剪辑",
+      "element_ids": [
+        "canvas",
+        "ticket_sheet",
+        "perforation",
+        "punch_0_left",
+        "punch_0_right",
+        "punch_1_left",
+        "punch_1_right",
+        "kicker",
+        "phase_index",
+        "ticket_divider",
+        "accent_rule",
+        "source_window",
+        "source_video",
+        "brand",
+        "headline",
+        "caption_panel",
+        "caption_text",
+        "audio_master"
+      ],
+      "variant": "Style06/phase=1"
+    },
+    {
+      "id": "beat_2",
+      "start": 5.4,
+      "end": 9,
+      "purpose": "第3拍：读取beat_titles[2]；视觉状态不等于新语音剪辑",
+      "element_ids": [
+        "canvas",
+        "ticket_sheet",
+        "perforation",
+        "punch_0_left",
+        "punch_0_right",
+        "punch_1_left",
+        "punch_1_right",
+        "kicker",
+        "phase_index",
+        "ticket_divider",
+        "accent_rule",
+        "source_window",
+        "source_video",
+        "brand",
+        "headline",
+        "caption_panel",
+        "caption_text",
+        "audio_master"
+      ],
+      "variant": "Style06/phase=2"
+    },
+    {
+      "id": "beat_3",
+      "start": 9,
+      "end": 12,
+      "purpose": "第4拍：读取beat_titles[3]；视觉状态不等于新语音剪辑",
+      "element_ids": [
+        "canvas",
+        "ticket_sheet",
+        "perforation",
+        "punch_0_left",
+        "punch_0_right",
+        "punch_1_left",
+        "punch_1_right",
+        "kicker",
+        "phase_index",
+        "ticket_divider",
+        "accent_rule",
+        "source_window",
+        "source_video",
+        "brand",
+        "headline",
+        "caption_panel",
+        "caption_text",
+        "audio_master"
+      ],
+      "variant": "Style06/phase=3"
+    }
+  ],
+  "assets": [
+    {
+      "id": "historical_source",
+      "kind": "video",
+      "path": null,
+      "source": "本期冻结request.origins['source.mp4']绝对路径/SHA；四比例分别复用历史已授权12秒MP4，完整导入到assets/investment-style-lab/source.mp4",
+      "embedded_content": [
+        "人物、原背景、服装、光线及源内任何标识皆为不可分离像素；实际资产检查另记"
+      ],
+      "rights_status": "用户授权本地测试；不推定第三方人物/场地/公开发布权已验"
+    },
+    {
+      "id": "mixed_master",
+      "kind": "audio",
+      "path": null,
+      "source": "本期原声提取与v5计划或经核验母带复用；request.sources与audio-mix-receipt/plan记录SHA",
+      "embedded_content": [
+        "已混合的人声/BGM/事件SFX，Remotion仅播放一条母带；调整须回到声音计划，不能单独替换其内语音"
+      ],
+      "rights_status": "本期自制程序声音来源以私有audio/PROVENANCE.json为准；原人声来自用户授权源"
+    },
+    {
+      "id": "cue_data",
+      "kind": "data",
+      "path": null,
+      "source": "本期cues JSON的source_video_sha256/timing_basis/evidence/cues/beat_titles；包内不携带私有人物稿件",
+      "embedded_content": [],
+      "rights_status": "本地测试输入，不作出厂商业文案"
+    },
+    {
+      "id": "font_yahei",
+      "kind": "font",
+      "path": "C:/Windows/Fonts/msyh.ttc",
+      "source": "本机已安装Windows字体；_runtime记录存在文件SHA",
+      "embedded_content": [],
+      "rights_status": "仅本机系统字体调用，不复制到公开模板资源/ZIP"
+    },
+    {
+      "id": "font_yahei_bold",
+      "kind": "font",
+      "path": "C:/Windows/Fonts/msyhbd.ttc",
+      "source": "本机已安装Windows字体；_runtime记录存在文件SHA",
+      "embedded_content": [],
+      "rights_status": "仅本机系统字体调用，不复制到公开模板资源/ZIP"
+    },
+    {
+      "id": "font_simsun",
+      "kind": "font",
+      "path": "C:/Windows/Fonts/simsun.ttc",
+      "source": "本机已安装Windows字体；_runtime记录存在文件SHA",
+      "embedded_content": [],
+      "rights_status": "仅本机系统字体调用，不复制到公开模板资源/ZIP"
+    },
+    {
+      "id": "font_consolas",
+      "kind": "font",
+      "path": "C:/Windows/Fonts/consola.ttf",
+      "source": "本机已安装Windows字体；_runtime记录存在文件SHA",
+      "embedded_content": [],
+      "rights_status": "仅本机系统字体调用，不复制到公开模板资源/ZIP"
+    }
+  ],
+  "elements": [
+    {
+      "id": "canvas",
+      "type": "group",
+      "role": "琥珀票据画布根容器",
+      "parent_id": null,
+      "z_index": 0,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "琥珀票据画布根容器"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1080,
+          1920
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "运行时读取当前源码：style组件同名对象；下列9:16框为审查快照，不是第二份执行参数",
+          "background": "#b76825",
+          "overflow": "hidden",
+          "paint_order": "同CSS auto元素按组件DOM顺序；本文z_index为审查层级，真实显式zIndex仅Caption=70。装饰具体绘制顺序以源码为准。"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 12
+      },
+      "states": [
+        {
+          "id": "initial",
+          "visible": true,
+          "description": "首帧按源码可见；字幕仅有当前cue时可见"
+        },
+        {
+          "id": "held",
+          "visible": true,
+          "description": "入场结束保持；四视觉拍按phase切换"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "源码/冻结props是真值；字段依赖按shared.metrics→phase→style几何→SourceWindow/TextBlock/Caption求值；无反向依赖"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "style_system",
+        "content"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "style_source",
+        "shared_source"
+      ],
+      "acceptance": [
+        {
+          "check": "琥珀票据画布根容器",
+          "method": "逐ratio检查首帧、四拍边界及最长实际字幕；依据同一输出SHA的实际帧",
+          "pass_condition": "对象、层级、源码声明时序一致；无意外文字/人脸遮挡；不把静态检查说成实际视频通过"
+        }
+      ]
+    },
+    {
+      "id": "ticket_sheet",
+      "type": "vector",
+      "role": "奶油票面及抬升入场",
+      "parent_id": "canvas",
+      "z_index": 1,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "奶油票面及抬升入场"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          48.6,
+          51.839999999999996,
+          982.8000000000001,
+          1824.0
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "运行时读取当前源码：style组件同名对象；下列9:16框为审查快照，不是第二份执行参数",
+          "rule": "#f5ead6 shadow0/8u/28u/#44210444"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 12
+      },
+      "states": [
+        {
+          "id": "initial",
+          "visible": true,
+          "description": "首帧按源码可见；字幕仅有当前cue时可见"
+        },
+        {
+          "id": "held",
+          "visible": true,
+          "description": "入场结束保持；四视觉拍按phase切换"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "initial",
+          "to": "held",
+          "trigger": "f0",
+          "start": 0,
+          "end": 0.6666666666666666,
+          "properties": {
+            "translateY": "26u→0"
+          },
+          "easing": "ease(t)=1-(1-clamp(t,0,1))^3；静态字段保持"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": "canvas",
+          "rule": "源码/冻结props是真值；字段依赖按shared.metrics→phase→style几何→SourceWindow/TextBlock/Caption求值；无反向依赖"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "style_system",
+        "content"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "style_source",
+        "shared_source"
+      ],
+      "acceptance": [
+        {
+          "check": "奶油票面及抬升入场",
+          "method": "逐ratio检查首帧、四拍边界及最长实际字幕；依据同一输出SHA的实际帧",
+          "pass_condition": "对象、层级、源码声明时序一致；无意外文字/人脸遮挡；不把静态检查说成实际视频通过"
+        }
+      ]
+    },
+    {
+      "id": "perforation",
+      "type": "vector",
+      "role": "票据虚线撕口",
+      "parent_id": "canvas",
+      "z_index": 2,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "票据虚线撕口"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          81.0,
+          288.0,
+          918.0,
+          2
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "运行时读取当前源码：style组件同名对象；下列9:16框为审查快照，不是第二份执行参数",
+          "rule": "borderTop2u dashed #b9986c"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 12
+      },
+      "states": [
+        {
+          "id": "initial",
+          "visible": true,
+          "description": "首帧按源码可见；字幕仅有当前cue时可见"
+        },
+        {
+          "id": "held",
+          "visible": true,
+          "description": "入场结束保持；四视觉拍按phase切换"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": "canvas",
+          "rule": "源码/冻结props是真值；字段依赖按shared.metrics→phase→style几何→SourceWindow/TextBlock/Caption求值；无反向依赖"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "style_system",
+        "content"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "style_source",
+        "shared_source"
+      ],
+      "acceptance": [
+        {
+          "check": "票据虚线撕口",
+          "method": "逐ratio检查首帧、四拍边界及最长实际字幕；依据同一输出SHA的实际帧",
+          "pass_condition": "对象、层级、源码声明时序一致；无意外文字/人脸遮挡；不把静态检查说成实际视频通过"
+        }
+      ]
+    },
+    {
+      "id": "punch_0_left",
+      "type": "vector",
+      "role": "票面1排left圆孔",
+      "parent_id": "canvas",
+      "z_index": 3,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "票面1排left圆孔"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          27.0,
+          267.0,
+          42,
+          42
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "运行时读取当前源码：style组件同名对象；下列9:16框为审查快照，不是第二份执行参数",
+          "rule": "42u圆形，与琥珀背景同色#b76825"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 12
+      },
+      "states": [
+        {
+          "id": "initial",
+          "visible": true,
+          "description": "首帧按源码可见；字幕仅有当前cue时可见"
+        },
+        {
+          "id": "held",
+          "visible": true,
+          "description": "入场结束保持；四视觉拍按phase切换"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": "canvas",
+          "rule": "源码/冻结props是真值；字段依赖按shared.metrics→phase→style几何→SourceWindow/TextBlock/Caption求值；无反向依赖"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "style_system",
+        "content"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "style_source",
+        "shared_source"
+      ],
+      "acceptance": [
+        {
+          "check": "票面1排left圆孔",
+          "method": "逐ratio检查首帧、四拍边界及最长实际字幕；依据同一输出SHA的实际帧",
+          "pass_condition": "对象、层级、源码声明时序一致；无意外文字/人脸遮挡；不把静态检查说成实际视频通过"
+        }
+      ]
+    },
+    {
+      "id": "punch_0_right",
+      "type": "vector",
+      "role": "票面1排right圆孔",
+      "parent_id": "canvas",
+      "z_index": 4,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "票面1排right圆孔"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          1011.0,
+          267.0,
+          42,
+          42
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "运行时读取当前源码：style组件同名对象；下列9:16框为审查快照，不是第二份执行参数",
+          "rule": "42u圆形，与琥珀背景同色#b76825"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 12
+      },
+      "states": [
+        {
+          "id": "initial",
+          "visible": true,
+          "description": "首帧按源码可见；字幕仅有当前cue时可见"
+        },
+        {
+          "id": "held",
+          "visible": true,
+          "description": "入场结束保持；四视觉拍按phase切换"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": "canvas",
+          "rule": "源码/冻结props是真值；字段依赖按shared.metrics→phase→style几何→SourceWindow/TextBlock/Caption求值；无反向依赖"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "style_system",
+        "content"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "style_source",
+        "shared_source"
+      ],
+      "acceptance": [
+        {
+          "check": "票面1排right圆孔",
+          "method": "逐ratio检查首帧、四拍边界及最长实际字幕；依据同一输出SHA的实际帧",
+          "pass_condition": "对象、层级、源码声明时序一致；无意外文字/人脸遮挡；不把静态检查说成实际视频通过"
+        }
+      ]
+    },
+    {
+      "id": "punch_1_left",
+      "type": "vector",
+      "role": "票面2排left圆孔",
+      "parent_id": "canvas",
+      "z_index": 5,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "票面2排left圆孔"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          27.0,
+          1572.6,
+          42,
+          42
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "运行时读取当前源码：style组件同名对象；下列9:16框为审查快照，不是第二份执行参数",
+          "rule": "42u圆形，与琥珀背景同色#b76825"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 12
+      },
+      "states": [
+        {
+          "id": "initial",
+          "visible": true,
+          "description": "首帧按源码可见；字幕仅有当前cue时可见"
+        },
+        {
+          "id": "held",
+          "visible": true,
+          "description": "入场结束保持；四视觉拍按phase切换"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": "canvas",
+          "rule": "源码/冻结props是真值；字段依赖按shared.metrics→phase→style几何→SourceWindow/TextBlock/Caption求值；无反向依赖"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "style_system",
+        "content"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "style_source",
+        "shared_source"
+      ],
+      "acceptance": [
+        {
+          "check": "票面2排left圆孔",
+          "method": "逐ratio检查首帧、四拍边界及最长实际字幕；依据同一输出SHA的实际帧",
+          "pass_condition": "对象、层级、源码声明时序一致；无意外文字/人脸遮挡；不把静态检查说成实际视频通过"
+        }
+      ]
+    },
+    {
+      "id": "punch_1_right",
+      "type": "vector",
+      "role": "票面2排right圆孔",
+      "parent_id": "canvas",
+      "z_index": 6,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "票面2排right圆孔"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          1011.0,
+          1572.6,
+          42,
+          42
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "运行时读取当前源码：style组件同名对象；下列9:16框为审查快照，不是第二份执行参数",
+          "rule": "42u圆形，与琥珀背景同色#b76825"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 12
+      },
+      "states": [
+        {
+          "id": "initial",
+          "visible": true,
+          "description": "首帧按源码可见；字幕仅有当前cue时可见"
+        },
+        {
+          "id": "held",
+          "visible": true,
+          "description": "入场结束保持；四视觉拍按phase切换"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": "canvas",
+          "rule": "源码/冻结props是真值；字段依赖按shared.metrics→phase→style几何→SourceWindow/TextBlock/Caption求值；无反向依赖"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "style_system",
+        "content"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "style_source",
+        "shared_source"
+      ],
+      "acceptance": [
+        {
+          "check": "票面2排right圆孔",
+          "method": "逐ratio检查首帧、四拍边界及最长实际字幕；依据同一输出SHA的实际帧",
+          "pass_condition": "对象、层级、源码声明时序一致；无意外文字/人脸遮挡；不把静态检查说成实际视频通过"
+        }
+      ]
+    },
+    {
+      "id": "kicker",
+      "type": "text",
+      "role": "固定COMMUNITY / PARTNER题签",
+      "parent_id": "canvas",
+      "z_index": 7,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "固定COMMUNITY / PARTNER题签"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          97.2,
+          215.04,
+          864.0,
+          35
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "运行时读取当前源码：style组件同名对象；下列9:16框为审查快照，不是第二份执行参数",
+          "font": "Consolas",
+          "font_size": "metrics.labelSize*.65",
+          "max_lines": 1,
+          "overflow": "显式换行保留；超限拒绝输入或实际审查后改本期换行，不截断字形"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 12
+      },
+      "states": [
+        {
+          "id": "initial",
+          "visible": true,
+          "description": "首帧按源码可见；字幕仅有当前cue时可见"
+        },
+        {
+          "id": "held",
+          "visible": true,
+          "description": "入场结束保持；四视觉拍按phase切换"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": "canvas",
+          "rule": "源码/冻结props是真值；字段依赖按shared.metrics→phase→style几何→SourceWindow/TextBlock/Caption求值；无反向依赖"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "style_system",
+        "content"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "style_source",
+        "shared_source"
+      ],
+      "acceptance": [
+        {
+          "check": "固定COMMUNITY / PARTNER题签",
+          "method": "逐ratio检查首帧、四拍边界及最长实际字幕；依据同一输出SHA的实际帧",
+          "pass_condition": "对象、层级、源码声明时序一致；无意外文字/人脸遮挡；不把静态检查说成实际视频通过"
+        }
+      ]
+    },
+    {
+      "id": "phase_index",
+      "type": "text",
+      "role": "超大淡色章节号",
+      "parent_id": "canvas",
+      "z_index": 8,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "0+phase(f)+1，01..04章节索引，非经营数字"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          86.4,
+          604.8,
+          270.0,
+          180
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "运行时读取当前源码：style组件同名对象；下列9:16框为审查快照，不是第二份执行参数",
+          "font": "Consolas",
+          "font_size": "metrics.heroSize*1.5",
+          "max_lines": 1,
+          "overflow": "显式换行保留；超限拒绝输入或实际审查后改本期换行，不截断字形"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 12
+      },
+      "states": [
+        {
+          "id": "initial",
+          "visible": true,
+          "description": "首帧按源码可见；字幕仅有当前cue时可见"
+        },
+        {
+          "id": "held",
+          "visible": true,
+          "description": "入场结束保持；四视觉拍按phase切换"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": "canvas",
+          "rule": "源码/冻结props是真值；字段依赖按shared.metrics→phase→style几何→SourceWindow/TextBlock/Caption求值；无反向依赖"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "style_system",
+        "content"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "style_source",
+        "shared_source"
+      ],
+      "acceptance": [
+        {
+          "check": "超大淡色章节号",
+          "method": "逐ratio检查首帧、四拍边界及最长实际字幕；依据同一输出SHA的实际帧",
+          "pass_condition": "对象、层级、源码声明时序一致；无意外文字/人脸遮挡；不把静态检查说成实际视频通过"
+        }
+      ]
+    },
+    {
+      "id": "ticket_divider",
+      "type": "vector",
+      "role": "票面下分隔线",
+      "parent_id": "canvas",
+      "z_index": 9,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "票面下分隔线"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          91.80000000000001,
+          1593.6,
+          896.4,
+          1
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "运行时读取当前源码：style组件同名对象；下列9:16框为审查快照，不是第二份执行参数",
+          "color": "#b9986c"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 12
+      },
+      "states": [
+        {
+          "id": "initial",
+          "visible": true,
+          "description": "首帧按源码可见；字幕仅有当前cue时可见"
+        },
+        {
+          "id": "held",
+          "visible": true,
+          "description": "入场结束保持；四视觉拍按phase切换"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": "canvas",
+          "rule": "源码/冻结props是真值；字段依赖按shared.metrics→phase→style几何→SourceWindow/TextBlock/Caption求值；无反向依赖"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "style_system",
+        "content"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "style_source",
+        "shared_source"
+      ],
+      "acceptance": [
+        {
+          "check": "票面下分隔线",
+          "method": "逐ratio检查首帧、四拍边界及最长实际字幕；依据同一输出SHA的实际帧",
+          "pass_condition": "对象、层级、源码声明时序一致；无意外文字/人脸遮挡；不把静态检查说成实际视频通过"
+        }
+      ]
+    },
+    {
+      "id": "accent_rule",
+      "type": "vector",
+      "role": "票面短横签名",
+      "parent_id": "canvas",
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "票面短横签名"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          97.2,
+          1651.2,
+          216.0,
+          4
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "运行时读取当前源码：style组件同名对象；下列9:16框为审查快照，不是第二份执行参数",
+          "color": "#987248"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 12
+      },
+      "states": [
+        {
+          "id": "initial",
+          "visible": true,
+          "description": "首帧按源码可见；字幕仅有当前cue时可见"
+        },
+        {
+          "id": "held",
+          "visible": true,
+          "description": "入场结束保持；四视觉拍按phase切换"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": "canvas",
+          "rule": "源码/冻结props是真值；字段依赖按shared.metrics→phase→style几何→SourceWindow/TextBlock/Caption求值；无反向依赖"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "style_system",
+        "content"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "style_source",
+        "shared_source"
+      ],
+      "acceptance": [
+        {
+          "check": "票面短横签名",
+          "method": "逐ratio检查首帧、四拍边界及最长实际字幕；依据同一输出SHA的实际帧",
+          "pass_condition": "对象、层级、源码声明时序一致；无意外文字/人脸遮挡；不把静态检查说成实际视频通过"
+        }
+      ]
+    },
+    {
+      "id": "source_window",
+      "type": "group",
+      "role": "完整人物窗及边框/底色",
+      "parent_id": "canvas",
+      "z_index": 30,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "完整人物窗及边框/底色"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          129.6,
+          652.8,
+          820.8,
+          844.8
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "运行时读取当前源码：style组件同名对象；下列9:16框为审查快照，不是第二份执行参数",
+          "ratio_boxes": {
+            "9x16": [
+              0.12,
+              0.34,
+              0.76,
+              0.44
+            ],
+            "4x5": [
+              0.12,
+              0.34,
+              0.76,
+              0.44
+            ],
+            "1x1": [
+              0.3,
+              0.34,
+              0.61,
+              0.43
+            ],
+            "16x9": [
+              0.43,
+              0.19,
+              0.5,
+              0.6
+            ]
+          },
+          "unit": "数组为相对W/H比例；四拍运动由Style组件person/positioned；3..6固定人物框",
+          "fit": "contain",
+          "background": "#f5ead6（shared.SourceWindow按模板主题填补contain空边；不改原片像素）",
+          "radius": "仅04=.47*pic.w；其他0",
+          "border": "SourceWindow传入值按对应组件",
+          "shadow": "03/05/07采用源码阴影；其他未新增滤镜"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 12
+      },
+      "states": [
+        {
+          "id": "initial",
+          "visible": true,
+          "description": "首帧按源码可见；字幕仅有当前cue时可见"
+        },
+        {
+          "id": "held",
+          "visible": true,
+          "description": "入场结束保持；四视觉拍按phase切换"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": "canvas",
+          "rule": "源码/冻结props是真值；字段依赖按shared.metrics→phase→style几何→SourceWindow/TextBlock/Caption求值；无反向依赖"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "style_system",
+        "content"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "style_source",
+        "shared_source"
+      ],
+      "acceptance": [
+        {
+          "check": "完整人物窗及边框/底色",
+          "method": "逐ratio检查首帧、四拍边界及最长实际字幕；依据同一输出SHA的实际帧",
+          "pass_condition": "对象、层级、源码声明时序一致；无意外文字/人脸遮挡；不把静态检查说成实际视频通过"
+        }
+      ]
+    },
+    {
+      "id": "source_video",
+      "type": "avatar",
+      "role": "原片人物和固化场景",
+      "parent_id": "source_window",
+      "z_index": 31,
+      "content": {
+        "mode": "embedded",
+        "binding": "source_video_slot",
+        "asset_id": "historical_source",
+        "description": "原视频全部人物、眼镜、服装、光照、背景与任何源内文字为固化像素；OffthreadVideo muted、原速、从0s起，包含完整12秒；不增帧补尾，不裁脸、不拉伸。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          129.6,
+          652.8,
+          820.8,
+          844.8
+        ],
+        "fit": "contain",
+        "clip": "self",
+        "style": {
+          "source": "运行时读取当前源码：style组件同名对象；下列9:16框为审查快照，不是第二份执行参数",
+          "objectFit": "contain",
+          "source_time": "outputFrame/30 seconds；从源0秒取，源编码25fps由播放器按同一时间采样，不制作低清中间片"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 12
+      },
+      "states": [
+        {
+          "id": "initial",
+          "visible": true,
+          "description": "首帧按源码可见；字幕仅有当前cue时可见"
+        },
+        {
+          "id": "held",
+          "visible": true,
+          "description": "入场结束保持；四视觉拍按phase切换"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": "source_window",
+          "rule": "源码/冻结props是真值；字段依赖按shared.metrics→phase→style几何→SourceWindow/TextBlock/Caption求值；无反向依赖"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "style_system"
+      ],
+      "replaceable": [
+        "content.asset_id"
+      ],
+      "evidence_ids": [
+        "style_source",
+        "shared_source"
+      ],
+      "acceptance": [
+        {
+          "check": "原片人物和固化场景",
+          "method": "逐ratio检查首帧、四拍边界及最长实际字幕；依据同一输出SHA的实际帧",
+          "pass_condition": "对象、层级、源码声明时序一致；无意外文字/人脸遮挡；不把静态检查说成实际视频通过"
+        }
+      ]
+    },
+    {
+      "id": "brand",
+      "type": "text",
+      "role": "可替换品牌",
+      "parent_id": "canvas",
+      "z_index": 50,
+      "content": {
+        "mode": "editable",
+        "binding": "brand_slot",
+        "asset_id": null,
+        "description": "props.brand；具体Style可覆盖x/y/w，见Brand调用"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          66.96,
+          82.55999999999999,
+          820.8,
+          65
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "运行时读取当前源码：style组件同名对象；下列9:16框为审查快照，不是第二份执行参数",
+          "font": "Microsoft YaHei（具体覆盖见同名组件）",
+          "font_size": "metrics.labelSize=shortSide*.024",
+          "max_lines": 1,
+          "overflow": "显式换行保留；超限拒绝输入或实际审查后改本期换行，不截断字形",
+          "weight": 700,
+          "letterSpacing": "1.5u"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 12
+      },
+      "states": [
+        {
+          "id": "initial",
+          "visible": true,
+          "description": "首帧按源码可见；字幕仅有当前cue时可见"
+        },
+        {
+          "id": "held",
+          "visible": true,
+          "description": "入场结束保持；四视觉拍按phase切换"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": "canvas",
+          "rule": "源码/冻结props是真值；字段依赖按shared.metrics→phase→style几何→SourceWindow/TextBlock/Caption求值；无反向依赖"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "style_system"
+      ],
+      "replaceable": [
+        "content.text"
+      ],
+      "evidence_ids": [
+        "style_source",
+        "shared_source"
+      ],
+      "acceptance": [
+        {
+          "check": "可替换品牌",
+          "method": "逐ratio检查首帧、四拍边界及最长实际字幕；依据同一输出SHA的实际帧",
+          "pass_condition": "对象、层级、源码声明时序一致；无意外文字/人脸遮挡；不把静态检查说成实际视频通过"
+        }
+      ]
+    },
+    {
+      "id": "headline",
+      "type": "text",
+      "role": "四拍可替换主标题",
+      "parent_id": "canvas",
+      "z_index": 51,
+      "content": {
+        "mode": "editable",
+        "binding": "beat_titles_slot",
+        "asset_id": null,
+        "description": "默认props.beatTitles[phase(f)]；headline是第一拍别名且prepare校验一致；phase3非空props.cta可覆盖第四拍标题。当前32输入cta全部为空，非空覆盖未测；不在模板写死本期商业文案。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          97.2,
+          374.4,
+          896.4,
+          384.0
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "运行时读取当前源码：style组件同名对象；下列9:16框为审查快照，不是第二份执行参数",
+          "font": "SimSun用于03/05/10；其余Microsoft YaHei",
+          "font_size": "03..06：ReadableBeat按metrics和style倍率；07..10：sizedTitle按最长显式换行行长限制，见源码",
+          "max_lines": 2,
+          "overflow": "显式换行保留；超限拒绝输入或实际审查后改本期换行，不截断字形",
+          "ratio_boxes": {
+            "9x16": [
+              0.09,
+              0.195,
+              0.83,
+              0.2
+            ],
+            "4x5": [
+              0.09,
+              0.195,
+              0.83,
+              0.2
+            ],
+            "1x1": [
+              0.09,
+              0.18,
+              0.83,
+              0.2
+            ],
+            "16x9": [
+              0.09,
+              0.24,
+              0.3,
+              0.2
+            ]
+          },
+          "entry": "03..06每phase16帧opacity/20u位移（首拍完全可读）；07..10首拍可见，其余8帧opacity .88→1，无标题位移"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 12
+      },
+      "states": [
+        {
+          "id": "initial",
+          "visible": true,
+          "description": "首帧按源码可见；字幕仅有当前cue时可见"
+        },
+        {
+          "id": "held",
+          "visible": true,
+          "description": "入场结束保持；四视觉拍按phase切换"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": "canvas",
+          "rule": "源码/冻结props是真值；字段依赖按shared.metrics→phase→style几何→SourceWindow/TextBlock/Caption求值；无反向依赖"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "style_system"
+      ],
+      "replaceable": [
+        "content.beat_titles"
+      ],
+      "evidence_ids": [
+        "style_source",
+        "shared_source"
+      ],
+      "acceptance": [
+        {
+          "check": "四拍可替换主标题",
+          "method": "逐ratio检查首帧、四拍边界及最长实际字幕；依据同一输出SHA的实际帧",
+          "pass_condition": "对象、层级、源码声明时序一致；无意外文字/人脸遮挡；不把静态检查说成实际视频通过"
+        }
+      ]
+    },
+    {
+      "id": "caption_panel",
+      "type": "group",
+      "role": "当前字幕背板与整句入场",
+      "parent_id": "canvas",
+      "z_index": 70,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "当前字幕背板与整句入场"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          86.4,
+          1708.8,
+          907.2,
+          122.88
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "运行时读取当前源码：style组件同名对象；下列9:16框为审查快照，不是第二份执行参数",
+          "ratio_boxes": {
+            "9x16": [
+              0.08,
+              0.89,
+              0.84,
+              0.064
+            ],
+            "4x5": [
+              0.08,
+              0.89,
+              0.84,
+              0.064
+            ],
+            "1x1": [
+              0.08,
+              0.89,
+              0.84,
+              0.064
+            ],
+            "16x9": [
+              0.08,
+              0.89,
+              0.84,
+              0.064
+            ]
+          },
+          "mode": "stamp",
+          "height": "max(box.h, fontSize*lineCount*1.33+24u)",
+          "y_clamp": "min(box.y,H-45u-height)",
+          "padding": "12u 20u",
+          "radius": "stamp=0，其余3u",
+          "cue_visibility": "find first c with t>=start && t<end；无cue时整组不存在；不覆盖到下一句"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 12
+      },
+      "states": [
+        {
+          "id": "initial",
+          "visible": true,
+          "description": "首帧按源码可见；字幕仅有当前cue时可见"
+        },
+        {
+          "id": "held",
+          "visible": true,
+          "description": "入场结束保持；四视觉拍按phase切换"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": "canvas",
+          "rule": "源码/冻结props是真值；字段依赖按shared.metrics→phase→style几何→SourceWindow/TextBlock/Caption求值；无反向依赖"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "style_system",
+        "content"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "style_source",
+        "shared_source"
+      ],
+      "acceptance": [
+        {
+          "check": "当前字幕背板与整句入场",
+          "method": "逐ratio检查首帧、四拍边界及最长实际字幕；依据同一输出SHA的实际帧",
+          "pass_condition": "对象、层级、源码声明时序一致；无意外文字/人脸遮挡；不把静态检查说成实际视频通过"
+        }
+      ]
+    },
+    {
+      "id": "caption_text",
+      "type": "subtitle",
+      "role": "完整当前口播字幕及静态词块强调",
+      "parent_id": "caption_panel",
+      "z_index": 71,
+      "content": {
+        "mode": "editable",
+        "binding": "caption_slot",
+        "asset_id": null,
+        "description": "props.cues完整Caption&{start,end}；文本取实际离线转录/人工校核，confidence/timestamp无实测值时null。普通字、数字/AI/九万八/三十个平方按正则静态着色，不编造逐字时钟。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          86.4,
+          1708.8,
+          907.2,
+          122.88
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "运行时读取当前源码：style组件同名对象；下列9:16框为审查快照，不是第二份执行参数",
+          "font": "05按当前代码为SimSun；其余Microsoft YaHei",
+          "font_size": "min(shortSide*.043, box.w/min(16,max(8,cue.text.length))*.89)",
+          "max_lines": 3,
+          "overflow": "input最多3显式行；本期实际交付目标≤2行，长句要改本期语义断行，不能声称程序已强制两行",
+          "lineHeight": 1.33,
+          "entry": "cue<30f立即出现；其余7f outCubic：rise上移12u；wipe右遮罩100→0%；stamp scale1.055→1；focus opacity.68→1；入场后静止，末尾硬切到下一cue"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 12
+      },
+      "states": [
+        {
+          "id": "initial",
+          "visible": true,
+          "description": "首帧按源码可见；字幕仅有当前cue时可见"
+        },
+        {
+          "id": "held",
+          "visible": true,
+          "description": "入场结束保持；四视觉拍按phase切换"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": "caption_panel",
+          "rule": "源码/冻结props是真值；字段依赖按shared.metrics→phase→style几何→SourceWindow/TextBlock/Caption求值；无反向依赖"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "style_system"
+      ],
+      "replaceable": [
+        "content.cues"
+      ],
+      "evidence_ids": [
+        "style_source",
+        "shared_source"
+      ],
+      "acceptance": [
+        {
+          "check": "完整当前口播字幕及静态词块强调",
+          "method": "逐ratio检查首帧、四拍边界及最长实际字幕；依据同一输出SHA的实际帧",
+          "pass_condition": "对象、层级、源码声明时序一致；无意外文字/人脸遮挡；不把静态检查说成实际视频通过"
+        }
+      ]
+    },
+    {
+      "id": "audio_master",
+      "type": "audio",
+      "role": "独立冻结人声/BGM/SFX母带",
+      "parent_id": "canvas",
+      "z_index": 0,
+      "content": {
+        "mode": "embedded",
+        "binding": "audio_slot",
+        "asset_id": "mixed_master",
+        "description": "Audio(mixed-master.wav) volume1；source video静音；原声1倍速，经v5 mixer一次voice -2.5dB/侧链/限幅及真实headroom回执，不把音乐或音效当现场声。最终mux同一master无追加gain，视频stream-copy。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source": "运行时读取当前源码：style组件同名对象；下列9:16框为审查快照，不是第二份执行参数"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 12
+      },
+      "states": [
+        {
+          "id": "initial",
+          "visible": true,
+          "description": "首帧按源码可见；字幕仅有当前cue时可见"
+        },
+        {
+          "id": "held",
+          "visible": true,
+          "description": "入场结束保持；四视觉拍按phase切换"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": "canvas",
+          "rule": "源码/冻结props是真值；字段依赖按shared.metrics→phase→style几何→SourceWindow/TextBlock/Caption求值；无反向依赖"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "style_system"
+      ],
+      "replaceable": [
+        "content.asset_id"
+      ],
+      "evidence_ids": [
+        "style_source",
+        "shared_source"
+      ],
+      "acceptance": [
+        {
+          "check": "独立冻结人声/BGM/SFX母带",
+          "method": "逐ratio检查首帧、四拍边界及最长实际字幕；依据同一输出SHA的实际帧",
+          "pass_condition": "对象、层级、源码声明时序一致；无意外文字/人脸遮挡；不把静态检查说成实际视频通过"
+        }
+      ]
+    }
+  ],
+  "slots": [
+    {
+      "id": "source_video_slot",
+      "element_id": "source_video",
+      "property": "content.asset_id",
+      "value_type": "asset",
+      "required": true,
+      "limits": {
+        "suffix": "mp4",
+        "audio_codec": "aac",
+        "duration_seconds": 12,
+        "coverage": "video duration>(359/30)，容器与12秒差≤.1；原声PCM完整288000样本",
+        "identity": "原视频绝对路径/SHA；四比例对应源；不补帧拉伸或低清转制"
+      },
+      "missing": "必需槽缺失则prepare拒绝；只对明确可选字段使用CLI已声明默认",
+      "overflow": "越界拒绝prepare；文字实际帧仍须逐比例核对，必要时只改本期换行后新请求"
+    },
+    {
+      "id": "audio_slot",
+      "element_id": "audio_master",
+      "property": "content.asset_id",
+      "value_type": "asset",
+      "required": true,
+      "limits": {
+        "duration_seconds": 12,
+        "rate": 48000,
+        "channels": 2,
+        "format": "PCM16 WAV",
+        "true_peak_ceiling_dbtp": -1.5,
+        "modes": [
+          "sound-plan",
+          "completed-mix-reuse",
+          "voice-only"
+        ],
+        "binding": "复用要求原声SHA/计划/混音器/FFmpeg/真实回执相同；不同4x5与common原声不伪称同一音频"
+      },
+      "missing": "必需槽缺失则prepare拒绝；只对明确可选字段使用CLI已声明默认",
+      "overflow": "越界拒绝prepare；文字实际帧仍须逐比例核对，必要时只改本期换行后新请求"
+    },
+    {
+      "id": "brand_slot",
+      "element_id": "brand",
+      "property": "content.text",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "min_length": 1,
+        "max_length": 24,
+        "default": "海客AI社区服务站（CLI可替换）"
+      },
+      "missing": "必需槽缺失则prepare拒绝；只对明确可选字段使用CLI已声明默认",
+      "overflow": "越界拒绝prepare；文字实际帧仍须逐比例核对，必要时只改本期换行后新请求"
+    },
+    {
+      "id": "beat_titles_slot",
+      "element_id": "headline",
+      "property": "content.beat_titles",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "count": 4,
+        "item_min_length": 1,
+        "item_max_length": 30,
+        "newline": "允许\\n；本期最多2行；标题不可添加源稿没有的金额/承诺",
+        "headline_alias": "省略headline则首拍；明确提供必须完全一致"
+      },
+      "missing": "必需槽缺失则prepare拒绝；只对明确可选字段使用CLI已声明默认",
+      "overflow": "越界拒绝prepare；文字实际帧仍须逐比例核对，必要时只改本期换行后新请求"
+    },
+    {
+      "id": "caption_slot",
+      "element_id": "caption_text",
+      "property": "content.cues",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "count_min": 1,
+        "count_max": 120,
+        "max_characters": 96,
+        "input_max_explicit_lines": 3,
+        "this_test_max_lines": 2,
+        "clock": "start/end秒数，0≤start<end≤12，有序不重叠；源SHA绑定；cached_asr/manual_reviewed+evidence",
+        "render_caption_fields": "startMs/endMs由真实秒数round*1000，timestampMs/confidence无实测值为null"
+      },
+      "missing": "必需槽缺失则prepare拒绝；只对明确可选字段使用CLI已声明默认",
+      "overflow": "越界拒绝prepare；文字实际帧仍须逐比例核对，必要时只改本期换行后新请求"
+    },
+    {
+      "id": "ratio_slot",
+      "element_id": "global",
+      "property": "ratio",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "allowed": [
+          "9x16",
+          "4x5",
+          "1x1",
+          "16x9"
+        ],
+        "fixed_dimensions": {
+          "9x16": [
+            1080,
+            1920
+          ],
+          "4x5": [
+            1440,
+            1800
+          ],
+          "1x1": [
+            1536,
+            1536
+          ],
+          "16x9": [
+            1920,
+            1080
+          ]
+        }
+      },
+      "missing": "必需槽缺失则prepare拒绝；只对明确可选字段使用CLI已声明默认",
+      "overflow": "越界拒绝prepare；文字实际帧仍须逐比例核对，必要时只改本期换行后新请求"
+    },
+    {
+      "id": "metadata_title_slot",
+      "element_id": "global",
+      "property": "title",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "max_length": 120,
+        "effect": "工作台作品标题，不新增画面内标题"
+      },
+      "missing": "必需槽缺失则prepare拒绝；只对明确可选字段使用CLI已声明默认",
+      "overflow": "越界拒绝prepare；文字实际帧仍须逐比例核对，必要时只改本期换行后新请求"
+    },
+    {
+      "id": "cta_slot",
+      "element_id": "global",
+      "property": "cta",
+      "value_type": "string",
+      "required": false,
+      "limits": {
+        "this_test_values": [
+          ""
+        ],
+        "code_max_length": 60,
+        "implementation": "非空props.cta在phase3覆盖第四拍标题；03–06由shared.ReadableBeat，07–10由words实现；空值仍使用beatTitles[3]",
+        "verification_scope": "本期32输入全部为空；非空CTA可选能力未测，不能从代码存在推定实际画面通过"
+      },
+      "missing": "必需槽缺失则prepare拒绝；只对明确可选字段使用CLI已声明默认",
+      "overflow": "越界拒绝prepare；文字实际帧仍须逐比例核对，必要时只改本期换行后新请求"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "style_source",
+      "source_kind": "design",
+      "source": "当前设计/实现声明，非成片通过证据",
+      "locator": "Style06及其引用helper",
+      "method": "实际读取源文件并记录SHA；参数以源码为真值",
+      "file": "../../styles03to06.tsx",
+      "sha256": "334dce2be8f8bf48ba232641a8572ebb9fb0fc80321b36bc225ef707f162f266"
+    },
+    {
+      "id": "shared_source",
+      "source_kind": "design",
+      "source": "当前设计/实现声明，非成片通过证据",
+      "locator": "metrics/phase/SourceWindow/TextBlock/Caption/ReadableBeat",
+      "method": "实际读取源文件并记录SHA；参数以源码为真值",
+      "file": "../../shared.tsx",
+      "sha256": "2722934f5c8fb144859406d2a9190bf833fbb56093e6c2a3d4ceeba82c166f6f"
+    },
+    {
+      "id": "layout_source",
+      "source_kind": "design",
+      "source": "当前设计/实现声明，非成片通过证据",
+      "locator": "四比例尺寸、360帧/30fps、beatStartFrames、20M和sourceFit",
+      "method": "实际读取源文件并记录SHA；参数以源码为真值",
+      "file": "../../layout.json",
+      "sha256": "9ae20cc9707031e95ad98af88e32eae3e9ae57ed0a5dd2e8bbd48118a5283533"
+    },
+    {
+      "id": "adapter_source",
+      "source_kind": "design",
+      "source": "当前设计/实现声明，非成片通过证据",
+      "locator": "prepare/validate/_props/_runtime/_render/submit/run",
+      "method": "实际读取源文件并记录SHA；参数以源码为真值",
+      "file": "../../../../backlot/studio_investment_style_lab.py",
+      "sha256": "47ceabac605b9ed862d6254f1c144c1b5672a79eee707e6334fb137bf6f3382f"
+    },
+    {
+      "id": "index_source",
+      "source_kind": "design",
+      "source": "当前设计/实现声明，非成片通过证据",
+      "locator": "LabVideo和calculateMetadata",
+      "method": "实际读取源文件并记录SHA；参数以源码为真值",
+      "file": "../../index.tsx",
+      "sha256": "a1baf1e4e85326f94d7b1dc186f83f81d28bb4fcf42a459dddda6359cd230fa6"
+    },
+    {
+      "id": "design_direction",
+      "source_kind": "design",
+      "source": "当前设计/实现声明，非成片通过证据",
+      "locator": "八套原创视觉方向与与当前源码的实施差异",
+      "method": "实际读取源文件并记录SHA；参数以源码为真值",
+      "file": "../../../../../.local/codex-runs/investment-templates-03-10-20261020/design/visual-direction-packet.md",
+      "sha256": "ef17aabdca681024998190cf19ac9575fd272fdbfd44cecf79b6e8e37849fc78"
+    },
+    {
+      "id": "final_structure",
+      "source_kind": "measurement",
+      "source": "Final existing test evidence; post-render documentation binding only",
+      "locator": "Existing final source structural/semantic pass and exact executable identities",
+      "method": "Read existing report; match every executable SHA to current final frozen runtime; no additional independent review",
+      "file": "../../../../../.local/codex-runs/investment-templates-03-10-20261020/design/strict-source-review.json",
+      "sha256": "08fea3470c37add90d917e43ac2b99a9bef9ceea5b15d2ad60af73dc20a3024d"
+    },
+    {
+      "id": "root_actual_visual",
+      "source_kind": "observation",
+      "source": "Final existing test evidence; post-render documentation binding only",
+      "locator": "Root pass_scoped records for template 06: 9x16,4x5,1x1,16x9",
+      "method": "Use Root actual viewed-image record, same final output SHA and preserved image hashes; discrete frames only",
+      "file": "../../../../../.local/codex-runs/investment-templates-03-10-20261020/visual-review.json",
+      "sha256": "cd0e38015edffc6b46d824b595b29b4ec410111aea944b32f9aed96068b567b0"
+    },
+    {
+      "id": "final_native_bindings",
+      "source_kind": "measurement",
+      "source": "Final existing test evidence; post-render documentation binding only",
+      "locator": "Four final request/job/work/version/HTTP/full-media identities for template 06",
+      "method": "Read-only SQLite and saved same-SHA native HTTP evidence reconciliation; no new media decoding",
+      "file": "../../../../../.local/codex-runs/investment-templates-03-10-20261020/spec-finalization/template-06-evidence.json",
+      "sha256": "4584bd7072cda43461ec5a458477e23bb68b51ba9c77dbf82171c7fd5a018c6f"
+    },
+    {
+      "id": "final_technical_9x16",
+      "source_kind": "measurement",
+      "source": "Final existing test evidence; post-render documentation binding only",
+      "locator": "Complete existing technical output pass for 9x16",
+      "method": "All existing technical checks true; same native request/output/work/version/SHA; reused SHA-bound native whole-decode receipt",
+      "file": "../../../../../.local/codex-runs/investment-templates-03-10-20261020/final-qa/06-9x16/technical-qa.json",
+      "sha256": "36c284b654d59d85717af55c563d523a3e8eca88b860dacf5334e647e52e6fc4"
+    },
+    {
+      "id": "final_technical_4x5",
+      "source_kind": "measurement",
+      "source": "Final existing test evidence; post-render documentation binding only",
+      "locator": "Complete existing technical output pass for 4x5",
+      "method": "All existing technical checks true; same native request/output/work/version/SHA; reused SHA-bound native whole-decode receipt",
+      "file": "../../../../../.local/codex-runs/investment-templates-03-10-20261020/final-qa/06-4x5/technical-qa.json",
+      "sha256": "0bae857ea227632a10b6e19b3780cf35c650aaae3904d35559d7d62ec5688b2c"
+    },
+    {
+      "id": "final_technical_1x1",
+      "source_kind": "measurement",
+      "source": "Final existing test evidence; post-render documentation binding only",
+      "locator": "Complete existing technical output pass for 1x1",
+      "method": "All existing technical checks true; same native request/output/work/version/SHA; reused SHA-bound native whole-decode receipt",
+      "file": "../../../../../.local/codex-runs/investment-templates-03-10-20261020/final-qa/06-1x1/technical-qa.json",
+      "sha256": "8544d5d3dcb7b92aa94c8cf9abd4cdedd20b07c667f36fb3cfaffedde1183d0f"
+    },
+    {
+      "id": "final_technical_16x9",
+      "source_kind": "measurement",
+      "source": "Final existing test evidence; post-render documentation binding only",
+      "locator": "Complete existing technical output pass for 16x9",
+      "method": "All existing technical checks true; same native request/output/work/version/SHA; reused SHA-bound native whole-decode receipt",
+      "file": "../../../../../.local/codex-runs/investment-templates-03-10-20261020/final-qa/06-16x9/technical-qa.json",
+      "sha256": "ef0b32dbf8d96c74a77ee40ea7e4142ae265a8b353ebc55c15d6d0026d400f3d"
+    }
+  ],
+  "unknowns": [],
+  "validation": {
+    "structure": {
+      "status": "pass",
+      "evidence_ids": [
+        "final_structure"
+      ],
+      "note": "Post-render binding only; pass is limited to template 06's four actual 12-second final inputs in jobs-final/round2. Existing final structural/technical evidence and actual frozen executable/media identities matched; no new review pass."
+    },
+    "technical": {
+      "status": "pass",
+      "evidence_ids": [
+        "final_technical_9x16",
+        "final_technical_4x5",
+        "final_technical_1x1",
+        "final_technical_16x9"
+      ],
+      "note": "Post-render binding only; pass is limited to template 06's four actual 12-second final inputs in jobs-final/round2. Existing final structural/technical evidence and actual frozen executable/media identities matched; no new review pass."
+    },
+    "visual": {
+      "status": "pass",
+      "evidence_ids": [
+        "root_actual_visual"
+      ],
+      "note": "Post-render binding only; pass is limited to template 06's four actual 12-second final inputs in jobs-final/round2. Root actually viewed encoded-frame contacts; no continuous listening/platform/user approval claim."
+    },
+    "audio": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "Only measured loudness/true peak and master/AAC identity are technically checked; subjective continuous listening and phoneme sync remain pending."
+    },
+    "platform": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "No real phone/target-platform playback verification; local frames/browser do not prove it."
+    },
+    "user_review": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "User aesthetic/finished-video approval remains pending; no approval or publication mutation."
+    },
+    "production": {
+      "status": "pass",
+      "evidence_ids": [
+        "final_native_bindings"
+      ],
+      "note": "Post-render binding only; pass is limited to template 06's four actual 12-second final inputs in jobs-final/round2. Native queue/work/version and saved complete HTTP same-SHA evidence reconciled; formal quality approval/publication remains absent."
+    }
+  },
+  "extensions": {
+    "avatar": {
+      "face_crop": {
+        "mode": "原源完整contain",
+        "source_time": "frame/30秒，源自身25fps按时间采样，speed1",
+        "frame_geometry_authority": "Style06 pic/base/person与shared.SourceWindow",
+        "clip": "人物窗自遮罩；04大圆角，其他矩形。08只有右下装饰折角；换人物不得假定同样安全",
+        "constraint": "眼镜、脸、嘴完整，原声不中断；不同输入需重验，不作音素口型通过声明"
+      },
+      "synchronization": {
+        "master": "历史12秒音轨",
+        "cue_basis": "离线实际ASR/人工校核，不按字符均分编造word clock",
+        "endpoints": "[start,end)，360帧0..359",
+        "audio": "预览与最终同一48k stereo mixed-master；source video muted；最终stream-copy video+AAC192k，无额外增益",
+        "body_motion": "人物像素不拉伸、不调色、不重生；07..10只改变显示窗几何并contain"
+      }
+    },
+    "graphic": {
+      "text_policy": {
+        "headline": "4个本期beat_titles，显式\\n优先；headline同首拍",
+        "captions": "完整实际cue，输入最多3显式行，本期测试限制≤2行并实看；字体/高亮/整句动效按shared.Caption",
+        "fixed_words": "只有对应媒介题签、章节索引、环境AI；不填虚构经营数据",
+        "cta": "本期32输入全部为空；代码支持phase3非空cta覆盖第四拍标题，空值仍显示beatTitles[3]；非空可选能力未测，需适用输入与实际画面另验"
+      },
+      "asset_fit": {
+        "primary": "历史人物原MP4 contain",
+        "decorations": "CSS/SVG原创程序几何，无门店实拍、无第三方插画；原背景为源视频固化内容",
+        "font": "Windows YaHei/SimSun/Consolas本机使用SHA冻结，不分发系统字体"
+      }
+    },
+    "style_lab": {
+      "contract": "investment-style-lab-v1/v001",
+      "rules": {
+        "number": 6,
+        "name": "琥珀票据",
+        "art_direction": "琥珀底上的奶油票据；虚线撕口、四个圆形冲孔、章节索引及细横线构成票面，直角人物窗与深棕字幕条稳定落位，不添加价格或虚构条款。",
+        "ratios": {
+          "9x16": [
+            1080,
+            1920
+          ],
+          "4x5": [
+            1440,
+            1800
+          ],
+          "1x1": [
+            1536,
+            1536
+          ],
+          "16x9": [
+            1920,
+            1080
+          ]
+        },
+        "nominal_geometry": "本规格元素box为9:16源码审查快照；其他ratio与全部装饰/运动参数唯一真值为绑定TSX/layout，不将本JSON当renderer props",
+        "source_boxes": {
+          "9x16": [
+            0.12,
+            0.34,
+            0.76,
+            0.44
+          ],
+          "4x5": [
+            0.12,
+            0.34,
+            0.76,
+            0.44
+          ],
+          "1x1": [
+            0.3,
+            0.34,
+            0.61,
+            0.43
+          ],
+          "16x9": [
+            0.43,
+            0.19,
+            0.5,
+            0.6
+          ]
+        },
+        "headline_boxes": {
+          "9x16": [
+            0.09,
+            0.195,
+            0.83,
+            0.2
+          ],
+          "4x5": [
+            0.09,
+            0.195,
+            0.83,
+            0.2
+          ],
+          "1x1": [
+            0.09,
+            0.18,
+            0.83,
+            0.2
+          ],
+          "16x9": [
+            0.09,
+            0.24,
+            0.3,
+            0.2
+          ]
+        },
+        "caption_boxes": {
+          "9x16": [
+            0.08,
+            0.89,
+            0.84,
+            0.064
+          ],
+          "4x5": [
+            0.08,
+            0.89,
+            0.84,
+            0.064
+          ],
+          "1x1": [
+            0.08,
+            0.89,
+            0.84,
+            0.064
+          ],
+          "16x9": [
+            0.08,
+            0.89,
+            0.84,
+            0.064
+          ]
+        },
+        "unit": "u=min(W,H)/1080；所有数值按shared.metrics，box数组是x/W,y/H,w/W,h/H",
+        "frames": {
+          "fps": 30,
+          "durationInFrames": 360,
+          "beatStartFrames": [
+            0,
+            72,
+            162,
+            270
+          ]
+        },
+        "easing": "outCubic=1-(1-clamp(t,0,1))^3",
+        "render_profile": "style-lab-20mbps-<ratio>-v1；video_bitrate20M ABR，crf null，PNG，H264 slow/yuv420p/scale1；平均码率不要求填充到严格20.000Mbps",
+        "source_preparation": "字节复制到public/source.mp4，不额外fps/H264低清转制",
+        "footer_disclosure": false,
+        "runtime_freeze": "可执行TSX/types/layout/tool/adapter/FFmpeg/本机字体SHA；JSON规格、runbook和README仅文档，不纳入render运行时；prepare记录specification_snapshot SHA，后补验收不重签原请求",
+        "safe_area": "本地设计范围仅由本期实际框和caption y_clamp确认；布局尚未通过真实平台安全区，03..06字幕较靠下也须如实实看，不套用未实现的设计安全区",
+        "registration": "独立investment-template-03..10系列；不是已有卡片模板3/数字人口播模板6；原生queue kind studio_investment_recompose start_paused=True single-lane；quality_passed=False待审，无发布",
+        "geometry_revision": {
+          "id": "round2-square-spacing-20261020",
+          "authority": "当前Style源码；本项是审查快照，不增加执行参数副本",
+          "source_square_base": [
+            0.3,
+            0.34,
+            0.61,
+            0.43
+          ],
+          "headline_square": [
+            0.09,
+            0.18,
+            0.83,
+            0.2
+          ],
+          "scope": "方版人物窗/标题避让修订；09/10人物/标题框未改；09左实体栏最大宽度更新为.048W以避让.065W品牌锚点；03..06的标题上移，08方版字号基准78u。另三ratio、contain几何规则、原片字节与音频计划保持原合同。",
+          "bound_source_sha256": {
+            "styles03to06.tsx": "334dce2be8f8bf48ba232641a8572ebb9fb0fc80321b36bc225ef707f162f266",
+            "shared.tsx": "2722934f5c8fb144859406d2a9190bf833fbb56093e6c2a3d4ceeba82c166f6f",
+            "layout.json": "9ae20cc9707031e95ad98af88e32eae3e9ae57ed0a5dd2e8bbd48118a5283533",
+            "studio_investment_style_lab.py": "47ceabac605b9ed862d6254f1c144c1b5672a79eee707e6334fb137bf6f3382f",
+            "index.tsx": "a1baf1e4e85326f94d7b1dc186f83f81d28bb4fcf42a459dddda6359cd230fa6",
+            "styles07to10.tsx": "862bd67b24790e2dd55785bc3f59663cc1aeae18347d45fd6016be4a9eb47ea0"
+          },
+          "final_request_set": ".local/codex-runs/investment-templates-03-10-20261020/jobs-final/round2/",
+          "exclusions": "旧jobs/以及jobs-final根预审片均保留历史，不纳入本期最终32样片通过范围。",
+          "validation": "Technical, existing structural pass, Root scoped actual visual and native end-to-end bindings passed for these four historical short samples only; audio listening/platform/user review pending.",
+          "final_request_binding": "Actual new final requests and output identities are bound by final_validation; preliminary jobs/jobs-final-root/preflight-square-round2 remain excluded historical evidence."
+        }
+      },
+      "final_validation": {
+        "post_render_documentation": true,
+        "scope": "Only the four outputs below; not arbitrary replacement inputs or optional nonempty CTA",
+        "bundle": "../../../../../.local/codex-runs/investment-templates-03-10-20261020/spec-finalization/template-06-evidence.json",
+        "bundle_sha256": "4584bd7072cda43461ec5a458477e23bb68b51ba9c77dbf82171c7fd5a018c6f",
+        "final_request_set": "jobs-final/round2",
+        "outputs": [
+          {
+            "ratio": "9x16",
+            "request_sha256": "a0f56df6d746b83c8cdaa1466984640036b47fa192fedf8529110e710aa65a83",
+            "request_file_sha256": "cdec2192ecbf420595b7103dafd502420b5106412e909f696b334b71747ae9bb",
+            "project_id": "studio-be77e38fe24f733f",
+            "render_id": "local-investment-style-lab-a0f56df6d746b83c8cda",
+            "queue_id": "PQ-73e90eddeece62396988",
+            "work_id": "work-92bac245063b2119ca0a31cb",
+            "version_id": "v-bf9a0c0e64dce84bf0f6b89a",
+            "output_sha256": "bf9a0c0e64dce84bf0f6b89a7b0b5bf4b8a3db0d7ab7f01bb35c3a149cadcf24",
+            "source_video_sha256": "eda60d33c83cdfca9afe905e3e3a8696889a76087598960ff111ee3bb60a6dd8"
+          },
+          {
+            "ratio": "4x5",
+            "request_sha256": "f2b3acd7f080aae134a372f26f84df413513282eaa483061b8957b90bf2cdf25",
+            "request_file_sha256": "a9524355175f03766defd4b686dd742b71145bd0fcc7fecd700fb2bed24a5a28",
+            "project_id": "studio-e3407ca7481a3813",
+            "render_id": "local-investment-style-lab-f2b3acd7f080aae134a3",
+            "queue_id": "PQ-4b4112a6fc9f4874287b",
+            "work_id": "work-9af821854ee8c10162daecc3",
+            "version_id": "v-5593f644f7518290a91ed448",
+            "output_sha256": "5593f644f7518290a91ed44807860dc5150bf4c7966e29dbcd57ae9044edde5f",
+            "source_video_sha256": "94a73450c8cb500c51684cc028cda5d2808668f0f754ef861ee61c7b2f5262dd"
+          },
+          {
+            "ratio": "1x1",
+            "request_sha256": "623777a81404f4bd00b1ff26d0984b41246ae2d4fcc4cda6c8e5b88c19ed2ff4",
+            "request_file_sha256": "37d9137de82ccde8deea67230c0f21ecc6a191e02b0ec26a6a1576c261037ec6",
+            "project_id": "studio-b42ae587d2714d69",
+            "render_id": "local-investment-style-lab-623777a81404f4bd00b1",
+            "queue_id": "PQ-3199eaa9aa356c144110",
+            "work_id": "work-6a2891c345ad5f91f17447b4",
+            "version_id": "v-804cfcf819458a3d58572da7",
+            "output_sha256": "804cfcf819458a3d58572da7689dc1b48d9551a559c9c16e4fb2019e377f6335",
+            "source_video_sha256": "79f9dcff2718920325d31b489af5902a1d1fcc8dbbab7892a81116715ea6f776"
+          },
+          {
+            "ratio": "16x9",
+            "request_sha256": "7b0097805ba4fbb7837490f1a5b388db46af73f37d4b0b0e9f1bec103c58bb5d",
+            "request_file_sha256": "d2de322f667429f292b590abbe16deed666b40b9dceab89afce29c913faa6ebc",
+            "project_id": "studio-00dfd31f1ae2fbd6",
+            "render_id": "local-investment-style-lab-7b0097805ba4fbb78374",
+            "queue_id": "PQ-f7d3031b843d27a56789",
+            "work_id": "work-8ef239e85477e2c69d000557",
+            "version_id": "v-e8ff70f222fafb45fb21de9d",
+            "output_sha256": "e8ff70f222fafb45fb21de9d19965ecbb1eff018b6180a880b972fafb326d74e",
+            "source_video_sha256": "cc1639130d7f2e7362970f437ab838a36334b364142fe929eb2a543be0186fec"
+          }
+        ],
+        "prepare_time_snapshot_policy": "Original request.specification_snapshot and frozen request/runtime are preserved byte-for-byte; this is later authoring evidence, not rewritten production input.",
+        "optional_cta": "All four current inputs have empty CTA; nonempty last-beat override remains untested."
+      }
+    }
+  },
+  "operations": [
+    {
+      "id": "prepare",
+      "input": "本规格/当前源码、本期对应ratio的12秒原片、source-SHA绑定cue envelope、4拍标题、品牌、声音计划或可核验母带。",
+      "action": "用investment_style_lab.py --prepare --evidence-dir <忽略目录> --source-video <绝对MP4> --cues <JSON> --template-number 6 --ratio <已登记ratio> --title <作品标题> [--brand] [--audio-plan 或 --mixed-audio+--audio-receipt]；headline省略读首拍，cta本期空。",
+      "output": "request.json、studio项目、assets/investment-style-lab/、真实混音/回执；零云、未入队。",
+      "completion": "health edition/workspace一致；模板输入/原片完整12秒/真实cue来源/SHA及参数合法；确认同一请求可幂等复用，未伪造音频证据。",
+      "recovery": "同证据目录已有request先validate；不同请求使用新目录；保留原片、音频与来源，不能覆盖不同SHA。",
+      "entrypoint": "../../../../scripts/investment_style_lab.py --prepare"
+    },
+    {
+      "id": "submit",
+      "input": "上一步原request.json及当前统一队列状态。",
+      "action": "同--evidence-dir调用--submit；start_paused=True，记录唯一job_id。",
+      "output": "暂停的studio_investment_recompose原生任务。",
+      "completion": "job frozen_request/request_sha对应；同幂等键不产生第二任务；未开始外部云调用。",
+      "recovery": "读原--status及任务编号，不新造任务绕开单lane或人工将私有kind放入通用排队。",
+      "entrypoint": "../../../../scripts/investment_style_lab.py --submit/--status"
+    },
+    {
+      "id": "render",
+      "input": "原暂停任务、冻结可执行文件和导入素材/母带。",
+      "action": "同--evidence-dir调用--run；专属worker claim_local_recompose取得全局单lane；Remotion HaikeInvestmentStyleLab读取同props，最终mux同母带。",
+      "output": "renders/<render_id>/avatar-preview.mp4、props.json、render-quality-receipt.json、investment-style-lab-result.json，实际WorkCatalog待审版本。",
+      "completion": "原任务completed且成片实际存在；12秒/360帧/30fps/本ratio尺寸/音轨/20M参数/noCRF/全解码通过；源人物字节相同。队列完成不替代视觉听审。",
+      "recovery": "失败保留同原任务，按retryable用--resume；执行占用时等待，不能并发父视频。源码确有变化则新prepare，不改旧request。",
+      "entrypoint": "../../../../scripts/investment_style_lab.py --run/--resume"
+    },
+    {
+      "id": "review",
+      "input": "同输出SHA的技术报告、实际代表帧、完整本地播放与作品/HTTP读回。",
+      "action": "两次独立验收上限内完成结构语义及最终媒体检查；每ratio看首帧、最长cue、四拍边界/停稳和末帧；实际听审/真机/用户确认分别记录。",
+      "output": "验证矩阵和本模板4个短样身份，交付对比页；符合ready条件才由作者更新阶段。",
+      "completion": "适用项有真实证据，技术与实际视觉通过；本次通过最多覆盖本模板4个12秒输入，未完成听审/真机/用户确认仍pending，不批准发布。",
+      "recovery": "定位失败对象、ratio、时间点，仅改受影响本期输入或源码；新SHA重验，保留旧通过范围。",
+      "entrypoint": "manual actual media review plus native CLI --status and WorkCatalog/HTTP evidence"
+    }
+  ]
+}

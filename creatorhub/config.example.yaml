@@ -1,0 +1,148 @@
+# 复制为 config.yaml 后修改。采集、弹幕、私信、写操作限制及代理门禁等常用参数也可在「设置 → 采集与运行」调整；页面保存项优先且重启后保留。
+server:
+  host: 127.0.0.1
+  # 本地个人工作台默认免登录，仅接受本机回环地址访问。
+  port: 8000
+
+engine:
+  scan_interval_seconds: 300      # 全局扫描间隔（1–86400 秒）；弹幕可跟随此值，其他监控单独设置
+  worker_pool_size: 2             # 并发下载数(跨作品)
+  scan_concurrency: 2             # 同时抓取的目标数(并发浏览器上下文)
+  block_media_resources: false    # 屏蔽图片/视频/字体加载(省带宽但会打断抖音 SPA 致拿不到数据,建议保持 false)
+  xhs_browser_mode: auto          # auto=优先每账号系统 Chrome CDP;cdp=严格 CDP;patchright=直接使用 Patchright
+  resident_browser_sessions: true # reuse one account browser process/Profile/task page
+  browser_session_idle_seconds: 1800 # idle recycle; 0=LRU/explicit close/shutdown only
+  xhs_read_mode: browser          # browser=读取也复用账号浏览器;api=显式签名 API 兼容模式
+  douyin_read_mode: hybrid         # hybrid=API优先/浏览器回退;api=仅API;browser=仅浏览器
+  douyin_profile_mode: hybrid      # 手动刷新资料:hybrid/API/browser
+  douyin_followers_mode: hybrid    # 粉丝同步:hybrid/API/browser
+  douyin_dm_sync_mode: hybrid      # 私信会话同步:hybrid/API/browser
+  douyin_creator_danmaku_mode: hybrid # 本账号作品弹幕:hybrid/API/browser
+  douyin_publish_mode: browser     # 发布当前仅 browser
+  douyin_write_mode: browser       # browser=页面写入;api=仅网页HTTP/imapi;hybrid=API优先、明确拒绝时回退页面
+  xhs_keyword_gap_seconds: 10     # 同一任务相邻关键词的最小停顿
+  xhs_item_gap_seconds: 2.5       # 相邻详情/评论读取的最小停顿
+  xhs_request_jitter: 0.35        # 小红书读取停顿的正向随机抖动比例
+  xhs_publish_mode: browser       # browser=页面发布;api=显式 API 兼容模式
+  xhs_dm_monitor_enabled: false   # 低频检查 Web 私信；首次只建立基线
+  xhs_dm_poll_interval_seconds: 120
+  xhs_dm_realtime_enabled: true   # 监听页面原生 WebSocket；推送只用于唤醒
+  xhs_dm_realtime_debounce_seconds: 1.5
+  xhs_dm_fallback_interval_seconds: 600
+  xhs_dm_max_conversations_per_poll: 2
+  xhs_dm_poll_jitter: 0.35
+  xhs_dm_auto_reply_enabled: false # 开启后仍需创建并启用账号规则
+  monitor_initial_backfill_count: 0  # 新增博主时回填最近 N 条;0=只下载订阅后的新作品,-1=尽可能全量
+  comment_recent_works: 5         # 监控评论时,只看每个目标最近 N 条作品
+  comment_recent_days: 7          # 且仅限最近多少天内发布的作品
+  comment_max_scrolls: 6          # 评论区翻页深度(滚动容器次数,越大扫得越深)
+  danmaku_recent_works: 5         # 弹幕监控账号模式默认扫描的近期作品数
+  danmaku_recent_days: 7          # 弹幕监控账号模式默认作品时间范围
+  danmaku_max_scrolls: 6          # 弹幕抓取默认翻页/加载轮次
+  danmaku_probe_step_seconds: 1.0 # 播放页按视频时间轴探测的步长(秒)
+  danmaku_max_probe_points: 120   # 单条视频最多探测的时间点数
+  danmaku_max_records_per_scan: 1000 # 单轮最多入库弹幕数,0=不限
+  danmaku_max_records_total: 0    # 每个监控最多保留记录数,0=不限
+  account_check_interval_seconds: 1800   # 账号登录态定时体检间隔(秒,0=关闭)
+  # 自有账号评论模式(创作中心)页面 URL —— 实验性,抖音改版/字段变了改这里
+  creator_comment_url: https://creator.douyin.com/creator-micro/interaction/comment-management
+  creator_danmaku_url: https://creator.douyin.com/creator-micro/interaction/danmaku-management
+  request_timeout_seconds: 20
+  douyin_captcha_wait_seconds: 300 # 关键词采集遇验证时等待人工处理；期间不产生搜索请求
+  douyin_keyword_gap_seconds: 8    # 同一任务内相邻抖音关键词的停顿秒数
+  download_timeout_seconds: 120
+  media_dir: ./data/media         # 下载文件落地目录
+  user_agent: >-
+    Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
+    (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36
+
+  # ── 多账号风控隔离 ──
+  profiles_dir: ./data/profiles   # 每账号独立持久化浏览器 profile 根目录
+  max_live_contexts: 6            # 同时常驻的浏览器 context 上限(LRU 驱逐,控内存;20+账号无需全开)
+  browser_backend: local          # local=现有 Patchright/CDP;fingerprint_chromium=其他平台可选；小红书固定使用系统 Chrome/CDP
+  fingerprint_chromium_path: ""   # 本机 chrome/chromium 主程序路径；也可用 CREATORHUB_FINGERPRINT_CHROMIUM_PATH
+  fingerprint_chromium_root: ""   # 本机多内核扫描根目录；不同机器分别配置，不限定盘符；多目录可用环境变量 CREATORHUB_FINGERPRINT_CHROMIUM_ROOTS
+  fingerprint_chromium_allow_headless: false # 上游无头画像不完整,默认所有指纹环境使用可见窗口
+  fingerprint_chromium_platform: auto # auto=跟随宿主系统;也可指定 windows/linux/macos
+  active_accounts: 3              # 同一时刻最多并发活跃的账号数(错峰,降低"多号同时活跃"特征)
+  scan_jitter: 0.15              # 扫描周期额外增加 0–15%；按任务和上次执行时间稳定错峰
+  initial_scan_spread_seconds: 60 # 新监控/评论规则首次自动执行额外等待 0–60 秒；0 关闭
+  route_download_via_proxy: true  # 媒体下载是否走账号代理(避免 CDN 拉流暴露真实 IP)
+  verify_proxy_region: true       # 体检时探测代理出口国家,与账号时区(默认东八区)不一致则告警
+  native_write_gate_enabled: true # 仅新建 native 账号:写操作执行前检查浏览器/代理基线
+  native_write_require_system_chrome: true # 写操作必须使用系统稳定版 Chrome
+  native_write_require_verified_proxy: true # 已配代理的账号必须先通过“测试”建立出口基线
+  native_write_proxy_max_age_seconds: 86400 # 出口基线有效期;过期后需重新测试代理
+  browser_exit_probe_url: https://ipinfo.io/json
+
+  # ── 写操作风控闸(取关/回关/私信 + 自动评论)──
+  comment_hourly_cap_per_account: 10   # 每账号每小时自动评论上限(0=不限)
+  comment_jitter: 0.4                 # 评论排队间隔额外增加 0–40%，不缩短最小间隔
+  comment_risk_cooldown_seconds: 21600 # 平台拒绝/验证后暂停该账号写操作(默认6小时)
+  xhs_comment_write_mode: browser      # browser=页面发布;api=显式兼容;manual=只保存草稿
+  xhs_comment_review_before_publish: true # true=人工审核后自动发布;false=生成后直接发布
+  action_daily_cap_per_account: 20     # 每账号每日写操作(关注/取关/私信)总上限(0=不限)
+  action_hourly_cap_per_account: 6     # 每账号每小时写操作上限(0=不限)
+  action_min_gap_seconds: 90           # 同账号两次写操作全局最小间隔(与任务级 min_gap 取大)
+
+  # ── 活跃时段(夜间静默)—— 仅约束写操作自动排队执行,按东八区小时判定 ──
+  quiet_hours_enabled: true       # 夜间静默总开关，手动「立即执行」也遵守写操作风控
+  active_hours_start: 8           # 活跃起点小时(含)
+  active_hours_end: 24            # 活跃止点小时(不含);可 >24 跨零点(如 25=次日 1 点)
+
+  # ── 本账号作品健康监控(盯自己作品的流量/0播/违规,异常推送通知)──
+  #    默认关:开启后每 interval 用各账号登录态打开自己主页抓作品列表(较重),
+  #    检测「发布满 N 小时仍 0 播」「状态含违规/下架」并推通知;顺带写每日粉丝/互动快照供「数据」视图。
+  work_health_enabled: false            # 作品健康监控总开关
+  work_health_interval_seconds: 3600    # 每个账号多久体检一次自己作品
+  work_health_zero_play_hours: 6.0      # 发布满 N 小时仍 0 播即预警(仅对会报播放量的平台生效)
+  work_health_recent_days: 7            # 只体检最近 N 天内发布的作品
+  work_health_stat_snapshots: true      # 记录账号粉丝/作品/互动每日快照(「本账号→数据」趋势;不占额外抓取)
+
+# 统一平台风控：所有读取、评论、关注/取关、私信和发布共用同一套账号预算。
+# conservative 模式保留写操作间隔下限与额度上限；写操作额度的 0 表示沿用保护线而非不限。
+# 需要完全自定义时显式改为 mode: custom；engine 中更严格的旧限制仍然生效。
+risk_control:
+  enabled: true
+  mode: conservative
+  network_group_concurrency: 1   # 同一代理出口（含直连出口）同时只做一个平台操作
+  read_light_gap_seconds: 20
+  read_heavy_gap_seconds: 60
+  operation_gap_min_seconds: 8  # 账号跨功能操作间隔；补充现有读取/写入限速
+  operation_gap_max_seconds: 25
+  session_operation_limit: 12   # 连续完成的读写尝试，失败也计数；0 关闭连续休息
+  session_rest_min_seconds: 180 # 连续操作后休息，截止时间持久化，重启不清零
+  session_rest_max_seconds: 480
+  network_retry_jitter_seconds: 30 # 在至少 5 分钟网络退避上额外等待 0–30 秒，重启后保留
+  shared_write_gap_seconds: 300  # 评论/账号动作/私信/发布之间的跨功能共享间隔
+  comment_min_gap_seconds: 600
+  comment_hourly_cap: 3
+  comment_daily_cap: 10
+  social_min_gap_seconds: 900
+  social_hourly_cap: 2
+  social_daily_cap: 8
+  dm_min_gap_seconds: 900
+  dm_hourly_cap: 2
+  dm_daily_cap: 8
+  publish_min_gap_seconds: 7200
+  publish_hourly_cap: 1
+  publish_daily_cap: 3
+  combined_action_hourly_cap: 3
+  combined_action_daily_cap: 10
+  cooldown_steps_seconds: [1800, 7200, 21600, 86400] # 30 分钟、2 小时、6 小时、24 小时
+  recovery_successes: 3
+  recovery_probe_gap_seconds: 600
+  event_retention_days: 30
+  network_group_risk_accounts: 2 # 同出口多少个 native 账号同时命中风险后熔断
+  network_group_risk_window_seconds: 900
+  network_group_cooldown_seconds: 7200
+
+storage:
+  db_path: ./data/creatorhub.db
+
+# 代理池:建号时一号一代理 sticky 分配(占用最少优先)。务必用住宅/4G 长效代理,
+# 一号一长效固定 IP,IP 地区与账号时区/locale 一致;切勿机房 IP、切勿多号共享一个 IP。
+# 支持 http / https / socks5,可带账号密码。留空则不分配(走宿主真实 IP,多账号有关联风险)。
+proxies: []
+  # - http://user:pass@gateway.example.com:8000
+  # - socks5://user:pass@1.2.3.4:1080

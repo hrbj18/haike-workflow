@@ -1,0 +1,43 @@
+{
+  "width": 1440,
+  "height": 1800,
+  "fps": 30,
+  "brand": [88, 64, 1264, 48],
+  "footer": [88, 1720, 1264, 36],
+  "captions": [88, 1570, 1264, 116],
+  "captionSize": 60,
+  "statement": {
+    "title": [100, 450, 1240, 390],
+    "subtitle": [100, 930, 1240, 190],
+    "line": [340, 874, 760, 7],
+    "titleSize": 132
+  },
+  "sceneHeader": {
+    "title": [88, 170, 1264, 260],
+    "subtitle": [88, 438, 1264, 72],
+    "titleSize": 92
+  },
+  "select": {
+    "primary": [88, 520, 600, 430],
+    "secondary": [752, 666, 600, 430],
+    "expanded": [88, 470, 1264, 870],
+    "portraitExpanded": [330, 440, 780, 1100],
+    "footerHeight": 72,
+    "radius": 24
+  },
+  "focus": {
+    "entry": [88, 470, 1264, 870],
+    "expanded": [88, 450, 1264, 960],
+    "label": [88, 1440, 950, 86],
+    "portraitEntry": [384, 470, 672, 1008],
+    "portraitExpanded": [360, 440, 720, 1080],
+    "portraitLabel": [88, 1390, 240, 140]
+  },
+  "presenter": {
+    "large": [300, 432, 840, 1110],
+    "small": [1092, 1222, 260, 325],
+    "plate": [0, 120, 1440, 1430],
+    "title": [88, 160, 1264, 240],
+    "transitionFrames": 16
+  }
+}

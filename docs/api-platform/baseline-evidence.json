@@ -1,0 +1,124 @@
+{
+  "status": "design-only-not-production-implemented",
+  "repository": "https://github.com/hrbj18/haike-workflow",
+  "transport_used": "configured-SSH-identity",
+  "branch": "main",
+  "commit": "05183670edca40483f4d2d212282e4c05c94cc84",
+  "commit_time": "2026-10-12 11:47:34 +0800",
+  "remote_heads_at_pull": [
+    "main"
+  ],
+  "repository_location": "/Users/edy/Documents/soft/博文工作台/haike-workflow",
+  "old_deployment_retained": true,
+  "files": [
+    {
+      "path": "Haike_video/backlot/server.py",
+      "sha256": "e3c9654c0bafc01385175203b4d77e5a6ba9f945b3284caa57d44d16c8277451",
+      "same_as_deployed_offline_snapshot": true
+    },
+    {
+      "path": "Haike_video/backlot/tts_runtime.py",
+      "sha256": "d0d4dae156e3ac37e01afe007a173944f7a92d22fdf90adc16c6de0fd1d4c43d",
+      "same_as_deployed_offline_snapshot": true
+    },
+    {
+      "path": "Haike_video/backlot/bailian_voice_clone.py",
+      "sha256": "fecb01ac0c22493a6ac5a3926e2d6950f95a229bcc7e9536bec12d9847539687",
+      "same_as_deployed_offline_snapshot": true
+    },
+    {
+      "path": "Haike_video/backlot/avatar_review_preview_pipeline.py",
+      "sha256": "e698b580c8f10e3bc655ffa4eef57e1e78e8a1a0c75da6123b91befea73456b5",
+      "same_as_deployed_offline_snapshot": true
+    },
+    {
+      "path": "Haike_video/backlot/production_queue.py",
+      "sha256": "dbab938e96f2957f09d3ce114870c115440f9c88304616941f9521fc0a2fb9ee",
+      "same_as_deployed_offline_snapshot": true
+    },
+    {
+      "path": "Haike_video/lib/bailian_speech.py",
+      "sha256": "5d2c981c7165105303c53cec1817182ade7d8bbef93a21f1758a6b4bb72f93f1",
+      "same_as_deployed_offline_snapshot": true
+    },
+    {
+      "path": "Haike_video/tools/audio/bailian_tts.py",
+      "sha256": "ce8545841e212322a1db01067d41df9f66bbef4d360fd761f262cd565d8119af",
+      "same_as_deployed_offline_snapshot": true
+    },
+    {
+      "path": "Haike_video/tools/avatar/runninghub_avatar.py",
+      "sha256": "34cfa87109be421829d60b3742812c06676897927cce42c3265d1ed9c3c6f51a",
+      "same_as_deployed_offline_snapshot": true
+    },
+    {
+      "path": "Haike_video/backlot/ui/audio_center.js",
+      "sha256": "0e26fbf7c4284244215b18f445034f0d991e7b5524e0da8c1fcc07ec289773d9",
+      "same_as_deployed_offline_snapshot": true
+    },
+    {
+      "path": "Haike_video/backlot/ui/index.html",
+      "sha256": "ec5bc2d9fb184e0638fe3b22f45c8b46eb8dd5d661a3fcb863754a79a3da9f92",
+      "same_as_deployed_offline_snapshot": true
+    }
+  ],
+  "legacy_portable_relay_present": false,
+  "verification": {
+    "source_check": {
+      "command": "Python 3.12 scripts/check.py",
+      "result": "passed",
+      "python_files": 1032,
+      "source_files": 2755
+    },
+    "draft_schemas": {
+      "schemas_checked": 3,
+      "valid_examples": 3,
+      "invalid_examples_rejected": 5,
+      "scope": "design schemas only, no actual API server"
+    },
+    "pricing_examples": {
+      "result": "all three match exact Decimal arithmetic",
+      "scope": "hypothetical prices"
+    },
+    "prototype": {
+      "result": "browser interaction assertions passed",
+      "checks": [
+        "pending recharge no credit",
+        "duplicate simulated credit once",
+        "invalid key budget rejected",
+        "demo key create/revoke",
+        "bill status filter",
+        "micro amount detail",
+        "markup versus target margin",
+        "price draft preserves historical bill",
+        "model meter display",
+        "customer/admin view separation"
+      ],
+      "scope": "client-side presentation only; no real authentication, payments or money ledger",
+      "desktop_and_mobile_layout": "320/360/1024/1200 pixel layouts passed; 320/1024 covered all customer pages and admin pricing; narrow tables scroll within page",
+      "browser_console": "0 errors, 0 warnings during tested interactions"
+    },
+    "real_paid_calls": 0,
+    "document_links": "passed"
+  },
+  "external_sources": [
+    {
+      "url": "https://help.aliyun.com/zh/model-studio/cosyvoice-tts-http-api",
+      "supports": "request_id, usage.characters and expiring result audio URL"
+    },
+    {
+      "url": "https://pay.weixin.qq.com/doc/v3/merchant/4012791882",
+      "supports": "callback signature, decryption, timely acknowledgement, repetition and query recovery"
+    }
+  ],
+  "old_service_readonly_check": {
+    "workbench": {
+      "url": "http://127.0.0.1:14754/",
+      "http_status": 200
+    },
+    "publisher": {
+      "url": "http://127.0.0.1:8000/",
+      "http_status": 200
+    }
+  }
+}

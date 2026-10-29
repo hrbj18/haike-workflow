@@ -1,0 +1,37 @@
+{
+  "normalization": "CRLF to LF for text portability",
+  "files": [
+    {
+      "path": "agent_cli.py",
+      "sha256": "cd13612a4a0aaeb7be181176372efb924b2a172394c8d23360edfa552eb15679"
+    },
+    {
+      "path": "capability.json",
+      "sha256": "a2c3365f606b6e5c603448e3243a70cb6f49047aac41f8c075c5877b4292f389"
+    },
+    {
+      "path": "README.md",
+      "sha256": "44504798f41bd8ea727107180a6d74fac756034305f80fdf71f749acb13f69f4"
+    },
+    {
+      "path": "reference/node_specs.json",
+      "sha256": "f751ddc2ac5f7e7f5fbe844df91ef00ded22026e443cf0b3e3f87797239665cf"
+    },
+    {
+      "path": "reference/工作流ID与版本.json",
+      "sha256": "fb15024aea391b548bb76c009a5747dddd6d465069125689da27d48943c7c313"
+    },
+    {
+      "path": "schema_check.py",
+      "sha256": "6cbfbb1483529367560d4207f8d1aa021716b6add127d3680ed48728d909fbe9"
+    },
+    {
+      "path": "workflows/InfiniteTalk_V5.3.1_API.json",
+      "sha256": "c0f7410c79415fc8aa7abd0da59bb604137b084cc0e187c9960426f2248ec367"
+    },
+    {
+      "path": "workflows/InfiniteTalk_V5.3.1_导入RunningHub.json",
+      "sha256": "285b3e8511d3a2340b2d2a8016037e821daa490712dabb4ead03ea5a47799c86"
+    }
+  ]
+}

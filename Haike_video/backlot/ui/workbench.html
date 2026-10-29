@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-haike-brand="2025">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#ffdc00">
+<title>项目工作台 · 海客科技</title>
+<script>
+  try {
+    const themeKey = "backlot.theme";
+    const storedTheme = localStorage.getItem(themeKey);
+    const theme = storedTheme === "dark" ? "dark" : "light";
+    if (storedTheme !== theme) localStorage.setItem(themeKey, theme);
+    document.documentElement.dataset.theme = theme;
+  } catch (_) {
+    document.documentElement.dataset.theme = "light";
+  }
+</script>
+<link rel="stylesheet" href="/ui/workbench.css">
+<link rel="stylesheet" href="/ui/haike-brand.css">
+<link rel="stylesheet" href="/ui/navigation.css">
+<link rel="stylesheet" href="/ui/workbench-modern.css">
+<link rel="icon" href="/ui/brand/haike-logo.png" type="image/png">
+</head>
+<body>
+<a class="skip-link" href="#main-content">跳到主要内容</a>
+<div id="app" class="shell"><main class="workspace" id="main-content"><section class="panel panel-body" role="status" aria-busy="true"><h2>正在打开项目</h2><p class="form-note">正在读取脚本、素材与制作进度，请稍候…</p></section></main></div>
+<div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+<script>
+  window.addEventListener("error", (event) => {
+    if (!String(event.filename || "").includes("workbench.js")) return;
+    const app = document.getElementById("app");
+    if (!app || app.childElementCount) return;
+    app.innerHTML = `<main class="workspace"><section class="panel"><div class="panel-body"><h1>导演台页面未能启动</h1><p>前端脚本加载失败（${event.lineno || "?"}:${event.colno || "?"}）。请刷新页面；若仍未恢复，请保留此位置用于排查。</p></div></section></main>`;
+  });
+</script>
+<dialog id="assetDialog" class="dialog">
+  <form id="assetForm" method="dialog">
+    <div class="dialog-heading"><div><p class="eyebrow">素材登记</p><h2>新增可追溯素材</h2></div><button type="button" class="icon-button" data-dialog-close="assetDialog" aria-label="关闭">关闭</button></div>
+    <label>素材名称（单文件可选）<input name="name" maxlength="160" placeholder="例如：产品正面特写；多文件时默认使用文件名"></label>
+    <label>从电脑导入（可多选）<input name="upload_files" type="file" multiple accept=".mp4,.mov,.mkv,.webm,.m4v,.png,.jpg,.jpeg,.webp"></label>
+    <div class="form-grid">
+      <label>类型<select name="type"><option value="video">视频</option><option value="image">图片</option><option value="audio">音频</option><option value="animation">动画</option></select></label>
+      <label>来源<select name="source_type"><option value="human_provided">人工提供</option><option value="web_download">网络下载</option><option value="project_library">项目素材库</option><option value="ai_generated">AI 生成</option><option value="local_generated">本地生成</option></select></label>
+    </div>
+    <label>或登记已有的项目内相对路径<input name="path" placeholder="assets/video/candidate.mp4"></label>
+    <div class="form-grid"><label>授权/许可<input name="license" placeholder="例如：已授权 / CC BY"></label><label>来源链接<input name="source_url" placeholder="https://…"></label></div>
+    <p class="form-note">选择电脑文件时会流式复制到项目，单文件最多 8GB；也可只登记已经位于项目目录内的路径。系统会分配稳定素材编号 S-xxx。</p>
+    <div class="dialog-actions"><button type="button" data-dialog-close="assetDialog" class="button quiet">取消</button><button type="submit" class="button primary">登记素材</button></div>
+  </form>
+</dialog>
+<dialog id="imageDialog" class="dialog">
+  <form id="imageForm" method="dialog">
+    <div class="dialog-heading"><div><p class="eyebrow">AI 生图素材</p><h2>生成并登记图片素材</h2></div><button type="button" class="icon-button" data-dialog-close="imageDialog" aria-label="关闭">关闭</button></div>
+    <p class="form-note">通过海客图片服务生成素材，保存到当前项目并分配稳定素材编号。生成后请审核，再选用到片段。</p>
+    <label>素材名称（可选）<input name="name" maxlength="140" placeholder="例如：产品主视觉 — 白底正面图"></label>
+    <label>导演提示词<textarea name="prompt" required maxlength="6000" placeholder="主体 + 画面目标 + 风格/材质 + 场景 + 光线 + 镜头。例如：一只白色保温杯，正面居中，纯白无缝背景，柔和棚拍光，电商产品静物摄影，留出干净边缘。"></textarea></label>
+    <div class="form-grid">
+      <label>画幅<select name="size"><option value="1536x1024">横版 3:2（推荐视频）</option><option value="1024x1536">竖版 2:3</option><option value="1024x1024">正方形 1:1</option><option value="auto">自动</option></select></label>
+      <label>质量<select name="quality"><option value="low">低（试样）</option><option value="medium" selected>中（默认）</option><option value="high">高（精修）</option><option value="auto">自动</option></select></label>
+    </div>
+    <label>生成数量<select name="n"><option value="1" selected>1 张</option><option value="2">2 张</option><option value="3">3 张</option><option value="4">4 张</option></select></label>
+    <p class="form-note">点击生成前会再次确认模型、数量与质量。实际费用、可用模型与限额以你的中转站账户为准；密钥不会发送到浏览器或写入项目素材元数据。</p>
+    <div class="dialog-actions"><button type="button" data-dialog-close="imageDialog" class="button quiet">取消</button><button type="submit" class="button primary">确认并生成</button></div>
+  </form>
+</dialog>
+
+<script type="module" src="/ui/workbench.js"></script>
+</body>
+</html>
