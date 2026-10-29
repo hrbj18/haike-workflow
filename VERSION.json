@@ -1,6 +1,6 @@
 {
   "edition": "haike-workflow-2",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "channel": "stable",
   "runtime_id": "haike-windows-x64-console-20261029",
   "data_schema": 1,

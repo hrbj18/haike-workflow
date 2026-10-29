@@ -323,6 +323,13 @@ def validate(queue,r):
             and r.get('profile')==PROFILE and r.get('export')==EXPORT and r.get('cloud_calls')==0 and r.get('publication') is False,'完整模板冻结身份无效')
     project=WorkCatalog(queue.projects_root).project(r['project_id'])
     require(read_json(project/'artifacts'/REQUEST_FILE)==r,'冻结请求已改变')
+    folder=project/'renders'/r['render_id'];receipt=read_json(folder/'result.json')
+    if receipt:
+        # Completed media is immutable; playback must not need the old compiler
+        # or its disposable source cache after an application upgrade.
+        require(receipt.get('request_sha256')==digest and sha(folder/OUTPUT_FILE)==receipt.get('output_sha256') and sha(folder/'quality.json')==receipt.get('quality_sha256') and sha(folder/'audio-receipt.json')==receipt.get('audio_receipt_sha256'),'完成产物或质量记录已改变')
+        if receipt.get('nomusic_output_sha256'):require(sha(folder/NOMUSIC_FILE)==receipt['nomusic_output_sha256'],'无配乐备选成片已变化')
+        return project
     asset_root=Path(r['asset_directory'])
     require(asset_root==(CACHE_ROOT/'assets'/fingerprint(r['origins'])[:24]).resolve(),'冻结素材目录身份无效')
     paths={n:regular_path(asset_root/n,asset_root) for n in r['origins']}
@@ -331,12 +338,8 @@ def validate(queue,r):
     raw_audio={k:v for k,v in r['audio'].items() if k not in {'durationFrames','voice_clock','mix_profile'}}
     require(speech._audio_plan(raw_audio,paths,clock)==r['audio'],'冻结声音计划与真实音轨不一致')
     validate_props(r['props'],clock['duration_seconds'])
-    folder=project/'renders'/r['render_id'];receipt=read_json(folder/'result.json')
-    _source_check(r['props'],r['audio'],paths,r['provenance'],fonts=not bool(receipt))
-    if receipt:
-        require(receipt.get('request_sha256')==digest and sha(folder/OUTPUT_FILE)==receipt.get('output_sha256') and sha(folder/'quality.json')==receipt.get('quality_sha256') and sha(folder/'audio-receipt.json')==receipt.get('audio_receipt_sha256'),'完成产物或质量记录已改变')
-        if receipt.get('nomusic_output_sha256'):require(sha(folder/NOMUSIC_FILE)==receipt['nomusic_output_sha256'],'无配乐备选成片已变化')
-    else:require(runtime()==r['runtime'],'模板源码或依赖已改变，请冻结新版本')
+    _source_check(r['props'],r['audio'],paths,r['provenance'],fonts=True)
+    require(runtime()==r['runtime'],'模板源码或依赖已改变，请冻结新版本')
     return project
 
 

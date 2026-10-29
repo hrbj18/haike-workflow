@@ -100,7 +100,9 @@ def test_console_uses_same_http_sessions_with_its_real_field_limits(env,monkeypa
     assert accepted.status_code==200
     revision=accepted.json()['revision']
     assert client.post(url,json={'revision':revision,'patch':{'layout':'portrait-square'}}).status_code==422
-    assert client.post(url,json={'revision':revision,'patch':{'presenter_mode':'hidden'}}).status_code==422
+    assert d['layout']=='portrait45' and d['presenter_mode']=='opening'
+    assert client.post(url,json={'revision':revision,'patch':{'layout':'landscape','presenter_mode':'hidden'}}).status_code==422
+    assert client.post(url,json={'revision':revision,'patch':{'presenter_mode':'small'}}).status_code==422
     invalid=deepcopy(seed['content']);invalid['versus-panels']['winner']=3
     assert client.post(url,json={'revision':revision,'patch':{'content':invalid}}).status_code==422
     invalid=deepcopy(seed['content']);invalid['keyword-slam']['keyword']='超过六个字符长度'
@@ -422,6 +424,29 @@ def test_consuming_console_source_never_reuses_old_person_crop(env,monkeypatch):
     assert s.consume_source(result,q)['input']['console']['cropCalibration']=={'path':'current-proof'}
 
 
+def test_reused_completed_source_reviews_its_own_receipt_not_seed_person(env,monkeypatch):
+    s,_,_,seed=env;d=s.create(m.TEMPLATE_ID)
+    receipt_path=s.folder(d['id'])/'completed-source.json'
+    receipt={'contract':'motion-template-source-v1','draft_id':'source-fixture','revision':2,
+             'script':d['script'],'voice':seed['voice'],'avatar':seed['avatar']}
+    atomic_private(receipt_path,receipt)
+    d['source_receipt']=m.binding(receipt_path)
+    d['source_origin']={'receipt':d['source_receipt'],'job_id':'completed-source-fixture'}
+    d['input']['avatar']['evidence']={'path':'obsolete-seed-person','sha256':'0'*64}
+    d['source_frames']={'token':'current-viewed-frames','rows':[],
+                        'voice_sha256':seed['voice']['sha256'],'avatar_sha256':seed['avatar']['sha256']}
+    d=s.put(d,d['revision']);monkeypatch.setattr(s,'slots',lambda value:[])
+    result=s.review_sources(d['id'],d['revision'],'current-viewed-frames',[],'Fixture review only')
+    proof=json.loads(Path(result['input']['avatar']['evidence']['path']).read_text(encoding='utf-8'))
+    assert proof['upstream']==d['source_receipt']
+    receipt['voice']={**receipt['voice'],'sha256':'f'*64}
+    atomic_private(receipt_path,receipt)
+    d=s.get(d['id']);d['source_receipt']=m.binding(receipt_path);d['source_origin']['receipt']=d['source_receipt']
+    d=s.put(d,d['revision'])
+    with pytest.raises(WorkError,match='原口播源'):
+        s.review_sources(d['id'],d['revision'],'current-viewed-frames',[],'Fixture invalid source')
+
+
 def test_approved_render_uses_existing_native_or_adapted_queue_once(env, monkeypatch):
     s, q, _, _ = env; d = s.create(m.TEMPLATE_ID)
     for engine, adapter in [('native', 'studio_dark_native'), ('adapted', 'studio_dark_full')]:
@@ -437,6 +462,30 @@ def test_approved_render_uses_existing_native_or_adapted_queue_once(env, monkeyp
         d = s.submit(d['id'], d['revision'], q); again = s.submit(d['id'], d['revision'], q)
         assert again['run']['job_id'] == d['run']['job_id']
     assert len(q.list()['tasks']) == 2
+
+
+def test_completed_component_video_uses_frozen_artifact_not_current_draft(env):
+    from lib.checkpoint import init_project
+    from backlot import studio_motiongit_render as component
+    s,q,_,_=env;d=s.create(m.TEMPLATE_ID)
+    project='studio-'+'e'*16
+    init_project(project,title='Isolated completed movie',pipeline_type='animated-explainer',pipeline_dir=q.projects_root)
+    core={'contract':component.CONTRACT,'project_id':project,'draft':{'id':'old-draft'},'assets':{}}
+    digest=m.fingerprint(core);frozen={**core,'request_sha256':digest,'render_id':'motiongit-component-'+digest[:20]}
+    path=q.projects_root/project/'artifacts/motiongit-component-request.json';atomic_private(path,frozen)
+    folder=q.projects_root/project/'renders'/frozen['render_id'];folder.mkdir(parents=True)
+    output=folder/'native-final.mp4';output.write_bytes(b'fixture completed video')
+    (folder/'quality.json').write_text('{}')
+    atomic_private(folder/'result.json',{'request_sha256':digest,'output_sha256':m.sha(output),'quality_sha256':m.sha(folder/'quality.json')})
+    job=q.submit(project_id=project,kind='studio_investment_recompose',source='workbench',priority='normal',
+                 parent_job_id=frozen['render_id'],idempotency_key='finished-component',frozen_request={**frozen,'phase':'render'},start_paused=True)
+    q.claim_local_recompose(job['job_id'],'video-fixture');q.finish(job['job_id'],'video-fixture',status='completed',stage='fixture',result={'output_sha256':m.sha(output)})
+    d.update(run={k:frozen[k] for k in ['project_id','render_id','request_sha256','contract']},frozen={'request':str(path),'engine':'component'})
+    d['run']['job_id']=job['job_id'];d=s.put(d,d['revision'])
+    assert s.video(d['id'],q)==output
+    output.write_bytes(b'corrupted')
+    with pytest.raises(WorkError,match='成片'):
+        s.video(d['id'],q)
 
 
 def test_asset_upload_stays_owned_and_clears_old_review(env):

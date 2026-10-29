@@ -100,6 +100,7 @@ def configured(value):
         result['native_dependency_cache']=str(cache if cache.is_absolute() else (ROOT/cache).resolve())
     result.update(title=value['title'],brand=value['brand'],script=value['script'])
     result['console']['layout']='portrait' if value['layout']=='portrait45' else 'landscape'
+    result['console']['presenterMode']=value.get('presenter_mode','auto')
     result['console']['segments']=apply_content(result['console']['segments'],value['content'])
     clock=compiler.native.speech._clock(compiler.checked(result['voice']))
     _,caps=compiler._captions(result['captions'],Path.cwd(),result['voice'],clock['duration_seconds'])

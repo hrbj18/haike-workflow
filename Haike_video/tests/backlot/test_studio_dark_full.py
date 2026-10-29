@@ -136,6 +136,22 @@ def test_changed_incomplete_runtime_requires_new_identity(fixture,monkeypatch):
         dark.validate(queue,r)
 
 
+def test_completed_artifact_survives_cache_relocation_but_not_tampering(fixture,monkeypatch,tmp_path):
+    from backlot.studio import atomic_private
+    value,queue=fixture;r=dark.prepare(queue,value)
+    folder=queue.projects_root/r['project_id']/'renders'/r['render_id'];folder.mkdir(parents=True)
+    for name in [dark.OUTPUT_FILE,'quality.json','audio-receipt.json']:
+        (folder/name).write_bytes(b'isolated completed artifact')
+    atomic_private(folder/'result.json',{'request_sha256':r['request_sha256'],
+        'output_sha256':sha(folder/dark.OUTPUT_FILE),'quality_sha256':sha(folder/'quality.json'),
+        'audio_receipt_sha256':sha(folder/'audio-receipt.json')})
+    monkeypatch.setattr(dark,'CACHE_ROOT',tmp_path/'new-runtime-cache')
+    assert dark.validate(queue,r)==queue.projects_root/r['project_id']
+    (folder/dark.OUTPUT_FILE).write_bytes(b'tampered')
+    with pytest.raises(WorkError,match='完成产物'):
+        dark.validate(queue,r)
+
+
 def test_caption_actual_font_width_blocks_overflow(fixture):
     value,_=fixture;value['props']['captions'][0]['text']='字'*40
     with pytest.raises(WorkError,match='实际字体字幕超宽'):

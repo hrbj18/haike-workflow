@@ -216,6 +216,8 @@ def source(value):
                 '此完整动作组超过原包允许的静止延长容量')
         frames+=segment['durationFrames']
     sentence_boundaries(caps,segments)
+    from backlot.studio_console_presenter import policy
+    policy(c, frames)
     following_frames(segments,profile['groups'])
     review_media(media_windows(value['media'],segments),review,tools)
     require(frames<=profile['maximum_frames'] and clock['duration_seconds']<=frames/60+.000001
@@ -415,6 +417,8 @@ def prepare_project(build_path,review_path):
     if not project.exists():official(b,'prepare',['@vault','--inputs','@vault','--plan',p,'--out',project])
     require((project/'instance.json').is_file() and (project/'parameters.json').is_file(),
             '控制台准备工程未完整生成，保留当前目录并重新准备新版本')
+    from backlot.studio_console_presenter import install
+    install(project, source_value.get('console', {}), b['frames'])
     return project
 
 

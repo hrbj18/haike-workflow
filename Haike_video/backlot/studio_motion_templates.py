@@ -121,6 +121,8 @@ def catalog():
             'status':'testing','status_label':'开发试制','description':'描边巨字、光环声明、扇形实拍、双面板比较与终端式收尾。',
             'original':None,'original_ratio':'16:9','layouts':deepcopy(console_session.LAYOUTS),
             'presenter_modes':['auto'],'groups':[g['id'] for g in console_session.fields()],
+            'presenter_modes_by_layout':{'landscape':['auto'],'portrait45':['opening','closing','hidden','auto']},
+            'presenter_default_by_layout':{'landscape':'auto','portrait45':'opening'},
             'presenter_auto_label':'随原版动作布局',
             'header_fields':False,
             'duration_note':'按完整口播和真实句间隙分配五个完整组；超过原包容量时需重选编排，不变速、不截句。',
@@ -249,6 +251,7 @@ class Sessions:
                  'sound': {'mode': 'reuse', 'modelId': 'haike/cosyvoice', 'voiceId': '', 'rate': 1},
                  'status': 'draft', 'generation': {}, 'source_review': None}
         if template_id==poster_session.ID:value['presenter_mode']='hidden'
+        if template_id==console_session.ID:value.update(layout='portrait45',presenter_mode='opening')
         if initial_script: value['script'] = str(initial_script)[:5000]
         if preset_id:
             preset = next((p for p in self.presets() if p['id'] == preset_id), None)
@@ -279,9 +282,12 @@ class Sessions:
                     require(isinstance(patch[k], str) and 0 < len(patch[k].strip()) <= (5000 if k == 'script' else 100), '文字为空或过长')
             layouts=console_session.LAYOUTS if value['template_id']==console_session.ID else poster_session.LAYOUTS if value['template_id']==poster_session.ID else LAYOUTS
             if 'layout' in patch: require(patch['layout'] in layouts, '此版本尚不支持该画幅')
-            if 'presenter_mode' in patch: require(patch['presenter_mode'] in {'auto', 'small', 'hidden'}, '人物模式无效')
+            if 'presenter_mode' in patch:
+                modes={'auto','opening','closing','hidden'} if value['template_id']==console_session.ID else {'auto','small','hidden'}
+                require(patch['presenter_mode'] in modes, '人物模式无效')
             if value['template_id']==console_session.ID:
-                require(patch.get('presenter_mode',value['presenter_mode'])=='auto','此原生控制台人物随原动作布局')
+                require(patch.get('layout',value['layout'])=='portrait45' or patch.get('presenter_mode',value['presenter_mode'])=='auto',
+                        '控制台开场、结尾和隐藏人物当前只支持4:5')
             if value['template_id']==poster_session.ID:
                 require(patch.get('presenter_mode',value['presenter_mode']) in {'auto','hidden'},'海报当前支持原生人物布局或不出镜')
                 require(all(patch.get(k,value[k])==value[k] for k in ['brand','presenter_label']),
@@ -571,10 +577,23 @@ class Sessions:
                      'actual_images_viewed': [r['image'] for r in rows if r['slot'] == 'avatar']}
             # Original same-source proof is still required for reused speaking video.
             if value['sound']['mode'] == 'reuse':
-                prior = read_json(verified(value['input']['avatar']['evidence']))
-                from backlot.studio_dark_native_content import _voice_proof
-                require(_voice_proof(prior, review['voice_sha256']) and prior.get('video_sha256', prior.get('sha256')) == sha(avatar), '复用人物缺少同声源依据')
-                proof['upstream'] = value['input']['avatar']['evidence']
+                origin=value.get('source_origin')
+                if origin:
+                    require(origin.get('receipt') == value.get('source_receipt') and origin.get('job_id'),
+                            '原口播源记录不一致，请重新选择已完成源')
+                    prior=read_json(verified(origin['receipt']))
+                    require(prior.get('contract') == 'motion-template-source-v1'
+                            and spoken(prior.get('script','')) == spoken(value['script'])
+                            and prior.get('voice',{}).get('sha256') == review['voice_sha256']
+                            and prior.get('avatar',{}).get('sha256') == sha(avatar),
+                            '原口播源与本期人物、声音不一致，请重新选择已完成源')
+                    verified(prior['voice']); verified(prior['avatar'])
+                    proof['upstream']=origin['receipt']
+                else:
+                    prior = read_json(verified(value['input']['avatar']['evidence']))
+                    from backlot.studio_dark_native_content import _voice_proof
+                    require(_voice_proof(prior, review['voice_sha256']) and prior.get('video_sha256', prior.get('sha256')) == sha(avatar), '复用人物缺少同声源依据')
+                    proof['upstream'] = value['input']['avatar']['evidence']
             atomic_private(folder/'avatar.json', proof)
             value['input']['source_review'] = binding(folder/'sources.json')
             value['input']['avatar']['evidence'] = binding(folder/'avatar.json')
@@ -723,10 +742,21 @@ class Sessions:
         require(run.get('job_id') and queue.get(run['job_id'])['status'] == 'completed', '本期视频尚未完成', 'missing')
         if value['frozen']['engine']=='component':
             from backlot import studio_motiongit_render as component
-            frozen=read_json(value['frozen']['request'])
-            component.recorded_request(queue,frozen['draft']['id'],run['render_id'])
-            folder=component._paths(queue,frozen);result=read_json(folder/'result.json');output=folder/'native-final.mp4'
-            require(result.get('request_sha256')==run['request_sha256'] and sha(output)==result.get('output_sha256'), '本期海报成片或记录已改变')
+            from backlot.work_catalog import WorkCatalog, regular_path
+            job=queue.get(run['job_id'])
+            project=WorkCatalog(queue.projects_root).project(run['project_id'])
+            frozen=read_json(regular_path(project/'artifacts/motiongit-component-request.json',project))
+            digest=fingerprint({k:v for k,v in frozen.items() if k not in {'request_sha256','render_id','phase'}})
+            require(frozen.get('contract')==component.CONTRACT and digest==run['request_sha256']==frozen.get('request_sha256')
+                    and frozen.get('project_id')==run['project_id']==job['project_id']
+                    and frozen.get('render_id')==run['render_id']==job['parent_job_id']=='motiongit-component-'+digest[:20],
+                    '本期海报成片请求身份已改变')
+            folder=project/'renders'/run['render_id']
+            result=read_json(regular_path(folder/'result.json',project))
+            output=regular_path(folder/'native-final.mp4',project)
+            require(result.get('request_sha256')==digest and sha(output)==result.get('output_sha256')
+                    and sha(regular_path(folder/'quality.json',project))==result.get('quality_sha256')
+                    and job.get('result',{}).get('output_sha256')==result.get('output_sha256'), '本期海报成片或记录已改变')
             return output
         adapter = native if value['frozen']['engine'] == 'native' else dark
         frozen = read_json(value['frozen']['request']); project = adapter.validate(queue, frozen)

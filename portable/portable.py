@@ -154,6 +154,15 @@ def bundle_lock():
 
 def prepare() -> dict:
     started = time.monotonic()
+    if __package__:
+        from .template_assets import materialize
+    else:
+        import importlib.util
+        spec = importlib.util.spec_from_file_location('haike_template_assets', Path(__file__).with_name('template_assets.py'))
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        materialize = module.materialize
+    materialize(ROOT)
     base = local_path("runtime/python")
     if not (base / "python.exe").is_file():
         raise RuntimeError("离线 Python 缺失，请完整解压发行包；不会在线安装")
