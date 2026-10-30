@@ -18,8 +18,9 @@ class FullReleaseTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)
             release = json.loads((ROOT / "VERSION.json").read_text(encoding="utf-8"))
+            release['version'] = '7.4.2'
             release["source_commit"] = "a" * 40
-            archive = root / "haike-video-v1.0.0-windows-x64.zip"
+            archive = root / "haike-video-v7.4.2-windows-x64.zip"
             with zipfile.ZipFile(archive, "w") as package:
                 package.writestr("Haike_videoflow/RELEASE.json", json.dumps(release))
             output = root / "haike-update.json"
@@ -27,7 +28,7 @@ class FullReleaseTests(unittest.TestCase):
             feed = json.loads(output.read_text(encoding="utf-8"))
             self.assertEqual(feed["package"]["kind"], "full")
             self.assertEqual(feed["base_version"], "0.0.0")
-            self.assertEqual(feed["version"], "1.0.0")
+            self.assertEqual(feed["version"], "7.4.2")
             self.assertEqual(feed["package"]["sha256"], hashlib.sha256(archive.read_bytes()).hexdigest())
             self.assertTrue(Path(str(archive) + ".sha256").is_file())
             with self.assertRaises(ValueError):

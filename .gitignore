@@ -39,6 +39,7 @@ projects/
 renders/
 cache/
 /.cache/
+/Haike_video/.cache/
 temp/
 logs/
 dist/
@@ -55,6 +56,7 @@ models/
 *.wav
 *.onnx
 private-transfer/
+/migration/
 test_artifacts/
 .DS_Store
 .firecrawl/

@@ -27,3 +27,12 @@ creatorhub/tests/test_publish_contract_v2.py:generic-api-key:88
 creatorhub/tests/test_publish_contract_v2.py:generic-api-key:92
 creatorhub/tests/test_xhs_boundaries.py:generic-api-key:532
 creatorhub/tests/test_xhs_boundaries.py:generic-api-key:555
+# Reviewed JSON control paths and SHA256 evidence, not authentication material.
+Haike_video/templates/motiongit-poster-v1/profile.json:generic-api-key:34
+Haike_video/templates/motiongit-poster-v1/profile.json:generic-api-key:39
+Haike_video/templates/motiongit-poster-v1/profile.json:generic-api-key:44
+Haike_video/templates/motiongit-poster-v1/profile.json:generic-api-key:76
+Haike_video/templates/motiongit-poster-v1/profile.json:generic-api-key:81
+Haike_video/templates/motiongit-poster-v1/profile.json:generic-api-key:86
+Haike_video/templates/motiongit-native-story-v1/reference/validation-summary.json:generic-api-key:224
+Haike_video/templates/motiongit-native-story-v1/reference/validation-summary.json:generic-api-key:225

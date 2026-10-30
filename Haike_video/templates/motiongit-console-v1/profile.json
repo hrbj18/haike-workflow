@@ -1,0 +1,423 @@
+{
+  "schema": "haike.motion-template-profile/1",
+  "document_kind": "reference",
+  "stage": "specification",
+  "id": "motiongit-console-story-v1",
+  "name": "科技控制台 · 口播讲解",
+  "package": {
+    "template_id": "template-04-dark-console",
+    "versions": [
+      "2.7.20-alpha.3"
+    ]
+  },
+  "adapter": "studio_motion_console",
+  "full_renderer": "studio_dark_native",
+  "workflow": "native",
+  "layouts": {
+    "landscape": {
+      "width": 1920,
+      "height": 1080,
+      "fps": 60
+    }
+  },
+  "status": "integration-in-progress",
+  "automatic_unknown_package_conversion": false,
+  "groups": [
+    {
+      "id": "keyword-slam",
+      "fields": [
+        {
+          "key": "chapter",
+          "label": "章节",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 20,
+          "required": true
+        },
+        {
+          "key": "keyword",
+          "label": "关键词（≤6 字符，描边巨字）",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 6,
+          "required": true
+        },
+        {
+          "key": "question",
+          "label": "跟砸的问句/判断",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 7,
+          "required": true
+        },
+        {
+          "key": "note",
+          "label": "打字注解",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 18,
+          "required": true
+        }
+      ],
+      "validated_visual_anchors": {
+        "keyword": 0.16666666666666666
+      },
+      "observed_example_frames": 216,
+      "anchor_scope": "visual choreography; not inferred speech or word timestamps"
+    },
+    {
+      "id": "statement-orb",
+      "fields": [
+        {
+          "key": "chapter",
+          "label": "章节",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 20,
+          "required": true
+        },
+        {
+          "key": "kicker",
+          "label": "小标题",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 24,
+          "required": true
+        },
+        {
+          "key": "lines.0",
+          "label": "上句",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 14,
+          "required": true
+        },
+        {
+          "key": "lines.1",
+          "label": "下句（强调）",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 12,
+          "required": true
+        },
+        {
+          "key": "source",
+          "label": "出处/补充",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 24,
+          "required": true
+        }
+      ],
+      "validated_visual_anchors": {
+        "kicker": 0.15,
+        "line-2": 2.45,
+        "source": 4.52,
+        "line-1": 0.4
+      },
+      "observed_example_frames": 348,
+      "anchor_scope": "visual choreography; not inferred speech or word timestamps"
+    },
+    {
+      "id": "works-fan",
+      "fields": [
+        {
+          "key": "chapter",
+          "label": "章节",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 20,
+          "required": true
+        },
+        {
+          "key": "title",
+          "label": "标题",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 12,
+          "required": true
+        },
+        {
+          "key": "note",
+          "label": "说明",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 16,
+          "required": true
+        },
+        {
+          "key": "works.0.name",
+          "label": "作品 1 名称",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 10,
+          "required": true
+        },
+        {
+          "key": "works.0.kind",
+          "label": "作品 1 类型",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 6,
+          "required": true
+        },
+        {
+          "key": "works.1.name",
+          "label": "作品 2 名称",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 10,
+          "required": true
+        },
+        {
+          "key": "works.1.kind",
+          "label": "作品 2 类型",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 6,
+          "required": true
+        },
+        {
+          "key": "works.2.name",
+          "label": "作品 3 名称",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 10,
+          "required": true
+        },
+        {
+          "key": "works.2.kind",
+          "label": "作品 3 类型",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 6,
+          "required": true
+        },
+        {
+          "key": "works.3.name",
+          "label": "作品 4 名称",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 10,
+          "required": true
+        },
+        {
+          "key": "works.3.kind",
+          "label": "作品 4 类型",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 6,
+          "required": true
+        },
+        {
+          "key": "works.4.name",
+          "label": "作品 5 名称",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 10,
+          "required": true
+        },
+        {
+          "key": "works.4.kind",
+          "label": "作品 5 类型",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 6,
+          "required": true
+        },
+        {
+          "key": "works.5.name",
+          "label": "作品 6 名称",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 10,
+          "required": true
+        },
+        {
+          "key": "works.5.kind",
+          "label": "作品 6 类型",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 6,
+          "required": true
+        }
+      ],
+      "validated_visual_anchors": {
+        "fan": 0.18333333333333332
+      },
+      "observed_example_frames": 324,
+      "anchor_scope": "visual choreography; not inferred speech or word timestamps"
+    },
+    {
+      "id": "versus-panels",
+      "fields": [
+        {
+          "key": "chapter",
+          "label": "章节",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 20,
+          "required": true
+        },
+        {
+          "key": "title",
+          "label": "标题",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 18,
+          "required": true
+        },
+        {
+          "key": "left.head",
+          "label": "左侧名称",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 12,
+          "required": true
+        },
+        {
+          "key": "left.tag",
+          "label": "左侧标签",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 8,
+          "required": true
+        },
+        {
+          "key": "left.points.0",
+          "label": "左 1",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 22,
+          "required": true
+        },
+        {
+          "key": "left.points.1",
+          "label": "左 2",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 22,
+          "required": true
+        },
+        {
+          "key": "left.points.2",
+          "label": "左 3（可选）",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 22,
+          "required": false
+        },
+        {
+          "key": "right.head",
+          "label": "右侧名称",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 12,
+          "required": true
+        },
+        {
+          "key": "right.tag",
+          "label": "右侧标签",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 8,
+          "required": true
+        },
+        {
+          "key": "right.points.0",
+          "label": "右 1",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 22,
+          "required": true
+        },
+        {
+          "key": "right.points.1",
+          "label": "右 2",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 22,
+          "required": true
+        },
+        {
+          "key": "right.points.2",
+          "label": "右 3（可选）",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 22,
+          "required": false
+        },
+        {
+          "key": "verdict",
+          "label": "盖章结论（winner=0 时不显示）",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 10,
+          "required": true
+        },
+        {
+          "key": "winner",
+          "label": "胜出方：1 左 / 2 右 / 0 不判",
+          "type": "number",
+          "minimum": 0,
+          "maximum": 2,
+          "required": true
+        }
+      ],
+      "validated_visual_anchors": {
+        "title": 0.15,
+        "left": 1.5,
+        "right": 3.6,
+        "versus": 5.1,
+        "verdict": 6.6
+      },
+      "observed_example_frames": 480,
+      "anchor_scope": "visual choreography; not inferred speech or word timestamps"
+    },
+    {
+      "id": "readme-terminal",
+      "fields": [
+        {
+          "key": "chapter",
+          "label": "章节",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 12,
+          "required": true
+        },
+        {
+          "key": "window.title",
+          "label": "窗口标题",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 18,
+          "required": true
+        },
+        {
+          "key": "body",
+          "label": "打字正文（换行保留，≤7 行）",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200,
+          "required": true
+        }
+      ],
+      "validated_visual_anchors": {
+        "window": 0.08333333333333333
+      },
+      "observed_example_frames": 468,
+      "anchor_scope": "visual choreography; not inferred speech or word timestamps"
+    }
+  ],
+  "validation": {
+    "public_contract": "pass",
+    "official_native_plan": "pass",
+    "actual_preview_12_frames": "pass",
+    "full_render": "pending",
+    "portrait45": "pending",
+    "web_session": "pending",
+    "second_use": "pending",
+    "continuous_av": "pending"
+  },
+  "note": "This profile is reference metadata for ongoing integration; it does not enable catalog production or replace per-episode content/media/clock review."
+}

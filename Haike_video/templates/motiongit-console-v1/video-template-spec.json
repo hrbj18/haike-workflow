@@ -1,0 +1,6164 @@
+{
+  "schema_version": 1,
+  "standard_version": "video-template-v1",
+  "template_id": "motiongit-console-story-v1",
+  "template_version": "console-v1/2.7.20-alpha.3/square-test-20261030",
+  "template_type": "custom",
+  "spec_kind": "implementation",
+  "stage": "ready",
+  "authority": {
+    "runbook": "README.md",
+    "implementation_paths": [
+      "profile.json",
+      "source-contract.json",
+      "../../backlot/studio_motion_console.py",
+      "../../backlot/studio_motion_console_session.py",
+      "../../backlot/studio_motion_native_viewport.py",
+      "../../backlot/studio_motion_face_crop.py",
+      "../../backlot/studio_console_presenter.py",
+      "presenter.js",
+      "../../backlot/studio_motion_presenter_framing.py",
+      "../../backlot/studio_dark_native.py",
+      "../../backlot/studio_motion_templates.py",
+      "../../scripts/motion_templates.py"
+    ],
+    "parameter_source": "../../backlot/studio_motion_console.py"
+  },
+  "canvas": {
+    "width": 1440,
+    "height": 1800,
+    "fps": 60,
+    "duration_seconds": 30.4,
+    "clock": "数值为本机30.4秒4:5验收实例；后续每期以完整PCM音频和实际ASR句间隙求值，ceil(seconds*5)*12帧。原生锚点/退场原速，画面只分配合法停留，不截句或拉伸。原生横版1920x1080；4:5先调用原包1080x1920 portrait重排，再按studio_motion_native_viewport.CONSOLE_45取视窗并输出1440x1800。",
+    "coordinate_system": "top_left_pixels"
+  },
+  "narrative": {
+    "purpose": "复用五组原生控制台动作，改41个公开文案槽、六路真实视频、完整口播/同声源人物和一份配乐；实例数值不作为后续固定时长。",
+    "information_hierarchy": [
+      "完整口播语义",
+      "真实素材证据",
+      "原生整组排版与运动",
+      "同声源人物",
+      "邀请与地址"
+    ],
+    "structure": [
+      "keyword-slam",
+      "statement-orb",
+      "works-fan",
+      "versus-panels",
+      "readme-terminal"
+    ]
+  },
+  "scenes": [
+    {
+      "id": "keyword-slam",
+      "start": 0,
+      "end": 3.5833333333333335,
+      "purpose": "keyword-slam的本期语义表达",
+      "element_ids": [
+        "canvas",
+        "captions",
+        "presenter",
+        "voice",
+        "music",
+        "keyword-slam",
+        "keyword-slam-field-0",
+        "keyword-slam-field-1",
+        "keyword-slam-field-2",
+        "keyword-slam-field-3"
+      ],
+      "variant": "original-native-portrait; final viewport4:5; instance timing only"
+    },
+    {
+      "id": "statement-orb",
+      "start": 3.5833333333333335,
+      "end": 9.333333333333334,
+      "purpose": "statement-orb的本期语义表达",
+      "element_ids": [
+        "canvas",
+        "captions",
+        "presenter",
+        "voice",
+        "music",
+        "statement-orb",
+        "statement-orb-field-0",
+        "statement-orb-field-1",
+        "statement-orb-field-2",
+        "statement-orb-field-3",
+        "statement-orb-field-4"
+      ],
+      "variant": "original-native-portrait; final viewport4:5; instance timing only"
+    },
+    {
+      "id": "works-fan",
+      "start": 9.333333333333334,
+      "end": 14.7,
+      "purpose": "works-fan的本期语义表达",
+      "element_ids": [
+        "canvas",
+        "captions",
+        "presenter",
+        "voice",
+        "music",
+        "works-fan",
+        "works-fan-field-0",
+        "works-fan-field-1",
+        "works-fan-field-2",
+        "works-fan-field-3",
+        "works-fan-field-4",
+        "works-fan-field-5",
+        "works-fan-field-6",
+        "works-fan-field-7",
+        "works-fan-field-8",
+        "works-fan-field-9",
+        "works-fan-field-10",
+        "works-fan-field-11",
+        "works-fan-field-12",
+        "works-fan-field-13",
+        "works-fan-field-14",
+        "media-0",
+        "media-1",
+        "media-2",
+        "media-3",
+        "media-4",
+        "media-5"
+      ],
+      "variant": "original-native-portrait; final viewport4:5; instance timing only"
+    },
+    {
+      "id": "versus-panels",
+      "start": 14.7,
+      "end": 22.766666666666666,
+      "purpose": "versus-panels的本期语义表达",
+      "element_ids": [
+        "canvas",
+        "captions",
+        "presenter",
+        "voice",
+        "music",
+        "versus-panels",
+        "versus-panels-field-0",
+        "versus-panels-field-1",
+        "versus-panels-field-2",
+        "versus-panels-field-3",
+        "versus-panels-field-4",
+        "versus-panels-field-5",
+        "versus-panels-field-6",
+        "versus-panels-field-7",
+        "versus-panels-field-8",
+        "versus-panels-field-9",
+        "versus-panels-field-10",
+        "versus-panels-field-11",
+        "versus-panels-field-12",
+        "versus-panels-field-13"
+      ],
+      "variant": "original-native-portrait; final viewport4:5; instance timing only"
+    },
+    {
+      "id": "readme-terminal",
+      "start": 22.766666666666666,
+      "end": 30.4,
+      "purpose": "readme-terminal的本期语义表达",
+      "element_ids": [
+        "canvas",
+        "captions",
+        "presenter",
+        "voice",
+        "music",
+        "readme-terminal",
+        "readme-terminal-field-0",
+        "readme-terminal-field-1",
+        "readme-terminal-field-2"
+      ],
+      "variant": "original-native-portrait; final viewport4:5; instance timing only"
+    }
+  ],
+  "assets": [
+    {
+      "id": "original-style",
+      "kind": "other",
+      "path": null,
+      "source": "精确版本合法原包持有的原生字体、纹理、环境与动作音效；绑定于官方prepare工程和来源锁",
+      "embedded_content": [
+        "固定字体与深色控制台视觉",
+        "原生动作音效"
+      ],
+      "rights_status": "由本机合法原包环境提供，按原包授权核对；不随项目公开源码分发"
+    },
+    {
+      "id": "voice",
+      "kind": "audio",
+      "path": null,
+      "source": "每期完整原声与同源ASR证据",
+      "embedded_content": [],
+      "rights_status": "每期核对用户授权，不随公开模板分发"
+    },
+    {
+      "id": "presenter",
+      "kind": "video",
+      "path": null,
+      "source": "每期完整同声源人物和实际校准记录",
+      "embedded_content": [
+        "人物形象及背景"
+      ],
+      "rights_status": "每期核对用户授权，不随公开模板分发"
+    },
+    {
+      "id": "music",
+      "kind": "audio",
+      "path": null,
+      "source": "每期明确配乐与混音参数",
+      "embedded_content": [],
+      "rights_status": "每期核对配乐授权"
+    },
+    {
+      "id": "media-0",
+      "kind": "video",
+      "path": null,
+      "source": "本期media.wall[0]，实际源区间覆盖完整works-fan",
+      "embedded_content": [
+        "视频内人物、横幅、字幕为固化实拍"
+      ],
+      "rights_status": "本期授权和来源核对"
+    },
+    {
+      "id": "media-1",
+      "kind": "video",
+      "path": null,
+      "source": "本期media.wall[1]，实际源区间覆盖完整works-fan",
+      "embedded_content": [
+        "视频内人物、横幅、字幕为固化实拍"
+      ],
+      "rights_status": "本期授权和来源核对"
+    },
+    {
+      "id": "media-2",
+      "kind": "video",
+      "path": null,
+      "source": "本期media.wall[2]，实际源区间覆盖完整works-fan",
+      "embedded_content": [
+        "视频内人物、横幅、字幕为固化实拍"
+      ],
+      "rights_status": "本期授权和来源核对"
+    },
+    {
+      "id": "media-3",
+      "kind": "video",
+      "path": null,
+      "source": "本期media.wall[3]，实际源区间覆盖完整works-fan",
+      "embedded_content": [
+        "视频内人物、横幅、字幕为固化实拍"
+      ],
+      "rights_status": "本期授权和来源核对"
+    },
+    {
+      "id": "media-4",
+      "kind": "video",
+      "path": null,
+      "source": "本期media.wall[4]，实际源区间覆盖完整works-fan",
+      "embedded_content": [
+        "视频内人物、横幅、字幕为固化实拍"
+      ],
+      "rights_status": "本期授权和来源核对"
+    },
+    {
+      "id": "media-5",
+      "kind": "video",
+      "path": null,
+      "source": "本期media.wall[5]，实际源区间覆盖完整works-fan",
+      "embedded_content": [
+        "视频内人物、横幅、字幕为固化实拍"
+      ],
+      "rights_status": "本期授权和来源核对"
+    }
+  ],
+  "elements": [
+    {
+      "id": "canvas",
+      "type": "background",
+      "role": "原生控制台环境与最终画布",
+      "parent_id": null,
+      "z_index": 0,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": "original-style",
+        "description": "原生控制台环境与最终画布；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 30.4
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "原生控制台环境与最终画布完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "captions",
+      "type": "text",
+      "role": "真实完整句字幕",
+      "parent_id": "canvas",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "captions",
+        "asset_id": "voice",
+        "description": "真实完整句字幕；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true,
+          "font": "按原包官方prepare的冻结字体依赖",
+          "font_size": "原版recipe对当前文案求值；最长内容实际看帧",
+          "max_lines": "本字段的原生控件行数/换行策略由profile与本期prepare决定，body允许明确多行",
+          "overflow": "长度预检后实际看完整画幅；语义缩写或合法分行后重新审核"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 30.4
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 0,
+          "end": 30.4,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "captions"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "真实完整句字幕完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "presenter",
+      "type": "video",
+      "role": "同声源人物原版载体",
+      "parent_id": "canvas",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "presenter",
+        "asset_id": "presenter",
+        "description": "同声源人物原版载体；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 30.4
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 0,
+          "end": 30.4,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "presenter"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "同声源人物原版载体完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "voice",
+      "type": "audio",
+      "role": "完整原声及原生动作音效",
+      "parent_id": "canvas",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "voice",
+        "asset_id": "voice",
+        "description": "完整原声及原生动作音效；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 30.4
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "voice"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "完整原声及原生动作音效完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "music",
+      "type": "audio",
+      "role": "外部单份BGM与原生人声音效混合",
+      "parent_id": "canvas",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "music",
+        "asset_id": "music",
+        "description": "外部单份BGM与原生人声音效混合；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 30.4
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "music"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "外部单份BGM与原生人声音效混合完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "keyword-slam",
+      "type": "native-group",
+      "role": "keyword-slam原生完整组",
+      "parent_id": "canvas",
+      "z_index": 1,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "keyword-slam原生完整组；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 3.5833333333333335
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 0,
+          "end": 3.5833333333333335,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "keyword-slam原生完整组完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "keyword-slam-field-0",
+      "type": "text",
+      "role": "章节",
+      "parent_id": "keyword-slam",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "keyword-slam-field-0",
+        "asset_id": null,
+        "description": "章节；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true,
+          "font": "按原包官方prepare的冻结字体依赖",
+          "font_size": "原版recipe对当前文案求值；最长内容实际看帧",
+          "max_lines": "本字段的原生控件行数/换行策略由profile与本期prepare决定，body允许明确多行",
+          "overflow": "长度预检后实际看完整画幅；语义缩写或合法分行后重新审核"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 3.5833333333333335
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 0,
+          "end": 3.5833333333333335,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "content['keyword-slam']['chapter']"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "章节完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "keyword-slam-field-1",
+      "type": "text",
+      "role": "关键词（≤6 字符，描边巨字）",
+      "parent_id": "keyword-slam",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "keyword-slam-field-1",
+        "asset_id": null,
+        "description": "关键词（≤6 字符，描边巨字）；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true,
+          "font": "按原包官方prepare的冻结字体依赖",
+          "font_size": "原版recipe对当前文案求值；最长内容实际看帧",
+          "max_lines": "本字段的原生控件行数/换行策略由profile与本期prepare决定，body允许明确多行",
+          "overflow": "长度预检后实际看完整画幅；语义缩写或合法分行后重新审核"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 3.5833333333333335
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 0,
+          "end": 3.5833333333333335,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "content['keyword-slam']['keyword']"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "关键词（≤6 字符，描边巨字）完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "keyword-slam-field-2",
+      "type": "text",
+      "role": "跟砸的问句/判断",
+      "parent_id": "keyword-slam",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "keyword-slam-field-2",
+        "asset_id": null,
+        "description": "跟砸的问句/判断；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true,
+          "font": "按原包官方prepare的冻结字体依赖",
+          "font_size": "原版recipe对当前文案求值；最长内容实际看帧",
+          "max_lines": "本字段的原生控件行数/换行策略由profile与本期prepare决定，body允许明确多行",
+          "overflow": "长度预检后实际看完整画幅；语义缩写或合法分行后重新审核"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 3.5833333333333335
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 0,
+          "end": 3.5833333333333335,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "content['keyword-slam']['question']"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "跟砸的问句/判断完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "keyword-slam-field-3",
+      "type": "text",
+      "role": "打字注解",
+      "parent_id": "keyword-slam",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "keyword-slam-field-3",
+        "asset_id": null,
+        "description": "打字注解；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true,
+          "font": "按原包官方prepare的冻结字体依赖",
+          "font_size": "原版recipe对当前文案求值；最长内容实际看帧",
+          "max_lines": "本字段的原生控件行数/换行策略由profile与本期prepare决定，body允许明确多行",
+          "overflow": "长度预检后实际看完整画幅；语义缩写或合法分行后重新审核"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 3.5833333333333335
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 0,
+          "end": 3.5833333333333335,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "content['keyword-slam']['note']"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "打字注解完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "statement-orb",
+      "type": "native-group",
+      "role": "statement-orb原生完整组",
+      "parent_id": "canvas",
+      "z_index": 1,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "statement-orb原生完整组；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 3.5833333333333335,
+        "end": 9.333333333333334
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 3.5833333333333335,
+          "end": 9.333333333333334,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "statement-orb原生完整组完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "statement-orb-field-0",
+      "type": "text",
+      "role": "章节",
+      "parent_id": "statement-orb",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "statement-orb-field-0",
+        "asset_id": null,
+        "description": "章节；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true,
+          "font": "按原包官方prepare的冻结字体依赖",
+          "font_size": "原版recipe对当前文案求值；最长内容实际看帧",
+          "max_lines": "本字段的原生控件行数/换行策略由profile与本期prepare决定，body允许明确多行",
+          "overflow": "长度预检后实际看完整画幅；语义缩写或合法分行后重新审核"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 3.5833333333333335,
+        "end": 9.333333333333334
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 3.5833333333333335,
+          "end": 9.333333333333334,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "content['statement-orb']['chapter']"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "章节完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "statement-orb-field-1",
+      "type": "text",
+      "role": "小标题",
+      "parent_id": "statement-orb",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "statement-orb-field-1",
+        "asset_id": null,
+        "description": "小标题；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true,
+          "font": "按原包官方prepare的冻结字体依赖",
+          "font_size": "原版recipe对当前文案求值；最长内容实际看帧",
+          "max_lines": "本字段的原生控件行数/换行策略由profile与本期prepare决定，body允许明确多行",
+          "overflow": "长度预检后实际看完整画幅；语义缩写或合法分行后重新审核"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 3.5833333333333335,
+        "end": 9.333333333333334
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 3.5833333333333335,
+          "end": 9.333333333333334,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "content['statement-orb']['kicker']"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "小标题完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "statement-orb-field-2",
+      "type": "text",
+      "role": "上句",
+      "parent_id": "statement-orb",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "statement-orb-field-2",
+        "asset_id": null,
+        "description": "上句；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true,
+          "font": "按原包官方prepare的冻结字体依赖",
+          "font_size": "原版recipe对当前文案求值；最长内容实际看帧",
+          "max_lines": "本字段的原生控件行数/换行策略由profile与本期prepare决定，body允许明确多行",
+          "overflow": "长度预检后实际看完整画幅；语义缩写或合法分行后重新审核"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 3.5833333333333335,
+        "end": 9.333333333333334
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 3.5833333333333335,
+          "end": 9.333333333333334,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "content['statement-orb']['lines.0']"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "上句完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "statement-orb-field-3",
+      "type": "text",
+      "role": "下句（强调）",
+      "parent_id": "statement-orb",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "statement-orb-field-3",
+        "asset_id": null,
+        "description": "下句（强调）；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true,
+          "font": "按原包官方prepare的冻结字体依赖",
+          "font_size": "原版recipe对当前文案求值；最长内容实际看帧",
+          "max_lines": "本字段的原生控件行数/换行策略由profile与本期prepare决定，body允许明确多行",
+          "overflow": "长度预检后实际看完整画幅；语义缩写或合法分行后重新审核"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 3.5833333333333335,
+        "end": 9.333333333333334
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 3.5833333333333335,
+          "end": 9.333333333333334,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "content['statement-orb']['lines.1']"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "下句（强调）完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "statement-orb-field-4",
+      "type": "text",
+      "role": "出处/补充",
+      "parent_id": "statement-orb",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "statement-orb-field-4",
+        "asset_id": null,
+        "description": "出处/补充；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true,
+          "font": "按原包官方prepare的冻结字体依赖",
+          "font_size": "原版recipe对当前文案求值；最长内容实际看帧",
+          "max_lines": "本字段的原生控件行数/换行策略由profile与本期prepare决定，body允许明确多行",
+          "overflow": "长度预检后实际看完整画幅；语义缩写或合法分行后重新审核"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 3.5833333333333335,
+        "end": 9.333333333333334
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 3.5833333333333335,
+          "end": 9.333333333333334,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "content['statement-orb']['source']"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "出处/补充完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "works-fan",
+      "type": "native-group",
+      "role": "works-fan原生完整组",
+      "parent_id": "canvas",
+      "z_index": 1,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "works-fan原生完整组；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 9.333333333333334,
+        "end": 14.7
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 9.333333333333334,
+          "end": 14.7,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "works-fan原生完整组完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "works-fan-field-0",
+      "type": "text",
+      "role": "章节",
+      "parent_id": "works-fan",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "works-fan-field-0",
+        "asset_id": null,
+        "description": "章节；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true,
+          "font": "按原包官方prepare的冻结字体依赖",
+          "font_size": "原版recipe对当前文案求值；最长内容实际看帧",
+          "max_lines": "本字段的原生控件行数/换行策略由profile与本期prepare决定，body允许明确多行",
+          "overflow": "长度预检后实际看完整画幅；语义缩写或合法分行后重新审核"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 9.333333333333334,
+        "end": 14.7
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 9.333333333333334,
+          "end": 14.7,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "content['works-fan']['chapter']"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "章节完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "works-fan-field-1",
+      "type": "text",
+      "role": "标题",
+      "parent_id": "works-fan",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "works-fan-field-1",
+        "asset_id": null,
+        "description": "标题；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true,
+          "font": "按原包官方prepare的冻结字体依赖",
+          "font_size": "原版recipe对当前文案求值；最长内容实际看帧",
+          "max_lines": "本字段的原生控件行数/换行策略由profile与本期prepare决定，body允许明确多行",
+          "overflow": "长度预检后实际看完整画幅；语义缩写或合法分行后重新审核"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 9.333333333333334,
+        "end": 14.7
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 9.333333333333334,
+          "end": 14.7,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "content['works-fan']['title']"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "标题完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "works-fan-field-2",
+      "type": "text",
+      "role": "说明",
+      "parent_id": "works-fan",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "works-fan-field-2",
+        "asset_id": null,
+        "description": "说明；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true,
+          "font": "按原包官方prepare的冻结字体依赖",
+          "font_size": "原版recipe对当前文案求值；最长内容实际看帧",
+          "max_lines": "本字段的原生控件行数/换行策略由profile与本期prepare决定，body允许明确多行",
+          "overflow": "长度预检后实际看完整画幅；语义缩写或合法分行后重新审核"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 9.333333333333334,
+        "end": 14.7
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 9.333333333333334,
+          "end": 14.7,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "content['works-fan']['note']"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "说明完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "works-fan-field-3",
+      "type": "text",
+      "role": "作品 1 名称",
+      "parent_id": "works-fan",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "works-fan-field-3",
+        "asset_id": null,
+        "description": "作品 1 名称；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true,
+          "font": "按原包官方prepare的冻结字体依赖",
+          "font_size": "原版recipe对当前文案求值；最长内容实际看帧",
+          "max_lines": "本字段的原生控件行数/换行策略由profile与本期prepare决定，body允许明确多行",
+          "overflow": "长度预检后实际看完整画幅；语义缩写或合法分行后重新审核"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 9.333333333333334,
+        "end": 14.7
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 9.333333333333334,
+          "end": 14.7,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "content['works-fan']['works.0.name']"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "作品 1 名称完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "works-fan-field-4",
+      "type": "text",
+      "role": "作品 1 类型",
+      "parent_id": "works-fan",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "works-fan-field-4",
+        "asset_id": null,
+        "description": "作品 1 类型；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true,
+          "font": "按原包官方prepare的冻结字体依赖",
+          "font_size": "原版recipe对当前文案求值；最长内容实际看帧",
+          "max_lines": "本字段的原生控件行数/换行策略由profile与本期prepare决定，body允许明确多行",
+          "overflow": "长度预检后实际看完整画幅；语义缩写或合法分行后重新审核"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 9.333333333333334,
+        "end": 14.7
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 9.333333333333334,
+          "end": 14.7,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "content['works-fan']['works.0.kind']"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "作品 1 类型完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "works-fan-field-5",
+      "type": "text",
+      "role": "作品 2 名称",
+      "parent_id": "works-fan",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "works-fan-field-5",
+        "asset_id": null,
+        "description": "作品 2 名称；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true,
+          "font": "按原包官方prepare的冻结字体依赖",
+          "font_size": "原版recipe对当前文案求值；最长内容实际看帧",
+          "max_lines": "本字段的原生控件行数/换行策略由profile与本期prepare决定，body允许明确多行",
+          "overflow": "长度预检后实际看完整画幅；语义缩写或合法分行后重新审核"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 9.333333333333334,
+        "end": 14.7
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 9.333333333333334,
+          "end": 14.7,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "content['works-fan']['works.1.name']"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "作品 2 名称完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "works-fan-field-6",
+      "type": "text",
+      "role": "作品 2 类型",
+      "parent_id": "works-fan",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "works-fan-field-6",
+        "asset_id": null,
+        "description": "作品 2 类型；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true,
+          "font": "按原包官方prepare的冻结字体依赖",
+          "font_size": "原版recipe对当前文案求值；最长内容实际看帧",
+          "max_lines": "本字段的原生控件行数/换行策略由profile与本期prepare决定，body允许明确多行",
+          "overflow": "长度预检后实际看完整画幅；语义缩写或合法分行后重新审核"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 9.333333333333334,
+        "end": 14.7
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 9.333333333333334,
+          "end": 14.7,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "content['works-fan']['works.1.kind']"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "作品 2 类型完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "works-fan-field-7",
+      "type": "text",
+      "role": "作品 3 名称",
+      "parent_id": "works-fan",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "works-fan-field-7",
+        "asset_id": null,
+        "description": "作品 3 名称；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true,
+          "font": "按原包官方prepare的冻结字体依赖",
+          "font_size": "原版recipe对当前文案求值；最长内容实际看帧",
+          "max_lines": "本字段的原生控件行数/换行策略由profile与本期prepare决定，body允许明确多行",
+          "overflow": "长度预检后实际看完整画幅；语义缩写或合法分行后重新审核"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 9.333333333333334,
+        "end": 14.7
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 9.333333333333334,
+          "end": 14.7,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "content['works-fan']['works.2.name']"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "作品 3 名称完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "works-fan-field-8",
+      "type": "text",
+      "role": "作品 3 类型",
+      "parent_id": "works-fan",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "works-fan-field-8",
+        "asset_id": null,
+        "description": "作品 3 类型；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true,
+          "font": "按原包官方prepare的冻结字体依赖",
+          "font_size": "原版recipe对当前文案求值；最长内容实际看帧",
+          "max_lines": "本字段的原生控件行数/换行策略由profile与本期prepare决定，body允许明确多行",
+          "overflow": "长度预检后实际看完整画幅；语义缩写或合法分行后重新审核"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 9.333333333333334,
+        "end": 14.7
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 9.333333333333334,
+          "end": 14.7,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "content['works-fan']['works.2.kind']"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "作品 3 类型完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "works-fan-field-9",
+      "type": "text",
+      "role": "作品 4 名称",
+      "parent_id": "works-fan",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "works-fan-field-9",
+        "asset_id": null,
+        "description": "作品 4 名称；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true,
+          "font": "按原包官方prepare的冻结字体依赖",
+          "font_size": "原版recipe对当前文案求值；最长内容实际看帧",
+          "max_lines": "本字段的原生控件行数/换行策略由profile与本期prepare决定，body允许明确多行",
+          "overflow": "长度预检后实际看完整画幅；语义缩写或合法分行后重新审核"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 9.333333333333334,
+        "end": 14.7
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 9.333333333333334,
+          "end": 14.7,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "content['works-fan']['works.3.name']"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "作品 4 名称完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "works-fan-field-10",
+      "type": "text",
+      "role": "作品 4 类型",
+      "parent_id": "works-fan",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "works-fan-field-10",
+        "asset_id": null,
+        "description": "作品 4 类型；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true,
+          "font": "按原包官方prepare的冻结字体依赖",
+          "font_size": "原版recipe对当前文案求值；最长内容实际看帧",
+          "max_lines": "本字段的原生控件行数/换行策略由profile与本期prepare决定，body允许明确多行",
+          "overflow": "长度预检后实际看完整画幅；语义缩写或合法分行后重新审核"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 9.333333333333334,
+        "end": 14.7
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 9.333333333333334,
+          "end": 14.7,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "content['works-fan']['works.3.kind']"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "作品 4 类型完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "works-fan-field-11",
+      "type": "text",
+      "role": "作品 5 名称",
+      "parent_id": "works-fan",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "works-fan-field-11",
+        "asset_id": null,
+        "description": "作品 5 名称；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true,
+          "font": "按原包官方prepare的冻结字体依赖",
+          "font_size": "原版recipe对当前文案求值；最长内容实际看帧",
+          "max_lines": "本字段的原生控件行数/换行策略由profile与本期prepare决定，body允许明确多行",
+          "overflow": "长度预检后实际看完整画幅；语义缩写或合法分行后重新审核"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 9.333333333333334,
+        "end": 14.7
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 9.333333333333334,
+          "end": 14.7,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "content['works-fan']['works.4.name']"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "作品 5 名称完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "works-fan-field-12",
+      "type": "text",
+      "role": "作品 5 类型",
+      "parent_id": "works-fan",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "works-fan-field-12",
+        "asset_id": null,
+        "description": "作品 5 类型；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true,
+          "font": "按原包官方prepare的冻结字体依赖",
+          "font_size": "原版recipe对当前文案求值；最长内容实际看帧",
+          "max_lines": "本字段的原生控件行数/换行策略由profile与本期prepare决定，body允许明确多行",
+          "overflow": "长度预检后实际看完整画幅；语义缩写或合法分行后重新审核"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 9.333333333333334,
+        "end": 14.7
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 9.333333333333334,
+          "end": 14.7,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "content['works-fan']['works.4.kind']"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "作品 5 类型完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "works-fan-field-13",
+      "type": "text",
+      "role": "作品 6 名称",
+      "parent_id": "works-fan",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "works-fan-field-13",
+        "asset_id": null,
+        "description": "作品 6 名称；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true,
+          "font": "按原包官方prepare的冻结字体依赖",
+          "font_size": "原版recipe对当前文案求值；最长内容实际看帧",
+          "max_lines": "本字段的原生控件行数/换行策略由profile与本期prepare决定，body允许明确多行",
+          "overflow": "长度预检后实际看完整画幅；语义缩写或合法分行后重新审核"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 9.333333333333334,
+        "end": 14.7
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 9.333333333333334,
+          "end": 14.7,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "content['works-fan']['works.5.name']"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "作品 6 名称完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "works-fan-field-14",
+      "type": "text",
+      "role": "作品 6 类型",
+      "parent_id": "works-fan",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "works-fan-field-14",
+        "asset_id": null,
+        "description": "作品 6 类型；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true,
+          "font": "按原包官方prepare的冻结字体依赖",
+          "font_size": "原版recipe对当前文案求值；最长内容实际看帧",
+          "max_lines": "本字段的原生控件行数/换行策略由profile与本期prepare决定，body允许明确多行",
+          "overflow": "长度预检后实际看完整画幅；语义缩写或合法分行后重新审核"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 9.333333333333334,
+        "end": 14.7
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 9.333333333333334,
+          "end": 14.7,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "content['works-fan']['works.5.kind']"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "作品 6 类型完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "media-0",
+      "type": "video",
+      "role": "第1路真实实拍",
+      "parent_id": "works-fan",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "media-0",
+        "asset_id": "media-0",
+        "description": "第1路真实实拍；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 9.333333333333334,
+        "end": 14.7
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 9.333333333333334,
+          "end": 14.7,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "media.wall[0]"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "第1路真实实拍完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "media-1",
+      "type": "video",
+      "role": "第2路真实实拍",
+      "parent_id": "works-fan",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "media-1",
+        "asset_id": "media-1",
+        "description": "第2路真实实拍；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 9.333333333333334,
+        "end": 14.7
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 9.333333333333334,
+          "end": 14.7,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "media.wall[1]"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "第2路真实实拍完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "media-2",
+      "type": "video",
+      "role": "第3路真实实拍",
+      "parent_id": "works-fan",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "media-2",
+        "asset_id": "media-2",
+        "description": "第3路真实实拍；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 9.333333333333334,
+        "end": 14.7
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 9.333333333333334,
+          "end": 14.7,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "media.wall[2]"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "第3路真实实拍完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "media-3",
+      "type": "video",
+      "role": "第4路真实实拍",
+      "parent_id": "works-fan",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "media-3",
+        "asset_id": "media-3",
+        "description": "第4路真实实拍；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 9.333333333333334,
+        "end": 14.7
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 9.333333333333334,
+          "end": 14.7,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "media.wall[3]"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "第4路真实实拍完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "media-4",
+      "type": "video",
+      "role": "第5路真实实拍",
+      "parent_id": "works-fan",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "media-4",
+        "asset_id": "media-4",
+        "description": "第5路真实实拍；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 9.333333333333334,
+        "end": 14.7
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 9.333333333333334,
+          "end": 14.7,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "media.wall[4]"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "第5路真实实拍完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "media-5",
+      "type": "video",
+      "role": "第6路真实实拍",
+      "parent_id": "works-fan",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "media-5",
+        "asset_id": "media-5",
+        "description": "第6路真实实拍；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 9.333333333333334,
+        "end": 14.7
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 9.333333333333334,
+          "end": 14.7,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "media.wall[5]"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "第6路真实实拍完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "versus-panels",
+      "type": "native-group",
+      "role": "versus-panels原生完整组",
+      "parent_id": "canvas",
+      "z_index": 1,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "versus-panels原生完整组；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 14.7,
+        "end": 22.766666666666666
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 14.7,
+          "end": 22.766666666666666,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "versus-panels原生完整组完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "versus-panels-field-0",
+      "type": "text",
+      "role": "章节",
+      "parent_id": "versus-panels",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "versus-panels-field-0",
+        "asset_id": null,
+        "description": "章节；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true,
+          "font": "按原包官方prepare的冻结字体依赖",
+          "font_size": "原版recipe对当前文案求值；最长内容实际看帧",
+          "max_lines": "本字段的原生控件行数/换行策略由profile与本期prepare决定，body允许明确多行",
+          "overflow": "长度预检后实际看完整画幅；语义缩写或合法分行后重新审核"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 14.7,
+        "end": 22.766666666666666
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 14.7,
+          "end": 22.766666666666666,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "content['versus-panels']['chapter']"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "章节完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "versus-panels-field-1",
+      "type": "text",
+      "role": "标题",
+      "parent_id": "versus-panels",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "versus-panels-field-1",
+        "asset_id": null,
+        "description": "标题；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true,
+          "font": "按原包官方prepare的冻结字体依赖",
+          "font_size": "原版recipe对当前文案求值；最长内容实际看帧",
+          "max_lines": "本字段的原生控件行数/换行策略由profile与本期prepare决定，body允许明确多行",
+          "overflow": "长度预检后实际看完整画幅；语义缩写或合法分行后重新审核"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 14.7,
+        "end": 22.766666666666666
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 14.7,
+          "end": 22.766666666666666,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "content['versus-panels']['title']"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "标题完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "versus-panels-field-2",
+      "type": "text",
+      "role": "左侧名称",
+      "parent_id": "versus-panels",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "versus-panels-field-2",
+        "asset_id": null,
+        "description": "左侧名称；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true,
+          "font": "按原包官方prepare的冻结字体依赖",
+          "font_size": "原版recipe对当前文案求值；最长内容实际看帧",
+          "max_lines": "本字段的原生控件行数/换行策略由profile与本期prepare决定，body允许明确多行",
+          "overflow": "长度预检后实际看完整画幅；语义缩写或合法分行后重新审核"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 14.7,
+        "end": 22.766666666666666
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 14.7,
+          "end": 22.766666666666666,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "content['versus-panels']['left.head']"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "左侧名称完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "versus-panels-field-3",
+      "type": "text",
+      "role": "左侧标签",
+      "parent_id": "versus-panels",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "versus-panels-field-3",
+        "asset_id": null,
+        "description": "左侧标签；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true,
+          "font": "按原包官方prepare的冻结字体依赖",
+          "font_size": "原版recipe对当前文案求值；最长内容实际看帧",
+          "max_lines": "本字段的原生控件行数/换行策略由profile与本期prepare决定，body允许明确多行",
+          "overflow": "长度预检后实际看完整画幅；语义缩写或合法分行后重新审核"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 14.7,
+        "end": 22.766666666666666
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 14.7,
+          "end": 22.766666666666666,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "content['versus-panels']['left.tag']"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "左侧标签完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "versus-panels-field-4",
+      "type": "text",
+      "role": "左 1",
+      "parent_id": "versus-panels",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "versus-panels-field-4",
+        "asset_id": null,
+        "description": "左 1；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true,
+          "font": "按原包官方prepare的冻结字体依赖",
+          "font_size": "原版recipe对当前文案求值；最长内容实际看帧",
+          "max_lines": "本字段的原生控件行数/换行策略由profile与本期prepare决定，body允许明确多行",
+          "overflow": "长度预检后实际看完整画幅；语义缩写或合法分行后重新审核"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 14.7,
+        "end": 22.766666666666666
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 14.7,
+          "end": 22.766666666666666,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "content['versus-panels']['left.points.0']"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "左 1完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "versus-panels-field-5",
+      "type": "text",
+      "role": "左 2",
+      "parent_id": "versus-panels",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "versus-panels-field-5",
+        "asset_id": null,
+        "description": "左 2；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true,
+          "font": "按原包官方prepare的冻结字体依赖",
+          "font_size": "原版recipe对当前文案求值；最长内容实际看帧",
+          "max_lines": "本字段的原生控件行数/换行策略由profile与本期prepare决定，body允许明确多行",
+          "overflow": "长度预检后实际看完整画幅；语义缩写或合法分行后重新审核"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 14.7,
+        "end": 22.766666666666666
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 14.7,
+          "end": 22.766666666666666,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "content['versus-panels']['left.points.1']"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "左 2完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "versus-panels-field-6",
+      "type": "text",
+      "role": "左 3（可选）",
+      "parent_id": "versus-panels",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "versus-panels-field-6",
+        "asset_id": null,
+        "description": "左 3（可选）；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true,
+          "font": "按原包官方prepare的冻结字体依赖",
+          "font_size": "原版recipe对当前文案求值；最长内容实际看帧",
+          "max_lines": "本字段的原生控件行数/换行策略由profile与本期prepare决定，body允许明确多行",
+          "overflow": "长度预检后实际看完整画幅；语义缩写或合法分行后重新审核"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 14.7,
+        "end": 22.766666666666666
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 14.7,
+          "end": 22.766666666666666,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "content['versus-panels']['left.points.2']"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "左 3（可选）完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "versus-panels-field-7",
+      "type": "text",
+      "role": "右侧名称",
+      "parent_id": "versus-panels",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "versus-panels-field-7",
+        "asset_id": null,
+        "description": "右侧名称；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true,
+          "font": "按原包官方prepare的冻结字体依赖",
+          "font_size": "原版recipe对当前文案求值；最长内容实际看帧",
+          "max_lines": "本字段的原生控件行数/换行策略由profile与本期prepare决定，body允许明确多行",
+          "overflow": "长度预检后实际看完整画幅；语义缩写或合法分行后重新审核"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 14.7,
+        "end": 22.766666666666666
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 14.7,
+          "end": 22.766666666666666,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "content['versus-panels']['right.head']"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "右侧名称完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "versus-panels-field-8",
+      "type": "text",
+      "role": "右侧标签",
+      "parent_id": "versus-panels",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "versus-panels-field-8",
+        "asset_id": null,
+        "description": "右侧标签；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true,
+          "font": "按原包官方prepare的冻结字体依赖",
+          "font_size": "原版recipe对当前文案求值；最长内容实际看帧",
+          "max_lines": "本字段的原生控件行数/换行策略由profile与本期prepare决定，body允许明确多行",
+          "overflow": "长度预检后实际看完整画幅；语义缩写或合法分行后重新审核"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 14.7,
+        "end": 22.766666666666666
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 14.7,
+          "end": 22.766666666666666,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "content['versus-panels']['right.tag']"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "右侧标签完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "versus-panels-field-9",
+      "type": "text",
+      "role": "右 1",
+      "parent_id": "versus-panels",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "versus-panels-field-9",
+        "asset_id": null,
+        "description": "右 1；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true,
+          "font": "按原包官方prepare的冻结字体依赖",
+          "font_size": "原版recipe对当前文案求值；最长内容实际看帧",
+          "max_lines": "本字段的原生控件行数/换行策略由profile与本期prepare决定，body允许明确多行",
+          "overflow": "长度预检后实际看完整画幅；语义缩写或合法分行后重新审核"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 14.7,
+        "end": 22.766666666666666
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 14.7,
+          "end": 22.766666666666666,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "content['versus-panels']['right.points.0']"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "右 1完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "versus-panels-field-10",
+      "type": "text",
+      "role": "右 2",
+      "parent_id": "versus-panels",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "versus-panels-field-10",
+        "asset_id": null,
+        "description": "右 2；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true,
+          "font": "按原包官方prepare的冻结字体依赖",
+          "font_size": "原版recipe对当前文案求值；最长内容实际看帧",
+          "max_lines": "本字段的原生控件行数/换行策略由profile与本期prepare决定，body允许明确多行",
+          "overflow": "长度预检后实际看完整画幅；语义缩写或合法分行后重新审核"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 14.7,
+        "end": 22.766666666666666
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 14.7,
+          "end": 22.766666666666666,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "content['versus-panels']['right.points.1']"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "右 2完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "versus-panels-field-11",
+      "type": "text",
+      "role": "右 3（可选）",
+      "parent_id": "versus-panels",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "versus-panels-field-11",
+        "asset_id": null,
+        "description": "右 3（可选）；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true,
+          "font": "按原包官方prepare的冻结字体依赖",
+          "font_size": "原版recipe对当前文案求值；最长内容实际看帧",
+          "max_lines": "本字段的原生控件行数/换行策略由profile与本期prepare决定，body允许明确多行",
+          "overflow": "长度预检后实际看完整画幅；语义缩写或合法分行后重新审核"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 14.7,
+        "end": 22.766666666666666
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 14.7,
+          "end": 22.766666666666666,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "content['versus-panels']['right.points.2']"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "右 3（可选）完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "versus-panels-field-12",
+      "type": "text",
+      "role": "盖章结论（winner=0 时不显示）",
+      "parent_id": "versus-panels",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "versus-panels-field-12",
+        "asset_id": null,
+        "description": "盖章结论（winner=0 时不显示）；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true,
+          "font": "按原包官方prepare的冻结字体依赖",
+          "font_size": "原版recipe对当前文案求值；最长内容实际看帧",
+          "max_lines": "本字段的原生控件行数/换行策略由profile与本期prepare决定，body允许明确多行",
+          "overflow": "长度预检后实际看完整画幅；语义缩写或合法分行后重新审核"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 14.7,
+        "end": 22.766666666666666
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 14.7,
+          "end": 22.766666666666666,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "content['versus-panels']['verdict']"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "盖章结论（winner=0 时不显示）完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "versus-panels-field-13",
+      "type": "value",
+      "role": "胜出方：1 左 / 2 右 / 0 不判",
+      "parent_id": "versus-panels",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "versus-panels-field-13",
+        "asset_id": null,
+        "description": "胜出方：1 左 / 2 右 / 0 不判；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 14.7,
+        "end": 22.766666666666666
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 14.7,
+          "end": 22.766666666666666,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "content['versus-panels']['winner']"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "胜出方：1 左 / 2 右 / 0 不判完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "readme-terminal",
+      "type": "native-group",
+      "role": "readme-terminal原生完整组",
+      "parent_id": "canvas",
+      "z_index": 1,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "readme-terminal原生完整组；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 22.766666666666666,
+        "end": 30.4
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 22.766666666666666,
+          "end": 30.4,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "readme-terminal原生完整组完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "readme-terminal-field-0",
+      "type": "text",
+      "role": "章节",
+      "parent_id": "readme-terminal",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "readme-terminal-field-0",
+        "asset_id": null,
+        "description": "章节；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true,
+          "font": "按原包官方prepare的冻结字体依赖",
+          "font_size": "原版recipe对当前文案求值；最长内容实际看帧",
+          "max_lines": "本字段的原生控件行数/换行策略由profile与本期prepare决定，body允许明确多行",
+          "overflow": "长度预检后实际看完整画幅；语义缩写或合法分行后重新审核"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 22.766666666666666,
+        "end": 30.4
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 22.766666666666666,
+          "end": 30.4,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "content['readme-terminal']['chapter']"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "章节完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "readme-terminal-field-1",
+      "type": "text",
+      "role": "窗口标题",
+      "parent_id": "readme-terminal",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "readme-terminal-field-1",
+        "asset_id": null,
+        "description": "窗口标题；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true,
+          "font": "按原包官方prepare的冻结字体依赖",
+          "font_size": "原版recipe对当前文案求值；最长内容实际看帧",
+          "max_lines": "本字段的原生控件行数/换行策略由profile与本期prepare决定，body允许明确多行",
+          "overflow": "长度预检后实际看完整画幅；语义缩写或合法分行后重新审核"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 22.766666666666666,
+        "end": 30.4
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 22.766666666666666,
+          "end": 30.4,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "content['readme-terminal']['window.title']"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "窗口标题完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    },
+    {
+      "id": "readme-terminal-field-2",
+      "type": "text",
+      "role": "打字正文（换行保留，≤7 行）",
+      "parent_id": "readme-terminal",
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "readme-terminal-field-2",
+        "asset_id": null,
+        "description": "打字正文（换行保留，≤7 行）；叶节点几何/遮罩/运动在原版组内求值，此包络不作为独立坐标覆盖。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1440,
+          1800
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "geometry_authority": "extensions.custom.element_layout_authority",
+          "logical_envelope": true,
+          "font": "按原包官方prepare的冻结字体依赖",
+          "font_size": "原版recipe对当前文案求值；最长内容实际看帧",
+          "max_lines": "本字段的原生控件行数/换行策略由profile与本期prepare决定，body允许明确多行",
+          "overflow": "长度预检后实际看完整画幅；语义缩写或合法分行后重新审核"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 22.766666666666666,
+        "end": 30.4
+      },
+      "states": [
+        {
+          "id": "inactive",
+          "visible": false,
+          "description": "本组/锚点范围外或原版设计隐藏"
+        },
+        {
+          "id": "active",
+          "visible": true,
+          "description": "在公开原生recipe及本期params局部锚点内求值；完整声源时钟连续"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "inactive",
+          "to": "active",
+          "trigger": "按本期scene起点+原生anchor/保持秒数映射全局60fps帧",
+          "start": 22.766666666666666,
+          "end": 30.4,
+          "properties": {
+            "driver": "官方原生完整组原速",
+            "geometry": "固定原版包络内布局；portrait由原版重排，最终视窗按唯一CONSOLE_45转换"
+          },
+          "easing": "原版原生渲染器固定曲线，未重写"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "本实例数值仅是运行结果；新片从完整源时钟、profile和原版prepare重新求值。"
+        }
+      ],
+      "fixed": [
+        "native_geometry",
+        "native_motion",
+        "voice_clock"
+      ],
+      "replaceable": [
+        "content['readme-terminal']['body']"
+      ],
+      "evidence_ids": [
+        "public-contract",
+        "profile-design"
+      ],
+      "acceptance": [
+        {
+          "check": "打字正文（换行保留，≤7 行）完整状态",
+          "method": "实际查看对应进退场/落定/最长内容及本期编码帧",
+          "pass_condition": "关键内容完整可读，显隐有意，保留原版动作且关联本期来源"
+        }
+      ]
+    }
+  ],
+  "slots": [
+    {
+      "id": "captions",
+      "element_id": "captions",
+      "property": "captions",
+      "value_type": "asset",
+      "required": true,
+      "limits": {
+        "authority": "共享源/音频门禁；音频不可变速，人物必须完整同源，字幕须绑定实际词时码，配乐按冻结混音配置。"
+      },
+      "missing": "显示实际缺项并阻断相应阶段",
+      "overflow": "核对本期时钟及所选组容量，补输入或重选组后重新审核"
+    },
+    {
+      "id": "presenter",
+      "element_id": "presenter",
+      "property": "presenter",
+      "value_type": "asset",
+      "required": true,
+      "limits": {
+        "authority": "共享源/音频门禁；音频不可变速，人物必须完整同源，字幕须绑定实际词时码，配乐按冻结混音配置。"
+      },
+      "missing": "显示实际缺项并阻断相应阶段",
+      "overflow": "核对本期时钟及所选组容量，补输入或重选组后重新审核"
+    },
+    {
+      "id": "voice",
+      "element_id": "voice",
+      "property": "voice",
+      "value_type": "asset",
+      "required": true,
+      "limits": {
+        "authority": "共享源/音频门禁；音频不可变速，人物必须完整同源，字幕须绑定实际词时码，配乐按冻结混音配置。"
+      },
+      "missing": "显示实际缺项并阻断相应阶段",
+      "overflow": "核对本期时钟及所选组容量，补输入或重选组后重新审核"
+    },
+    {
+      "id": "music",
+      "element_id": "music",
+      "property": "music",
+      "value_type": "asset",
+      "required": true,
+      "limits": {
+        "authority": "共享源/音频门禁；音频不可变速，人物必须完整同源，字幕须绑定实际词时码，配乐按冻结混音配置。"
+      },
+      "missing": "显示实际缺项并阻断相应阶段",
+      "overflow": "核对本期时钟及所选组容量，补输入或重选组后重新审核"
+    },
+    {
+      "id": "keyword-slam-field-0",
+      "element_id": "keyword-slam-field-0",
+      "property": "content['keyword-slam']['chapter']",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "authority": "profile.json#/groups/0/fields/0",
+        "native_contract": "source-contract.json",
+        "multiline": false
+      },
+      "missing": "要求填写本期真实文案并阻断准备",
+      "overflow": "按真实语义缩写/分行后再看帧；数字不得杜撰，声音与原版动作不加速"
+    },
+    {
+      "id": "keyword-slam-field-1",
+      "element_id": "keyword-slam-field-1",
+      "property": "content['keyword-slam']['keyword']",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "authority": "profile.json#/groups/0/fields/1",
+        "native_contract": "source-contract.json",
+        "multiline": false
+      },
+      "missing": "要求填写本期真实文案并阻断准备",
+      "overflow": "按真实语义缩写/分行后再看帧；数字不得杜撰，声音与原版动作不加速"
+    },
+    {
+      "id": "keyword-slam-field-2",
+      "element_id": "keyword-slam-field-2",
+      "property": "content['keyword-slam']['question']",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "authority": "profile.json#/groups/0/fields/2",
+        "native_contract": "source-contract.json",
+        "multiline": false
+      },
+      "missing": "要求填写本期真实文案并阻断准备",
+      "overflow": "按真实语义缩写/分行后再看帧；数字不得杜撰，声音与原版动作不加速"
+    },
+    {
+      "id": "keyword-slam-field-3",
+      "element_id": "keyword-slam-field-3",
+      "property": "content['keyword-slam']['note']",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "authority": "profile.json#/groups/0/fields/3",
+        "native_contract": "source-contract.json",
+        "multiline": false
+      },
+      "missing": "要求填写本期真实文案并阻断准备",
+      "overflow": "按真实语义缩写/分行后再看帧；数字不得杜撰，声音与原版动作不加速"
+    },
+    {
+      "id": "statement-orb-field-0",
+      "element_id": "statement-orb-field-0",
+      "property": "content['statement-orb']['chapter']",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "authority": "profile.json#/groups/1/fields/0",
+        "native_contract": "source-contract.json",
+        "multiline": false
+      },
+      "missing": "要求填写本期真实文案并阻断准备",
+      "overflow": "按真实语义缩写/分行后再看帧；数字不得杜撰，声音与原版动作不加速"
+    },
+    {
+      "id": "statement-orb-field-1",
+      "element_id": "statement-orb-field-1",
+      "property": "content['statement-orb']['kicker']",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "authority": "profile.json#/groups/1/fields/1",
+        "native_contract": "source-contract.json",
+        "multiline": false
+      },
+      "missing": "要求填写本期真实文案并阻断准备",
+      "overflow": "按真实语义缩写/分行后再看帧；数字不得杜撰，声音与原版动作不加速"
+    },
+    {
+      "id": "statement-orb-field-2",
+      "element_id": "statement-orb-field-2",
+      "property": "content['statement-orb']['lines.0']",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "authority": "profile.json#/groups/1/fields/2",
+        "native_contract": "source-contract.json",
+        "multiline": false
+      },
+      "missing": "要求填写本期真实文案并阻断准备",
+      "overflow": "按真实语义缩写/分行后再看帧；数字不得杜撰，声音与原版动作不加速"
+    },
+    {
+      "id": "statement-orb-field-3",
+      "element_id": "statement-orb-field-3",
+      "property": "content['statement-orb']['lines.1']",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "authority": "profile.json#/groups/1/fields/3",
+        "native_contract": "source-contract.json",
+        "multiline": false
+      },
+      "missing": "要求填写本期真实文案并阻断准备",
+      "overflow": "按真实语义缩写/分行后再看帧；数字不得杜撰，声音与原版动作不加速"
+    },
+    {
+      "id": "statement-orb-field-4",
+      "element_id": "statement-orb-field-4",
+      "property": "content['statement-orb']['source']",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "authority": "profile.json#/groups/1/fields/4",
+        "native_contract": "source-contract.json",
+        "multiline": false
+      },
+      "missing": "要求填写本期真实文案并阻断准备",
+      "overflow": "按真实语义缩写/分行后再看帧；数字不得杜撰，声音与原版动作不加速"
+    },
+    {
+      "id": "works-fan-field-0",
+      "element_id": "works-fan-field-0",
+      "property": "content['works-fan']['chapter']",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "authority": "profile.json#/groups/2/fields/0",
+        "native_contract": "source-contract.json",
+        "multiline": false
+      },
+      "missing": "要求填写本期真实文案并阻断准备",
+      "overflow": "按真实语义缩写/分行后再看帧；数字不得杜撰，声音与原版动作不加速"
+    },
+    {
+      "id": "works-fan-field-1",
+      "element_id": "works-fan-field-1",
+      "property": "content['works-fan']['title']",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "authority": "profile.json#/groups/2/fields/1",
+        "native_contract": "source-contract.json",
+        "multiline": false
+      },
+      "missing": "要求填写本期真实文案并阻断准备",
+      "overflow": "按真实语义缩写/分行后再看帧；数字不得杜撰，声音与原版动作不加速"
+    },
+    {
+      "id": "works-fan-field-2",
+      "element_id": "works-fan-field-2",
+      "property": "content['works-fan']['note']",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "authority": "profile.json#/groups/2/fields/2",
+        "native_contract": "source-contract.json",
+        "multiline": false
+      },
+      "missing": "要求填写本期真实文案并阻断准备",
+      "overflow": "按真实语义缩写/分行后再看帧；数字不得杜撰，声音与原版动作不加速"
+    },
+    {
+      "id": "works-fan-field-3",
+      "element_id": "works-fan-field-3",
+      "property": "content['works-fan']['works.0.name']",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "authority": "profile.json#/groups/2/fields/3",
+        "native_contract": "source-contract.json",
+        "multiline": false
+      },
+      "missing": "要求填写本期真实文案并阻断准备",
+      "overflow": "按真实语义缩写/分行后再看帧；数字不得杜撰，声音与原版动作不加速"
+    },
+    {
+      "id": "works-fan-field-4",
+      "element_id": "works-fan-field-4",
+      "property": "content['works-fan']['works.0.kind']",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "authority": "profile.json#/groups/2/fields/4",
+        "native_contract": "source-contract.json",
+        "multiline": false
+      },
+      "missing": "要求填写本期真实文案并阻断准备",
+      "overflow": "按真实语义缩写/分行后再看帧；数字不得杜撰，声音与原版动作不加速"
+    },
+    {
+      "id": "works-fan-field-5",
+      "element_id": "works-fan-field-5",
+      "property": "content['works-fan']['works.1.name']",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "authority": "profile.json#/groups/2/fields/5",
+        "native_contract": "source-contract.json",
+        "multiline": false
+      },
+      "missing": "要求填写本期真实文案并阻断准备",
+      "overflow": "按真实语义缩写/分行后再看帧；数字不得杜撰，声音与原版动作不加速"
+    },
+    {
+      "id": "works-fan-field-6",
+      "element_id": "works-fan-field-6",
+      "property": "content['works-fan']['works.1.kind']",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "authority": "profile.json#/groups/2/fields/6",
+        "native_contract": "source-contract.json",
+        "multiline": false
+      },
+      "missing": "要求填写本期真实文案并阻断准备",
+      "overflow": "按真实语义缩写/分行后再看帧；数字不得杜撰，声音与原版动作不加速"
+    },
+    {
+      "id": "works-fan-field-7",
+      "element_id": "works-fan-field-7",
+      "property": "content['works-fan']['works.2.name']",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "authority": "profile.json#/groups/2/fields/7",
+        "native_contract": "source-contract.json",
+        "multiline": false
+      },
+      "missing": "要求填写本期真实文案并阻断准备",
+      "overflow": "按真实语义缩写/分行后再看帧；数字不得杜撰，声音与原版动作不加速"
+    },
+    {
+      "id": "works-fan-field-8",
+      "element_id": "works-fan-field-8",
+      "property": "content['works-fan']['works.2.kind']",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "authority": "profile.json#/groups/2/fields/8",
+        "native_contract": "source-contract.json",
+        "multiline": false
+      },
+      "missing": "要求填写本期真实文案并阻断准备",
+      "overflow": "按真实语义缩写/分行后再看帧；数字不得杜撰，声音与原版动作不加速"
+    },
+    {
+      "id": "works-fan-field-9",
+      "element_id": "works-fan-field-9",
+      "property": "content['works-fan']['works.3.name']",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "authority": "profile.json#/groups/2/fields/9",
+        "native_contract": "source-contract.json",
+        "multiline": false
+      },
+      "missing": "要求填写本期真实文案并阻断准备",
+      "overflow": "按真实语义缩写/分行后再看帧；数字不得杜撰，声音与原版动作不加速"
+    },
+    {
+      "id": "works-fan-field-10",
+      "element_id": "works-fan-field-10",
+      "property": "content['works-fan']['works.3.kind']",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "authority": "profile.json#/groups/2/fields/10",
+        "native_contract": "source-contract.json",
+        "multiline": false
+      },
+      "missing": "要求填写本期真实文案并阻断准备",
+      "overflow": "按真实语义缩写/分行后再看帧；数字不得杜撰，声音与原版动作不加速"
+    },
+    {
+      "id": "works-fan-field-11",
+      "element_id": "works-fan-field-11",
+      "property": "content['works-fan']['works.4.name']",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "authority": "profile.json#/groups/2/fields/11",
+        "native_contract": "source-contract.json",
+        "multiline": false
+      },
+      "missing": "要求填写本期真实文案并阻断准备",
+      "overflow": "按真实语义缩写/分行后再看帧；数字不得杜撰，声音与原版动作不加速"
+    },
+    {
+      "id": "works-fan-field-12",
+      "element_id": "works-fan-field-12",
+      "property": "content['works-fan']['works.4.kind']",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "authority": "profile.json#/groups/2/fields/12",
+        "native_contract": "source-contract.json",
+        "multiline": false
+      },
+      "missing": "要求填写本期真实文案并阻断准备",
+      "overflow": "按真实语义缩写/分行后再看帧；数字不得杜撰，声音与原版动作不加速"
+    },
+    {
+      "id": "works-fan-field-13",
+      "element_id": "works-fan-field-13",
+      "property": "content['works-fan']['works.5.name']",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "authority": "profile.json#/groups/2/fields/13",
+        "native_contract": "source-contract.json",
+        "multiline": false
+      },
+      "missing": "要求填写本期真实文案并阻断准备",
+      "overflow": "按真实语义缩写/分行后再看帧；数字不得杜撰，声音与原版动作不加速"
+    },
+    {
+      "id": "works-fan-field-14",
+      "element_id": "works-fan-field-14",
+      "property": "content['works-fan']['works.5.kind']",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "authority": "profile.json#/groups/2/fields/14",
+        "native_contract": "source-contract.json",
+        "multiline": false
+      },
+      "missing": "要求填写本期真实文案并阻断准备",
+      "overflow": "按真实语义缩写/分行后再看帧；数字不得杜撰，声音与原版动作不加速"
+    },
+    {
+      "id": "media-0",
+      "element_id": "media-0",
+      "property": "media.wall[0]",
+      "value_type": "asset",
+      "required": true,
+      "limits": {
+        "rule": "video only; full selected window with SHA and start/mid/end review"
+      },
+      "missing": "补足本期真实实拍后重审",
+      "overflow": "区间不足阻断，不循环或尾帧补时"
+    },
+    {
+      "id": "media-1",
+      "element_id": "media-1",
+      "property": "media.wall[1]",
+      "value_type": "asset",
+      "required": true,
+      "limits": {
+        "rule": "video only; full selected window with SHA and start/mid/end review"
+      },
+      "missing": "补足本期真实实拍后重审",
+      "overflow": "区间不足阻断，不循环或尾帧补时"
+    },
+    {
+      "id": "media-2",
+      "element_id": "media-2",
+      "property": "media.wall[2]",
+      "value_type": "asset",
+      "required": true,
+      "limits": {
+        "rule": "video only; full selected window with SHA and start/mid/end review"
+      },
+      "missing": "补足本期真实实拍后重审",
+      "overflow": "区间不足阻断，不循环或尾帧补时"
+    },
+    {
+      "id": "media-3",
+      "element_id": "media-3",
+      "property": "media.wall[3]",
+      "value_type": "asset",
+      "required": true,
+      "limits": {
+        "rule": "video only; full selected window with SHA and start/mid/end review"
+      },
+      "missing": "补足本期真实实拍后重审",
+      "overflow": "区间不足阻断，不循环或尾帧补时"
+    },
+    {
+      "id": "media-4",
+      "element_id": "media-4",
+      "property": "media.wall[4]",
+      "value_type": "asset",
+      "required": true,
+      "limits": {
+        "rule": "video only; full selected window with SHA and start/mid/end review"
+      },
+      "missing": "补足本期真实实拍后重审",
+      "overflow": "区间不足阻断，不循环或尾帧补时"
+    },
+    {
+      "id": "media-5",
+      "element_id": "media-5",
+      "property": "media.wall[5]",
+      "value_type": "asset",
+      "required": true,
+      "limits": {
+        "rule": "video only; full selected window with SHA and start/mid/end review"
+      },
+      "missing": "补足本期真实实拍后重审",
+      "overflow": "区间不足阻断，不循环或尾帧补时"
+    },
+    {
+      "id": "versus-panels-field-0",
+      "element_id": "versus-panels-field-0",
+      "property": "content['versus-panels']['chapter']",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "authority": "profile.json#/groups/3/fields/0",
+        "native_contract": "source-contract.json",
+        "multiline": false
+      },
+      "missing": "要求填写本期真实文案并阻断准备",
+      "overflow": "按真实语义缩写/分行后再看帧；数字不得杜撰，声音与原版动作不加速"
+    },
+    {
+      "id": "versus-panels-field-1",
+      "element_id": "versus-panels-field-1",
+      "property": "content['versus-panels']['title']",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "authority": "profile.json#/groups/3/fields/1",
+        "native_contract": "source-contract.json",
+        "multiline": false
+      },
+      "missing": "要求填写本期真实文案并阻断准备",
+      "overflow": "按真实语义缩写/分行后再看帧；数字不得杜撰，声音与原版动作不加速"
+    },
+    {
+      "id": "versus-panels-field-2",
+      "element_id": "versus-panels-field-2",
+      "property": "content['versus-panels']['left.head']",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "authority": "profile.json#/groups/3/fields/2",
+        "native_contract": "source-contract.json",
+        "multiline": false
+      },
+      "missing": "要求填写本期真实文案并阻断准备",
+      "overflow": "按真实语义缩写/分行后再看帧；数字不得杜撰，声音与原版动作不加速"
+    },
+    {
+      "id": "versus-panels-field-3",
+      "element_id": "versus-panels-field-3",
+      "property": "content['versus-panels']['left.tag']",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "authority": "profile.json#/groups/3/fields/3",
+        "native_contract": "source-contract.json",
+        "multiline": false
+      },
+      "missing": "要求填写本期真实文案并阻断准备",
+      "overflow": "按真实语义缩写/分行后再看帧；数字不得杜撰，声音与原版动作不加速"
+    },
+    {
+      "id": "versus-panels-field-4",
+      "element_id": "versus-panels-field-4",
+      "property": "content['versus-panels']['left.points.0']",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "authority": "profile.json#/groups/3/fields/4",
+        "native_contract": "source-contract.json",
+        "multiline": false
+      },
+      "missing": "要求填写本期真实文案并阻断准备",
+      "overflow": "按真实语义缩写/分行后再看帧；数字不得杜撰，声音与原版动作不加速"
+    },
+    {
+      "id": "versus-panels-field-5",
+      "element_id": "versus-panels-field-5",
+      "property": "content['versus-panels']['left.points.1']",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "authority": "profile.json#/groups/3/fields/5",
+        "native_contract": "source-contract.json",
+        "multiline": false
+      },
+      "missing": "要求填写本期真实文案并阻断准备",
+      "overflow": "按真实语义缩写/分行后再看帧；数字不得杜撰，声音与原版动作不加速"
+    },
+    {
+      "id": "versus-panels-field-6",
+      "element_id": "versus-panels-field-6",
+      "property": "content['versus-panels']['left.points.2']",
+      "value_type": "string",
+      "required": false,
+      "limits": {
+        "authority": "profile.json#/groups/3/fields/6",
+        "native_contract": "source-contract.json",
+        "multiline": false
+      },
+      "missing": "保留合法空值，不自动补事实",
+      "overflow": "按真实语义缩写/分行后再看帧；数字不得杜撰，声音与原版动作不加速"
+    },
+    {
+      "id": "versus-panels-field-7",
+      "element_id": "versus-panels-field-7",
+      "property": "content['versus-panels']['right.head']",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "authority": "profile.json#/groups/3/fields/7",
+        "native_contract": "source-contract.json",
+        "multiline": false
+      },
+      "missing": "要求填写本期真实文案并阻断准备",
+      "overflow": "按真实语义缩写/分行后再看帧；数字不得杜撰，声音与原版动作不加速"
+    },
+    {
+      "id": "versus-panels-field-8",
+      "element_id": "versus-panels-field-8",
+      "property": "content['versus-panels']['right.tag']",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "authority": "profile.json#/groups/3/fields/8",
+        "native_contract": "source-contract.json",
+        "multiline": false
+      },
+      "missing": "要求填写本期真实文案并阻断准备",
+      "overflow": "按真实语义缩写/分行后再看帧；数字不得杜撰，声音与原版动作不加速"
+    },
+    {
+      "id": "versus-panels-field-9",
+      "element_id": "versus-panels-field-9",
+      "property": "content['versus-panels']['right.points.0']",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "authority": "profile.json#/groups/3/fields/9",
+        "native_contract": "source-contract.json",
+        "multiline": false
+      },
+      "missing": "要求填写本期真实文案并阻断准备",
+      "overflow": "按真实语义缩写/分行后再看帧；数字不得杜撰，声音与原版动作不加速"
+    },
+    {
+      "id": "versus-panels-field-10",
+      "element_id": "versus-panels-field-10",
+      "property": "content['versus-panels']['right.points.1']",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "authority": "profile.json#/groups/3/fields/10",
+        "native_contract": "source-contract.json",
+        "multiline": false
+      },
+      "missing": "要求填写本期真实文案并阻断准备",
+      "overflow": "按真实语义缩写/分行后再看帧；数字不得杜撰，声音与原版动作不加速"
+    },
+    {
+      "id": "versus-panels-field-11",
+      "element_id": "versus-panels-field-11",
+      "property": "content['versus-panels']['right.points.2']",
+      "value_type": "string",
+      "required": false,
+      "limits": {
+        "authority": "profile.json#/groups/3/fields/11",
+        "native_contract": "source-contract.json",
+        "multiline": false
+      },
+      "missing": "保留合法空值，不自动补事实",
+      "overflow": "按真实语义缩写/分行后再看帧；数字不得杜撰，声音与原版动作不加速"
+    },
+    {
+      "id": "versus-panels-field-12",
+      "element_id": "versus-panels-field-12",
+      "property": "content['versus-panels']['verdict']",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "authority": "profile.json#/groups/3/fields/12",
+        "native_contract": "source-contract.json",
+        "multiline": false
+      },
+      "missing": "要求填写本期真实文案并阻断准备",
+      "overflow": "按真实语义缩写/分行后再看帧；数字不得杜撰，声音与原版动作不加速"
+    },
+    {
+      "id": "versus-panels-field-13",
+      "element_id": "versus-panels-field-13",
+      "property": "content['versus-panels']['winner']",
+      "value_type": "number",
+      "required": true,
+      "limits": {
+        "authority": "profile.json#/groups/3/fields/13",
+        "native_contract": "source-contract.json",
+        "multiline": false
+      },
+      "missing": "要求填写本期真实文案并阻断准备",
+      "overflow": "按真实语义缩写/分行后再看帧；数字不得杜撰，声音与原版动作不加速"
+    },
+    {
+      "id": "readme-terminal-field-0",
+      "element_id": "readme-terminal-field-0",
+      "property": "content['readme-terminal']['chapter']",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "authority": "profile.json#/groups/4/fields/0",
+        "native_contract": "source-contract.json",
+        "multiline": false
+      },
+      "missing": "要求填写本期真实文案并阻断准备",
+      "overflow": "按真实语义缩写/分行后再看帧；数字不得杜撰，声音与原版动作不加速"
+    },
+    {
+      "id": "readme-terminal-field-1",
+      "element_id": "readme-terminal-field-1",
+      "property": "content['readme-terminal']['window.title']",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "authority": "profile.json#/groups/4/fields/1",
+        "native_contract": "source-contract.json",
+        "multiline": false
+      },
+      "missing": "要求填写本期真实文案并阻断准备",
+      "overflow": "按真实语义缩写/分行后再看帧；数字不得杜撰，声音与原版动作不加速"
+    },
+    {
+      "id": "readme-terminal-field-2",
+      "element_id": "readme-terminal-field-2",
+      "property": "content['readme-terminal']['body']",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "authority": "profile.json#/groups/4/fields/2",
+        "native_contract": "source-contract.json",
+        "multiline": true
+      },
+      "missing": "要求填写本期真实文案并阻断准备",
+      "overflow": "按真实语义缩写/分行后再看帧；数字不得杜撰，声音与原版动作不加速"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "public-contract",
+      "source_kind": "observation",
+      "source": "已核验原包公开原生合同；不读取保护核心",
+      "locator": "source-contract.json/profile.json",
+      "method": "公开schema和精确包版本核对",
+      "file": "source-contract.json",
+      "sha256": "fca0f07610652d6b08c65ea0cbc064b769673bd6825a347c4c90de854d8bb24e"
+    },
+    {
+      "id": "profile-design",
+      "source_kind": "design",
+      "source": "项目选择的五完整组和实际开放字段",
+      "locator": "profile.json#/groups",
+      "method": "与共享会话fields()和官方计划对应",
+      "file": "profile.json",
+      "sha256": "31282ef57ace7ae7b5ac64d874f1f0b68a84f19d59cb8ec1b19c3087ecb7733c"
+    },
+    {
+      "id": "local-validation",
+      "source_kind": "measurement",
+      "source": "本机完整亲子源的满幅/原生圆窗与队列编码检查；旧失败候选和当前完成片分别留证",
+      "locator": "reference/validation-summary.json；face-framing-v001/delivery及encoded-review",
+      "method": "当前6取景/7导入诊断/55预览/56编码状态实际查看，全解码及下载；早期失败保留；非连续听审",
+      "file": "reference/validation-summary.json",
+      "sha256": "b8d27ee8af8a2be35f5f8d59b45fe68095c2d4d38257cdd7b134a1f2095c0565"
+    },
+    {
+      "id": "delivery-20261030",
+      "source_kind": "observation",
+      "source": "本轮隔离安装真实队列、完整质量记录与逐张实际编码画面检查",
+      "locator": "reference/delivery-20261030.json；原始文件和逐图审核留在所列本机私有证据根",
+      "method": "完整源和预览审核后实际导出；核对原请求/输出SHA、全解码、流参数，逐张查看编码状态；不冒称连续人耳听审或物理新机",
+      "file": "reference/delivery-20261030.json",
+      "sha256": "258e1c69cbc9b4a44aa291e137004c4d826e9987cb0d043cdd1893cb1678ffce"
+    }
+  ],
+  "unknowns": [],
+  "validation": {
+    "structure": {
+      "status": "pass",
+      "evidence_ids": [
+        "delivery-20261030"
+      ],
+      "note": "当前工作台/同一编译器与版本绑定，规格单独静态校验；运行源SHA见本轮摘要。"
+    },
+    "technical": {
+      "status": "pass",
+      "evidence_ids": [
+        "delivery-20261030"
+      ],
+      "note": "本轮1440x1800/60fps/视频流>=20Mbps/AAC48k双声道及完整解码通过，精确数值和输出SHA见摘要。"
+    },
+    "visual": {
+      "status": "pass",
+      "evidence_ids": [
+        "delivery-20261030"
+      ],
+      "note": "本轮来源、最终预览和75个实际编码状态已逐张查看；限本轮4:5及已开放参数。"
+    },
+    "audio": {
+      "status": "pending",
+      "evidence_ids": [
+        "delivery-20261030"
+      ],
+      "note": "完整时钟、编码、响度/真峰值技术测量通过；本轮未新做连续人耳听看或普通外放听审，不伪造通过。"
+    },
+    "platform": {
+      "status": "pending",
+      "evidence_ids": [
+        "delivery-20261030"
+      ],
+      "note": "本机独立路径/用户/PATH和禁止依赖下载环境实际制作通过；另一台物理电脑与平台呈现未验。"
+    },
+    "user_review": {
+      "status": "not_applicable",
+      "evidence_ids": [
+        "delivery-20261030"
+      ],
+      "note": "用户下班前明确授权自主验收，不再等待逐片意见；不把此授权写成用户已播放三片。"
+    },
+    "production": {
+      "status": "pass",
+      "evidence_ids": [
+        "delivery-20261030"
+      ],
+      "note": "本轮隔离安装统一队列真实完整输出，原请求、job和输出SHA对应；无新增云调用或发布。"
+    }
+  },
+  "extensions": {
+    "custom": {
+      "contract": "motiongit-console-story-v1 / exact template-04-dark-console@2.7.20-alpha.3 / public native interface",
+      "rules": [
+        "原包及保护核心保持独立只读；固定五组，字段真值为profile.json，动作时序真值为每期公开params.json。",
+        "元素box是组件求值包络，实际叶节点位置/层级/曲线由原版官方原生渲染器求值；修改本规格包络不改变画面。",
+        "动态时长只移动合法句间隙边界/停留，保留原生anchor、minFollowingFrames与音效尾部。",
+        "4:5全宽视窗源于真实portrait重排，省略辅助顶部HUD；像素审核、视窗参数、模块SHA进入同一冻结队列。",
+        "源/字幕/图片/区间变化后重新审核；每期保存声源SHA、原包版本、预览、冻结请求、queue/work/version。"
+      ],
+      "element_layout_authority": "source-contract.json与官方prepare产物；原生画布比例由console.layout求值。最终4:5几何只由studio_motion_native_viewport.CONSOLE_45持有。"
+    },
+    "avatar": {
+      "face_crop": "auto原生圆窗来自本期input.console.presenterCrop，按720x1280导入帧解释。项目4:5的opening/closing/hidden由studio_console_presenter.policy和presenter.js共同持有：1080x1920父画布内x320/y952/440x440直角正方形；导入人物图取x0/y170/720x720，双轴等比缩放，不拉伸；开头最长180帧、结尾最长300帧，60fps、15帧淡入淡出。新方框当前为已有同声源人物的开发验收，旧交付证据只证明旧圆框；不同人物须重新校准。该项目能力不冒充原包参数。",
+      "source_framing": "input.console.presenterFraming绑定studio_motion_presenter_framing.py测量的六个原源帧、保留头部的最大9:16窗口和实际FFmpeg预览；编译器另制720x1280 talk，原源及同声源证据不变，再按官方导入帧校准圆窗。",
+      "synchronization": "完整原声为主时钟；同声源人物覆盖全片，25fps输入对齐公共0.2秒帧时钟，原生60fps动作保持1x；校验字幕/人物同声源SHA，逐音素和连续听看另验。",
+      "automatic_new_person_calibration": {
+        "scope": "本轮完整已授权同声源及本轮实际来源图；不同新人物的首次使用仍须单独来源/取景/预览审核",
+        "acceptance": "未声明所有新人物或新源云API已实测，检测无合法框时阻断，不能沿用旧裁切顶替"
+      }
+    },
+    "graphic": {
+      "text_policy": "41字段类型、长度、可选第三比较项、多行正文由profile及公开合同决定；空间溢出需要实际看帧缩写，时间溢出需重选完整组。",
+      "asset_fit": "六路实拍使用官方native媒体槽；源内字幕/横幅为固化内容，按实拍证据保留，不能当作本期承诺。"
+    },
+    "material_edit": {
+      "source_ranges": "每路sourceStart到sourceStart+works-fan完整秒数；检查起点、中间、末段，时长不足报错。",
+      "cut_policy": "仅真实句间隙选择完整组边界；原生动态切换由原版执行。声音完整原速，动作/实拍不循环补足。"
+    }
+  },
+  "operations": [
+    {
+      "id": "create",
+      "input": "当前工作台身份、合法原包/工具、模板ID、文案或原完整输入",
+      "action": "读取START_HERE.md并核健康、GET catalog；POST sessions创建或GET原id恢复。",
+      "output": "持久会话id/revision与当前能力",
+      "completion": "包版本匹配，模板状态允许开发制作；知道本期声源/画幅及费用授权。",
+      "recovery": "原包未接入或工具缺失按onboarding任务补齐；已有会话继续原id。",
+      "entrypoint": "../../scripts/motion_templates.py"
+    },
+    {
+      "id": "source",
+      "input": "本期script、完整voice/ASR/同声源人物、六路视频与入点、BGM",
+      "action": "共享API绑定输入；新云调用先报价/预算；source-frames包含原源及六幅满幅人物图，实际看齐再source-review。",
+      "output": "同版本源审核token和真实文件身份",
+      "completion": "完整原声/人物同源且全时钟覆盖；原源与派生取景身份可追溯、头部完整无补边；六路素材完整使用区间实际看帧，新源/新人物实测范围另列。",
+      "recovery": "保留已完成云文件与原job，仅补缺项；原付费结果未知先查询/恢复。",
+      "entrypoint": "../../docs/MOTION_TEMPLATE_STUDIO.md"
+    },
+    {
+      "id": "plan",
+      "input": "源审核后的会话、41槽文案、landscape或portrait45",
+      "action": "prepare读回原生plan及源图；新人物首次plan-review先有界导入测量，另存新参数和带七幅诊断的新计划，实际重新审核后才生成正式预览。已知人物沿原路径。",
+      "output": "官方完整组计划和本期全部关键状态",
+      "completion": "完整真实句时码、组范围、退场容量、实拍覆盖通过；没有blocking/missing/截句。",
+      "recovery": "准备中断用local-resume，同期同输入复用已有阶段；改内容另建版本。",
+      "entrypoint": "../../backlot/studio_motion_console_session.py"
+    },
+    {
+      "id": "preview",
+      "input": "当前preview token、全部实际图片、最终画幅",
+      "action": "实际看齐；4:5覆盖全部字幕中段/锚点/进退场，按source/crop对应关系审核；preview-review冻结。",
+      "output": "同一份native请求、viewportReview和文件SHA",
+      "completion": "每张审核图与冻结窗口像素一致，人物/主文案/素材/字幕完整，原生源与最终画幅身份清楚。",
+      "recovery": "失败返回对应元素/槽修订；保留旧片，重提本地准备，不重做已付费源。",
+      "entrypoint": "../../backlot/studio_motion_native_viewport.py"
+    },
+    {
+      "id": "render",
+      "input": "已冻结请求与原queueid（若已有）",
+      "action": "submit只进入原native统一队列；GET原会话/job跟踪，失败resume原任务。",
+      "output": "成片、质量回执、work/version与下载",
+      "completion": "队列completed且尺寸/帧数/音频/全解码通过；实际看编码关键状态。连续听看另记。",
+      "recovery": "保留raw/音频/执行副本；从safe_resume_point恢复，代码变更后冻结新请求而非改旧SHA。",
+      "entrypoint": "../../backlot/studio_dark_native.py"
+    },
+    {
+      "id": "reuse",
+      "input": "已审核会话与变体名、新一期口播/素材/人物",
+      "action": "preset保存；下次create带preset_id或clone；更新本期真实内容与源文件，再走源和画面审核。",
+      "output": "独立新会话/新作品",
+      "completion": "复用配置完整，旧审核/旧费用授权不继承；第二期实际出片后才登记换稿复用通过。",
+      "recovery": "原包SHA变化先重新接入；新人物/新声源未验项继续开发而不宣称正式支持。",
+      "entrypoint": "../../scripts/motion_templates.py"
+    }
+  ]
+}

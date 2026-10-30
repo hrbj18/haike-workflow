@@ -14,6 +14,7 @@ import shutil
 import sqlite3
 import subprocess
 import urllib.request
+from urllib.parse import urlsplit
 import zipfile
 
 from backlot.studio import atomic_private
@@ -56,6 +57,20 @@ def _get(table, identity):
     require(row is not None, '模板包或草稿不存在')
     value = json.loads(row[0])
     if table == 'packages':
+        # Registry identities survive a portable directory move. Only files in
+        # this installation with the recorded digest can replace old paths.
+        package=STORE/'packages'/identity/'original.motion'
+        if value.get('path')!=str(package) and package.is_file() and sha(package)==value.get('sha256'):
+            value['path']=str(package)
+        helper=STORE/'tools'/HELPER_VERSION/'motion.mjs'
+        if value.get('helper') and value['helper']!=str(helper) and helper.is_file() and sha(helper)==HELPER_SHA:
+            value['helper']=str(helper)
+        cache=value.get('dependency_cache')
+        if isinstance(cache,str) and not Path(cache).is_absolute():
+            candidate=(ROOT/cache).resolve()
+            require(cache.replace('\\','/').startswith('.local/md/') and candidate.is_relative_to(ROOT.resolve())
+                    and candidate.is_dir() and not candidate.is_symlink(),'模板离线依赖位置无效')
+            value['dependency_cache']=str(candidate)
         _hum_workflow(value)
     return value
 
@@ -151,16 +166,35 @@ def public_package(value):
     fields={'id','filename','bytes','sha256','name','version','template_id','runtime','spec_version','personal',
             'protection','verification','runnable','support','support_note','workflows','entry_count'}
     result={k: v for k, v in value.items() if k in fields}
+    preview = _public_preview(value)
+    if preview: result['preview_url'] = preview
     if 'project-wall' in result.get('workflows',{}):
         result['workflows']['project-wall']['schema']=_project_schema()
+    if value.get('template_id') and value.get('version'):
+        from backlot.motion_adapter_registry import resolve_adapter
+        result['motion_adapter'] = resolve_adapter(value['template_id'], value['version'])
     return result
+
+
+def _public_preview(value):
+    """Only expose verified, public CDN references, never recipient URLs."""
+    if value.get('verification') != 'verified': return None
+    guide = value.get('documents', {}).get('guide', {})
+    preview = guide.get('preview', {}).get('video') or guide.get('consumerDemo', {}).get('stylePreviewUrl')
+    if not isinstance(preview, str): return None
+    try: parsed = urlsplit(preview)
+    except ValueError: return None
+    if (parsed.scheme == 'https' and parsed.netloc == 'media.openaicut.com'
+            and not parsed.query and not parsed.fragment and parsed.path.endswith('.mp4')):
+        return preview
+    return None
 
 
 def _hum_workflow(value):
     """Expose the independently authored adapter on already-verified originals."""
     if value.get('verification') == 'verified' and value.get('template_id') == 'motiongit-promo-user':
         value.setdefault('workflows', {})['hum-production'] = {
-            'schema': _hum_schema(), 'controls': {}, 'description': '完整口播可复用模板 · Hum / Coral',
+            'schema': _hum_schema(), 'controls': {}, 'description': '完整口播与动态素材 · Hum / Coral / Archive / Playroom',
             'implementation': 'hum-production-v1',
             'scope': '4:5 / 30fps；完整口播自动时长；素材墙/聚焦/大窗/小窗/不出镜；本地配乐音效'}
 
@@ -201,13 +235,22 @@ def verified_helper(value):
     return target
 
 
-def helper_command(value, *args, timeout=180):
+def helper_command(value, *args, timeout=180, temporary_root=None):
     helper = Path(value['helper'])
     require(helper.is_file() and sha(helper) == HELPER_SHA, '官方工具未核验或已变化')
     require(sha(value['path']) == value['sha256'], '原包已变化')
     node = shutil.which('node')
     require(node is not None, '需要Node.js 22或更新版本')
     env = dict(os.environ, PYTHONUTF8='1', PYTHONIOENCODING='utf-8')
+    if value.get('offline_dependencies') is True:
+        require(Path(value.get('dependency_cache','')).is_dir(),'请恢复此模板随首次部署交付的离线运行环境')
+        env.update(PIP_NO_INDEX='1',UV_OFFLINE='1',PIP_DISABLE_PIP_VERSION_CHECK='1',NPM_CONFIG_OFFLINE='true')
+    if temporary_root is not None:
+        temporary=Path(temporary_root).resolve()
+        require(temporary.is_relative_to((ROOT/'.local').resolve()) and not temporary.is_symlink()
+                and len(str(temporary))<=80,'模板临时目录需要工作区内的短路径')
+        temporary.mkdir(parents=True,exist_ok=True)
+        env.update(TEMP=str(temporary),TMP=str(temporary))
     try:
         result = subprocess.run([node, str(helper), args[0], value['path'], *map(str, args[1:])],
                                 capture_output=True, text=True, encoding='utf-8', errors='replace', timeout=timeout,
@@ -255,6 +298,18 @@ def verify_package(identity):
         workflows['poster-kit'] = {'schema': component_schema, 'controls': spec.get('controls', {}),
                                    'description': component_guide.get('fit', {}).get('style', '组件时间线'),
                                    'guide': component_guide, 'transitions': spec.get('transitions', [])}
+    extension = guide.get('extensionLibrary') or {}
+    if extension.get('profile') == 'motiongit-motion-kit-integration/1' and extension.get('schema'):
+        extension_schema = _read_public(value, extension['schema'])
+        require(extension_schema.get('properties', {}).get('workflow', {}).get('const') == 'motion-kit',
+                '新增控件路线的公开schema与工作流名称不一致')
+        controls = extension.get('controls', {})
+        require(isinstance(controls, dict) and controls and all(isinstance(k, str) and isinstance(v, dict) for k, v in controls.items()),
+                '新增控件路线缺少实际公开控件合同')
+        workflows['motion-kit'] = {'schema': extension_schema, 'controls': controls,
+            'description': '原包新增控件 · '+str(value['name']),
+            'guide': {k: extension[k] for k in ['profile', 'schema', 'libraryVersion', 'layouts', 'duration', 'styleProfiles', 'recipes'] if k in extension},
+            'source': extension['schema'], 'scope': '公开参数已读取；成片入口按已接入适配器范围执行'}
     if value['template_id'] == 'motiongit-promo-user':
         workflows['project-wall'] = {'schema': _project_schema(), 'controls': {},
             'description': '项目内可编辑素材墙', 'implementation': 'motiongit-narrated-pilot-v1',
@@ -279,7 +334,7 @@ def validate_parameters(package, workflow, parameters):
                 and isinstance(parameters.get('provenance'), dict), '完整口播模板须有props、audio、provenance')
         require(('scenes' in parameters['props']) != ('shotPlan' in parameters), '固定场景和自动shotPlan须选一种')
         from backlot.studio_hum_production import _name
-        require(_name(parameters['audio'].get('voice')) and parameters['props'].get('visualStyle') in {'hum', 'coral'}, '口播绑定名或视觉风格无效')
+        require(_name(parameters['audio'].get('voice')) and parameters['props'].get('visualStyle') in {'hum', 'coral', 'darkroom', 'carnival', 'archive', 'playroom'}, '口播绑定名或视觉风格无效')
         return {'valid': True, 'scope': 'speech-clock-draft-structure', 'runtime_validation': 'pending-bound-source-preflight'}
     schema = package['workflows'][workflow]['schema']
     # Remote references are not implicit network permission. Real local refs remain available.
@@ -293,13 +348,14 @@ def validate_parameters(package, workflow, parameters):
     validator = jsonschema.validators.validator_for(schema)(schema)
     errors = sorted(validator.iter_errors(parameters), key=lambda e: str(list(e.path)))
     require(not errors, '参数不符合模板契约：' + ('/'.join(map(str, errors[0].path)) + ' ' + errors[0].message[:350] if errors else ''))
-    if workflow == 'poster-kit':
+    if workflow in {'poster-kit', 'motion-kit'}:
+        timeline = parameters['timeline'] if workflow == 'motion-kit' else parameters
         controls = package['workflows'][workflow]['controls']
         previous = 0
-        for segment in parameters['segments']:
+        for segment in timeline['segments']:
             require(segment['control'] in controls, '控件尚未在此包声明')
             control = controls[segment['control']]
-            require(previous <= segment['t0'] < segment['t1'] <= parameters['duration'], '场景重叠或超出时间线')
+            require(previous <= segment['t0'] < segment['t1'] <= timeline['duration'], '场景重叠或超出时间线')
             require(segment['t1'] - segment['t0'] + .001 >= control.get('minDur', 0), '场景短于控件最短时长')
             require(not segment.get('variant') or segment['variant'] in control.get('variants', []), '控件变体未声明')
             for key, field in control.get('props', {}).items():
@@ -447,7 +503,7 @@ def _hum_schema():
         return {'type': 'string'}
     schema = shape(example)
     schema['default'] = example
-    schema['properties']['props']['properties']['visualStyle'] = {'type': 'string', 'enum': ['hum', 'coral'], 'enumTitles': ['Hum亲子剪纸', 'Coral温暖棉纸']}
+    schema['properties']['props']['properties']['visualStyle'] = {'type': 'string', 'enum': ['hum', 'coral', 'darkroom', 'carnival', 'archive', 'playroom'], 'enumTitles': ['Hum亲子剪纸', 'Coral温暖棉纸', 'Darkroom深色纪实', 'Carnival几何探索', 'Archive长者画廊', 'Playroom亲子探索']}
     return schema
 
 

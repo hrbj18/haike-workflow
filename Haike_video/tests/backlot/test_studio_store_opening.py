@@ -268,3 +268,38 @@ def test_completed_legacy_request_still_validates_after_current_runtime_changes(
     assert "fontAssets" not in request["props"]
     assert opening.validate(sample["queue"], request) == project
 
+
+def community_sample(sample):
+    sample["props"].update(contentMode="community-cend", location="新塘未来汇 · 海客AI社区服务店")
+    sample["props"]["captions"][0]["text"] = "免费的有套路吗"
+    sample["asr"]["text"] = "免费的有套路吗。新塘未来汇开业了。"
+    sample["audio"]["authorization"]["presenter_script_sha256"] = sample["asr"]["approved_script_sha256"]
+    sample["audio"]["avatar_review"][0].update(source_text="免费的，有套路吗？", reason="开场钩子")
+    for name, value in [("audio-receipt.json", sample["audio"]), ("asr.json", sample["asr"])]:
+        atomic_private(sample["paths"][name], value)
+    return sample
+
+
+def test_community_hook_binds_authorized_script_and_real_opening_cues(sample):
+    community_sample(sample)
+    request = prepare(sample)
+    assert request["props"]["contentMode"] == "community-cend"
+    assert opening.validate(sample["queue"], request)
+
+
+@pytest.mark.parametrize("mutation", ["script", "text", "not_opening", "non_contiguous", "wrong_reason"])
+def test_community_hook_rejects_unbound_or_non_opening_presenter(sample, mutation):
+    community_sample(sample)
+    audio = sample["audio"]
+    review = audio["avatar_review"][0]
+    if mutation == "script": audio["authorization"]["presenter_script_sha256"] = "f" * 64
+    elif mutation == "text": review["source_text"] = "其他视频的口型"
+    elif mutation == "not_opening":
+        sample["props"]["avatarSegments"][0]["from"] = 1
+        review["from"] = 1
+    elif mutation == "non_contiguous": review["asr_cue_indices"] = [1]
+    else: review["reason"] = "店长介绍"
+    atomic_private(sample["paths"]["audio-receipt.json"], audio)
+    with pytest.raises(WorkError, match="连续开场真实字幕"):
+        prepare(sample)
+

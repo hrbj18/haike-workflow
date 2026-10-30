@@ -113,7 +113,11 @@ def run_update(root, identity):
         return set_operation(root, status, message, expected_id=identity, **fields)
     try:
         archive = folder / "package.zip"
-        download_package(root, candidate, archive, operation_id=identity)
+        if command.get('local_package') is True:
+            if archive.stat().st_size != candidate['package']['size'] or core.digest(archive) != candidate['package']['sha256']:
+                raise core.UpdateError('本地更新包校验失败，原程序未修改')
+        else:
+            download_package(root, candidate, archive, operation_id=identity)
         bundle = folder / "bundle"
         core.extract_bundle(archive, bundle)
         plan = core.preflight(bundle, root)

@@ -121,6 +121,8 @@ def clean_runtime(name):
     composer = name.startswith('Haike_video/remotion-composer/node_modules/')
     if not (runtime or composer):
         return False
+    if composer and '.cache' in parts:
+        return False
     lower = parts[-1].lower()
     return not (private_path(name) or lower.endswith(('.pyc', '.pyo')))
 
@@ -254,6 +256,10 @@ def stage(args):
         'source_commit': revision, 'runtime_source_sha256': sha256(args.runtime_archive),
         'runtime_source_name': args.runtime_archive.name, 'environments': environments,
         'local_tts': 'optional_not_installed', 'account_sessions': 'none', 'cloud_credentials': 'none',
+        'optional_components': {
+            'hyperframes': (destination/'runtime/hyperframes/node_modules/hyperframes/package.json').is_file(),
+            'whisper_small': any((destination/'runtime/models/whisper-small').glob('*/model.bin')),
+        },
     })
     version = json.loads((destination / 'VERSION.json').read_text(encoding='utf-8'))
     write_json(destination / 'RELEASE.json', {**version, 'source_commit': revision,

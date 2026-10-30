@@ -100,9 +100,12 @@ def validate_props(props):
     _require(isinstance(props, dict), "开业模板参数必须是对象")
     _font_names(props)
     duration = props.get("durationFrames")
+    content_mode = props.get("contentMode", "opening")
+    _require(content_mode in {"opening", "community-cend"}, "门店内容模式无效")
     _require(type(props.get("style")) is int and props["style"] in range(22, 27) and _integer(duration, 30, 1800), "开业模板仅支持22–26及1至60秒")
     _require(props.get("audio") == "master.wav", "开业模板音频必须使用同一master.wav母带")
-    _require(isinstance(props.get("location"), str) and "新塘未来汇" in props["location"] and "海客AI社区服务站" in props["location"], "开业模板地址必须明确新塘未来汇海客AI社区服务站")
+    store_name = "海客AI社区服务店" if content_mode == "community-cend" else "海客AI社区服务站"
+    _require(isinstance(props.get("location"), str) and "新塘未来汇" in props["location"] and store_name in props["location"], "模板地址必须明确新塘未来汇及本期门店名称")
     shots = props.get("shots")
     _require(isinstance(shots, list) and bool(shots) and all(isinstance(s, dict) for s in shots), "开业模板需要实拍镜头")
     identifiers = []
@@ -132,7 +135,7 @@ def validate_props(props):
     avatars = props.get("avatarSegments", [])
     _require(isinstance(avatars, list) and all(isinstance(a, dict) for a in avatars), "数字人短段必须是数组")
     for a in avatars:
-        _require(_name(a.get("src")) and _integer(a.get("from"), 0, duration - 1) and _integer(a.get("frames"), 1, 240)
+        _require(_name(a.get("src")) and _integer(a.get("from"), 0, duration - 1) and _integer(a.get("frames"), 1, 300 if content_mode == "community-cend" else 240)
                  and a["from"] + a["frames"] <= duration, "数字人短段越界或超过8秒")
     end = 0
     for a in sorted(avatars, key=lambda a: a["from"]):
@@ -214,13 +217,25 @@ def _validate_receipts(props, paths, media=None):
         matched = [r for r in avatar_reviews if (r.get("src"), r.get("from"), r.get("frames")) == (a["src"], a["from"], a["frames"])]
         _require(len(matched) == 1, "数字人审核区间与实际出镜不符")
         r = matched[0]
-        _require(r.get("source_sha256") == sha(paths[a["src"]]) and "店长" in str(r.get("source_text", "")) and r.get("reason") == "店长介绍", "数字人未绑定本期店长介绍原句")
+        community = props.get("contentMode") == "community-cend"
+        _require(r.get("source_sha256") == sha(paths[a["src"]]), "数字人来源SHA不符")
+        if not community:
+            _require("店长" in str(r.get("source_text", "")) and r.get("reason") == "店长介绍", "数字人未绑定本期店长介绍原句")
         indices = r.get("asr_cue_indices")
         _require(isinstance(indices, list) and bool(indices) and all(_integer(i, 0, len(props["captions"]) - 1) for i in indices), "数字人缺少真实ASR句索引")
         cues = [props["captions"][i] for i in indices]
-        _require(any("店长" in c["text"] for c in cues), "数字人出镜时段没有提及店长")
+        if community:
+            canonical = lambda text: re.sub(r"[^\w\u4e00-\u9fff]", "", text)
+            _require(r.get("reason") == "开场钩子" and a["from"] == 0
+                     and indices == list(range(len(indices)))
+                     and authorization.get("presenter_script_sha256") == asr["approved_script_sha256"]
+                     and canonical(str(r.get("source_text", ""))) == canonical("".join(c["text"] for c in cues)),
+                     "C端人物必须绑定已授权文案的连续开场真实字幕")
+        else:
+            _require(any("店长" in c["text"] for c in cues), "数字人出镜时段没有提及店长")
         start, stop = a["from"] / FPS, (a["from"] + a["frames"]) / FPS
-        _require(start >= min(c["startMs"] for c in cues) / 1000 - .5 and stop <= max(c["endMs"] for c in cues) / 1000 + .5, "数字人超出店长介绍句范围")
+        _require(start >= (0 if community else min(c["startMs"] for c in cues) / 1000 - .5)
+                 and stop <= max(c["endMs"] for c in cues) / 1000 + .5, "数字人超出已审核句范围")
         info = media[a["src"]] if media is not None else media_probe(paths[a["src"]])
         _require(bool(info.get("video")) and info["duration"] + .08 >= a["frames"] / FPS, "数字人视频长度不足")
         videos[a["src"]] = info
@@ -340,9 +355,10 @@ def run(queue, job):
             validate(queue, r)
             atomic_private(folder / "result.json", {"request_sha256": r["request_sha256"], "output_sha256": sha(output),
                 "quality_sha256": sha(folder / "quality.json"), "cloud_calls": 0, "publication": False})
+        community = r["props"].get("contentMode") == "community-cend"
         work = WorkCatalog(queue.projects_root).register(r["project_id"], output, work_key="main", mode="manual", event_id=job["job_id"],
-            quality_passed=False, actor="store-opening", title=r["title"], summary="新塘未来汇开业店长账号；原片与同钟短数字人；实测≥20Mbps；待视听审阅，未发布")
-        return {"status": "completed", "stage": "新塘未来汇开业成片完成，待审阅", "result": {"output_path": str(output),
+            quality_passed=False, actor="store-opening", title=r["title"], summary=("新塘未来汇C端门店视频" if community else "新塘未来汇开业店长账号") + "；原片与同钟短数字人；实测≥20Mbps；待视听审阅，未发布")
+        return {"status": "completed", "stage": "新塘未来汇C端视频完成，待审阅" if community else "新塘未来汇开业成片完成，待审阅", "result": {"output_path": str(output),
                 "output_sha256": sha(output), "work_id": work["work_id"], "cloud_calls": 0}}
     except WorkError as exc:
         return {"status": "failed", "stage": str(exc), "error": {"type": "StoreOpening", "message": str(exc)},

@@ -1,0 +1,188 @@
+"""Network update contract: trusted source, bounded downloads and no token leak."""
+import hashlib
+from contextlib import nullcontext
+import importlib.util
+import io
+import json
+import os
+from pathlib import Path
+import tempfile
+import unittest
+from unittest.mock import Mock, patch
+from urllib.request import Request
+import zipfile
+
+spec = importlib.util.spec_from_file_location('github_updater', Path(__file__).resolve().parents[1] / 'scripts/update-from-github.py')
+updater = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(updater)
+
+
+class GitHubOnlineUpdateTests(unittest.TestCase):
+    def test_unfinished_file_audio_operations_block_before_stopping_processes(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory).resolve()
+            record = root / 'Haike_video/.backlot/audio-center-internal/voice/operations/task/operation.json'
+            record.parent.mkdir(parents=True)
+            for state in ['submitting', 'processing', 'submission_unknown', None]:
+                record.write_text(json.dumps({'status': state}))
+                with patch.object(updater, 'processes') as processes, patch.object(updater.os, 'kill') as kill:
+                    with self.assertRaisesRegex(ValueError, '音色操作'):
+                        updater.stop_legacy(root)
+                    processes.assert_not_called(); kill.assert_not_called()
+            record.write_text(json.dumps({'status': 'succeeded'}))
+            updater.idle(root)
+
+    def test_stopped_modern_install_starts_existing_launcher_after_successful_rollback(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory).resolve(); base = 'http://127.0.0.1:14970'
+            receipt = root / '.local/app-updates/previous/receipt.json'
+            receipt.parent.mkdir(parents=True); receipt.write_text(json.dumps({'status': 'rolled_back'}))
+            operation = {'id': 'a'*24, 'target_version': '1.2.1', 'status': 'downloading'}
+            replies = [{'operation': {'status': 'idle'}},
+                       {'update': {'version': '1.2.1', 'status': 'available'}},
+                       {'operation': operation},
+                       {'operation': {**operation, 'status': 'complete'}, 'current': {'version': '1.2.1'}}]
+            with patch.object(updater, 'running_base', side_effect=[ValueError('stopped'), base]), \
+                 patch.object(updater, 'launch') as launch, patch.object(updater, 'local', side_effect=replies) as local:
+                self.assertTrue(updater.modern_update(root, '1.2.1')['ok'])
+                launch.assert_called_once_with(root)
+                self.assertEqual(local.call_args_list[2].args[1], '/api/studio/app-update/install')
+
+    def test_active_modern_operation_is_followed_without_resubmitting(self):
+        operation = {'id': 'b'*24, 'target_version': '1.2.1', 'status': 'waiting'}
+        replies = [{'operation': operation},
+                   {'operation': {**operation, 'status': 'complete'}, 'current': {'version': '1.2.1'}}]
+        with patch.object(updater, 'running_base', return_value='http://127.0.0.1:14970'), \
+             patch.object(updater, 'local', side_effect=replies) as local:
+            self.assertTrue(updater.modern_update(Path('.'), '1.2.1')['ok'])
+            self.assertTrue(all(call.args[1:] == ('/api/studio/app-update',) for call in local.call_args_list))
+
+    def test_pending_transaction_blocks_stopped_install_without_launch(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory).resolve(); record = root / '.local/app-updates/backup/receipt.json'
+            record.parent.mkdir(parents=True); record.write_text(json.dumps({'status': 'applying'}))
+            with patch.object(updater, 'running_base', side_effect=ValueError('stopped')), \
+                 patch.object(updater, 'launch') as launch:
+                with self.assertRaisesRegex(ValueError, '恢复备份'):
+                    updater.modern_update(root, '1.2.1')
+                launch.assert_not_called()
+
+    def test_formal_start_failure_restores_backup_and_starts_original(self):
+        installer = Mock(); installer.lock.side_effect = lambda _: nullcontext()
+        root = Path('D:/test-install'); output = {'backup': 'D:/test-install/.local/release-updates/backup'}
+        with patch.object(updater, 'launch', side_effect=[ValueError('new startup failure'), None]) as launch, \
+             patch.object(updater, 'stop_legacy') as stop, \
+             patch.object(updater, 'running_base', return_value='http://127.0.0.1:14971'):
+            with self.assertRaisesRegex(ValueError, '已恢复并启动原版本'):
+                updater.finish_bootstrap_start(root, output, installer)
+            installer.restore.assert_called_once_with(root, Path(output['backup']))
+            self.assertEqual(launch.call_count, 2); stop.assert_called_once_with(root)
+
+    def test_child_python_uses_utf8_even_on_chinese_windows(self):
+        with patch.dict(os.environ, {'PYTHONHOME': 'unrelated-python', 'PYTHONIOENCODING': 'cp936'}):
+            environment = updater.python_environment()
+        self.assertNotIn('PYTHONHOME', environment)
+        self.assertEqual(environment['PYTHONUTF8'], '1')
+        self.assertEqual(environment['PYTHONIOENCODING'], 'utf-8')
+
+    def feed(self):
+        asset = {'url': 'https://github.com/hrbj18/haike-workflow/releases/download/v1.2.1/program.zip',
+                 'size': 100, 'sha256': 'a'*64}
+        return {'schema': 1, 'edition': 'haike-workflow-2', 'channel': 'stable', 'version': '1.2.1',
+                'bootstrap': {'base_source_commit': updater.BASE_SOURCE, 'program': dict(asset), 'resources': dict(asset)}}
+
+    def test_repository_and_release_url_resolve_stable_feed(self):
+        self.assertIn('/releases/latest/download/', updater.feed_url('https://github.com/hrbj18/haike-workflow'))
+        self.assertIn('/download/v1.2.1/', updater.feed_url('https://github.com/hrbj18/haike-workflow/releases/tag/v1.2.1'))
+        for url in ['https://github.com/other/repo', 'http://github.com/hrbj18/haike-workflow',
+                    'https://github.com.attacker.test/hrbj18/haike-workflow',
+                    'https://user@github.com/hrbj18/haike-workflow']:
+            with self.assertRaises(ValueError):
+                updater.feed_url(url)
+
+    def test_feed_requires_pinned_asset_identity_and_total_under_200mb(self):
+        value = self.feed()
+        updater.validate_feed(value)
+        value['bootstrap']['resources']['size'] = 200_000_000
+        with self.assertRaisesRegex(ValueError, '总量'):
+            updater.validate_feed(value)
+        value = self.feed(); value['bootstrap']['program']['sha256'] = 'bad'
+        with self.assertRaisesRegex(ValueError, '摘要'):
+            updater.validate_feed(value)
+
+    def test_redirect_drops_github_credentials_before_cdn_request(self):
+        original = Request('https://api.github.com/repos/hrbj18/private/releases/assets/123',
+                           headers={'Authorization': 'Bearer unit-test-only'})
+        redirected = updater.Redirect().redirect_request(original, None, 302, 'Found', {},
+                                                        'https://release-assets.githubusercontent.com/payload.zip')
+        self.assertFalse(redirected.has_header('Authorization'))
+        with self.assertRaises(ValueError):
+            updater.Redirect().redirect_request(original, None, 302, 'Found', {}, 'http://bad.test/file')
+
+    def test_private_auth_never_goes_to_browser_download_urls(self):
+        with patch.object(updater, 'github_token') as token:
+            with self.assertRaisesRegex(ValueError, '认证'):
+                updater.remote('https://github.com/hrbj18/haike-workflow/releases/download/v1.2.1/a.zip', 'github-cli')
+            token.assert_not_called()
+
+    def test_cached_verified_asset_is_reused_without_network(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory); content = b'validated-program'
+            asset = {'size': len(content), 'sha256': hashlib.sha256(content).hexdigest(), 'url': 'https://example.test/file'}
+            with patch.object(updater, 'remote', return_value=io.BytesIO(content)) as network:
+                path = updater.fetch_asset(root, asset)
+                self.assertEqual(path.read_bytes(), content)
+                network.assert_called_once()
+            with patch.object(updater, 'remote', side_effect=AssertionError('must not redownload')):
+                self.assertEqual(updater.fetch_asset(root, asset), path)
+
+    def test_corrupt_or_oversized_download_never_creates_installable_zip(self):
+        for data in [b'bad', b'too much data']:
+            with self.subTest(data=data), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                asset = {'size': 3, 'sha256': hashlib.sha256(b'yes').hexdigest(), 'url': 'https://example.test/file'}
+                with patch.object(updater, 'remote', return_value=io.BytesIO(data)):
+                    with self.assertRaises(ValueError):
+                        updater.fetch_asset(root, asset)
+                self.assertFalse(list(root.rglob('*.zip')))
+                self.assertFalse(list(root.rglob('*.part')))
+
+    def test_zip_traversal_and_duplicate_names_are_rejected(self):
+        for names in [['haike-update-1.2/../../outside.py'],
+                      ['haike-update-1.2/A.py', 'haike-update-1.2/a.py']]:
+            with self.subTest(names=names), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory); archive = root / 'program.zip'
+                with zipfile.ZipFile(archive, 'w') as zipped:
+                    for name in names:
+                        zipped.writestr(name, b'never execute')
+                with self.assertRaises(ValueError):
+                    updater.extract_program(root, archive)
+                self.assertFalse((root / 'outside.py').exists())
+
+    def test_windows_extraction_prefix_leaves_room_for_nested_source_files(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory); archive = root / 'program.zip'
+            name = 'haike-update-1.2/payload/Haike_video/backlot/studio_motion_console_session.py'
+            with zipfile.ZipFile(archive, 'w') as zipped:
+                zipped.writestr(name, b'program')
+                zipped.writestr('haike-update-1.2/legacy_upgrade.py', b'installer')
+                zipped.writestr('haike-update-1.2/UPGRADE.json', b'{}')
+            bundle = updater.extract_program(root, archive)
+            relative = bundle.relative_to(root.resolve()).parts
+            self.assertEqual(relative[:3], ('.local', 'gu', 'b'))
+            self.assertLessEqual(len(relative[3]), 21)
+            self.assertEqual((bundle / 'payload/Haike_video/backlot/studio_motion_console_session.py').read_bytes(), b'program')
+
+    def test_installed_current_version_does_not_download_or_stop_services(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / 'PACKAGE-MANIFEST.json').write_text('{}')
+            (root / 'RELEASE.json').write_text(json.dumps({'edition': 'haike-workflow-2', 'version': '1.2.1'}))
+            with patch.object(updater, 'remote', return_value=io.BytesIO(json.dumps(self.feed()).encode())), \
+                 patch.object(updater, 'fetch_asset', side_effect=AssertionError('no download')), \
+                 patch.object(updater, 'stop_legacy', side_effect=AssertionError('no stop')):
+                self.assertTrue(updater.run('https://github.com/hrbj18/haike-workflow', root)['already_current'])
+
+
+if __name__ == '__main__':
+    unittest.main()

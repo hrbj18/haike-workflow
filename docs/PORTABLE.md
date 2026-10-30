@@ -1,7 +1,5 @@
 # 便携包初始化与启动
 
-**v1.0.0 的公开附件是轻量联网包：按 [ONLINE_INSTALL.md](ONLINE_INSTALL.md) 初始化，首次下载依赖；下述“离线、不安装依赖”仅适用于另行构建的完整离线包。** 两种包都从 `01-setup.cmd` 进入，联网包自动识别 `RELEASE.json` 的 `distribution=online`。
-
 根目录同时有 `PACKAGE-MANIFEST.json`、`runtime/` 和 `portable/` 的 ZIP 使用本文。包内已包含声明的 Windows x64 运行环境和前端产物；初始化使用包内 Python，不需要先执行源码的 `scripts/setup.ps1`。没有该清单的源码 checkout 使用根 [README.md](../README.md) 的安装流程。
 
 ## 首次解压

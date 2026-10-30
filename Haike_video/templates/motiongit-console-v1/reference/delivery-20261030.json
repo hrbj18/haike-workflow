@@ -1,0 +1,48 @@
+{
+  "schema": "haike.scoped-template-delivery/1",
+  "date": "2026-10-30",
+  "application_production_version": "1.1.6",
+  "delivery_version": "1.1.7",
+  "scope": "Windows x64 local independent installation; portrait45; same complete authorized source; exposed text/media slots; additional physical computer and new cloud source not certified",
+  "source_review_frames": 30,
+  "preview_frames": 110,
+  "encoded_frames_actually_viewed": 75,
+  "output_sha256": "1ffbc28caf4a51c1467cf0727d80c36d9ed8d9ef1ec614b3b92f29e450934bb8",
+  "bytes": 78690509,
+  "session": "mts-d90482e4f2c04c489c36aee8",
+  "project": "studio-7cf7fe3591ccec16",
+  "render": "motiongit-dark-native-v1-40bcb5ec21310f8e1ec9",
+  "job": "PQ-f5123875f5478b7031a7",
+  "request_sha256": "40bcb5ec21310f8e1ec9a1c03e039b8f8bbe8ba4910c2460870b78d51aa7bdf6",
+  "technical": {
+    "width": 1440,
+    "height": 1800,
+    "fps": "60/1",
+    "frames": 1824,
+    "video_bitrate": 20498692,
+    "duration_seconds": 30.4,
+    "audio_codec": "aac",
+    "sample_rate": "48000",
+    "channels": 2,
+    "loudness": {
+      "integrated_lufs": -16.15,
+      "true_peak_dbtp": -4.03,
+      "loudness_range_lu": 1.0
+    },
+    "full_decode": "passed"
+  },
+  "visual": "actual encoded frames inspected; explicit review receipt retained privately",
+  "continuous_human_listening": "not newly performed; technical audio measured separately",
+  "user_review": "user explicitly authorized autonomous acceptance without further opinions",
+  "physical_second_computer": "not tested",
+  "private_evidence_root": ".local/stable-delivery-20261029/F-encoded",
+  "source_code_sha256": {
+    "Haike_video/backlot/studio_motion_templates.py": "842a49d306b5e3360b0264ea6337505abe253aa1284fa2629e220ea0d3dd7a5c",
+    "Haike_video/backlot/studio_console_presenter.py": "d81e4450a8e818831f8e2dba90468e7c8e571bc5efad1f0649eeb89cd1265b80",
+    "Haike_video/templates/motiongit-console-v1/presenter.js": "b83688d5cbd6dae5c82a334b4053b132211cf9da6bea2132bffc4fee5be1492a",
+    "Haike_video/backlot/studio_motion_poster_session.py": "1db0b465bec7c71801d81f58a8c4fd7673dd823c8c2e69b002377715d67ec151",
+    "Haike_video/backlot/studio_native_story_portrait.py": "38fd61e1160fa0dd268e95d9e90281afbc65af47b2eb3d054627d94f5d49fa98",
+    "Haike_video/scripts/motion_template_preview.cjs": "2165aee6c5587ec688cd92baf748e53195a71e564e04738df56d2a5b2dbba863",
+    "Haike_video/tools/video/video_compose.py": "74f3e1b63633fa0b9d2c703628e7e1a8850569dcb3b09c5bc6cdad6277a8dcd8"
+  }
+}

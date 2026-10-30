@@ -91,6 +91,8 @@ user and the agent resolve the same name to the same line.
 
 | Call sign | User must supply | Engine | Primary instructions | Cost |
 |-----------|------------------|--------|----------------------|------|
+| **店长动态素材** | 完整本期口播、真实字幕、已看源区间的实拍及配乐音效 | HumProduction的Archive/Playroom动态场景；既有统一队列 | [动态素材runbook](../templates/hum-production-v1/dynamic/README.md) | 本地已有素材复用；新增上游配音/人物另按授权 |
+| **深色立体完整模板** | 完整口播/真实字幕、已看帧实拍、可选同声源人物；脚本先走已配置音频阶段 | 完整十组或按内容选择整组，Hedgerow/Cobalt 4:5；现有统一队列 | [固定runbook](../../Haike-Videohub/agent-runbooks/深色立体完整模板.md) / [模板入口](../templates/motiongit-dark-full-v1/README.md) | 依规格当前stage与各维度，不继承旧墙模板验收；不默认发布 |
 | **高质量数字人工作流** | 本期文案或完整音频；默认侯总图片与侯总音色，可显式覆盖 | InfiniteTalk V5.3.1 独立测试附件；45秒分段续接 | [高质量数字人工作流](../docs/高质量数字人工作流.md) | RunningHub与新增配音按本期授权；正式父视频仍走统一队列 |
 | **数字人模板7 / 数字人口播模板7** | 同钟人物视频、素材、完整音轨、字幕与本期标题/品牌 | 项目原生 Remotion Atelier 开发短样；全片队列适配待验证 | [数字人模板7 runbook](../../Haike-Videohub/agent-runbooks/数字人模板7.md) | 本地复用零新增云调用；新配音/数字人另按报价 |
 | **招商视频模板3至10 / 招商视频模板3…招商视频模板10** | 已测四比例12秒原片、同源真实字幕、四拍标题与声音计划 | 独立 investment-style-lab-v1 合同；原生统一队列、20Mbps，八种视觉系统 | [系列入口及八份runbook](../templates/investment-style-lab-v1/README.md) | 本地复用零云调用；本轮不发布 |

@@ -10,11 +10,12 @@ import re
 import shutil
 import socket
 import subprocess
-from http.client import HTTPSConnection
+from http.client import HTTPSConnection, IncompleteRead
 from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import urlsplit, urlencode
 from urllib.request import Request, build_opener, HTTPRedirectHandler, HTTPSHandler, ProxyHandler
+from urllib.error import URLError
 from uuid import uuid4
 
 from backlot.studio import Studio, atomic_private
@@ -45,14 +46,17 @@ def renew_if_expired(sdk, quote):
     return renewed
 
 
-def prepare_audio(source, target, rate=1):
+def prepare_audio(source, target, rate=1, *, frame_quantum=1):
     from lib.ffmpeg_locator import resolve_ffmpeg_pair
     ffmpeg, _ = resolve_ffmpeg_pair()
     info = media_probe(source)
     if not info.get("audio") or not 0 < info["duration"] / rate <= 120:
         raise WorkError("数字人口播音频需要在120秒内，请截取合适的口播")
-    duration = math.ceil(info["duration"] / rate * 25) / 25
-    r = subprocess.run([ffmpeg, "-v", "error", "-y", "-i", str(source), "-af", f"atempo={rate},apad,atrim=0:{duration}", "-ac", "1", "-ar", "24000", "-c:a", "pcm_s16le", str(target)], capture_output=True, timeout=60)
+    if frame_quantum not in {1, 5}: raise WorkError("音频帧对齐参数无效")
+    duration = math.ceil(info["duration"] / rate * 25 / frame_quantum) * frame_quantum / 25
+    filters = f"apad,atrim=0:{duration}"
+    if frame_quantum == 1 or rate != 1: filters = f"atempo={rate},"+filters
+    r = subprocess.run([ffmpeg, "-v", "error", "-y", "-i", str(source), "-af", filters, "-ac", "1", "-ar", "24000", "-c:a", "pcm_s16le", str(target)], capture_output=True, timeout=60)
     if r.returncode: raise WorkError("无法准备数字人驱动音轨")
     return duration
 
@@ -119,8 +123,10 @@ def validate(studio, draft):
     if not composer.is_dir(): raise WorkError("缺少本地Remotion渲染依赖，尚未提交付费调用")
 
 
-def quote(studio, draft):
+def quote(studio, draft, *, source_consumer=None):
     validate(studio, draft)
+    if source_consumer is not None and source_consumer != 'motion-template-source-v1':
+        raise WorkError("未登记的人物素材使用方")
     from backlot.studio_asr import snapshot
     from backlot.studio_network_materials import needs_clock
     clock_required = needs_clock(draft)
@@ -135,7 +141,8 @@ def quote(studio, draft):
     quotes = {}
     if draft["input"]["soundMode"] == "audio":
         audio = folder / "narration.wav"
-        duration = prepare_audio(studio.asset(draft["input"]["audio"]["id"], draft["id"]), audio)
+        duration = prepare_audio(studio.asset(draft["input"]["audio"]["id"], draft["id"]), audio,
+                                 frame_quantum=5 if source_consumer else 1)
         prepared.update(audio_path=str(audio), duration=duration, audio_file=sdk.upload(audio, "audio")["id"])
         quotes["avatar"] = sdk.quote("haike/avatar", {"audio_file": prepared["audio_file"], "image_file": prepared["image_file"]}, draft["id"])
         if clock_required and asr["provider"] == "gateway": quotes["asr"] = sdk.quote("haike/tencent-asr", {"audio_file": prepared["audio_file"]}, draft["id"])
@@ -152,6 +159,7 @@ def quote(studio, draft):
         required = {"haike/avatar"} | ({"haike/tencent-asr"} if needs_asr and asr["provider"] == "gateway" else set())
         if required - models: raise WorkError("数字人或字幕模型尚不可用，请由管理员确认成本费率后再制作")
     data = {"id": identity, "draft": draft, "prepared": prepared, "quotes": quotes, "asr": asr, "key_identity": key_identity(studio), "created_at": datetime.now(timezone.utc).isoformat()}
+    if source_consumer: data['source_consumer'] = source_consumer
     with studio.db() as db: db.execute("INSERT INTO studio_quotes VALUES(?,?)", (identity, json.dumps(data, ensure_ascii=False)))
     return public_quote(data)
 
@@ -186,9 +194,13 @@ def frozen_request(studio, draft, quote_id, maximum):
 
 
 def public_media_address(host, port):
+    return public_media_addresses(host, port)[0]
+
+
+def public_media_addresses(host, port):
     addresses = socket.getaddrinfo(host, port, type=socket.SOCK_STREAM)
     ips = [ipaddress.ip_address(a[4][0]) for a in addresses]
-    if ips and all(ip.is_global for ip in ips): return str(ips[0])
+    if ips and all(ip.is_global for ip in ips): return list(dict.fromkeys(str(ip) for ip in ips))
     # A local TUN fake-DNS address is not an origin address. For known public
     # media hosts only, verify public DNS over HTTPS and pin the actual socket.
     known = (re.fullmatch(r"dashscope-result-[a-z0-9-]+\.oss-[a-z0-9-]+\.aliyuncs\.com", host)
@@ -201,9 +213,10 @@ def public_media_address(host, port):
     class NoRedirect(HTTPRedirectHandler):
         def redirect_request(self, req, fp, code, msg, headers, newurl): return None
     # Some local proxies cannot validate the first resolver's certificate chain.
-    # Both fixed resolvers still require normal TLS and a public destination;
+    # Fixed resolvers still require normal TLS and a public destination;
     # the resulting media socket remains pinned to the checked IP below.
-    for resolver in ("https://1.1.1.1/dns-query", "https://dns.alidns.com/resolve"):
+    for resolver in ("https://1.1.1.1/dns-query", "https://dns.alidns.com/resolve",
+                     "https://dns.google/resolve", "https://cloudflare-dns.com/dns-query"):
         try:
             dns = resolver + "?" + urlencode({"name": host, "type": "A"})
             with build_opener(ProxyHandler({}), NoRedirect()).open(Request(dns, headers={"Accept": "application/dns-json"}), timeout=10) as response:
@@ -216,8 +229,8 @@ def public_media_address(host, port):
             continue
         if not all(a.is_global for a in answers):
             raise WorkError("代理DNS未能核对真实公网媒体地址，请核对代理DNS后恢复原任务")
-        return str(answers[0])
-    raise WorkError("代理DNS未能核对真实公网媒体地址，请核对代理DNS后恢复原任务")
+        return list(dict.fromkeys(str(ip) for ip in answers))
+    raise WorkError("代理DNS未能核对真实公网媒体地址，请核对代理DNS后恢复原任务", "unavailable")
 
 
 def media_https_handler(address):
@@ -248,28 +261,38 @@ def download_result(url, path, referer=None, *, max_bytes=100 * 1024 * 1024):
             p = urlsplit(url)
         if p.scheme != "https" or p.username or p.password or not p.hostname: raise WorkError("供应商媒体地址无效")
         address = public_media_address(p.hostname, p.port or 443)
-        opener = build_opener(ProxyHandler({}), NoRedirect(), media_https_handler(address))
-        try:
-            headers = {"User-Agent": "HaikeVideo/1.0", **({"Referer": referer} if referer else {})}
-            with opener.open(Request(url, headers=headers), timeout=90) as response:
-                temporary = path.with_suffix(path.suffix + ".part")
-                count = 0
-                try:
+        addresses=[address]; attempted=set(); expanded=False
+        while addresses and len(attempted)<4:
+            address=addresses.pop(0);attempted.add(address)
+            opener = build_opener(ProxyHandler({}), NoRedirect(), media_https_handler(address))
+            temporary = path.with_suffix(path.suffix + ".part")
+            try:
+                headers = {"User-Agent": "HaikeVideo/1.0", **({"Referer": referer} if referer else {})}
+                with opener.open(Request(url, headers=headers), timeout=30) as response:
+                    count = 0
+                    expected = (getattr(response,'headers',{}) or {}).get('Content-Length')
                     with temporary.open("wb") as out:
                         while chunk := response.read(1024 * 1024):
                             count += len(chunk)
                             if count > max_bytes: raise WorkError("供应商媒体超过下载大小上限")
                             out.write(chunk)
+                    if expected and int(expected)!=count: raise IncompleteRead(b'',max(0,int(expected)-count))
                     temporary.replace(path)
-                except BaseException:
-                    try: temporary.unlink(missing_ok=True)
-                    except OSError: pass
-                    raise
-                return
-        except HTTPError as exc:
-            if exc.code not in {301, 302, 303, 307, 308}: raise WorkError("供应商媒体暂时无法下载，请恢复原任务") from None
-            from urllib.parse import urljoin
-            url = urljoin(url, exc.headers.get("Location", ""))
+                    return
+            except HTTPError as exc:
+                if exc.code not in {301,302,303,307,308}:
+                    raise WorkError("供应商媒体暂时无法下载，请恢复原任务", "unavailable") from None
+                from urllib.parse import urljoin
+                url=urljoin(url,exc.headers.get('Location',''));break
+            except (URLError,TimeoutError,ConnectionError,IncompleteRead):
+                if not expanded:
+                    addresses.extend(ip for ip in public_media_addresses(p.hostname,p.port or 443) if ip not in attempted)
+                    expanded=True
+                if not addresses or len(attempted)>=4:
+                    raise WorkError("供应商媒体连接暂不可用，原调用已保留，请恢复下载", "unavailable") from None
+            finally:
+                try: temporary.unlink(missing_ok=True)
+                except OSError: pass
     raise WorkError("供应商媒体跳转过多")
 
 
@@ -432,13 +455,19 @@ def run_avatar(project_dir, request, sdk=None, *, progress=None):
         original_job_id = (s.get("job") or {}).get("id")
         if stage == "avatar" and s.get("job") and not s.get("intent"):
             raise WorkError("原数字人调用意图缺失，请核对原记录；未新建付费调用", "unavailable")
-        if not s.get("job"):
+        # Once an intent exists, its original journal owns submission/recovery.
+        # An accepted job stays recoverable after its creation quote expires.
+        if not s.get("job") and not s.get("intent"):
             s["quote"]=renew_if_expired(sdk,s["quote"]);save()
         if not s.get("intent"):
             identity = "call_" + hashlib.sha256((request["id"] + ":" + stage).encode()).hexdigest()[:32]
             s["intent"] = sdk.confirm(s["quote"], int(s["quote"]["max_charge_micros"]), identity); save()
         report(label + "：等待供应商结果")
-        job = sdk.wait(s["intent"], timeout=600)
+        job = s.get("job")
+        # Frozen successful stages are already durable source evidence. Requerying
+        # ASR on resume can block an unrelated original avatar download.
+        if not isinstance(job, dict) or job.get("status") != "succeeded":
+            job = sdk.wait(s["intent"], timeout=600)
         if stage == "avatar" and original_job_id and job.get("id") != original_job_id:
             raise WorkError("读回的数字人任务与原调用编号不一致，保留原记录待核对", "unavailable")
         s["job"] = job; save()
@@ -476,8 +505,14 @@ def run_avatar(project_dir, request, sdk=None, *, progress=None):
             # The selected speed is already applied by the relay for new jobs.
             # Applying atempo again would square the user's chosen multiplier.
             local_rate = 1 if draft["input"].get("modelId") else draft["input"].get("rate", 1)
-            duration = prepare_audio(raw, audio, local_rate)
+            duration = prepare_audio(raw, audio, local_rate,
+                                     frame_quantum=5 if request.get('source_consumer') == 'motion-template-source-v1' else 1)
             p.update(audio_path=str(audio), duration=duration, audio_file=sdk.upload(audio, "audio")["id"]); save()
+        if request.get('source_consumer') == 'motion-template-source-v1':
+            # Check the real generated clock before paying for ASR/avatar.
+            # The shortest registered full story needs 28s; no word-count guess.
+            if p['duration'] < 28:
+                raise WorkError('完整口播不足28秒，当前三组模板放不下；已保留配音，尚未生成新人物。请换较长口播或接入更短动作组合。')
         cues = manual_cues or []
         clock_cues = []
         caption_timing = "off"
@@ -513,6 +548,9 @@ def run_avatar(project_dir, request, sdk=None, *, progress=None):
             caption_timing = ("Whisper word-level" if result.get("provider") == "local-whisper"
                               else "Bailian word-level" if word_clock and asr["provider"] == "bailian"
                               else "ASR word-level" if word_clock else "ASR sentence-level")
+            if request.get('source_consumer') == 'motion-template-source-v1':
+                state['source_asr'] = result
+                save()
         from backlot.studio_storyboard import produce
         from backlot.studio_n1 import TEMPLATE_ID as N1_TEMPLATE, settings as n1_settings
         if draft["template_id"] == N1_TEMPLATE:
@@ -561,6 +599,17 @@ def run_avatar(project_dir, request, sdk=None, *, progress=None):
             state["avatar_artifact_recovery"] = recovery
             save()
         from backlot.studio_composition import compose_avatar
+        if request.get('source_consumer') == 'motion-template-source-v1':
+            # Server-owned handoff: the MotionGit session reviews these actual
+            # inputs before its own composition. No second avatar/TTS call.
+            receipt = {'contract': 'motion-template-source-v1', 'draft_id': draft['id'],
+                       'revision': draft['revision'], 'script': draft['text'],
+                       'voice': {'path': p['audio_path'], 'sha256': sha(Path(p['audio_path']))},
+                       'avatar': {'path': str(video), 'sha256': sha(video)},
+                       'asr': state.get('source_asr'), 'provider_stages': state['stages']}
+            atomic_private(output_dir/'motion-template-source.json', receipt)
+            return {'status': 'completed', 'stage': '口播与数字人已生成，等待模板素材审核',
+                    'result': {'source_receipt': 'motion-template-source.json', 'qa_status': 'pending'}}
         report("本地合成成片")
         if draft["input"].get("motion"):
             from backlot.studio_storyboard import compose_motion

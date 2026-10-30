@@ -1,8 +1,12 @@
 # GitHub 与跨电脑部署
 
-更新时间：2026-10-28
+私有开发迁移按根`docs/DEVELOPMENT_RECOVERY.md`恢复；有migration清单时以其必读记录核对最新.motion中断点，原冻结证据保留。
 
-v1.0.0发行范围见根docs/releases/v1.0.0.md：基于稳定main，仅应用更新功能与工具；其他开发窗口改动未纳入。根VERSION.json、portable/{app_update,update_service,update_worker}.py与studio_update_api.py提供版本、HTTPS检查、任务维护闸门和事务回退；AboutDialog.jsx为入口。首版改用轻量联网包（根docs/ONLINE_INSTALL.md），依赖从国内直连源下载，Whisper/Qwen可选；清单kind=full，后续补丁kind=patch；源码副本不自动覆盖。附件、物理新机与真实付费/发布验收分别核对。
+更新时间：2026-10-30
+
+10/30三模板：科技控制台、深色立体、活力海报。方框首片用户已看；旧三片/离线制作及中间构建升级证据根`.local/stable-delivery-20261029/`。用户指定真实1027完整包为1.1，正式新包叫1.2；原ZIP摘要已与发布记录核对，77982文件逐项验证后解压隔离测试。独立升级器根portable/legacy_upgrade.py；源码/模板两包制作与实际旧版验收见根`.local/release-1.2/`及docs/releases/1.2.md。1.1.x为内部构建，不能当1027基线。无新增云费/远端发布/物理异机验收；私人素材不进两包。
+
+应用更新首版：根docs/APP_UPDATES.md，VERSION.json引入1.0.0产品编号，源码显示开发态。studio_update_api.py与根portable/{app_update,update_service,update_worker}.py负责HTTPS清单、兼容程序补丁、任务维护闸门、独立重启/回退；AboutDialog.jsx为入口。根test_*update*.py及test_studio_update_api.py覆盖数据保留和启动失败恢复。线上清单/包仍需正式发布，其他安装/云服务未同步。
 
 10/27：用户授权将已验收交付快照21d1ff2发布为main稳定版，旧main保留legacy-main-before-20261027，合入后固定stable-20261027；见根[稳定版说明](../../../docs/releases/20261027-stable.md)。模板[交付说明](../../../docs/TEMPLATE_DELIVERY.md)含40张本地ZIP截图/42目录及备份回退。发布不混入其他窗口新改动；未声称异机/付费/发布验收。
 
@@ -37,8 +41,8 @@ v1.0.0发行范围见根docs/releases/v1.0.0.md：基于稳定main，仅应用�
 
 Agent素材分析通过Studio的`agent-materials`读写：真实音轨/ASR后提供原版本与clock；Agent按真实cue安排分镜、观看保留候选代表帧并提交SHA绑定结论，再恢复原任务。没有分析结果时可恢复暂停，不后台调用中转模型，不重做已成功的TTS/ASR。已有上传素材也须提供来源/使用权和实际观察依据，最终汇报不包含私人配置。
 
-2026-10-17源码隔离回归：Studio及批次419项、根初始化84项、前端128项通过。N1可在明确关闭联网后使用Agent已审本地素材；开启联网仍要求采用真实网络来源，未找到素材不降级。证据在忽略目录`.local/portable-build/`，本轮未产生费用或真实发布。
+旧版隔离回归见根`.local/portable-build/`；不代表本次异机或真实账号验收。
 
-最终便携包源码固定`53f47b0`，交付`dist/Haike_videoflow_20261017_v2/`仅ZIP和私有配置文档。完整解压77,499项CRC/SHA及凭据扫描通过；新目录一键导入、419项隔离回归、本地渲染、报价、设置页和重复启动/初始化通过，7份配置保持字节一致。未搬账号或伪造云端验证，旧ZIP/main不动；最终证据`.local/portable-build/verification-agent-final.json`。这是本机独立目录验收，不是另一台物理机或真实收费发布验收。
+10/17便携包`53f47b0`本机验收及范围见`.local/portable-build/verification-agent-final.json`；未验另一台物理机、真实收费或发布。
 
 Git仅保存源码、测试、公开配置模板、可分发品牌资源与设计文档。凭据、账本、主密钥、Cookie、项目素材、成片及备份被忽略，另行加密备份。新机静态测试通过不代表真实供应商、付费结算或账号发布已经验收。

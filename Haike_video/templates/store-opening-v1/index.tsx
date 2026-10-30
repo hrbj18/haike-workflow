@@ -9,6 +9,7 @@ export type OpeningCaption = {text: string; startMs: number; endMs: number; time
 export type OpeningChapter = {from: number; title: string; sub: string; accent?: string};
 export type OpeningAvatar = {src: string; from: number; frames: number};
 export type OpeningProps = {style: number; durationFrames: number; audio: string; captions: OpeningCaption[];
+  contentMode?: 'opening' | 'community-cend';
   shots: OpeningShot[]; avatarSegments?: OpeningAvatar[]; chapters?: OpeningChapter[]; location?: string;
   fontAssets?: {display: string; body: string; latin: string}};
 type Box = readonly [number, number, number, number];
@@ -111,6 +112,12 @@ const Footage: React.FC<{shots: OpeningShot[]; lane: OpeningShot['lane']; box: B
 };
 
 function titleFor(p: OpeningProps, l: Layout): string {
+  if (p.contentMode === 'community-cend') {
+    const title = (l.chapter?.title || '来店坐坐').replace(/\n/g, '');
+    if (l.stage.spine) return Array.from(title).join('\n');
+    if (l.stage.title[3] < l.stage.titleSize * 1.8 || l.avatar) return title;
+    return title.length > 3 ? title.slice(0, 2) + '\n' + title.slice(2) : title;
+  }
   if (l.avatar) return p.style === 23 ? '店长邀你' : p.style === 24 ? '店长欢迎' : '我是店长';
   if (p.style === 23 && l.id === 'field') return ['AI\n在身边', '店长\n邀你', '免费\n体验', '不收费\n不办卡', '来店\n坐坐'][l.chapterIndex] || '来店\n坐坐';
   if (p.style === 25 && l.id === 'quote') return `“${l.chapter?.title || '来聊聊'}”`;
@@ -139,20 +146,20 @@ const DisplayType: React.FC<{p: OpeningProps; layout: Layout; frame: number}> = 
     </Panel>
   </>;
 };
-const Brand: React.FC<{family: Family; styleNumber: number}> = ({family, styleNumber}) => (
+const Brand: React.FC<{family: Family; styleNumber: number; community?: boolean}> = ({family, styleNumber, community}) => (
   <Panel id="brand" box={geometry.brand as Box} style={{backgroundColor: styleNumber === 26 ? family.b : family.a, color: '#000',
     display: 'flex', alignItems: 'center', padding: '0 20px', gap: 15}}>
     <span style={{fontFamily: LATIN, fontWeight: 800, fontStyle: 'italic', fontSize: 55}}>HAIKE AI</span>
-    <span style={{fontFamily: BODY, fontWeight: 800, fontSize: 40, whiteSpace: 'nowrap'}}>开业</span>
+    <span style={{fontFamily: BODY, fontWeight: 800, fontSize: 40, whiteSpace: 'nowrap'}}>{community ? '社区' : '开业'}</span>
   </Panel>
 );
-const Location: React.FC<{family: Family; styleNumber: number; location?: string}> = ({family, styleNumber, location}) => {
+const Location: React.FC<{family: Family; styleNumber: number; location?: string; community?: boolean}> = ({family, styleNumber, location, community}) => {
   const bg = styleNumber === 26 ? family.b : family.a;
   const fg = styleNumber === 26 ? family.a : '#000';
   return <Panel id="location" box={geometry.location as Box} style={{backgroundColor: bg, color: fg,
     fontFamily: BODY, fontWeight: 800, padding: '0 50px', display: 'flex', alignItems: 'center', gap: 30}}>
-    <span style={{fontSize: 64, whiteSpace: 'nowrap'}}>新塘未来汇</span>
-    <span style={{fontSize: 64, whiteSpace: 'nowrap'}}>海客AI社区服务站</span>
+    <span style={{fontSize: 64, whiteSpace: 'nowrap'}}>{community ? '未来汇一楼' : '新塘未来汇'}</span>
+    <span style={{fontSize: 64, whiteSpace: 'nowrap'}}>{community ? '海客AI社区服务店' : '海客AI社区服务站'}</span>
     <span data-location={location || '新塘未来汇 · 海客AI社区服务站'} style={{display: 'none'}} />
   </Panel>;
 };
@@ -185,13 +192,13 @@ const OpeningContent: React.FC<OpeningProps> = p => {
       {stage.detail && <Footage shots={p.shots} lane="detail" box={stage.detail} />}
     </>}
     <DisplayType p={p} layout={l} frame={frame} />
-    <Brand family={family} styleNumber={p.style} />
+    <Brand family={family} styleNumber={p.style} community={p.contentMode === 'community-cend'} />
     {avatar && <div data-element="speaker" style={{position: 'absolute', left: 54, top: 1370,
       fontFamily: BODY, fontSize: 54, fontWeight: 800, lineHeight: 1.2, backgroundColor: '#000', color: '#fff', padding: '14px 24px'}}>
-      海客AI社区服务站店长
+      {p.contentMode === 'community-cend' ? '侯总 · 海客AI社区服务店' : '海客AI社区服务站店长'}
     </div>}
     {caption && <Caption text={caption.text} styleNumber={p.style} family={family} />}
-    <Location family={family} styleNumber={p.style} location={p.location} />
+    <Location family={family} styleNumber={p.style} location={p.location} community={p.contentMode === 'community-cend'} />
     {p.audio && <Audio src={staticFile(p.audio)} />}
   </AbsoluteFill>;
 };

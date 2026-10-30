@@ -184,7 +184,11 @@ def production(project_id: str, render_id: str, request: Request):
     review=read_json(folder/'visual-review.json')
     preview_receipt=Path(state.get('preview_receipt') or Path(state['preview_directory'])/'preview-review.json') if state.get('preview_directory') else None
     preview_sha=sha(preview_receipt) if preview_receipt and preview_receipt.is_file() else None
+    plan=Path(state['plan_directory']) if state.get('workflow')=='motion-kit' and state.get('plan_directory') else None
+    plan_details={'report_url':root+'component-plan.json','report_sha256':sha(plan/'report.json'),
+                  'inputs_sha256':sha(plan/'inputs.json'),'reviewed':bool(read_json(folder/'plan-semantic-review.json'))} if plan else None
     return {'images':[{'name':name,'url':root+name} for name in state.get('images',[])],
+            'plan':plan_details,
             'preview_sha256':preview_sha,'reviewed':bool(review and review.get('reviewed_preview_sha256')==preview_sha),
             'nomusic':root+'hum-production-nomusic.mp4' if (folder/'hum-production-nomusic.mp4').is_file() else None,
             'sample':root+'native-final.mp4' if (folder/'native-final.mp4').is_file() else root+'narrated-pilot.mp4' if (folder/'narrated-pilot.mp4').is_file() else root+'hum-production.mp4' if (folder/'hum-production.mp4').is_file() else None}
@@ -201,6 +205,7 @@ def production_media(project_id: str, render_id: str, name: str, request: Reques
     state=read_json(folder/'native-state.json')
     if name in {'native-final.mp4','narrated-pilot.mp4','hum-production.mp4','hum-production-nomusic.mp4'} and (folder/name).is_file():
         return FileResponse(folder/name)
+    if name=='component-plan.json' and details.get('plan') and (folder/name).is_file():return FileResponse(folder/name,media_type='application/json')
     if name not in [i['name'] for i in details['images']]: raise HTTPException(404,'预览不存在')
     return FileResponse(Path(state.get('images_directory') or state['preview_directory'])/name)
 
@@ -214,3 +219,12 @@ def visual_review(project_id: str, render_id: str, request: Request, data: dict 
     frozen=read_json(queue.projects_root/project_id/'artifacts/motiongit-component-request.json')
     if frozen.get('render_id') != render_id: raise HTTPException(404,'工程不存在')
     return call(render.review,queue,frozen,data)
+
+
+@router.post('/productions/{project_id}/{render_id}/plan-review')
+def component_plan_review(project_id: str, render_id: str, request: Request, data: dict = Body(...)):
+    mutation(request);production(project_id,render_id,request)
+    from backlot import studio_motiongit_render as render
+    queue=_queue(request);frozen=read_json(queue.projects_root/project_id/'artifacts/motiongit-component-request.json')
+    if frozen.get('render_id')!=render_id:raise HTTPException(404,'工程不存在')
+    return call(render.review_plan,queue,frozen,data)

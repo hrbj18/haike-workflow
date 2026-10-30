@@ -92,6 +92,37 @@ class UpdateServiceTests(unittest.TestCase):
             with patch.object(service, "remote_open", return_value=io.BytesIO(json.dumps(invalid).encode())):
                 self.assertEqual(updater.check()["update"]["status"], "unavailable")
 
+    def test_application_patch_has_a_decimal_300mb_download_limit(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root, _, plan = self.fixture(folder)
+            candidate = self.candidate(plan)
+            candidate['package']['size'] = 300_000_000
+            service.UpdateService.validate_candidate(candidate, core.read_release(root))
+            candidate['package']['size'] += 1
+            with self.assertRaisesRegex(core.UpdateError, '大小'):
+                service.UpdateService.validate_candidate(candidate, core.read_release(root))
+
+    def test_imported_patch_is_private_pinned_and_never_needs_a_download(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root, bundle, plan = self.fixture(folder)
+            archive = service.private_path(root, 'import-'+'b'*24+'/package.zip')
+            with zipfile.ZipFile(archive, 'w') as output:
+                for file in bundle.rglob('*'):
+                    if file.is_file(): output.write(file, file.relative_to(bundle).as_posix())
+            updater = service.UpdateService(root)
+            with patch.object(service, 'remote_open', side_effect=AssertionError('offline import must not use network')):
+                snapshot = updater.import_archive(archive)
+                self.assertEqual(snapshot['update']['source'], 'local')
+                self.assertNotIn('local_archive', json.dumps(snapshot))
+                result = updater.install(plan['version'], 'http://127.0.0.1:1234', 'instance', 1234, True, launch=False)
+            command = service.read_json(service.private_path(root, result['operation']['id']+'/operation.json'))
+            self.assertTrue(command['local_package'])
+            self.assertEqual(core.digest(service.private_path(root, result['operation']['id']+'/package.zip')), core.digest(archive))
+            service.set_operation(root, 'cancelled', 'test cancelled')
+            archive.write_bytes(b'changed after inspection')
+            with self.assertRaisesRegex(core.UpdateError, '已变化'):
+                updater.install(plan['version'], 'http://127.0.0.1:1234', 'instance', 1234, True, launch=False)
+
     def test_incompatible_and_source_never_install(self):
         with tempfile.TemporaryDirectory() as folder:
             root, bundle, plan = self.fixture(folder)

@@ -40,10 +40,11 @@ def local_request(request):
         raise HTTPException(403, "更新功能仅供本机使用")
 
 
-def mutation(request):
+def mutation(request, raw=False):
     from backlot.studio_api import mutation as studio_mutation
     local_request(request)
-    studio_mutation(request)
+    if not raw:
+        studio_mutation(request)
     if request.headers.get("origin") != str(request.base_url).rstrip("/"):
         raise HTTPException(403, "请从本机海客工作台确认更新")
 
@@ -69,6 +70,34 @@ async def install(request: Request, data: dict = Body(...)):
                                        os.getpid(), data.get("confirmed") is True)
     except updates.core.UpdateError as exc:
         raise HTTPException(409, str(exc)) from exc
+
+
+@router.post('/import')
+async def import_package(request: Request):
+    mutation(request, raw=True)
+    updater = service(request.app)
+    current = updates.current_release(updater.root)
+    cap = updates.capability(updater.root, current)
+    if not cap['can_install']:
+        raise HTTPException(409, cap['reason'])
+    if request.headers.get('content-type') != 'application/octet-stream':
+        raise HTTPException(415, '请选择程序更新ZIP文件')
+    archive = updates.private_path(updater.root, 'import-'+secrets.token_hex(12)+'/package.zip')
+    size = 0
+    try:
+        with archive.open('xb') as output:
+            async for chunk in request.stream():
+                size += len(chunk)
+                if size > updates.core.MAX_ARCHIVE_BYTES:
+                    raise HTTPException(413, '更新包不能超过300 MB')
+                output.write(chunk)
+        return await asyncio.to_thread(updater.import_archive, archive)
+    except updates.core.UpdateError as exc:
+        archive.unlink(missing_ok=True)
+        raise HTTPException(409, str(exc)) from exc
+    except BaseException:
+        archive.unlink(missing_ok=True)
+        raise
 
 
 @router.post("/cancel")
@@ -149,6 +178,9 @@ async def readiness(request: Request):
         busy = "正在等待制作队列结束；结果待确认的任务请先核对，或暂缓本次更新。"
     if getattr(request.app.state, "update_inflight", 0):
         busy = "正在等待已提交的工作台操作结束。"
+    from backlot import studio_motion_templates_api
+    if studio_motion_templates_api._ACTIVE_PREPARATIONS:
+        busy = '正在等待动效模板的素材检查、准备或预览结束。'
     for name in ("recovery_tasks", "media_index_tasks", "media_index_batch_tasks", "interaction_candidate_tasks", "interaction_second_pass_tasks"):
         tasks = getattr(request.app.state, name, {})
         if isinstance(tasks, dict):

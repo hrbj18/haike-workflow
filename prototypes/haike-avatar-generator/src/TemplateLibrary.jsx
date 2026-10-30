@@ -3,10 +3,11 @@ import {api} from './studio-api.js';
 import {Button,Notice} from './ui.jsx';
 import './template-library.css';
 import {MotionGitLibrary} from './MotionGitLibrary.jsx';
+import {MotionTemplateStudio} from './MotionTemplateStudio.jsx';
 
-export function TemplateLibrary(){
-  const [mode,setMode]=useState('saved');
-  return <><div className="library-filters" role="group" aria-label="模板来源"><button aria-pressed={mode==='saved'} onClick={()=>setMode('saved')}>已保存模板</button><button aria-pressed={mode==='motiongit'} onClick={()=>setMode('motiongit')}>MotionGit 导入与编辑</button><a href="/motiongit">打开独立编辑页</a></div>{mode==='motiongit'?<MotionGitLibrary/>:<SavedTemplateLibrary/>}</>;
+export function TemplateLibrary({initialScript='',initialInput=null}){
+  const [mode,setMode]=useState('motiongit');
+return <><div className="library-filters" role="group" aria-label="模板来源"><button aria-pressed={mode==='motiongit'} onClick={()=>setMode('motiongit')}>MotionGit 模板</button><button aria-pressed={mode==='saved'} onClick={()=>setMode('saved')}>已保存模板</button><button aria-pressed={mode==='editor'} onClick={()=>setMode('editor')}>原包参数编辑</button></div>{mode==='motiongit'?<MotionTemplateStudio initialScript={initialScript} initialInput={initialInput}/>:mode==='editor'?<MotionGitLibrary embedded/>:<SavedTemplateLibrary/>}</>;
 }
 
 function SavedTemplateLibrary(){

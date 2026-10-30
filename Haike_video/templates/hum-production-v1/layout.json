@@ -1,8 +1,10 @@
 {
   "width":1440,"height":1800,"fps":30,
-  "brand":[88,64,1264,48],"footer":[88,1730,1264,38],
-  "captions":[88,1580,1264,116],"captionSize":58,
+  "brand":[88,64,1264,48],"footer":[88,120,1264,36],
+  "captions":[88,1460,1264,140],"captionSize":84,
   "statement":{"title":[88,178,1264,300],"titleSize":104},
   "sceneHeader":{"title":[88,178,1264,260],"titleSize":88},
-  "presenter":{"large":[300,460,840,1060],"small":[1082,1205,270,338],"transitionFrames":18}
+  "focus":{"portrait":[348,420,744,1000],"coralPortrait":[454,420,750,1000],"landscape":[88,490,1264,884],"labelY":1380},
+  "wall":{"portraitTarget":[348,420,744,1000],"landscapeTarget":[88,490,1264,900]},
+  "presenter":{"large":[300,430,840,1000],"small":[1082,1070,270,338],"transitionFrames":18}
 }

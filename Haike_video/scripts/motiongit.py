@@ -20,7 +20,8 @@ def main():
     asset=sub.add_parser('asset');asset.add_argument('draft_id');asset.add_argument('path',type=Path);asset.add_argument('--slot')
     for name in ('preview','render'):
         item=sub.add_parser(name);item.add_argument('draft_id')
-    review=sub.add_parser('review');review.add_argument('request',type=Path);review.add_argument('evidence',type=Path)
+    for name in ('review','review-plan'):
+        review=sub.add_parser(name);review.add_argument('request',type=Path);review.add_argument('evidence',type=Path)
     resume=sub.add_parser('resume');resume.add_argument('request',type=Path);resume.add_argument('--phase',choices=['preview','render'],default='render')
     save = sub.add_parser('save')
     save.add_argument('package_id'); save.add_argument('workflow'); save.add_argument('input', type=Path)
@@ -36,14 +37,15 @@ def main():
     elif args.action == 'asset':
         motion.require(args.path.is_file() and 0<args.path.stat().st_size<=motion.MAX_PACKAGE,'素材缺失或超过大小限制')
         result=motion.save_asset(args.draft_id,args.slot or args.path.name,args.path.read_bytes())
-    elif args.action in {'preview','render','review','resume'}:
+    elif args.action in {'preview','render','review','review-plan','resume'}:
         from backlot import studio_motiongit_render as render
         from backlot.production_queue import ProductionQueue, ProductionQueueConflict
         from backlot.production_queue_worker import ProductionQueueWorker
         root=Path(__file__).resolve().parents[1]
         queue=ProductionQueue(root/'.backlot/production-queue.sqlite3',root/'projects')
-        if args.action=='review':
-            result=render.review(queue,json.loads(args.request.read_text(encoding='utf-8')),json.loads(args.evidence.read_text(encoding='utf-8')))
+        if args.action in {'review','review-plan'}:
+            function=render.review_plan if args.action=='review-plan' else render.review
+            result=function(queue,json.loads(args.request.read_text(encoding='utf-8')),json.loads(args.evidence.read_text(encoding='utf-8')))
         else:
             request=json.loads(args.request.read_text(encoding='utf-8')) if args.action=='resume' else render.freeze(queue,args.draft_id)
             job=render.submit(queue,request,phase=args.phase if args.action=='resume' else args.action)

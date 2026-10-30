@@ -37,6 +37,17 @@ def test_png_crf16_slow_and_copy_of_issued_command_are_not_dropped(renderer):
     assert result.data["render_command"] == calls[0]
 
 
+def test_portable_browser_is_explicit_and_missing_file_never_falls_back_to_download(renderer,monkeypatch,tmp_path):
+    tool,output,calls,settings=renderer
+    browser=tmp_path/'bundled-browser.exe';browser.write_bytes(b'fixture-browser')
+    monkeypatch.setenv('REMOTION_BROWSER_EXECUTABLE',str(browser))
+    assert tool._render_via_atelier({'output_path':str(output)},{'bespoke':settings}).success
+    assert f'--browser-executable={browser}' in calls[0]
+    calls.clear();browser.unlink()
+    assert not tool._render_via_atelier({'output_path':str(output)},{'bespoke':settings}).success
+    assert calls==[]
+
+
 @pytest.mark.parametrize("change", [{"image_format": "gif"}, {"jpeg_quality": 80}, {"x264_preset": "invented"},
                                      {"pixel_format": "invented"}, {"codec": "copy"}])
 def test_invalid_quality_options_fail_before_renderer_process(renderer, change):

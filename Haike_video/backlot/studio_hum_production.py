@@ -17,6 +17,7 @@ import subprocess
 import wave
 
 from backlot.studio import atomic_private
+from backlot.production_queue import _sanitize as _queue_sanitize
 from backlot.studio_investment_recompose import KIND, fingerprint
 from backlot.studio_render import media_probe
 from backlot.work_catalog import WorkCatalog, WorkError, read_json, regular_path, sha
@@ -94,7 +95,7 @@ def _template_files():
 
 def runtime():
     from lib.ffmpeg_locator import resolve_ffmpeg_pair
-    files = [Path(__file__), ROOT / "backlot/production_queue_worker.py", ROOT / "tools/video/video_compose.py",
+    files = [Path(__file__), ROOT / "backlot/production_queue_worker.py", ROOT / "backlot/production_queue.py", ROOT / "tools/video/video_compose.py",
              ROOT / "remotion-composer/package-lock.json", *_template_files(), *map(Path, resolve_ffmpeg_pair())]
     _require((TEMPLATE / "index.tsx").is_file() and (ROOT / "remotion-composer/node_modules").is_dir(), "正式模板或Remotion依赖未就绪")
     _require(all(p.is_file() for p in files), "本地渲染器或编码器缺失")
@@ -106,7 +107,11 @@ def plan_scenes(shot_plan, duration_frames):
     _require(isinstance(shot_plan, list) and 1 <= len(shot_plan) <= 100 and all(isinstance(s, dict) for s in shot_plan), "shotPlan须有1至100个场景")
     weights = [s.get("weight", 1) for s in shot_plan]
     _require(all(_number(w) and 0 < w <= 100 for w in weights), "shotPlan场景权重须大于0且不超过100")
-    minimums = [180 if s.get('module') == 'wall' and s.get('motion') == 'card-stack' else 108 if s.get("module") == "wall" else 30 for s in shot_plan]
+    minimums = [180 if s.get('module') == 'wall' and s.get('motion') == 'card-stack' else 108 if s.get("module") == "wall"
+                else {'cloth': 50, 'parallax': 60, 'mondrian': 80, 'gl-film': 54, 'gl-circle': 54, 'pixi-shock': 60}.get(s.get('motion'), 30) for s in shot_plan]
+    dynamic_minimums = read_json(TEMPLATE / 'dynamic/layout.json')['minimumFrames'] if any(s.get('module') == 'dynamic' for s in shot_plan) else {}
+    minimums = [dynamic_minimums.get(s.get('motion'), 30) if s.get('module') == 'dynamic' else old
+                for s, old in zip(shot_plan, minimums)]
     remaining = duration_frames - sum(minimums)
     _require(remaining >= 0, "口播太短，无法容纳shotPlan的级联、展开和阅读时窗；请减少场景")
     floats = [remaining * w / sum(weights) for w in weights]
@@ -138,7 +143,7 @@ def validate_props(props, voice_seconds):
     _require(_int(total, 60, 18060) and (props.get("width"), props.get("height"), props.get("fps"), props.get("audio"))
              == (WIDTH, HEIGHT, FPS, "master.wav"), "正式模板须绑定自动口播时钟、4:5和master.wav")
     _require(_text(props.get("brand"), 24) and _text(props.get("footer", ""), 50, empty=True), "品牌或页脚文字无效")
-    _require(props.get("visualStyle") in {"hum", "coral"}, "视觉风格须为已适配的hum或coral")
+    _require(props.get("visualStyle") in {"hum", "coral", "darkroom", "carnival", "archive", "playroom"}, "视觉风格须为已适配的模板风格")
     if "palette" in props:
         _require(isinstance(props["palette"], dict) and all(isinstance(v, str) and re.fullmatch(r"#[a-fA-F0-9]{6}", v) for v in props["palette"].values()), "颜色须为十六进制色值")
     _require(props.get("fontAssets") == {"display": "display.ttf", "body": "body.ttf"}, "正式模板须绑定display.ttf和body.ttf字体文件")
@@ -168,13 +173,33 @@ def validate_props(props, voice_seconds):
                  and _int(scene.get("from"), 0, total - 1) and _int(scene.get("frames"), 30, total)
                  and cursor + scene["frames"] <= total, "场景须连续覆盖全片、不重叠且编号唯一")
         seen.add(scene["id"])
-        _require(scene.get("module") in {"statement", "wall", "focus"} and scene.get("theme", "paper") in {"paper", "dark"}, "尚未适配的场景模块或主题")
+        _require(scene.get("module") in {"statement", "wall", "focus", "dynamic"} and scene.get("theme", "paper") in {"paper", "dark"}, "尚未适配的场景模块或主题")
         motion = scene.get('motion')
-        _require(motion is None or (scene['module'] == 'wall' and motion in {'cascade', 'card-stack'})
-                 or (scene['module'] == 'focus' and motion == 'paper-reveal'), '动效与场景模块不匹配或尚未适配')
-        _require(_text(scene.get("title"), 42, lines=3) and all(len(line) <= 16 for line in scene["title"].split("\n"))
-                 and _text(scene.get("subtitle", ""), 50, lines=2, empty=True), "标题或说明超过阅读容量")
-        if scene["module"] in {"wall", "focus"}:
+        dynamic = scene['module'] == 'dynamic'
+        if props['visualStyle'] in {'archive', 'playroom'}:
+            _require(scene['module'] in {'dynamic', 'statement'}, '动态素材模板使用dynamic或statement场景')
+        if dynamic:
+            rules = read_json(TEMPLATE / 'dynamic/layout.json')['minimumFrames']
+            _require(props['visualStyle'] in {'archive', 'playroom'} and motion in rules
+                     and scene['frames'] >= rules[motion], '动态场景尚未适配或时长不足以完成动作')
+            wall = scene.get('wallMediaIds')
+            _require(isinstance(wall, list) and 3 <= len(wall) <= 9 and len(set(wall)) == len(wall)
+                     and all(i in ids for i in wall) and scene.get('mediaId') in wall, '动态场景须绑定3至9项真实素材并包含主素材')
+            _require('selection' not in scene, '动态场景动作节点由当前模块与时长决定，不接受旧素材墙selection')
+            _require('\n' not in scene.get('subtitle', '') and len(scene.get('subtitle', '')) <= 38, '动态场景说明须为最多38字的单行')
+            used.update(wall)
+        if props['visualStyle'] in {'darkroom', 'carnival'}:
+            _require(scene['module'] in {'focus', 'statement'}, '开源新风格须使用focus/statement镜头安排；旧wall时间窗不能直接套用')
+            _require(motion is None or motion in {'cloth', 'parallax', 'mondrian', 'gl-film', 'gl-circle', 'pixi-shock'}, '新风格不使用旧鼠标卡片动效')
+            _require(motion not in {'gl-film', 'gl-circle', 'pixi-shock'} or scene['module'] == 'focus', 'GL/Pixi实拍效果须绑定focus素材')
+            _require(scene['frames'] >= {'cloth': 50, 'parallax': 60, 'mondrian': 80, 'gl-film': 54, 'gl-circle': 54, 'pixi-shock': 60}.get(motion, 30), '场景太短，无法完成开源动效及稳定阅读')
+        _require(motion is None or dynamic or (scene['module'] == 'wall' and motion in {'cascade', 'card-stack'})
+                 or (scene['module'] == 'focus' and motion == 'paper-reveal')
+                 or (props['visualStyle'] in {'darkroom', 'carnival'} and scene['module'] in {'focus', 'statement'}
+                     and motion in {'cloth', 'parallax', 'mondrian', 'gl-film', 'gl-circle', 'pixi-shock'}), '动效与场景模块不匹配或尚未适配')
+        _require(_text(scene.get("title"), 42, lines=2) and all(len(line) <= 16 for line in scene["title"].split("\n"))
+                 and _text(scene.get("subtitle", ""), 50, lines=2, empty=True), "场景标题最多2行、每行16字；说明最多2行，须适合实际阅读字框")
+        if scene["module"] in {"wall", "focus", "dynamic"}:
             _require(scene.get("mediaId") in ids, "场景引用不存在的主素材")
             used.add(scene["mediaId"])
             if scene["module"] == "wall":
@@ -191,7 +216,7 @@ def validate_props(props, voice_seconds):
                          and scene["frames"] - selection["holdFrom"] >= (20 if motion == 'card-stack' else 30), "级联、点击、展开和稳定阅读时窗无效")
                 if motion == 'card-stack':
                     _require(scene['frames'] >= 180 and selection['expandFrom'] >= 142, '卡堆场景至少180帧并保留142帧分发/选择时窗')
-            else:
+            elif scene['module'] == 'focus':
                 _require(not {"selection", "wallMediaIds"} & set(scene), "聚焦模块不接受素材墙选择参数")
         else:
             _require(not {"mediaId", "selection", "wallMediaIds"} & set(scene), "陈述模块不接受实拍参数")
@@ -350,15 +375,22 @@ def _validate_fonts(props, paths, image_font):
     try:
         geometry = read_json(TEMPLATE / "layout.json")
         caption_width = (geometry.get("captions") or [88, 1570, 1264, 116])[2]
-        caption_font = image_font.truetype(str(paths["body.ttf"]), geometry.get("captionSize", 60))
+        is_dynamic = props.get('visualStyle') in {'archive', 'playroom'}
+        caption_font = image_font.truetype(str(paths["body.ttf"]), 76 if is_dynamic else geometry.get("captionSize", 60))
         _require(all(caption_font.getlength(c["text"]) <= caption_width for c in props["captions"]), "字幕超出实际字体字框，请按语义分句")
         for scene in props["scenes"]:
             role = geometry.get("statement" if scene["module"] == "statement" else "sceneHeader", {})
             size = role.get("titleSize", 112 if scene["module"] == "statement" else 88)
             box = role.get("title", [88, 160, 1264, 400])
+            if is_dynamic:
+                size, box = (112, [88, 400, 1264, 300]) if scene['module'] == 'statement' else (88, [88, 200, 1264, 210])
             font = image_font.truetype(str(paths["display.ttf"]), size)
             lines = scene["title"].split("\n")
-            _require(all(font.getlength(line) <= box[2] for line in lines) and len(lines) * (size * 1.16 + 3) <= box[3], "标题超出字体字框，请按语义换行")
+            measured_height = len(lines) * size * (1.25 if scene['module'] == 'statement' else 1.12) if is_dynamic else len(lines) * (size * 1.16 + 3)
+            _require(all(font.getlength(line) <= box[2] for line in lines) and measured_height <= box[3], "标题超出字体字框，请按语义换行")
+            if is_dynamic and scene.get('subtitle'):
+                sub_font = image_font.truetype(str(paths['body.ttf']), 44 if scene['module'] == 'statement' else 30)
+                _require(all(sub_font.getlength(line) <= 1250 for line in scene['subtitle'].split('\n')), '说明超出实际字体字框')
     except OSError as exc:
         raise WorkError("安全字体无法加载") from exc
 
@@ -381,8 +413,19 @@ def preflight(value):
         _require("scenes" not in props, "shotPlan与props.scenes只能选择一种")
         props["scenes"] = plan_scenes(value["shotPlan"], audio["durationFrames"])
     validate_props(props, clock["duration_seconds"])
-    probes = _validate_sources(props, audio, paths, value.get("provenance"))
-    return {"title": value["title"], "props": props, "audio": audio, "paths": paths, "provenance": deepcopy(value["provenance"]), "media": probes}
+    provenance = canonical_provenance(value.get("provenance"))
+    probes = _validate_sources(props, audio, paths, provenance)
+    return {"title": value["title"], "props": props, "audio": audio, "paths": paths, "provenance": provenance, "media": probes}
+
+
+def canonical_provenance(value):
+    """Freeze the same credential-free lineage the real queue can retain.
+
+    Keys such as authorization_basis/reuse_authorization are removed by the
+    queue, whereas authorized and source SHA fields survive. Validate the
+    surviving required lineage before assigning any immutable identity.
+    """
+    return _queue_sanitize(deepcopy(value), redact_local_paths=False)
 
 
 def prepare(queue, value):
@@ -390,6 +433,12 @@ def prepare(queue, value):
     core = {"contract": CONTRACT, "title": normalized["title"], "props": normalized["props"], "audio": normalized["audio"],
             "provenance": normalized["provenance"], "origins": {n: {"path": str(p), "sha256": sha(p)} for n, p in normalized["paths"].items()},
             "media": normalized["media"], "runtime": runtime(), "profile": PROFILE, "export": EXPORT, "cloud_calls": 0, "publication": False}
+    clean = _queue_sanitize(core, redact_local_paths=False)
+    # Optional probe metadata can be scrubbed; execution semantics cannot be
+    # silently changed (e.g. a credential-looking caption or source slot).
+    _require(all(clean.get(key) == core[key] for key in ("title", "props", "audio", "origins", "runtime")),
+             "制作参数或来源绑定含队列保留凭据字段，请移除或重命名后冻结；不会静默改写口播字幕或素材")
+    core = clean
     core["project_id"] = "studio-" + fingerprint(core)[:16]
     digest = fingerprint(core)
     request = {**core, "request_sha256": digest, "render_id": CONTRACT + "-" + digest[:20]}
@@ -445,6 +494,7 @@ def validate(queue, request, *, check_runtime=True):
 
 def submit(queue, request):
     validate(queue, request)
+    _require(_queue_sanitize(request, redact_local_paths=False) == request, "冻结请求与队列无凭据表示不一致，须从原输入重新冻结")
     return queue.submit(project_id=request["project_id"], kind=KIND, source="codex", priority="normal", parent_job_id=request["render_id"],
                         frozen_request=request, idempotency_key=CONTRACT + ":" + request["request_sha256"], start_paused=True)
 

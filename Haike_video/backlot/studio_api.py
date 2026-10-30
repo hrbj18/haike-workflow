@@ -16,6 +16,12 @@ from backlot import work_publish
 router = APIRouter()
 from backlot.studio_motiongit_api import router as motiongit_router
 router.include_router(motiongit_router)
+from backlot.studio_dark_full_api import router as dark_full_router
+router.include_router(dark_full_router)
+from backlot.studio_dark_showcase_api import router as dark_showcase_router
+router.include_router(dark_showcase_router)
+from backlot.studio_motion_templates_api import router as motion_templates_router
+router.include_router(motion_templates_router)
 # Professional tools remain reachable. Customer audio uses the account-scoped
 # relay modal; the former global supplier settings are internal only.
 REMOVED_ENTRIES = {"/audio": "/settings?panel=audio", "/settings/audio-center": "/settings?panel=audio",

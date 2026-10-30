@@ -23,7 +23,8 @@ import zipfile
 EDITION = "haike-workflow-2"
 PLATFORM = "windows-x64"
 RUNTIME_ID = "haike-windows-x64-v1"
-MAX_ARCHIVE_BYTES = 256 * 1024 * 1024
+# Decimal MB: the delivery contract caps each application patch at 300 MB.
+MAX_ARCHIVE_BYTES = 300_000_000
 MAX_EXPANDED_BYTES = 768 * 1024 * 1024
 MAX_FILE_BYTES = 128 * 1024 * 1024
 MAX_FILES = 20000

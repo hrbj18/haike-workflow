@@ -1,14 +1,12 @@
 # Haike Workflow
 
-正式产品版本 **v1.0.0（2026-10-28）**：Windows x64 轻量联网安装包、版本显示与兼容补丁更新。下载与首次迁移见[发行说明](docs/releases/v1.0.0.md)，程序更新与恢复见[应用更新说明](docs/APP_UPDATES.md)。公开发行附件不含私人截图、样片或用户数据。
+已有安装需要更新时，从[GitHub地址联网升级](docs/UPDATE_WITH_CODEX.md)进入：Codex负责识别目标副本、自动下载与校验，后续在“关于海客视频”检查并下载安装。不要用Git覆盖运行目录或重新执行全量setup。1.2联网修订规范版本号为1.2.1，实际上线状态以GitHub Release及其更新清单为准。
 
 当前稳定源码入口为`main`（2026-10-27），版本范围与验收见[稳定版说明](docs/releases/20261027-stable.md)。本地新版ZIP另含40张用户授权截图，入口见[模板交付](docs/TEMPLATE_DELIVERY.md)；私人截图和样片不进入公开Git。Windows便携包按根`使用说明.txt`初始化并导入自己的私有配置；已有独立APIKey包也可用`00-install.cmd`，再运行`02-start.cmd`。Key不进入项目ZIP。两条RunningHub工作流都包含，性价比默认，高质量需明确指定；详情见`Haike_video/workflows/runninghub-high-quality/README.md`。
 
 海客科技视频工作台与统一API收费中转站的源码仓库。用户确认的仓库为 [hrbj18/haike-workflow](https://github.com/hrbj18/haike-workflow)，保留公开可见性和原提交历史；后续迭代、分支和提交见 [Git管理](docs/GIT_WORKFLOW.md)。`main`为稳定交付入口，旧基线保存在`legacy-main-before-20261027`及原有历史标签，功能分支继续保留。
 
-**v1.0.0 公开下载为轻量联网包，先读[联网安装说明](docs/ONLINE_INSTALL.md)，双击 `01-setup.cmd` 自动从国内可直连源安装依赖，再运行 `02-start.cmd`。** 本地模型保持可选。
-
-**解压离线便携包后，根目录有 `PACKAGE-MANIFEST.json`：先读[便携包初始化](docs/PORTABLE.md)，用 `01-setup.cmd -ConfigDocument '私有文档绝对路径' -Full` 一次初始化并导入，再运行 `02-start.cmd`。** 包内已有运行时，使用这条入口；后续可用 `03-check.cmd` 诊断。把实际需要的 Keys、服务地址、音色和预设集中到单独的私有配置文档，步骤与三平台扫码见[首次配置说明](docs/API_KEY_SETUP.md)。源码 checkout 按下文“Windows 源码安装”准备环境。保留以下布局：
+**解压便携包后，根目录有 `PACKAGE-MANIFEST.json`：先读[便携包初始化](docs/PORTABLE.md)，用 `01-setup.cmd -ConfigDocument '私有文档绝对路径' -Full` 一次初始化并导入，再运行 `02-start.cmd`。** 包内已有运行时，使用这条入口；后续可用 `03-check.cmd` 诊断。把实际需要的 Keys、服务地址、音色和预设集中到单独的私有配置文档，步骤与三平台扫码见[首次配置说明](docs/API_KEY_SETUP.md)。源码 checkout 按下文“Windows 源码安装”准备环境。保留以下布局：
 
 Codex / Agent 首次接入请读[基础教程](START_HERE.md)：Codex 总控、首次配置、单条制作、夜间三条与发布汇报、原任务恢复；接口详情继续由各模块文档维护。
 

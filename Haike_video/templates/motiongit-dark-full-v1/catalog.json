@@ -1,0 +1,579 @@
+{
+  "version": "dark-full-v1",
+  "referenceSeconds": 122.4,
+  "nativeSourceVersion": "2.7.18-alpha.2",
+  "groups": [
+    {
+      "id": "s01",
+      "nativeId": "03-A:s01",
+      "title": "开场钩子→剪辑负担→作品墙与人像缩窗",
+      "source": {
+        "end": 8.8,
+        "start": 0
+      },
+      "minimumSeconds": 5.45,
+      "score": 91,
+      "cues": [
+        {
+          "at": 0,
+          "id": "opening",
+          "kind": "第一帧出现人物与标题",
+          "required": false
+        },
+        {
+          "at": 1.3,
+          "id": "title_slam",
+          "kind": "关键词标题砸入",
+          "required": true
+        },
+        {
+          "at": 2.5,
+          "id": "timeline",
+          "kind": "手动工作时间线",
+          "required": false
+        },
+        {
+          "at": 3.28,
+          "id": "strike",
+          "kind": "划掉与红色章",
+          "required": false
+        },
+        {
+          "at": 3.9,
+          "id": "wall_handoff",
+          "kind": "人物缩窗且作品墙入场",
+          "required": true
+        },
+        {
+          "at": 5.45,
+          "id": "statement_1",
+          "kind": "第一句逐字",
+          "required": false
+        },
+        {
+          "at": 6.1,
+          "id": "statement_2",
+          "kind": "第二句逐字",
+          "required": false
+        },
+        {
+          "at": 7.75,
+          "id": "payoff",
+          "kind": "结论砸字",
+          "required": true
+        }
+      ],
+      "atomic": true,
+      "minimumProjectSeconds": 8.3
+    },
+    {
+      "id": "s02",
+      "nativeId": "03-A:s02",
+      "title": "九宫格对比→分组高亮→全选→指标滚动",
+      "source": {
+        "end": 25.9,
+        "start": 8.8
+      },
+      "minimumSeconds": 10.6,
+      "score": 94,
+      "cues": [
+        {
+          "at": 8.8,
+          "id": "grid",
+          "kind": "九格依次弹入",
+          "required": false
+        },
+        {
+          "at": 12.13,
+          "id": "group_b",
+          "kind": "第一组高亮",
+          "required": false
+        },
+        {
+          "at": 13.37,
+          "id": "group_a",
+          "kind": "第二组高亮",
+          "required": true
+        },
+        {
+          "at": 15.2,
+          "id": "version_chips",
+          "kind": "版本标签依次出现",
+          "required": false
+        },
+        {
+          "at": 19.35,
+          "id": "all_checked",
+          "kind": "九格逐个打钩",
+          "required": true
+        },
+        {
+          "at": 20.25,
+          "id": "quality",
+          "kind": "评价字卡",
+          "required": false
+        },
+        {
+          "at": 22,
+          "id": "reasoning",
+          "kind": "指标卡入场",
+          "required": false
+        },
+        {
+          "at": 23.8,
+          "id": "cost",
+          "kind": "计数与成本滚动",
+          "required": true
+        }
+      ],
+      "atomic": true,
+      "minimumProjectSeconds": 10.6
+    },
+    {
+      "id": "s03",
+      "nativeId": "03-A:s03",
+      "title": "重点成果由九宫格放大→结论砸字→审片报告",
+      "source": {
+        "end": 40.4,
+        "start": 25.9
+      },
+      "minimumSeconds": 8.983333333333333,
+      "score": 95,
+      "cues": [
+        {
+          "at": 25.9,
+          "id": "hero_from_grid",
+          "kind": "中间格放大接上场",
+          "required": false
+        },
+        {
+          "at": 29,
+          "id": "slam_word_a",
+          "kind": "结论第一词",
+          "required": true
+        },
+        {
+          "at": 30.3,
+          "id": "slam_word_b",
+          "kind": "结论第二词",
+          "required": false
+        },
+        {
+          "at": 31.4,
+          "id": "comparison_board",
+          "kind": "比较卡",
+          "required": false
+        },
+        {
+          "at": 33.15,
+          "id": "review_start",
+          "kind": "计时圈与报告",
+          "required": true
+        },
+        {
+          "at": 33.9,
+          "id": "review_note_1",
+          "kind": "审片细节一",
+          "required": false
+        },
+        {
+          "at": 34.6,
+          "id": "review_note_2",
+          "kind": "审片细节二",
+          "required": false
+        },
+        {
+          "at": 35.7,
+          "id": "review_note_3",
+          "kind": "审片细节三",
+          "required": false
+        },
+        {
+          "at": 37.7,
+          "id": "precision",
+          "kind": "评价砸字",
+          "required": true
+        },
+        {
+          "at": 38.5,
+          "id": "previous_work",
+          "kind": "作品卡入场",
+          "required": false
+        }
+      ],
+      "atomic": true,
+      "minimumProjectSeconds": 8.983333333333333
+    },
+    {
+      "id": "s04",
+      "nativeId": "03-A:s04",
+      "title": "跨品类四卡→大作品墙→反模板→镜头语言",
+      "source": {
+        "end": 52.7,
+        "start": 40.4
+      },
+      "minimumSeconds": 7.633333333333334,
+      "score": 96,
+      "cues": [
+        {
+          "at": 40.4,
+          "id": "category_title",
+          "kind": "跨品类标题",
+          "required": true
+        },
+        {
+          "at": 43.17,
+          "id": "category_1",
+          "kind": "第一张作品卡",
+          "required": false
+        },
+        {
+          "at": 43.75,
+          "id": "category_2",
+          "kind": "第二张作品卡",
+          "required": false
+        },
+        {
+          "at": 44.33,
+          "id": "category_3",
+          "kind": "第三张作品卡",
+          "required": false
+        },
+        {
+          "at": 45.1,
+          "id": "category_4",
+          "kind": "第四张作品卡",
+          "required": false
+        },
+        {
+          "at": 45.55,
+          "id": "wall_expand",
+          "kind": "满屏作品墙",
+          "required": true
+        },
+        {
+          "at": 47.3,
+          "id": "quality",
+          "kind": "质量结论",
+          "required": false
+        },
+        {
+          "at": 49,
+          "id": "cross_out",
+          "kind": "划掉流水线",
+          "required": false
+        },
+        {
+          "at": 49.75,
+          "id": "camera_demo",
+          "kind": "镜头语言演示",
+          "required": true
+        },
+        {
+          "at": 51.05,
+          "id": "narrative_arc",
+          "kind": "起承转合弧线",
+          "required": false
+        }
+      ],
+      "atomic": true,
+      "minimumProjectSeconds": 11.5
+    },
+    {
+      "id": "s05",
+      "nativeId": "03-A:s05",
+      "title": "情绪反转→身份卡→软件录屏→竞赛道",
+      "source": {
+        "end": 69.4,
+        "start": 52.7
+      },
+      "minimumSeconds": 10.35,
+      "score": 93,
+      "cues": [
+        {
+          "at": 52.7,
+          "id": "shock",
+          "kind": "震惊画面",
+          "required": false
+        },
+        {
+          "at": 54.87,
+          "id": "crack",
+          "kind": "红色裂纹与打击",
+          "required": true
+        },
+        {
+          "at": 55.4,
+          "id": "identity",
+          "kind": "人物身份卡",
+          "required": false
+        },
+        {
+          "at": 57.9,
+          "id": "software_window",
+          "kind": "软件录屏窗口",
+          "required": true
+        },
+        {
+          "at": 61.3,
+          "id": "software_detail",
+          "kind": "切换录屏功能与加速",
+          "required": false
+        },
+        {
+          "at": 66.37,
+          "id": "competition",
+          "kind": "竞争对象入场",
+          "required": true
+        },
+        {
+          "at": 68.3,
+          "id": "lane_result",
+          "kind": "赛道结果砸字",
+          "required": false
+        }
+      ],
+      "atomic": true,
+      "minimumProjectSeconds": 10.35
+    },
+    {
+      "id": "s06",
+      "nativeId": "03-A:s06",
+      "title": "时间轴迭代→竞争者进场→账号卡",
+      "source": {
+        "end": 78.1,
+        "start": 69.4
+      },
+      "minimumSeconds": 5.4,
+      "score": 89,
+      "cues": [
+        {
+          "at": 69.4,
+          "id": "iteration",
+          "kind": "迭代速度",
+          "required": true
+        },
+        {
+          "at": 70.2,
+          "id": "timeline",
+          "kind": "时间轴变化",
+          "required": false
+        },
+        {
+          "at": 71,
+          "id": "competitors",
+          "kind": "竞品进入",
+          "required": false
+        },
+        {
+          "at": 73.4,
+          "id": "fast_lane",
+          "kind": "快车道",
+          "required": true
+        },
+        {
+          "at": 75.85,
+          "id": "account",
+          "kind": "账号卡",
+          "required": true
+        },
+        {
+          "at": 77.05,
+          "id": "account_commit",
+          "kind": "账号动作确认",
+          "required": false
+        }
+      ],
+      "atomic": true,
+      "minimumProjectSeconds": 5.4
+    },
+    {
+      "id": "s07",
+      "nativeId": "03-A:s07",
+      "title": "旧工作流→时间压缩→工作/代码录屏",
+      "source": {
+        "end": 89.7,
+        "start": 78.1
+      },
+      "minimumSeconds": 7.2,
+      "score": 97,
+      "cues": [
+        {
+          "at": 78.1,
+          "id": "before",
+          "kind": "过去流程",
+          "required": true
+        },
+        {
+          "at": 80.3,
+          "id": "process",
+          "kind": "写稿拍摄剪辑",
+          "required": false
+        },
+        {
+          "at": 82.15,
+          "id": "time_shift",
+          "kind": "一小时目标",
+          "required": true
+        },
+        {
+          "at": 83.3,
+          "id": "work_video",
+          "kind": "工作录屏",
+          "required": false
+        },
+        {
+          "at": 85.1,
+          "id": "output",
+          "kind": "每天产出",
+          "required": true
+        },
+        {
+          "at": 87.4,
+          "id": "code_video",
+          "kind": "代码录屏",
+          "required": false
+        }
+      ],
+      "atomic": true,
+      "minimumProjectSeconds": 11.6
+    },
+    {
+      "id": "s08",
+      "nativeId": "03-A:s08",
+      "title": "情绪收束→产能对比→逐帧焦虑→行动号召",
+      "source": {
+        "end": 102.92,
+        "start": 89.7
+      },
+      "minimumSeconds": 8.2,
+      "score": 88,
+      "cues": [
+        {
+          "at": 89.7,
+          "id": "closing",
+          "kind": "人物大卡回归",
+          "required": false
+        },
+        {
+          "at": 91.85,
+          "id": "era",
+          "kind": "新时代逐词入场",
+          "required": true
+        },
+        {
+          "at": 93.6,
+          "id": "warning",
+          "kind": "竞争警告",
+          "required": false
+        },
+        {
+          "at": 95.4,
+          "id": "growth",
+          "kind": "产能对比增长",
+          "required": true
+        },
+        {
+          "at": 96.5,
+          "id": "frame_work",
+          "kind": "逐帧烦恼",
+          "required": false
+        },
+        {
+          "at": 98.6,
+          "id": "call_to_action",
+          "kind": "行动按钮",
+          "required": true
+        },
+        {
+          "at": 100.1,
+          "id": "comments",
+          "kind": "评论提示",
+          "required": false
+        }
+      ],
+      "atomic": true,
+      "minimumProjectSeconds": 8.2
+    },
+    {
+      "id": "s09",
+      "nativeId": "03-A:s09",
+      "title": "制作说明→逐字提示词→签名",
+      "source": {
+        "end": 108.4,
+        "start": 102.92
+      },
+      "minimumSeconds": 3.4,
+      "score": 84,
+      "cues": [
+        {
+          "at": 102.92,
+          "id": "production",
+          "kind": "制作信息",
+          "required": true
+        },
+        {
+          "at": 103.45,
+          "id": "tool",
+          "kind": "工具名称",
+          "required": false
+        },
+        {
+          "at": 104.35,
+          "id": "prompt",
+          "kind": "打字机提示词",
+          "required": true
+        },
+        {
+          "at": 107,
+          "id": "signature",
+          "kind": "片尾签名",
+          "required": false
+        }
+      ],
+      "atomic": true,
+      "minimumProjectSeconds": 5.48
+    },
+    {
+      "id": "review",
+      "nativeId": "03-A:independent-artifact-review",
+      "title": "单项实际成果独立建立 → 三项真实审阅 → 有依据的结论",
+      "source": {
+        "end": 124,
+        "start": 110
+      },
+      "minimumSeconds": 14.0,
+      "score": 92,
+      "cues": [
+        {
+          "at": 110,
+          "id": "entry",
+          "required": true
+        },
+        {
+          "at": 114,
+          "id": "review",
+          "required": true
+        },
+        {
+          "at": 118.6,
+          "id": "conclusion",
+          "required": true
+        }
+      ],
+      "atomic": true,
+      "minimumProjectSeconds": 14.0
+    }
+  ],
+  "themes": [
+    "reference",
+    "hedgerow",
+    "cobalt"
+  ],
+  "adjacentPairs": [
+    [
+      "s02",
+      "s03"
+    ]
+  ]
+}

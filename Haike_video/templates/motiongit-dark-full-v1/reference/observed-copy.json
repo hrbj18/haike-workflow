@@ -1,0 +1,20 @@
+{
+  "document_type": "reference-observed-copy",
+  "date": "2026-10-28",
+  "status": "Only listed strings confirmed visually; not an exhaustive transcript or native parameter map",
+  "source_preview_seconds": 122.4,
+  "groups": {
+    "s01": {"heading": "开场与作品墙", "strings": ["完整原生动作 · 模板 03", "让作品发声", "变成清晰表达", "STAGE", "02", "演示界面", "从动作看表达", "内容由你决定", "带动画面"], "evidence": ["full-2.png", "overview-000.jpg"]},
+    "s02": {"heading": "九屏接力", "strings": ["九屏接力 · 自制动画素材", "方案 A", "方案 B", "方案 C", "方案 D", "方案 A", "方案 E", "方案 F", "方案 G", "方案 H", "分组 B", "分组 A", "初稿", "修订", "审阅", "定稿", "九个画面依次出现"], "evidence": ["full-10.png", "overview-012.jpg", "overview-024.jpg"]},
+    "s03": {"heading": "聚焦审阅", "strings": ["聚焦", "细节", "参考画面", "方案 A", "并排审阅", "03:00", "转场衔接", "画面层次", "内容逻辑", "逐项看清"], "evidence": ["full-27.png", "overview-024.jpg", "overview-036.jpg"]},
+    "s04": {"heading": "分类与镜头", "strings": ["不止一个画面四类表达逐项展开", "知识讲解", "趣味解说", "故事叙述", "节奏画面", "结构清晰", "观点与例子", "转折与回应", "镜头与节拍", "不同内容选择不同镜头", "自制图形 · 27 个独立设计", "389 个 · 独立示意设计", "画面跟随你的文案", "用镜头层次", "用叙事节奏", "特写 · 看清", "起", "承", "转", "合"], "evidence": ["full-45.35.png", "full-48.png", "full-49.5.png", "full-50.3.png", "full-51.8.png"], "business_count_warning": "27 and 389 are reference demonstration artwork counts, not Haike facts"},
+    "s05": {"heading": "转折与竞争", "strings": ["从展开", "到聚合", "创作者", "让画面动起来", "素材接入"], "evidence": ["full-58.png", "overview-048.jpg", "overview-060.jpg"]},
+    "s06": {"heading": "时间推进", "strings": ["制作过程逐步迭代", "沿时间线推进逐步清楚", "演示数据 · 不代表真实产能", "MotionGit", "示意卡片 · 非真实账户"], "evidence": ["full-76.png", "overview-072.jpg"]},
+    "s07": {"heading": "过程与成果", "strings": ["自制界面 · 制作过程示意", "过程示意 · 非耗时承诺", "制作过程", "形成自己的表达"], "evidence": ["full-84.png", "overview-078.jpg", "overview-084.jpg"]},
+    "s08": {"heading": "归纳与行动", "strings": ["结构对比 · 示意", "路径 A", "加上动画", "×1", "路径 B", "让动作帮你讲清楚"], "evidence": ["full-95.png", "overview-090.jpg", "overview-096.jpg"]},
+    "s09": {"heading": "制作说明", "strings": ["制作方式", "原生编舞", "结合", "adu-motion-video", "完整动作 · 文案与素材可替换", "示例提示词 · 按需调整", "使用模板 03 的原生动画，根据我的文稿和素材选择合适的完整场景。保留镜头衔接，"], "evidence": ["full-106.png", "overview-102.jpg"], "prompt_status": "Visible prefix at 106s only; full final prompt not asserted"},
+    "review": {"heading": "独立成果审阅", "strings": ["本期成果", "实际检查", "镜头衔接", "内容层次"], "evidence": ["full-114.png", "overview-108.jpg", "overview-120.jpg"]}
+  },
+  "evidence_root": ".local/motion-full-20261028/reference",
+  "notes": ["Whitespace is normalized for readability", "Historical guide sourceText differs from the current preview; do not silently use it as exact visible copy", "Study/Motion Study inner media words are baked in reference artwork, rather than demonstrated native editable UI text"]
+}

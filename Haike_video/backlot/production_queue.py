@@ -605,6 +605,74 @@ class ProductionQueue:
             updated = connection.execute("SELECT * FROM production_jobs WHERE job_id=?", (job_id,)).fetchone()
         return self._public_row(updated)
 
+    def recover_studio_avatar_download(self, job_id: str) -> dict[str, Any]:
+        """Recheck a legacy DNS failure against an already accepted source job."""
+        from urllib.parse import urlsplit
+        from backlot.studio import Studio
+        from backlot.studio_avatar import key_identity, public_media_address
+        job = self.get(job_id, include_private=True)
+        message = "代理DNS未能核对真实公网媒体地址，请核对代理DNS后恢复原任务"
+        error = job.get("error") or {}
+        request = job.get("frozen_request") or {}
+        draft = request.get("draft") or {}
+        if (job["kind"] != "studio_avatar" or job["status"] != "failed" or job["cancel_requested"]
+                or job.get("safe_resume_point") != "studio_avatar" or error.get("type") != "StudioAvatar"
+                or error.get("message") != message or request.get("source_consumer") != "motion-template-source-v1"
+                or draft.get("id") != job["project_id"] or type(draft.get("revision")) is not int
+                or draft["revision"] < 1 or request.get("render_id") != "studio-" + str(draft["revision"])
+                or job["parent_job_id"] != request.get("render_id")):
+            raise ProductionQueueConflict("此任务没有可重新核验的原数字人下载失败")
+        studio = Studio(self.projects_root)
+        if request.get("key_identity") != key_identity(studio):
+            raise ProductionQueueConflict("原数字人下载属于其他账户连接")
+        project = self.projects_root / job["project_id"]
+        folder = project / "renders" / request["render_id"]
+        path = folder / "gateway-state.json"
+        try:
+            if (project.is_symlink() or folder.is_symlink() or path.is_symlink()
+                    or not project.resolve().is_relative_to(self.projects_root.resolve())
+                    or not path.resolve().is_relative_to(project.resolve())): raise ValueError()
+            state_bytes = path.read_bytes(); state = json.loads(state_bytes)
+            stages = state["stages"]; stage = stages["avatar"]; original = stage["job"]
+            audio = Path(state["prepared"]["audio_path"])
+            if (not audio.is_file() or audio.is_symlink() or not audio.resolve().is_relative_to(project.resolve())
+                    or any(s.get("job", {}).get("status") != "succeeded"
+                           for name, s in stages.items() if name != "avatar")): raise ValueError()
+            intent = stage["intent"]
+            if not re.fullmatch(r"call_[0-9a-f]{32}", intent): raise ValueError()
+            journal_path = studio.private / "haike-api/intents" / (intent + ".json")
+            if journal_path.is_symlink(): raise ValueError()
+            journal_bytes = journal_path.read_bytes(); journal = json.loads(journal_bytes)
+            body = journal["body"]
+            if (original.get("status") not in {"succeeded", "submission_unknown"}
+                    or not isinstance(original.get("id"), str) or not original["id"]
+                    or journal.get("job_id") != original["id"] or body.get("call_intent_id") != intent
+                    or body.get("quote_id") != stage["quote"]["id"]
+                    or stage["quote"].get("model") != "haike/avatar"
+                    or sum(int(s["quote"]["max_charge_micros"]) for s in stages.values()) > request["max_charge_micros"]):
+                raise ValueError()
+            target = urlsplit(original["result"]["video_url"])
+            if target.scheme != "https" or target.username or target.password or not target.hostname: raise ValueError()
+            public_media_address(target.hostname, target.port or 443)
+        except Exception as exc:
+            raise ProductionQueueConflict("原数字人回执或公网下载条件尚未通过核验，未重新入队") from exc
+        with self._connection(immediate=True) as connection:
+            row = connection.execute("SELECT * FROM production_jobs WHERE job_id=?", (job_id,)).fetchone()
+            if (row is None or row["status"] != "failed" or row["revision"] != job["revision"]
+                    or _decode(row["frozen_request"], {}) != request
+                    or path.read_bytes() != state_bytes or journal_path.read_bytes() != journal_bytes):
+                raise ProductionQueueConflict("原任务或下载回执已变化，请重新核对")
+            now = _now()
+            connection.execute(
+                "UPDATE production_jobs SET status='queued',stage='已核验原数字人下载，等待统一调度',"
+                "error_json='{}',retryable=0,cancel_requested=0,worker_id=NULL,lease_expires_at=NULL,finished_at=NULL,"
+                "updated_at=?,revision=revision+1 WHERE job_id=?", (now, job_id))
+            self._event(connection, job_id, "source_download_rechecked", "failed", "queued",
+                        {"provider_job_id": original["id"], "new_paid_intents": 0,
+                         "source_state_sha256": hashlib.sha256(state_bytes).hexdigest()})
+            updated = connection.execute("SELECT * FROM production_jobs WHERE job_id=?", (job_id,)).fetchone()
+        return self._public_row(updated)
+
     def amend_studio_avatar_budget(
         self, job_id: str, *, expected_revision: int, previous_max_charge_micros: int,
         max_charge_micros: int, authorization_evidence: str, validate_only: bool = False,
@@ -799,6 +867,10 @@ class ProductionQueue:
     @classmethod
     def _public_row(cls, row: sqlite3.Row) -> dict[str, Any]:
         private = cls._private_row(row)
+        frozen=private.get("frozen_request",{})
+        contract=frozen.get("contract")
+        draft=frozen.get("draft") if isinstance(frozen.get("draft"),dict) else {}
+        motion_title=frozen.get("title") or draft.get("title")
         private.pop("idempotency_key", None)
         private.pop("priority_rank", None)
         private.pop("worker_id", None)
@@ -813,6 +885,11 @@ class ProductionQueue:
             "published_remix": "成片二剪待审预览",
             "material_commentary": "素材解说待审预览",
         }.get(private["kind"], private["kind"])
+        if contract in {"motiongit-dark-full-v1","motiongit-dark-native-v1"}:
+            private["title"]="深色立体完整原版" if contract=="motiongit-dark-native-v1" else "海客完整多屏模板"
+        if contract in {"motiongit-component-render-v1","motiongit-dark-full-v1","motiongit-dark-native-v1"}:
+            if isinstance(motion_title,str) and motion_title.strip():private["title"]=motion_title[:160]
+            elif contract=="motiongit-component-render-v1":private["title"]="MotionGit模板视频"
         private["progress"] = {
             "completed": 1 if private["status"] == "completed" else 0,
             "total": 1,

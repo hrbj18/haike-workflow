@@ -1359,6 +1359,10 @@ def create_app() -> FastAPI:
     app = FastAPI(title="Backlot", docs_url=None, redoc_url=None, lifespan=_lifespan)
     from backlot.studio_update_api import attach as attach_app_updater
     attach_app_updater(app)
+    portable_root=Path(__file__).resolve().parents[2]
+    if (portable_root/'PACKAGE-MANIFEST.json').is_file():
+        from portable.template_assets import materialize
+        materialize(portable_root)
     from backlot.customer_surface import install as install_customer_surface
     install_customer_surface(app)
     app.include_router(published_clip_router)

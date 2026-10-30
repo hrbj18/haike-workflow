@@ -1,0 +1,291 @@
+{
+  "schema": "haike.native-story-validation/1",
+  "template_id": "motiongit-native-story-v1",
+  "template_version": "v001",
+  "stage": "ready",
+  "status": "ready-for-controlled-local-reuse-scoped",
+  "verified_date": "2026-10-28",
+  "engines": {
+    "landscape": "官方MotionGit native public pipeline，原生横版保真；新内容CLI已验证至真实预览/manifest/freeze-only，未新重渲原生整片",
+    "portrait45": "项目motiongit-dark-full-v1 variant=native-story，1440×1800/60fps直接排版；当前auto完整片技术及编码抽样视觉已通过"
+  },
+  "authority": {
+    "compiler": {
+      "path": "../../../backlot/studio_dark_native_content.py",
+      "sha256": "33af01257036dd52baabf71ecb250bedf906fd3d5c5568106ed627bc5c03f6b9"
+    },
+    "profile": {
+      "path": "../profile.json",
+      "sha256": "01b3c852457b9b1b99823bca2db4dd38fa53dd7ffce1e4f11e0dc2e3567b51ab"
+    },
+    "bridge": {
+      "path": "../../../backlot/studio_native_story_portrait.py",
+      "sha256": "bdafb103e55f7121b3e0f6cd23fb8f77128fb04852ac61458dc7d6a500061466"
+    },
+    "bridge_cli": {
+      "path": "../../../scripts/native_story_portrait.py",
+      "sha256": "a234829c0466729d9e35aa126ea4cea95f482ad0142373001386d5d2b6cf26bb"
+    },
+    "portrait_renderer_source_hashes": {
+      "index.tsx": "1661aaa836135a7a351e5555a4bdd0c41533a8611030538f9c50f8912247e972",
+      "types.ts": "68d865d33820abca05770701fdb087f37e754b9b9c73e7eeef41b723b6b5cc76",
+      "shared.tsx": "72a2b9e5bf201d386bc92ed0dc91d6865dc6272678c12d52a39ccc0cc9cddb29",
+      "GroupsA.tsx": "128bb85cd4c5ecc98f61a6f1610163f1729be834ef3e9e635ab653958f807537",
+      "GroupsB.tsx": "6dd7663fd7540970d484caa2f7f44535433629bc35e4ad7202fee37b40ba0ff4",
+      "presenter-clock.ts": "45e915237111b3e4738089ba231bd1b843955a466da40b4366b13bc8a65de70f"
+    }
+  },
+  "scope": {
+    "groups": [
+      "s01",
+      "s04",
+      "s08"
+    ],
+    "native_landscape_baseline_frames": [
+      348,
+      695,
+      793
+    ],
+    "portrait45_timing_authority": "plan_shots项目下限8.3/11.5/8.2秒、权重1/1/3；物理缓动固定秒数，两引擎时序不同",
+    "portrait45_current_example_frames": [
+      530,
+      721,
+      585
+    ],
+    "duration_follows_complete_pcm": true,
+    "no_full_frame_landscape_contain": true,
+    "paid_calls_in_this_optimization": 0,
+    "publication": false,
+    "presenter_modes": {
+      "auto": "actual complete encoded output technical/visual scoped pass",
+      "small": "actual preflight only; first use requires corresponding visual check",
+      "hidden": "actual preflight only; first use requires corresponding visual check"
+    }
+  },
+  "preparation": {
+    "compiler_receipt": {
+      "file_name": "compiler-verification-v003.json",
+      "sha256": "dafea206e39d8905fcf4cc5257c2b82d046bd8807fc8fd7b1d46a8c0ac4a7045",
+      "location": "private task evidence directory",
+      "status": "pass-scoped",
+      "focused_tests": 32
+    },
+    "portrait_bridge_checks": {
+      "focused_tests": 33,
+      "included_layout_text_fit_tests": 6,
+      "legacy_child_input": "918 frames / 30fps /30.6 seconds unchanged, zero cloud calls",
+      "current_three_presenter_modes_preflight": "passed"
+    },
+    "combined_focused_tests": 65,
+    "current_portrait_build": {
+      "sha256": "c0c795ff0c7536bbda6e0dd5ac201482c48381a2f4e42b3224de1059f31d4958",
+      "prepared_files": 2244,
+      "compiler_sha256": "33af01257036dd52baabf71ecb250bedf906fd3d5c5568106ed627bc5c03f6b9"
+    },
+    "frozen_portrait_build": {
+      "sha256": "a8c32536b57a59f9ccb6846304750212d191353dfd637a92109ec8881614fdb6",
+      "compiler_sha256": "91895622b0f914858133f784ebaa60dd9aceb53f490312a55c733c0844f8c5eb",
+      "input_sha256": "182f9544013f8b04a989efa1b828edf8aea552ca005edb30665d66df8ccfe136",
+      "policy": "Formal output keeps its original frozen v002 identity; no backfilling current compiler identity"
+    },
+    "equivalence": {
+      "file_name": "portrait-build-v003-equivalence.json",
+      "sha256": "eba193bfd089002bf4c8c3a2e3d560a21cc5eac5ce3767ede8232a485a083cf5",
+      "prepared_files_byte_identical": 2244,
+      "source_sha_records_identical": 42,
+      "normalized_props_and_audio_equal": true
+    },
+    "optional_native_dependency_cache": "Explicit directory string only; dependencies.json schema and three lock hashes are read and frozen, and official setup still validates. Absent field uses a fresh isolated cache.",
+    "public_layout_capability": "Official native and motion-kit public schemas expose only landscape/portrait; no custom4:5 canvas. Portrait9:16 plan/render was not certified."
+  },
+  "native_preparation": {
+    "receipt": "compiler-verification-v003.json",
+    "actual_stages": [
+      "check",
+      "build",
+      "new",
+      "setup using explicit verified official cache",
+      "doctor",
+      "check-params",
+      "plan ready without missing/blocking/deferred",
+      "prepare",
+      "5 actual preview images viewed",
+      "idempotent native-manifest",
+      "freeze-only"
+    ],
+    "native_preview_receipt": {
+      "file_name": "native-actual-preview-review-v003.json",
+      "sha256": "b222d2626b7752f90534f1c44d4578564c7090d49d2e1d8c2b4a0205b7e0cb82",
+      "times_seconds": [
+        0.3,
+        5.4,
+        10.6,
+        16,
+        29.2
+      ]
+    },
+    "frozen_project_id": "studio-019960bcfaf7a649",
+    "render_id": "motiongit-dark-native-v1-e2e1644a586112fd82ed",
+    "request_sha256": "e2e1644a586112fd82ed8768880181500b71614bf0dbb571dcaceca49120a4d1",
+    "matching_jobs": 0,
+    "new_full_native_export": false,
+    "previous_actual_native_full_production": {
+      "project_id": "studio-4e3304baad499ab7",
+      "render_id": "motiongit-dark-native-v1-488ad361aedd1dec6eb3",
+      "job_id": "PQ-5550472a553ab458ac53",
+      "output_sha256": "e2ade1348d0cb222e57811b0d700deca9ac876b4eacc767676eed2770673e8f8",
+      "scope": "Historical completed original native runtime/queue production, separate from the new compiler freeze-only proof"
+    }
+  },
+  "formal_portrait": {
+    "project_id": "studio-eccc09db2c5c2048",
+    "render_id": "motiongit-dark-full-v1-0f063f454ae40014b137",
+    "job_id": "PQ-d4962c9589cd4ebebb03",
+    "managed_directory": "Haike_video/projects/studio-eccc09db2c5c2048/renders/motiongit-dark-full-v1-0f063f454ae40014b137",
+    "outputs": {
+      "primary": {
+        "file": "dark-full.mp4",
+        "sha256": "81888d318a72a90f1f3aeba96eb0b43b3dccd88f37bbd8bd460500873c2c1e74"
+      },
+      "nomusic": {
+        "file": "dark-full-nomusic.mp4",
+        "sha256": "24efd4d4857ebd598e42411deef8028face22ebe74d0e171de17e40934dcde70"
+      }
+    },
+    "receipts": {
+      "quality_sha256": "6c81df8c8e548ef6379ca0f1a2873f6b169a6f04c5659dc92683ee3f9fe0df9c",
+      "audio_sha256": "48b65d13e67dd0ace26e6c9bc36aa8d995687a6c6ec15ed9b9e5f20c09daf182",
+      "result_sha256": "a1a1eea90b227dcdef144ba4d2c29937370eff2c6c7b422312ff650e8f0e16dc"
+    },
+    "technical": {
+      "width": 1440,
+      "height": 1800,
+      "fps": 60,
+      "frames": 1836,
+      "seconds": 30.6,
+      "codec": "H264/yuv420p",
+      "video_bit_rate": 20494492,
+      "audio": "AAC48kHz stereo",
+      "primary_true_peak_dbtp": -4.05,
+      "nomusic_true_peak_dbtp": -4.07,
+      "full_decode_both": "passed",
+      "nomusic_picture": "H264 elementary stream byte-identical"
+    },
+    "output_review": {
+      "status": "passed-scoped",
+      "receipt": "final-qa/final-review.json",
+      "receipt_sha256": "13529d1b787d7e4e8d2e5069388a4ee83374dd09d385efb0a7e2f41045a86a09",
+      "report": "final-qa/FINAL_REVIEW.md",
+      "report_sha256": "e102d22fc5d789332753103de8519b12d14a349b9d6ba47a4a757e0cdb16a18b",
+      "independent_reviewer": "child_final_qa",
+      "seconds_positions": 32,
+      "seams": [
+        {
+          "at_frame": 530,
+          "range_frames": [
+            500,
+            560
+          ],
+          "positions": 31,
+          "step_native_frames": 2
+        },
+        {
+          "at_frame": 1251,
+          "range_frames": [
+            1221,
+            1281
+          ],
+          "positions": 31,
+          "step_native_frames": 2
+        }
+      ],
+      "key_state_frames": [
+        108,
+        216,
+        488,
+        831,
+        949,
+        1052,
+        1178,
+        1542,
+        1579,
+        1672,
+        1780
+      ],
+      "actual_picture_scope": "2x2four cards, title/timeline, real child/store wall, red strike, lens above curve, three-action count, frame strip, CTA left and presenter right, captions separate; no whole-landscape contain/pad",
+      "root_additional_view": "Final encoded key-states-2.jpg actually viewed",
+      "contact_sha256": {
+        "seconds-1.jpg": "89cc46c6767d68ee532d08b7be875baf239c0fbd6a170399bd6e5f2ec2252f38",
+        "seconds-2.jpg": "53a19e606b1c6f3e7262b07e1d094479aa70fd48e9a2a052477a4f639f8d44eb",
+        "seam-530-1.jpg": "f258ce0c78107afbfe4016dead01acbc71ce39a7a5cb982407f64f9926dd6167",
+        "seam-530-2.jpg": "7154953d00d39e626b3931c81ee7cb61737541c17303de0a07f220f9bf878111",
+        "seam-1251-1.jpg": "1d8e40987e67a564d16864d59cafd4e3cb1bd807c8a800ef048b9fe0e5045dad",
+        "seam-1251-2.jpg": "d1b3a0b4886639db509a2bbedeeb93e80ec59d7397ef2793c5c0932eec5a67ff",
+        "key-states-1.jpg": "7dd8589453fb58fcdd2bf5bedd5d8cc0f290c6a0023562063bd503ac09eb8cd2",
+        "key-states-2.jpg": "73f4d44e0d930204a95509c971b9fbf5cc33923ac81c24826547896fc15a4bb6"
+      }
+    },
+    "audio_scope": {
+      "source_pcm_samples": 727930,
+      "source_pcm_rate": 24000,
+      "padding_seconds": 0.2695833333333333,
+      "final_samples": 1468800,
+      "final_rate": 48000,
+      "voice_anchors": 12,
+      "all_voice_anchor_lags_samples": 0,
+      "nomusic_source_cosine_range": [
+        0.99657,
+        0.999996
+      ],
+      "sfx_events": 16,
+      "sfx_delay_source": "project cue times",
+      "music": "one existing bed, -3dB, loop + sidechain/fade",
+      "presenter_original_audio": "muted",
+      "original_native_58_sfx_losslessly_extracted": false,
+      "continuous_human_listening": "pending"
+    }
+  },
+  "validation": {
+    "structure": {
+      "status": "pass",
+      "scope": "Newspec/scoped runbook and example fields;32compiler +33bridge/backend focused checks; fixed current input/resource contracts"
+    },
+    "technical": {
+      "status": "pass",
+      "scope": "Current auto portrait formal files plus source-clock/mix/complete decode; native preparation proof separately scoped"
+    },
+    "visual": {
+      "status": "pass",
+      "scope": "Currentauto final encoded32second samples, two31frame seam strips,11key states; not continuous whole-motion/other modes"
+    },
+    "production": {
+      "status": "pass",
+      "scope": "Actual portrait unifiedqueue output/work contract; new native CLI freeze-only and prior completed native queue kept distinct"
+    },
+    "audio": {
+      "status": "pending",
+      "scope": "Signal/clock/source and peaks measured passed; continuous human listening/phoneme acceptance pending"
+    },
+    "platform": {
+      "status": "pending",
+      "scope": "No real-device/platform/browser UI playback certification"
+    },
+    "user_review": {
+      "status": "pending",
+      "scope": "New final video not yet accepted by user"
+    }
+  },
+  "limits": [
+    "Controlled local source checkout and supplied legal media only; current30.6s input is verified, future episode must pass its own real voice/captions/media/avatar/layout gates",
+    "Only projectauto mode visually certified in the sampled scope; small/hidden preflight-only",
+    "Same three groups; supported duration is bounded by each engine's complete-group minima and quiet capacity, not arbitrary length",
+    "New MotionGit packages require one new public-contract/media/layout adaptation",
+    "Continuous watching/listening, phoneme lip sync, device/platform and user artistic acceptance remain pending",
+    "No personal licensed package, footage, avatars, fonts or credentials distributed with this report"
+  ],
+  "evidence_location": "Original complete receipts and actual frames are retained in the private task evidence directory motion-child-template-20261028; this public redacted summary preserves their identities and bounded findings.",
+  "legacy": {
+    "old_4x5_companion": "Historical landscape contain/pad only; never counted as newportrait45 visual evidence",
+    "frozen_receipts_policy": "Do not rewrite old request/result/quality or their source IDs to current compiler versions"
+  }
+}

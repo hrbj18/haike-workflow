@@ -1,8 +1,9 @@
 {
   "edition": "haike-workflow-2",
-  "version": "1.0.0",
+  "version": "1.2.1",
+  "display_version": "1.2",
   "channel": "stable",
-  "runtime_id": "haike-windows-x64-v1",
+  "runtime_id": "haike-windows-x64-1027-motion-v1",
   "data_schema": 1,
   "platform": "windows-x64"
 }

@@ -76,6 +76,69 @@ def read_state(case):
     return json.loads(case["state_path"].read_text(encoding="utf-8"))
 
 
+def test_motion_template_source_handoff_keeps_original_paid_artifact_without_composing(recovery):
+    case = recovery
+    case['request']['source_consumer'] = 'motion-template-source-v1'
+    case['request']['draft']['revision'] = 1
+    case['state']['prepared']['duration'] = 30.6
+    case['request']['prepared']['duration'] = 30.6
+    state = read_state(case)
+    state['prepared']['duration'] = 30.6
+    state['source_asr'] = {'segments': [{'words': [{'text': '测试', 'start': 0, 'end': 1}]}]}
+    atomic_private(case['state_path'], state)
+    sdk = OriginalGateway({**case['job'], 'status': 'succeeded'})
+    outcome = run_avatar(case['project'], case['request'], sdk)
+    assert outcome['status'] == 'completed' and not case['compositions'], outcome
+    receipt = json.loads((case['folder']/'motion-template-source.json').read_text(encoding='utf-8'))
+    assert receipt['contract'] == 'motion-template-source-v1'
+    assert receipt['voice']['sha256'] == sha(case['project']/'narration.wav')
+    assert receipt['avatar']['sha256'] == sha(case['folder']/'avatar-source.mp4')
+    assert receipt['asr'] == state['source_asr']
+    assert sdk.quotes == sdk.confirms == 0
+
+
+def test_motion_template_short_measured_audio_stops_before_avatar_charge(recovery):
+    case = recovery; case['request']['source_consumer'] = 'motion-template-source-v1'
+    sdk = OriginalGateway(case['job'])
+    outcome = run_avatar(case['project'], case['request'], sdk)
+    assert outcome['status'] == 'failed' and '28' in outcome['stage']
+    assert not sdk.waits and not case['downloads'] and not case['compositions']
+    assert (case['project']/'narration.wav').exists()
+
+
+def test_resume_reuses_completed_asr_before_fetching_original_avatar(recovery):
+    case=recovery;case['request']['source_consumer']='motion-template-source-v1'
+    case['request']['draft'].update(revision=1)
+    case['request']['draft']['input']['subtitles']=True
+    case['request']['asr']={'provider':'bailian','model':'haike/bailian-asr'}
+    state=read_state(case);state['prepared'].update(duration=30.6,bailian_audio_file='original-asr-audio')
+    result={'segments':[{'start':0,'end':1,'text':'测试','words':[{'text':'测试','start':0,'end':1}]}],
+            'timestamp_unit':'seconds','provider':'bailian'}
+    asr={'quote':{'id':'old-asr','model':'haike/bailian-asr','max_charge_micros':100000},
+         'intent':'call_'+'b'*32,'job':{'id':'asr-original','status':'succeeded','result':result}}
+    state['stages']['asr_bailian']=asr;atomic_private(case['state_path'],state)
+    sdk=OriginalGateway({**case['job'],'status':'succeeded'})
+    outcome=run_avatar(case['project'],case['request'],sdk)
+    assert outcome['status']=='completed',outcome
+    assert sdk.waits==[case['stage']['intent']]
+    assert read_state(case)['stages']['asr_bailian']==asr
+    receipt=json.loads((case['folder']/'motion-template-source.json').read_text(encoding='utf-8'))
+    assert receipt['asr']==result and sdk.quotes==sdk.confirms==0
+
+
+def test_persisted_intent_without_stage_job_resumes_original_after_quote_expiry(recovery,monkeypatch):
+    case=recovery;state=read_state(case);state['stages']['avatar'].pop('job')
+    state['stages']['avatar']['quote']['expires_at']='2000-01-01T00:00:00Z'
+    atomic_private(case['state_path'],state)
+    def no_renew(*args): raise AssertionError('an existing intent owns its original quote')
+    monkeypatch.setattr('backlot.studio_avatar.renew_if_expired',no_renew)
+    sdk=OriginalGateway(case['job']);outcome=run_avatar(case['project'],case['request'],sdk)
+    assert outcome['status']=='completed',outcome
+    assert sdk.waits==[case['stage']['intent']] and sdk.quotes==sdk.confirms==0
+    stored=read_state(case)['stages']['avatar']
+    assert stored['quote']==state['stages']['avatar']['quote'] and stored['job']['id']==case['job']['id']
+
+
 def test_original_unknown_avatar_artifact_recovers_twice_without_new_intent_or_settlement(recovery):
     case = recovery
     sdk = OriginalGateway(case["job"])

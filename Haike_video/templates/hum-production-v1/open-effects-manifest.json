@@ -1,0 +1,17 @@
+{
+  "version": "v002",
+  "remocn": {
+    "repository": "https://github.com/Remocn/remocn",
+    "commit": "7aebcbe6514ed9e54e3a4a6786f83f8425a4a9af",
+    "components": ["cloth-reveal", "parallax-depth", "mondrian-split"],
+    "installation": "unmodified source vendored under vendor/remocn; skill installed separately",
+    "license": "MIT"
+  },
+  "dependencies": {"gl-transitions":"2.0.0", "gl-transition":"2.1.0", "gl-texture2d":"2.1.0", "pixi.js":"8.22.0", "pixi-filters":"6.1.5", "buffer":"6.0.3"},
+  "gl_transitions": ["FilmBurn", "CircleOpen"],
+  "pixi_filters": ["AdjustmentFilter", "ShockwaveFilter"],
+  "clock": "Remotion frame; Pixi ticker disabled; texture from actual OffthreadVideo decoded frame",
+  "media_fit": "contain; no stretch or looping",
+  "styles": {"darkroom": "dark green / amber, right portrait, restrained depth and one cloth reveal", "carnival": "vermillion / cobalt / yellow, left portrait and wide establishing shots, geometric scene reveal and one touch shockwave"},
+  "provenance": "package-lock freezes npm integrity; runtime hashes this manifest, vendor source, adapter and lockfile"
+}

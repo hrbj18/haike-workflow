@@ -38,8 +38,9 @@ export function AboutUpdateContent({snapshot, checking = false, checkError = '',
 
 export function AboutUpdateActions({snapshot, checking = false, submitting = false, canceling = false, cancelPending = false, checkError = '', confirmation = false, savedConfirmed = false, reconnectStopped = false, onClose = noop, onCheck = noop, onRequestInstall = noop, onConfirmInstall = noop, onCancelInstall = noop, onCancelUpdate = noop, onReconnect = noop, onReload = noop}) {
   const active = updateActive(snapshot);
+  const installLabel = snapshot?.update?.source === 'local' ? '安装更新包' : '下载并更新';
   if (confirmation) return <><Button onClick={onCancelInstall} disabled={submitting}>暂不更新</Button><Button variant="primary" onClick={onConfirmInstall} loading={submitting} disabled={!savedConfirmed}>确认更新并重启</Button></>;
-  return <><Button onClick={onClose} disabled={submitting}>关闭</Button>{updateCompleted(snapshot) ? <Button variant="primary" onClick={onReload}>刷新页面使用新版</Button> : active ? <>{canCancelUpdate(snapshot) && <Button onClick={onCancelUpdate} loading={canceling || cancelPending} disabled={submitting}>{cancelPending ? '正在核对暂缓请求' : '暂缓更新'}</Button>}{reconnectStopped ? <Button variant="primary" onClick={onReconnect}>重新连接</Button> : <span className="helper about-background-note">更新在后台继续</span>}</> : <><Button onClick={onCheck} loading={checking} disabled={submitting}><RefreshCw size={16}/>检查更新</Button>{canInstallUpdate(snapshot) && <Button variant="primary" onClick={onRequestInstall} disabled={checking || submitting || Boolean(checkError)}><Download size={16}/>下载并更新</Button>}</>}</>;
+  return <><Button onClick={onClose} disabled={submitting}>关闭</Button>{updateCompleted(snapshot) ? <Button variant="primary" onClick={onReload}>刷新页面使用新版</Button> : active ? <>{canCancelUpdate(snapshot) && <Button onClick={onCancelUpdate} loading={canceling || cancelPending} disabled={submitting}>{cancelPending ? '正在核对暂缓请求' : '暂缓更新'}</Button>}{reconnectStopped ? <Button variant="primary" onClick={onReconnect}>重新连接</Button> : <span className="helper about-background-note">更新在后台继续</span>}</> : <><Button onClick={onCheck} loading={checking} disabled={submitting}><RefreshCw size={16}/>检查更新</Button>{canInstallUpdate(snapshot) && <Button variant="primary" onClick={onRequestInstall} disabled={checking || submitting || Boolean(checkError)}><Download size={16}/>{installLabel}</Button>}</>}</>;
 }
 
 export function AboutDialog({onClose}) {
@@ -51,7 +52,7 @@ export function AboutDialog({onClose}) {
   const alive = useRef(true), requestId = useRef(0);
   const active = updateActive(snapshot);
 
-  async function check() {
+  async function check(force = true) {
     const id = ++requestId.current;
     setChecking(true); setCheckError(''); setVersionError(''); setConfirmation(false); setSavedConfirmed(false);
     try {
@@ -59,6 +60,7 @@ export function AboutDialog({onClose}) {
       if (!alive.current || id !== requestId.current) return;
       setSnapshot(existing);
       if (updateActive(existing)) return;
+      if (!force && existing.update?.source === 'local' && existing.update.status === 'available') return;
       const result = await api(`${endpoint}/check`, {});
       if (alive.current && id === requestId.current) setSnapshot(result);
     } catch (error) {
@@ -72,9 +74,27 @@ export function AboutDialog({onClose}) {
   }
 
   useEffect(() => {
-    alive.current = true; void check();
+    alive.current = true; void check(false);
     return () => {alive.current = false; ++requestId.current;};
   }, []);
+
+  async function importPackage(event) {
+    const file = event.target.files?.[0]; event.target.value = '';
+    if (!file) return;
+    if (file.size > 300000000) {setCheckError('更新包不能超过300 MB。'); return;}
+    const id = ++requestId.current;
+    setChecking(true); setCheckError(''); setConfirmation(false); setSavedConfirmed(false);
+    try {
+      const response = await fetch(`${endpoint}/import`, {method: 'POST', headers: {'Content-Type': 'application/octet-stream'}, body: file});
+      const value = await response.json();
+      if (!response.ok) throw new Error(value.detail || '更新包检查未通过');
+      if (alive.current && id === requestId.current) setSnapshot(value);
+    } catch (error) {
+      if (alive.current && id === requestId.current) setCheckError(error.message || '更新包导入失败，请重试。');
+    } finally {
+      if (alive.current && id === requestId.current) setChecking(false);
+    }
+  }
 
   useEffect(() => {
     if (!active || reconnectStopped) return;
@@ -134,6 +154,7 @@ export function AboutDialog({onClose}) {
 
   return <Dialog title="关于海客视频" description="版本信息与程序更新" onClose={onClose} busy={submitting} footer={<AboutUpdateActions snapshot={snapshot} checking={checking} submitting={submitting} canceling={canceling} cancelPending={cancelPending} checkError={checkError || versionError} confirmation={confirmation} savedConfirmed={savedConfirmed} reconnectStopped={reconnectStopped} onClose={onClose} onCheck={check} onRequestInstall={() => {setSavedConfirmed(false); setConfirmation(true);}} onConfirmInstall={install} onCancelInstall={() => setConfirmation(false)} onCancelUpdate={cancelUpdate} onReconnect={() => {setReconnectStopped(false); setPollEpoch(value => value + 1);}} onReload={() => window.location.reload()}/> }>
     <AboutUpdateContent snapshot={snapshot} checking={checking} checkError={checkError} versionError={versionError} disconnected={disconnected} reconnectStopped={reconnectStopped}/>
+    {snapshot?.capability?.can_install && !active && !confirmation && <label className="about-local-import">导入已下载的更新包（ZIP，300 MB以内）<input aria-label="选择本地程序更新包" type="file" accept=".zip,application/zip" disabled={checking || submitting} onChange={importPackage}/><span className="helper">检查通过后再确认安装，无需重新下载运行依赖。</span></label>}
     {confirmation && <section className="about-install-confirmation" aria-label="确认程序更新"><h3>准备更新到 v{snapshot.update.version}</h3><p>请先保存当前正在编辑的草稿。更新会等待制作、下载和发布任务结束，再备份程序、安装并重启工作台。</p><p>配置、账号和作品会保留；安装或启动检查失败时恢复旧版本。</p><label className="checkbox-row"><input type="checkbox" checked={savedConfirmed} onChange={event => setSavedConfirmed(event.target.checked)}/>我已保存当前工作，可以更新并重启</label></section>}
   </Dialog>;
 }

@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+from concurrent.futures import ThreadPoolExecutor
 from contextlib import contextmanager
 import hashlib
 import json
@@ -104,6 +105,7 @@ def environment() -> dict[str, str]:
                FFMPEG_BINARY=str(ROOT / "runtime/ffmpeg/bin/ffmpeg.exe"),
                FFPROBE_BINARY=str(ROOT / "runtime/ffmpeg/bin/ffprobe.exe"),
                REMOTION_BROWSER_EXECUTABLE=str(ROOT / BROWSER),
+               CHROME_PATH=str(ROOT / BROWSER),
                HYPERFRAMES_BROWSER_PATH=str(ROOT / BROWSER),
                PRODUCER_HEADLESS_SHELL_PATH=str(ROOT / BROWSER),
                HYPERFRAMES_FFMPEG_PATH=str(ROOT / "runtime/ffmpeg/bin/ffmpeg.exe"),
@@ -153,17 +155,35 @@ def bundle_lock():
 
 def prepare() -> dict:
     started = time.monotonic()
+    if __package__:
+        from .template_assets import materialize
+    else:
+        import importlib.util
+        spec = importlib.util.spec_from_file_location('haike_template_assets', Path(__file__).with_name('template_assets.py'))
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        materialize = module.materialize
+    materialize(ROOT)
     base = local_path("runtime/python")
     if not (base / "python.exe").is_file():
         raise RuntimeError("离线 Python 缺失，请完整解压发行包；不会在线安装")
     repos = list(REPOS)
     if local_path(CRAWLER + "/.venv").is_dir():
         repos.append(CRAWLER)
+    for template in ['motion-console','motion-native-story','motion-poster']:
+        config=read_json('.local/'+template+'/defaults.json', {})
+        cache=config.get('native_dependency_cache') if isinstance(config,dict) else None
+        if isinstance(cache,str) and not Path(cache).is_absolute():
+            if not cache.replace('\\','/').startswith('.local/md/'):
+                raise ValueError('模板离线依赖须位于本安装的.local/md目录')
+            if not local_path(cache+'/.venv/Scripts/python.exe').is_file():
+                raise RuntimeError('模板离线依赖缺失，请恢复首次安装的运行环境')
+            if cache not in repos:repos.append(cache)
     for repo in repos:
         if not local_path(repo + "/.venv/Scripts/python.exe").is_file():
             raise RuntimeError("离线环境缺失：" + repo)
         write_text(repo + "/.venv/pyvenv.cfg",
-                   f"home = {base}\ninclude-system-site-packages = false\nversion = 3.12.8\nexecutable = {base / 'python.exe'}\n")
+                   f"home = {base}\ninclude-system-site-packages = false\nexecutable = {base / 'python.exe'}\n")
     copy = "copy_skill/copy_skill-main"
     libraries = local_path(copy + "/.venv/Lib/site-packages")
     for path in libraries.glob("__editable__.douyin_content_intelligence-*.pth"):
@@ -214,27 +234,38 @@ def integrity() -> int:
     manifest = read_json("PACKAGE-MANIFEST.json")
     if not isinstance(manifest, dict) or not isinstance(manifest.get("files"), list):
         raise ValueError("完整文件清单缺失或无效")
-    count, seen = 0, set()
+    seen = set()
     for entry in manifest["files"]:
         if not isinstance(entry, dict) or not isinstance(entry.get("path"), str):
             raise ValueError("文件清单条目无效")
         name = entry["path"]
-        path = local_path(name)
         if name in seen:
             raise ValueError("文件清单含重复路径")
         seen.add(name)
+    def verify(entry):
+        name = entry['path']
+        path = local_path(name)
         if entry.get("mutable") is True:
-            continue
+            return 0
         expected = entry.get("sha256")
         if not isinstance(expected, str) or len(expected) != 64:
             raise ValueError("文件清单缺少 SHA256：" + name)
+        # Older bundles accidentally listed the composer's disposable build
+        # cache. Remotion/Webpack legitimately replaces and removes these files
+        # during production. Keep validating actual modules and bundled browsers.
+        if name.startswith('Haike_video/remotion-composer/node_modules/.cache/'):
+            return 0
         if not path.is_file():
             raise RuntimeError("发行文件缺失：" + name)
         with path.open("rb") as handle:
             actual = hashlib.file_digest(handle, "sha256").hexdigest()
         if actual != expected:
             raise RuntimeError("发行文件校验失败：" + name)
-        count += 1
+        return 1
+    # Windows dependency trees contain many small files. Every path and digest
+    # is still checked; bounded concurrent reads avoid serial metadata latency.
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        count = sum(pool.map(verify, manifest['files']))
     if not count:
         raise ValueError("文件清单没有不可变文件")
     return count
@@ -276,24 +307,36 @@ def run_launcher(command: list[str], *, env, timeout=200) -> None:
 
 
 def diagnose(full=False) -> dict:
+    # Older full bundles require both components. New bundles may explicitly
+    # declare either absent; never infer absence from a missing file.
+    components = read_json("RUNTIME-INVENTORY.json", {}).get("optional_components", {})
+    if (not isinstance(components, dict) or set(components) - {"hyperframes", "whisper_small"}
+            or any(type(v) is not bool for v in components.values())):
+        raise ValueError("运行环境组件清单无效")
+    # The already-public v1.0 online profile predates optional_components and
+    # explicitly omits the optional local Whisper download during setup.
+    models = list(local_path("runtime/models/whisper-small").glob("*/model.bin"))
+    legacy_online = (read_json("RELEASE.json", {}).get("distribution") == "online"
+                     and 'whisper_small' not in components)
+    if legacy_online:
+        components['whisper_small'] = bool(models)
     required = ["runtime/python/python.exe", "runtime/python/pythonw.exe", "runtime/node/node.exe",
                 "runtime/ffmpeg/bin/ffmpeg.exe", "runtime/ffmpeg/bin/ffprobe.exe", BROWSER,
                 "Haike_video/backlot/server.py", "Haike_video/backlot/ui/avatar-generator/index.html",
-                "Haike_video/remotion-composer/node_modules/@remotion/cli/package.json",
-                "runtime/hyperframes/node_modules/hyperframes/package.json"]
+                "Haike_video/remotion-composer/node_modules/@remotion/cli/package.json"]
+    if components.get("hyperframes", True):
+        required.append("runtime/hyperframes/node_modules/hyperframes/package.json")
     required += ["runtime/msvc/" + name for name in DLLS]
     required += [repo + "/.venv/Scripts/" + name + ".exe" for repo in REPOS for name in ("python", "pythonw")]
     missing = [name for name in required if not local_path(name).is_file()]
     if missing:
         raise RuntimeError("发行包缺少必要文件：" + ", ".join(missing[:8]))
-    models = list(local_path("runtime/models/whisper-small").glob("*/model.bin"))
-    optional_model = read_json("RELEASE.json", {}).get("distribution") == "online" and not models
-    if not optional_model and (len(models) != 1 or not all((models[0].parent / n).is_file()
+    if components.get("whisper_small", True) and (len(models) != 1 or not all((models[0].parent / n).is_file()
                                  for n in ("config.json", "tokenizer.json", "vocabulary.txt"))):
         raise RuntimeError("离线 Whisper-small 模型不完整")
     bootstrap = ("import ctypes,os; "
                  "ctypes.windll.kernel32.SetErrorMode(0x8003) if os.name=='nt' else None; "
-                 "import site; site.main(); import sys; assert sys.version_info[:3]==(3,12,8); ")
+                 "import site; site.main(); import sys; assert sys.version_info[:2]==(3,12); ")
     imports = {"Haike_video": "import fastapi,uvicorn,onnxruntime,ctranslate2,faster_whisper; from faster_whisper.vad import get_speech_timestamps",
                "copy_skill/copy_skill-main": "import onnxruntime,ctranslate2,faster_whisper,douyin_intelligence",
                "creatorhub": "import fastapi,uvicorn,sqlmodel,patchright"}
@@ -304,7 +347,7 @@ def diagnose(full=False) -> dict:
     model_code = (bootstrap + "from faster_whisper.vad import get_vad_model; get_vad_model(); "
                   "from faster_whisper import WhisperModel; "
                   "WhisperModel(sys.argv[1],device='cpu',compute_type='int8',local_files_only=True,cpu_threads=1,num_workers=1)")
-    if not optional_model:
+    if components.get("whisper_small", True):
         model_dir = local_path(models[0].parent.relative_to(ROOT.resolve()).as_posix())
         checks.append(run_probe("whisper-small", [str(ROOT / "Haike_video/.venv/Scripts/python.exe"),
                                 "-S", "-c", model_code, str(model_dir)]))
@@ -314,8 +357,8 @@ def diagnose(full=False) -> dict:
         checks.append(run_probe(name, command))
     result = {"ok": True, "command": "diagnose", "root": str(ROOT), "full": full,
               "checks": checks, "file_count": integrity() if full else None,
-              "models": {"whisper_small": "optional_not_installed" if optional_model else "loadable",
-                         "clean_install_default_asr": "gateway"},
+              "optional_components": {name: components.get(name, True) for name in ("hyperframes", "whisper_small")},
+              "models": {"whisper_small": "loadable" if components.get("whisper_small", True) else "optional_not_installed" if legacy_online else "not_installed", "clean_install_default_asr": "gateway"},
               "browsers": {"system_chrome": system_chrome() is not None,
                            "bundled_interactive_browser": bundled_login_browser() is not None},
               "network_install": False, "physical_new_machine_tested": False}

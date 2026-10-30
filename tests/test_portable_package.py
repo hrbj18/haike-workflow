@@ -17,6 +17,11 @@ spec.loader.exec_module(package)
 
 
 class PortablePackageTests(unittest.TestCase):
+    def test_disposable_composer_cache_is_not_an_offline_dependency(self):
+        self.assertFalse(package.clean_runtime('Haike_video/remotion-composer/node_modules/.cache/webpack/renderer/0.pack'))
+        self.assertTrue(package.clean_runtime('Haike_video/remotion-composer/node_modules/@remotion/cli/index.js'))
+        self.assertTrue(package.clean_runtime('Haike_video/remotion-composer/node_modules/.remotion/chrome-headless-shell/win64/chrome-headless-shell.exe'))
+
     def test_original_template_sounds_require_matching_provenance(self):
         relative = Path('Haike_video/templates/avatar-investment-a-v6-art-v5/assets/sound')
         with tempfile.TemporaryDirectory() as folder:

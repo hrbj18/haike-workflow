@@ -1,7 +1,7 @@
 """Trusted release discovery and durable orchestration for the local updater.
 
-Only an operator-configured HTTPS feed can supply an install candidate. Browser
-requests never supply a URL, path, command, PID or update manifest.
+Install candidates come from a configured HTTPS feed or an inspected local ZIP.
+Browser requests never supply a URL, path, command, PID or update manifest.
 """
 from __future__ import annotations
 
@@ -13,6 +13,7 @@ import secrets
 import shutil
 import subprocess
 import sys
+import tempfile
 import threading
 from contextlib import contextmanager
 from datetime import datetime, timezone
@@ -196,7 +197,7 @@ class UpdateService:
         current = current_release(self.root)
         state = read_json(private_path(self.root))
         update = {k: v for k, v in state.get("update", {"status": "unchecked", "message": "尚未检查更新"}).items()
-                  if k not in {"candidate", "feed_url"}}
+                  if k not in {"candidate", "feed_url", "local_archive"}}
         cap = capability(self.root, current)
         pending = core.pending_receipts(self.root)
         operation_record = state.get("operation", {})
@@ -238,6 +239,8 @@ class UpdateService:
             if len(raw) > 1024 * 1024:
                 raise core.UpdateError("版本清单过大，已停止检查")
             candidate = self.validate_candidate(json.loads(raw), current)
+            if candidate['package'].get('kind', 'patch') == 'patch' and len(raw)+candidate['package']['size'] > core.MAX_ARCHIVE_BYTES:
+                raise core.UpdateError('更新包与清单总大小超过300 MB')
             newer = core.version_tuple(candidate["version"]) > core.version_tuple(current.get("version") or "0.0.0")
             compatible = (candidate["package"].get("kind", "patch") == "patch"
                           and all(candidate.get(k) == current.get(k) for k in ("runtime_id", "data_schema", "platform"))
@@ -258,11 +261,13 @@ class UpdateService:
             state = read_json(private_path(self.root))
             if state.get("operation", {}).get("status") not in ACTIVE:
                 state["update"] = update
+                if update.get('status') == 'available':
+                    state['operation'] = {'status':'idle', 'message':''}
                 write_json(private_path(self.root), state)
         return self.snapshot()
 
     @staticmethod
-    def validate_candidate(value, current):
+    def validate_candidate(value, current, *, local=False):
         if (not isinstance(value, dict) or type(value.get("schema")) is not int or value.get("schema") != 1
                 or value.get("edition") != "haike-workflow-2" or value.get("channel") != "stable"
                 or type(value.get("data_schema")) is not int or value["data_schema"] < 1
@@ -276,7 +281,11 @@ class UpdateService:
         package = value["package"]
         if not isinstance(package, dict):
             raise core.UpdateError("更新包信息无效")
-        https_url(package["url"])
+        if local:
+            if 'url' in package:
+                raise core.UpdateError('本地更新包不能指定下载地址')
+        else:
+            https_url(package["url"])
         kind = package.get("kind", "patch")
         if kind not in {"patch", "full"}:
             raise core.UpdateError("更新包类型无效")
@@ -291,6 +300,41 @@ class UpdateService:
             raise core.UpdateError("更新说明格式无效")
         return value
 
+    def import_archive(self, archive):
+        """Inspect a bounded local upload; only install() admits a restart."""
+        with _LOCK:
+            state = read_json(private_path(self.root))
+            if state.get('operation', {}).get('status') in ACTIVE or core.pending_receipts(self.root):
+                raise core.UpdateError('已有更新正在处理，请先完成或恢复原更新')
+            current = current_release(self.root)
+            cap = capability(self.root, current)
+            if not cap['can_install']:
+                raise core.UpdateError(cap['reason'])
+            archive = Path(archive)
+            relative = archive.relative_to(self.root).as_posix()
+            if not relative.startswith('.local/app-updates/import-') or archive.name != 'package.zip':
+                raise core.UpdateError('更新包不属于本次本地导入')
+            archive = core.safe_path(self.root, relative)
+            if not archive.is_file() or not 0 < archive.stat().st_size <= core.MAX_ARCHIVE_BYTES:
+                raise core.UpdateError('更新包超过300 MB或内容为空')
+            checksum = core.digest(archive)
+            with tempfile.TemporaryDirectory(dir=archive.parent, prefix='inspect-') as temporary:
+                bundle = Path(temporary)/'bundle'
+                core.extract_bundle(archive, bundle)
+                plan = core.preflight(bundle, self.root)
+            candidate = {key: plan[key] for key in ('schema', 'edition', 'version',
+                         'base_version', 'runtime_id', 'data_schema', 'platform')}
+            candidate.update(channel=plan.get('channel', 'stable'), notes='本地程序更新包，已核对版本、依赖和文件完整性。',
+                             package={'size': archive.stat().st_size, 'sha256': checksum})
+            self.validate_candidate(candidate, current, local=True)
+            state['update'] = {'status':'available', 'source':'local', 'message':'本地更新包已检查，可以安装',
+                              'version':candidate['version'], 'size':candidate['package']['size'],
+                              'notes':candidate['notes'], 'candidate':candidate,
+                              'local_archive':relative, 'checked_at':utcnow()}
+            state['operation'] = {'status':'idle', 'message':''}
+            write_json(private_path(self.root), state)
+            return self.snapshot()
+
     def install(self, version, base_url, instance_id, server_pid, confirmed=False, launch=True):
         with _LOCK:
             state = read_json(private_path(self.root))
@@ -302,9 +346,10 @@ class UpdateService:
             if not capability(self.root, current)["can_install"]:
                 raise core.UpdateError(capability(self.root, current)["reason"])
             update = state.get("update", {})
-            if confirmed is not True or update.get("status") != "available" or update.get("version") != version or update.get("feed_url") != self.feed_url:
+            local = update.get('source') == 'local'
+            if confirmed is not True or update.get("status") != "available" or update.get("version") != version or (not local and update.get("feed_url") != self.feed_url):
                 raise core.UpdateError("请先重新检查版本，再确认本次更新")
-            candidate = self.validate_candidate(update["candidate"], current)
+            candidate = self.validate_candidate(update["candidate"], current, local=local)
             if candidate["package"].get("kind", "patch") != "patch":
                 raise core.UpdateError("完整安装包请按发行说明迁移，不可作为程序补丁安装")
             if candidate["base_version"] != current["version"]:
@@ -316,6 +361,13 @@ class UpdateService:
             command = {"id": operation_id, "candidate": candidate, "base_url": base_url,
                        "instance_id": instance_id, "server_pid": server_pid,
                        "token": secrets.token_urlsafe(32)}
+            if local:
+                archive = core.safe_path(self.root, update['local_archive'])
+                if archive.stat().st_size != candidate['package']['size'] or core.digest(archive) != candidate['package']['sha256']:
+                    raise core.UpdateError('本地更新包已变化，请重新导入')
+                shutil.copyfile(archive, folder/'package.zip')
+                command['local_package'] = True
+                operation['message'] = '本地更新包已就绪，正在核对安装条件'
             write_json(folder / "operation.json", command)
             state["operation"] = operation
             write_json(private_path(self.root), state)

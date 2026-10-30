@@ -115,6 +115,33 @@ def test_paper_reveal_is_bound_to_focus_and_unknown_motion_is_blocked(sample):
         hum.preflight(value)
 
 
+@pytest.mark.parametrize('scene_index', [0, 1, 2])
+def test_title_three_lines_rejected_before_wall_focus_or_statement_can_overlap_media(sample, scene_index):
+    value = sample['value']
+    value['shotPlan'][scene_index]['title'] = '第一行\n第二行'
+    hum.preflight(value)
+    value['shotPlan'][scene_index]['title'] = '第一行\n第二行\n压住素材的第三行'
+    with pytest.raises(WorkError, match='场景标题最多2行'):
+        hum.preflight(value)
+
+
+def test_actual_84px_chinese_caption_width_blocks_safe_area_overflow(tmp_path, monkeypatch):
+    from PIL import ImageFont
+    font = Path('C:/Windows/Fonts/msyh.ttc')
+    if not font.is_file():
+        pytest.skip('This actual CJK width integration check requires the installed Windows CJK font')
+    monkeypatch.setattr(hum, 'TEMPLATE', tmp_path)
+    atomic_private(tmp_path / 'layout.json', {'captions': [88, 1460, 1264, 140], 'captionSize': 84})
+    props = {'scenes': [], 'captions': [{'text': '字幕保留独立安全区'}]}
+    paths = {'display.ttf': font, 'body.ttf': font}
+    hum._validate_fonts(props, paths, ImageFont)
+    # This remains below the22-character structural limit but exceeds the real
+    # 1264px caption width at84px. Font metrics must reject instead of clipping.
+    props['captions'][0]['text'] = '字' * 16
+    with pytest.raises(WorkError, match='字幕超出实际字体字框'):
+        hum._validate_fonts(props, paths, ImageFont)
+
+
 def test_fractional_clock_uses_pcm_samples_not_rounded_seconds(sample):
     pcm(sample["paths"]["voice.wav"], 20.123)
     value = sample["value"]
@@ -216,6 +243,35 @@ def test_freeze_idempotency_resume_and_source_tamper(sample):
         hum.validate(queue, request)
 
 
+def test_real_queue_snapshot_matches_frozen_identity_after_private_provenance_scrub(sample):
+    """Use the actual queue sanitizer/SQLite, including production's benign keys."""
+    queue, value = sample['queue'], sample['value']
+    value['provenance']['voice'].update(authorization_basis='Explicit human authorization for this narration', api_key='fixture-secret-never-retained')
+    value['provenance']['audio']['music.wav']['reuse_authorization'] = 'Same licensed local music source'
+    value['provenance']['audio']['music.wav']['nested'] = {'authorization': 'Bearer fixture-secret', 'source': 'retained non-secret source'}
+    original = deepcopy(value)
+    request = hum.prepare(queue, value)
+    submitted = hum.submit(queue, request)
+    # Do not mock _sanitize, queue.submit, or get(include_private=True).
+    snapshot = queue.get(submitted['job_id'], include_private=True)['frozen_request']
+    assert snapshot == request
+    assert hum.validate(queue, snapshot) == queue.projects_root / request['project_id']
+    assert request['provenance']['voice']['authorized'] is True
+    assert request['provenance']['voice']['sha256'] == sha(sample['paths']['voice.wav'])
+    assert request['provenance']['captions']['voice_sha256'] == sha(sample['paths']['voice.wav'])
+    assert 'authorization_basis' not in request['provenance']['voice']
+    assert 'api_key' not in request['provenance']['voice']
+    assert 'reuse_authorization' not in request['provenance']['audio']['music.wav']
+    assert request['provenance']['audio']['music.wav']['nested'] == {'source': 'retained non-secret source'}
+    assert value == original  # source input and failed old requests are not rewritten
+
+
+def test_queue_scrub_cannot_silently_change_execution_text(sample):
+    sample['value']['props']['footer'] = 'Authorization: fixture-value'
+    with pytest.raises(WorkError, match='不会静默改写'):
+        hum.prepare(sample['queue'], sample['value'])
+
+
 def test_completed_output_recovers_without_current_runtime_but_binds_output(sample, monkeypatch):
     request = hum.prepare(sample["queue"], sample["value"])
     project = hum.validate(sample["queue"], request)
@@ -311,3 +367,55 @@ def test_real_ffmpeg_mix_keeps_exact_sample_clock_and_declared_sources(tmp_path,
     assert receipt['voice_clock']['samples'] == seconds * 24000
     assert not receipt['speech_stretched'] and not receipt['speech_reordered']
     assert measure_audio(output)['true_peak_dbtp'] <= -2.4
+
+
+def dynamic_input(sample, style='archive', action='reflow'):
+    value = deepcopy(sample['value'])
+    source = Path(__file__).resolve().parents[2] / 'templates/hum-production-v1/dynamic/layout.json'
+    folder = sample['template'] / 'dynamic'
+    folder.mkdir(exist_ok=True)
+    (folder / 'layout.json').write_bytes(source.read_bytes())
+    value['props']['visualStyle'] = style
+    value['shotPlan'] = [
+        {'id': 'materials', 'module': 'dynamic', 'motion': action, 'theme': 'paper', 'title': '亲手体验',
+         'mediaId': 'm0', 'wallMediaIds': ['m0', 'm1', 'm2', 'm3'], 'weight': 2},
+        {'id': 'invite', 'module': 'statement', 'theme': 'paper', 'title': '欢迎来店', 'weight': 1}]
+    return value
+
+
+@pytest.mark.parametrize('style', ['archive', 'playroom'])
+@pytest.mark.parametrize('seconds', [20, 35, 60])
+def test_dynamic_recipe_reuses_full_voice_clock_and_all_material_bindings(sample, style, seconds):
+    value = dynamic_input(sample, style)
+    pcm(sample['paths']['voice.wav'], seconds)
+    digest = sha(sample['paths']['voice.wav'])
+    value['provenance']['voice']['sha256'] = digest
+    value['provenance']['captions']['voice_sha256'] = digest
+    result = hum.preflight(value)
+    assert result['props']['durationFrames'] == seconds * 30 + 8
+    first, last = result['props']['scenes']
+    assert first['from'] == 0 and last['from'] == first['frames']
+    assert last['from'] + last['frames'] == seconds * 30 + 8
+    assert set(first['wallMediaIds']) == {m['id'] for m in value['props']['media']}
+
+
+def test_dynamic_scene_rejects_short_action_and_nonexistent_capability(sample):
+    for action in ['click-open', 'spatial-gallery', 'waterfall', 'reflow']:
+        value = dynamic_input(sample, action=action)
+        with pytest.raises(WorkError, match='太短'):
+            hum.plan_scenes(value['shotPlan'], 60)
+    value = dynamic_input(sample, action='fake-waterfall')
+    with pytest.raises(WorkError, match='尚未适配'):
+        hum.preflight(value)
+
+
+def test_dynamic_scene_requires_unique_pool_and_valid_source_clock(sample):
+    value = dynamic_input(sample)
+    value['shotPlan'][0]['wallMediaIds'] = ['m0', 'm0', 'm1']
+    with pytest.raises(WorkError, match='3至9'):
+        hum.preflight(value)
+    value = dynamic_input(sample)
+    value['provenance']['media'][0]['source_end_seconds'] = 3
+    value['provenance']['media'][0]['observed_frames'] = [1, 2]
+    with pytest.raises(WorkError, match='实际播放长度超出'):
+        hum.preflight(value)

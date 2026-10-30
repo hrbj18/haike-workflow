@@ -132,6 +132,71 @@ def test_secondary_resolver_still_rejects_private_addresses(monkeypatch):
         studio_avatar.public_media_address('dashscope-result-bj.oss-cn-beijing.aliyuncs.com',443)
 
 
+def test_third_verified_resolver_recovers_without_relaxing_tls_or_public_ip_checks(monkeypatch):
+    from urllib.error import URLError
+    monkeypatch.setattr(studio_avatar.socket,'getaddrinfo',lambda *a,**k:[(2,1,6,'',('198.18.1.230',443))])
+    requests=[]
+    class Opener:
+        def open(self,request,timeout):
+            requests.append(request)
+            if len(requests)<3:raise URLError('first two resolvers unavailable')
+            return io.BytesIO(b'{"Status":0,"Answer":[{"type":1,"data":"8.8.8.8"}]}')
+    monkeypatch.setattr(studio_avatar,'build_opener',lambda *a:Opener())
+    assert studio_avatar.public_media_address('rh-comfyui01.tos-cn-beijing.volces.com',443)=='8.8.8.8'
+    assert len(requests)==3 and requests[-1].full_url.startswith('https://dns.google/resolve?')
+    assert all(not request.has_header('Authorization') for request in requests)
+
+
+def test_temporarily_unavailable_resolvers_keep_same_job_retryable(monkeypatch):
+    from urllib.error import URLError
+    monkeypatch.setattr(studio_avatar.socket,'getaddrinfo',lambda *a,**k:[(2,1,6,'',('198.18.1.230',443))])
+    class Opener:
+        def open(self,*a,**k):raise URLError('temporary resolver outage')
+    monkeypatch.setattr(studio_avatar,'build_opener',lambda *a:Opener())
+    with pytest.raises(WorkError) as error:
+        studio_avatar.public_media_address('rh-comfyui01.tos-cn-beijing.volces.com',443)
+    assert error.value.code=='unavailable'
+
+
+def test_media_download_rotates_checked_ips_and_discards_interrupted_partial(tmp_path,monkeypatch):
+    from urllib.error import URLError
+    monkeypatch.setattr(studio_avatar,'public_media_address',lambda *a:'8.8.8.8')
+    monkeypatch.setattr(studio_avatar,'public_media_addresses',lambda *a:['8.8.8.8','1.1.1.1'])
+    monkeypatch.setattr(studio_avatar,'media_https_handler',lambda address:address)
+    calls=[]
+    class Interrupted(io.BytesIO):
+        def read(self,*a):
+            if self.tell():raise ConnectionResetError('interrupted original download')
+            return super().read(*a)
+    class Opener:
+        def __init__(self,address):self.address=address
+        def open(self,request,timeout):
+            calls.append((self.address,request.full_url,request.has_header('Authorization')))
+            return Interrupted(b'partial') if self.address=='8.8.8.8' else io.BytesIO(b'complete-original')
+    monkeypatch.setattr(studio_avatar,'build_opener',lambda *args:Opener(args[-1]))
+    target=tmp_path/'original.mp4';url='https://cdn.example/original.mp4?signature=fixture'
+    studio_avatar.download_result(url,target)
+    assert target.read_bytes()==b'complete-original' and not target.with_suffix('.mp4.part').exists()
+    assert calls==[('8.8.8.8',url,False),('1.1.1.1',url,False)]
+
+
+def test_media_ip_rotation_is_bounded_and_preserves_existing_output(tmp_path,monkeypatch):
+    from urllib.error import URLError
+    monkeypatch.setattr(studio_avatar,'public_media_address',lambda *a:'8.8.8.8')
+    monkeypatch.setattr(studio_avatar,'public_media_addresses',lambda *a:[f'8.8.8.{i}' for i in range(1,10)])
+    monkeypatch.setattr(studio_avatar,'media_https_handler',lambda address:address)
+    calls=[]
+    class Opener:
+        def __init__(self,address):self.address=address
+        def open(self,*args,**kwargs):calls.append(self.address);raise URLError('temporary connection failure')
+    monkeypatch.setattr(studio_avatar,'build_opener',lambda *args:Opener(args[-1]))
+    target=tmp_path/'existing.mp4';target.write_bytes(b'preserved')
+    with pytest.raises(WorkError) as error:
+        studio_avatar.download_result('https://cdn.example/original.mp4',target)
+    assert error.value.code=='unavailable' and len(calls)==4 and len(set(calls))==4
+    assert target.read_bytes()==b'preserved' and not target.with_suffix('.mp4.part').exists()
+
+
 @pytest.mark.parametrize('host', ['www.douyin.com', 'v3-web.douyinvod.com', 'v26-web.douyinvod.com'])
 def test_douyin_play_redirect_hosts_require_verified_public_dns(monkeypatch, host):
     monkeypatch.setattr(studio_avatar.socket, 'getaddrinfo',

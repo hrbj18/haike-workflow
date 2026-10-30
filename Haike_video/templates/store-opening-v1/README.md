@@ -1,5 +1,7 @@
 # 新塘未来汇开业｜双色排版 v002
 
+新C端文案可使用独立的`contentMode="community-cend"`受控内容槽，规则及本期证据入口见[C端适配](CEND.md)。历史五条开业片的限定ready不覆盖新输入。
+
 文档类型：video-template-runbook
 标准版本：video-template-v1
 状态：implementation，v002限定ready；本期5个新冻结输入的完整原生成片技术检查及703个最终编码离散帧/46页实际视觉抽样已通过并登记。连续听看、平台真机和用户最终确认保持pending。不得沿用v001的ready或成片通过。

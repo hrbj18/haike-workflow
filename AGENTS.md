@@ -1,5 +1,7 @@
 # Haike Workflow 单仓库入口
 
+- 用户说「项目初始化，并恢复开发记录」或「恢复开发记录」时，先完整读取 `docs/DEVELOPMENT_RECOVERY.md`。存在 `migration/RECOVERY_MANIFEST.json` 的私有开发迁移副本按清单恢复 `.motion` 开发主线；逐份完整读取必读记录、核对最新进度并写恢复回执后，才回复末份记录中的暗号。文件校验通过仅代表完整性。
+
 工作台、采集、发布、跨模块手册及API账户中心包含于本仓库，保留固定目录布局。根目录存在 PACKAGE-MANIFEST.json 时，先读 docs/PORTABLE.md，使用包内运行时初始化；源码 checkout 的安装入口为 README.md 和 scripts/setup.ps1。历史部署文档中的多仓 clone/checkout、旧提交锚点和旧便携包说明不适用于本版本。首次迁移来源见 SOURCE-PROVENANCE.json。
 
 - 首次用 Agent 接入、单条做片、夜间批次或交接恢复：先读根 START_HERE.md，按任务进入现有接口和模块规则；Agent 负责总控，项目工具负责执行，接入条件见教程。
