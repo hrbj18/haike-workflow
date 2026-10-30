@@ -313,6 +313,10 @@ def diagnose(full=False) -> dict:
     if (not isinstance(components, dict) or set(components) - {"hyperframes", "whisper_small"}
             or any(type(v) is not bool for v in components.values())):
         raise ValueError("运行环境组件清单无效")
+    # The already-public v1.0 online profile predates optional_components and
+    # explicitly omits the optional local Whisper download during setup.
+    if read_json("RELEASE.json", {}).get("distribution") == "online":
+        components.setdefault("whisper_small", False)
     required = ["runtime/python/python.exe", "runtime/python/pythonw.exe", "runtime/node/node.exe",
                 "runtime/ffmpeg/bin/ffmpeg.exe", "runtime/ffmpeg/bin/ffprobe.exe", BROWSER,
                 "Haike_video/backlot/server.py", "Haike_video/backlot/ui/avatar-generator/index.html",

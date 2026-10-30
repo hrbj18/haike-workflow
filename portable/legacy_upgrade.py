@@ -140,7 +140,7 @@ def data_for(row, bundle, target, archive):
     return archive.read(row['blob'])
 
 
-def preflight(bundle, target, resource):
+def preflight(bundle, target, resource, *, require_stopped=True):
     target = target.resolve(strict=True)
     require(not (target / '.git').exists(), '请选择已安装的1027便携目录，不能升级源码仓库')
     require((target / 'runtime/python/python.exe').is_file(), '目标目录缺少包内Python运行时')
@@ -148,7 +148,7 @@ def preflight(bundle, target, resource):
     require(plan.get('id') == ID and plan.get('schema') == 1, '更新清单不适用')
     require(resource.is_file() and digest(resource) == plan['resources']['sha256'], '模板资源包缺失或摘要不符')
     release = read(target / 'RELEASE.json')
-    current = release.get('version') == '1.2.0' and release.get('upgrade_id') == ID
+    current = release.get('version') == plan['release']['version'] and release.get('upgrade_id') == ID
     if current:
         require(release.get('source_commit') == plan['release']['source_commit'], '已安装其他1.2构建，不能覆盖')
     else:
@@ -198,7 +198,8 @@ def preflight(bundle, target, resource):
                 list(pool.map(dependency, plan['required_files']))
         require(shutil.disk_usage(target).free > sum(row['size'] for row in rows) + 600_000_000,
                 '目标磁盘空间不足，请保留至少解压体积加600MB')
-    stopped(target)
+    if require_stopped:
+        stopped(target)
     cfg = safe_path(target, CACHE + '.venv/pyvenv.cfg')
     require(current or not cfg.exists(), '共享依赖目录已经有本机配置，请先核对，不能覆盖')
     if current:
@@ -245,6 +246,7 @@ def registry_records(target, packages):
 
 
 def probe(target):
+    expected_version = read(target / 'RELEASE.json')['version']
     code = ("import json,sys; from pathlib import Path; "
             "from backlot import studio_motion_templates as t; "
             "from backlot.server import create_app; "
@@ -289,7 +291,7 @@ def probe(target):
                 try:
                     health = json.loads(get('/api/health'))
                     if (Path(health.get('workspace', '')).resolve() == target
-                            and health.get('version') == '1.2.0' and health.get('pid') == child.pid):
+                            and health.get('version') == expected_version and health.get('pid') == child.pid):
                         break
                     health = None
                 except (OSError, ValueError):
@@ -348,7 +350,7 @@ def apply(bundle, target, resource, *, check=False, health_check=probe):
     plan, resources, rows, current = preflight(bundle, target, resource)
     if check or current:
         return {'ok': True, 'check_only': check, 'already_current': current,
-                'version': '1.2.0' if current else '1.1 / 1027', 'files': len(rows)}
+                'version': plan['release']['version'] if current else '1.1 / 1027', 'files': len(rows)}
     records = registry_records(target, resources['packages'])
     stamp = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')
     backup = safe_path(target, '.local/release-updates/' + ID + '-' + stamp)
@@ -419,7 +421,7 @@ def apply(bundle, target, resource, *, check=False, health_check=probe):
             receipt['status'] = 'rollback_failed'
             _atomic_write(backup / 'receipt.json', json_bytes(receipt))
         raise
-    return {'ok': True, 'version': '1.2.0', 'files_updated': len(receipt['files']),
+    return {'ok': True, 'version': plan['release']['version'], 'files_updated': len(receipt['files']),
             'backup': str(backup), 'templates': receipt['probe']['templates'],
             'next': '用原目录02-start.cmd启动，Ctrl+F5刷新；首次制作绑定自己的素材'}
 

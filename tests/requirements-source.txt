@@ -1,0 +1,5 @@
+# Small dependencies used by offline configuration/migration tests, not production setup.
+requests==2.34.2
+Pillow==12.3.0
+PyYAML==6.0.3
+python-dotenv==1.2.4

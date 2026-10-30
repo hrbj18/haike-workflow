@@ -39,8 +39,8 @@ def build(args):
         raise ValueError('Source snapshot must be clean and committed')
     commit = git(args.source, 'rev-parse', 'HEAD')
     version = read(args.source / 'VERSION.json')
-    if version['version'] != '1.2.0':
-        raise ValueError('Source version must be 1.2.0')
+    if not version['version'].startswith('1.2.'):
+        raise ValueError('Source must belong to the 1.2 release series')
     args.output.mkdir(parents=True, exist_ok=False)
     bundle = args.output / 'haike-update-1.2'
     bundle.mkdir()
