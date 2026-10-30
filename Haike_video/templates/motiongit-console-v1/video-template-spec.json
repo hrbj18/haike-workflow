@@ -2,7 +2,7 @@
   "schema_version": 1,
   "standard_version": "video-template-v1",
   "template_id": "motiongit-console-story-v1",
-  "template_version": "console-v1/2.7.20-alpha.3/haike-1.1.7",
+  "template_version": "console-v1/2.7.20-alpha.3/square-test-20261030",
   "template_type": "custom",
   "spec_kind": "implementation",
   "stage": "ready",
@@ -6088,7 +6088,7 @@
       "element_layout_authority": "source-contract.json与官方prepare产物；原生画布比例由console.layout求值。最终4:5几何只由studio_motion_native_viewport.CONSOLE_45持有。"
     },
     "avatar": {
-      "face_crop": "值来自本期input.console.presenterCrop，按实际导入后的720x1280人物帧解释；auto由原版持有。4:5的opening/closing/hidden由项目studio_console_presenter.policy和presenter.js共同持有，开头最长180帧、结尾最长300帧；帧率60，15帧淡入淡出。该项目能力不冒充原包参数。",
+      "face_crop": "auto原生圆窗来自本期input.console.presenterCrop，按720x1280导入帧解释。项目4:5的opening/closing/hidden由studio_console_presenter.policy和presenter.js共同持有：1080x1920父画布内x320/y952/440x440直角正方形；导入人物图取x0/y170/720x720，双轴等比缩放，不拉伸；开头最长180帧、结尾最长300帧，60fps、15帧淡入淡出。新方框当前为已有同声源人物的开发验收，旧交付证据只证明旧圆框；不同人物须重新校准。该项目能力不冒充原包参数。",
       "source_framing": "input.console.presenterFraming绑定studio_motion_presenter_framing.py测量的六个原源帧、保留头部的最大9:16窗口和实际FFmpeg预览；编译器另制720x1280 talk，原源及同声源证据不变，再按官方导入帧校准圆窗。",
       "synchronization": "完整原声为主时钟；同声源人物覆盖全片，25fps输入对齐公共0.2秒帧时钟，原生60fps动作保持1x；校验字幕/人物同声源SHA，逐音素和连续听看另验。",
       "automatic_new_person_calibration": {

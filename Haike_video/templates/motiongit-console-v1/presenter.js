@@ -11,11 +11,14 @@
   const card = document.createElement('div');
   card.id = 'haike-presenter';
   Object.assign(card.style, {left: `${config.left}px`, top: `${config.top}px`,
-    width: `${config.diameter}px`, height: `${config.diameter}px`, borderRadius:'50%', opacity:'0'});
+    width: `${config.diameter}px`, height: `${config.diameter}px`, borderRadius:'0', opacity:'0'});
   const image = new Image();
   image.alt = '';
-  // Keep the reviewed native 720x1280 full-head framing, enlarged uniformly.
-  Object.assign(image.style, {left:'0px', top:'0px', width:`${config.diameter}px`, height:`${config.diameter * 1280 / 720}px`});
+  // This reviewed source uses a 720x1280 imported frame. Its 720x720 window
+  // starts at y=170: retain hair, chin and upper chest with less empty sky.
+  // Scale both axes uniformly; keep this same crop in preview and export.
+  Object.assign(image.style, {left:'0px', top:`${-config.diameter * 170 / 720}px`,
+    width:`${config.diameter}px`, height:`${config.diameter * 1280 / 720}px`});
   card.append(image);
   document.getElementById('stage').append(card);
   const clamp = x => Math.max(0, Math.min(1, x));

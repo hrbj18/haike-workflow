@@ -16,7 +16,7 @@
 | 音频主时钟 | `studio_motion_console.fit_segments()`以完整原声、真实句间隙和0.2秒公共帧时钟分配合法完整组；规格30.4秒仅是验收实例 |
 | 原比例 | 官方原生1920×1080/60fps，人物载体随原版动作 |
 | 4:5 | 官方原生`portrait`先在1080×1920重新排版；最终视窗/输出只由`studio_motion_native_viewport.CONSOLE_45`持有。辅助顶部HUD省略，主文案、实拍、人物与字幕逐帧检查 |
-| 人物显示 | `auto`保持原生；4:5支持`opening/closing/hidden`，默认开头大窗。项目自有`studio_console_presenter.py`和`presenter.js`持有窗口/显隐帧钟，开头最长3秒、结尾最长5秒，完整人声持续 |
+| 人物显示 | `auto`保持原生；4:5支持`opening/closing/hidden`，默认开头大窗。项目自有`studio_console_presenter.py`和`presenter.js`持有窗口/显隐帧钟，开头最长3秒、结尾最长5秒，完整人声持续。2026-10-30按用户参考测试直角正方形：同一440×440外框，720×1280导入帧取x=0/y=170/720×720，等比缩放，保留头顶至胸口；该裁切仅对当前同声源人物验收，新人物另测。旧圆窗样片保留 |
 | 人物源适配 | `studio_motion_presenter_framing.py`测量六个原源帧，取最大且保留头部的9:16窗口；原视频保留，另制720×1280 talk。随后`studio_motion_face_crop.py`按七个官方导入帧求圆窗，不把原视频坐标当导入坐标 |
 | 声音 | 原生完整人声/SFX一次，另加一份明确BGM；`studio_dark_native`生成同一帧时钟母带 |
 
