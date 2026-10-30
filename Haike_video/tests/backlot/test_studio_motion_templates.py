@@ -35,6 +35,22 @@ def test_known_imported_templates_show_setup_cards_without_private_seed(monkeypa
     assert {card['package_id'] for card in cards} == {row['id'] for row in rows}
 
 
+def test_public_update_without_personal_packages_shows_setup_without_claiming_ready(monkeypatch):
+    from backlot import studio_motiongit as packages, studio_dark_showcase_api
+    def unavailable(*args, **kwargs):
+        raise WorkError('请先导入本机原包', 'unavailable')
+    monkeypatch.setattr(m, 'seed_input', unavailable)
+    monkeypatch.setattr(m.console_session, 'seed', unavailable)
+    monkeypatch.setattr(m.poster_session, 'seed', unavailable)
+    monkeypatch.setattr(studio_dark_showcase_api, 'registered', lambda _: [{}])
+    monkeypatch.setattr(packages, 'packages', lambda: {'packages': []})
+    cards = m.catalog()
+    assert {card['id'] for card in cards} == {m.TEMPLATE_ID, m.console_session.ID, m.poster_session.ID}
+    assert all(card['status'] == 'needs_setup' and card['package_sha256'] is None for card in cards)
+    for identity in [m.console_session.ID, m.poster_session.ID]:
+        assert next(card for card in cards if card['id'] == identity)['status_label'] == '待导入本机原包'
+
+
 @pytest.fixture
 def env(tmp_path, monkeypatch):
     media = tmp_path/'media'; media.mkdir()

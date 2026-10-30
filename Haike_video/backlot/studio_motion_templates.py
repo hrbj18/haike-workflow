@@ -136,9 +136,9 @@ def catalog():
         console_seed=console_session.seed(check_sources=False);console_sha=console_seed['tools']['package']['sha256']
     except WorkError:console_seed=None
     console_sha = console_sha or installed_sha('template-04-dark-console', '2.7.20-alpha.3')
-    if console_seed or console_sha:
+    if console_seed or console_sha or console_session.PROFILE.is_file():
         result.append({'id':console_session.ID,'name':'科技控制台 · 口播讲解','version':'2.7.20-alpha.3 / console-v1',
-            'status':'ready' if console_seed else 'needs_setup','status_label':'可制作' if console_seed else '待配置本机素材','description':'描边巨字、光环声明、扇形实拍、双面板比较与终端式收尾。',
+            'status':'ready' if console_seed else 'needs_setup','status_label':'可制作' if console_seed else ('待配置本机素材' if console_sha else '待导入本机原包'),'description':'描边巨字、光环声明、扇形实拍、双面板比较与终端式收尾。',
             'original':None,'original_ratio':'16:9','layouts':deepcopy(console_session.LAYOUTS),
             'presenter_modes':['auto'],'groups':[g['id'] for g in console_session.fields()],
             'presenter_modes_by_layout':{'landscape':['auto'],'portrait45':['opening','closing','hidden','auto']},
@@ -155,9 +155,9 @@ def catalog():
         poster_seed=poster_session.seed(check_sources=False);poster_sha=poster_seed['tools']['package']['sha256']
     except WorkError:poster_seed=None
     poster_sha = poster_sha or installed_sha('vibrant-poster', '2.7.13')
-    if poster_seed or poster_sha:
+    if poster_seed or poster_sha or poster_session.PROFILE.is_file():
         result.append({'id':poster_session.ID,'name':'活力海报 · 口播讲解','version':'2.7.13 / poster-v1',
-            'status':'ready' if poster_seed else 'needs_setup','status_label':'可制作' if poster_seed else '待配置本机素材','description':'逐行巨字、胶片照片、扫描实拍、立体轮播与箭头行动收尾。',
+            'status':'ready' if poster_seed else 'needs_setup','status_label':'可制作' if poster_seed else ('待配置本机素材' if poster_sha else '待导入本机原包'),'description':'逐行巨字、胶片照片、扫描实拍、立体轮播与箭头行动收尾。',
             'original':None,'original_ratio':'16:9','layouts':deepcopy(poster_session.LAYOUTS),
             'presenter_modes':['auto','hidden'],'groups':[g['id'] for g in poster_session.fields()],
             'presenter_auto_label':'原包圆窗人物',

@@ -20,7 +20,7 @@ MediaCrawler 继续作为按需获取的第三方依赖。小型 YuNet 模型使
 
 ## 发布范围
 
-1.2联网升级公开程序补丁、稳定清单与单文件升级入口；个人`.motion`封套中的`personal/motiongit.key.json`含API Key与账号身份，不属于公开附件。原本仅用于本机交付的模板ZIP不可直接上传公开Release，授权原包的分发方式须另行明确。依赖复用与自动下载不改变凭据、版权及用户素材边界。
+1.2联网升级公开程序补丁、无个人原包的依赖包、稳定清单与单文件升级入口；个人`.motion`封套中的`personal/motiongit.key.json`含API Key与账号身份，不属于公开附件。用户已确认由使用者在本机提供原包；原本仅用于本机交付的模板ZIP不可直接上传公开Release。`package-legacy-release.py`默认排除个人原包，`--include-personal-motion`仅供明确授权的本地私有交付；公开资产仍须运行`check-public-release.py`。依赖复用与自动下载不改变凭据、版权及用户素材边界。
 
 用户于2026-10-17确认沿用公开仓库`hrbj18/haike-workflow`，于2026-10-27进一步明确授权把已验收交付源码更新到main作为稳定版；旧main先打保留标签，再经PR合入。早期“不修改main、不打包”为历史范围。便携ZIP和API Key配置说明单独交付；Key、Cookie、私人媒体和运行数据不上传公开Git。40张模板截图仅随已授权本地ZIP交付，源码保留相对封面读取及目标机私有绑定能力。
 
