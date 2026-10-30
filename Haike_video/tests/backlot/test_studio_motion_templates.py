@@ -17,6 +17,24 @@ from backlot.work_catalog import WorkError
 from backlot.production_queue import ProductionQueue
 
 
+def test_known_imported_templates_show_setup_cards_without_private_seed(monkeypatch):
+    from backlot import studio_motiongit as packages, studio_dark_showcase_api
+    def unavailable(*args, **kwargs):
+        raise WorkError('本机尚未绑定素材', 'unavailable')
+    monkeypatch.setattr(m, 'seed_input', unavailable)
+    monkeypatch.setattr(m.console_session, 'seed', unavailable)
+    monkeypatch.setattr(m.poster_session, 'seed', unavailable)
+    monkeypatch.setattr(studio_dark_showcase_api, 'registered', lambda _: [{}])
+    rows = [{'id': 'mg-' + str(i), 'sha256': str(i) * 64, 'template_id': name, 'version': version}
+            for i, (name, version) in enumerate([
+                ('template-03-native', '2.7.18-alpha.2'),
+                ('template-04-dark-console', '2.7.20-alpha.3'), ('vibrant-poster', '2.7.13')])]
+    monkeypatch.setattr(packages, 'packages', lambda: {'packages': rows})
+    cards = m.catalog()
+    assert len(cards) == 3 and all(card['status'] == 'needs_setup' for card in cards)
+    assert {card['package_id'] for card in cards} == {row['id'] for row in rows}
+
+
 @pytest.fixture
 def env(tmp_path, monkeypatch):
     media = tmp_path/'media'; media.mkdir()
