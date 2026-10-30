@@ -73,7 +73,8 @@ def build(args):
         shutil.copyfile(source, target)
         rows.append({'path': name, 'payload': 'payload/' + name, 'size': source.stat().st_size,
                      'sha256': digest, 'before_sha256': old['sha256'] if old else None})
-    # Resources contain only pinned original packages and execution dependencies.
+    # Public resources contain execution dependencies. Personalized originals
+    # are an explicit local-only option and must never enter public releases.
     # A content address can reuse an identical file anywhere in the old install.
     by_sha = {}
     for name, row in before.items():
@@ -97,7 +98,8 @@ def build(args):
         if '__pycache__' in file.parts or file.suffix in {'.pyc', '.pyo'} or rel == '.venv/pyvenv.cfg':
             continue
         sources.append(('.local/md/shared-1.2/' + rel, file))
-    for identity in PACKAGES:
+    package_ids = PACKAGES if args.include_personal_motion else []
+    for identity in package_ids:
         name = '.local/motiongit/packages/' + identity + '/original.motion'
         sources.append((name, args.donor / name))
     helper = '.local/motiongit/tools/1.0.0-rc.50/motion.mjs'
@@ -124,22 +126,25 @@ def build(args):
                     archive.write(file, blob)
                     written.add(blob)
             resource_rows.append(row)
-        with sqlite3.connect((args.donor / '.local/motiongit/registry.sqlite3').as_uri() + '?mode=ro', uri=True) as db:
-            packages = []
-            for identity in PACKAGES:
-                original = json.loads(db.execute('SELECT data FROM packages WHERE id=?', (identity,)).fetchone()[0])
-                # Do not distribute absolute paths, private render history or local config.
-                keys = {'id', 'filename', 'bytes', 'sha256', 'name', 'version', 'template_id', 'runtime',
-                        'spec_version', 'personal', 'protection', 'verification', 'runnable', 'support',
-                        'support_note', 'workflows', 'entry_count', 'helper_version'}
-                value = {k: v for k, v in original.items() if k in keys}
-                actual = next(r for r in resource_rows if r['path'].endswith(identity + '/original.motion'))
-                if actual['sha256'] != value['sha256'] or value.get('verification') != 'verified':
-                    raise ValueError('Original package identity/verification differs: ' + identity)
-                packages.append(value)
+        packages = []
+        if package_ids:
+            with sqlite3.connect((args.donor / '.local/motiongit/registry.sqlite3').as_uri() + '?mode=ro', uri=True) as db:
+                for identity in package_ids:
+                    original = json.loads(db.execute('SELECT data FROM packages WHERE id=?', (identity,)).fetchone()[0])
+                    # Do not distribute absolute paths, private render history or local config.
+                    keys = {'id', 'filename', 'bytes', 'sha256', 'name', 'version', 'template_id', 'runtime',
+                            'spec_version', 'personal', 'protection', 'verification', 'runnable', 'support',
+                            'support_note', 'workflows', 'entry_count', 'helper_version'}
+                    value = {k: v for k, v in original.items() if k in keys}
+                    actual = next(r for r in resource_rows if r['path'].endswith(identity + '/original.motion'))
+                    if actual['sha256'] != value['sha256'] or value.get('verification') != 'verified':
+                        raise ValueError('Original package identity/verification differs: ' + identity)
+                    packages.append(value)
         resource_plan = {'schema': 1, 'id': ID, 'files': resource_rows, 'packages': packages,
                          'shared_cache': '.local/md/shared-1.2',
                          'dependency_locks': read(cache / 'dependencies.json'),
+                         'template_package_policy': 'local-personal' if package_ids else 'user-provided',
+                         'personal_credentials_included': bool(package_ids),
                          'private_media_included': False}
         archive.writestr('RESOURCES.json', core.json_bytes(resource_plan))
     release = {**version, 'source_commit': commit, 'date': '2026-10-30',
@@ -189,6 +194,8 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ('baseline-manifest', 'stage', 'donor', 'source', 'output'):
         parser.add_argument('--' + name, type=Path, required=True)
+    parser.add_argument('--include-personal-motion', action='store_true',
+                        help='Local private delivery only; includes signed personal credentials. Never upload publicly.')
     args = parser.parse_args()
     print(json.dumps(build(args), ensure_ascii=False, indent=2))
 
