@@ -45,7 +45,8 @@ def build(args):
     bundle = args.output / 'haike-update-1.2'
     bundle.mkdir()
     rows = []
-    tracked = set(git(args.source, 'ls-files').splitlines())
+    tracked = set(subprocess.check_output(['git', '-C', str(args.source), 'ls-files', '-z'])
+                  .decode('utf-8').split('\0')) - {''}
     # The frontend was built from this exact tracked frontend source. Compare
     # it with the accepted stage's source rather than copying a working build.
     accepted_commit = read(args.stage / 'RELEASE.json')['source_commit']
