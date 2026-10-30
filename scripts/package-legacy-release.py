@@ -48,11 +48,11 @@ def build(args):
     tracked = set(git(args.source, 'ls-files').splitlines())
     # The frontend was built from this exact tracked frontend source. Compare
     # it with the accepted stage's source rather than copying a working build.
-    for name in tracked:
-        if name.startswith('prototypes/haike-avatar-generator/src/'):
-            previous = args.stage / name
-            if not previous.is_file() or core.digest(previous) != core.digest(args.source / name):
-                raise ValueError('Frontend changed; rebuild an audited stage first: ' + name)
+    accepted_commit = read(args.stage / 'RELEASE.json')['source_commit']
+    frontend_diff = subprocess.run(['git', '-C', str(args.source), 'diff', '--quiet', accepted_commit,
+                                    'HEAD', '--', 'prototypes/haike-avatar-generator'], check=False)
+    if frontend_diff.returncode:
+        raise ValueError('Frontend changed or accepted source is unavailable; rebuild an audited stage first')
     candidates = {n: args.source / n for n in tracked if core.is_program_path(n)}
     candidates.update({n: args.source / n for n in [
         'Haike_video/remotion-composer/package.json', 'Haike_video/remotion-composer/package-lock.json']})

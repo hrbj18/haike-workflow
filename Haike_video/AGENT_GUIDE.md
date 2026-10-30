@@ -32,7 +32,7 @@ Do not update handoff files for ordinary questions, acknowledgements, or repeate
 - 数字人口播模板6／招商A：读 `../Haike-Videohub/agent-runbooks/数字人口播模板6-招商A.md`；模板3读 `skills/INDEX.md`；其他口播读 `../Haike-Videohub/agent-runbooks/数字人口播视频.md`。
 - Agent 制片（含模糊指令）或续做：读 `docs/CODEX_VIDEO_BATCH.md`；新任务用账号预设、明确参数优先，旧任务复用冻结规格与回执。
 - 素材解说/电影解说/直播切片解说：读 `../Haike-Videohub/agent-runbooks/素材解说视频.md`；素材决定结构，走统一队列。
-- Video analysis: read `../Haike-Videohub/agent-runbooks/视频快速理解与分层分析.md`; start with local overview, deepen by goal. Analysis does not authorize production.
+- Video analysis: read `../Haike-Videohub/agent-runbooks/视频快速理解与分层分析.md`; start with local overview, deepen by goal. Reference reconstruction or motion comparison also uses `docs/REFERENCE_UNDERSTANDING.md` for speech-linked frames, persistent objects and semantic events. Analysis does not authorize production.
 - Answer, explain, review, or report status: inspect read-only evidence and respond. Do not mutate external state.
 - Diagnose: identify the cause and evidence. Implement only when the user asks for a fix or the request clearly includes one.
 - Change or build: implement, verify in proportion to risk, fix discovered in-scope defects, and report the outcome.
@@ -84,9 +84,9 @@ For daily technology brief rules, always use `docs/handoff/DAILY_TECH_BRIEF.md`.
 
 - Search with `rg` or `rg --files` first.
 - Use `apply_patch` for source and documentation edits. Formatting and generated bulk artifacts may use their native tools.
-- The worktree may contain user changes. Inspect the relevant diff and preserve unrelated work.
+- Inspect the relevant diff; preserve unrelated user changes.
 - Do not use destructive Git or filesystem operations unless the user explicitly requests them and the exact target is verified.
-- Never expose secrets in logs, UI, tests, or responses. Store credentials only in the repository's ignored local-secret mechanism; redact values from evidence.
+- Keep credentials in ignored local-secret storage; redact logs, UI, tests, responses and evidence.
 - Prefer small, reversible changes and focused tests, then run broader tests when the change crosses contracts.
 
 ## 7. Skills and communication
@@ -98,8 +98,8 @@ For daily technology brief rules, always use `docs/handoff/DAILY_TECH_BRIEF.md`.
 - For repeated operator tasks such as three-platform publication, start at `../Haike-Videohub/agent-runbooks/README.md`; verify live account and task state before following a recorded procedure.
 - Propose new evidence and recovery steps through Videohub governance; edit shared runbooks only with explicit maintenance assignment.
 - Announce skill use and any skill-caused action or pause in commentary.
-- When tools are needed, send a concise commentary update first and keep the user informed during long work.
-- Final responses lead with the outcome, name material files with clickable absolute paths, state what was tested, and call out only genuine remaining risks.
+- Before tools, send commentary; give progress updates during long work.
+- Final: outcome, clickable absolute file paths, validation and remaining risks.
 
 ## 8. Authoritative detail sources
 
