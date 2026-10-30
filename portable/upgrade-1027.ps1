@@ -1,4 +1,4 @@
-param([string]$Target, [string]$Resources, [switch]$Check, [string]$Rollback)
+﻿param([string]$Target, [string]$Resources, [switch]$Check, [string]$Rollback)
 $ErrorActionPreference = 'Stop'
 if (-not $Target) { $Target = Read-Host '请输入原1027工作台根目录（包含02-start.cmd）' }
 $Target = $Target.Trim().Trim('"')
