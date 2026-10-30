@@ -3,6 +3,7 @@ import hashlib
 import importlib.util
 import io
 import json
+import os
 from pathlib import Path
 import tempfile
 import unittest
@@ -16,6 +17,13 @@ spec.loader.exec_module(updater)
 
 
 class GitHubOnlineUpdateTests(unittest.TestCase):
+    def test_child_python_uses_utf8_even_on_chinese_windows(self):
+        with patch.dict(os.environ, {'PYTHONHOME': 'unrelated-python', 'PYTHONIOENCODING': 'cp936'}):
+            environment = updater.python_environment()
+        self.assertNotIn('PYTHONHOME', environment)
+        self.assertEqual(environment['PYTHONUTF8'], '1')
+        self.assertEqual(environment['PYTHONIOENCODING'], 'utf-8')
+
     def feed(self):
         asset = {'url': 'https://github.com/hrbj18/haike-workflow/releases/download/v1.2.1/program.zip',
                  'size': 100, 'sha256': 'a'*64}

@@ -286,6 +286,13 @@ def modern_update(root, expected):
     raise ValueError('更新仍在等待任务或恢复连接，请查询原更新记录，不要重复提交')
 
 
+def python_environment():
+    environment = os.environ.copy()
+    environment.pop('PYTHONHOME', None)
+    environment.update(PYTHONUTF8='1', PYTHONIOENCODING='utf-8', PYTHONNOUSERSITE='1')
+    return environment
+
+
 def run(url, target=None, *, check=False, start=True):
     root = Path(target).resolve(strict=True) if target else discover()
     require(supported(root), '目标不是受支持的已安装便携工作台，不能覆盖源码仓库')
@@ -333,18 +340,20 @@ def run(url, target=None, *, check=False, start=True):
     # Full installer preflight follows immediately; only this target's idle
     # video server is stopped. Publisher and other installations keep running.
     stop_legacy(root)
-    result = subprocess.run(command, capture_output=True, encoding='utf-8', timeout=600)
+    result = subprocess.run(command, capture_output=True, encoding='utf-8', timeout=600,
+                            env=python_environment())
     if result.returncode:
         reverted = read(root / 'RELEASE.json')
         if reverted.get('source_commit') == BASE_SOURCE and not reverted.get('version'):
             subprocess.run([str(root / 'runtime/python/python.exe'), '-s', str(root / 'portable/portable.py'),
-                'start', '--no-browser'], capture_output=True, timeout=240)
+                'start', '--no-browser'], capture_output=True, timeout=240, env=python_environment())
         raise ValueError('升级未完成，原程序或备份已保留：' + result.stderr[-1200:])
     output = json.loads(result.stdout)
     require(output.get('ok') and read(root / 'RELEASE.json')['version'] == feed['version'], '未确认安装结果')
     if start:
         started = subprocess.run([str(root / 'runtime/python/python.exe'), '-s', str(root / 'portable/portable.py'),
-            'start', '--no-browser'], capture_output=True, encoding='utf-8', timeout=240)
+            'start', '--no-browser'], capture_output=True, encoding='utf-8', timeout=240,
+            env=python_environment())
         require(started.returncode == 0, '程序已升级，但启动未完成，请保留日志并检查原目录启动器')
         output['url'] = running_base(root) + '/avatar'
     output['mode'] = 'github-online-bootstrap'
