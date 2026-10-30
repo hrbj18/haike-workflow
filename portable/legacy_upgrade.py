@@ -125,6 +125,13 @@ def archive_manifest(archive, name):
     return json.loads(archive.read(name))
 
 
+def find_resources(bundle, filename):
+    require(len(_parts(filename)) == 1, '模板ZIP文件名无效')
+    # Windows "Extract All" can add a second enclosing directory.
+    candidates = [bundle / filename, bundle.parent / filename, bundle.parent.parent / filename]
+    return next((path for path in candidates if path.is_file()), candidates[1])
+
+
 def data_for(row, bundle, target, archive):
     if row.get('payload'):
         return safe_path(bundle, row['payload']).read_bytes()
@@ -432,7 +439,7 @@ def main():
                 result = restore(target, args.rollback, automatic=read(args.rollback / 'receipt.json')['status'] in {'installing', 'rollback_failed'})
             else:
                 plan = read(bundle / 'UPGRADE.json')
-                resource = args.resources or bundle.parent / plan['resources']['filename']
+                resource = args.resources or find_resources(bundle, plan['resources']['filename'])
                 result = apply(bundle, target, resource, check=args.check)
         print(json.dumps(result, ensure_ascii=False, indent=2))
     except (ValueError, OSError, KeyError, zipfile.BadZipFile, subprocess.SubprocessError) as exc:

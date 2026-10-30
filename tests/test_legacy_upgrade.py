@@ -85,6 +85,12 @@ class LegacyUpgradeTests(unittest.TestCase):
         self.assertTrue(self.install(check=True)['check_only'])
         self.assertFalse((self.target / 'VERSION.json').exists())
 
+    def test_windows_extract_all_extra_folder_finds_sibling_resource_zip(self):
+        nested = self.root / 'extracted' / 'haike-update-1.2'
+        self.assertEqual(upgrade.find_resources(nested, self.resource.name), self.resource)
+        with self.assertRaises(ValueError):
+            upgrade.find_resources(nested, '../templates.zip')
+
     def test_modified_old_file_rejected_before_any_write(self):
         self.file('Haike_video/backlot/legacy_test.py', b'custom user edit')
         with self.assertRaisesRegex(ValueError, '本地修改'):
