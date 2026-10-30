@@ -10,10 +10,13 @@ from unittest.mock import patch
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / 'portable'))
+core_spec = importlib.util.spec_from_file_location('release_core', ROOT / 'portable/app_update.py')
+core = importlib.util.module_from_spec(core_spec)
+core_spec.loader.exec_module(core)
 spec = importlib.util.spec_from_file_location('legacy_upgrade', ROOT / 'portable/legacy_upgrade.py')
 upgrade = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(upgrade)
+with patch.dict(sys.modules, {'release_core': core}):
+    spec.loader.exec_module(upgrade)
 
 
 class LegacyUpgradeTests(unittest.TestCase):

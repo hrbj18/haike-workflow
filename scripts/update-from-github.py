@@ -313,11 +313,19 @@ def run(url, target=None, *, check=False, start=True):
             and plan['resources']['sha256'] == bootstrap['resources']['sha256'], '联网清单与已验证程序包不一致')
     # Execute only the verified archive's own preflight before stopping the
     # running old server; apply() repeats all checks under its transaction lock.
-    sys.path.insert(0, str(bundle))
-    spec = importlib.util.spec_from_file_location('haike_online_installer', bundle / 'legacy_upgrade.py')
-    installer = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(installer)
-    installer.preflight(bundle, root, resources, require_stopped=False)
+    previous_path = list(sys.path)
+    previous_core = sys.modules.pop('release_core', None)
+    try:
+        sys.path.insert(0, str(bundle))
+        spec = importlib.util.spec_from_file_location('haike_online_installer', bundle / 'legacy_upgrade.py')
+        installer = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(installer)
+        installer.preflight(bundle, root, resources, require_stopped=False)
+    finally:
+        sys.path[:] = previous_path
+        sys.modules.pop('release_core', None)
+        if previous_core is not None:
+            sys.modules['release_core'] = previous_core
     command = [str(root / 'runtime/python/python.exe'), '-s', str(bundle / 'legacy_upgrade.py'),
                '--target', str(root), '--resources', str(resources)]
     # Full installer preflight follows immediately; only this target's idle

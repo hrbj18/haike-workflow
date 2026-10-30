@@ -315,8 +315,11 @@ def diagnose(full=False) -> dict:
         raise ValueError("运行环境组件清单无效")
     # The already-public v1.0 online profile predates optional_components and
     # explicitly omits the optional local Whisper download during setup.
-    if read_json("RELEASE.json", {}).get("distribution") == "online":
-        components.setdefault("whisper_small", False)
+    models = list(local_path("runtime/models/whisper-small").glob("*/model.bin"))
+    legacy_online = (read_json("RELEASE.json", {}).get("distribution") == "online"
+                     and 'whisper_small' not in components)
+    if legacy_online:
+        components['whisper_small'] = bool(models)
     required = ["runtime/python/python.exe", "runtime/python/pythonw.exe", "runtime/node/node.exe",
                 "runtime/ffmpeg/bin/ffmpeg.exe", "runtime/ffmpeg/bin/ffprobe.exe", BROWSER,
                 "Haike_video/backlot/server.py", "Haike_video/backlot/ui/avatar-generator/index.html",
@@ -328,7 +331,6 @@ def diagnose(full=False) -> dict:
     missing = [name for name in required if not local_path(name).is_file()]
     if missing:
         raise RuntimeError("发行包缺少必要文件：" + ", ".join(missing[:8]))
-    models = list(local_path("runtime/models/whisper-small").glob("*/model.bin"))
     if components.get("whisper_small", True) and (len(models) != 1 or not all((models[0].parent / n).is_file()
                                  for n in ("config.json", "tokenizer.json", "vocabulary.txt"))):
         raise RuntimeError("离线 Whisper-small 模型不完整")
@@ -356,7 +358,7 @@ def diagnose(full=False) -> dict:
     result = {"ok": True, "command": "diagnose", "root": str(ROOT), "full": full,
               "checks": checks, "file_count": integrity() if full else None,
               "optional_components": {name: components.get(name, True) for name in ("hyperframes", "whisper_small")},
-              "models": {"whisper_small": "loadable" if components.get("whisper_small", True) else "not_installed", "clean_install_default_asr": "gateway"},
+              "models": {"whisper_small": "loadable" if components.get("whisper_small", True) else "optional_not_installed" if legacy_online else "not_installed", "clean_install_default_asr": "gateway"},
               "browsers": {"system_chrome": system_chrome() is not None,
                            "bundled_interactive_browser": bundled_login_browser() is not None},
               "network_install": False, "physical_new_machine_tested": False}
