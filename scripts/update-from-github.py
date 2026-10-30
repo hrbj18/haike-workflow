@@ -229,6 +229,11 @@ def idle(root):
             if db.execute("SELECT 1 FROM sqlite_master WHERE name='studio_audio_operations'").fetchone():
                 require(not db.execute('SELECT 1 FROM studio_audio_operations WHERE attempts>0 AND outcome IS NULL LIMIT 1').fetchone(),
                         '音色操作结果待确认，请核对原操作后更新')
+    audio = safe(root, 'Haike_video/.backlot/audio-center-internal')
+    for file in audio.glob('*/operations/*/operation.json'):
+        operation = read(safe(root, file.relative_to(root).as_posix()))
+        require(operation.get('status') in {'succeeded', 'failed'},
+                '音色操作正在执行或结果待确认，请先核对原操作后更新')
 
 
 def stop_legacy(root):
@@ -267,15 +272,29 @@ def running_base(root):
 
 
 def modern_update(root, expected):
-    base = running_base(root)
-    snapshot = local(base, '/api/studio/app-update/check', {})
-    require(snapshot['update'].get('version') == expected and snapshot['update']['status'] == 'available',
-            snapshot['update'].get('message', '此版本没有兼容补丁'))
-    local(base, '/api/studio/app-update/install', {'version': expected, 'confirmed': True})
+    try:
+        base = running_base(root)
+    except ValueError:
+        idle(root)
+        ensure_no_pending_update(root)
+        launch(root)
+        base = running_base(root)
+    snapshot = local(base, '/api/studio/app-update')
+    operation = snapshot.get('operation', {})
+    if operation.get('status') not in {'downloading', 'waiting', 'installing', 'restarting'}:
+        snapshot = local(base, '/api/studio/app-update/check', {})
+        require(snapshot['update'].get('version') == expected and snapshot['update']['status'] == 'available',
+                snapshot['update'].get('message', '此版本没有兼容补丁'))
+        snapshot = local(base, '/api/studio/app-update/install', {'version': expected, 'confirmed': True})
+        operation = snapshot['operation']
+    require(operation.get('target_version') == expected and operation.get('id'),
+            '已有其他更新任务，请先核对原更新记录')
+    identity = operation['id']
     deadline = time.monotonic() + 2100
     while time.monotonic() < deadline:
         try:
             snapshot = local(base, '/api/studio/app-update')
+            require(snapshot.get('operation', {}).get('id') == identity, '更新记录已变化，请核对原更新任务')
             state = snapshot.get('operation', {}).get('status')
             require(state not in {'failed', 'rolled_back', 'cancelled'}, snapshot.get('operation', {}).get('message', '更新未完成'))
             if state == 'complete' and snapshot['current'].get('version') == expected:
@@ -291,6 +310,39 @@ def python_environment():
     environment.pop('PYTHONHOME', None)
     environment.update(PYTHONUTF8='1', PYTHONIOENCODING='utf-8', PYTHONNOUSERSITE='1')
     return environment
+
+
+def ensure_no_pending_update(root):
+    directory = safe(root, '.local/app-updates')
+    state = safe(root, '.local/app-updates/state.json')
+    if state.is_file():
+        require(read(state).get('operation', {}).get('status') not in
+                {'downloading', 'waiting', 'installing', 'restarting'}, '已有更新任务，请查询原更新记录，不要重复启动')
+    for file in directory.glob('*/receipt.json'):
+        require(read(safe(root, file.relative_to(root).as_posix())).get('status') in {'complete', 'restored', 'rolled_back'},
+                '上次更新未恢复，请先按回执恢复备份')
+
+
+def launch(root):
+    result = subprocess.run([str(root / 'runtime/python/python.exe'), '-s', str(root / 'portable/portable.py'),
+        'start', '--no-browser'], capture_output=True, encoding='utf-8', timeout=240, env=python_environment())
+    require(result.returncode == 0, '本副本启动未完成，请查看原目录启动日志')
+
+
+def finish_bootstrap_start(root, output, installer):
+    try:
+        launch(root)
+        output['url'] = running_base(root) + '/avatar'
+    except (ValueError, OSError, subprocess.SubprocessError) as startup:
+        try:
+            stop_legacy(root)
+            with installer.lock(root):
+                installer.restore(root, Path(output['backup']))
+            launch(root)
+            running_base(root)
+        except (ValueError, OSError, subprocess.SubprocessError) as recovery:
+            raise ValueError('正式启动未完成，恢复尚未确认，请保留备份 ' + output['backup']) from recovery
+        raise ValueError('新版本正式启动失败，已恢复并启动原版本；备份：' + output['backup']) from startup
 
 
 def run(url, target=None, *, check=False, start=True):
@@ -351,11 +403,7 @@ def run(url, target=None, *, check=False, start=True):
     output = json.loads(result.stdout)
     require(output.get('ok') and read(root / 'RELEASE.json')['version'] == feed['version'], '未确认安装结果')
     if start:
-        started = subprocess.run([str(root / 'runtime/python/python.exe'), '-s', str(root / 'portable/portable.py'),
-            'start', '--no-browser'], capture_output=True, encoding='utf-8', timeout=240,
-            env=python_environment())
-        require(started.returncode == 0, '程序已升级，但启动未完成，请保留日志并检查原目录启动器')
-        output['url'] = running_base(root) + '/avatar'
+        finish_bootstrap_start(root, output, installer)
     output['mode'] = 'github-online-bootstrap'
     return output
 
