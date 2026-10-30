@@ -90,6 +90,20 @@ class GitHubOnlineUpdateTests(unittest.TestCase):
                     updater.extract_program(root, archive)
                 self.assertFalse((root / 'outside.py').exists())
 
+    def test_windows_extraction_prefix_leaves_room_for_nested_source_files(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory); archive = root / 'program.zip'
+            name = 'haike-update-1.2/payload/Haike_video/backlot/studio_motion_console_session.py'
+            with zipfile.ZipFile(archive, 'w') as zipped:
+                zipped.writestr(name, b'program')
+                zipped.writestr('haike-update-1.2/legacy_upgrade.py', b'installer')
+                zipped.writestr('haike-update-1.2/UPGRADE.json', b'{}')
+            bundle = updater.extract_program(root, archive)
+            relative = bundle.relative_to(root).parts
+            self.assertEqual(relative[:3], ('.local', 'gu', 'b'))
+            self.assertLessEqual(len(relative[3]), 21)
+            self.assertEqual((bundle / 'payload/Haike_video/backlot/studio_motion_console_session.py').read_bytes(), b'program')
+
     def test_installed_current_version_does_not_download_or_stop_services(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

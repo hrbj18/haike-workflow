@@ -158,7 +158,9 @@ def fetch_asset(root, asset):
 
 
 def extract_program(root, archive):
-    directory = safe(root, '.local/github-updates/bundles/' + sha(archive) + '-' + uuid4().hex)
+    # Keep extraction paths short on Windows; the nested source filenames can
+    # otherwise exceed MAX_PATH even under a normal installation directory.
+    directory = safe(root, '.local/gu/b/' + sha(archive)[:12] + '-' + uuid4().hex[:8])
     directory.mkdir(parents=True, exist_ok=False)
     with zipfile.ZipFile(archive) as zipped:
         require(len(zipped.infolist()) < 20000 and sum(x.file_size for x in zipped.infolist()) < 100_000_000,
