@@ -81,7 +81,7 @@ class PortableTests(unittest.TestCase):
         run.assert_not_called()
         self.assertIn('.local/md/console-v1',result['venvs'])
         cfg=(self.root/'.local/md/console-v1/.venv/pyvenv.cfg').read_text()
-        self.assertIn(str(self.root/'runtime/python'),cfg)
+        self.assertIn(str((self.root/'runtime/python').resolve()),cfg)
         self.assertNotIn('old-machine',cfg)
 
     def test_invalid_user_override_fails_and_preserves_file(self):

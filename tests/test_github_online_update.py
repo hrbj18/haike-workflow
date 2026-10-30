@@ -107,7 +107,7 @@ class GitHubOnlineUpdateTests(unittest.TestCase):
                 zipped.writestr('haike-update-1.2/legacy_upgrade.py', b'installer')
                 zipped.writestr('haike-update-1.2/UPGRADE.json', b'{}')
             bundle = updater.extract_program(root, archive)
-            relative = bundle.relative_to(root).parts
+            relative = bundle.relative_to(root.resolve()).parts
             self.assertEqual(relative[:3], ('.local', 'gu', 'b'))
             self.assertLessEqual(len(relative[3]), 21)
             self.assertEqual((bundle / 'payload/Haike_video/backlot/studio_motion_console_session.py').read_bytes(), b'program')

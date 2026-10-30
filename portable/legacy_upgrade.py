@@ -317,7 +317,7 @@ def restore(target, backup, *, automatic=False):
     target, backup = target.resolve(), backup.resolve(strict=True)
     require(backup.is_relative_to(safe_path(target, '.local/release-updates')), '回退记录不属于此安装')
     receipt = read(backup / 'receipt.json')
-    require(receipt['target'] == str(target), '回退目录身份不匹配')
+    require(Path(receipt['target']).resolve(strict=True) == target, '回退目录身份不匹配')
     if receipt['status'] == 'restored':
         return {'ok': True, 'already_restored': True}
     stopped(target)

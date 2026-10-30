@@ -34,7 +34,7 @@ class TemplateAssetsTests(unittest.TestCase):
             shutil.copytree(first, second)
             self.assertEqual(materialize(second), 2)
             moved = json.loads((second / '.local/motion-console/assets/proof.json').read_bytes())
-            self.assertEqual(Path(moved['asset']['path']), second / '.local/motion-console/assets/sample.bin')
+            self.assertEqual(Path(moved['asset']['path']), second.resolve() / '.local/motion-console/assets/sample.bin')
             self.assertEqual((second / '.local/user-preset.json').read_bytes(), b'user-owned')
 
     def test_invalid_input_leaves_all_generated_documents_unchanged(self):

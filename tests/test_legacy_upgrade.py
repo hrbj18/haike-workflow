@@ -88,6 +88,16 @@ class LegacyUpgradeTests(unittest.TestCase):
         self.assertTrue(self.install(check=True)['check_only'])
         self.assertFalse((self.target / 'VERSION.json').exists())
 
+    def test_rollback_accepts_same_installation_through_canonical_path_alias(self):
+        (self.root / 'alias-parent').mkdir()
+        alias = self.root / 'alias-parent/../old'
+        result = upgrade.apply(self.bundle, alias, self.resource,
+                               health_check=lambda _: {'ok': True, 'templates': []})
+        restored = upgrade.restore(self.target.resolve(), Path(result['backup']))
+        self.assertTrue(restored['ok'])
+        self.assertFalse((self.target / 'VERSION.json').exists())
+        self.assertEqual((self.target / 'Haike_video/backlot/legacy_test.py').read_bytes(), b'old program')
+
     def test_windows_extract_all_extra_folder_finds_sibling_resource_zip(self):
         nested = self.root / 'extracted' / 'haike-update-1.2'
         self.assertEqual(upgrade.find_resources(nested, self.resource.name), self.resource)
