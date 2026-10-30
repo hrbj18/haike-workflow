@@ -1,0 +1,45 @@
+海客工作台 1.2 · 从1027稳定版（1.1）直接升级
+
+一、这次需要的两个包
+haike-update-1.2.zip：累计程序更新、模板实现、已编译界面和独立升级器。
+haike-templates-1.2.zip：三份原始.motion及新增离线执行依赖，程序包会自动读取它。
+无需下载完整大项目，无需重新安装FFmpeg、Python、Node或浏览器。
+
+二、安装步骤
+1. 两个ZIP放在同一个文件夹。只解压haike-update-1.2.zip，保留模板ZIP原文件。
+   目录示例：下载目录/haike-templates-1.2.zip
+             下载目录/haike-update-1.2/upgrade.cmd
+2. 完成或暂停目标副本的制作任务，关闭目标工作台后台服务。其他工作台副本继续运行。
+3. 双击解压出来的haike-update-1.2/upgrade.cmd，输入原1027工作台根目录。
+   应选里面有02-start.cmd、Haike_video和runtime的文件夹，不要选源码仓库或ZIP。
+4. 出现ok:true、version:1.2.0后，使用原目录02-start.cmd启动，浏览器Ctrl+F5刷新。
+   4:5的科技控制台使用已验收方框人物；另两套沿用已验收版本。
+
+三、模板首次使用
+入口：选择模板 → MotionGit模板，或工作台/motiongit?section=templates。
+资源包不包含制作机器的私人头像、录音、账号和历史作品。
+首次升级的电脑会显示三套模板“待配置本机素材”；已有有效绑定的电脑保留原配置。
+请让项目Agent按Haike_video/docs/MOTION_TEMPLATE_STUDIO.md及对应模板README，
+用本用户合法素材绑定默认输入；共享离线依赖目录为.local/md/shared-1.2。
+此版本仍需逐条检查文案、素材时长及画面，不能保证任意脚本或任意新模板自动适配。
+
+四、检查与回退
+仅检查不安装（PowerShell）：
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\upgrade-1027.ps1 -Target "旧版根目录" -Check
+模板ZIP不在上级目录时，再加 -Resources "模板ZIP完整路径"。
+
+升级前先校验两包、旧版身份、将被替换文件和复用依赖；不匹配会停止。
+安装后会用本目录临时端口验证启动、版本、三模板目录和页面，然后关闭临时检查服务。
+安装或启动检查失败会尝试自动恢复。若提示中断，请保留回执和日志，先执行回退。
+备份在目标根目录.local/release-updates/，成功回执会显示具体backup路径。
+关闭目标后台后，使用解压包中的入口回退：
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\upgrade-1027.ps1 -Target "旧版根目录" -Rollback "回执backup路径"
+升级后又手工改过的程序或模板登记会阻止回退，避免覆盖后来的修改。
+
+五、适用范围
+只支持用户提供的20261027原始完整便携包（对外1.1）；不需要先装内部1.1.x补丁。
+若本地程序已被修改或属于其他版本，先核对差异，不要强行覆盖。
+用户配置、Key、Cookie、作品和原运行时不随更新替换；安装本身不产生云费用和发布任务。
+本机真实旧包隔离升级验收与另一台物理电脑、云账号制作/发布验收分别记录。
+源码的规范版本号为1.2.0，界面/对外名称为1.2；1027原ZIP及其SHA不改变。
+后续纯程序修订使用独立程序更新包；只有模板原包或资源变化时才需要新的资源包。

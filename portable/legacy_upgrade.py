@@ -15,9 +15,12 @@ import os
 from pathlib import Path
 import re
 import shutil
+import socket
 import sqlite3
 import subprocess
 import sys
+import time
+import urllib.request
 import zipfile
 
 try:
@@ -221,7 +224,7 @@ def registry_records(target, packages):
         value = dict(package)
         value.update(path=str(safe_path(target, '.local/motiongit/packages/' + value['id'] + '/original.motion')),
                      helper=str(safe_path(target, '.local/motiongit/tools/1.0.0-rc.50/motion.mjs')),
-                     dependency_cache=CACHE.rstrip('/'))
+                     dependency_cache=CACHE.rstrip('/'), offline_dependencies=True)
         before = None
         if path.is_file():
             with database(path, readonly=True) as db:
@@ -252,7 +255,53 @@ def probe(target):
                             cwd=target / 'Haike_video', env=environment,
                             capture_output=True, text=True, encoding='utf-8', timeout=120)
     require(result.returncode == 0, '升级后模块/模板/依赖检查失败：' + result.stderr[-1800:])
-    return json.loads(result.stdout.strip().splitlines()[-1])
+    summary = json.loads(result.stdout.strip().splitlines()[-1])
+    with socket.socket() as sock:
+        sock.bind(('127.0.0.1', 0))
+        port = sock.getsockname()[1]
+    environment['PATH'] = os.pathsep.join(str(target / p) for p in (
+        'runtime/python', 'runtime/node', 'runtime/ffmpeg/bin')) + os.pathsep + environment.get('PATH', '')
+    environment.update(BACKLOT_NO_BROWSER='1', BACKLOT_DETACHED='1', VIDEOHUB_ROOT=str(target),
+        FFMPEG_BINARY=str(target / 'runtime/ffmpeg/bin/ffmpeg.exe'),
+        FFPROBE_BINARY=str(target / 'runtime/ffmpeg/bin/ffprobe.exe'))
+    opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
+    def get(path):
+        with opener.open(f'http://127.0.0.1:{port}' + path, timeout=2) as response:
+            return response.read()
+    log = safe_path(target, '.local/release-updates/startup-probe.log')
+    with log.open('ab') as stream:
+        child = subprocess.Popen([str(target / 'runtime/python/python.exe'), '-s', '-m',
+            'backlot', 'serve', '--port', str(port)], cwd=target / 'Haike_video', env=environment,
+            stdout=stream, stderr=stream, stdin=subprocess.DEVNULL,
+            creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
+        try:
+            deadline = time.monotonic() + 45
+            health = None
+            while time.monotonic() < deadline:
+                require(child.poll() is None, '升级后工作台启动失败，已自动回退；请查看本机启动检查日志')
+                try:
+                    health = json.loads(get('/api/health'))
+                    if (Path(health.get('workspace', '')).resolve() == target
+                            and health.get('version') == '1.2.0' and health.get('pid') == child.pid):
+                        break
+                    health = None
+                except (OSError, ValueError):
+                    pass
+                time.sleep(.25)
+            require(health is not None, '升级后工作台启动超时，已自动回退')
+            live = json.loads(get('/api/studio/motion-templates/catalog'))
+            require(len([x for x in live['templates'] if x['id'].startswith('motiongit-')]) >= 3,
+                    '升级后三模板入口不完整')
+            require(b'<html' in get('/avatar').lower(), '升级后页面无法加载')
+            summary.update(http_startup=True, http_workspace=str(target), http_version=health['version'])
+        finally:
+            if child.poll() is None:
+                child.terminate()
+                try:
+                    child.wait(timeout=15)
+                except subprocess.TimeoutExpired:
+                    child.kill(); child.wait(timeout=10)
+    return summary
 
 
 def restore(target, backup, *, automatic=False):

@@ -163,6 +163,7 @@ def build(args):
                          ('portable/app_update.py', 'release_core.py'),
                          ('portable/upgrade-1027.ps1', 'upgrade-1027.ps1')]:
         shutil.copyfile(args.source / source, bundle / name)
+    shutil.copyfile(args.source / 'docs/releases/1.2-使用说明.txt', bundle / '使用说明.txt')
     (bundle / 'upgrade.cmd').write_text('@echo off\ncd /d "%~dp0"\npowershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0upgrade-1027.ps1" %*\npause\n', encoding='ascii')
     update_zip = args.output / 'haike-update-1.2.zip'
     with zipfile.ZipFile(update_zip, 'x', compression=zipfile.ZIP_DEFLATED, compresslevel=6) as archive:
