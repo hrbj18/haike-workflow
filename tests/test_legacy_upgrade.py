@@ -88,6 +88,40 @@ class LegacyUpgradeTests(unittest.TestCase):
         self.assertTrue(self.install(check=True)['check_only'])
         self.assertFalse((self.target / 'VERSION.json').exists())
 
+    def modern_base(self):
+        identity = 'base-1-2-1-' + 'c' * 12
+        release = {**self.plan['release'], 'version': '1.2.1', 'source_commit': 'c' * 40}
+        self.file('RELEASE.json', upgrade.json_bytes(release))
+        self.plan['release']['version'] = '1.2.2'
+        self.plan['modern_bases'] = [{'id': identity, 'version': '1.2.1', 'source_commit': 'c' * 40, 'required_files': []}]
+        for row in self.plan['files'] + self.resources['files']:
+            row['before_by_base'] = {identity: row.get('before_sha256')}
+        with zipfile.ZipFile(self.resource, 'w') as archive:
+            archive.writestr('blobs/test', b'new cache file')
+            archive.writestr('RESOURCES.json', upgrade.json_bytes(self.resources))
+        self.plan['resources']['sha256'] = upgrade.digest(self.resource)
+        self.save_plan()
+        return release
+
+    def test_explicit_modern_migration_preserves_data_and_rolls_back(self):
+        previous = self.modern_base()
+        before = (self.target / 'RELEASE.json').read_bytes()
+        result = self.install()
+        self.assertEqual(upgrade.read(self.target / 'RELEASE.json')['upgraded_from'], '1.2.1')
+        self.assertEqual((self.target / 'Haike_video/config.local.yaml').read_bytes(), b'private-config-sentinel')
+        upgrade.restore(self.target, Path(result['backup']))
+        self.assertEqual((self.target / 'RELEASE.json').read_bytes(), before)
+
+    def test_unknown_modern_build_and_missing_per_file_baseline_are_rejected(self):
+        release = self.modern_base()
+        self.file('RELEASE.json', upgrade.json_bytes({**release, 'source_commit': 'd' * 40}))
+        with self.assertRaisesRegex(ValueError, '未支持当前构建'):
+            self.install()
+        self.file('RELEASE.json', upgrade.json_bytes(release))
+        self.plan['files'][0].pop('before_by_base'); self.save_plan()
+        with self.assertRaisesRegex(ValueError, '基线校验'):
+            self.install()
+
     def test_rollback_accepts_same_installation_through_canonical_path_alias(self):
         (self.root / 'alias-parent').mkdir()
         alias = self.root / 'alias-parent/../old'

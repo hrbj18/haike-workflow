@@ -1,0 +1,862 @@
+{
+  "schema_version": 1,
+  "standard_version": "video-template-v1",
+  "template_id": "quest-vlog-v1",
+  "template_version": "v001",
+  "template_type": "custom",
+  "spec_kind": "implementation",
+  "stage": "specification",
+  "authority": {
+    "runbook": "README.md",
+    "implementation_paths": [
+      "QuestVlog.tsx",
+      "Mechanisms.tsx",
+      "MotionState.ts",
+      "layout.json",
+      "../index.tsx",
+      "../types.ts",
+      "../../../backlot/quest_vlog.py",
+      "../../../backlot/studio_hum_production.py"
+    ],
+    "parameter_source": "layout.json"
+  },
+  "canvas": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "duration_seconds": 30.6,
+    "clock": "Example extent only. Each new film uses the full PCM sample clock and a 0–2 second tail through hum-production-v1; no stretch. Landscape is 1920x1080/30fps with independent layout.",
+    "coordinate_system": "top_left_pixels"
+  },
+  "narrative": {
+    "purpose": "Reference-derived blue/white/black gamified talking-head explanations using own assets.",
+    "information_hierarchy": [
+      "Complete own narration",
+      "Semantic graphic or reviewed footage",
+      "Optional same-clock presenter",
+      "Readable captions",
+      "Own brand and progress"
+    ],
+    "structure": [
+      "Choose mechanisms by argument; no mandatory fixed chapter count.",
+      "Actual speech phrases supply anchors; cues are explicit local authored frames, not fabricated ASR timestamps.",
+      "Optional portrait path evidence uses scene.mediaId in its reserved right window. The same graph, nodes, cues and background handoff remain visible; footage must not replace the mechanism. Portrait path cards use layout.json pathPresenter canvas coordinates to avoid left node labels and bottom captions."
+    ]
+  },
+  "scenes": [
+    {
+      "id": "episode",
+      "start": 0,
+      "end": 30.6,
+      "purpose": "Example full voice clock; actual contiguous per-film scenes are frozen in props.scenes.",
+      "element_ids": [
+        "background",
+        "chapter",
+        "headline",
+        "mechanism",
+        "footage",
+        "presenter",
+        "captions",
+        "identity",
+        "master"
+      ],
+      "variant": "quest"
+    }
+  ],
+  "assets": [],
+  "elements": [
+    {
+      "id": "background",
+      "type": "background",
+      "role": "Blue, white or ink per scene, full bleed.",
+      "parent_id": null,
+      "z_index": 0,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Blue, white or ink per scene, full bleed."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1080,
+          1920
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json and QuestVlog.tsx; landscape uses its independent coordinate set"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 30.6
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Visible only in the owning scene/clip interval; final values held until exit."
+        },
+        {
+          "id": "outside",
+          "visible": false,
+          "description": "Hidden outside declared scene/clip windows."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "Frame-based deterministic evaluation, no random live clock."
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "Actual rendered states",
+          "method": "View entry, intermediate, reading hold and exit plus frame-clock source mapping.",
+          "pass_condition": "No clipping, wrong source, missing state, duplicate audio or unintended source restart."
+        }
+      ]
+    },
+    {
+      "id": "chapter",
+      "type": "text",
+      "role": "Chapter label and local scene index.",
+      "parent_id": null,
+      "z_index": 2,
+      "content": {
+        "mode": "editable",
+        "binding": "chapter-input",
+        "asset_id": null,
+        "description": "Chapter label and local scene index."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          72,
+          210,
+          936,
+          50
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json and QuestVlog.tsx; landscape uses its independent coordinate set",
+          "font": "body.ttf",
+          "font_size": 23,
+          "max_lines": 1,
+          "overflow": "reject in source preflight"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 30.6
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Visible only in the owning scene/clip interval; final values held until exit."
+        },
+        {
+          "id": "outside",
+          "visible": false,
+          "description": "Hidden outside declared scene/clip windows."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "Frame-based deterministic evaluation, no random live clock."
+      ],
+      "replaceable": [
+        "props.scenes[].quest.chapter"
+      ],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "Actual rendered states",
+          "method": "View entry, intermediate, reading hold and exit plus frame-clock source mapping.",
+          "pass_condition": "No clipping, wrong source, missing state, duplicate audio or unintended source restart."
+        }
+      ]
+    },
+    {
+      "id": "headline",
+      "type": "text",
+      "role": "Editable two-line headline; measured font widths.",
+      "parent_id": null,
+      "z_index": 3,
+      "content": {
+        "mode": "editable",
+        "binding": "headline-input",
+        "asset_id": null,
+        "description": "Editable two-line headline; measured font widths."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          72,
+          286,
+          936,
+          220
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json and QuestVlog.tsx; landscape uses its independent coordinate set",
+          "font": "display.ttf",
+          "font_size": 110,
+          "max_lines": 2,
+          "overflow": "reject in source preflight"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 30.6
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Visible only in the owning scene/clip interval; final values held until exit."
+        },
+        {
+          "id": "outside",
+          "visible": false,
+          "description": "Hidden outside declared scene/clip windows."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "Frame-based deterministic evaluation, no random live clock."
+      ],
+      "replaceable": [
+        "props.scenes[].title"
+      ],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "Actual rendered states",
+          "method": "View entry, intermediate, reading hold and exit plus frame-clock source mapping.",
+          "pass_condition": "No clipping, wrong source, missing state, duplicate audio or unintended source restart."
+        }
+      ]
+    },
+    {
+      "id": "mechanism",
+      "type": "graphic",
+      "role": "Fifteen implemented controls: typed question then reviewed proof photos; stable-ID rank permutations/strikes; shared battle panel; same-root branch unlock; scan/editor illustrations; persistent path with explicit reset and skipped-node semantics; existing titles/tasks/media/books/world/clear. Actual verified subset is documented in VALIDATION.md.",
+      "parent_id": null,
+      "z_index": 4,
+      "content": {
+        "mode": "editable",
+        "binding": "mechanism-input",
+        "asset_id": null,
+        "description": "Typed items, HP bars, quest cards, unlock nodes, timeline, book stack or completion checks. Explicit local cue frames retain object identity within the scene."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          72,
+          520,
+          936,
+          570
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json and QuestVlog.tsx; landscape uses its independent coordinate set"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 30.6
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Visible only in the owning scene/clip interval; final values held until exit."
+        },
+        {
+          "id": "outside",
+          "visible": false,
+          "description": "Hidden outside declared scene/clip windows."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "Frame-based deterministic evaluation, no random live clock."
+      ],
+      "replaceable": [
+        "props.scenes[].quest"
+      ],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "Actual rendered states",
+          "method": "View entry, intermediate, reading hold and exit plus frame-clock source mapping.",
+          "pass_condition": "No clipping, wrong source, missing state, duplicate audio or unintended source restart."
+        }
+      ]
+    },
+    {
+      "id": "footage",
+      "type": "video",
+      "role": "Reviewed original scene video, muted, contain, source offset at original speed. Optional portrait path footage stays beside the continuous graph in layout.json pathMedia content coordinates; actual-font label capacity is checked. Text inside footage remains embedded.",
+      "parent_id": null,
+      "z_index": 5,
+      "content": {
+        "mode": "editable",
+        "binding": "footage-input",
+        "asset_id": null,
+        "description": "Reviewed original scene video, muted, contain, source offset at original speed. Text inside footage remains embedded."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          72,
+          520,
+          936,
+          520
+        ],
+        "fit": "contain",
+        "clip": "self",
+        "style": {
+          "authority": "layout.json and QuestVlog.tsx; landscape uses its independent coordinate set"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 30.6
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Visible only in the owning scene/clip interval; final values held until exit."
+        },
+        {
+          "id": "outside",
+          "visible": false,
+          "description": "Hidden outside declared scene/clip windows."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "Frame-based deterministic evaluation, no random live clock."
+      ],
+      "replaceable": [
+        "props.media"
+      ],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "Actual rendered states",
+          "method": "View entry, intermediate, reading hold and exit plus frame-clock source mapping.",
+          "pass_condition": "No clipping, wrong source, missing state, duplicate audio or unintended source restart."
+        }
+      ]
+    },
+    {
+      "id": "presenter",
+      "type": "video",
+      "role": "One globally clocked source node; card/circle morph, actual clip interval and visibility modes. No loop/freeze.",
+      "parent_id": null,
+      "z_index": 20,
+      "content": {
+        "mode": "editable",
+        "binding": "presenter-input",
+        "asset_id": null,
+        "description": "One globally clocked source node; card/circle morph, actual clip interval and visibility modes. No loop/freeze."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          370,
+          1170,
+          340,
+          340
+        ],
+        "fit": "contain",
+        "clip": "self",
+        "style": {
+          "authority": "layout.json and QuestVlog.tsx; landscape uses its independent coordinate set"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 30.6
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Visible only in the owning scene/clip interval; final values held until exit."
+        },
+        {
+          "id": "outside",
+          "visible": false,
+          "description": "Hidden outside declared scene/clip windows."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "Frame-based deterministic evaluation, no random live clock."
+      ],
+      "replaceable": [
+        "props.presenterClips"
+      ],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "Actual rendered states",
+          "method": "View entry, intermediate, reading hold and exit plus frame-clock source mapping.",
+          "pass_condition": "No clipping, wrong source, missing state, duplicate audio or unintended source restart."
+        }
+      ]
+    },
+    {
+      "id": "captions",
+      "type": "text",
+      "role": "Actual measured speech captions, independent of diagram labels.",
+      "parent_id": null,
+      "z_index": 40,
+      "content": {
+        "mode": "editable",
+        "binding": "captions-input",
+        "asset_id": null,
+        "description": "Actual measured speech captions, independent of diagram labels."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          72,
+          1565,
+          936,
+          160
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json and QuestVlog.tsx; landscape uses its independent coordinate set",
+          "font": "body.ttf",
+          "font_size": 50,
+          "max_lines": 2,
+          "overflow": "reject in source preflight"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 30.6
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Visible only in the owning scene/clip interval; final values held until exit."
+        },
+        {
+          "id": "outside",
+          "visible": false,
+          "description": "Hidden outside declared scene/clip windows."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "Frame-based deterministic evaluation, no random live clock."
+      ],
+      "replaceable": [
+        "props.captions"
+      ],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "Actual rendered states",
+          "method": "View entry, intermediate, reading hold and exit plus frame-clock source mapping.",
+          "pass_condition": "No clipping, wrong source, missing state, duplicate audio or unintended source restart."
+        }
+      ]
+    },
+    {
+      "id": "identity",
+      "type": "text",
+      "role": "Own brand, episode count, footer and output-clock progress rail.",
+      "parent_id": null,
+      "z_index": 40,
+      "content": {
+        "mode": "editable",
+        "binding": "identity-input",
+        "asset_id": null,
+        "description": "Own brand, episode count, footer and output-clock progress rail."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          72,
+          70,
+          936,
+          60
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json and QuestVlog.tsx; landscape uses its independent coordinate set",
+          "font": "body.ttf",
+          "font_size": 23,
+          "max_lines": 1,
+          "overflow": "reject in source preflight"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 30.6
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Visible only in the owning scene/clip interval; final values held until exit."
+        },
+        {
+          "id": "outside",
+          "visible": false,
+          "description": "Hidden outside declared scene/clip windows."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "Frame-based deterministic evaluation, no random live clock."
+      ],
+      "replaceable": [
+        "props.brand"
+      ],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "Actual rendered states",
+          "method": "View entry, intermediate, reading hold and exit plus frame-clock source mapping.",
+          "pass_condition": "No clipping, wrong source, missing state, duplicate audio or unintended source restart."
+        }
+      ]
+    },
+    {
+      "id": "master",
+      "type": "audio",
+      "role": "Full narration once, ducked licensed local music, timed effects; source video muted.",
+      "parent_id": null,
+      "z_index": 0,
+      "content": {
+        "mode": "editable",
+        "binding": "master-input",
+        "asset_id": null,
+        "description": "Full narration once, ducked licensed local music, timed effects; source video muted."
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "layout.json and QuestVlog.tsx; landscape uses its independent coordinate set",
+          "non_visual": true
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 30.6
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Visible only in the owning scene/clip interval; final values held until exit."
+        },
+        {
+          "id": "outside",
+          "visible": false,
+          "description": "Hidden outside declared scene/clip windows."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "Frame-based deterministic evaluation, no random live clock."
+      ],
+      "replaceable": [
+        "audio"
+      ],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "Actual rendered states",
+          "method": "View entry, intermediate, reading hold and exit plus frame-clock source mapping.",
+          "pass_condition": "No clipping, wrong source, missing state, duplicate audio or unintended source restart."
+        }
+      ]
+    }
+  ],
+  "slots": [
+    {
+      "id": "chapter-input",
+      "element_id": "chapter",
+      "property": "props.scenes[].quest.chapter",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "validator": "backlot/quest_vlog.py and studio_hum_production.py",
+        "rule": "Source-SHA, type, cue, font and scene-window validation is required; omitted optional sources are not rendered."
+      },
+      "missing": "Required input blocks; optional source is explicitly absent.",
+      "overflow": "Reject or choose more appropriate scenes; never silently discard speech or resize text."
+    },
+    {
+      "id": "headline-input",
+      "element_id": "headline",
+      "property": "props.scenes[].title",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "validator": "backlot/quest_vlog.py and studio_hum_production.py",
+        "rule": "Source-SHA, type, cue, font and scene-window validation is required; omitted optional sources are not rendered."
+      },
+      "missing": "Required input blocks; optional source is explicitly absent.",
+      "overflow": "Reject or choose more appropriate scenes; never silently discard speech or resize text."
+    },
+    {
+      "id": "mechanism-input",
+      "element_id": "mechanism",
+      "property": "props.scenes[].quest",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "validator": "backlot/quest_vlog.py and studio_hum_production.py",
+        "rule": "Source-SHA, type, cue, font and scene-window validation is required; omitted optional sources are not rendered."
+      },
+      "missing": "Required input blocks; optional source is explicitly absent.",
+      "overflow": "Reject or choose more appropriate scenes; never silently discard speech or resize text."
+    },
+    {
+      "id": "footage-input",
+      "element_id": "footage",
+      "property": "props.media",
+      "value_type": "array",
+      "required": false,
+      "limits": {
+        "validator": "backlot/quest_vlog.py and studio_hum_production.py",
+        "rule": "Source-SHA, type, cue, font and scene-window validation is required; omitted optional sources are not rendered."
+      },
+      "missing": "Required input blocks; optional source is explicitly absent.",
+      "overflow": "Reject or choose more appropriate scenes; never silently discard speech or resize text."
+    },
+    {
+      "id": "presenter-input",
+      "element_id": "presenter",
+      "property": "props.presenterClips",
+      "value_type": "array",
+      "required": false,
+      "limits": {
+        "validator": "backlot/quest_vlog.py and studio_hum_production.py",
+        "rule": "Source-SHA, type, cue, font and scene-window validation is required; omitted optional sources are not rendered."
+      },
+      "missing": "Required input blocks; optional source is explicitly absent.",
+      "overflow": "Reject or choose more appropriate scenes; never silently discard speech or resize text."
+    },
+    {
+      "id": "captions-input",
+      "element_id": "captions",
+      "property": "props.captions",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "validator": "backlot/quest_vlog.py and studio_hum_production.py",
+        "rule": "Source-SHA, type, cue, font and scene-window validation is required; omitted optional sources are not rendered."
+      },
+      "missing": "Required input blocks; optional source is explicitly absent.",
+      "overflow": "Reject or choose more appropriate scenes; never silently discard speech or resize text."
+    },
+    {
+      "id": "identity-input",
+      "element_id": "identity",
+      "property": "props.brand",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "validator": "backlot/quest_vlog.py and studio_hum_production.py",
+        "rule": "Source-SHA, type, cue, font and scene-window validation is required; omitted optional sources are not rendered."
+      },
+      "missing": "Required input blocks; optional source is explicitly absent.",
+      "overflow": "Reject or choose more appropriate scenes; never silently discard speech or resize text."
+    },
+    {
+      "id": "master-input",
+      "element_id": "master",
+      "property": "audio",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "validator": "backlot/quest_vlog.py and studio_hum_production.py",
+        "rule": "Source-SHA, type, cue, font and scene-window validation is required; omitted optional sources are not rendered."
+      },
+      "missing": "Required input blocks; optional source is explicitly absent.",
+      "overflow": "Reject or choose more appropriate scenes; never silently discard speech or resize text."
+    }
+  ],
+  "evidence": [
+    {
+      "id": "design",
+      "source_kind": "design",
+      "source": "Independent project implementation following observed reference relationships and Hypit whole/detail/semantic-event principles.",
+      "locator": "QuestVlog.tsx; layout.json; backlot/quest_vlog.py",
+      "method": "Reference observations and implementation remain separate. Actual local evidence and its limits are recorded in VALIDATION.md; no universal or cross-machine acceptance inferred.",
+      "file": null,
+      "sha256": null
+    },
+    {
+      "id": "local-review",
+      "source_kind": "measurement",
+      "source": "Local queue artifacts, technical quality receipts, actual encoded-frame and isolated-state review, HTTP/UI recovery and the human listening reply.",
+      "locator": "VALIDATION.md and repository-private .local/template-upgrade-20261101/task.json",
+      "method": "Specific portrait/landscape v5 outputs and 24 repaired isolated states; source/output hashes and real frame identities remain in private task artifacts. Per-input evidence, not complete continuous viewing or a stable release certification.",
+      "file": "VALIDATION.md",
+      "sha256": null
+    }
+  ],
+  "unknowns": [],
+  "validation": {
+    "structure": {
+      "status": "pass",
+      "evidence_ids": ["local-review"],
+      "note": "115 affected tests passed locally; direct schema check separately recorded. Whole Videohub package still has unrelated historical failures."
+    },
+    "technical": {
+      "status": "pass",
+      "evidence_ids": ["local-review"],
+      "note": "Specific frozen portrait/landscape v5 films: expected30fps/918frames/30.6s, measured20.494Mbps, complete decode and audio metrics. Does not certify a new input or later renderer snapshot."
+    },
+    "visual": {
+      "status": "pass",
+      "evidence_ids": ["local-review"],
+      "note": "Sampled scope only:40 encoded frames each aspect; source/target semantic pairs,42 other isolated states plus3 repaired path states;24 repaired core-control states actually viewed. Continuous motion/lip-sync review remains separate."
+    },
+    "audio": {
+      "status": "pass",
+      "evidence_ids": ["local-review"],
+      "note": "Full same-source Hou narration and measured mix preserved. Human confirmed three named films clear with audible non-masking music; exact Quest revision/device unspecified. Model hearing and additional landscape listening are not established."
+    },
+    "platform": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "Not yet verified for this new template."
+    },
+    "user_review": {
+      "status": "pass",
+      "evidence_ids": ["local-review"],
+      "note": "User explicitly approved portrait v7 as the final template look on2026-11-01; approved-look-v1.json binds its exact output SHA and seven-scene recipe. No approval inferred for all fifteen controls, new voices, landscape evidence windows or another machine."
+    },
+    "production": {
+      "status": "pass",
+      "evidence_ids": ["local-review"],
+      "note": "Specific local UI/CLI→frozen draft→unified queue→actual artifacts and work entries, ordinary startup and exact completed-job recovery verified. No publication, cross-machine or complete stable-release certification."
+    }
+  },
+  "extensions": {
+    "custom": {
+      "contract": "quest-vlog-v1 on hum-production-v1",
+      "rules": "Fifteen implemented controls; tested scope is separate in VALIDATION.md. Local cues are explicit increasing frames, label counts/minimum durations from layout.json. Path cues reference stops, not all nodes; stable graph identity carries position across adjacent scenes, reset is explicit, skipped nodes stay incomplete. Rank permutations preserve all original IDs; strikes follow ID; order basis required. Comment proof follows complete typed question and retains last-photo reading. 12-frame checker/iris is below presenter20 and captions40. 15-frame entry/10-frame exit,18-frame presenter morph. HP/scan/editor are labeled illustration, never measured statistics. No fabricated word timings."
+    },
+    "avatar": {
+      "face_crop": "contain; video content retains original proportions in card/circle mask; per-film review required.",
+      "synchronization": "Global clip.from and source offset; actual source length checked. Source persists through scene changes. A partial performance is shown only in its original matching narration interval."
+    },
+    "graphic": {
+      "text_policy": "Font metrics reject overflowing titles, captions and labels; full speech stays in measured captions.",
+      "asset_fit": "contain original media; embedded captions/logos in footage remain non-editable."
+    },
+    "material_edit": {
+      "source_ranges": "Reviewed original source offsets; scene plays at1x, source audio muted.",
+      "cut_policy": "Contiguous scenes cover full narration plus allowed tail; no media loop/freeze fallback."
+    }
+  },
+  "operations": [
+    {
+      "id": "check",
+      "input": "Private title/props/sources/audio/provenance JSON; visualStyle quest.",
+      "action": "Run existing producer preflight with the new typed control validator.",
+      "output": "Source-clock, dimensions, content capacity and font results.",
+      "completion": "All inputs and actual source windows pass; specification stage permits authorized development samples only.",
+      "recovery": "Repair affected input, retain original media.",
+      "entrypoint": "../../../scripts/hum_production.py --input <input.json> --check"
+    },
+    {
+      "id": "render",
+      "input": "Frozen local source-bound input; no new provider call.",
+      "action": "Submit and execute through unified local-recompose queue.",
+      "output": "Complete encoded candidate, technical receipts and editable props.",
+      "completion": "Actual full decode,>=20Mbps measured video, expected dimensions/frames/audio peak; separate visual/listening review remains.",
+      "recovery": "Resume --request; changed source/runtime requires new freeze.",
+      "entrypoint": "../../../scripts/hum_production.py --input <input.json> --output-dir <delivery>"
+    },
+    {
+      "id": "review",
+      "input": "Actual encoded candidate and reference evidence.",
+      "action": "Inspect semantic states and transitions; continuously watch/listen where supported.",
+      "output": "Separate technical/visual/audio/platform/user conclusions.",
+      "completion": "Only promote verified scope; no claim of exact original choreography from a similarly named MotionGit package.",
+      "recovery": "Fix owning component or affected cue/source then rerender.",
+      "entrypoint": "README.md"
+    }
+  ]
+}

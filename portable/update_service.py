@@ -287,7 +287,7 @@ class UpdateService:
         else:
             https_url(package["url"])
         kind = package.get("kind", "patch")
-        if kind not in {"patch", "full"}:
+        if kind not in {"patch", "full", "migration"}:
             raise core.UpdateError("更新包类型无效")
         limit = core.MAX_ARCHIVE_BYTES if kind == "patch" else 2 * 1024 ** 3 - 1
         if (not isinstance(package.get("size"), int) or isinstance(package["size"], bool)

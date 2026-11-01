@@ -1,0 +1,30 @@
+{
+  "schema": "haike.quest-approved-look/1",
+  "id": "quest-approved-portrait-v1",
+  "status": "owner-approved-look",
+  "approved_on": "2026-11-01",
+  "approved_output_sha256": "602dded50ce877f602ade44a7e4bf6878138f63db6392a2f57d8d486505073f7",
+  "implementation": "QuestVlog.tsx",
+  "geometry_authority": "layout.json",
+  "production": "../../../scripts/hum_production.py",
+  "canvas": {"width": 1080, "height": 1920, "fps": 30},
+  "sequence": [
+    {"kind": "comment", "preserve": "Complete typing, then reviewed proof photos and reading hold."},
+    {"kind": "ranking", "preserve": "Stable original item IDs move to the declared complete order; show opinion basis."},
+    {"kind": "world", "preserve": "Blue location reveal with original portrait footage."},
+    {"kind": "media", "preserve": "Footage and phrase reveals share the scene; preserve source proportions."},
+    {"kind": "path", "preserve": "White graph with persistent nodes, progress actor and adjacent evidence video."},
+    {"kind": "path", "preserve": "Same graph continues on dark background; right evidence and matching presenter card avoid the graph."},
+    {"kind": "clear", "preserve": "Completion copy, matching presenter and five reviewed photos enter around the presenter."}
+  ],
+  "fixed_effect_rules": [
+    "Preserve checker and iris handoffs, existing entry/exit/morph timing and timed sound design.",
+    "Add or replace footage inside its supported slot; do not replace the graph or another defining mechanism to make room.",
+    "A matching partial presenter stays on its original narration interval across scene changes.",
+    "Changed voice duration requires actual-caption-based scene/cue planning and new review; do not scale the whole choreography or speech."
+  ],
+  "replaceable": ["brand", "titles", "comment copy", "ranking copy and declared order", "path labels", "captions", "reviewed footage and source offsets", "reviewed photo thumbnails", "same-source presenter", "licensed music and SFX bindings"],
+  "reuse_entry": "Copy the approved source-bound v7 draft in the existing template library, then use the ordinary preflight/freeze/queue/recovery workflow.",
+  "evidence_locator": "VALIDATION.md; repository-private .local/template-upgrade-20261101/task.json and human-confirmations.json",
+  "scope": "Approved portrait look and its seven-scene recipe. Other mechanisms, arbitrary new scripts, landscape evidence windows and other machines keep their separate validation states. This policy is not a fabricated source-bound production input."
+}

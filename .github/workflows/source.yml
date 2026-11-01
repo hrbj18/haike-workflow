@@ -29,6 +29,7 @@ jobs:
         run: |
           python scripts/check.py
           python -m unittest discover -s tests -v
+          python -m pytest tests/test_motion_runtime.py tests/test_template_capability.py tests/test_template_selftest.py -q
       - name: Parse PowerShell entrypoints
         shell: pwsh
         run: |

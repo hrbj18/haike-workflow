@@ -2,6 +2,20 @@
   "version": 1,
   "templates": [
     {
+      "id": "haike-quest-v1",
+      "name": "蓝白任务口播 · 游戏式讲解",
+      "group": "参考视频复刻",
+      "status": "本机开发样片",
+      "duration": "跟随完整口播",
+      "ratio": "9:16 / 16:9独立重排",
+      "description": "可编辑提问输入、同条目换位、持续路径、实拍窗口与人物变窗；已有横竖屏开发片。连续听看、新稿和异机另验。",
+      "runbook": "Haike_video/templates/hum-production-v1/quest/README.md",
+      "spec": "Haike_video/templates/hum-production-v1/quest/video-template-spec.json",
+      "href": "/motiongit?section=packages&package=haike-quest-v1",
+      "avatar": "可选同源数字人片段，不循环补齐",
+      "family": "quest-vlog-v1"
+    },
+    {
       "id": "store-footage-18",
       "name": "店长18 · 橙紫现场",
       "group": "店长账号",

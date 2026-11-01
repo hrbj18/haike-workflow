@@ -15,9 +15,11 @@ from urllib import parse, request
 
 try:
     from . import app_update as core
+    from .template_capability import selftest as verify_templates
     from .update_service import (download_package, private_path, read_json, set_operation, UpdateCancelled)
 except ImportError:
     import app_update as core
+    from template_capability import selftest as verify_templates
     from update_service import download_package, private_path, read_json, set_operation, UpdateCancelled
 
 
@@ -77,6 +79,7 @@ def start_server(root, port):
 
 
 def wait_server(base, root, child, version, timeout=90):
+    template_delivery = verify_templates(root)
     deadline = time.monotonic() + timeout
     while time.monotonic() < deadline:
         try:
@@ -88,7 +91,7 @@ def wait_server(base, root, child, version, timeout=90):
                 with request.build_opener(request.ProxyHandler({})).open(base + "/avatar", timeout=5) as page:
                     if page.status != 200 or b"<html" not in page.read(1024 * 1024).lower():
                         raise core.UpdateError("新版界面未能加载")
-                return health
+                return {**health, 'template_delivery': template_delivery}
         except (OSError, ValueError):
             pass
         if child.poll() is not None:

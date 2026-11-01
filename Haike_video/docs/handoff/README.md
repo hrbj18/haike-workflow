@@ -1,33 +1,31 @@
 # OpenMontage 交接入口
 
-更新：2026-10-27
+更新：2026-11-02
 
 ## 读取规则
 
-1. 每轮只强制读取仓库根目录 `AGENT_GUIDE.md`。
-2. 开发、诊断、状态或规划再读本文件和 `CURRENT_STATUS.md`。
-3. 按任务只加读一个专题：产品边界 `PRODUCT_RULES.md`；历史决策 `DECISIONS.md`；代码 `CODE_MAP.md`；每日快报 `DAILY_TECH_BRIEF.md`；GitHub/跨机 `DEPLOYMENT.md`。
-4. 仅检查本任务项目、媒体和差异；不默认扫描旧日志及批次。
+先读 `AGENT_GUIDE.md`；开发另读本文件与 `CURRENT_STATUS.md`。按Guide限读专题，只查当前任务。
 
-## 当前任务入口
+## 任务入口
 
 - 六款招商：[入口](../../templates/investment-six-v1/README.md)；恢复根`.local/codex-runs/investment-six-20261026/`。
 
-- 模板：[库](../../templates/TEMPLATE-LIBRARY.md)（含18–21手册）；[22–26v002验收](../../templates/store-opening-v1/REVIEW.md)。默认.local/store-manager/defaults.json。
-- MotionGit：[制作](../MOTION_TEMPLATE_STUDIO.md)，网页/HTTP/CLI共用；[包适配](../MOTION_PACK_ADAPTERS.md)。
+- 模板：[库](../../templates/TEMPLATE-LIBRARY.md)含18–21；[22–26验收](../../templates/store-opening-v1/REVIEW.md)。默认.local/store-manager/defaults.json。
+- MotionGit：[制作](../MOTION_TEMPLATE_STUDIO.md)共用网页/HTTP/CLI；[包适配](../MOTION_PACK_ADAPTERS.md)。
+- [参考理解](../REFERENCE_UNDERSTANDING.md)：同源台词/原生帧/对象事件/语义配对；[粉笔双比例](../../templates/chalkboard-explainer-v1/README.md)本机测试范围见VALIDATION，听看/真机另验。
+- [本轮升级](../SINGLE_DEVELOPMENT_GUIDE_TEMPLATE_UPGRADE_20261102.md)：预设/API/CLI已接；依赖与1027出片待验。
 
-- Mac模板交付：[复刻包入口](../../template-kit/README.md)，47条目/35冻结实例，字体替代须复验；Mac真机待验。
+- [Mac复刻包](../../template-kit/README.md)：47条目/35实例，字体替代复验，真机待验。
 
-- 招商07蓝米／08青炭／09黑粉：[视觉Runbook](../../templates/investment-full-v1/visual-runbooks/README.md)含参数/源码，环境与私人素材另备、异机未验；08扩展45秒，听审待验。
+- 招商07/08/09：[手册](../../templates/investment-full-v1/visual-runbooks/README.md)含参数/源码；环境/私材另备、异机未验；08为45秒，听审待验。
 
-- 高质量数字人：读[规则](../高质量数字人工作流.md)；本机Agent新片≤120秒默认高质量；条件在根`.local/runninghub-workflow/default.json`，Studio未切换。
-- GitHub 稳定版、分支和跨电脑安装：读 `DEPLOYMENT.md`；克隆后的同事从根目录 `START_HERE.md` 开始。
-- 本机新增功能不代表 GitHub 已发布。
-- 数字人模板7的19秒本地开发短样、布局真值与验证范围见[同名手册](../../../Haike-Videohub/agent-runbooks/数字人模板7.md)；工作台全片接入待验证。
+- [高质量规则](../高质量数字人工作流.md)：本机Agent新片≤120秒默认高质量；根`.local/runninghub-workflow/default.json`，Studio未切换。
+- GitHub稳定版/分支/跨机见 `DEPLOYMENT.md`；新克隆读根 `START_HERE.md`。本机新增不代表远端已发布。
+- 模板7的19秒开发样/布局真值/验证见[手册](../../../Haike-Videohub/agent-runbooks/数字人模板7.md)；工作台全片待验。
 
 ## 更新规则
 
-实质变化更新，覆盖旧结论；问答不更新。改后运行：
+实质变化替换旧结论；问答不更新。改后运行：
 
 `python scripts/audit_context_handoff.py`
 

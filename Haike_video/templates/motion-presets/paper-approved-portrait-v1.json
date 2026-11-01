@@ -1,0 +1,21 @@
+{
+  "schema": "haike.motion-preset-recipe/1",
+  "parameters": {"workflow": "motion-kit", "timeline": {
+    "layout": "portrait", "language": "zh", "styleProfile": "paper", "narrationComposition": "readable/1", "ending": "cut",
+    "voiceover": "voice.wav", "music": "music.wav", "captions": [],
+    "segments": [
+      {"control": "compare", "variant": "panels", "props": {"left": {"label": "本期比较", "big": "原来如此"}, "right": {"label": "本期选择", "big": "亲手体验"}, "winner": "none"}, "shotId": "paper-1", "styleProfile": "paper", "presenter": "hide"},
+      {"control": "kinetic", "variant": "stack", "props": {"kicker": "本期问题", "lines": ["第一项", "第二项", "第三项"]}, "shotId": "paper-2", "styleProfile": "paper", "presenter": "hide"},
+      {"control": "device", "variant": "phone", "props": {"src": "material-1.mp4", "sourceStart": 0, "title": "本期地点", "sub": "本期说明"}, "shotId": "paper-3", "styleProfile": "paper", "area": {"x": 180, "y": 100, "w": 720, "h": 1100}, "presenter": "hide"},
+      {"control": "device", "variant": "phone", "props": {"src": "material-2.mp4", "sourceStart": 0, "title": "本期体验", "sub": "本期特点"}, "shotId": "paper-4", "styleProfile": "paper", "area": {"x": 180, "y": 100, "w": 720, "h": 1100}, "presenter": "hide"},
+      {"control": "quote", "variant": "reveal", "props": {"text": "本期完整观点", "who": "本期观点来源"}, "shotId": "paper-5", "styleProfile": "paper", "presenter": "hide"},
+      {"control": "cta", "variant": "button", "props": {"kicker": "本期行动信息", "text": "现在来体验", "sub": "本期结论", "icon": "pin"}, "shotId": "paper-6", "styleProfile": "paper", "presenter": "hide"}
+    ], "narrationMap": [], "mediaPolicies": {}
+  }},
+  "binding": {
+    "clock": "actual-voice-and-caption-events",
+    "required": ["完整口播与真实字幕", "每镜t0/t1/cues", "连续同源narrationMap", "本期两路实拍及mediaPolicies", "已授权配乐"],
+    "optional": ["真实连续时钟人物与明确显隐区间"],
+    "instructions": "按真实字幕填写完整duration、场景时点及narrationMap，不缩放原动作速度。原生控件最短时长仍由原包裁决。人物通过公开presenter槽添加，同声源校验与原生预览不可跳过。删除素材时同步移除未使用mediaPolicies。"
+  }
+}

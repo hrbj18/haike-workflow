@@ -10,6 +10,7 @@ from concurrent.futures import ThreadPoolExecutor
 from contextlib import contextmanager
 from datetime import datetime, timezone
 import hashlib
+import importlib.util
 import json
 import os
 from pathlib import Path
@@ -31,6 +32,28 @@ except ModuleNotFoundError:
 ID = '1027-to-1.2'
 METADATA = {'VERSION.json', 'RELEASE.json', 'PACKAGE-MANIFEST.json', 'RUNTIME-INVENTORY.json'}
 CACHE = '.local/md/shared-1.2/'
+
+
+def runtime_module():
+    spec = importlib.util.spec_from_file_location('haike_bootstrap_motion_runtime', Path(__file__).with_name('motion_runtime.py'))
+    module = importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
+    return module
+
+
+def runtime_plan(bundle, plan, resources):
+    identity = resources.get('runtime_manifest_sha256')
+    if identity is None:
+        return None
+    module = runtime_module()
+    row = next((r for r in plan['files'] if r['path'] == module.PATH), None)
+    require(row and row['sha256'] == identity, '程序与资源的运行依赖身份不一致')
+    value = read(safe_path(bundle, row['payload'])); module.validate(value)
+    actual = {r['path']: r['sha256'] for r in resources['files']}
+    require(actual.get(module.HELPER) == module.HELPER_SHA, '资源包rc.54工具不匹配')
+    for profile in value['profiles']:
+        require(all(actual.get(profile['cache'] + '/' + name) == digest for name, digest in profile['files'].items()),
+                '资源包缺少声明的模板运行文件')
+    return value
 
 
 def read(path):
@@ -61,7 +84,10 @@ def allowed(name, resource=False):
     return (name.startswith('Haike_video/remotion-composer/node_modules/')
             or name.startswith(CACHE)
             or re.fullmatch(r'\.local/motiongit/packages/mg-[a-f0-9]{24}/original\.motion', name)
-            or name == '.local/motiongit/tools/1.0.0-rc.50/motion.mjs')
+            or name.startswith(('.local/md/paper-rc54-v1-kit/', '.local/md/knowledge-rc54-v1/'))
+            and not name.casefold().endswith('/pyvenv.cfg')
+            or name in {'.local/motiongit/tools/1.0.0-rc.50/motion.mjs',
+                        '.local/motiongit/tools/1.0.0-rc.54/motion.mjs'})
 
 
 def stopped(target):
@@ -149,13 +175,22 @@ def preflight(bundle, target, resource, *, require_stopped=True):
     require(resource.is_file() and digest(resource) == plan['resources']['sha256'], '模板资源包缺失或摘要不符')
     release = read(target / 'RELEASE.json')
     current = release.get('version') == plan['release']['version'] and release.get('upgrade_id') == ID
+    selected = None
     if current:
         require(release.get('source_commit') == plan['release']['source_commit'], '已安装其他1.2构建，不能覆盖')
+    elif release.get('version'):
+        selected = next((b for b in plan.get('modern_bases', []) if b.get('version') == release.get('version')
+                         and b.get('source_commit') == release.get('source_commit')), None)
+        require(selected is not None, '本次运行依赖迁移未支持当前构建，请保留原程序并核对发行说明')
+        require(all(release.get(k) == plan['release'].get(k) for k in ['edition', 'runtime_id', 'data_schema', 'platform']),
+                '运行环境或数据结构不符合本次迁移基线')
+        require(re.fullmatch('[a-z0-9-]{4,80}', selected.get('id', '')), '迁移基线身份无效')
     else:
         require(release.get('source_commit') == plan['base_source_commit'] and not release.get('version'),
                 '此包仅用于原始1027（1.1）安装，当前版本不匹配')
         require(digest(target / 'PACKAGE-MANIFEST.json') == plan['base_manifest_sha256'],
                 '目标不是原始1027清单，已停止以避免覆盖其他版本')
+    plan = {**plan, 'selected_base': selected['id'] if selected else '1027'}
     pending = safe_path(target, '.local/release-updates')
     if pending.exists():
         for receipt in pending.glob('*/receipt.json'):
@@ -174,6 +209,12 @@ def preflight(bundle, target, resource, *, require_stopped=True):
             names.add(name.casefold())
             require(re.fullmatch('[a-f0-9]{64}', row['sha256']) and 0 <= row['size'] < 400_000_000,
                     '更新文件大小或摘要无效')
+            if selected:
+                require(isinstance(row.get('before_by_base'), dict) and selected['id'] in row['before_by_base'],
+                        '更新文件缺少本次迁移的基线校验')
+                before = row['before_by_base'][selected['id']]
+                require(before is None or isinstance(before, str) and re.fullmatch('[0-9a-f]{64}', before),
+                        '更新文件的迁移基线摘要无效')
         require(sum(row['size'] for row in rows) < 2_000_000_000, '解压内容过大')
         # Validate payload bytes and ALL overwritten files before writing.
         def verify(row):
@@ -184,7 +225,8 @@ def preflight(bundle, target, resource, *, require_stopped=True):
             if destination.exists():
                 require(destination.is_file(), '目标路径不是文件：' + row['path'])
                 actual = digest(destination)
-                require(actual == row['sha256'] or (not current and actual == row.get('before_sha256')),
+                prior = row.get('before_by_base', {}).get(selected['id']) if selected else row.get('before_sha256')
+                require(actual == row['sha256'] or (not current and actual == prior),
                         '目标文件有本地修改，已停止保留：' + row['path'])
             elif current:
                 raise ValueError('已安装1.2的文件缺失：' + row['path'])
@@ -195,13 +237,20 @@ def preflight(bundle, target, resource, *, require_stopped=True):
                 file = safe_path(target, row['path'])
                 require(file.is_file() and digest(file) == row['sha256'], '旧版依赖不匹配：' + row['path'])
             with ThreadPoolExecutor(max_workers=8) as pool:
-                list(pool.map(dependency, plan['required_files']))
+                list(pool.map(dependency, selected['required_files'] if selected else plan['required_files']))
         require(shutil.disk_usage(target).free > sum(row['size'] for row in rows) + 600_000_000,
                 '目标磁盘空间不足，请保留至少解压体积加600MB')
     if require_stopped:
         stopped(target)
+    profiles = runtime_plan(bundle, plan, resources)
+    if profiles:
+        runtime_module().configuration_writes(target, profiles)
     cfg = safe_path(target, CACHE + '.venv/pyvenv.cfg')
-    require(current or not cfg.exists(), '共享依赖目录已经有本机配置，请先核对，不能覆盖')
+    if not current and cfg.exists():
+        runtime = target / 'runtime/python'
+        expected = f'home = {runtime}\ninclude-system-site-packages = false\nexecutable = {runtime / "python.exe"}\n'
+        require(selected is not None and cfg.read_text(encoding='utf-8-sig').replace('\r\n', '\n') == expected,
+                '共享依赖目录已经有其他环境配置，请先核对，不能覆盖')
     if current:
         registry_path = safe_path(target, '.local/motiongit/registry.sqlite3')
         require(registry_path.is_file(), '已安装模板登记缺失')
@@ -246,6 +295,16 @@ def registry_records(target, packages):
 
 
 def probe(target):
+    # Use the newly installed verifier, not a bootstrap script's import cache.
+    verifier = safe_path(target, 'portable/template_capability.py')
+    template_delivery = {'status': 'not-declared'}
+    if read(target / 'RELEASE.json').get('template_capability'):
+        require(verifier.is_file(), '模板交付校验器缺失')
+        import importlib.util
+        spec = importlib.util.spec_from_file_location('haike_installed_template_capability', verifier)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        template_delivery = module.selftest(target)
     expected_version = read(target / 'RELEASE.json')['version']
     code = ("import json,sys; from pathlib import Path; "
             "from backlot import studio_motion_templates as t; "
@@ -265,6 +324,7 @@ def probe(target):
                             capture_output=True, text=True, encoding='utf-8', timeout=120)
     require(result.returncode == 0, '升级后模块/模板/依赖检查失败：' + result.stderr[-1800:])
     summary = json.loads(result.stdout.strip().splitlines()[-1])
+    summary['template_delivery'] = template_delivery
     with socket.socket() as sock:
         sock.bind(('127.0.0.1', 0))
         port = sock.getsockname()[1]
@@ -369,8 +429,12 @@ def apply(bundle, target, resource, *, check=False, health_check=probe):
     runtime = target / 'runtime/python'
     writes.append((CACHE + '.venv/pyvenv.cfg', (
         f'home = {runtime}\ninclude-system-site-packages = false\nexecutable = {runtime / "python.exe"}\n').encode()))
-    release = {**read(target / 'RELEASE.json'), **plan['release'], 'upgrade_id': ID,
-               'upgraded_from': '20261027 / 1.1', 'resources_sha256': plan['resources']['sha256']}
+    profiles = runtime_plan(bundle, plan, resources)
+    if profiles:
+        writes.extend(runtime_module().configuration_writes(target, profiles))
+    previous = read(target / 'RELEASE.json')
+    release = {**previous, **plan['release'], 'upgrade_id': ID,
+               'upgraded_from': previous.get('version') or '20261027 / 1.1', 'resources_sha256': plan['resources']['sha256']}
     version = {k: release[k] for k in ('edition', 'version', 'channel', 'runtime_id', 'data_schema', 'platform')}
     version['display_version'] = '1.2'
     for name, content in [('VERSION.json', json_bytes(version)), ('RELEASE.json', json_bytes(release))]:

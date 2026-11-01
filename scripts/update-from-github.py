@@ -122,6 +122,15 @@ def validate_feed(value):
     bootstrap = value.get('bootstrap')
     require(isinstance(bootstrap, dict) and bootstrap.get('base_source_commit') == BASE_SOURCE,
             '发行版未提供1027直接升级入口')
+    bases = bootstrap.get('modern_bases', [])
+    require(isinstance(bases, list) and len(bases) <= 32, '运行依赖迁移基线清单无效')
+    seen_bases = set()
+    for base in bases:
+        require(isinstance(base, dict) and isinstance(base.get('source_commit'), str)
+                and re.fullmatch('[0-9a-f]{40}', base['source_commit'])
+                and version(base.get('version')) < version(value['version']), '迁移基线版本或提交无效')
+        identity = (base['version'], base['source_commit'])
+        require(identity not in seen_bases, '迁移基线重复'); seen_bases.add(identity)
     for key in ('program', 'resources'):
         asset = bootstrap[key]
         parsed = https(asset['url'])
@@ -133,6 +142,73 @@ def validate_feed(value):
         require(asset.get('authentication') in {None, 'github-cli'}, '资源认证方式不支持')
     require(sum(bootstrap[k]['size'] for k in ('program', 'resources')) <= MAX_DOWNLOAD,
             '首次升级下载总量超过200MB')
+    if value.get('template_capability') is not None:
+        validate_template_capability(value['template_capability'])
+    return value
+
+
+def validate_template_capability(value):
+    require(isinstance(value, dict) and value.get('schema') == 'haike.motion-capability/1'
+            and isinstance(value.get('sha256'), str) and re.fullmatch('[0-9a-f]{64}', value['sha256'])
+            and isinstance(value.get('presets'), list) and 0 < len(value['presets']) <= 100,
+            '发行模板能力身份无效')
+    ids = set()
+    for row in value['presets']:
+        require(isinstance(row, dict) and isinstance(row.get('id'), str)
+                and re.fullmatch('[a-z0-9-]{4,80}', row['id']) and row['id'] not in ids
+                and isinstance(row.get('sha256'), str) and re.fullmatch('[0-9a-f]{64}', row['sha256'])
+                and type(row.get('requires_package')) is bool and isinstance(row.get('protocol'), str),
+                '发行预设身份无效或重复')
+        version(row.get('version')); ids.add(row['id'])
+
+
+def verify_template_capability(root, expected=None, *, required=None):
+    """The single-file bootstrap must verify bytes without executing target code."""
+    if expected is None:
+        expected = read(root / 'RELEASE.json').get('template_capability')
+    if expected is None:
+        require(required is None, '当前版本缺少本次模板能力，请安装修复发行版')
+        return {'status': 'not-declared'}
+    validate_template_capability(expected)
+    path = safe(root, 'Haike_video/templates/motion-presets/delivery.json')
+    require(path.is_file() and path.stat().st_size <= 2_000_000 and sha(path) == expected['sha256'],
+            '模板交付清单缺失或已改变，不能报告已更新；请安装修复发行版')
+    value = read(path)
+    files = value.get('files')
+    require(value.get('schema') == 'haike.motion-capability/1' and isinstance(files, dict)
+            and 1 <= len(files) <= 20000 and value.get('presets') == expected['presets']
+            and value.get('sha256') == hashlib.sha256(json.dumps(files, sort_keys=True,
+                separators=(',', ':')).encode()).hexdigest(), '模板交付清单内容无效')
+    forbidden = {'.local', '.backlot', '.venv', 'runtime', 'node_modules', 'projects', 'data', 'config', '.git'}
+    for name, digest in files.items():
+        require(isinstance(name, str) and not forbidden.intersection(name.casefold().split('/'))
+                and name.startswith(('Haike_video/', 'portable/', 'scripts/', 'prototypes/haike-avatar-generator/'))
+                and isinstance(digest, str) and re.fullmatch('[0-9a-f]{64}', digest), '模板交付路径或摘要无效')
+        file = safe(root, name)
+        require(file.is_file() and sha(file) == digest, '模板文件缺失或已改变：' + name + '；请安装修复发行版')
+    if required is not None:
+        validate_template_capability(required)
+        actual = {r['id']: r for r in value['presets']}
+        require(all(r['id'] in actual and version(actual[r['id']]['version']) >= version(r['version'])
+                    and actual[r['id']]['protocol'] == r['protocol'] for r in required['presets']),
+                '当前版本没有本次所需的正式预设，请安装修复发行版')
+    return {'status': 'verified', 'presets': value['presets'], 'verified_files': len(files),
+            'episode_inputs': 'user-provided', 'runtime_selftest': 'pending'}
+
+
+def confirm_template_runtime(root, delivery):
+    if delivery.get('status') != 'verified':
+        return delivery
+    idle(root)
+    # The verifier and its public imports were hash-checked above. Only now may
+    # the single-file entry execute installed code, with no inherited Python path.
+    result = subprocess.run([str(root / 'runtime/python/python.exe'), '-s',
+        str(root / 'portable/template_capability.py'), '--root', str(root), '--selftest'],
+        cwd=root, capture_output=True, encoding='utf-8', timeout=240, env=python_environment())
+    require(result.returncode == 0, '模板安装自检失败，请保留更新备份：' + result.stderr[-1000:])
+    value = json.loads(result.stdout.strip().splitlines()[-1])
+    require(value.get('status') == 'verified' and value.get('runtime_selftest') == 'passed',
+            '程序文件已核验，但模板运行自检尚未通过')
     return value
 
 
@@ -308,6 +384,7 @@ def modern_update(root, expected):
 def python_environment():
     environment = os.environ.copy()
     environment.pop('PYTHONHOME', None)
+    environment.pop('PYTHONPATH', None)
     environment.update(PYTHONUTF8='1', PYTHONIOENCODING='utf-8', PYTHONNOUSERSITE='1')
     return environment
 
@@ -355,15 +432,23 @@ def run(url, target=None, *, check=False, start=True):
     release = read(root / 'RELEASE.json')
     current = release.get('version')
     if current and version(current) >= version(feed['version']):
-        return {'ok': True, 'already_current': True, 'version': current}
-    if current:
+        expected = feed.get('template_capability') if current == feed['version'] else release.get('template_capability')
+        delivery = verify_template_capability(root, expected, required=feed.get('template_capability'))
+        if not check:
+            delivery = confirm_template_runtime(root, delivery)
+        return {'ok': True, 'already_current': True, 'version': current, 'template_delivery': delivery}
+    migration = current and any(b.get('version') == current and b.get('source_commit') == release.get('source_commit')
+                                for b in feed['bootstrap'].get('modern_bases', []))
+    if current and not migration:
         if check:
             return {'ok': True, 'mode': 'application-updater', 'current': current, 'target': feed['version']}
-        return modern_update(root, feed['version'])
-    require(release['source_commit'] == BASE_SOURCE, '此发行版不支持当前旧安装')
+        result = modern_update(root, feed['version'])
+        result['template_delivery'] = confirm_template_runtime(root, verify_template_capability(root, feed.get('template_capability')))
+        return result
+    require(migration or release['source_commit'] == BASE_SOURCE, '此发行版不支持当前旧安装')
     bootstrap = feed['bootstrap']
     if check:
-        return {'ok': True, 'mode': '1027-bootstrap', 'version': feed['version'],
+        return {'ok': True, 'mode': 'runtime-migration' if migration else '1027-bootstrap', 'version': feed['version'],
                 'download_bytes': sum(bootstrap[k]['size'] for k in ('program', 'resources'))}
     # Acquire and verify both archives before stopping any service.
     program = fetch_asset(root, bootstrap['program'])
@@ -372,6 +457,10 @@ def run(url, target=None, *, check=False, start=True):
     plan = read(bundle / 'UPGRADE.json')
     require(plan['release']['version'] == feed['version']
             and plan['resources']['sha256'] == bootstrap['resources']['sha256'], '联网清单与已验证程序包不一致')
+    require(plan['release'].get('template_capability') == feed.get('template_capability'),
+            '联网清单与程序包的模板能力不一致')
+    require([{k: b[k] for k in ('version', 'source_commit')} for b in plan.get('modern_bases', [])]
+            == feed['bootstrap'].get('modern_bases', []), '联网清单与程序包的迁移基线不一致')
     # Execute only the verified archive's own preflight before stopping the
     # running old server; apply() repeats all checks under its transaction lock.
     previous_path = list(sys.path)
@@ -396,7 +485,7 @@ def run(url, target=None, *, check=False, start=True):
                             env=python_environment())
     if result.returncode:
         reverted = read(root / 'RELEASE.json')
-        if reverted.get('source_commit') == BASE_SOURCE and not reverted.get('version'):
+        if reverted.get('source_commit') == release.get('source_commit') and reverted.get('version') == current:
             subprocess.run([str(root / 'runtime/python/python.exe'), '-s', str(root / 'portable/portable.py'),
                 'start', '--no-browser'], capture_output=True, timeout=240, env=python_environment())
         raise ValueError('升级未完成，原程序或备份已保留：' + result.stderr[-1200:])
@@ -404,7 +493,8 @@ def run(url, target=None, *, check=False, start=True):
     require(output.get('ok') and read(root / 'RELEASE.json')['version'] == feed['version'], '未确认安装结果')
     if start:
         finish_bootstrap_start(root, output, installer)
-    output['mode'] = 'github-online-bootstrap'
+    output['mode'] = 'github-runtime-migration' if migration else 'github-online-bootstrap'
+    output['template_delivery'] = confirm_template_runtime(root, verify_template_capability(root, feed.get('template_capability')))
     return output
 
 

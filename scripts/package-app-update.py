@@ -129,6 +129,11 @@ def build(baseline, stage, output, package_url, notes='', published_at=None):
     plan = {key: release[key] for key in ('edition', 'version', 'channel', 'runtime_id', 'data_schema', 'platform')}
     plan.update(schema=1, base_version=before_release['version'], source_commit=release['source_commit'],
                 files=changed, required_locks=locks)
+    if release.get('template_capability') is not None:
+        spec = importlib.util.spec_from_file_location('haike_patch_template_capability', ROOT / 'portable/template_capability.py')
+        capability = importlib.util.module_from_spec(spec); spec.loader.exec_module(capability)
+        capability.verify(stage, release['template_capability'])
+        plan['template_capability'] = release['template_capability']
     plan_bytes = update.json_bytes(plan)
     if (len(changed) + 1 > update.MAX_FILES or len(plan_bytes) > update.MAX_MANIFEST_BYTES
             or any(item['size'] > update.MAX_FILE_BYTES for item in changed)
@@ -161,6 +166,8 @@ def build(baseline, stage, output, package_url, notes='', published_at=None):
                                           'runtime_id', 'data_schema', 'platform')}
         feed.update(notes=notes, published_at=published_at or datetime.now(timezone.utc).isoformat(),
                     package={'url': package_url, 'size': output.stat().st_size, 'sha256': checksum})
+        if plan.get('template_capability') is not None:
+            feed['template_capability'] = plan['template_capability']
         if output.stat().st_size + len(update.json_bytes(feed)) > update.MAX_ARCHIVE_BYTES:
             raise ValueError('更新包与版本清单的下载总量超过300 MB')
         with feed_path.open('xb') as stream:

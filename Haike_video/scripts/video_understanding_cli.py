@@ -268,6 +268,54 @@ def submit(args):
                 "report_path": str(task_path.parent / "report.md"), "production_ready": False}
 
 
+def reference_prepare(args):
+    from backlot import reference_understanding as ref
+    if bool(args.ffmpeg) != bool(args.ffprobe):
+        raise ValueError('显式路径须同时填写FFmpeg/ffprobe')
+    pair = (str(args.ffmpeg),str(args.ffprobe)) if args.ffmpeg else resolve_ffmpeg_pair()
+    if not pair:
+        raise ValueError('找不到现有FFmpeg/ffprobe')
+    selected = args.ranges
+    if args.around:
+        if selected or not args.transcript:
+            raise ValueError('--around需要同源实测转录，且不能与--range同时使用')
+        from backlot.reference_motion import phrase_ranges
+        from backlot.media_index import probe_media
+        duration = float(probe_media(args.source,pair[1])['format']['duration'])
+        speech = ref.transcript(ref.read(args.transcript),ref.sha(args.source),duration)
+        matches = phrase_ranges(speech,args.around,duration,padding=args.padding,occurrence=args.occurrence)
+        selected = [f"{m['start']}:{m['end']}" for m in matches]
+    return ref.prepare(args.source,args.output,ffmpeg=pair[0],ffprobe=pair[1],model=args.model,
+        selected_ranges=selected,every_frame=args.every_frame,transcript_path=args.transcript,
+        revision=args.revision,cell_width=args.cell_width)
+
+
+def reference_scan(args):
+    from backlot.reference_motion import scan
+    if bool(args.ffmpeg) != bool(args.ffprobe):
+        raise ValueError('显式路径须同时填写FFmpeg/ffprobe')
+    pair = (str(args.ffmpeg),str(args.ffprobe)) if args.ffmpeg else resolve_ffmpeg_pair()
+    if not pair:
+        raise ValueError('找不到现有FFmpeg/ffprobe')
+    return scan(args.source,args.output,ffmpeg=pair[0],ffprobe=pair[1],every=args.every,
+                width=args.width,revision=args.revision)
+
+
+def reference_read(args):
+    from backlot.reference_understanding import load
+    return load(args.task)
+
+
+def reference_submit(args):
+    from backlot.reference_understanding import submit as submit_reference
+    return submit_reference(args.task,args.submission)
+
+
+def reference_compare(args):
+    from backlot.reference_understanding import compare
+    return compare(args.reference_task,args.target_task,args.mapping,args.output)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     commands = parser.add_subparsers(dest="command", required=True)
@@ -290,6 +338,43 @@ def main():
     sub.add_argument("--task", type=Path, required=True)
     sub.add_argument("--submission", type=Path, required=True)
     sub.set_defaults(handler=submit)
+    ref = commands.add_parser('reference-prepare', help='原生PTS局部取证、台词联读与动作分析任务；不调用云服务')
+    ref.add_argument('--source', type=Path, required=True)
+    ref.add_argument('--output', type=Path, required=True)
+    ref.add_argument('--model', required=True)
+    ref.add_argument('--range', action='append', dest='ranges', help='开始秒:结束秒[:间隔秒]，可重复')
+    ref.add_argument('--every-frame', action='store_true')
+    ref.add_argument('--transcript', type=Path, help='同源SHA绑定的实测句/词转录JSON')
+    ref.add_argument('--around', help='按实测台词定位；无词时间时保留完整句子范围')
+    ref.add_argument('--padding', type=float, default=.5, help='台词前后各保留秒数，0–10')
+    ref.add_argument('--occurrence', type=int, help='仅选台词的第N次出现，从1开始')
+    ref.add_argument('--revision', default='1')
+    ref.add_argument('--cell-width', type=int, default=480)
+    ref.add_argument('--ffmpeg', type=Path)
+    ref.add_argument('--ffprobe', type=Path)
+    ref.set_defaults(handler=reference_prepare)
+    scan = commands.add_parser('reference-scan', help='测量原生PTS样本变化与局部活动，建议精查区间；不代替读片')
+    scan.add_argument('--source', type=Path, required=True)
+    scan.add_argument('--output', type=Path, required=True)
+    scan.add_argument('--every', type=float, default=.25)
+    scan.add_argument('--width', type=int, default=320)
+    scan.add_argument('--revision', default='1')
+    scan.add_argument('--ffmpeg', type=Path)
+    scan.add_argument('--ffprobe', type=Path)
+    scan.set_defaults(handler=reference_scan)
+    ref_read = commands.add_parser('reference-read', help='校验原片和证据身份后读取动作分析任务')
+    ref_read.add_argument('--task', type=Path, required=True)
+    ref_read.set_defaults(handler=reference_read)
+    ref_submit = commands.add_parser('reference-submit', help='保存已看帧的对象、阶段、语义事件与未知项')
+    ref_submit.add_argument('--task', type=Path, required=True)
+    ref_submit.add_argument('--submission', type=Path, required=True)
+    ref_submit.set_defaults(handler=reference_submit)
+    comp = commands.add_parser('reference-compare', help='按明确语义/动作对应生成参考和适配版对照图')
+    comp.add_argument('--reference-task', type=Path, required=True)
+    comp.add_argument('--target-task', type=Path, required=True)
+    comp.add_argument('--mapping', type=Path, required=True)
+    comp.add_argument('--output', type=Path, required=True)
+    comp.set_defaults(handler=reference_compare)
     args = parser.parse_args()
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")

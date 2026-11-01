@@ -1,0 +1,1704 @@
+{
+  "schema_version": 1,
+  "standard_version": "video-template-v1",
+  "template_id": "chalkboard-explainer-v1",
+  "template_version": "v001",
+  "template_type": "custom",
+  "spec_kind": "implementation",
+  "stage": "ready",
+  "authority": {
+    "runbook": "README.md",
+    "implementation_paths": [
+      "index.tsx",
+      "Board.tsx",
+      "physics.ts",
+      "types.ts",
+      "../../backlot/studio_chalkboard.py",
+      "../../scripts/chalkboard.py",
+      "../../scripts/chalkboard_render.cjs"
+    ],
+    "parameter_source": "Board.tsx"
+  },
+  "canvas": {
+    "width": 1440,
+    "height": 1800,
+    "fps": 60,
+    "duration_seconds": 210,
+    "clock": "完整参考音轨原速，60fps取12600帧；全局秒驱动物理模型。第二画幅1080×1920见扩展；替换音轨重建实测clock",
+    "coordinate_system": "top_left_pixels"
+  },
+  "narrative": {
+    "purpose": "将同一月球模型的月相/地影关系完整演示，并测试两种画幅的独立布局与时序保留",
+    "information_hierarchy": [
+      "章节问题",
+      "世界模型与地球视角",
+      "随句注解",
+      "口播字幕",
+      "品牌及注脚"
+    ],
+    "structure": [
+      "两种变化",
+      "受光半球放大与归位",
+      "观察角度",
+      "从半月到满月",
+      "入地影",
+      "倾角条件",
+      "并排比较",
+      "总结"
+    ]
+  },
+  "scenes": [
+    {
+      "id": "c01",
+      "start": 0,
+      "end": 24.777875,
+      "purpose": "两种变化",
+      "element_ids": [
+        "board",
+        "headline",
+        "topic",
+        "brand",
+        "counter",
+        "world",
+        "sun",
+        "earth",
+        "orbit",
+        "moon",
+        "observation",
+        "left_experiment",
+        "right_experiment",
+        "annotations",
+        "captions",
+        "footnote",
+        "audio"
+      ],
+      "variant": "orbit"
+    },
+    {
+      "id": "c02",
+      "start": 24.777875,
+      "end": 50.03820833,
+      "purpose": "受光半球放大与归位",
+      "element_ids": [
+        "board",
+        "headline",
+        "topic",
+        "brand",
+        "counter",
+        "world",
+        "sun",
+        "earth",
+        "orbit",
+        "moon",
+        "observation",
+        "left_experiment",
+        "right_experiment",
+        "annotations",
+        "captions",
+        "footnote",
+        "audio"
+      ],
+      "variant": "surface"
+    },
+    {
+      "id": "c03",
+      "start": 50.03820833,
+      "end": 76.85604166,
+      "purpose": "观察角度",
+      "element_ids": [
+        "board",
+        "headline",
+        "topic",
+        "brand",
+        "counter",
+        "world",
+        "sun",
+        "earth",
+        "orbit",
+        "moon",
+        "observation",
+        "left_experiment",
+        "right_experiment",
+        "annotations",
+        "captions",
+        "footnote",
+        "audio"
+      ],
+      "variant": "orbit"
+    },
+    {
+      "id": "c04",
+      "start": 76.85604166,
+      "end": 104.46129166,
+      "purpose": "从半月到满月",
+      "element_ids": [
+        "board",
+        "headline",
+        "topic",
+        "brand",
+        "counter",
+        "world",
+        "sun",
+        "earth",
+        "orbit",
+        "moon",
+        "observation",
+        "left_experiment",
+        "right_experiment",
+        "annotations",
+        "captions",
+        "footnote",
+        "audio"
+      ],
+      "variant": "orbit"
+    },
+    {
+      "id": "c05",
+      "start": 104.46129166,
+      "end": 129.81320833,
+      "purpose": "入地影",
+      "element_ids": [
+        "board",
+        "headline",
+        "topic",
+        "brand",
+        "counter",
+        "world",
+        "sun",
+        "earth",
+        "orbit",
+        "moon",
+        "observation",
+        "left_experiment",
+        "right_experiment",
+        "annotations",
+        "captions",
+        "footnote",
+        "audio"
+      ],
+      "variant": "shadow"
+    },
+    {
+      "id": "c06",
+      "start": 129.81320833,
+      "end": 154.58841666,
+      "purpose": "倾角条件",
+      "element_ids": [
+        "board",
+        "headline",
+        "topic",
+        "brand",
+        "counter",
+        "world",
+        "sun",
+        "earth",
+        "orbit",
+        "moon",
+        "observation",
+        "left_experiment",
+        "right_experiment",
+        "annotations",
+        "captions",
+        "footnote",
+        "audio"
+      ],
+      "variant": "tilt"
+    },
+    {
+      "id": "c07",
+      "start": 154.58841666,
+      "end": 178.38362499,
+      "purpose": "并排比较",
+      "element_ids": [
+        "board",
+        "headline",
+        "topic",
+        "brand",
+        "counter",
+        "world",
+        "sun",
+        "earth",
+        "orbit",
+        "moon",
+        "observation",
+        "left_experiment",
+        "right_experiment",
+        "annotations",
+        "captions",
+        "footnote",
+        "audio"
+      ],
+      "variant": "compare"
+    },
+    {
+      "id": "c08",
+      "start": 178.38362499,
+      "end": 210,
+      "purpose": "总结",
+      "element_ids": [
+        "board",
+        "headline",
+        "topic",
+        "brand",
+        "counter",
+        "world",
+        "sun",
+        "earth",
+        "orbit",
+        "moon",
+        "observation",
+        "left_experiment",
+        "right_experiment",
+        "annotations",
+        "captions",
+        "footnote",
+        "audio"
+      ],
+      "variant": "recap"
+    }
+  ],
+  "assets": [
+    {
+      "id": "reference_audio",
+      "kind": "audio",
+      "path": null,
+      "source": "本期私有assets绑定SHA与原片身份；本次使用官方参考混合音轨",
+      "embedded_content": [
+        "原口播",
+        "原BGM",
+        "原音效"
+      ],
+      "rights_status": "仅授权本地复刻测试；不打包进公开源码"
+    },
+    {
+      "id": "chalk_font",
+      "kind": "font",
+      "path": null,
+      "source": "本机合法字体或用户供应字体，绑定SHA；本次Windows楷体",
+      "embedded_content": [],
+      "rights_status": "源代码不分发系统字体，异机自行合法绑定并复验"
+    }
+  ],
+  "elements": [
+    {
+      "id": "board",
+      "type": "background",
+      "role": "黑板、灰框、粉尘、弧线与粉笔槽",
+      "parent_id": null,
+      "z_index": 0,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "渐变/粉尘/静态弧线覆盖整片；9:16高度1920，其余由BoardScene统一求值"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1080,
+          1350
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Board.tsx；名义1080×1350画布按4/3等比映射到1440×1800；9:16直接使用1080×1920分支"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 210
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "渐变/粉尘/静态弧线覆盖整片；9:16高度1920，其余由BoardScene统一求值"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "evaluation",
+          "target_id": null,
+          "rule": "物理模型→相位/节点→世界投影及观察结果→按画幅布局；未创建章内重置时钟"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "model evaluation order"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation",
+        "source_behavior"
+      ],
+      "acceptance": [
+        {
+          "check": "visual_and_temporal",
+          "method": "查看全部章节及过渡前中后，核对冻结props、模型数值与实际帧",
+          "pass_condition": "内容在声明区域内可读，对象状态连续，独立实验不混用相位"
+        }
+      ]
+    },
+    {
+      "id": "headline",
+      "type": "text",
+      "role": "章节标题",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "editable",
+        "binding": "chapters",
+        "asset_id": null,
+        "description": "即时完整显示当前章节标题，不额外添加打字入场"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          72,
+          70,
+          936,
+          80
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Board.tsx；名义1080×1350画布按4/3等比映射到1440×1800；9:16直接使用1080×1920分支",
+          "font": "props.font绑定的ChalkKai；本次Windows楷体",
+          "font_size": 54,
+          "max_lines": 1,
+          "overflow": "先改写或按实测拆句；实际预览复验"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 210
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "即时完整显示当前章节标题，不额外添加打字入场"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "evaluation",
+          "target_id": null,
+          "rule": "物理模型→相位/节点→世界投影及观察结果→按画幅布局；未创建章内重置时钟"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "model evaluation order"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation",
+        "source_behavior"
+      ],
+      "acceptance": [
+        {
+          "check": "visual_and_temporal",
+          "method": "查看全部章节及过渡前中后，核对冻结props、模型数值与实际帧",
+          "pass_condition": "内容在声明区域内可读，对象状态连续，独立实验不混用相位"
+        }
+      ]
+    },
+    {
+      "id": "topic",
+      "type": "text",
+      "role": "全片主题",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "editable",
+        "binding": "topic",
+        "asset_id": null,
+        "description": "props.title；章节间保留"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          72,
+          140,
+          850,
+          40
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Board.tsx；名义1080×1350画布按4/3等比映射到1440×1800；9:16直接使用1080×1920分支",
+          "font": "props.font绑定的ChalkKai；本次Windows楷体",
+          "font_size": 25,
+          "max_lines": 1,
+          "overflow": "先改写或按实测拆句；实际预览复验"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 210
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "props.title；章节间保留"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "evaluation",
+          "target_id": null,
+          "rule": "物理模型→相位/节点→世界投影及观察结果→按画幅布局；未创建章内重置时钟"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "model evaluation order"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation",
+        "source_behavior"
+      ],
+      "acceptance": [
+        {
+          "check": "visual_and_temporal",
+          "method": "查看全部章节及过渡前中后，核对冻结props、模型数值与实际帧",
+          "pass_condition": "内容在声明区域内可读，对象状态连续，独立实验不混用相位"
+        }
+      ]
+    },
+    {
+      "id": "brand",
+      "type": "text",
+      "role": "右上品牌",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "editable",
+        "binding": "branding",
+        "asset_id": null,
+        "description": "props.brand右对齐"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          650,
+          35,
+          350,
+          42
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Board.tsx；名义1080×1350画布按4/3等比映射到1440×1800；9:16直接使用1080×1920分支",
+          "font": "props.font绑定的ChalkKai；本次Windows楷体",
+          "font_size": 23,
+          "max_lines": 1,
+          "overflow": "先改写或按实测拆句；实际预览复验"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 210
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "props.brand右对齐"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "evaluation",
+          "target_id": null,
+          "rule": "物理模型→相位/节点→世界投影及观察结果→按画幅布局；未创建章内重置时钟"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "model evaluation order"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation",
+        "source_behavior"
+      ],
+      "acceptance": [
+        {
+          "check": "visual_and_temporal",
+          "method": "查看全部章节及过渡前中后，核对冻结props、模型数值与实际帧",
+          "pass_condition": "内容在声明区域内可读，对象状态连续，独立实验不混用相位"
+        }
+      ]
+    },
+    {
+      "id": "counter",
+      "type": "text",
+      "role": "章节编号",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "当前章/总章数，9:16基线247"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          880,
+          200,
+          120,
+          40
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Board.tsx；名义1080×1350画布按4/3等比映射到1440×1800；9:16直接使用1080×1920分支",
+          "font": "props.font绑定的ChalkKai；本次Windows楷体",
+          "font_size": 24,
+          "max_lines": 1,
+          "overflow": "先改写或按实测拆句；实际预览复验"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 210
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "当前章/总章数，9:16基线247"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "evaluation",
+          "target_id": null,
+          "rule": "物理模型→相位/节点→世界投影及观察结果→按画幅布局；未创建章内重置时钟"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "model evaluation order"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation",
+        "source_behavior"
+      ],
+      "acceptance": [
+        {
+          "check": "visual_and_temporal",
+          "method": "查看全部章节及过渡前中后，核对冻结props、模型数值与实际帧",
+          "pass_condition": "内容在声明区域内可读，对象状态连续，独立实验不混用相位"
+        }
+      ]
+    },
+    {
+      "id": "world",
+      "type": "component",
+      "role": "统一世界、放大、影锥和倾斜投影",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "Orbit/Surface/Shadow按kind选择，9:16位置60,340且scale .96；全球相位/node不归零"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          60,
+          255,
+          860,
+          516
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Board.tsx；名义1080×1350画布按4/3等比映射到1440×1800；9:16直接使用1080×1920分支"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 210
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Orbit/Surface/Shadow按kind选择，9:16位置60,340且scale .96；全球相位/node不归零"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "evaluation",
+          "target_id": null,
+          "rule": "物理模型→相位/节点→世界投影及观察结果→按画幅布局；未创建章内重置时钟"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "model evaluation order"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation",
+        "source_behavior"
+      ],
+      "acceptance": [
+        {
+          "check": "visual_and_temporal",
+          "method": "查看全部章节及过渡前中后，核对冻结props、模型数值与实际帧",
+          "pass_condition": "内容在声明区域内可读，对象状态连续，独立实验不混用相位"
+        }
+      ]
+    },
+    {
+      "id": "sun",
+      "type": "vector",
+      "role": "固定光源与光线",
+      "parent_id": "world",
+      "z_index": 10,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "Orbit局部中心90,300半径35；Rays九条平行线/移动箭头t*.22，Surface和Shadow由同名组件改变布局"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          38,
+          245,
+          900,
+          130
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Board.tsx；名义1080×1350画布按4/3等比映射到1440×1800；9:16直接使用1080×1920分支"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 210
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Orbit局部中心90,300半径35；Rays九条平行线/移动箭头t*.22，Surface和Shadow由同名组件改变布局"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "evaluation",
+          "target_id": null,
+          "rule": "物理模型→相位/节点→世界投影及观察结果→按画幅布局；未创建章内重置时钟"
+        },
+        {
+          "kind": "allow_overflow",
+          "target_id": "world",
+          "rule": "子模型在1000×600局部坐标求值，继承父scale .86/.96后输出；名义框记录局部坐标，实际以源码投影为准"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "model evaluation order"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation",
+        "source_behavior"
+      ],
+      "acceptance": [
+        {
+          "check": "visual_and_temporal",
+          "method": "查看全部章节及过渡前中后，核对冻结props、模型数值与实际帧",
+          "pass_condition": "内容在声明区域内可读，对象状态连续，独立实验不混用相位"
+        }
+      ]
+    },
+    {
+      "id": "earth",
+      "type": "vector",
+      "role": "地球/遮挡体",
+      "parent_id": "world",
+      "z_index": 10,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "Orbit局部555,300半径35；Shadow局部410,300半径52"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          520,
+          265,
+          70,
+          70
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Board.tsx；名义1080×1350画布按4/3等比映射到1440×1800；9:16直接使用1080×1920分支"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 210
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Orbit局部555,300半径35；Shadow局部410,300半径52"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "evaluation",
+          "target_id": null,
+          "rule": "物理模型→相位/节点→世界投影及观察结果→按画幅布局；未创建章内重置时钟"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "model evaluation order"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation",
+        "source_behavior"
+      ],
+      "acceptance": [
+        {
+          "check": "visual_and_temporal",
+          "method": "查看全部章节及过渡前中后，核对冻结props、模型数值与实际帧",
+          "pass_condition": "内容在声明区域内可读，对象状态连续，独立实验不混用相位"
+        }
+      ]
+    },
+    {
+      "id": "orbit",
+      "type": "vector",
+      "role": "轨道及节点",
+      "parent_id": "world",
+      "z_index": 10,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "相位角Monotone Hermite插值；首章0.5–1.4秒描线；tilt采用k=.29+.09cos(node)、旋转-.32sin(node)"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          350,
+          95,
+          410,
+          410
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Board.tsx；名义1080×1350画布按4/3等比映射到1440×1800；9:16直接使用1080×1920分支"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 210
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "相位角Monotone Hermite插值；首章0.5–1.4秒描线；tilt采用k=.29+.09cos(node)、旋转-.32sin(node)"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "evaluation",
+          "target_id": null,
+          "rule": "物理模型→相位/节点→世界投影及观察结果→按画幅布局；未创建章内重置时钟"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "model evaluation order"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation",
+        "source_behavior"
+      ],
+      "acceptance": [
+        {
+          "check": "visual_and_temporal",
+          "method": "查看全部章节及过渡前中后，核对冻结props、模型数值与实际帧",
+          "pass_condition": "内容在声明区域内可读，对象状态连续，独立实验不混用相位"
+        }
+      ]
+    },
+    {
+      "id": "moon",
+      "type": "vector",
+      "role": "持续的世界月球",
+      "parent_id": "world",
+      "z_index": 10,
+      "content": {
+        "mode": "editable",
+        "binding": "motion",
+        "asset_id": null,
+        "description": "位置随phaseKeys；世界半球固定朝光源，阴影投影在同一圆盘clipPath；Surface原位置→570,280半径185→原位置"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          50,
+          50
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Board.tsx；名义1080×1350画布按4/3等比映射到1440×1800；9:16直接使用1080×1920分支"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 210
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "位置随phaseKeys；世界半球固定朝光源，阴影投影在同一圆盘clipPath；Surface原位置→570,280半径185→原位置"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "evaluation",
+          "target_id": null,
+          "rule": "物理模型→相位/节点→世界投影及观察结果→按画幅布局；未创建章内重置时钟"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "model evaluation order"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation",
+        "source_behavior"
+      ],
+      "acceptance": [
+        {
+          "check": "visual_and_temporal",
+          "method": "查看全部章节及过渡前中后，核对冻结props、模型数值与实际帧",
+          "pass_condition": "内容在声明区域内可读，对象状态连续，独立实验不混用相位"
+        }
+      ]
+    },
+    {
+      "id": "observation",
+      "type": "component",
+      "role": "地球视角月相或遮挡结果",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "普通4:5中心785,995半径137；9:16中心540,1330半径235；phase决定亮面，shadow由圆交面积决定"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          648,
+          812,
+          274,
+          390
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Board.tsx；名义1080×1350画布按4/3等比映射到1440×1800；9:16直接使用1080×1920分支"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 210
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "普通4:5中心785,995半径137；9:16中心540,1330半径235；phase决定亮面，shadow由圆交面积决定"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "evaluation",
+          "target_id": null,
+          "rule": "物理模型→相位/节点→世界投影及观察结果→按画幅布局；未创建章内重置时钟"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "model evaluation order"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation",
+        "source_behavior"
+      ],
+      "acceptance": [
+        {
+          "check": "visual_and_temporal",
+          "method": "查看全部章节及过渡前中后，核对冻结props、模型数值与实际帧",
+          "pass_condition": "内容在声明区域内可读，对象状态连续，独立实验不混用相位"
+        }
+      ]
+    },
+    {
+      "id": "left_experiment",
+      "type": "component",
+      "role": "比较中的左月相实验",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "compare/recap两列：大月相中心292,555 r176；轨道translate55,825 scale.46；9:16上行大月相720,570 r190、小轨道20,420 scale.5"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          55,
+          340,
+          460,
+          760
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Board.tsx；名义1080×1350画布按4/3等比映射到1440×1800；9:16直接使用1080×1920分支"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 210
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "compare/recap两列：大月相中心292,555 r176；轨道translate55,825 scale.46；9:16上行大月相720,570 r190、小轨道20,420 scale.5"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "evaluation",
+          "target_id": null,
+          "rule": "物理模型→相位/节点→世界投影及观察结果→按画幅布局；未创建章内重置时钟"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "model evaluation order"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation",
+        "source_behavior"
+      ],
+      "acceptance": [
+        {
+          "check": "visual_and_temporal",
+          "method": "查看全部章节及过渡前中后，核对冻结props、模型数值与实际帧",
+          "pass_condition": "内容在声明区域内可读，对象状态连续，独立实验不混用相位"
+        }
+      ]
+    },
+    {
+      "id": "right_experiment",
+      "type": "component",
+      "role": "独立右入影实验",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "editable",
+        "binding": "comparison",
+        "asset_id": null,
+        "description": "4:5大圆788,555；右模型565,825 scale.46；9:16下行大圆720,1270、小世界20,1120。comparisonPhaseKeys独立求值，不套用左侧轨迹"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          565,
+          340,
+          460,
+          760
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Board.tsx；名义1080×1350画布按4/3等比映射到1440×1800；9:16直接使用1080×1920分支"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 210
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "4:5大圆788,555；右模型565,825 scale.46；9:16下行大圆720,1270、小世界20,1120。comparisonPhaseKeys独立求值，不套用左侧轨迹"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "evaluation",
+          "target_id": null,
+          "rule": "物理模型→相位/节点→世界投影及观察结果→按画幅布局；未创建章内重置时钟"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "model evaluation order"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation",
+        "source_behavior"
+      ],
+      "acceptance": [
+        {
+          "check": "visual_and_temporal",
+          "method": "查看全部章节及过渡前中后，核对冻结props、模型数值与实际帧",
+          "pass_condition": "内容在声明区域内可读，对象状态连续，独立实验不混用相位"
+        }
+      ]
+    },
+    {
+      "id": "annotations",
+      "type": "text",
+      "role": "随句书写及粉笔头",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "editable",
+        "binding": "notes",
+        "asset_id": null,
+        "description": "以当前章最后已开始的真实字幕句为锚；.7秒从左到右遮罩，停顿保留；9:16基线302"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          80,
+          218,
+          920,
+          55
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Board.tsx；名义1080×1350画布按4/3等比映射到1440×1800；9:16直接使用1080×1920分支",
+          "font": "props.font绑定的ChalkKai；本次Windows楷体",
+          "font_size": 31,
+          "max_lines": 1,
+          "overflow": "先改写或按实测拆句；实际预览复验"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 210
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "以当前章最后已开始的真实字幕句为锚；.7秒从左到右遮罩，停顿保留；9:16基线302"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "evaluation",
+          "target_id": null,
+          "rule": "物理模型→相位/节点→世界投影及观察结果→按画幅布局；未创建章内重置时钟"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "model evaluation order"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation",
+        "source_behavior"
+      ],
+      "acceptance": [
+        {
+          "check": "visual_and_temporal",
+          "method": "查看全部章节及过渡前中后，核对冻结props、模型数值与实际帧",
+          "pass_condition": "内容在声明区域内可读，对象状态连续，独立实验不混用相位"
+        }
+      ]
+    },
+    {
+      "id": "captions",
+      "type": "text",
+      "role": "真实句级字幕",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "editable",
+        "binding": "captions",
+        "asset_id": null,
+        "description": "4:5字号35/1.4，9:16 y1750字号40/1.4；[start,end)显示，原音频间隙可留空"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          70,
+          1187,
+          940,
+          130
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Board.tsx；名义1080×1350画布按4/3等比映射到1440×1800；9:16直接使用1080×1920分支",
+          "font": "props.font绑定的ChalkKai；本次Windows楷体",
+          "font_size": 35,
+          "max_lines": 2,
+          "overflow": "先改写或按实测拆句；实际预览复验"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 210
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "4:5字号35/1.4，9:16 y1750字号40/1.4；[start,end)显示，原音频间隙可留空"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "evaluation",
+          "target_id": null,
+          "rule": "物理模型→相位/节点→世界投影及观察结果→按画幅布局；未创建章内重置时钟"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "model evaluation order"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation",
+        "source_behavior"
+      ],
+      "acceptance": [
+        {
+          "check": "visual_and_temporal",
+          "method": "查看全部章节及过渡前中后，核对冻结props、模型数值与实际帧",
+          "pass_condition": "内容在声明区域内可读，对象状态连续，独立实验不混用相位"
+        }
+      ]
+    },
+    {
+      "id": "footnote",
+      "type": "text",
+      "role": "测试/来源注脚",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "editable",
+        "binding": "footnote",
+        "asset_id": null,
+        "description": "props.note右对齐；9:16基线H-52"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          500,
+          1275,
+          510,
+          35
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Board.tsx；名义1080×1350画布按4/3等比映射到1440×1800；9:16直接使用1080×1920分支",
+          "font": "props.font绑定的ChalkKai；本次Windows楷体",
+          "font_size": 17,
+          "max_lines": 1,
+          "overflow": "先改写或按实测拆句；实际预览复验"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 210
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "props.note右对齐；9:16基线H-52"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "evaluation",
+          "target_id": null,
+          "rule": "物理模型→相位/节点→世界投影及观察结果→按画幅布局；未创建章内重置时钟"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "model evaluation order"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation",
+        "source_behavior"
+      ],
+      "acceptance": [
+        {
+          "check": "visual_and_temporal",
+          "method": "查看全部章节及过渡前中后，核对冻结props、模型数值与实际帧",
+          "pass_condition": "内容在声明区域内可读，对象状态连续，独立实验不混用相位"
+        }
+      ]
+    },
+    {
+      "id": "audio",
+      "type": "audio",
+      "role": "完整音轨主时钟",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "embedded",
+        "binding": "sound",
+        "asset_id": "reference_audio",
+        "description": "已混合人声/BGM/SFX的源音频合入一次，原速；末尾仅补16毫秒至210秒。不重新混入重复音乐"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1080,
+          1350
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Board.tsx；名义1080×1350画布按4/3等比映射到1440×1800；9:16直接使用1080×1920分支"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 210
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "已混合人声/BGM/SFX的源音频合入一次，原速；末尾仅补16毫秒至210秒。不重新混入重复音乐"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "evaluation",
+          "target_id": null,
+          "rule": "物理模型→相位/节点→世界投影及观察结果→按画幅布局；未创建章内重置时钟"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "model evaluation order"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation",
+        "source_behavior"
+      ],
+      "acceptance": [
+        {
+          "check": "visual_and_temporal",
+          "method": "查看全部章节及过渡前中后，核对冻结props、模型数值与实际帧",
+          "pass_condition": "内容在声明区域内可读，对象状态连续，独立实验不混用相位"
+        }
+      ]
+    }
+  ],
+  "slots": [
+    {
+      "id": "topic",
+      "element_id": "topic",
+      "property": "content",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "binding": "props.title",
+        "max_characters": 22
+      },
+      "missing": "缺标题时补齐",
+      "overflow": "缩短后以实际字体复验"
+    },
+    {
+      "id": "chapters",
+      "element_id": "headline",
+      "property": "content",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "binding": "props.chapters",
+        "kinds": [
+          "orbit",
+          "surface",
+          "orbit",
+          "orbit",
+          "shadow",
+          "tilt",
+          "compare",
+          "recap"
+        ],
+        "chapters": [
+          1,
+          40
+        ],
+        "minimum_seconds": 8,
+        "max_title_characters": 17
+      },
+      "missing": "缺章节或覆盖不连续拒绝",
+      "overflow": "按语义重分章节，不压短到8秒以下"
+    },
+    {
+      "id": "motion",
+      "element_id": "moon",
+      "property": "content",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "binding": "props.phaseKeys,nodeKeys,model,surfaceWindows",
+        "clock": "真实全局秒，关键帧覆盖整片；半径/距离正数，inclination 0..90；surface至少两秒阅读",
+        "fixed_source_metadata": [
+          "model.displayInclinationDegrees：保留来源值，显示投影按Board.tsx固定，未开放为可变控制"
+        ]
+      },
+      "missing": "缺模型或轨迹拒绝",
+      "overflow": "重新测量轨迹，不按字幕字数均分"
+    },
+    {
+      "id": "comparison",
+      "element_id": "right_experiment",
+      "property": "content",
+      "value_type": "array",
+      "required": false,
+      "limits": {
+        "binding": "props.comparisonPhaseKeys",
+        "optional": "未填时复用主轨迹，适用单实验；本次双实验明确填写独立轨迹"
+      },
+      "missing": "双实验不允许漏独立时序",
+      "overflow": "独立拟合并复验入影过程"
+    },
+    {
+      "id": "notes",
+      "element_id": "annotations",
+      "property": "content",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "binding": "props.chapters[].annotation",
+        "max_characters": 27,
+        "trigger": "每章真实字幕句start"
+      },
+      "missing": "缺注解拒绝",
+      "overflow": "先提炼注解，保留原完整字幕"
+    },
+    {
+      "id": "captions",
+      "element_id": "captions",
+      "property": "content",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "binding": "props.captions",
+        "chronological": true,
+        "max_characters_45": 52,
+        "max_characters_916": 46,
+        "max_lines": 2
+      },
+      "missing": "无口播允许空数组，有口播须有实测句时钟",
+      "overflow": "按实测语义/停顿拆句，禁止估词时钟"
+    },
+    {
+      "id": "branding",
+      "element_id": "brand",
+      "property": "content",
+      "value_type": "object",
+      "required": false,
+      "limits": {
+        "binding": "props.brand,note",
+        "review": "替换后实际预览测宽，当前最小演示文本为默认"
+      },
+      "missing": "允许空品牌/注脚",
+      "overflow": "溢出先缩短并复验"
+    },
+    {
+      "id": "sound",
+      "element_id": "audio",
+      "property": "content.asset_id",
+      "value_type": "asset",
+      "required": false,
+      "limits": {
+        "binding": "props.audio + assets",
+        "path": "绝对源路径和SHA；props只放平面文件名",
+        "speed": 1
+      },
+      "missing": "有口播须绑定真实完整音轨；无声示意可省略",
+      "overflow": "音轨变化重新绑定实测时钟，禁止拉伸人声"
+    },
+    {
+      "id": "footnote",
+      "element_id": "footnote",
+      "property": "content",
+      "value_type": "string",
+      "required": false,
+      "limits": {
+        "binding": "props.note",
+        "review": "右下区域，替换后按实际字体测宽"
+      },
+      "missing": "允许空注脚",
+      "overflow": "先缩短后预览"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "implementation",
+      "source_kind": "design",
+      "source": "海客独立SVG/Remotion实现",
+      "locator": "Board.tsx、physics.ts及冻结请求source_files",
+      "method": "源码为参数真值；每次冻结绑定SHA，变更后重新预览",
+      "file": "Board.tsx",
+      "sha256": null
+    },
+    {
+      "id": "source_behavior",
+      "source_kind": "observation",
+      "source": "官方预览2.5.3和个人签名包2.7.2公开时钟，身份分别保存",
+      "locator": "本次项目reference对象和素材理解analysis.json",
+      "method": "全片概览30帧、32句中点及五段120个原生连续帧；未声称连续听看",
+      "file": null,
+      "sha256": null
+    },
+    {
+      "id": "local_validation",
+      "source_kind": "measurement",
+      "source": "当前本机双比例开发验收",
+      "locator": "VALIDATION.json及其项目/任务/产物SHA",
+      "method": "真实队列、逐章预览、编码探测与关键过渡取证分别记录",
+      "file": "VALIDATION.json",
+      "sha256": "a5a8cf92c0f4119b9c9e31817d1e4488306f46b0c8ccbc5b7a24afc05fd1b45e"
+    }
+  ],
+  "unknowns": [],
+  "validation": {
+    "structure": {
+      "status": "pass",
+      "evidence_ids": [
+        "local_validation"
+      ],
+      "note": "本模板独立schema/约束检查、129项相关回归及根源码/handoff检查通过；其他Videohub历史项失败单列。"
+    },
+    "technical": {
+      "status": "pass",
+      "evidence_ids": [
+        "local_validation"
+      ],
+      "note": "两种完整210秒/12600帧/60fps输出均完整解码，实测视频流20.98Mbps、yuv420p/tv；原音轨零偏移相关性0.99983、真峰值-3.5dBFS。"
+    },
+    "visual": {
+      "status": "pass",
+      "evidence_ids": [
+        "local_validation"
+      ],
+      "note": "最终编码各34帧覆盖8章，另实际查看4:5的144帧/9:16的120原生邻帧及各5配对。主要对象状态/时钟与重排通过；独立笔触、投影和右实验拟合曲线差异单列。"
+    },
+    "audio": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "全片原音轨对齐、响度/峰值测量通过；实际连续听审/外放未执行，保留待验。"
+    },
+    "platform": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "未在手机或发布平台真机验收"
+    },
+    "user_review": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "待用户观看测试产物"
+    },
+    "production": {
+      "status": "pass",
+      "evidence_ids": [
+        "local_validation"
+      ],
+      "note": "本机CLI已通过现有统一队列完成双比例整片与候选作品登记、幂等请求/字幕局部修订/同画面音频修订；产品模板选择器未接入，交付明确本地测试产物。"
+    }
+  },
+  "extensions": {
+    "graphic": {
+      "text_policy": "标题17字、注解27字、实测字幕容量；保持字号并先改写/按实测拆句，实际预览复验",
+      "asset_fit": "SVG元素分别布局及等比缩放；整幅横片不裁切填充"
+    },
+    "avatar": {
+      "face_crop": "不适用，无人物",
+      "synchronization": "只有语音/字幕项适用；源音轨合入一次，实测句时钟不平摊成词；连续听审保持pending"
+    },
+    "custom": {
+      "contract": "haike-chalkboard-reconstruction-v1",
+      "rules": "仅Orbit/Surface/Shadow/Tilt/Compare/Recap六种已实现关系。不是原生21机制通用转换器；时序/字号/布局均由源码和冻结请求确定。4:5与9:16各自求布局，禁止缩放裁切横片替代。 声音最终从绑定源用native AAC封装，画面流复制；未把全片相关性测量当作连续听审。",
+      "canvases": [
+        {
+          "width": 1440,
+          "height": 1800
+        },
+        {
+          "width": 1080,
+          "height": 1920
+        }
+      ],
+      "source_version_boundary": "包2.7.2公开时钟，官方预览2.5.3；字体笔触独立近似，比较实验轨迹据观察拟合，非私有源码恢复",
+      "evaluation": "全球相位→同一物理状态→世界/观察投影；倾角影响遮挡，月相与入影分别求值；右比较拥有独立相位轨迹。sourceClock值只存在本期输入，源码默认中性示例。"
+    }
+  },
+  "operations": [
+    {
+      "id": "check",
+      "input": "本期input JSON、合法font/audio、真实同源素材理解与工具SHA",
+      "action": "chalkboard.py check --input；核对已存在项目与冻结输入",
+      "output": "合法性及秒数",
+      "completion": "全部参数已确定、素材/工具/理解证据同源；开发测试授权有效",
+      "recovery": "缺字段补齐，旧请求不覆盖",
+      "entrypoint": "../../scripts/chalkboard.py"
+    },
+    {
+      "id": "prepare",
+      "input": "通过check的input及单队列执行资格",
+      "action": "chalkboard.py prepare --input，冻结输入并由统一队列渲染34帧",
+      "output": "项目、request、preview队列编号、预览PNG",
+      "completion": "实际查看所有本期预览，布局/最长内容/主要状态可读并填写review；再核对ready范围",
+      "recovery": "status --request查询，复用已有预览；源码变动重新冻结",
+      "entrypoint": "../../scripts/chalkboard.py"
+    },
+    {
+      "id": "render",
+      "input": "本期已看预览review + 冻结request + 完整测试授权",
+      "action": "chalkboard.py review --request --evidence 后 render --request；开发完整测试按本期授权，不当作已验正式生产",
+      "output": "MP4、quality.json、统一队列终态、作品ID",
+      "completion": "完整解码，尺寸/fps/帧数与冻结输入一致且视频实测≥20Mbps；实际最终关键状态/过渡检查与音频验证分别记载",
+      "recovery": "status --request和原队列查询。中断保留原文件日志；未完整编码文件先隔离，再在原请求恢复，不能把存在当成完整",
+      "entrypoint": "../../scripts/chalkboard.py"
+    },
+    {
+      "id": "handoff",
+      "input": "完整双比例产物、验证记录及本规格",
+      "action": "按量表核对静态/技术/视觉/音频/真机/用户/生产接入范围，交付播放器及报告",
+      "output": "VALIDATION.json与本次REPORT.md",
+      "completion": "证据和版本一致，抽帧不冒充连续听看，未验维度明确；仅交付开发测试，不发布",
+      "recovery": "定位问题所属对象/时间窗，修复后重新冻结和重验受影响维度",
+      "entrypoint": "README.md"
+    }
+  ]
+}

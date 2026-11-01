@@ -95,7 +95,8 @@ def _template_files():
 
 def runtime():
     from lib.ffmpeg_locator import resolve_ffmpeg_pair
-    files = [Path(__file__), ROOT / "backlot/production_queue_worker.py", ROOT / "backlot/production_queue.py", ROOT / "tools/video/video_compose.py",
+    from backlot import quest_vlog
+    files = [Path(__file__), Path(quest_vlog.__file__), ROOT / "backlot/production_queue_worker.py", ROOT / "backlot/production_queue.py", ROOT / "tools/video/video_compose.py",
              ROOT / "remotion-composer/package-lock.json", *_template_files(), *map(Path, resolve_ffmpeg_pair())]
     _require((TEMPLATE / "index.tsx").is_file() and (ROOT / "remotion-composer/node_modules").is_dir(), "正式模板或Remotion依赖未就绪")
     _require(all(p.is_file() for p in files), "本地渲染器或编码器缺失")
@@ -140,10 +141,13 @@ def validate_props(props, voice_seconds):
                "captions", "fontAssets", "wallCategories", "presenterClips", "presenterModes"}
     _require(not set(props) - allowed, "正式模板包含未开放参数")
     total = props.get("durationFrames")
+    from backlot import quest_vlog
+    quest = props.get('visualStyle') == 'quest'
+    width, height = quest_vlog.canvas(props) if quest else (WIDTH, HEIGHT)
     _require(_int(total, 60, 18060) and (props.get("width"), props.get("height"), props.get("fps"), props.get("audio"))
-             == (WIDTH, HEIGHT, FPS, "master.wav"), "正式模板须绑定自动口播时钟、4:5和master.wav")
+             == (width, height, FPS, "master.wav"), "正式模板须绑定自动口播时钟、已声明画幅和master.wav")
     _require(_text(props.get("brand"), 24) and _text(props.get("footer", ""), 50, empty=True), "品牌或页脚文字无效")
-    _require(props.get("visualStyle") in {"hum", "coral", "darkroom", "carnival", "archive", "playroom"}, "视觉风格须为已适配的模板风格")
+    _require(props.get("visualStyle") in {"hum", "coral", "darkroom", "carnival", "archive", "playroom", "quest"}, "视觉风格须为已适配的模板风格")
     if "palette" in props:
         _require(isinstance(props["palette"], dict) and all(isinstance(v, str) and re.fullmatch(r"#[a-fA-F0-9]{6}", v) for v in props["palette"].values()), "颜色须为十六进制色值")
     _require(props.get("fontAssets") == {"display": "display.ttf", "body": "body.ttf"}, "正式模板须绑定display.ttf和body.ttf字体文件")
@@ -168,11 +172,17 @@ def validate_props(props, voice_seconds):
     _require(isinstance(scenes, list) and scenes and all(isinstance(s, dict) for s in scenes), "场景清单为空")
     cursor, seen, used = 0, set(), set()
     for scene in scenes:
-        _require(not set(scene) - {"id", "from", "frames", "module", "theme", "title", "subtitle", "mediaId", "selection", "wallMediaIds", "motion"}, "场景包含未开放参数")
+        _require(not set(scene) - {"id", "from", "frames", "module", "theme", "title", "subtitle", "mediaId", "selection", "wallMediaIds", "motion", "quest"}, "场景包含未开放参数")
         _require(_text(scene.get("id"), 60) and scene["id"] not in seen and scene.get("from") == cursor
                  and _int(scene.get("from"), 0, total - 1) and _int(scene.get("frames"), 30, total)
                  and cursor + scene["frames"] <= total, "场景须连续覆盖全片、不重叠且编号唯一")
         seen.add(scene["id"])
+        if quest:
+            _require(_text(scene.get('title'), 42, lines=2) and _text(scene.get('subtitle', ''), 50, lines=2, empty=True), '任务口播标题与说明超出容量')
+            used.update(quest_vlog.scene(scene, ids))
+            cursor += scene['frames']
+            continue
+        _require('quest' not in scene, '此模板不能使用任务口播参数')
         _require(scene.get("module") in {"statement", "wall", "focus", "dynamic"} and scene.get("theme", "paper") in {"paper", "dark"}, "尚未适配的场景模块或主题")
         motion = scene.get('motion')
         dynamic = scene['module'] == 'dynamic'
@@ -222,6 +232,8 @@ def validate_props(props, voice_seconds):
             _require(not {"mediaId", "selection", "wallMediaIds"} & set(scene), "陈述模块不接受实拍参数")
         cursor += scene["frames"]
     _require(cursor == total and used == ids, "场景未覆盖完整口播时钟或有未使用素材")
+    if quest:
+        quest_vlog.continuity(scenes)
     captions = props.get("captions")
     _require(isinstance(captions, list) and captions and all(isinstance(c, dict) for c in captions), "须提供实际口播字幕")
     end_ms = 0
@@ -344,7 +356,7 @@ def _validate_sources(props, audio, paths, provenance, *, check_fonts=True):
                  and isinstance(observed, list) and observed and all(_number(t) and start <= t <= stop for t in observed), "视频素材须声明实际看帧区间，不能循环或冻结补长")
     by_id = {m["id"]: m for m in props["media"]}
     for scene in props["scenes"]:
-        if scene["module"] == "statement":
+        if scene["module"] == "statement" or not scene.get('mediaId'):
             continue
         item = by_id[scene["mediaId"]]
         if item.get("kind", "image" if Path(item["src"]).suffix.lower() in IMAGE_EXT else "video") == "image":
@@ -373,6 +385,9 @@ def _validate_sources(props, audio, paths, provenance, *, check_fonts=True):
 
 def _validate_fonts(props, paths, image_font):
     try:
+        if props.get('visualStyle') == 'quest':
+            from backlot.quest_vlog import fonts
+            return fonts(props, paths, image_font)
         geometry = read_json(TEMPLATE / "layout.json")
         caption_width = (geometry.get("captions") or [88, 1570, 1264, 116])[2]
         is_dynamic = props.get('visualStyle') in {'archive', 'playroom'}
@@ -406,7 +421,9 @@ def preflight(value):
     audio = _audio_plan(raw_audio, paths, clock)
     props = deepcopy(value.get("props"))
     _require(isinstance(props, dict), "须有模板props")
-    for key, expected in {"width": WIDTH, "height": HEIGHT, "fps": FPS, "durationFrames": audio["durationFrames"], "audio": "master.wav"}.items():
+    from backlot.quest_vlog import canvas
+    width, height = canvas(props) if props.get('visualStyle') == 'quest' else (WIDTH, HEIGHT)
+    for key, expected in {"width": width, "height": height, "fps": FPS, "durationFrames": audio["durationFrames"], "audio": "master.wav"}.items():
         _require(key not in props or props[key] == expected, "尺寸或时长由完整口播自动生成，不能手工覆盖：" + key)
         props[key] = expected
     if "shotPlan" in value:
@@ -587,7 +604,7 @@ def run(queue, job):
             subprocess.run(command, check=True, capture_output=True, creationflags=NO_WINDOW)
             info, measured = media_probe(output), measure_audio(output)
             video, audio = info.get("video") or {}, info.get("audio") or {}
-            _require(video.get("width") == WIDTH and video.get("height") == HEIGHT and video.get("codec_name") == "h264" and video.get("pix_fmt") == "yuv420p"
+            _require(video.get("width") == r['props']['width'] and video.get("height") == r['props']['height'] and video.get("codec_name") == "h264" and video.get("pix_fmt") == "yuv420p"
                      and abs(float(Fraction(video.get("avg_frame_rate", "0/1"))) - FPS) < .001 and int(video.get("nb_frames", 0)) == r["props"]["durationFrames"]
                      and abs(info["duration"] - duration) <= .08 and int(video.get("bit_rate", 0)) >= EXPORT["minimum_measured_bitrate"]
                      and str(audio.get("sample_rate")) == str(RATE) and audio.get("channels") == 2 and measured["true_peak_dbtp"] <= -1.5, "成片帧数、码率、尺寸、声道或峰值未通过")
@@ -607,7 +624,7 @@ def run(queue, job):
             atomic_private(folder / "result.json", {"request_sha256": r["request_sha256"], "output_sha256": sha(output), "nomusic_output_sha256": sha(no_music_output),
                            "nomusic_wav_sha256": sha(folder / "nomusic.wav"), "quality_sha256": sha(folder / "quality.json"), "cloud_calls": 0, "publication": False})
         work = WorkCatalog(queue.projects_root).register(r["project_id"], output, work_key="main", mode="manual", event_id=job["job_id"], quality_passed=False, actor=CONTRACT,
-                title=r["title"], summary="口播主钟4:5可复用动效模板；本地渲染；实测≥20Mbps；视听复核待完成；未发布")
+                title=r["title"], summary=f"口播主钟可复用动效模板 · {r['props']['width']}×{r['props']['height']}；本地渲染；实测≥20Mbps；视听复核待完成；未发布")
         version = next(v for v in work["versions"] if v["sha256"] == sha(output))
         return {"status": "completed", "stage": "可复用口播动效成片已合成，等待观看", "result": {"output_path": str(output), "output_sha256": sha(output),
                 "work_id": work["work_id"], "version_id": version["version_id"], "qa_status": "pending", "cloud_calls": 0}}

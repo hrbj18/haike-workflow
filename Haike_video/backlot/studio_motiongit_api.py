@@ -57,6 +57,26 @@ def packages():
     return call(motion.packages)
 
 
+@router.get('/presets')
+def presets():
+    from backlot.studio_motion_presets import catalog
+    return call(catalog)
+
+
+@router.get('/preset-capability')
+def preset_capability():
+    from backlot.studio_motion_presets import capability_identity, catalog
+    return call(lambda: {**capability_identity(), 'availability': catalog()['presets']})
+
+
+@router.post('/presets/{preset_id}/drafts')
+def create_preset(preset_id: str, request: Request, data: dict = Body(...)):
+    mutation(request)
+    from backlot.studio_motion_presets import create
+    return call(create, preset_id, parameters=data.get('parameters'), title=data.get('title'),
+                package_id=data.get('package_id'))
+
+
 @router.post('/packages')
 async def upload(request: Request, filename: str = 'template.motion'):
     mutation(request)

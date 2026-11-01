@@ -1,0 +1,35 @@
+{
+  "schema": "haike.motion-preset-recipe/1",
+  "parameters": {
+    "props": {
+      "visualStyle": "quest", "width": 1080, "height": 1920,
+      "brand": "本期品牌", "footer": "本期信息",
+      "fontAssets": {"display": "display.ttf", "body": "body.ttf"},
+      "media": [
+        {"id": "photo-1", "src": "material-1.mp4", "thumbnail": "photo-1.png", "kind": "video", "orientation": "portrait", "offset": 0, "fit": "contain", "label": "本期素材一"},
+        {"id": "photo-2", "src": "material-2.mp4", "thumbnail": "photo-2.png", "kind": "video", "orientation": "portrait", "offset": 0, "fit": "contain", "label": "本期素材二"},
+        {"id": "photo-3", "src": "material-3.mp4", "thumbnail": "photo-3.png", "kind": "video", "orientation": "portrait", "offset": 0, "fit": "contain", "label": "本期素材三"},
+        {"id": "photo-4", "src": "material-4.mp4", "thumbnail": "photo-4.png", "kind": "video", "orientation": "portrait", "offset": 0, "fit": "contain", "label": "本期素材四"},
+        {"id": "photo-5", "src": "material-5.mp4", "thumbnail": "photo-5.png", "kind": "video", "orientation": "portrait", "offset": 0, "fit": "contain", "label": "本期素材五"}
+      ],
+      "scenes": [
+        {"id": "opening", "module": "quest", "theme": "paper", "title": "本期问题", "quest": {"kind": "comment", "items": [], "cues": [], "accent": "", "presenter": "circle", "chapter": "QUESTION 01", "comment": {"author": "本期提问", "body": "请填写本期完整提问", "photoIds": ["photo-1", "photo-2", "photo-3"]}}},
+        {"id": "question", "module": "quest", "theme": "dark", "title": "比较与选择", "quest": {"kind": "ranking", "items": ["第一项", "第二项", "第三项", "第四项"], "accent": "", "chapter": "TRY IT YOURSELF", "presenter": "circle", "transition": "checker", "ranking": {"note": "本期主张，非统计排名", "orders": [], "strikes": []}}},
+        {"id": "place", "module": "quest", "theme": "paper", "title": "地点与实拍", "quest": {"kind": "world", "items": [], "cues": [], "accent": "本期地点", "presenter": "circle", "chapter": "NEW LOCATION", "transition": "iris"}, "mediaId": "photo-3"},
+        {"id": "experience", "module": "quest", "theme": "paper", "title": "亲眼看看", "quest": {"kind": "media", "items": ["第一特点", "第二特点"], "accent": "", "presenter": "circle", "chapter": "HANDS ON"}, "mediaId": "photo-1"},
+        {"id": "experience-route", "module": "quest", "theme": "paper", "title": "从了解到体验", "quest": {"kind": "path", "items": ["了解", "体验"], "accent": "", "chapter": "LEVEL UP", "presenter": "circle", "path": {"id": "experience-route", "stops": [0, 1], "travelFrames": 18}}, "mediaId": "photo-5"},
+        {"id": "address", "module": "quest", "theme": "dark", "title": "本期行动信息", "quest": {"kind": "path", "items": ["了解", "体验"], "accent": "行动信息", "chapter": "COME AND TRY", "presenter": "card", "transition": "checker", "path": {"id": "experience-route", "stops": [1], "travelFrames": 18}}, "mediaId": "photo-3"},
+        {"id": "closing", "module": "quest", "theme": "paper", "title": "本期结论", "quest": {"kind": "clear", "items": ["现在开始", "亲手体验"], "accent": "欢迎体验", "presenter": "card", "chapter": "YOUR NEXT QUEST", "photoIds": ["photo-1", "photo-2", "photo-3", "photo-4", "photo-5"], "transition": "iris"}}
+      ],
+      "captions": [], "presenterClips": [], "presenterModes": []
+    },
+    "audio": {"voice": "voice.wav", "music": "music.wav", "musicGainDb": -12, "musicOffsetSeconds": 0, "loopMusic": true, "sfx": [], "tailSeconds": 0.25},
+    "provenance": {}
+  },
+  "binding": {
+    "clock": "actual-voice-and-caption-events",
+    "required": ["完整口播及来源", "真实字幕及同源证据", "每镜from/frames和局部事件帧", "本期素材与缩略图", "已授权配乐与字体"],
+    "optional": ["仅在真实同声源区间出现的数字人", "逐事件音效"],
+    "instructions": "按真实字幕和语音规划七镜连续时序；填写每镜from/frames、cues、提问输入/证据时点和完整重排事件。保留同ID路径接力。缺时序时保持待绑定，不按示例时长缩放。人物可选；添加时提供同源片段和审核。"
+  }
+}

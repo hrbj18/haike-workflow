@@ -1,11 +1,13 @@
 """The read-only gallery must not expose arbitrary files or become a draft template."""
 import json
+import zipfile
 
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
 from backlot import studio_template_library as library
 from backlot.studio_api import router
+from backlot import studio_motiongit as motion
 
 
 def test_inventory_has_unique_ids_and_existing_guides():
@@ -82,3 +84,63 @@ def test_stale_or_malformed_private_binding_falls_back_to_portable_cover(tmp_pat
                     json.dumps({'store-footage-20': {'poster': 'missing.jpg'}})):
         bindings.write_text(content)
         assert library.media('store-footage-20', 'poster') == poster
+
+
+def test_imported_motion_enters_gallery_as_metadata_without_executing_or_leaking(tmp_path, monkeypatch):
+    monkeypatch.setattr(motion, 'STORE', tmp_path / 'motion-private')
+    monkeypatch.setattr(motion, 'helper_command', lambda *a, **kw: (_ for _ in ()).throw(AssertionError('gallery executed helper')))
+    motion._put_package({'id':'mg-gallery-known','name':'隔离原生模板','template_id':'fixture-native','version':'1.0',
+        'runtime':'motiongit-host/1','verification':'verified','runnable':True,'support':'official-helper',
+        'path':'C:/private/source.motion','personal_key':'never-expose-this-value',
+        'workflows':{'motion-kit':{'schema':{'default':{'private':'never-expose-this-value'}},
+                                    'controls':{'one':{'label':'控件一'},'two':{'label':'控件二'}}}}})
+    motion._put_package({'id':'mg-gallery-unknown','name':'未核验模板','template_id':'fixture-unknown','version':'9.0',
+        'verification':'pending','runnable':False,'support':'inspection-only','workflows':{}})
+    data=library.library();known=next(t for t in data['templates'] if t.get('package_id')=='mg-gallery-known')
+    unknown=next(t for t in data['templates'] if t.get('package_id')=='mg-gallery-unknown')
+    assert known['source_kind']=='imported-motion' and known['group']=='已导入 .motion'
+    assert known['href']=='/motiongit?section=packages&package=mg-gallery-known'
+    assert known['capability_status']=='开放制作接口' and known['declared_control_count']==2
+    assert unknown['capability_status']=='待核验，仅检查'
+    assert library.document(known['id']).is_file()
+    rendered=json.dumps(data,ensure_ascii=False)
+    assert 'never-expose-this-value' not in rendered and 'C:/private' not in rendered
+    assert not {'workflows','schema','path','personal_key'} & set(known)
+
+
+def test_verified_future_native_protocol_is_not_promoted_to_production(tmp_path, monkeypatch):
+    monkeypatch.setattr(motion,'STORE',tmp_path/'motion-private')
+    motion._put_package({'id':'mg-future-only','name':'未来协议','template_id':'fixture-future','version':'9.9',
+        'verification':'verified','runnable':True,'support':'official-helper',
+        'workflows':{'native':{'schema':{},'production_protocol':'unsupported-future'}}})
+    card=next(t for t in library.entries() if t.get('package_id')=='mg-future-only')
+    assert card['capability_status']=='仅参数编辑'
+
+
+def test_gallery_does_not_create_a_motion_store_when_none_was_imported(tmp_path, monkeypatch):
+    monkeypatch.setattr(motion,'STORE',tmp_path/'not-created')
+    monkeypatch.setattr(motion,'packages',lambda: (_ for _ in ()).throw(AssertionError('empty gallery read created registry')))
+    assert library.entries() and not motion.STORE.exists()
+
+
+def test_real_static_import_appears_as_inspection_only_without_extra_registration(tmp_path, monkeypatch):
+    monkeypatch.setattr(motion,'STORE',tmp_path/'motion-private')
+    monkeypatch.setattr(motion,'helper_command',lambda *a,**kw: (_ for _ in ()).throw(AssertionError('static gallery import executed helper')))
+    source=tmp_path/'future.motion'
+    with zipfile.ZipFile(source,'w') as archive:
+        archive.writestr('motion.json',json.dumps({'format':'motiongit-template','specVersion':'0.1.0-draft.1',
+            'template':{'id':'future-static','name':'隔离未来模板','version':'1.0'},'runtime':{'profile':'html-canvas/1'},
+            'parameters':{'schema':'params.schema.json'}}))
+        archive.writestr('params.schema.json',json.dumps({'type':'object','properties':{'title':{'type':'string'}}}))
+    imported=motion.import_package(source)
+    card=library.entry('motion-package-'+imported['id'])
+    assert card['name']=='隔离未来模板' and card['capability_status']=='待核验，仅检查'
+    media=tmp_path/'local-film.mp4';media.write_bytes(b'0123456789')
+    bindings=tmp_path/'bindings.json';bindings.write_text(json.dumps({card['id']:{'sample':str(media)}}))
+    monkeypatch.setattr(library,'BINDINGS',bindings)
+    app=FastAPI();app.include_router(router);client=TestClient(app)
+    item=next(t for t in client.get('/api/studio/template-library').json()['templates'] if t['id']==card['id'])
+    assert item['status']=='本机开发样片' and item['capability_status']=='待核验，仅检查'
+    # An explicit local sample cannot promote an unverified execution protocol.
+    response=client.get(item['sample'],headers={'Range':'bytes=2-5'})
+    assert response.status_code==206 and response.content==b'2345'

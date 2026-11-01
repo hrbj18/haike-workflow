@@ -91,6 +91,7 @@ user and the agent resolve the same name to the same line.
 
 | Call sign | User must supply | Engine | Primary instructions | Cost |
 |-----------|------------------|--------|----------------------|------|
+| **粉笔黑板知识讲解双比例** | 已提交的参考理解、完整音轨/实测句时钟、模型轨迹及合法字体 | 独立SVG/Remotion重排4:5与9:16；统一队列 `haike-chalkboard-reconstruction-v1` 合同 | [模板规格、操作与验收范围](../templates/chalkboard-explainer-v1/README.md) | 本地复用无云调用；非任意.motion通用转换，不默认发布 |
 | **店长动态素材** | 完整本期口播、真实字幕、已看源区间的实拍及配乐音效 | HumProduction的Archive/Playroom动态场景；既有统一队列 | [动态素材runbook](../templates/hum-production-v1/dynamic/README.md) | 本地已有素材复用；新增上游配音/人物另按授权 |
 | **深色立体完整模板** | 完整口播/真实字幕、已看帧实拍、可选同声源人物；脚本先走已配置音频阶段 | 完整十组或按内容选择整组，Hedgerow/Cobalt 4:5；现有统一队列 | [固定runbook](../../Haike-Videohub/agent-runbooks/深色立体完整模板.md) / [模板入口](../templates/motiongit-dark-full-v1/README.md) | 依规格当前stage与各维度，不继承旧墙模板验收；不默认发布 |
 | **高质量数字人工作流** | 本期文案或完整音频；默认侯总图片与侯总音色，可显式覆盖 | InfiniteTalk V5.3.1 独立测试附件；45秒分段续接 | [高质量数字人工作流](../docs/高质量数字人工作流.md) | RunningHub与新增配音按本期授权；正式父视频仍走统一队列 |

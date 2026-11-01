@@ -71,9 +71,13 @@ def regular_path(raw, root):
     return path
 
 
-def probe(path):
-    from lib.ffmpeg_locator import resolve_ffmpeg_pair
-    _, ffprobe = resolve_ffmpeg_pair()
+def probe(path, *, ffprobe=None):
+    if ffprobe is None:
+        from lib.ffmpeg_locator import resolve_ffmpeg_pair
+        pair = resolve_ffmpeg_pair()
+        if not pair:
+            raise WorkError("找不到FFmpeg/ffprobe，请核对本副本工具路径")
+        _, ffprobe = pair
     result = subprocess.run([ffprobe, "-v", "error", "-show_streams", "-show_format",
                              "-of", "json", str(path)], capture_output=True, timeout=30)
     try:
@@ -172,13 +176,14 @@ class WorkCatalog:
                       key=lambda w: w.get("project_created_at") or w["created_at"], reverse=True)
 
     def register(self, project_id, path, *, work_key="main", mode="manual", event_id="",
-                 quality_passed=False, title="", actor="producer", summary=""):
+                 quality_passed=False, title="", actor="producer", summary="", ffprobe=None):
         project = self.project(project_id)
         meta = read_json(project / "project.json")
         if mode not in {"manual", "automatic"} or not work_key or len(work_key) > 100:
             raise WorkError("作品类别或任务模式无效")
         path = regular_path(path if Path(path).is_absolute() else project / path, project)
-        media, content = probe(path), sha(path)
+        media = probe(path, ffprobe=ffprobe) if ffprobe is not None else probe(path)
+        content = sha(path)
         media["bytes"] = path.stat().st_size
         identity = hashlib.sha256(f"{project_id}:{work_key}".encode()).hexdigest()[:24]
         work_id = "work-" + identity

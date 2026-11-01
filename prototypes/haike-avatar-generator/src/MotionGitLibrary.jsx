@@ -1,4 +1,4 @@
-import {useEffect,useState} from 'react';
+import {useEffect,useRef,useState} from 'react';
 import {api} from './studio-api.js';
 import {Button,Notice} from './ui.jsx';
 import {HallmarkDirections} from './HallmarkDirections.jsx';
@@ -7,7 +7,8 @@ import {DarkFullTemplate} from './DarkFullTemplate.jsx';
 
 const base='/api/studio/motiongit';
 const labels={kicker:'上方小字',lines:'文字行',items:'内容项',src:'素材文件',thumbnail:'缩略图文件',sourceStart:'素材开始秒数',caption:'卡片说明',title:'标题',sub:'补充说明',text:'正文',word:'关键词',audio:'原片声音',hide:'隐藏人物',face:'人物构图（可选）',cx:'水平中心比例',cy:'垂直中心比例',w:'宽度比例',h:'高度比例',framing:'人物取景',callouts:'画面标注',x:'横向位置',y:'纵向位置',label:'标签',value:'数值',from:'开始帧',frames:'持续帧数',mode:'出镜方式',id:'编号',brand:'品牌',footer:'页脚',palette:'配色',fontAssets:'字体文件',display:'标题字体',body:'正文字体',presenter:'人物来源',presenterModes:'人物出镜安排',media:'素材清单',scenes:'场景清单',captions:'字幕时钟',durationFrames:'全片帧数',offset:'素材入点秒数',fit:'画面适配',orientation:'素材方向',module:'效果模块',theme:'主题',subtitle:'说明',mediaId:'主素材编号',secondaryMediaId:'副素材编号',selection:'选择动效时点',wallMediaIds:'素材墙卡片编号',cursorFrom:'光标开始帧',selectFrom:'选中开始帧',expandFrom:'放大开始帧',holdFrom:'稳定阅读开始帧',startMs:'字幕开始毫秒',endMs:'字幕结束毫秒',objectPosition:'素材对齐位置'};
-const initialValue=s=>s?.default!==undefined?s.default:s?.enum?s.enum[0]:s?.type==='object'?Object.fromEntries(Object.entries(s.properties||{}).filter(([k,v])=>s.required?.includes(k)||v.default!==undefined).map(([k,v])=>[k,initialValue(v)])):s?.type==='array'?[]:s?.type==='boolean'?false:['number','integer'].includes(s?.type)?s.minimum||0:'';
+const initialValue=s=>s?.default!==undefined?s.default:s?.const!==undefined?s.const:s?.enum?s.enum[0]:s?.type==='object'?Object.fromEntries(Object.entries(s.properties||{}).filter(([k,v])=>s.required?.includes(k)||v.default!==undefined).map(([k,v])=>[k,initialValue(v)])):s?.type==='array'?[]:s?.type==='boolean'?false:['number','integer'].includes(s?.type)?s.minimum||0:'';
+Object.assign(labels,{kind:'动作',cues:'事件帧',accent:'强调文字',chapter:'章节小字',comment:'自拟提问',ranking:'同条目排序',path:'持续路径',code:'编辑流程',photoIds:'照片素材编号',variant:'动作结构',transition:'转场'});
 
 function Field({label,schema={},value,onChange,depth=0}){
   if(schema.enum)return <label className="mg-field">{label}<select value={value??''} onChange={e=>onChange(schema.enum.find(v=>String(v)===e.target.value))}>{schema.enum.map((v,i)=><option key={String(v)} value={String(v)}>{schema.enumTitles?.[i]||String(v)}</option>)}</select></label>;
@@ -26,6 +27,43 @@ function controlSchema(c){
   return {type:'object',properties:Object.fromEntries(Object.entries(c.props||{}).map(([k,v])=>[k,field(v)])),required:Object.entries(c.props||{}).filter(([,v])=>v.required).map(([k])=>k)};
 }
 
+const questKinds=['boot','headline','versus','quests','media','unlock','timeline','books','world','clear','comment','ranking','radar','path','editor'];
+const questTitles=['开机进度','关键词标题','对比血条','任务清单','实拍窗口','分支解锁','节点时间线','书本堆叠','地点升级','通关清单','提问输入与证据','同条目重排','雷达扫描','持续路径','编辑流程'];
+const arrayOf=type=>({type:'array',items:{type}});
+function questSchema(q){
+  const properties={kind:{enum:questKinds,enumTitles:questTitles},items:arrayOf('string'),cues:arrayOf('integer'),accent:{type:'string'},chapter:{type:'string'},presenter:{enum:['circle','card','hidden'],enumTitles:['圆形人物窗','大人物卡','隐藏人物']}};
+  if(q.kind==='comment')properties.comment={type:'object',properties:{author:{title:'提问署名',type:'string'},body:{title:'自拟提问全文',type:'string'},from:{title:'开始输入帧',type:'integer'},until:{title:'输入完成帧',type:'integer'},proofFrom:{title:'证据出现帧',type:'integer'},photoIds:{title:'已审素材编号',...arrayOf('string')}}};
+  if(q.kind==='ranking')properties.ranking={type:'object',properties:{note:{title:'排序依据／示意说明',type:'string'},orders:{title:'各次完整排序',type:'array',items:{type:'object',properties:{at:{title:'开始换位帧',type:'integer'},order:{title:'按原编号排列（从0开始）',...arrayOf('integer')}}}},strikes:{title:'划除原编号条目',type:'array',items:{type:'object',properties:{at:{title:'划除帧',type:'integer'},index:{title:'原条目编号',type:'integer'}}}}}};
+  if(q.kind==='path')properties.path={type:'object',properties:{id:{title:'持续路径编号',type:'string'},stops:{title:'依次抵达节点（从0开始）',...arrayOf('integer')},initial:{title:'初始节点',type:'integer'},reset:{title:'显式重新开始',type:'boolean'},travelFrames:{title:'每次移动帧数',type:'integer'}}};
+  if(q.kind==='editor')properties.code={title:'自己的流程行',...arrayOf('string')};
+  if(q.kind==='clear')properties.photoIds={title:'收尾照片素材编号（3–5项）',...arrayOf('string')};
+  return {type:'object',properties};
+}
+function newQuestKind(kind,old){
+  const counts={versus:2,quests:2,unlock:2,timeline:2,books:2,clear:2,ranking:2,path:2,editor:2};
+  const items=Array.from({length:counts[kind]||0},(_,i)=>`内容${i+1}`),q={kind,items,cues:items.map((_,i)=>15+i*30),accent:'',chapter:old.chapter||'',presenter:old.presenter||'circle'};
+  if(old.transition)q.transition=old.transition;
+  if(kind==='comment')q.comment={author:'本期提问',body:'请填写本期自己的完整提问',from:15,until:90,photoIds:[]};
+  if(kind==='ranking')q.ranking={note:'编排示意，非统计数据',orders:[{at:75,order:[1,0]}],strikes:[]};
+  if(kind==='path')q.path={id:'请填写本期路径编号',stops:[0,1],travelFrames:24};
+  if(kind==='editor')q.code=['请填写自己的编辑流程'];
+  return q;
+}
+
+function QuestSceneFields({s,onChange,media=[],portrait=true}){
+  const q=s.quest||newQuestKind('headline',{});
+  const update=patch=>onChange({quest:{...q,...patch}});
+  return <fieldset className="mg-object"><legend>{s.id}</legend>
+    <div className="mg-two"><Field label="起始帧" schema={{type:'integer'}} value={s.from} onChange={from=>onChange({from})}/><Field label="持续帧数" schema={{type:'integer'}} value={s.frames} onChange={frames=>onChange({frames})}/></div>
+    <Field label="标题" value={s.title} onChange={title=>onChange({title})}/>
+    {(['headline','versus','quests','unlock','clear','world','media'].includes(q.kind)||(q.kind==='path'&&portrait))&&<Field label="实拍素材（保留当前动效）" schema={{enum:[...(['world','media'].includes(q.kind)?[]:['none']),...media.map(m=>m.id)],enumTitles:[...(['world','media'].includes(q.kind)?[]:['不加实拍']),...media.map(m=>m.label||m.id)]}} value={s.mediaId||'none'} onChange={value=>onChange({mediaId:value==='none'?undefined:value})}/>}
+    <Field label="承接上一镜头的转场" schema={{enum:['none','checker','iris'],enumTitles:['直接切换','棋盘格由右向左覆盖','右侧圆形展开']}} value={q.transition||'none'} onChange={v=>{const next={...q};if(v==='none')delete next.transition;else next.transition=v;onChange({quest:next});}}/>
+    {['versus','unlock'].includes(q.kind)&&<Field label="动作结构" schema={{enum:['default',q.kind==='versus'?'panel':'tree'],enumTitles:['标准结构',q.kind==='versus'?'同一黑色对战面板':'同根分支树']}} value={q.variant||'default'} onChange={v=>{const next={...q};if(v==='default')delete next.variant;else next.variant=v;onChange({quest:next});}}/>}
+    <Field label="动作、标签与局部事件帧" schema={questSchema(q)} value={q} onChange={v=>v.kind!==q.kind?onChange({quest:newQuestKind(v.kind,q)}):update(v)}/>
+    <p>事件帧相对本镜头；路径“编号”相同会保留节点和当前位置。换动作会建立待填写参数，制作前须核对口播对应、镜头长度和素材绑定。</p>
+  </fieldset>;
+}
+
 function HumProductionFields({parameters:p,onChange,assets,onUpload,onImport,busy}){
   const props=p.props||{},audio=p.audio||{};
   const bound=new Map(assets.map(a=>[a.slot,a]));
@@ -35,12 +73,14 @@ function HumProductionFields({parameters:p,onChange,assets,onUpload,onImport,bus
   const clips=props.presenterClips||[];
   const modes=props.presenterModes||[];
   const dynamicStyle=['archive','playroom'].includes(props.visualStyle);
+  const quest=props.visualStyle==='quest';
   const sceneKey=Array.isArray(props.scenes)?'scenes':'shotPlan';
   const dynamicScenes=sceneKey==='scenes'?props.scenes:(p.shotPlan||[]);
   const changeScene=(index,patch)=>{const next=dynamicScenes.map((s,i)=>i===index?{...s,...patch}:s);if(sceneKey==='scenes')setProps({scenes:next});else onChange({...p,shotPlan:next});};
   const uniform=modes.length&&modes.every(m=>m.mode===modes[0].mode)?modes[0].mode:'custom';
-  return <section className="mg-hum-inputs"><h4>完整口播模板 · 4:5</h4><p>时长跟随整条口播自动计算，保留配乐与音效。Archive长者画廊、Playroom亲子探索支持素材瀑布、空间画廊、多屏重排与点击展开；请复制对应草稿再换内容。Hum/Coral和Darkroom/Carnival沿用各自的镜头安排。</p>
-    <div className="mg-two"><Field label="视觉风格" schema={{enum:['hum','coral','darkroom','carnival','archive','playroom'],enumTitles:['Hum · 亲子剪纸','Coral · 温暖棉纸','Darkroom · 深色纪实','Carnival · 几何探索','Archive · 长者画廊','Playroom · 亲子探索']}} value={props.visualStyle} onChange={v=>setProps({visualStyle:v})}/><Field label="品牌" value={props.brand} onChange={v=>setProps({brand:v})}/></div>
+  return <section className="mg-hum-inputs"><h4>{quest?'蓝白任务口播 · 独立横竖排版':'完整口播模板 · 4:5'}</h4><p>{quest?'时长跟随完整口播。支持提问输入、同条目换位、持续路径、分支解锁、实拍窗口与人物变窗；标题、事件帧和照片均可编辑。换声音后需要真实字幕与重新编排，初始示例不能直接作为已核验成片。':'时长跟随整条口播自动计算，保留配乐与音效。Archive长者画廊、Playroom亲子探索支持素材瀑布、空间画廊、多屏重排与点击展开；请复制对应草稿再换内容。Hum/Coral和Darkroom/Carnival沿用各自的镜头安排。'}</p>
+    <div className="mg-two"><Field label="视觉风格" schema={quest?{enum:['quest'],enumTitles:['Quest · 蓝白任务口播']}:{enum:['hum','coral','darkroom','carnival','archive','playroom'],enumTitles:['Hum · 亲子剪纸','Coral · 温暖棉纸','Darkroom · 深色纪实','Carnival · 几何探索','Archive · 长者画廊','Playroom · 亲子探索']}} value={props.visualStyle} onChange={v=>setProps({visualStyle:v})}/><Field label="品牌" value={props.brand} onChange={v=>setProps({brand:v})}/></div>
+    {quest&&<><Field label="输出画幅" schema={{enum:['portrait','landscape'],enumTitles:['9:16 · 竖屏重排','16:9 · 横屏重排']}} value={props.height>props.width?'portrait':'landscape'} onChange={v=>setProps(v==='portrait'?{width:1080,height:1920}:{width:1920,height:1080})}/><details><summary>逐镜头动作与文案</summary>{(props.scenes||[]).map((s,i)=><QuestSceneFields key={s.id} s={s} media={props.media||[]} portrait={props.height>props.width} onChange={patch=>changeScene(i,patch)}/>)}</details></>}
     <Field label="顶部门店信息" value={props.footer} onChange={v=>setProps({footer:v})}/>
     <div className="mg-two"><Field label="口播绑定文件名" value={audio.voice} onChange={v=>setAudio({voice:v})}/><Field label="配乐绑定文件名" value={audio.music||''} onChange={v=>setAudio({music:v})}/></div>
     <div className="mg-actions">{upload('换完整口播',audio.voice,'.wav')}{audio.music&&upload('换配乐',audio.music,'.wav,.mp3,.m4a')}<label className="mg-upload">导入本期制作参数<input type="file" disabled={busy} accept=".json" onChange={e=>{onImport(e.target.files[0]);e.target.value='';}}/></label></div>
@@ -52,6 +92,26 @@ function HumProductionFields({parameters:p,onChange,assets,onUpload,onImport,bus
   </section>;
 }
 
+function KitFields({parameters,onChange,route}){
+  const t=parameters.timeline||{},[choice,setChoice]=useState('');
+  const update=patch=>onChange({...parameters,timeline:{...t,...patch}});
+  const scene=(index,patch)=>update({segments:t.segments.map((s,i)=>i===index?{...s,...patch}:s)});
+  function add(){const c=route.controls[choice];if(!c)return;const t0=t.segments?.at(-1)?.t1||0,t1=t0+Math.max(c.minDur||3,3);update({duration:Math.max(t.duration||0,t1),segments:[...(t.segments||[]),{control:choice,variant:c.variants?.[0],t0,t1,props:initialValue(controlSchema(c))}]});}
+  const schema=route.schema.properties.timeline.properties;
+  return <><div className="mg-two"><Field label="原生画幅" schema={schema.layout} value={t.layout} onChange={layout=>update({layout})}/><Field label="完整时长（秒）" schema={schema.duration} value={t.duration} onChange={duration=>update({duration})}/></div><div className="mg-two"><Field label="完整口播绑定名" value={t.voiceover} onChange={voiceover=>update({voiceover})}/><Field label="配乐绑定名" value={t.music} onChange={music=>update({music})}/></div>
+    <p>每包使用自己的真实控件和材质。复制已完成草稿后替换内容；换口播时由 Agent 更新真实字幕、句子与镜头对应关系，再核对完整计划。</p><div className="mg-actions"><select aria-label="新增原生动效" value={choice} onChange={e=>setChoice(e.target.value)}><option value="">选择本包动效</option>{Object.entries(route.controls).map(([id,c])=><option key={id} value={id}>{c.label||id}</option>)}</select><Button onClick={add}>添加镜头</Button></div>
+    {(t.segments||[]).map((s,i)=><details key={s.shotId||i}><summary>镜头{i+1} · {route.controls[s.control]?.label||s.control} · {s.t0}–{s.t1}秒</summary><div className="mg-two"><Field label="开始秒数" schema={{type:'number'}} value={s.t0} onChange={t0=>scene(i,{t0})}/><Field label="结束秒数" schema={{type:'number'}} value={s.t1} onChange={t1=>scene(i,{t1})}/><Field label="动作变体" schema={{enum:route.controls[s.control]?.variants||[]}} value={s.variant} onChange={variant=>scene(i,{variant})}/></div><Field label="画面文字与素材" schema={controlSchema(route.controls[s.control]||{})} value={s.props} onChange={props=>scene(i,{props})}/><Field label="真实事件秒数" schema={{type:'array',items:{type:'number'}}} value={s.cues||[]} onChange={cues=>scene(i,{cues})}/><Button onClick={()=>update({segments:t.segments.filter((_,j)=>j!==i)})}>移除本镜头</Button></details>)}
+  </>;
+}
+
+function PlanReview({plan,bound,onApproved}){
+  const [report,setReport]=useState(null),[seen,setSeen]=useState(false),[pending,setPending]=useState(false),[error,setError]=useState('');
+  useEffect(()=>{setSeen(false);setReport(null);setError('');},[plan.report_sha256]);
+  async function open(event){if(!event.currentTarget.open)return;try{setReport(await api(plan.report_url));setSeen(true);}catch(e){setError(e.message);}}
+  async function approve(){setPending(true);try{await api(`${base}/productions/${bound.project_id}/${bound.render_id}/plan-review`,{report_sha256:plan.report_sha256,inputs_sha256:plan.inputs_sha256,inspected_plan:true,reviewer:'workbench-operator',description:'工作台操作者已打开并核对完整口播归属、镜头含义和素材区间；继续生成本期真实画面预览。'});await onApproved();}catch(e){setError(e.message);}finally{setPending(false);}}
+  return <section><h4>口播与镜头计划</h4><p>先核对完整台词、镜头含义和实拍区间，再生成画面。</p><details onToggle={open}><summary>打开本期完整计划</summary>{report&&<pre className="mg-plan">{JSON.stringify({镜头:report.segments,字幕:report.captionRows,素材:report.mediaBindings,口播归属:report.narrationAlignment?.rows,待核事项:report.narrationChoices?.findings},null,2)}</pre>}</details><Button disabled={!seen||pending} onClick={approve}>已核对计划，继续生成预览</Button><Notice message={error}/></section>;
+}
+
 function Production({draft,save,assetRevision}){
   const [job,setJob]=useState(null),[bound,setBound]=useState(null),[view,setView]=useState(null),[message,setMessage]=useState(''),[opened,setOpened]=useState([]),[reviewed,setReviewed]=useState(false),[pending,setPending]=useState(false),[recovering,setRecovering]=useState(false),[recovery,setRecovery]=useState(0);
   const signature=JSON.stringify([draft.parameters,draft.output_profile,draft.title,assetRevision]);
@@ -61,22 +121,26 @@ function Production({draft,save,assetRevision}){
   useEffect(()=>{if(job?.status!=='completed'||!bound)return;let active=true;api(`${base}/productions/${bound.project_id}/${bound.render_id}`).then(v=>{if(active){setView(v);setReviewed(v.reviewed);}}).catch(e=>{if(active)setMessage(e.message);});return()=>{active=false;};},[job?.status,bound]);
   async function produce(phase){setPending(true);setMessage('');try{const d=await save();const v=await api(`${base}/drafts/${d.id}/produce`,{revision:d.revision,phase,render_id:d.revision===draft.revision?bound?.render_id:undefined});setBound(v);setJob(v.job);}catch(e){setMessage(e.message);}finally{setPending(false);}}
   async function review(){setPending(true);try{await api(`${base}/productions/${bound.project_id}/${bound.render_id}/review`,{preview_sha256:view.preview_sha256,reviewer:'workbench-user',inspected_images:view.images.map(i=>i.name)});setReviewed(true);setMessage('本期预览抽样已确认，连续播放与听审仍在成片阶段完成。');}catch(e){setMessage(e.message);}finally{setPending(false);}}
-  return <section className="mg-production"><h4>预览与成片</h4><p>制作进入现有统一队列。画面变更后生成新的预览与版本。</p><div className="mg-actions"><Button disabled={pending} onClick={()=>produce('preview')}>生成本期预览</Button>{draft.id&&<Button disabled={pending||recovering} onClick={()=>setRecovery(n=>n+1)}>{recovering?'正在读取已有结果…':'恢复已有制作结果'}</Button>}{draft.workflow==='poster-kit'&&<Button disabled={pending||!reviewed} onClick={()=>produce('render')}>导出成片</Button>}</div>{job&&<p role="status">{job.stage} · {job.status}{job.status==='paused'?'（生产队列忙时稍后重试原草稿）':''}</p>}<Notice message={message}/>{view?.sample&&<video controls preload="metadata" src={view.sample} style={{maxWidth:'100%',maxHeight:600}}/>}
+  return <section className="mg-production"><h4>预览与成片</h4><p>制作进入现有统一队列。画面变更后生成新的预览与版本。</p><div className="mg-actions"><Button disabled={pending} onClick={()=>produce('preview')}>生成本期预览</Button>{draft.id&&<Button disabled={pending||recovering} onClick={()=>setRecovery(n=>n+1)}>{recovering?'正在读取已有结果…':'恢复已有制作结果'}</Button>}{['poster-kit','motion-kit','native'].includes(draft.workflow)&&<Button disabled={pending||!reviewed} onClick={()=>produce('render')}>导出成片</Button>}</div>{job&&<p role="status">{job.stage} · {job.status}{job.status==='paused'?'（生产队列忙时稍后重试原草稿）':''}</p>}<Notice message={message}/>{view?.plan&&!view.plan.reviewed&&<PlanReview plan={view.plan} bound={bound} onApproved={()=>produce('preview')}/>} {view?.sample&&<video controls preload="metadata" src={view.sample} style={{maxWidth:'100%',maxHeight:600}}/>}
   {view?.sample&&<p><a href={view.sample} download={`${draft.title}.mp4`}>下载当前成片</a>{view.nomusic&&<> · <a href={view.nomusic} download={`${draft.title}-无配乐.mp4`}>下载无配乐备选（保留口播与音效）</a></>}</p>}
   {view?.images?.length>0&&<><p>静态预览：逐张打开检查文字、素材完整性与字幕。此处不代表已连续观看动效。</p><div className="mg-preview-grid">{view.images.map(i=><button key={i.name} onClick={()=>{window.open(i.url,'_blank','noopener');setOpened(old=>[...new Set([...old,i.name])]);}}><img loading="lazy" src={i.url} alt={i.name}/><span>{i.name}{opened.includes(i.name)?' · 已打开':''}</span></button>)}</div><Button disabled={pending||opened.length!==view.images.length||reviewed} onClick={review}>{reviewed?'本期预览已确认':'已检查全部预览，确认抽样画面'}</Button></>}
   </section>;
 }
 
 function PackageLibrary(){
+  const [presets,setPresets]=useState([]);
   const [packages,setPackages]=useState([]),[selected,setSelected]=useState(null),[workflow,setWorkflow]=useState('native'),[draft,setDraft]=useState(null),[saved,setSaved]=useState([]),[message,setMessage]=useState(''),[busy,setBusy]=useState(false),[assets,setAssets]=useState([]),[control,setControl]=useState(''),[raw,setRaw]=useState('');
-  async function refresh(){const [p,d]=await Promise.all([api(`${base}/packages`),api(`${base}/drafts`)]);setPackages(p.packages);setSaved(d.drafts);}
+  const linkedPackage=useRef(new URLSearchParams(location.search).get('package'));
+  async function refresh(){const [p,d,r]=await Promise.all([api(`${base}/packages`),api(`${base}/drafts`),api(`${base}/presets`)]);setPackages(p.packages);setSaved(d.drafts);setPresets(r.presets);if(linkedPackage.current){const id=linkedPackage.current;linkedPackage.current=null;const item=p.packages.find(v=>v.id===id);if(item){setSelected(item);setDraft(null);setWorkflow(item.workflows?.native?'native':Object.keys(item.workflows||{})[0]||'native');}else setMessage('本机尚未导入指定原包，请先导入后核验。');}}
   useEffect(()=>{refresh().catch(e=>setMessage(e.message));},[]);
   useEffect(()=>{if(!draft?.id)return;let active=true;api(`${base}/drafts/${draft.id}/assets`).then(v=>{if(active)setAssets(v.assets);}).catch(e=>{if(active)setMessage(e.message);});return()=>{active=false;};},[draft?.id]);
   async function run(fn){setBusy(true);setMessage('');try{await fn();}catch(e){setMessage(e.message);}finally{setBusy(false);}}
+  async function createPreset(preset){await run(async()=>{const next=await api(`${base}/presets/${preset.id}/drafts`,{});setSelected(packages.find(p=>p.id===next.package_id));setWorkflow(next.workflow);setDraft(next);setAssets([]);setRaw('');await refresh();setMessage('已从正式预设新建。请绑定本期完整声音、真实字幕、素材和镜头时码，再检查预览；旧片审核不会继承。');});}
   async function importFile(file){if(!file)return;await run(async()=>{const response=await fetch(`${base}/packages?${new URLSearchParams({filename:file.name})}`,{method:'POST',headers:{'Content-Type':'application/octet-stream'},body:file});const p=await response.json();if(!response.ok)throw new Error(p.detail||'导入未完成');setSelected(p);setDraft(null);await refresh();setMessage('原包已私有保存，导入阶段未执行模板。');});}
   async function verify(){await run(async()=>{const p=await api(`${base}/packages/${selected.id}/verify`,{});setSelected(p);await refresh();setMessage('身份已核验，已读取此包实际开放的参数和控件。');});}
-  function create(w){setWorkflow(w);setAssets([]);setRaw('');const s=selected.workflows[w].schema;const parameters=w==='poster-kit'?{duration:20,layout:'landscape',language:'zh',voiceover:'',music:'',presenter:{hide:true},segments:[],captions:[]}:initialValue(s);setDraft({package_id:selected.id,workflow:w,revision:0,title:'店长账号新视频',output_profile:w==='hum-production'?'4:5':'native',parameters});}
+  function create(w){setWorkflow(w);setAssets([]);setRaw('');const s=selected.workflows[w].schema;const parameters=w==='poster-kit'?{duration:20,layout:'landscape',language:'zh',voiceover:'',music:'',presenter:{hide:true},segments:[],captions:[]}:structuredClone(initialValue(s));setDraft({package_id:selected.id,workflow:w,revision:0,title:'店长账号新视频',output_profile:w==='hum-production'&&selected.id!=='haike-quest-v1'?'4:5':'native',parameters});}
   const route=selected?.workflows?.[workflow];
+  const visibleSaved=saved.filter(d=>!selected||d.package_id===selected.id);
   const p=draft?.parameters;
   const change=parameters=>setDraft({...draft,parameters});
   async function save(){const old=saved.find(d=>d.id===draft.id);if(old&&JSON.stringify(old)===JSON.stringify(draft))return draft;const next=await api(`${base}/drafts`,draft);setDraft(next);await refresh();setMessage(`草稿第${next.revision}版已保存。`);return next;}
@@ -84,27 +148,29 @@ function PackageLibrary(){
   async function importHumParameters(file){if(!file)return;await run(async()=>{const value=JSON.parse(await file.text());const input=value.parameters||value;const next=Object.fromEntries(['props','audio','provenance','shotPlan'].filter(k=>k in input).map(k=>[k,input[k]]));if(!next.props||!next.audio||!next.provenance)throw new Error('制作参数须含 props、audio 和 provenance');setDraft(old=>({...old,title:value.title||old.title,parameters:next,output_profile:'4:5'}));setRaw('');setMessage('本期制作参数已载入，核对文件绑定后保存并生成。');});}
   function addControl(){const c=route.controls[control];if(!c)return;const t0=p.segments.at(-1)?.t1||0,t1=t0+Math.max(c.minDur||3,3);change({...p,duration:Math.max(p.duration,t1),segments:[...p.segments,{control,variant:c.variants?.[0],t0,t1,props:initialValue(controlSchema(c))}]});}
   return <section className="mg-library">
-    <div className="mg-heading"><div><h3>MotionGit 模板接入</h3><p>导入原包，查看真实替换范围，再绑定自己的口播和素材。</p></div><label className="mg-upload">导入 .motion<input type="file" accept=".motion" disabled={busy} onChange={e=>importFile(e.target.files[0])}/></label></div>
+    <div className="mg-heading"><div><h3>模板库与 .motion 接入</h3><p>选择内置模板或导入原包，绑定自己的口播和素材。</p></div><label className="mg-upload">导入 .motion<input type="file" accept=".motion" disabled={busy} onChange={e=>importFile(e.target.files[0])}/></label></div>
     <Notice message={message}/>{busy&&<p role="status">正在处理，请保留当前工程…</p>}
+    <section aria-label="定稿动效模板"><h3>定稿动效模板</h3><p>保留动作编排，用自己的素材制作新视频。时长与事件由本期真实口播确定。</p><div className="mg-hum-cards mg-preset-cards">{presets.map(preset=><article className="mg-hum-card" key={preset.id}><strong>{preset.name}</strong><small>预设 v{preset.version} · {preset.canvas}</small><p>{preset.scope}</p><p role="status">{preset.message}</p><Button disabled={busy||!preset.can_create} onClick={()=>createPreset(preset)}>用此模板制作</Button>{!preset.can_create&&<small>在下方导入并核验自己的合法原包后重试。</small>}</article>)}</div></section>
+    {draft?.preset_source&&<p>本期来源：{presets.find(p=>p.id===draft.preset_source.id)?.name||draft.preset_source.id} · 预设 v{draft.preset_source.version}。编辑会另存本期版本，历史作品保留。</p>}
     <HallmarkDirections draft={draft} onSelect={art_direction=>setDraft({...draft,art_direction})}/>
-    <div className="mg-workspace"><aside><h4>本机模板包</h4>{packages.map(item=><button key={item.id} className={selected?.id===item.id?'active':''} onClick={()=>{setSelected(item);setDraft(null);setMessage('');}}><strong>{item.name}</strong><small>v{item.version} · {item.verification==='verified'?'身份已核验':'待核验'}</small></button>)}{!packages.length&&<p>导入后会保留原包和独立草稿。</p>}<h4>已保存草稿</h4>{saved.map(d=><button key={d.id} onClick={()=>{setSelected(packages.find(p=>p.id===d.package_id));setWorkflow(d.workflow);setDraft(d);setAssets([]);setRaw('');}}>{d.title}<small>第{d.revision}版 · {d.workflow}</small></button>)}</aside>
-    <div className="mg-editor">{!selected?<p>选择模板包开始。</p>:<><h3>{selected.name}</h3><p>版本 {selected.version} · {selected.runtime} · {(selected.bytes/1024/1024).toFixed(1)} MiB</p>{selected.verification!=='verified'&&<Button disabled={busy||selected.support==='inspection-only'} onClick={verify}>核验并读取可编辑内容</Button>}{selected.support==='inspection-only'&&<p>当前版本支持只读分析，运行适配待补。</p>}
+    <div className="mg-workspace"><aside><h4>本机模板包</h4>{packages.map(item=><button key={item.id} className={selected?.id===item.id?'active':''} onClick={()=>{setSelected(item);setDraft(null);setMessage('');}}><strong>{item.name}</strong><small>v{item.version} · {item.verification==='verified'?'身份已核验':'待核验'}</small></button>)}{!packages.length&&<p>导入后会保留原包和独立草稿。</p>}<h4>{selected?'本模板已保存草稿':'已保存草稿'}</h4>{visibleSaved.map(d=><button key={d.id} onClick={()=>{setSelected(packages.find(p=>p.id===d.package_id));setWorkflow(d.workflow);setDraft(d);setAssets([]);setRaw('');}}>{d.title}<small>第{d.revision}版 · {d.workflow}</small></button>)}</aside>
+    <div className="mg-editor">{!selected?<p>选择模板开始。</p>:<><h3>{selected.name}</h3><p>{selected.runtime==='project-source'?`项目内置 · v${selected.version} · 无需个人.motion原包`:`版本 ${selected.version} · ${selected.runtime} · ${(selected.bytes/1024/1024).toFixed(1)} MiB`}</p>{selected.verification!=='verified'&&<Button disabled={busy||selected.support==='inspection-only'} onClick={verify}>核验并读取可编辑内容</Button>}{selected.support==='inspection-only'&&<p>当前版本支持只读分析，运行适配待补。</p>}
     <div className="mg-actions">{Object.entries(selected.workflows||{}).map(([key,w])=><Button key={key} onClick={()=>create(key)}>{key==='native'?'新建原生参数草稿':`新建${w.description}草稿`}</Button>)}</div>
     {draft&&route&&<><label className="mg-field">视频名称<input value={draft.title} onChange={e=>setDraft({...draft,title:e.target.value})}/></label><p>路线：{workflow} · 原包与本期内容分开保存。结构检查后仍需实际预览。</p>{workflow==='poster-kit'&&<Field label="输出画幅" schema={{enum:['native','4:5']}} value={draft.output_profile||'native'} onChange={v=>setDraft({...draft,output_profile:v})}/>}<p>{draft.output_profile==='4:5'?(workflow==='hum-production'?'原生4:5构图，时长由完整口播自动确定；人物和实拍保持全幅。':'4:5使用竖屏原生布局的顶部视窗；先在实际适配预览中检查主体与字幕完整。'):''}</p>
     {workflow==='poster-kit'?<><div className="mg-two"><Field label="全片时长（秒）" schema={{type:'number',minimum:.1}} value={p.duration} onChange={v=>change({...p,duration:v})}/><Field label="原生画幅" schema={route.schema.properties.layout} value={p.layout} onChange={v=>change({...p,layout:v})}/></div><Field label="口播文件绑定名" value={p.voiceover} onChange={v=>change({...p,voiceover:v})}/><Field label="配乐文件绑定名" value={p.music} onChange={v=>change({...p,music:v})}/><Field label="人物" schema={route.schema.properties.presenter} value={p.presenter} onChange={v=>change({...p,presenter:v})}/>
     <div className="mg-actions"><select aria-label="动效控件" value={control} onChange={e=>setControl(e.target.value)}><option value="">选择真实控件</option>{Object.entries(route.controls).map(([key,c])=><option key={key} value={key}>{c.label||key}</option>)}</select><Button onClick={addControl}>添加镜头</Button><span>{Object.keys(route.controls).length}个已声明控件</span></div>
     {p.segments.map((s,i)=><fieldset className="mg-object" key={i}><legend>镜头{i+1} · {route.controls[s.control]?.label||s.control}</legend><div className="mg-two"><Field label="开始（秒）" schema={{type:'number'}} value={s.t0} onChange={v=>change({...p,segments:p.segments.map((v,j)=>j===i?{...s,t0:v}:v)})}/><Field label="结束（秒）" schema={{type:'number'}} value={s.t1} onChange={v=>change({...p,segments:p.segments.map((v,j)=>j===i?{...s,t1:v}:v)})}/></div><Field label="动效变体" schema={{enum:route.controls[s.control]?.variants||[]}} value={s.variant} onChange={v=>change({...p,segments:p.segments.map((v2,j)=>j===i?{...s,variant:v}:v2)})}/><Field label="镜头内容与素材" schema={controlSchema(route.controls[s.control]||{})} value={s.props} onChange={v=>change({...p,segments:p.segments.map((v2,j)=>j===i?{...s,props:v}:v2)})}/><Button onClick={()=>change({...p,segments:p.segments.filter((_,j)=>j!==i)})}>移除镜头</Button></fieldset>)}
-    </>:workflow==='hum-production'?<HumProductionFields parameters={p} onChange={change} assets={assets} onUpload={uploadAsset} onImport={importHumParameters} busy={busy}/>:<Field label="模板开放参数" schema={route.schema} value={p} onChange={change}/>}
+    </>:workflow==='hum-production'?<HumProductionFields parameters={p} onChange={change} assets={assets} onUpload={uploadAsset} onImport={importHumParameters} busy={busy}/>:workflow==='motion-kit'?<KitFields parameters={p} onChange={change} route={route}/>:<Field label="模板开放参数" schema={route.schema} value={p} onChange={change}/>}
     <div className="mg-actions"><Button variant="primary" disabled={busy} onClick={()=>run(save)}>保存草稿</Button><Button disabled={busy} onClick={()=>run(async()=>{const d=await save();const v=await api(`${base}/drafts/${d.id}/check`,{});setMessage(v.valid?'参数结构检查通过；实际运行与画面待核验。':'参数待调整');})}>检查参数</Button>{draft.id&&<Button disabled={busy} onClick={()=>run(async()=>{const old=await save(),next=await api(`${base}/drafts/${old.id}/clone`,{});setDraft(next);await refresh();setMessage('完整镜头和素材绑定已复制，可替换内容制作新视频。');})}>复制为新视频</Button>}<label className="mg-upload">导入口播／素材<input type="file" disabled={busy} accept=".mp4,.mov,.webm,.png,.jpg,.jpeg,.webp,.wav,.mp3,.srt,.json,.ttf,.otf" onChange={e=>uploadAsset(e.target.files[0])}/></label></div>
     {assets.map(a=><p key={a.name} className="mg-binding"><strong>{a.original_name}</strong><code>{a.slot} / {a.name}</code></p>)}
     <details><summary>完整参数与字幕时钟</summary><p>{workflow==='hum-production'?'可编辑标题、素材卡、shotPlan镜头权重、实际字幕时钟、人物片段与音效。总时长从口播自动生成。':'高级字段直接使用此包实际schema；修改后保存、检查并重新预览。'}</p><textarea aria-label="完整制作参数JSON" className="mg-json" value={raw||JSON.stringify(p,null,2)} onChange={e=>setRaw(e.target.value)}/><Button onClick={()=>{try{change(JSON.parse(raw||JSON.stringify(p)));setRaw('');setMessage('完整参数已应用，尚未保存。');}catch{setMessage('JSON格式无效');}}}>应用完整参数</Button></details>
-    {workflow!=='native'&&<Production draft={draft} save={save} assetRevision={JSON.stringify(assets)}/>}
+    {(workflow!=='native'||route.production_protocol==='knowledge-story-v1')&&<Production draft={draft} save={save} assetRevision={JSON.stringify(assets)}/>}
     </>}</>}</div></div>
   </section>;
 }
 
 export function MotionGitLibrary({embedded=false}){
-  const [section,setSection]=useState(()=>new URLSearchParams(location.search).get('section')==='packages'?'packages':'dark-full');
+  const [section,setSection]=useState(()=>new URLSearchParams(location.search).get('section')==='dark-full'?'dark-full':'packages');
   function select(value){setSection(value);if(embedded)return;const url=new URL(location.href);url.searchParams.set('section',value);history.replaceState(null,'',url);}
-  return <><div className="library-filters" role="tablist" aria-label="MotionGit制作方式"><button role="tab" aria-selected={section==='dark-full'} onClick={()=>select('dark-full')}>完整可复用模板</button><button role="tab" aria-selected={section==='packages'} onClick={()=>select('packages')}>MotionGit原包导入与编辑</button></div>{section==='dark-full'?<DarkFullTemplate/>:<PackageLibrary/>}</>;
+  return <><div className="library-filters" role="tablist" aria-label="MotionGit制作方式"><button role="tab" aria-selected={section==='packages'} onClick={()=>select('packages')}>定稿动效与原包</button><button role="tab" aria-selected={section==='dark-full'} onClick={()=>select('dark-full')}>完整可复用模板</button></div>{section==='dark-full'?<DarkFullTemplate/>:<PackageLibrary/>}</>;
 }

@@ -1,0 +1,14 @@
+{
+  "width": 1440,
+  "height": 1800,
+  "fps": 60,
+  "durationFrames": 600,
+  "title": "连续对象与观察角度",
+  "brand": "海客",
+  "note": "独立适配 · 示意模型",
+  "chapters": [{"id": "demo", "start": 0, "end": 10, "title": "同一对象，观察角度改变", "kind": "orbit", "annotation": ["先看整体，再看观察结果"]}],
+  "captions": [],
+  "phaseKeys": [[0, 0.1], [10, 6.28]],
+  "nodeKeys": [[0, 1.57], [10, 1.57]],
+  "model": {"orbitRadius": 60.3, "bodyRadius": 0.273, "occluderRadius": 1, "sourceRadius": 109.2, "sourceDistance": 23455, "inclinationDegrees": 5.1, "displayInclinationDegrees": 20}
+}

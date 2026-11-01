@@ -1,0 +1,16 @@
+{
+  "props": {
+    "visualStyle": "quest", "width": 1080, "height": 1920,
+    "brand": "你的品牌", "footer": "按本期素材说明来源",
+    "fontAssets": {"display": "display.ttf", "body": "body.ttf"},
+    "media": [], "captions": [], "presenterClips": [], "presenterModes": [],
+    "scenes": [
+      {"id": "question", "from": 0, "frames": 150, "module": "quest", "theme": "paper", "title": "从问题开始",
+       "quest": {"kind": "versus", "items": ["认识问题", "亲手实践"], "cues": [30, 75], "accent": "", "chapter": "QUESTION", "presenter": "circle"}},
+      {"id": "action", "from": 150, "frames": 150, "module": "quest", "theme": "dark", "title": "下一步做什么",
+       "quest": {"kind": "unlock", "items": ["了解方法", "开始尝试"], "cues": [30, 75], "accent": "", "chapter": "YOUR NEXT QUEST", "presenter": "circle"}}
+    ]
+  },
+  "audio": {"voice": "voice.wav", "music": "music.wav", "musicGainDb": -12, "loopMusic": false, "tailSeconds": 0.25, "sfx": []},
+  "provenance": {"voice": {"sha256": "", "source": "请绑定本期授权完整口播", "authorized": true}, "captions": {"voice_sha256": "", "method": ""}, "media": [], "presenterClips": [], "audio": {}}
+}
