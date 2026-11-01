@@ -13,7 +13,7 @@
 - 模板：[库](../../templates/TEMPLATE-LIBRARY.md)含18–21；[22–26验收](../../templates/store-opening-v1/REVIEW.md)。默认.local/store-manager/defaults.json。
 - MotionGit：[制作](../MOTION_TEMPLATE_STUDIO.md)共用网页/HTTP/CLI；[包适配](../MOTION_PACK_ADAPTERS.md)。
 - [参考理解](../REFERENCE_UNDERSTANDING.md)：同源台词/原生帧/对象事件/语义配对；[粉笔双比例](../../templates/chalkboard-explainer-v1/README.md)本机测试范围见VALIDATION，听看/真机另验。
-- [本轮升级](../SINGLE_DEVELOPMENT_GUIDE_TEMPLATE_UPGRADE_20261102.md)：1027升级/四片技术/重启回退通过；听看与发行待验。
+- [本轮升级](../SINGLE_DEVELOPMENT_GUIDE_TEMPLATE_UPGRADE_20261102.md)：四片/重启回退通过；离线门禁补齐，听看/发行待验。
 
 - [Mac复刻包](../../template-kit/README.md)：47条目/35实例，字体替代复验，真机待验。
 

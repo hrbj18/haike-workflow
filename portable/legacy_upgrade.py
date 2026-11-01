@@ -94,10 +94,11 @@ def stopped(target):
     # CIM checks cover manually launched servers as well as portable launchers.
     # A failure to inspect processes must not permit editing a running install.
     if os.name == 'nt':
-        command = ("Get-CimInstance Win32_Process -Filter \"Name='python.exe'\" | "
+        command = ("[Console]::OutputEncoding = New-Object System.Text.UTF8Encoding; "
+                   "Get-CimInstance Win32_Process -Filter \"Name='python.exe' OR Name='pythonw.exe'\" | "
                    "Select-Object ProcessId,CommandLine,ExecutablePath | ConvertTo-Json -Compress")
         result = subprocess.run(['powershell.exe', '-NoProfile', '-Command', command],
-                                capture_output=True, text=True, timeout=30)
+                                capture_output=True, text=True, encoding='utf-8', errors='replace', timeout=30)
         require(result.returncode == 0, '无法检查目标服务，请先关闭后台服务后重试')
         rows = json.loads(result.stdout) if result.stdout.strip() else []
         if isinstance(rows, dict):
@@ -113,8 +114,22 @@ def stopped(target):
         with database(queue, readonly=True) as db:
             exists = db.execute("SELECT 1 FROM sqlite_master WHERE name='production_jobs'").fetchone()
             if exists:
-                count = db.execute("SELECT COUNT(*) FROM production_jobs WHERE status IN ('queued','running')").fetchone()[0]
-                require(not count, '目标副本有排队或执行中的制作任务，请先完成或暂停任务')
+                count = db.execute("SELECT COUNT(*) FROM production_jobs WHERE "
+                                   "status NOT IN ('completed','failed','cancelled') OR status IS NULL").fetchone()[0]
+                require(not count, '目标副本有未完成或结果待确认的制作任务，请先核对原任务再更新')
+    # This installer is also a standalone offline entry: never rely solely on
+    # the network wrapper's guard or import unverified installed application code.
+    studio = safe_path(target, 'Haike_video/.backlot/studio.sqlite3')
+    if studio.is_file():
+        with database(studio, readonly=True) as db:
+            if db.execute("SELECT 1 FROM sqlite_master WHERE name='studio_audio_operations'").fetchone():
+                pending = db.execute('SELECT 1 FROM studio_audio_operations WHERE attempts>0 AND outcome IS NULL LIMIT 1').fetchone()
+                require(not pending, '音色操作结果待确认，请核对原操作后更新')
+    audio = safe_path(target, 'Haike_video/.backlot/audio-center-internal')
+    for file in audio.glob('*/operations/*/operation.json'):
+        operation = read(safe_path(target, file.relative_to(target).as_posix()))
+        require(isinstance(operation, dict) and operation.get('status') in {'succeeded', 'failed'},
+                '音色操作正在执行或结果待确认，请先核对原操作后更新')
 
 
 @contextmanager

@@ -1,7 +1,9 @@
 """Public bootstrap contract: no partial writes, safe rollback and offline reuse."""
 import hashlib
+from contextlib import closing
 import importlib.util
 import json
+import sqlite3
 from pathlib import Path
 import sys
 import tempfile
@@ -177,6 +179,67 @@ class LegacyUpgradeTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, '又被修改'):
             upgrade.restore(self.target, Path(result['backup']))
         self.assertTrue((self.target / 'VERSION.json').exists())
+
+
+class LegacyPendingWorkTests(unittest.TestCase):
+    def setUp(self):
+        temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(temporary.cleanup)
+        self.root = Path(temporary.name).resolve()
+        inspection = patch.object(upgrade.subprocess, 'run', return_value=type('ProcessList', (), {
+            'returncode': 0, 'stdout': '[]'})())
+        inspection.start()
+        self.addCleanup(inspection.stop)
+
+    def test_every_nonterminal_queue_state_blocks_offline_installer(self):
+        path = self.root / 'Haike_video/.backlot/production-queue.sqlite3'
+        path.parent.mkdir(parents=True)
+        with closing(sqlite3.connect(path)) as db:
+            db.execute('CREATE TABLE production_jobs(status TEXT)')
+            db.execute('INSERT INTO production_jobs VALUES (?)', ('queued',))
+            db.commit()
+            for status in ['queued', 'running', 'paused', 'awaiting_human', 'ambiguous', None]:
+                with self.subTest(status=status):
+                    db.execute('UPDATE production_jobs SET status=?', (status,)); db.commit()
+                    with self.assertRaisesRegex(ValueError, '制作任务'):
+                        upgrade.stopped(self.root)
+            for status in ['completed', 'failed', 'cancelled']:
+                db.execute('UPDATE production_jobs SET status=?', (status,)); db.commit()
+                upgrade.stopped(self.root)
+
+    def test_unknown_audio_file_blocks_without_modifying_its_record(self):
+        path = self.root / 'Haike_video/.backlot/audio-center-internal/voice/operations/test/operation.json'
+        path.parent.mkdir(parents=True)
+        for status in ['submitting', 'processing', 'submission_unknown', None]:
+            with self.subTest(status=status):
+                original = upgrade.json_bytes({'status': status, 'synthetic': True})
+                path.write_bytes(original)
+                with self.assertRaisesRegex(ValueError, '音色操作'):
+                    upgrade.stopped(self.root)
+                self.assertEqual(path.read_bytes(), original)
+        for status in ['succeeded', 'failed']:
+            path.write_bytes(upgrade.json_bytes({'status': status}))
+            upgrade.stopped(self.root)
+
+    def test_unresolved_audio_database_intent_blocks_offline_installer(self):
+        path = self.root / 'Haike_video/.backlot/studio.sqlite3'
+        path.parent.mkdir(parents=True)
+        with closing(sqlite3.connect(path)) as db:
+            db.execute('CREATE TABLE studio_audio_operations(attempts INTEGER, outcome TEXT)')
+            db.execute('INSERT INTO studio_audio_operations VALUES(1,NULL)'); db.commit()
+            with self.assertRaisesRegex(ValueError, '音色操作'):
+                upgrade.stopped(self.root)
+            db.execute("UPDATE studio_audio_operations SET outcome='failed'"); db.commit()
+            upgrade.stopped(self.root)
+            db.execute('UPDATE studio_audio_operations SET attempts=0,outcome=NULL'); db.commit()
+            upgrade.stopped(self.root)
+
+    def test_corrupt_audio_record_fails_closed(self):
+        path = self.root / 'Haike_video/.backlot/audio-center-internal/voice/operations/test/operation.json'
+        path.parent.mkdir(parents=True)
+        path.write_bytes(b'{invalid')
+        with self.assertRaises(ValueError):
+            upgrade.stopped(self.root)
 
 
 if __name__ == '__main__':
