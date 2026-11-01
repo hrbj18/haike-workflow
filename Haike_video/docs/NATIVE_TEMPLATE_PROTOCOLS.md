@@ -28,6 +28,8 @@ HTTP前缀`/api/studio/motiongit`。`POST /drafts`保存完整参数，`POST /dr
 
 文件名、尺寸、全片时长、实际窗口和同源SHA都有执行检查。局部事件帧是编排参数；只有真实ASR词证据才可称词级识别。句级证据可以驱动整句表达，不能均分汉字推造时码。精确原生版本缺开放能力时，应记录缺口并新增受测适配协议。
 
+knowledge的可选连续圆窗还须在句级证据JSON中记录`presenter`：`reviewed: true`、`sourceSha256`、同一口播`audioSha256`、`sourceStart`、`globalStart: 0`、整片`durationSeconds`及覆盖实际播放区间的`reviewedSourceInterval: [起,止]`。证据JSON自身SHA随参数与素材冻结；缺失、不同声音或超出已审区间停止冻结。短人物仍不能作为全片连续人物。
+
 组件导出为AAC重建峰值保留限幅余量，最终仍实测≤−1.5dBTP；本期真实素材测试曾在旧0.8限幅后测得−1.49dBTP而被拦住，0.75限幅的同源音频实测−2.05dBTP。新参数/执行器另冻请求，旧成片及质量回执不改写。
 
 ## 参考理解的增量

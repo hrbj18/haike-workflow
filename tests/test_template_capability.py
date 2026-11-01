@@ -3,6 +3,7 @@ from copy import deepcopy
 import importlib.util
 import io
 import json
+import re
 from pathlib import Path
 import shutil
 from unittest.mock import patch
@@ -42,13 +43,15 @@ def test_delivery_verifies_exact_files_and_contains_no_personal_inputs(stage):
     assert result['status'] == 'verified' and len(result['presets']) == 3
     assert result['runtime_selftest'] == 'pending'
     files = capability._read(root / capability.PATH)['files']
-    assert all(core.is_program_path(name) for name in files)
+    assert all(capability.is_delivery_path(name) for name in files)
     assert not any('.local' in name or name.endswith('.motion') for name in files)
     assert updater.verify_template_capability(root, expected)['presets'] == result['presets']
 
 
 @pytest.mark.parametrize('name', [capability.PATH, capability.MANIFEST,
-    'Haike_video/backlot/ui/avatar-generator/chunk.js', 'Haike_video/backlot/studio_motion_presets.py'])
+    'Haike_video/backlot/ui/avatar-generator/chunk.js', 'Haike_video/backlot/studio_motion_presets.py',
+    'Haike_video/templates/hum-production-v1/quest/Mechanisms.tsx',
+    'Haike_video/templates/hum-production-v1/quest/MotionState.ts'])
 def test_missing_or_changed_delivery_blocks_success(stage, name):
     root, expected = stage
     path = root / name
@@ -65,6 +68,26 @@ def test_moving_install_does_not_change_relative_delivery(stage, tmp_path):
     moved = tmp_path / '移动后的 海客'
     root.rename(moved)
     assert capability.verify(moved, expected)['status'] == 'verified'
+
+
+def test_bluewhite_identity_covers_all_local_imports_of_actual_entry(stage):
+    root, _ = stage
+    files = capability._read(root / capability.PATH)['files']
+    pending = [root / 'Haike_video/templates/hum-production-v1/index.tsx']
+    inspected = set()
+    while pending:
+        path = pending.pop()
+        if path in inspected: continue
+        inspected.add(path)
+        assert path.relative_to(root).as_posix() in files
+        if path.suffix == '.json': continue
+        imports = re.findall(r"""from\s+['"](\.[^'"]+)['"]""", path.read_text(encoding='utf-8'))
+        for local in imports:
+            target = path.parent / local
+            choices = [target, *(Path(str(target) + suffix) for suffix in ['.ts', '.tsx', '.json'])]
+            resolved = next((p.resolve() for p in choices if p.is_file()), None)
+            assert resolved is not None, f'missing actual import: {local} in {path.name}'
+            pending.append(resolved)
 
 
 def test_old_install_without_this_feature_keeps_old_update_contract(tmp_path):

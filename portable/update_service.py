@@ -375,7 +375,7 @@ class UpdateService:
                 helper = folder / "helper"
                 helper.mkdir()
                 try:
-                    for name in ("app_update.py", "update_service.py", "update_worker.py"):
+                    for name in ("app_update.py", "update_service.py", "update_worker.py", "template_capability.py"):
                         shutil.copyfile(Path(__file__).parent / name, helper / name)
                     flags = (getattr(subprocess, "CREATE_NEW_PROCESS_GROUP", 0) | getattr(subprocess, "DETACHED_PROCESS", 0)) if os.name == "nt" else 0
                     with (folder / "helper.log").open("ab") as log:

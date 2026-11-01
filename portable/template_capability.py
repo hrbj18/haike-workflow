@@ -29,6 +29,9 @@ TRANSPORT = [
     'portable/template_selftest.py', 'Haike_video/remotion-composer/runtime-selftest.mjs',
     'Haike_video/remotion-composer/src/RuntimeSelftest.tsx',
     'Haike_video/backlot/studio_motion_runtime.py',
+    'Haike_video/backlot/production_queue.py', 'Haike_video/backlot/production_queue_worker.py',
+    'Haike_video/tools/video/video_compose.py', 'Haike_video/remotion-composer/package.json',
+    'Haike_video/remotion-composer/package-lock.json',
     'prototypes/haike-avatar-generator/src/MotionGitLibrary.jsx',
 ]
 
@@ -36,6 +39,15 @@ TRANSPORT = [
 def require(ok, message):
     if not ok:
         raise core.UpdateError(message)
+
+
+def is_delivery_path(name):
+    # Dependency locks are verified bytes, but remain forbidden as ordinary
+    # program-patch payloads. Only the controlled resource migration changes them.
+    return core.is_program_path(name) or name in {
+        'Haike_video/remotion-composer/package.json',
+        'Haike_video/remotion-composer/package-lock.json',
+    }
 
 
 def _read(path):
@@ -81,7 +93,7 @@ def build(root, *, frontend_root=None, generated_files=None):
     names.update(ui_names)
     files = {}
     for name in sorted(names):
-        require(core.is_program_path(name), '模板交付不能包含私人或运行数据：' + name)
+        require(is_delivery_path(name), '模板交付不能包含私人或运行数据：' + name)
         path = Path(generated_files[name]) if name in generated_files else core.safe_path(frontend_root if name in ui_names else root, name)
         require(path.is_file(), '模板执行文件缺失：' + name)
         files[name] = core.digest(path)
@@ -112,7 +124,7 @@ def verify(root, expected=None):
         require(value['presets'] == expected['presets'], '安装的正式预设版本与本次发行不一致')
     require(all(name in value['files'] for name in [MANIFEST, *TRANSPORT]), '模板交付缺少必需的公共入口')
     for name, digest in value['files'].items():
-        require(core.is_program_path(name) and isinstance(digest, str) and re.fullmatch('[0-9a-f]{64}', digest),
+        require(is_delivery_path(name) and isinstance(digest, str) and re.fullmatch('[0-9a-f]{64}', digest),
                 '模板交付包含无效路径或摘要')
         file = core.safe_path(root, name)
         require(file.is_file() and core.digest(file) == digest, '模板执行文件缺失或已改变：' + name)

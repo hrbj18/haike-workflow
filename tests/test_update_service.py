@@ -134,6 +134,39 @@ class UpdateServiceTests(unittest.TestCase):
             (root / ".git").mkdir()
             self.assertFalse(updater.snapshot()["capability"]["can_install"])
 
+    def test_actual_detached_helper_imports_and_records_failure_without_touching_program(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root, bundle, plan = self.fixture(folder)
+            archive = service.private_path(root, 'import-' + 'c' * 24 + '/package.zip')
+            with zipfile.ZipFile(archive, 'w') as output:
+                for file in bundle.rglob('*'):
+                    if file.is_file(): output.write(file, file.relative_to(bundle).as_posix())
+            updater = service.UpdateService(root)
+            updater.import_archive(archive)
+            before = (root / 'RELEASE.json').read_bytes()
+            with socket.socket() as sock:
+                sock.bind(('127.0.0.1', 0)); port = sock.getsockname()[1]
+            children = []
+            real_popen = subprocess.Popen
+            def tracked_launch(*args, **kwargs):
+                child = real_popen(*args, **kwargs); children.append(child); return child
+            with patch.dict(os.environ, {'PYTHONPATH': ''}), patch.object(service.subprocess, 'Popen', side_effect=tracked_launch):
+                snapshot = updater.install(plan['version'], f'http://127.0.0.1:{port}',
+                                           'isolated-fixture', 0, True, launch=True)
+            child = children[0]
+            try:
+                child.wait(timeout=20)
+                operation = service.private_path(root, snapshot['operation']['id'] + '/operation.json').parent
+                log = (operation / 'helper.log').read_text(encoding='utf-8', errors='replace')
+                self.assertNotIn('ModuleNotFoundError', log)
+                self.assertEqual((operation / 'helper/template_capability.py').read_bytes(),
+                                 Path(service.__file__).with_name('template_capability.py').read_bytes())
+                self.assertEqual(updater.snapshot()['operation']['status'], 'failed')
+                self.assertEqual((root / 'RELEASE.json').read_bytes(), before)
+            finally:
+                if child.poll() is None: child.terminate()
+                child.wait(timeout=10)
+
     def test_digest_mismatch_never_touches_program(self):
         with tempfile.TemporaryDirectory() as folder:
             root, bundle, plan = self.fixture(folder)

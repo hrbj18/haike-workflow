@@ -6,7 +6,24 @@
       "recipe": "quest-approved-portrait-v1.json", "sha256": "8e21d29c96a413a57fe1084f52f54675045975d7207965fe39a52401022bfd84",
       "workflow": "hum-production", "protocol": "hum-production-v1", "canvas": "9:16", "requires_package": false,
       "package": {"template_id": "haike-quest-v1", "version": "1.0.0"},
-      "engine_files": ["Haike_video/backlot/studio_hum_production.py", "Haike_video/backlot/quest_vlog.py", "Haike_video/templates/hum-production-v1/quest/QuestVlog.tsx", "Haike_video/templates/hum-production-v1/quest/layout.json"],
+      "engine_files": [
+        "Haike_video/backlot/studio_hum_production.py", "Haike_video/backlot/quest_vlog.py",
+        "Haike_video/templates/hum-production-v1/index.tsx", "Haike_video/templates/hum-production-v1/types.ts",
+        "Haike_video/templates/hum-production-v1/layout.json",
+        "Haike_video/templates/hum-production-v1/quest/QuestVlog.tsx",
+        "Haike_video/templates/hum-production-v1/quest/Mechanisms.tsx",
+        "Haike_video/templates/hum-production-v1/quest/MotionState.ts",
+        "Haike_video/templates/hum-production-v1/quest/layout.json",
+        "Haike_video/templates/hum-production-v1/OpenMotion.tsx",
+        "Haike_video/templates/hum-production-v1/OpenEffects.tsx",
+        "Haike_video/templates/hum-production-v1/vendor/remocn/cloth-reveal.tsx",
+        "Haike_video/templates/hum-production-v1/vendor/remocn/mondrian-split.tsx",
+        "Haike_video/templates/hum-production-v1/vendor/remocn/parallax-depth.tsx",
+        "Haike_video/templates/hum-production-v1/dynamic/Scenes.tsx",
+        "Haike_video/templates/hum-production-v1/dynamic/motion.ts",
+        "Haike_video/templates/hum-production-v1/dynamic/layout.json",
+        "Haike_video/templates/hum-production-v1/dynamic/vendor/layouts.ts"
+      ],
       "scope": "已认可的七镜动效；重新绑定本期完整声音、真实字幕、素材及可选同源人物。"
     },
     {

@@ -26,7 +26,7 @@ def supported(package):
 def bindings(value, assets):
     """Resolve only this protocol's declared material paths, never arbitrary JSON paths."""
     from backlot.studio_render import media_probe
-    from backlot.studio_hum_production import _clock
+    from backlot.studio_hum_production import _clock, _number
     p = value['parameters']
     motion.require(p.get('creationProfile') == 'knowledge-story/1', '新主题须使用知识讲解路线，不能套用原片演出')
     audio = p.get('audio', {})
@@ -55,8 +55,23 @@ def bindings(value, assets):
     presenter = p.get('presenter', {})
     if presenter.get('mode') != 'none':
         source = material(presenter.get('path'))
+        start = presenter.get('sourceStart', 0)
+        sync = measured.get('presenter', {})
+        motion.require(isinstance(sync, dict), '人物同源证据须为对象')
+        interval = sync.get('reviewedSourceInterval', [])
+        motion.require(sync.get('reviewed') is True
+                       and sync.get('sourceSha256') == sha(source)
+                       and sync.get('audioSha256') == sha(voice_path)
+                       and sync.get('sourceStart') == start and sync.get('globalStart') == 0
+                       and sync.get('durationSeconds') == duration
+                       and _number(start) and start >= 0
+                       and isinstance(interval, list) and len(interval) == 2
+                       and all(_number(t) for t in interval)
+                       and 0 <= interval[0] <= start
+                       and start + duration <= interval[1] + 1 / fps,
+                       '人物须有同源声音、源SHA及完整已审区间证据，请补充句级证据中的presenter记录')
         motion.require(presenter.get('mode') == 'intro-circle'
-                       and media_probe(source).get('duration', 0) + .025 >= presenter.get('sourceStart', 0) + duration,
+                       and media_probe(source).get('duration', 0) + .025 >= interval[1],
                        '原生连续圆窗需要真实完整人物，不能循环或冻结短片')
     return clock
 

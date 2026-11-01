@@ -73,6 +73,40 @@ def test_native_version_is_exact_and_unknown_package_does_not_execute(period):
         render.freeze(queue, draft['id'])
 
 
+@pytest.mark.parametrize('change', [
+    lambda evidence: evidence.pop('presenter'),
+    lambda evidence: evidence['presenter'].update(audioSha256='a' * 64),
+    lambda evidence: evidence['presenter'].update(sourceSha256='b' * 64),
+    lambda evidence: evidence['presenter'].update(sourceStart=1),
+    lambda evidence: evidence['presenter'].update(reviewedSourceInterval=[0, 4]),
+    lambda evidence: evidence['presenter'].update(reviewed=False),
+    None,
+])
+def test_presenter_needs_same_speech_and_reviewed_source_interval(period, change):
+    _, draft, queue, paths = period
+    source = paths['voice.wav'].with_name('presenter.mp4')
+    source.write_bytes(b'isolated-video-binding-fixture')
+    motion.save_asset(draft['id'], source.name, source.read_bytes())
+    params = draft['parameters']
+    params['presenter'] = {'mode': 'intro-circle', 'path': source.name, 'sourceStart': 0}
+    evidence = json.loads(paths['sentence.json'].read_text(encoding='utf-8'))
+    evidence['presenter'] = {'reviewed': True, 'sourceSha256': sha(source),
+        'audioSha256': sha(paths['voice.wav']), 'sourceStart': 0, 'globalStart': 0,
+        'durationSeconds': 8, 'reviewedSourceInterval': [0, 8]}
+    if change: change(evidence)
+    paths['sentence.json'].write_text(json.dumps(evidence), encoding='utf-8')
+    params['sentenceEvidence']['sha256'] = sha(paths['sentence.json'])
+    motion.save_asset(draft['id'], 'sentence.json', paths['sentence.json'].read_bytes())
+    updated = motion.save_draft(draft['package_id'], 'native', params,
+                               draft_id=draft['id'], revision=draft['revision'])
+    if change:
+        with pytest.raises(WorkError, match='人物须有同源'):
+            render.freeze(queue, updated['id'])
+    else:
+        request = render.freeze(queue, updated['id'])
+        native.validate(queue, request)
+
+
 @pytest.mark.parametrize('change, message', [
     (lambda p: p['audio']['narration'].update(path='../voice.wav'), '平面绑定名'),
     (lambda p: p.update(durationSeconds=7), '整片时钟'),
