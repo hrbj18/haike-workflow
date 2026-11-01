@@ -227,6 +227,7 @@ def build(args):
         plan['modern_bases'] = modern_bases
     (bundle / 'UPGRADE.json').write_bytes(core.json_bytes(plan))
     for source, name in [('portable/legacy_upgrade.py', 'legacy_upgrade.py'),
+                         ('portable/audio_update_guard.py', 'audio_update_guard.py'),
                          ('portable/app_update.py', 'release_core.py'),
                          ('portable/upgrade-1027.ps1', 'upgrade-1027.ps1')]:
         shutil.copyfile(args.source / source, bundle / name)

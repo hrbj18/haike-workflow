@@ -26,6 +26,7 @@ TRANSPORT = [
     'Haike_video/backlot/studio_motion_presets.py', 'Haike_video/backlot/studio_motiongit.py',
     'Haike_video/backlot/studio_motiongit_api.py', 'Haike_video/scripts/motiongit.py',
     'portable/template_capability.py', 'portable/motion_runtime.py', 'portable/app_update.py',
+    'portable/audio_update_guard.py',
     'portable/template_selftest.py', 'Haike_video/remotion-composer/runtime-selftest.mjs',
     'Haike_video/remotion-composer/src/RuntimeSelftest.tsx',
     'Haike_video/backlot/studio_motion_runtime.py',

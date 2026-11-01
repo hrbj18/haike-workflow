@@ -87,7 +87,9 @@ class LegacyUpgradeTests(unittest.TestCase):
         self.assertEqual((self.target / 'Haike_video/backlot/legacy_test.py').read_bytes(), b'old program')
 
     def test_read_only_check_does_not_change_program(self):
-        self.assertTrue(self.install(check=True)['check_only'])
+        with patch.object(upgrade, 'reconcile_audio') as reconcile:
+            self.assertTrue(self.install(check=True)['check_only'])
+            reconcile.assert_not_called()
         self.assertFalse((self.target / 'VERSION.json').exists())
 
     def modern_base(self):

@@ -40,6 +40,12 @@ def runtime_module():
     return module
 
 
+def reconcile_audio(target):
+    spec = importlib.util.spec_from_file_location('haike_audio_update_guard', Path(__file__).with_name('audio_update_guard.py'))
+    module = importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
+    return module.reconcile(target)
+
+
 def runtime_plan(bundle, plan, resources):
     identity = resources.get('runtime_manifest_sha256')
     if identity is None:
@@ -422,7 +428,10 @@ def restore(target, backup, *, automatic=False):
 
 
 def apply(bundle, target, resource, *, check=False, health_check=probe):
-    plan, resources, rows, current = preflight(bundle, target, resource)
+    plan, resources, rows, current = preflight(bundle, target, resource, require_stopped=False)
+    if not check:
+        reconcile_audio(target)
+    stopped(target)
     if check or current:
         return {'ok': True, 'check_only': check, 'already_current': current,
                 'version': plan['release']['version'] if current else '1.1 / 1027', 'files': len(rows)}

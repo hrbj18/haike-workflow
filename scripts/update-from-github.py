@@ -199,6 +199,13 @@ def verify_template_capability(root, expected=None, *, required=None):
 def confirm_template_runtime(root, delivery):
     if delivery.get('status') != 'verified':
         return delivery
+    manifest = read(safe(root, 'Haike_video/templates/motion-presets/delivery.json'))
+    require('portable/audio_update_guard.py' in manifest.get('files', {}),
+            '音色核对模块缺少本次交付身份，请安装修复发行版')
+    guard_spec = importlib.util.spec_from_file_location('haike_verified_audio_guard',
+        safe(root, 'portable/audio_update_guard.py'))
+    guard = importlib.util.module_from_spec(guard_spec); guard_spec.loader.exec_module(guard)
+    guard.reconcile(root)
     idle(root)
     # The verifier and its public imports were hash-checked above. Only now may
     # the single-file entry execute installed code, with no inherited Python path.
@@ -471,6 +478,7 @@ def run(url, target=None, *, check=False, start=True):
         installer = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(installer)
         installer.preflight(bundle, root, resources, require_stopped=False)
+        installer.reconcile_audio(root)
     finally:
         sys.path[:] = previous_path
         sys.modules.pop('release_core', None)
