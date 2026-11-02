@@ -164,6 +164,12 @@ def prepare() -> dict:
         spec.loader.exec_module(module)
         materialize = module.materialize
     materialize(ROOT)
+    runtime_module = Path(__file__).with_name('motion_runtime.py')
+    if runtime_module.is_file():
+        import importlib.util
+        spec = importlib.util.spec_from_file_location('haike_portable_motion_runtime', runtime_module)
+        module = importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
+        module.relocate(ROOT)
     base = local_path("runtime/python")
     if not (base / "python.exe").is_file():
         raise RuntimeError("离线 Python 缺失，请完整解压发行包；不会在线安装")

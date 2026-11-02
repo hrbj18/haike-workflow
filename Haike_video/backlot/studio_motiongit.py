@@ -13,6 +13,7 @@ import re
 import shutil
 import sqlite3
 import subprocess
+import sys
 import urllib.request
 from urllib.parse import urlsplit
 import zipfile
@@ -28,6 +29,21 @@ HELPER_VERSION = '1.0.0-rc.50'
 HELPER_SHA = '7004609ddbc0ccf6451beeb477aff0d3c85bda74f902e5922465c85cd347f6f3'
 HELPER_BYTES = 836994
 METADATA_URL = 'https://motiongit.com/assets/motion-runtimes/1.0.0-rc.50.json'
+HELPER_PINS = {
+    HELPER_VERSION: (HELPER_SHA, HELPER_BYTES),
+    '1.0.0-rc.51': ('2748865645a5a0911de4ca79a4186c7ee5f1c7157e09eb72904bd2330463304b', 842265),
+    # Compared with the fixed official HTTPS metadata on 2026-11-01.
+    '1.0.0-rc.54': ('90f00d37cafdc9a204babce24b86b683c097c8a60b74b862b28cfe1a081b2a3f', 852945),
+}
+
+
+def helper_identity(value=None):
+    """Independent release pins; existing packages retain their original tool."""
+    version = (value or {}).get('helper_version', HELPER_VERSION)
+    require(version in HELPER_PINS, '官方工具版本尚未核验')
+    digest, size = HELPER_PINS[version]
+    return {'version': version, 'sha256': digest, 'bytes': size,
+            'metadata_url': f'https://motiongit.com/assets/motion-runtimes/{version}.json'}
 
 
 def require(condition, message):
@@ -52,6 +68,8 @@ def _id(value):
 
 def _get(table, identity):
     _id(identity)
+    if table == 'packages' and identity == 'haike-quest-v1':
+        return _builtin_quest()
     with _db() as db:
         row = db.execute(f'SELECT data FROM {table} WHERE id=?', (identity,)).fetchone()
     require(row is not None, '模板包或草稿不存在')
@@ -62,8 +80,9 @@ def _get(table, identity):
         package=STORE/'packages'/identity/'original.motion'
         if value.get('path')!=str(package) and package.is_file() and sha(package)==value.get('sha256'):
             value['path']=str(package)
-        helper=STORE/'tools'/HELPER_VERSION/'motion.mjs'
-        if value.get('helper') and value['helper']!=str(helper) and helper.is_file() and sha(helper)==HELPER_SHA:
+        pin = helper_identity(value)
+        helper=STORE/'tools'/pin['version']/'motion.mjs'
+        if value.get('helper') and value['helper']!=str(helper) and helper.is_file() and sha(helper)==pin['sha256']:
             value['helper']=str(helper)
         cache=value.get('dependency_cache')
         if isinstance(cache,str) and not Path(cache).is_absolute():
@@ -123,7 +142,14 @@ def inspect_package(path):
             if known:
                 require('assistant/motion.mjs' in names, '个人包缺少随包入口')
                 info = archive.getinfo('assistant/motion.mjs')
-                if info.file_size != HELPER_BYTES or hashlib.sha256(archive.read(info)).hexdigest() != HELPER_SHA:
+                matches = []
+                if info.file_size in {pin[1] for pin in HELPER_PINS.values()}:
+                    digest = hashlib.sha256(archive.read(info)).hexdigest()
+                    matches = [pin for pin in (helper_identity({'helper_version': v}) for v in HELPER_PINS)
+                               if pin['bytes'] == info.file_size and pin['sha256'] == digest]
+                if matches:
+                    result['helper_version'] = matches[0]['version']
+                else:
                     result['support']='inspection-only'
                     result['support_note']='随包入口不在已核验版本内；已保留原包，只读分析，不执行。'
             # An open format is inspectable without becoming an executable plugin.
@@ -166,6 +192,11 @@ def public_package(value):
     fields={'id','filename','bytes','sha256','name','version','template_id','runtime','spec_version','personal',
             'protection','verification','runnable','support','support_note','workflows','entry_count'}
     result={k: v for k, v in value.items() if k in fields}
+    if value.get('verification') == 'verified':
+        from backlot.studio_motion_knowledge import supported, PROTOCOL
+        if supported(value) and 'native' in result.get('workflows', {}):
+            result['workflows']['native']['production_protocol'] = PROTOCOL
+            result['workflows']['native']['scope'] = '原生横屏/9:16；完整口播、句级证据、可选连续人物；经本期预览审核后统一队列导出'
     preview = _public_preview(value)
     if preview: result['preview_url'] = preview
     if 'project-wall' in result.get('workflows',{}):
@@ -202,7 +233,22 @@ def _hum_workflow(value):
 def packages():
     with _db() as db:
         values = db.execute('SELECT data FROM packages ORDER BY rowid DESC').fetchall()
-    return {'packages': [public_package(json.loads(row[0])) for row in values]}
+    return {'packages': [public_package(_builtin_quest()), *[public_package(json.loads(row[0])) for row in values]]}
+
+
+def _builtin_quest():
+    """Project-owned source template; it requires no downloaded personal envelope."""
+    folder = ROOT / 'Haike_video/templates/hum-production-v1/quest'
+    schema = _hum_schema()
+    schema['default'] = json.loads((folder / 'params.example.json').read_text(encoding='utf-8'))
+    schema['properties']['props']['properties']['visualStyle'] = {'const': 'quest', 'type': 'string'}
+    return {'id': 'haike-quest-v1', 'name': '内置 · 蓝白任务口播', 'filename': '项目内置源码',
+            'template_id': 'haike-quest-v1', 'version': '1.0.0', 'bytes': 0,
+            'sha256': sha(folder / 'params.example.json'), 'runtime': 'project-source',
+            'verification': 'verified', 'support': 'project-source', 'runnable': True,
+            'workflows': {'hum-production': {'schema': schema, 'controls': {},
+                'implementation': 'hum-production-v1', 'description': '蓝白任务口播',
+                'scope': '独立16:9/9:16；完整口播、自己的素材和可选同源人物；新稿须实际复验'}}}
 
 
 class _NoRedirect(urllib.request.HTTPRedirectHandler):
@@ -216,35 +262,43 @@ def verified_helper(value):
     require(package.is_file() and sha(package) == value['sha256'], '原包身份已变化')
     # Fixed official origin + independent digest; never a URL or trust root from a package.
     opener = urllib.request.build_opener(_NoRedirect)
-    with opener.open(METADATA_URL, timeout=30) as response:
-        require(response.geturl() == METADATA_URL, '官方工具元数据发生跳转')
+    pin = helper_identity(value)
+    with opener.open(pin['metadata_url'], timeout=30) as response:
+        require(response.geturl() == pin['metadata_url'], '官方工具元数据发生跳转')
         raw = response.read(16385)
     require(len(raw) <= 16384, '官方工具元数据过大')
     metadata = json.loads(raw)
-    require(metadata.get('sha256') == HELPER_SHA and metadata.get('bytes') == HELPER_BYTES
-            and metadata.get('helperVersion') == HELPER_VERSION, '官方工具身份与已支持版本不一致')
-    target = STORE / 'tools' / HELPER_VERSION / 'motion.mjs'
+    require(metadata.get('sha256') == pin['sha256'] and metadata.get('bytes') == pin['bytes']
+            and metadata.get('helperVersion') == pin['version'], '官方工具身份与已支持版本不一致')
+    target = STORE / 'tools' / pin['version'] / 'motion.mjs'
     target.parent.mkdir(parents=True, exist_ok=True)
     if not target.exists():
         with zipfile.ZipFile(package) as archive:
             content = archive.read('assistant/motion.mjs')
-        require(len(content) == HELPER_BYTES and hashlib.sha256(content).hexdigest() == HELPER_SHA, '随包工具身份不符')
+        require(len(content) == pin['bytes'] and hashlib.sha256(content).hexdigest() == pin['sha256'], '随包工具身份不符')
         with target.open('xb') as output:
             output.write(content)
-    require(sha(target) == HELPER_SHA, '本地官方工具身份已变化')
+    require(sha(target) == pin['sha256'], '本地官方工具身份已变化')
     return target
 
 
 def helper_command(value, *args, timeout=180, temporary_root=None):
     helper = Path(value['helper'])
-    require(helper.is_file() and sha(helper) == HELPER_SHA, '官方工具未核验或已变化')
+    require(helper.is_file() and sha(helper) == helper_identity(value)['sha256'], '官方工具未核验或已变化')
     require(sha(value['path']) == value['sha256'], '原包已变化')
-    node = shutil.which('node')
+    node = node_executable()
     require(node is not None, '需要Node.js 22或更新版本')
     env = dict(os.environ, PYTHONUTF8='1', PYTHONIOENCODING='utf-8')
+    # The source/portable Python running this service is a real interpreter.
+    # Prefer it over WindowsApps aliases when official setup probes Python;
+    # the helper still validates its supported version and owns its own cache.
+    env['PATH'] = str(Path(sys.executable).resolve().parent) + os.pathsep + env.get('PATH', '')
     if value.get('offline_dependencies') is True:
         require(Path(value.get('dependency_cache','')).is_dir(),'请恢复此模板随首次部署交付的离线运行环境')
         env.update(PIP_NO_INDEX='1',UV_OFFLINE='1',PIP_DISABLE_PIP_VERSION_CHECK='1',NPM_CONFIG_OFFLINE='true')
+    browser = ROOT / 'runtime/browser/chrome-headless-shell.exe'
+    if browser.is_file() and not env.get('CHROME_PATH'):
+        env['CHROME_PATH'] = str(browser)
     if temporary_root is not None:
         temporary=Path(temporary_root).resolve()
         require(temporary.is_relative_to((ROOT/'.local').resolve()) and not temporary.is_symlink()
@@ -272,6 +326,11 @@ def helper_command(value, *args, timeout=180, temporary_root=None):
         return {'output_recorded_privately': True}
 
 
+def node_executable():
+    node = ROOT / 'runtime/node/node.exe'
+    return str(node) if node.is_file() else shutil.which('node')
+
+
 def _read_public(value, name):
     require(isinstance(name, str) and not name.startswith(('personal/', 'content/')) and '..' not in name
             and name.endswith(('.json', '.md')), '仅允许声明的公开说明文档')
@@ -282,6 +341,14 @@ def _read_public(value, name):
 
 def verify_package(identity):
     value = _get('packages', identity)
+    if value['support'] == 'inspection-only' and value.get('personal'):
+        # An explicit re-verification may recognize a newly supported release.
+        # Preserve the original bytes; a package can never nominate a trust pin.
+        inspected = inspect_package(value['path'])
+        require(inspected['sha256'] == value['sha256'], '原包身份已变化')
+        if inspected['support'] == 'official-helper':
+            value.update(support='official-helper', helper_version=inspected['helper_version'])
+            value.pop('support_note', None)
     value['helper'] = str(verified_helper(value))
     started = helper_command(value, 'start', '--summary')
     require(started.get('verified') is True, '模板个人封套验签未通过')
@@ -334,7 +401,9 @@ def validate_parameters(package, workflow, parameters):
                 and isinstance(parameters.get('provenance'), dict), '完整口播模板须有props、audio、provenance')
         require(('scenes' in parameters['props']) != ('shotPlan' in parameters), '固定场景和自动shotPlan须选一种')
         from backlot.studio_hum_production import _name
-        require(_name(parameters['audio'].get('voice')) and parameters['props'].get('visualStyle') in {'hum', 'coral', 'darkroom', 'carnival', 'archive', 'playroom'}, '口播绑定名或视觉风格无效')
+        require(_name(parameters['audio'].get('voice')) and parameters['props'].get('visualStyle') in {'hum', 'coral', 'darkroom', 'carnival', 'archive', 'playroom', 'quest'}, '口播绑定名或视觉风格无效')
+        if package.get('id') == 'haike-quest-v1':
+            require(parameters['props'].get('visualStyle') == 'quest', '此内置模板使用任务口播风格')
         return {'valid': True, 'scope': 'speech-clock-draft-structure', 'runtime_validation': 'pending-bound-source-preflight'}
     schema = package['workflows'][workflow]['schema']
     # Remote references are not implicit network permission. Real local refs remain available.
@@ -364,7 +433,7 @@ def validate_parameters(package, workflow, parameters):
     return {'valid': True, 'scope': 'schema-and-control-structure', 'runtime_validation': 'pending'}
 
 
-def save_draft(identity, workflow, parameters, *, draft_id=None, revision=0, title='新视频', output_profile='native', art_direction=None):
+def save_draft(identity, workflow, parameters, *, draft_id=None, revision=0, title='新视频', output_profile='native', art_direction=None, preset_source=None):
     package = _get('packages', identity)
     require(workflow in package['workflows'], '请先核验模板并选择已声明工作流')
     require(isinstance(parameters, dict) and isinstance(revision, int) and not isinstance(revision, bool) and revision >= 0,
@@ -375,6 +444,8 @@ def save_draft(identity, workflow, parameters, *, draft_id=None, revision=0, tit
     draft_id = _id(draft_id or 'mgd-' + uuid4().hex)
     value = {'id': draft_id, 'package_id': identity, 'package_sha256': package['sha256'], 'workflow': workflow,
              'parameters': parameters, 'revision': revision + 1, 'title': str(title)[:160], 'output_profile':output_profile}
+    if preset_source is not None:
+        value['preset_source'] = dict(preset_source)
     if art_direction is not None:
         from backlot.studio_art_direction import normalize_selection
         value['art_direction'] = normalize_selection(art_direction)
@@ -387,6 +458,8 @@ def save_draft(identity, workflow, parameters, *, draft_id=None, revision=0, tit
         else:
             old = db.execute('SELECT data FROM drafts WHERE id=? AND revision=?', (draft_id, revision)).fetchone()
             require(old and json.loads(old[0])['package_id'] == identity, '草稿已更新或模板身份不同，请重新读取')
+            if 'preset_source' in json.loads(old[0]):
+                value['preset_source'] = json.loads(old[0])['preset_source']
             if art_direction is None and 'art_direction' in json.loads(old[0]):
                 value['art_direction'] = json.loads(old[0])['art_direction']
             count = db.execute('UPDATE drafts SET revision=?,data=? WHERE id=? AND revision=?',
@@ -409,7 +482,8 @@ def clone_draft(identity):
     """Reuse a complete film layout while preserving the original draft/version."""
     old=draft(identity)
     new=save_draft(old['package_id'],old['workflow'],old['parameters'],title=old['title']+' · 副本',
-                   output_profile=old.get('output_profile','native'),art_direction=old.get('art_direction'))
+                   output_profile=old.get('output_profile','native'),art_direction=old.get('art_direction'),
+                   preset_source=old.get('preset_source'))
     folder=STORE/'drafts'/new['id']/'inputs';folder.mkdir(parents=True,exist_ok=True)
     for asset in asset_list(identity)['assets']:
         source=STORE/'drafts'/identity/'inputs'/asset['name']
@@ -428,6 +502,9 @@ def validate_draft(identity):
     value = draft(identity)
     package = _get('packages', value['package_id'])
     require(value['package_sha256'] == package['sha256'], '草稿模板身份不一致')
+    if value.get('preset_source'):
+        from backlot.studio_motion_presets import check_binding
+        check_binding(value)
     return validate_parameters(package, value['workflow'], value['parameters'])
 
 

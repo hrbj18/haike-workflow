@@ -287,7 +287,7 @@ class UpdateService:
         else:
             https_url(package["url"])
         kind = package.get("kind", "patch")
-        if kind not in {"patch", "full"}:
+        if kind not in {"patch", "full", "migration"}:
             raise core.UpdateError("更新包类型无效")
         limit = core.MAX_ARCHIVE_BYTES if kind == "patch" else 2 * 1024 ** 3 - 1
         if (not isinstance(package.get("size"), int) or isinstance(package["size"], bool)
@@ -375,7 +375,7 @@ class UpdateService:
                 helper = folder / "helper"
                 helper.mkdir()
                 try:
-                    for name in ("app_update.py", "update_service.py", "update_worker.py"):
+                    for name in ("app_update.py", "update_service.py", "update_worker.py", "template_capability.py"):
                         shutil.copyfile(Path(__file__).parent / name, helper / name)
                     flags = (getattr(subprocess, "CREATE_NEW_PROCESS_GROUP", 0) | getattr(subprocess, "DETACHED_PROCESS", 0)) if os.name == "nt" else 0
                     with (folder / "helper.log").open("ab") as log:

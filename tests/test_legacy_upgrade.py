@@ -1,7 +1,9 @@
 """Public bootstrap contract: no partial writes, safe rollback and offline reuse."""
 import hashlib
+from contextlib import closing
 import importlib.util
 import json
+import sqlite3
 from pathlib import Path
 import sys
 import tempfile
@@ -85,8 +87,44 @@ class LegacyUpgradeTests(unittest.TestCase):
         self.assertEqual((self.target / 'Haike_video/backlot/legacy_test.py').read_bytes(), b'old program')
 
     def test_read_only_check_does_not_change_program(self):
-        self.assertTrue(self.install(check=True)['check_only'])
+        with patch.object(upgrade, 'reconcile_audio') as reconcile:
+            self.assertTrue(self.install(check=True)['check_only'])
+            reconcile.assert_not_called()
         self.assertFalse((self.target / 'VERSION.json').exists())
+
+    def modern_base(self):
+        identity = 'base-1-2-1-' + 'c' * 12
+        release = {**self.plan['release'], 'version': '1.2.1', 'source_commit': 'c' * 40}
+        self.file('RELEASE.json', upgrade.json_bytes(release))
+        self.plan['release']['version'] = '1.2.2'
+        self.plan['modern_bases'] = [{'id': identity, 'version': '1.2.1', 'source_commit': 'c' * 40, 'required_files': []}]
+        for row in self.plan['files'] + self.resources['files']:
+            row['before_by_base'] = {identity: row.get('before_sha256')}
+        with zipfile.ZipFile(self.resource, 'w') as archive:
+            archive.writestr('blobs/test', b'new cache file')
+            archive.writestr('RESOURCES.json', upgrade.json_bytes(self.resources))
+        self.plan['resources']['sha256'] = upgrade.digest(self.resource)
+        self.save_plan()
+        return release
+
+    def test_explicit_modern_migration_preserves_data_and_rolls_back(self):
+        previous = self.modern_base()
+        before = (self.target / 'RELEASE.json').read_bytes()
+        result = self.install()
+        self.assertEqual(upgrade.read(self.target / 'RELEASE.json')['upgraded_from'], '1.2.1')
+        self.assertEqual((self.target / 'Haike_video/config.local.yaml').read_bytes(), b'private-config-sentinel')
+        upgrade.restore(self.target, Path(result['backup']))
+        self.assertEqual((self.target / 'RELEASE.json').read_bytes(), before)
+
+    def test_unknown_modern_build_and_missing_per_file_baseline_are_rejected(self):
+        release = self.modern_base()
+        self.file('RELEASE.json', upgrade.json_bytes({**release, 'source_commit': 'd' * 40}))
+        with self.assertRaisesRegex(ValueError, '未支持当前构建'):
+            self.install()
+        self.file('RELEASE.json', upgrade.json_bytes(release))
+        self.plan['files'][0].pop('before_by_base'); self.save_plan()
+        with self.assertRaisesRegex(ValueError, '基线校验'):
+            self.install()
 
     def test_rollback_accepts_same_installation_through_canonical_path_alias(self):
         (self.root / 'alias-parent').mkdir()
@@ -143,6 +181,67 @@ class LegacyUpgradeTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, '又被修改'):
             upgrade.restore(self.target, Path(result['backup']))
         self.assertTrue((self.target / 'VERSION.json').exists())
+
+
+class LegacyPendingWorkTests(unittest.TestCase):
+    def setUp(self):
+        temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(temporary.cleanup)
+        self.root = Path(temporary.name).resolve()
+        inspection = patch.object(upgrade.subprocess, 'run', return_value=type('ProcessList', (), {
+            'returncode': 0, 'stdout': '[]'})())
+        inspection.start()
+        self.addCleanup(inspection.stop)
+
+    def test_every_nonterminal_queue_state_blocks_offline_installer(self):
+        path = self.root / 'Haike_video/.backlot/production-queue.sqlite3'
+        path.parent.mkdir(parents=True)
+        with closing(sqlite3.connect(path)) as db:
+            db.execute('CREATE TABLE production_jobs(status TEXT)')
+            db.execute('INSERT INTO production_jobs VALUES (?)', ('queued',))
+            db.commit()
+            for status in ['queued', 'running', 'paused', 'awaiting_human', 'ambiguous', None]:
+                with self.subTest(status=status):
+                    db.execute('UPDATE production_jobs SET status=?', (status,)); db.commit()
+                    with self.assertRaisesRegex(ValueError, '制作任务'):
+                        upgrade.stopped(self.root)
+            for status in ['completed', 'failed', 'cancelled']:
+                db.execute('UPDATE production_jobs SET status=?', (status,)); db.commit()
+                upgrade.stopped(self.root)
+
+    def test_unknown_audio_file_blocks_without_modifying_its_record(self):
+        path = self.root / 'Haike_video/.backlot/audio-center-internal/voice/operations/test/operation.json'
+        path.parent.mkdir(parents=True)
+        for status in ['submitting', 'processing', 'submission_unknown', None]:
+            with self.subTest(status=status):
+                original = upgrade.json_bytes({'status': status, 'synthetic': True})
+                path.write_bytes(original)
+                with self.assertRaisesRegex(ValueError, '音色操作'):
+                    upgrade.stopped(self.root)
+                self.assertEqual(path.read_bytes(), original)
+        for status in ['succeeded', 'failed']:
+            path.write_bytes(upgrade.json_bytes({'status': status}))
+            upgrade.stopped(self.root)
+
+    def test_unresolved_audio_database_intent_blocks_offline_installer(self):
+        path = self.root / 'Haike_video/.backlot/studio.sqlite3'
+        path.parent.mkdir(parents=True)
+        with closing(sqlite3.connect(path)) as db:
+            db.execute('CREATE TABLE studio_audio_operations(attempts INTEGER, outcome TEXT)')
+            db.execute('INSERT INTO studio_audio_operations VALUES(1,NULL)'); db.commit()
+            with self.assertRaisesRegex(ValueError, '音色操作'):
+                upgrade.stopped(self.root)
+            db.execute("UPDATE studio_audio_operations SET outcome='failed'"); db.commit()
+            upgrade.stopped(self.root)
+            db.execute('UPDATE studio_audio_operations SET attempts=0,outcome=NULL'); db.commit()
+            upgrade.stopped(self.root)
+
+    def test_corrupt_audio_record_fails_closed(self):
+        path = self.root / 'Haike_video/.backlot/audio-center-internal/voice/operations/test/operation.json'
+        path.parent.mkdir(parents=True)
+        path.write_bytes(b'{invalid')
+        with self.assertRaises(ValueError):
+            upgrade.stopped(self.root)
 
 
 if __name__ == '__main__':

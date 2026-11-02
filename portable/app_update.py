@@ -64,6 +64,22 @@ def version_tuple(version):
     return tuple(int(part) for part in version.split("."))
 
 
+def validate_template_capability(value):
+    if (not isinstance(value, dict) or value.get('schema') != 'haike.motion-capability/1'
+            or not isinstance(value.get('sha256'), str) or not _SHA.fullmatch(value['sha256'])
+            or not isinstance(value.get('presets'), list) or not 0 < len(value['presets']) <= 100):
+        raise UpdateError('更新清单的模板能力身份无效')
+    seen = set()
+    for row in value['presets']:
+        if (not isinstance(row, dict) or not isinstance(row.get('id'), str)
+                or not re.fullmatch(r'[a-z0-9-]{4,80}', row['id']) or row['id'] in seen
+                or not isinstance(row.get('sha256'), str) or not _SHA.fullmatch(row['sha256'])
+                or type(row.get('requires_package')) is not bool or not isinstance(row.get('protocol'), str)):
+            raise UpdateError('更新清单的预设身份无效或重复')
+        version_tuple(row.get('version')); seen.add(row['id'])
+    return value
+
+
 def digest(path):
     with Path(path).open("rb") as stream:
         return hashlib.file_digest(stream, "sha256").hexdigest()
@@ -216,6 +232,8 @@ def _plan(value):
         raise UpdateError("更新包缺少有效的源码构建标识")
     if "published_at" in value and (not isinstance(value["published_at"], str) or len(value["published_at"]) > 100):
         raise UpdateError("更新包发布时间无效")
+    if value.get('template_capability') is not None:
+        validate_template_capability(value['template_capability'])
     files = value.get("files")
     locks = value.get("required_locks", [])
     if not isinstance(files, list) or not files or len(files) > MAX_FILES or not isinstance(locks, list):
@@ -354,7 +372,7 @@ def _new_metadata(root, plan):
     release = _read(safe_path(root, "RELEASE.json"))
     release.update({key: plan[key] for key in ("edition", "version", "runtime_id", "data_schema", "platform")})
     release.update(channel="stable", updated_at=_time())
-    for key in ("source_commit", "published_at"):
+    for key in ("source_commit", "published_at", "template_capability"):
         if key in plan:
             release[key] = plan[key]
     release_bytes = json_bytes(release)

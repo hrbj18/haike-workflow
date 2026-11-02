@@ -67,6 +67,20 @@ def test_internal_cache_and_future_private_fields_never_reach_browser():
     assert motion.public_package(value)=={'id':'mg-test','name':'模板'}
 
 
+def test_builtin_quest_is_available_without_a_personal_motion_package(store, monkeypatch):
+    monkeypatch.setattr(motion.subprocess, 'run', lambda *a, **k: pytest.fail('builtin executed helper'))
+    package = motion._get('packages', 'haike-quest-v1')
+    assert package['runtime'] == 'project-source' and not package.get('personal')
+    assert package['workflows']['hum-production']['schema']['default']['props']['visualStyle'] == 'quest'
+    assert motion.packages()['packages'][0]['id'] == 'haike-quest-v1'
+    params = package['workflows']['hum-production']['schema']['default']
+    draft = motion.save_draft(package['id'], 'hum-production', params)
+    assert motion.validate_draft(draft['id'])['valid']
+    params['props']['visualStyle'] = 'hum'
+    with pytest.raises(WorkError, match='任务口播风格'):
+        motion.validate_parameters(package, 'hum-production', params)
+
+
 @pytest.mark.parametrize('url',[
     'http://media.openaicut.com/example.mp4',
     'https://media.openaicut.com/example.mp4?token=private',
@@ -155,6 +169,29 @@ def test_new_personal_helper_remains_inspectable_without_execution(store):
     result=motion.import_package(path)
     assert result['support']=='inspection-only' and not result['runnable']
     assert '只读分析' in result['support_note']
+
+
+def test_explicit_reverification_recognizes_new_pin_without_reimport(store, monkeypatch):
+    import hashlib
+    content = b'new independently pinned official entry'
+    path = store / 'recent.motion'
+    with zipfile.ZipFile(path, 'w') as archive:
+        archive.writestr('motion.json', json.dumps({'format':'motiongit-template',
+            'packageProfile':'personal-download-v1', 'specVersion':'1.0.0-rc.1',
+            'runtime':{'profile':'motiongit-host/1'}}))
+        archive.writestr('assistant/motion.mjs', content)
+    imported = motion.import_package(path)
+    assert imported['support'] == 'inspection-only'
+    monkeypatch.setitem(motion.HELPER_PINS, 'test-new-pin', (hashlib.sha256(content).hexdigest(), len(content)))
+    def verified(value):
+        assert value['support'] == 'official-helper' and value['helper_version'] == 'test-new-pin'
+        return store / 'verified-tool'
+    monkeypatch.setattr(motion, 'verified_helper', verified)
+    monkeypatch.setattr(motion, 'helper_command', lambda *a, **kw: {'verified':True})
+    monkeypatch.setattr(motion, '_read_public', lambda *a: {})
+    result = motion.verify_package(imported['id'])
+    assert result['id'] == imported['id'] and result['sha256'] == imported['sha256']
+    assert result['verification'] == 'verified' and 'support_note' not in result
 
 
 def test_api_upload_edit_and_cross_origin_rejection(store):

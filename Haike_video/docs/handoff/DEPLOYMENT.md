@@ -4,7 +4,7 @@
 
 更新时间：2026-10-30
 
-10/30三模板：科技控制台、深色立体、活力海报。方框首片用户已看；旧三片/离线制作及中间构建升级证据根`.local/stable-delivery-20261029/`。用户指定真实1027完整包为1.1，正式新包叫1.2；原ZIP摘要已与发布记录核对，77982文件逐项验证后解压隔离测试。独立升级器根portable/legacy_upgrade.py；源码/模板两包制作与实际旧版验收见根`.local/release-1.2/`及docs/releases/1.2.md。1.1.x为内部构建，不能当1027基线。无新增云费/远端发布/物理异机验收；私人素材不进两包。
+10/30三模板：科技控制台、深色立体、活力海报。方框首片已看，空场节奏后续处理。1027原包=1.1；SHA匹配、77982文件逐项验证。1.2源码244c454独立交付：程序1.65MB/模板191.49MB，合计<200MB。真实旧包隔离升级/重复/回退/故障恢复/配置保留通过；最终84123发行文件全验、42目录/40封面/三原包验签/正常启动通过。入口根portable/legacy_upgrade.py；包与验收D:/codex_work/haike-delivery-20261030/V1.2/；证据根.local/release-1.2。首次需绑定自有素材；私有素材不分发。内部1.1.x不是1027基线；无新增云费/公网发布/物理异机验收。
 
 应用更新首版：根docs/APP_UPDATES.md，VERSION.json引入1.0.0产品编号，源码显示开发态。studio_update_api.py与根portable/{app_update,update_service,update_worker}.py负责HTTPS清单、兼容程序补丁、任务维护闸门、独立重启/回退；AboutDialog.jsx为入口。根test_*update*.py及test_studio_update_api.py覆盖数据保留和启动失败恢复。线上清单/包仍需正式发布，其他安装/云服务未同步。
 

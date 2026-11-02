@@ -1,6 +1,6 @@
 # Haike Workflow
 
-已有安装需要更新时，从[GitHub地址联网升级](docs/UPDATE_WITH_CODEX.md)进入：Codex负责识别目标副本、自动下载与校验，后续在“关于海客视频”检查并下载安装。不要用Git覆盖运行目录或重新执行全量setup。1.2联网修订规范版本号为1.2.1，实际上线状态以GitHub Release及其更新清单为准。
+已有安装需要更新时，从[GitHub地址联网升级](docs/UPDATE_WITH_CODEX.md)进入：Agent识别目标副本、自动下载与校验，兼容补丁也可在“关于海客视频”检查并安装。定稿模板升级须额外核验配方、动效组件与实际运行自检；缺个人原包或本期素材分别提示待配置。不要用Git覆盖运行目录或重新执行全量setup，实际上线状态以GitHub Release及其更新清单为准。
 
 当前稳定源码入口为`main`（2026-10-27），版本范围与验收见[稳定版说明](docs/releases/20261027-stable.md)。本地新版ZIP另含40张用户授权截图，入口见[模板交付](docs/TEMPLATE_DELIVERY.md)；私人截图和样片不进入公开Git。Windows便携包按根`使用说明.txt`初始化并导入自己的私有配置；已有独立APIKey包也可用`00-install.cmd`，再运行`02-start.cmd`。Key不进入项目ZIP。两条RunningHub工作流都包含，性价比默认，高质量需明确指定；详情见`Haike_video/workflows/runninghub-high-quality/README.md`。
 

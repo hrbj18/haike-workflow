@@ -90,6 +90,31 @@ def test_scene_plan_compresses_to_legal_wall_window_and_rejects_too_short():
         hum.plan_scenes(plan, 137)
 
 
+@pytest.mark.parametrize('size', [(1080, 1920), (1920, 1080)])
+def test_quest_reflow_keeps_shared_voice_source_and_queue_contract(sample, size):
+    value = sample['value']
+    value.pop('shotPlan')
+    value['props'].update(visualStyle='quest', width=size[0], height=size[1])
+    value['props']['media'] = value['props']['media'][:1]
+    value['provenance']['media'] = value['provenance']['media'][:1]
+    for i in range(1, 4):
+        value['sources'].pop(f'video-{i}.mp4')
+        value['sources'].pop(f'poster-{i}.jpg')
+    value['props']['scenes'] = [{'id':'experience', 'from':0, 'frames':608, 'module':'quest',
+        'title':'亲手体验', 'mediaId':'m0', 'quest':{'kind':'media', 'items':[], 'cues':[]}}]
+    frozen = hum.prepare(sample['queue'], value)
+    assert (frozen['props']['width'], frozen['props']['height']) == size
+    job = hum.submit(sample['queue'], frozen)
+    assert job['kind'] == hum.KIND and frozen['cloud_calls'] == 0
+    value['props']['scenes'][0]['quest'].update(kind='unlock', items=['看见', '亲手体验'], cues=[30, 590])
+    with pytest.raises(WorkError, match='至少一秒'):
+        hum.preflight(value)
+    value['props']['scenes'][0]['quest']['cues'] = [30, 120]
+    value['props']['width'], value['props']['height'] = 1440, 1800
+    with pytest.raises(WorkError, match='独立重排'):
+        hum.preflight(value)
+
+
 def test_card_stack_preserves_distribution_window_and_odd_card_count(sample):
     value = sample['value']
     value['shotPlan'][0]['motion'] = 'card-stack'

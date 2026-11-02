@@ -86,3 +86,6 @@ backups/
 /deliverables/海客全模板_Mac复刻包_20261025/
 /deliverables/海客全模板_Mac复刻包_20261025.zip
 /deliverables/海客全模板_Mac复刻包_20261025.zip.sha256
+# Release-generated, hash-bound preset/runtime inventories.
+/Haike_video/templates/motion-presets/delivery.json
+/Haike_video/templates/motion-presets/runtime.json

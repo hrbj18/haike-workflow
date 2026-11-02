@@ -1,0 +1,18 @@
+{
+  "schema": "haike.quest-vlog-layout/1",
+  "layouts": {
+    "landscape": {"width": 1920, "height": 1080},
+    "portrait": {"width": 1080, "height": 1920}
+  },
+  "kinds": {
+    "boot": 60, "headline": 90, "versus": 105, "quests": 105,
+    "media": 90, "unlock": 120, "timeline": 120, "books": 105,
+    "world": 90, "clear": 105, "comment": 135, "ranking": 135,
+    "radar": 90, "path": 120, "editor": 120
+  },
+  "palette": {"accent": "#1455FF", "paper": "#FFFFFF", "ink": "#101114", "good": "#7BE69B", "bad": "#FF4D58"},
+  "timing": {"fps": 30, "entryFrames": 15, "exitFrames": 10, "presenterMorphFrames": 18, "transitionFrames": 12},
+  "transitions": ["checker", "iris"],
+  "portrait": {"content": [72, 210, 936, 880], "presenter": [370, 1170, 340, 340], "pathMedia": [570, 290, 306, 544], "pathPresenter": [580, 1060, 360, 450], "caption": [72, 1565, 936, 160], "captionSize": 50},
+  "landscape": {"content": [100, 200, 1210, 620], "presenter": [1410, 240, 390, 570], "caption": [100, 900, 1720, 100], "captionSize": 44}
+}

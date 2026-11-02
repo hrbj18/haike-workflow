@@ -84,6 +84,9 @@ def _check_bindings(parameters, assets):
 
 def freeze(queue, draft_id):
     value = motion.draft(draft_id)
+    if value['workflow'] == 'native':
+        from backlot.studio_motion_knowledge import freeze as native_freeze
+        return native_freeze(queue, draft_id)
     if value['workflow'] in {'project-wall', 'hum-production'}:
         return motion.freeze_project_draft(queue, draft_id)
     parameters=component_timeline(value)
@@ -98,7 +101,7 @@ def freeze(queue, draft_id):
                    '4:5适配目前以竖屏原生布局为基础，请先选择portrait并审核适配预览')
     _check_source_windows(parameters, assets)
     core = {'contract':CONTRACT,'draft':value,'package_id':package['id'],'package_sha256':package['sha256'],
-            'helper_sha256':motion.HELPER_SHA,'assets':assets,'adapter_sha256':sha(__file__),
+            'helper_sha256':motion.helper_identity(package)['sha256'],'assets':assets,'adapter_sha256':sha(__file__),
             'publication':False,'paid_calls':0}
     if value['workflow']=='motion-kit':core['entry_parameters']=entry_parameters(value)
     core['project_id'] = 'studio-' + fingerprint(core)[:16]
@@ -140,7 +143,9 @@ def recorded_request(queue,draft_id,render_id):
         adapter.validate(queue, request)
         parameters = value['parameters']
         expected_props = dict(parameters['props'])
-        expected_props.update(width=adapter.WIDTH, height=adapter.HEIGHT, fps=adapter.FPS,
+        from backlot.quest_vlog import canvas
+        width, height = canvas(expected_props) if expected_props.get('visualStyle') == 'quest' else (adapter.WIDTH, adapter.HEIGHT)
+        expected_props.update(width=width, height=height, fps=adapter.FPS,
                               durationFrames=request['props']['durationFrames'], audio='master.wav')
         if 'shotPlan' in parameters:
             expected_props['scenes'] = adapter.plan_scenes(parameters['shotPlan'], request['props']['durationFrames'])
@@ -225,8 +230,55 @@ def _execute(package, state, operation, *args, timeout=180):
     motion.require(workflow in COMPONENT_WORKFLOWS,'原生组件状态含未登记的工作流')
     flags=[] if workflow=='motion-kit' and operation!='setup' else ['--workflow',workflow]
     options={'temporary_root':motion.ROOT/'.local/mt'}
+    if state.get('runtime_profile'):
+        package = {**package, 'offline_dependencies': True, 'dependency_cache': state['cache'] + '-kit'}
     return motion.helper_command(package,'run','--instance',state['instanceDirectory'],'--cache',state['cache'],
                                  operation,*flags,*args,'--language','zh',timeout=timeout,**options)
+
+
+def _ensure_setup(package, state, folder):
+    """Reuse a successful exact-release dependency install across new drafts.
+
+    The public kit setup deliberately rejects an existing destination. Keep its
+    receipt separately from per-film state; invalid installs get a fresh folder.
+    The official plan/prepare still checks the actual runtime on every film.
+    """
+    if state.get('setup'):
+        return
+    if state['workflow'] == 'motion-kit':
+        from backlot.studio_motion_runtime import profile
+        installed = profile(package, 'motion-kit')
+        if installed:
+            state.update(cache=installed['cache_argument_path'], setup=True, runtime_profile=installed['id'])
+            atomic_private(folder / 'native-state.json', state)
+            return
+    if state['workflow'] != 'motion-kit':
+        _execute(package, state, 'setup', timeout=900)
+    else:
+        identity = {'package_sha256': package['sha256'], 'helper_sha256': motion.helper_identity(package)['sha256']}
+        record = motion.STORE / 'dependencies' / (fingerprint(identity) + '.json')
+        prior = read_json(record); cache = Path(prior.get('cache', ''))
+        locks = prior.get('locks', {})
+        reusable = prior.get('identity') == identity and cache.is_dir() and bool(locks)
+        if reusable:
+            reusable = (cache.resolve().is_relative_to((motion.ROOT / '.local').resolve())
+                and cache.resolve() == Path(prior.get('cache_base', '') + '-kit').resolve()) and all(
+                (cache / name).is_file() and sha(cache / name) == digest for name, digest in locks.items()
+                if name in {'package.json', 'package-lock.json'}) and set(locks) <= {'package.json', 'package-lock.json'}
+        if reusable:
+            state['cache'] = prior['cache_base']
+        else:
+            state['cache'] = str(motion.ROOT / '.local/mkd' / (package['sha256'][:12] + '-' + uuid4().hex[:8]))
+            result = _execute(package, state, 'setup', timeout=900)
+            cache = Path(result.get('cache', ''))
+            motion.require(result.get('status') == 'dependencies-ready' and result.get('workflow') == 'motion-kit'
+                           and cache.is_dir() and cache.resolve().is_relative_to((motion.ROOT / '.local').resolve()),
+                           '组件依赖安装未返回可验证的本机缓存')
+            locks = {name: sha(cache / name) for name in ['package.json', 'package-lock.json'] if (cache / name).is_file()}
+            motion.require(locks, '组件依赖缓存缺少安装清单，请保留原目录后重试')
+            atomic_private(record, {'identity': identity, 'cache_base': state['cache'], 'cache': str(cache), 'locks': locks})
+    state['setup'] = True
+    atomic_private(folder / 'native-state.json', state)
 
 
 def kit_images(receipt,project):
@@ -376,6 +428,9 @@ def preview_times(parameters):
 
 
 def review(queue, request, evidence):
+    if request.get('native_protocol'):
+        from backlot.studio_motion_knowledge import review as native_review
+        return native_review(queue, request, evidence)
     folder = _paths(queue,request)
     state = read_json(folder/'native-state.json')
     motion.require(state and state.get('preview_directory'), '请先生成本期预览')
@@ -403,6 +458,9 @@ def review(queue, request, evidence):
 
 def run(queue, job):
     request = job['frozen_request']
+    if request.get('native_protocol'):
+        from backlot.studio_motion_knowledge import run as native_run
+        return native_run(queue, job)
     try:
         core = {k:v for k,v in request.items() if k not in {'request_sha256','render_id','phase'}}
         motion.require(fingerprint(core) == request['request_sha256'] and request['contract'] == CONTRACT,
@@ -440,8 +498,7 @@ def run(queue, job):
         motion.require(state.get('workflow','poster-kit')==request['draft']['workflow'],'本期原生实例工作流已改变')
         inst = Path(state['instanceDirectory'])
         if not state.get('setup'):
-            _execute(package,state,'setup',timeout=900)
-            state['setup'] = True; atomic_private(folder/'native-state.json',state)
+            _ensure_setup(package, state, folder)
         inputs = inst/'inputs';inputs.mkdir(exist_ok=True)
         for name,asset in request['assets'].items():
             targets=(inputs/name,) if state['workflow']=='motion-kit' else (inputs/name,inst/name)
@@ -523,7 +580,9 @@ def run(queue, job):
                 '-b:v','20500k','-minrate','20500k','-maxrate','20500k','-bufsize','2000k',
                 '-x264-params','nal-hrd=cbr:force-cfr=1:filler=1','-pix_fmt','yuv420p',
                 *conversion['options'],
-                '-af','alimiter=limit=0.8:level=false','-c:a','aac','-b:a','192k','-ar','48000','-ac','2',
+                # AAC reconstruction can overshoot the sample limiter. Keep
+                # enough margin for the existing -1.5dBTP encoded-output gate.
+                '-af','alimiter=limit=0.75:level=false','-c:a','aac','-b:a','192k','-ar','48000','-ac','2',
                 '-movflags','+faststart',str(candidate)],check=True,capture_output=True,creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
         info=media_probe(candidate); audio=measure_audio(candidate)
         motion.require(int(info['video'].get('bit_rate',0)) >= 20000000 and audio['true_peak_dbtp'] <= -1.5,

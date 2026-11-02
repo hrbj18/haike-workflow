@@ -1,0 +1,20 @@
+{
+  "schema": "haike.motion-preset-recipe/1",
+  "parameters": {
+    "creationProfile": "knowledge-story/1", "title": "本期主题", "script": "", "fps": 60, "layout": "portrait", "language": "zh-CN",
+    "claims": [], "sources": [], "captions": [],
+    "audio": {"narration": {"mode": "file", "path": "voice.wav"}, "music": {"mode": "file", "path": "music.wav", "source": "", "license": "", "gainDb": -12}},
+    "presenter": {"mode": "none"}, "timeCorner": {"enabled": false},
+    "sentenceEvidence": {"path": "sentences.json", "sha256": "", "method": "measured", "audioSha256": ""},
+    "segments": [
+      {"id": "opening", "title": "本期关键词", "family": "sketchnote.keyword-annotation", "recipe": {"title": "本期关键词", "items": [{"id": "concept", "label": "亲手体验", "highlight": [0, 4], "icon": "concept", "notes": ["本期解释"]}], "conclusion": ["本期观点"]}, "claimIds": [], "explanation": {"visibleChange": "在同一纸页建立问题并标记关键词。", "viewerInference": ""}},
+      {"id": "steps", "title": "本期三步走", "family": "sketchnote.step-sequence", "recipe": {"title": "本期三步走", "items": [{"id": "step-1", "label": "第一步", "highlight": [0, 3], "icon": "concept", "notes": ["本期说明一"]}, {"id": "step-2", "label": "第二步", "highlight": [0, 3], "icon": "explain", "notes": ["本期说明二"]}, {"id": "step-3", "label": "第三步", "highlight": [0, 3], "icon": "relearn", "notes": ["本期说明三"]}], "conclusion": ["本期结论"]}, "claimIds": [], "explanation": {"visibleChange": "关键词留在同一手账页，相机按步骤接力。", "viewerInference": ""}}
+    ]
+  },
+  "binding": {
+    "clock": "actual-voice-and-caption-events",
+    "required": ["完整script/口播及真实captions", "durationSeconds和两段start/end", "本期claims/sources和推论说明", "句级证据文件及声音SHA", "覆盖全片的已授权配乐"],
+    "optional": ["原包支持的完整同源intro-circle人物"],
+    "instructions": "保留关键词手绘和步骤留页接力，按新稿填写文案及真实时码。句级证据绑定本期实际音频，换稿不能复用旧证据。当前协议没有局部人物或实拍槽；不承诺添加未开放槽。"
+  }
+}

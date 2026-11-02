@@ -887,7 +887,7 @@ class ProductionQueue:
         }.get(private["kind"], private["kind"])
         if contract in {"motiongit-dark-full-v1","motiongit-dark-native-v1"}:
             private["title"]="深色立体完整原版" if contract=="motiongit-dark-native-v1" else "海客完整多屏模板"
-        if contract in {"motiongit-component-render-v1","motiongit-dark-full-v1","motiongit-dark-native-v1"}:
+        if contract in {"motiongit-component-render-v1","motiongit-dark-full-v1","motiongit-dark-native-v1","hum-production-v1"}:
             if isinstance(motion_title,str) and motion_title.strip():private["title"]=motion_title[:160]
             elif contract=="motiongit-component-render-v1":private["title"]="MotionGit模板视频"
         private["progress"] = {

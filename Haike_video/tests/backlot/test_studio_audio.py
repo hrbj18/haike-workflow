@@ -199,3 +199,48 @@ def test_definitive_budget_rejection_survives_refresh_and_can_resume_same_intent
     state['drop'] = False
     assert center.submit(body)['status'] == 'succeeded'
     assert len(state['jobs']) == 1
+
+
+@pytest.mark.parametrize('status', ['succeeded', 'failed', 'cancelled'])
+def test_verified_terminal_poll_persists_receipt_without_paid_resubmission(relay, status):
+    studio, state = relay
+    center = AudioCenter(studio)
+    quote, body = quote_and_body(center)
+    assert center.submit(body)['status'] == 'submission_unknown'
+    original_posts = len([c for c in state['calls'] if c[1] == '/jobs'])
+    original = next(iter(state['jobs'].values()))
+    original['status'] = status
+    assert AudioCenter(studio).job(quote['operation_id'])['status'] == status
+    receipt = json.loads(center.operation(quote['operation_id'])['outcome'])
+    assert receipt['status'] == status
+    assert len([c for c in state['calls'] if c[1] == '/jobs']) == original_posts
+
+
+def test_old_null_outcome_can_be_reconciled_before_installing_new_code(relay, monkeypatch):
+    from portable.audio_update_guard import reconcile
+    studio, state = relay
+    root = studio.projects_root.parent / 'old-install'
+    original = Studio(root / 'Haike_video/projects')
+    monkeypatch.setattr(original, 'client', studio.client)
+    original.config_path.parent.mkdir(parents=True, exist_ok=True)
+    original.config_path.write_text(json.dumps({'base_url': 'http://127.0.0.1:17894/v2', 'api_key': state['key']}))
+    center = AudioCenter(original)
+    quote, body = quote_and_body(center)
+    assert center.submit(body)['status'] == 'submission_unknown'
+    assert center.operation(quote['operation_id'])['outcome'] is None
+    original_posts = len([c for c in state['calls'] if c[1] == '/jobs'])
+    result = reconcile(root, fetch=lambda base, key, path: center.sdk.request(path))
+    assert result == [{'operation_id': quote['operation_id'], 'status': 'succeeded'}]
+    assert json.loads(center.operation(quote['operation_id'])['outcome'])['status'] == 'succeeded'
+    assert len([c for c in state['calls'] if c[1] == '/jobs']) == original_posts
+
+
+def test_terminal_remote_receipt_survives_local_preview_decode_failure(relay):
+    studio, state = relay
+    center = AudioCenter(studio)
+    quote, body = quote_and_body(center)
+    assert center.submit(body)['status'] == 'submission_unknown'
+    next(iter(state['jobs'].values()))['result'] = {'audio_base64': 'invalid%%%'}
+    with pytest.raises(WorkError, match='试听音频不完整'):
+        AudioCenter(studio).job(quote['operation_id'])
+    assert json.loads(center.operation(quote['operation_id'])['outcome'])['status'] == 'succeeded'

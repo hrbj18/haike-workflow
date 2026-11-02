@@ -14,6 +14,11 @@ def main():
     for name in ('inspect', 'import'):
         sub.add_parser(name).add_argument('path', type=Path)
     sub.add_parser('list')
+    sub.add_parser('presets')
+    sub.add_parser('preset-capability')
+    preset = sub.add_parser('create-preset')
+    preset.add_argument('preset_id'); preset.add_argument('--input', type=Path)
+    preset.add_argument('--title'); preset.add_argument('--package-id')
     sub.add_parser('verify').add_argument('package_id')
     sub.add_parser('check').add_argument('draft_id')
     sub.add_parser('clone').add_argument('draft_id')
@@ -31,6 +36,13 @@ def main():
     if args.action == 'inspect': result = motion.inspect_package(args.path)
     elif args.action == 'import': result = motion.import_package(args.path)
     elif args.action == 'list': result = motion.packages()
+    elif args.action in {'presets', 'preset-capability', 'create-preset'}:
+        from backlot import studio_motion_presets as presets
+        if args.action == 'presets': result = presets.catalog()
+        elif args.action == 'preset-capability': result = presets.capability_identity()
+        else:
+            result = presets.create(args.preset_id, title=args.title, package_id=args.package_id,
+                parameters=json.loads(args.input.read_text(encoding='utf-8-sig')) if args.input else None)
     elif args.action == 'verify': result = motion.verify_package(args.package_id)
     elif args.action == 'check': result = motion.validate_draft(args.draft_id)
     elif args.action == 'clone': result = motion.clone_draft(args.draft_id)

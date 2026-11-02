@@ -234,6 +234,9 @@ class AudioCenter:
         self.operation(operation)
         value = {"id": operation, "operation_id": operation, "status": job.get("status", "submission_unknown"),
                  "charged_micros": job.get("charged_micros", "0"), "result": None}
+        # Remote execution and local preview availability are independent.
+        # Persist the trusted terminal receipt even if a later media fetch fails.
+        self.save_terminal(operation, value)
         result = job.get("result") or {}
         if value["status"] == "succeeded":
             public = {}
@@ -259,7 +262,14 @@ class AudioCenter:
             value["result"] = public
         elif job.get("error"):
             value["error"] = "配音服务未完成，请核对原任务和账号额度后恢复"
+        self.save_terminal(operation, value)
         return value
+
+    def save_terminal(self, operation, value):
+        if value['status'] in {'succeeded', 'failed', 'cancelled'}:
+            with self.studio.db() as db:
+                db.execute('UPDATE studio_audio_operations SET outcome=? WHERE account=? AND id=?',
+                           (json.dumps(value, ensure_ascii=False), self.account, operation))
 
     def preview(self, operation):
         self.operation(operation)

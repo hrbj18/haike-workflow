@@ -190,3 +190,29 @@ def test_saved_production_restores_only_same_draft_and_asset_bindings(tmp_path,m
     assert render.recorded_request(queue,value['id'],request['render_id'])==request
     motion.save_asset(value['id'],'photo.jpg',b'changed-owned-photo')
     with pytest.raises(WorkError,match='素材绑定已变更'):render.recorded_request(queue,value['id'],request['render_id'])
+def test_kit_dependencies_reuse_exact_install_and_preserve_changed_cache(tmp_path, monkeypatch):
+    from backlot import studio_motiongit as motion
+    from backlot import studio_motiongit_render as render
+    monkeypatch.setattr(motion, 'ROOT', tmp_path)
+    monkeypatch.setattr(motion, 'STORE', tmp_path / '.local/private')
+    monkeypatch.setattr(motion, 'helper_identity', lambda _: {'sha256': 'isolated-helper'})
+    calls = []
+    def setup(package, state, operation, **kwargs):
+        assert operation == 'setup'
+        cache = Path(state['cache'] + '-kit'); cache.mkdir(parents=True)
+        (cache / 'package-lock.json').write_text('isolated-lock', encoding='utf-8')
+        calls.append(cache)
+        return {'status': 'dependencies-ready', 'workflow': 'motion-kit', 'cache': str(cache)}
+    monkeypatch.setattr(render, '_execute', setup)
+    package = {'sha256': 'a' * 64}
+    states = []
+    for i in range(2):
+        folder = tmp_path / str(i); folder.mkdir()
+        state = {'workflow': 'motion-kit'}
+        render._ensure_setup(package, state, folder); states.append(state)
+    assert len(calls) == 1 and states[0]['cache'] == states[1]['cache']
+    (calls[0] / 'package-lock.json').write_text('changed', encoding='utf-8')
+    folder = tmp_path / 'third'; folder.mkdir()
+    render._ensure_setup(package, {'workflow': 'motion-kit'}, folder)
+    assert len(calls) == 2 and calls[0] != calls[1]
+    assert (calls[0] / 'package-lock.json').read_text() == 'changed'

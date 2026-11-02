@@ -4,6 +4,7 @@ import type { Box, Media, Props, Scene } from './types';
 import geometry from './layout.json';
 import { OpenMotionContent } from './OpenMotion';
 import {DynamicContent} from './dynamic/Scenes';
+import {QuestVlog} from './quest/QuestVlog';
 const g=geometry;
 const C = { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' } as const;
 const smooth = Easing.bezier(.25, .46, .45, .94), gentle = Easing.bezier(.45, 0, .55, 1);
@@ -161,7 +162,7 @@ const Content:React.FC<Props>=p=>{
   {p.audio&&<Audio src={staticFile(p.audio)}/>}
  </AbsoluteFill>;
 };
-export const HumProduction: React.FC<Props> = p => <Fonts p={p}>{p.visualStyle==='archive'||p.visualStyle==='playroom'?<DynamicContent {...p} presenterLayer={<Presenter p={p}/>}/>:p.visualStyle==='darkroom'||p.visualStyle==='carnival'?<OpenMotionContent {...p}/>:<Content {...p}/>}</Fonts>;
+export const HumProduction: React.FC<Props> = p => <Fonts p={p}>{p.visualStyle==='quest'?<QuestVlog {...p}/>:p.visualStyle==='archive'||p.visualStyle==='playroom'?<DynamicContent {...p} presenterLayer={<Presenter p={p}/>}/>:p.visualStyle==='darkroom'||p.visualStyle==='carnival'?<OpenMotionContent {...p}/>:<Content {...p}/>}</Fonts>;
 const defaults: Props = { durationFrames: 600, brand: '海客AI社区服务店', footer: '', visualStyle: 'hum', media: [], scenes: [], captions: [] };
-const Root = () => <Composition id="HumProduction" component={HumProduction} width={1440} height={1800} fps={30} durationInFrames={600} defaultProps={defaults} calculateMetadata={({ props }) => ({ durationInFrames: props.durationFrames })}/>;
+const Root = () => <Composition id="HumProduction" component={HumProduction} width={1440} height={1800} fps={30} durationInFrames={600} defaultProps={defaults} calculateMetadata={({ props }) => ({ durationInFrames: props.durationFrames, width: props.width || 1440, height: props.height || 1800 })}/>;
 registerRoot(Root);

@@ -305,17 +305,21 @@ def test_http_and_cli_share_catalog_revision_and_handoff(env,monkeypatch):
         assert client.get(f"/api/works/{w['work_id']}/media").content==(p/"v1.mp4").read_bytes()
 
 
-def test_real_media_probe_and_automatic_cover(tmp_path):
+def test_real_media_probe_and_automatic_cover(tmp_path,monkeypatch):
     import subprocess
     from lib.ffmpeg_locator import resolve_ffmpeg_pair
     root=tmp_path/"projects";p=root/"auto";p.mkdir(parents=True)
     (p/"project.json").write_text(json.dumps({"title":"自动测试","intake":{"created_from":"daily_automation"}}))
-    ff,_=resolve_ffmpeg_pair();video=p/"final.mp4"
+    ff,fp=resolve_ffmpeg_pair();video=p/"final.mp4"
     subprocess.run([ff,"-y","-v","error","-f","lavfi","-i","color=c=blue:s=180x240:d=1", "-f","lavfi","-i","sine=frequency=440:duration=1","-c:v","libx264","-pix_fmt","yuv420p","-c:a","aac","-shortest",str(video)],check=True,timeout=30)
     c=WorkCatalog(root);w=work_ingest.completed(c,"auto",video,"real-video")
     assert w["final_version_id"] and w["versions"][0]["media"]["has_audio"]
     assert w["materials"][0]["data"]["title"]=="自动测试"
     with Image.open(w["materials"][0]["data"]["cover_path"]) as image:assert image.size==(720,960)
+    monkeypatch.setattr('lib.ffmpeg_locator.resolve_ffmpeg_pair',lambda:None)
+    assert c.register('auto',video,mode='automatic',ffprobe=fp)['work_id']==w['work_id']
+    from backlot.work_catalog import probe
+    with pytest.raises(WorkError,match='工具路径'):probe(video)
 
 
 def test_shared_library_location_is_protected_even_when_declared_exclusive(env):
