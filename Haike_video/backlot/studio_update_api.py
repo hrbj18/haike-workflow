@@ -174,7 +174,18 @@ async def readiness(request: Request):
         from backlot.server import _ensure_production_queue
         queue_service = _ensure_production_queue(request.app)
     queue = await asyncio.to_thread(queue_service.list, limit=200)
-    if any(queue.get(k, 0) for k in ("active_count", "queued_count", "waiting_count")):
+    held_count = 0
+    queue_path = getattr(queue_service, 'db_path', None)
+    if queue_path is not None and Path(queue_path).is_file():
+        from portable import queue_update_guard
+        queue_state = await asyncio.to_thread(queue_update_guard.inspect, queue_path)
+        held_count = len(queue_state['held'])
+        queue_busy = (queue_state['blocked_count'] > 0
+            or any(queue.get(k, 0) for k in ('active_count', 'queued_count', 'paused_count'))
+            or queue.get('waiting_count', 0) > held_count)
+    else:
+        queue_busy = any(queue.get(k, 0) for k in ("active_count", "queued_count", "waiting_count"))
+    if queue_busy:
         busy = "正在等待制作队列结束；结果待确认的任务请先核对，或暂缓本次更新。"
     if getattr(request.app.state, "update_inflight", 0):
         busy = "正在等待已提交的工作台操作结束。"
@@ -194,7 +205,7 @@ async def readiness(request: Request):
                 busy = await asyncio.to_thread(publisher_busy, root)
         except Exception:
             busy = "暂时无法确认下载与发布状态，请检查本副本账号服务；原程序未修改。"
-    return {"ready": not busy, "message": busy}
+    return {"ready": not busy, "message": busy, 'held_jobs_preserved': held_count}
 
 
 def attach(app):

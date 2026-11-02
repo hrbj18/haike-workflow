@@ -201,7 +201,7 @@ def verify_template_capability(root, expected=None, *, required=None):
             'episode_inputs': 'user-provided', 'runtime_selftest': 'pending'}
 
 
-def confirm_template_runtime(root, delivery):
+def confirm_template_runtime(root, delivery, queue_guard=None):
     if delivery.get('status') != 'verified':
         return delivery
     manifest = read(safe(root, 'Haike_video/templates/motion-presets/delivery.json'))
@@ -211,7 +211,7 @@ def confirm_template_runtime(root, delivery):
         safe(root, 'portable/audio_update_guard.py'))
     guard = importlib.util.module_from_spec(guard_spec); guard_spec.loader.exec_module(guard)
     guard.reconcile(root)
-    idle(root)
+    idle(root, queue_guard=queue_guard)
     # The verifier and its public imports were hash-checked above. Only now may
     # the single-file entry execute installed code, with no inherited Python path.
     result = subprocess.run([str(root / 'runtime/python/python.exe'), '-s',
@@ -303,9 +303,11 @@ def discover():
     return roots.pop()
 
 
-def idle(root):
+def idle(root, queue_guard=None):
     queue = safe(root, 'Haike_video/.backlot/production-queue.sqlite3')
-    if queue.is_file():
+    if queue_guard is not None:
+        queue_guard.require_idle(queue)
+    elif queue.is_file():
         with closing(sqlite3.connect(queue.as_uri() + '?mode=ro', uri=True)) as db:
             if db.execute("SELECT 1 FROM sqlite_master WHERE name='production_jobs'").fetchone():
                 require(not db.execute("SELECT 1 FROM production_jobs WHERE status NOT IN ('completed','failed','cancelled') OR status IS NULL LIMIT 1").fetchone(),
@@ -323,8 +325,8 @@ def idle(root):
                 '音色操作正在执行或结果待确认，请先核对原操作后更新')
 
 
-def stop_legacy(root):
-    idle(root)
+def stop_legacy(root, queue_guard=None):
+    idle(root, queue_guard=queue_guard)
     prefix = str(root).casefold() + os.sep
     for row in processes():
         if (row.get('ExecutablePath') or '').casefold().startswith(prefix) and re.search(
@@ -423,7 +425,7 @@ def finish_bootstrap_start(root, output, installer):
         output['url'] = running_base(root) + '/avatar'
     except (ValueError, OSError, subprocess.SubprocessError) as startup:
         try:
-            stop_legacy(root)
+            stop_legacy(root, queue_guard=getattr(installer, 'queue_module', lambda: None)())
             with installer.lock(root):
                 installer.restore(root, Path(output['backup']))
             launch(root)
@@ -488,15 +490,19 @@ def run(url, target=None, *, check=False, start=True):
         spec = importlib.util.spec_from_file_location('haike_online_installer', bundle / 'legacy_upgrade.py')
         installer = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(installer)
+        queue_guard = getattr(installer, 'queue_module', lambda: None)()
         if project_mode:
             installer.project_identity(root, release, bootstrap['project_compatibility'])
             dependency = installer.dependency_module()
             report = dependency.inspect(root)
-            if current == feed['version'] and not report['missing']:
+            installed_guard = safe(root, 'portable/queue_update_guard.py')
+            revision_current = release.get('updater_revision', 0) >= feed.get('updater_revision', 0)
+            guard_current = queue_guard is None or (installed_guard.is_file() and sha(installed_guard) == sha(bundle / 'queue_update_guard.py'))
+            if current == feed['version'] and not report['missing'] and revision_current and guard_current:
                 try:
                     delivery = verify_template_capability(root, feed.get('template_capability'))
                     if not check:
-                        delivery = confirm_template_runtime(root, delivery)
+                        delivery = confirm_template_runtime(root, delivery, queue_guard=queue_guard)
                 except ValueError:
                     pass  # Same-version repair can restore missing template files.
                 else:
@@ -505,14 +511,15 @@ def run(url, target=None, *, check=False, start=True):
             if check:
                 blockers = []
                 try:
-                    idle(root)
+                    idle(root, queue_guard=queue_guard)
                 except ValueError as exc:
                     blockers.append(str(exc))
                 return {'ok': not blockers, 'check_only': True, 'mode': 'project-compatible',
                     'current': current, 'target': feed['version'], 'source_commit': release.get('source_commit'),
-                    'dependencies': report, 'blockers': blockers, 'can_repair_dependencies': True}
+                    'dependencies': report, 'blockers': blockers, 'can_repair_dependencies': True,
+                    'held_jobs_preserved': len(queue_guard.inspect(safe(root, 'Haike_video/.backlot/production-queue.sqlite3'))['held']) if queue_guard else 0}
         installer.reconcile_audio(root)
-        idle(root)
+        idle(root, queue_guard=queue_guard)
         if project_mode:
             dependency_plan = dependency.prepare(root, bundle, report)
         resources = fetch_asset(root, bootstrap['resources'])
@@ -528,7 +535,7 @@ def run(url, target=None, *, check=False, start=True):
         command.extend(['--dependency-plan', str(dependency_plan)])
     # Full installer preflight follows immediately; only this target's idle
     # video server is stopped. Publisher and other installations keep running.
-    stop_legacy(root)
+    stop_legacy(root, queue_guard=queue_guard)
     result = subprocess.run(command, capture_output=True, encoding='utf-8', timeout=600,
                             env=python_environment())
     if result.returncode:
@@ -542,7 +549,7 @@ def run(url, target=None, *, check=False, start=True):
     if start:
         finish_bootstrap_start(root, output, installer)
     output['mode'] = 'github-project-compatible' if project_mode else 'github-runtime-migration' if migration else 'github-online-bootstrap'
-    output['template_delivery'] = confirm_template_runtime(root, verify_template_capability(root, feed.get('template_capability')))
+    output['template_delivery'] = confirm_template_runtime(root, verify_template_capability(root, feed.get('template_capability')), queue_guard=queue_guard)
     return output
 
 

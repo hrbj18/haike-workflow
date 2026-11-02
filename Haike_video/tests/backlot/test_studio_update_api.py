@@ -87,6 +87,29 @@ def test_update_waits_for_native_template_preparation(tmp_path, monkeypatch):
     assert '动效模板' in response.json()['message']
 
 
+def test_readiness_preserves_seven_held_results_but_blocks_a_real_worker(tmp_path, monkeypatch):
+    import sqlite3
+    from contextlib import closing
+    web, app = client(tmp_path)
+    identity = 'e' * 24
+    updates.set_operation(tmp_path, 'waiting', '等待', id=identity)
+    updates.write_json(updates.private_path(tmp_path, identity+'/operation.json'), {'token':'test-token'})
+    path = tmp_path/'queue.sqlite3'
+    with closing(sqlite3.connect(path)) as db:
+        db.execute('CREATE TABLE production_jobs(job_id TEXT,status TEXT,worker_id TEXT,lease_expires_at TEXT)')
+        db.executemany('INSERT INTO production_jobs VALUES (?,?,?,?)', [(str(i),'ambiguous',None,None) for i in range(7)])
+        db.commit()
+    original = path.read_bytes()
+    app.state.production_queue = SimpleNamespace(db_path=path, list=lambda **kw: {'waiting_count':7})
+    monkeypatch.setattr(api, 'publisher_busy', lambda root: '')
+    headers = {'X-Haike-Update-Token':'test-token'}
+    result = web.get('/api/studio/app-update/readiness',headers=headers).json()
+    assert result['ready'] and result['held_jobs_preserved']==7 and path.read_bytes()==original
+    with closing(sqlite3.connect(path)) as db:
+        db.execute("UPDATE production_jobs SET status='running',worker_id='worker' WHERE job_id='0'"); db.commit()
+    assert not web.get('/api/studio/app-update/readiness',headers=headers).json()['ready']
+
+
 def test_cli_admission_and_interrupted_receipt_guard(tmp_path, monkeypatch):
     from backlot import production_queue as queue
     monkeypatch.setattr(queue, "__file__", str(tmp_path / "Haike_video/backlot/production_queue.py"))

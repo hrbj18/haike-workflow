@@ -1,9 +1,11 @@
 """Real temporary-install transactions; no production data, services, or network."""
 import hashlib
+from contextlib import closing
 import importlib.util
 import json
 from pathlib import Path
 import stat
+import sqlite3
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -17,6 +19,24 @@ spec.loader.exec_module(update)
 
 
 class AppUpdateTests(unittest.TestCase):
+    def test_patch_and_rollback_snapshot_seven_held_records_without_changes(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root, bundle, original, plan = self.fixture(Path(temporary))
+            path = root / 'Haike_video/.backlot/production-queue.sqlite3'
+            with closing(sqlite3.connect(path)) as db:
+                db.execute('CREATE TABLE production_jobs(job_id TEXT,status TEXT,worker_id TEXT,lease_expires_at TEXT)')
+                db.executemany('INSERT INTO production_jobs VALUES (?,?,?,?)', [(str(i),'ambiguous',None,None) for i in range(7)])
+                db.commit()
+            before = path.read_bytes()
+            result = update.apply_update(bundle, root, health_check=lambda *_: True)
+            self.assertEqual(result['held_jobs_preserved'], 7)
+            receipt = json.loads((Path(result['backup'])/'receipt.json').read_bytes())
+            self.assertEqual(len(receipt['preserved_queue']['held']), 7)
+            self.assertTrue((Path(result['backup'])/receipt['preserved_queue']['filename']).is_file())
+            self.assertEqual(path.read_bytes(), before)
+            update.rollback(root, Path(result['backup']))
+            self.assertEqual(path.read_bytes(), before)
+
     def test_large_portable_inventory_does_not_use_small_update_manifest_limit(self):
         with tempfile.TemporaryDirectory() as temporary:
             root, bundle, original, plan = self.fixture(Path(temporary))

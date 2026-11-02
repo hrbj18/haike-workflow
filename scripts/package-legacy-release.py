@@ -165,7 +165,8 @@ def build(args):
     with ThreadPoolExecutor(max_workers=8) as pool:
         verified = list(pool.map(info, sources))
     resource_rows, written = [], set()
-    resource_zip = args.output / (f'haike-templates-{version["version"]}-compat2.zip'
+    revision = getattr(args, 'updater_revision', 2)
+    resource_zip = args.output / (f'haike-templates-{version["version"]}-compat{revision}.zip'
                                  if getattr(args, 'project_compatible', False) else 'haike-templates-1.2.zip')
     with zipfile.ZipFile(resource_zip, 'x', compression=zipfile.ZIP_DEFLATED, compresslevel=6) as archive:
         for name, file, sha, size in sorted(verified):
@@ -206,11 +207,26 @@ def build(args):
         if runtime_value:
             resource_plan['runtime_manifest_sha256'] = core.digest(generated_runtime)
         archive.writestr('RESOURCES.json', core.json_bytes(resource_plan))
+    reuse = getattr(args, 'reuse_resources', None)
+    if reuse:
+        if not getattr(args, 'project_compatible', False) or core.digest(reuse) != getattr(args, 'reuse_resources_sha256', None):
+            raise ValueError('Resource reuse needs the exact published SHA256 and project-compatible mode')
+        with zipfile.ZipFile(reuse) as archive:
+            if json.loads(archive.read('RESOURCES.json')) != resource_plan:
+                raise ValueError('Published resources do not match this build; do not reuse them')
+        replacement = args.output / reuse.name
+        if replacement == resource_zip:
+            raise ValueError('Resource reuse must keep the original immutable asset name')
+        shutil.copyfile(reuse, replacement)
+        resource_zip.unlink()
+        resource_zip = replacement
     release = {**version, 'source_commit': commit, 'date': datetime.now(timezone.utc).date().isoformat(),
                'setup': '01-setup.cmd', 'agent_entry': 'START_HERE.md',
                'runtime_origin': 'original 20261027 portable installation; runtime binaries unchanged'}
     if template_capability:
         release['template_capability'] = template_capability
+    if getattr(args, 'project_compatible', False):
+        release['updater_revision'] = revision
     # Old Python requirements are unchanged. Verify shipped ABI/runtime binaries
     # and all declared lockfiles; overwritten files and reuse inputs are separately checked.
     required = [row for name, row in before.items() if name in {
@@ -241,6 +257,7 @@ def build(args):
         plan['modern_bases'] = modern_bases
     (bundle / 'UPGRADE.json').write_bytes(core.json_bytes(plan))
     for source, name in [('portable/legacy_upgrade.py', 'legacy_upgrade.py'),
+                         ('portable/queue_update_guard.py', 'queue_update_guard.py'),
                          ('portable/audio_update_guard.py', 'audio_update_guard.py'),
                          ('portable/app_update.py', 'release_core.py'),
                          ('portable/upgrade-1027.ps1', 'upgrade-1027.ps1')]:
@@ -249,7 +266,7 @@ def build(args):
         shutil.copyfile(args.source / 'portable/motion_runtime.py', bundle / 'motion_runtime.py')
     shutil.copyfile(args.source / 'docs/releases/1.2-使用说明.txt', bundle / '使用说明.txt')
     (bundle / 'upgrade.cmd').write_text('@echo off\ncd /d "%~dp0"\npowershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0upgrade-1027.ps1" %*\npause\n', encoding='ascii')
-    update_zip = args.output / (f'haike-update-{version["version"]}-compat2.zip'
+    update_zip = args.output / (f'haike-update-{version["version"]}-compat{revision}.zip'
                                if getattr(args, 'project_compatible', False) else 'haike-update-1.2.zip')
     with zipfile.ZipFile(update_zip, 'x', compression=zipfile.ZIP_DEFLATED, compresslevel=6) as archive:
         for file in sorted(bundle.rglob('*')):
@@ -277,6 +294,9 @@ def main():
     parser.add_argument('--include-personal-motion', action='store_true',
                         help='Local private delivery only; includes signed personal credentials. Never upload publicly.')
     parser.add_argument('--project-compatible', action='store_true', help='Accept matching Haike projects by capabilities; ship full program and dependency repair bytes')
+    parser.add_argument('--updater-revision', type=int, choices=range(2, 100), default=2)
+    parser.add_argument('--reuse-resources', type=Path, help='Reuse an immutable public archive only when its entire manifest is identical')
+    parser.add_argument('--reuse-resources-sha256')
     parser.add_argument('--paper-cache', type=Path, help='Verified rc.54 component dependency directory')
     parser.add_argument('--knowledge-cache', type=Path, help='Verified rc.54 knowledge dependency directory')
     parser.add_argument('--helper-54', type=Path, help='Independently pinned rc.54 helper bytes')
