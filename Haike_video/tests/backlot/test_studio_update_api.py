@@ -12,6 +12,22 @@ from portable import update_service as updates
 from backlot import studio_update_api as api
 
 
+def test_historical_local_audio_is_ready_but_active_lock_blocks(tmp_path):
+    import json
+    from lib.bailian_speech import operation_lock
+    identity = 'call_' + 'a' * 32
+    folder = tmp_path / 'Haike_video/.backlot/audio-center-internal/local/operations' / identity
+    folder.mkdir(parents=True)
+    (folder / '.lock').write_bytes(b'0')
+    (folder / 'operation.json').write_text(json.dumps({'id': identity, 'status': 'submission_unknown',
+        'signature': 'a' * 64, 'quote_id': 'iq_' + 'a' * 32, 'maximum': 100,
+        'request': {'kind': 'clone', 'credential_identity': 'synthetic'}}), encoding='utf-8')
+    app = SimpleNamespace(state=SimpleNamespace())
+    assert api.audio_busy(app, tmp_path) == ''
+    with operation_lock(folder):
+        assert '音色操作' in api.audio_busy(app, tmp_path)
+
+
 def client(tmp_path):
     (tmp_path / "VERSION.json").write_text('{"version":"1.0.0"}', encoding="utf-8")
     app = FastAPI()

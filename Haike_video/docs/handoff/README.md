@@ -12,7 +12,7 @@
 
 - 模板：[库](../../templates/TEMPLATE-LIBRARY.md)含18–21；[22–26验收](../../templates/store-opening-v1/REVIEW.md)。默认.local/store-manager/defaults.json。
 - MotionGit：[制作](../MOTION_TEMPLATE_STUDIO.md)共用网页/HTTP/CLI；[包适配](../MOTION_PACK_ADAPTERS.md)。
-- [1.2.2](../../../docs/releases/1.2.2.md)蓝白/点阵已发；纸感后续。[兼容修订](../../../docs/UPDATE_COMPATIBILITY.md)已支持594/国内补依赖；compat3保留无执行权的ambiguous旧任务，升级前快照、升级后核对，不伪造终态或重发。
+- [1.2.2](../../../docs/releases/1.2.2.md)蓝白/点阵已发；纸感后续。[兼容修订](../../../docs/UPDATE_COMPATIBILITY.md)支持594/国内补依赖；compat4保留无执行权的ambiguous任务及锁已释放的本地未知音色，分别备份、升级后核对，不伪造终态或重发。
 
 - [Mac复刻包](../../template-kit/README.md)：47条目/35实例，字体替代复验，真机待验。
 

@@ -97,7 +97,8 @@ class GitHubOnlineUpdateTests(unittest.TestCase):
                 updater.finish_bootstrap_start(root, output, installer)
             installer.restore.assert_called_once_with(root, Path(output['backup']))
             self.assertEqual(launch.call_count, 2)
-            stop.assert_called_once_with(root, queue_guard=installer.queue_module.return_value)
+            stop.assert_called_once_with(root, queue_guard=installer.queue_module.return_value,
+                audio_guard=installer.audio_module.return_value)
 
     def test_child_python_uses_utf8_even_on_chinese_windows(self):
         with patch.dict(os.environ, {'PYTHONHOME': 'unrelated-python', 'PYTHONIOENCODING': 'cp936'}):

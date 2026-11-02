@@ -142,16 +142,11 @@ def publisher_busy(root):
 def audio_busy(app, root):
     projects = Path(getattr(app.state, "works_projects_root", Path(root) / "Haike_video/projects"))
     private = projects.parent / ".backlot"
-    database = private / "studio.sqlite3"
-    if database.is_file():
-        with sqlite3.connect(database.resolve().as_uri() + "?mode=ro", uri=True, timeout=2) as db:
-            exists = db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='studio_audio_operations'").fetchone()
-            if exists and db.execute("SELECT 1 FROM studio_audio_operations WHERE attempts>0 AND outcome IS NULL LIMIT 1").fetchone():
-                return "音色操作结果尚未确认，请先核对原操作或暂缓更新。"
-    for file in (private / "audio-center-internal").glob("*/operations/*/operation.json"):
-        record = updates.read_json(file)
-        if record.get("status") not in {"succeeded", "failed"}:
-            return "正在等待音色操作结束；结果未知时请先核对原操作。"
+    from portable import audio_update_guard
+    try:
+        audio_update_guard.require_idle(root, private=private)
+    except ValueError as error:
+        return str(error)
     return ""
 
 

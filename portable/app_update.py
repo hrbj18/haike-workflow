@@ -407,9 +407,13 @@ def apply_update(bundle_dir, root, health_check=None):
         queue_guard = importlib.util.module_from_spec(spec); spec.loader.exec_module(queue_guard)
         queue_path = safe_path(root, 'Haike_video/.backlot/production-queue.sqlite3')
         held = queue_guard.require_idle(queue_path)
+        spec = importlib.util.spec_from_file_location('haike_patch_audio_guard', Path(__file__).with_name('audio_update_guard.py'))
+        audio_guard = importlib.util.module_from_spec(spec); spec.loader.exec_module(audio_guard)
+        audio = audio_guard.require_idle(root)
         directory = safe_path(root, ".local/app-updates/" + plan["version"] + "-" + uuid4().hex)
         directory.mkdir(parents=True, exist_ok=False)
         queue_copy = queue_guard.snapshot(queue_path, directory, held)
+        audio_copy = audio_guard.snapshot(root, directory, audio)
         contents = {item["path"]: safe_path(bundle_dir / "payload", item["path"]).read_bytes() for item in plan["files"]}
         contents.update(_new_metadata(root, plan))
         rows = []
@@ -424,7 +428,7 @@ def apply_update(bundle_dir, root, health_check=None):
             rows.append(row)
         receipt = {"schema": 1, "installation": str(root), "status": "prepared", "created_at": _time(),
                    "base_version": plan["base_version"], "version": plan["version"], "files": rows,
-                   'preserved_queue': queue_copy}
+                   'preserved_queue': queue_copy, 'preserved_audio': audio_copy}
         receipt_path = directory / "receipt.json"
         _atomic_write(receipt_path, json_bytes(receipt))
         try:
@@ -437,6 +441,7 @@ def apply_update(bundle_dir, root, health_check=None):
             if health_check is not None and not health_check(root, plan):
                 raise UpdateError("新版工作台启动检查未通过")
             queue_guard.verify_preserved(queue_path, held)
+            audio_guard.verify_preserved(root, audio)
             receipt.update(status="complete", completed_at=_time())
             _atomic_write(receipt_path, json_bytes(receipt))
         except Exception as error:
@@ -447,7 +452,8 @@ def apply_update(bundle_dir, root, health_check=None):
                 raise UpdateError("更新失败，自动恢复未完成；请保留更新备份并恢复：" + str(directory)) from recovery_error
             raise UpdateError("更新失败，程序已回退到原版本：" + str(error)) from error
         return {"ok": True, "status": "complete", "version": plan["version"], "backup": str(directory),
-                "files_updated": len(plan["files"]), 'held_jobs_preserved': len(held['held'])}
+                "files_updated": len(plan["files"]), 'held_jobs_preserved': len(held['held']),
+                'held_audio_preserved': len(audio['held'])}
 
 
 def _rollback(root, backup_dir, check_hashes=True):
