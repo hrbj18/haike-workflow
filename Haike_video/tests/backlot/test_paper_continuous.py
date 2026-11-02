@@ -157,3 +157,34 @@ def test_actual_short_video_with_long_audio_is_rejected(parameters, tmp_path):
     assets = {n: {'path': str(source), 'sha256': 'a'*64} for n in ['a.mp4', 'b.mp4']}
     with pytest.raises(WorkError, match='区间不足'):
         paper.validate(parameters, assets, media_probe)
+
+
+def test_non_frame_aligned_low_fps_preview_matches_encoded_cut_frames(parameters, tmp_path):
+    from PIL import Image
+    import numpy as np
+    from lib.ffmpeg_locator import resolve_ffmpeg_pair
+    ff, _ = resolve_ffmpeg_pair()
+    def run(args):
+        subprocess.run([str(ff), '-nostdin', '-v', 'error', '-y', *args], check=True, capture_output=True, timeout=60)
+    footage, native = tmp_path/'slow.mp4', tmp_path/'native.mp4'
+    run(['-f', 'lavfi', '-i', 'testsrc2=s=180x320:r=1', '-t', '3', '-c:v', 'libx264', str(footage)])
+    run(['-f', 'lavfi', '-i', 'color=white:s=1080x1920:r=60', '-f', 'lavfi', '-i', 'anullsrc=r=48000:cl=stereo',
+         '-t', '2', '-c:v', 'libx264', '-preset', 'ultrafast', '-c:a', 'aac', str(native)])
+    fontpath = Path(__file__).resolve().parents[2]/'remotion-composer/a2e/public/fonts/NotoSansSC.ttf'
+    assets = {n: {'path': str(footage), 'sha256': 'a'*64} for n in ['a.mp4', 'b.mp4']}
+    assets['title-font.ttf'] = {'path': str(fontpath), 'sha256': 'f'*64}
+    first, second = parameters['paperSupport']['shots'][0]['clips']
+    first['sourceStart'], second['sourceStart'] = .5, 1.25
+    output = tmp_path/'full.mp4'
+    paper.compose(ff, native, output, parameters, assets)
+    blank = tmp_path/'native.png'
+    run(['-i', str(native), '-frames:v', '1', str(blank)])
+    x, y, w, h = paper.MAIN
+    def pixels(path):
+        with Image.open(path) as im:
+            return np.asarray(im.convert('RGB').crop((x, y, x+w, y+h)).resize((96, 120))).astype(float)
+    for at in [0, .5, 1, 1.75, 119/60]:
+        still, encoded = tmp_path/f'preview-{at}.png', tmp_path/f'encoded-{at}.png'
+        paper.compose(ff, blank, still, parameters, assets, at=at)
+        run(['-i', str(output), '-vf', f'select=eq(n\\,{round(at*60)})', '-frames:v', '1', str(encoded)])
+        assert abs(pixels(still)-pixels(encoded)).mean() < 5, f'preview/export differ at {at}'

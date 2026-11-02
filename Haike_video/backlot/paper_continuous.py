@@ -99,13 +99,13 @@ def video_timestamps(path, digest):
     return times
 
 
-def preview_seek(path, digest, requested):
+def source_clock(path, digest, requested):
     # A video frame holds until the next timestamp. Seeking beyond the final
     # frame's PTS can return no image even though that frame covers requested.
     times = video_timestamps(str(path), digest)
     index = bisect_right(times, requested+.0000001)-1
     require(index >= 0, '素材该时刻还没有视频帧')
-    return max(0, times[index]-.0000001)
+    return max(0, times[index]-.0000001), requested-times[index]
 
 
 def validate(parameters, assets=None, probe=None):
@@ -255,16 +255,17 @@ def command(ffmpeg, source, target, parameters, assets, plates, *, at=None, colo
             continue
         index += 1
         offset = clip['sourceStart'] + (at-a if at is not None else 0)
-        if at is not None and 'sha256' in assets[clip['src']]:
-            offset = preview_seek(assets[clip['src']]['path'], assets[clip['src']]['sha256'], offset)
-        args += ['-ss', f'{offset:.9f}', '-t', f'{b-a if at is None else .1:.9f}', '-i', str(assets[clip['src']]['path'])]
+        lead = 0
+        if 'sha256' in assets[clip['src']]:
+            offset, lead = source_clock(assets[clip['src']]['path'], assets[clip['src']]['sha256'], offset)
+        args += ['-ss', f'{offset:.9f}', '-t', f'{(b-a if at is None else .1)+lead:.9f}', '-i', str(assets[clip['src']]['path'])]
         graph.append(f"[{index}:v]scale=w='max(2,trunc(iw*sar/2)*2)':h=ih,setsar=1,split=2[sharp{index}][soft{index}]")
         graph.append(f'[soft{index}]scale=96:120:force_original_aspect_ratio=increase,crop=96:120,'
                      f'gblur=sigma=5,scale={w}:{h}[fill{index}]')
         graph.append(f'[sharp{index}]scale={w}:{h}:force_original_aspect_ratio=decrease:force_divisible_by=2[subject{index}]')
         origin = a if at is None else 0
         graph.append(f'[fill{index}][subject{index}]overlay=(W-w)/2:(H-h)/2,setsar=1,'
-                     f'setpts=PTS-STARTPTS+{origin:.9f}/TB[main{index}]')
+                     f'setpts=PTS-STARTPTS+{origin-lead:.9f}/TB[main{index}]')
         enable = f":enable='gte(t,{a:.9f})*lt(t,{b:.9f})'" if at is None else ''
         # Resample the final valid source frame to the native FPS within this
         # real source window. Never let a clip remain after its explicit end.
