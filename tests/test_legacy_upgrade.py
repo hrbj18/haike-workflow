@@ -92,12 +92,12 @@ class LegacyUpgradeTests(unittest.TestCase):
             reconcile.assert_not_called()
         self.assertFalse((self.target / 'VERSION.json').exists())
 
-    def modern_base(self):
-        identity = 'base-1-2-1-' + 'c' * 12
-        release = {**self.plan['release'], 'version': '1.2.1', 'source_commit': 'c' * 40}
+    def modern_base(self, base_version='1.2.1', target_version='1.2.2'):
+        identity = 'base-' + base_version.replace('.', '-') + '-' + 'c' * 12
+        release = {**self.plan['release'], 'version': base_version, 'source_commit': 'c' * 40}
         self.file('RELEASE.json', upgrade.json_bytes(release))
-        self.plan['release']['version'] = '1.2.2'
-        self.plan['modern_bases'] = [{'id': identity, 'version': '1.2.1', 'source_commit': 'c' * 40, 'required_files': []}]
+        self.plan['release']['version'] = target_version
+        self.plan['modern_bases'] = [{'id': identity, 'version': base_version, 'source_commit': 'c' * 40, 'required_files': []}]
         for row in self.plan['files'] + self.resources['files']:
             row['before_by_base'] = {identity: row.get('before_sha256')}
         with zipfile.ZipFile(self.resource, 'w') as archive:
@@ -125,6 +125,16 @@ class LegacyUpgradeTests(unittest.TestCase):
         self.plan['files'][0].pop('before_by_base'); self.save_plan()
         with self.assertRaisesRegex(ValueError, '基线校验'):
             self.install()
+
+    def test_released_122_to_123_preserves_data_and_restores_exact_metadata(self):
+        self.modern_base('1.2.2', '1.2.3')
+        before = (self.target / 'RELEASE.json').read_bytes()
+        result = self.install()
+        current = upgrade.read(self.target / 'RELEASE.json')
+        self.assertEqual((current['version'], current['upgraded_from']), ('1.2.3', '1.2.2'))
+        self.assertEqual((self.target / 'Haike_video/config.local.yaml').read_bytes(), b'private-config-sentinel')
+        upgrade.restore(self.target, Path(result['backup']))
+        self.assertEqual((self.target / 'RELEASE.json').read_bytes(), before)
 
     def test_rollback_accepts_same_installation_through_canonical_path_alias(self):
         (self.root / 'alias-parent').mkdir()
