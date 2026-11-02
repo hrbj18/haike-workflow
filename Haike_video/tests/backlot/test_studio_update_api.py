@@ -121,9 +121,31 @@ def test_readiness_preserves_seven_held_results_but_blocks_a_real_worker(tmp_pat
     headers = {'X-Haike-Update-Token':'test-token'}
     result = web.get('/api/studio/app-update/readiness',headers=headers).json()
     assert result['ready'] and result['held_jobs_preserved']==7 and path.read_bytes()==original
+    for status in ['paused', 'awaiting_human']:
+        with closing(sqlite3.connect(path)) as db:
+            db.execute('UPDATE production_jobs SET status=?', (status,)); db.commit()
+        original = path.read_bytes()
+        counts = {'paused_count': 7} if status == 'paused' else {'waiting_count': 7}
+        app.state.production_queue.list = lambda **kw: counts
+        result = web.get('/api/studio/app-update/readiness', headers=headers).json()
+        assert result['ready'] and result['held_jobs_preserved'] == 7 and path.read_bytes() == original
     with closing(sqlite3.connect(path)) as db:
         db.execute("UPDATE production_jobs SET status='running',worker_id='worker' WHERE job_id='0'"); db.commit()
     assert not web.get('/api/studio/app-update/readiness',headers=headers).json()['ready']
+
+
+def test_readiness_reports_all_independent_blockers_once(tmp_path, monkeypatch):
+    web, app = client(tmp_path)
+    identity = 'f' * 24
+    updates.set_operation(tmp_path, 'waiting', '等待', id=identity)
+    updates.write_json(updates.private_path(tmp_path, identity+'/operation.json'), {'token':'test-token'})
+    app.state.production_queue = SimpleNamespace(list=lambda **kw: {})
+    app.state.update_inflight = 1
+    monkeypatch.setattr(api, 'audio_busy', lambda *args: '音色仍在执行')
+    monkeypatch.setattr(api, 'publisher_busy', lambda *args: '发布仍在执行')
+    result = web.get('/api/studio/app-update/readiness', headers={'X-Haike-Update-Token':'test-token'}).json()
+    assert not result['ready'] and len(result['blockers']) == 3
+    assert '音色仍在执行' in result['message'] and '发布仍在执行' in result['message']
 
 
 def test_cli_admission_and_interrupted_receipt_guard(tmp_path, monkeypatch):
