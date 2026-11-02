@@ -11,6 +11,8 @@
 
 顶部主题标题从0秒显示至最后一帧，逐镜短标题在镜头边界直接切换，两者没有空白入场。字体分别64px、44px，使用本期导入且冻结的授权TTF/OTF；按实际字宽检查，过长要求缩写，不自动缩小。标题PNG由相同执行器生成，预览和整片共用，不能依赖原包已废弃的header字段。
 
+安装内可复用Haike_video/remotion-composer/a2e/public/fonts/NotoSansSC.ttf，通过既有素材上传保存为title-font.ttf再绑定。其SIL OFL 1.1许可保留在同目录LICENSE.md；不要求用户另购字体或使用Windows系统字体。换字体后重新检查真实字宽与预览。
+
 主素材窗为paper_continuous.MAIN，完整contain主体；侧边用同源柔化背景填充。所有六镜都绑定主素材，包括原生手机/文字/行动段。原生六段先在ACTION_AREA保留原尺寸排版容量，再完整等比缩入AUX辅助带；不能直接把原生比较控件挤进260px高区域。presenter设hide并移除timeline.presenter，避免原生入场与主素材互相覆盖。素材和动效的起止独立，动效入场不使主素材消失。
 
 paperSupport包含profile/title/font/shots；shots按原镜头顺序给出shotId/heading/clips。每片段声明src/sourceStart/start/end/captionIndices/meaning/kind，start/end相对本镜且连续覆盖[0,镜头时长)。同一镜可顺序切换多个来源，切点按真实台词与素材动作安排，不追求每秒乱切。源窗不足、断档、标题缺失或语义未绑定均拒绝冻结。停止、循环或变速填时长不开放；源帧率到60fps的正常采样只在有效源窗内进行。
@@ -31,6 +33,6 @@ kind=presenter须另给本期voiceSha256和videoSha256，源入点与全片时�
 
 ## 验证与交付范围
 
-新增单元/真实FFmpeg测试已覆盖断档、标题缺失、错配人物、字幕碰撞、每帧主素材和标题检测；两条真实输入的开发预览与成片继续验证。技术、视觉、连续听看、用户反馈、正式更新/下载、第二物理机分别记录。stage保持specification，开发样片不自动升级为受控生产ready。
+新增单元/真实FFmpeg测试覆盖断档、标题缺失、错配人物、字幕碰撞、视频轨源窗、损坏标题缓存、非整帧入点及每帧主体/标题检测，21项通过。两条真实输入经原队列完成30.8/33.05秒整片，实际查看216张预览与118张编码抽帧，3831帧技术扫描无空帧；详见[回执](PAPER-CONTINUOUS-VALIDATION.json)。本轮完整听看与用户反馈仍待验，未从旧双卡反馈继承；正式更新/下载、第二物理机独立记录。stage保持specification，开发样片不自动升级为受控生产ready。
 
 历史双卡规格及回执保留于paper-evidence-spec.json、PAPER-EVIDENCE-VALIDATION.json，仅代表1.1.0的旧验证范围。新版以本规格和新产物回执为准，不能继承旧正向反馈替代本次验收。

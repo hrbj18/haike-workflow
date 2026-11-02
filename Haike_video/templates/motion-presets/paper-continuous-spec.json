@@ -568,30 +568,39 @@
       "method": "固定标题/主素材/辅助动作/字幕分区，显式全时钟源窗，逐帧空场检测与独立语义审核",
       "file": "../../backlot/paper_continuous.py",
       "sha256": "bd642f850b19072cabfa486e3119d66d0cc81f30905eddf2ba7c0ffa55422a26"
+    },
+    {
+      "id": "paper_continuous_outputs",
+      "source_kind": "measurement",
+      "source": "两份完整口播的连续主素材/常驻标题开发整片",
+      "locator": "30.8秒/33.05秒；请求和成片SHA见回执",
+      "method": "实际查看216张组合预览及118张编码帧；全3831帧主素材/主题标题非空扫描，完整解码/帧数/码率/峰值检查。连续听看单独待验。",
+      "file": "PAPER-CONTINUOUS-VALIDATION.json",
+      "sha256": "319264566e7a6807e780be79e670e34d6135623ed58b54720139a59377109433"
     }
   ],
   "unknowns": [],
   "validation": {
     "structure": {
-      "status": "pending",
+      "status": "pass",
       "evidence_ids": [
-        "paper_design"
+        "paper_continuous_outputs"
       ],
-      "note": "新版独立验收中，旧1.1.0视觉反馈不继承；单元测试、真实预览/成片、连续听看、正式发行及物理异机分别记录"
+      "note": "规格独立schema/静态检查通过；非全知识库检查"
     },
     "technical": {
-      "status": "pending",
+      "status": "pass",
       "evidence_ids": [
-        "paper_design"
+        "paper_continuous_outputs"
       ],
-      "note": "新版独立验收中，旧1.1.0视觉反馈不继承；单元测试、真实预览/成片、连续听看、正式发行及物理异机分别记录"
+      "note": "两片1080×1920/60fps，1848/1983帧、视频流≥20Mbps、AAC峰值与全帧主体/标题检测通过；开发覆盖不是正式更新证明"
     },
     "visual": {
-      "status": "pending",
+      "status": "pass",
       "evidence_ids": [
-        "paper_design"
+        "paper_continuous_outputs"
       ],
-      "note": "新版独立验收中，旧1.1.0视觉反馈不继承；单元测试、真实预览/成片、连续听看、正式发行及物理异机分别记录"
+      "note": "实际查看216张组合预览及118张编码帧：开头、逐秒、切点和末帧有大主体与两层标题，字幕避让；不等同完整听看"
     },
     "audio": {
       "status": "pending",
