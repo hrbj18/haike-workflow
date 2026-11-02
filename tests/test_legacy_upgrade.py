@@ -92,6 +92,24 @@ class LegacyUpgradeTests(unittest.TestCase):
             reconcile.assert_not_called()
         self.assertFalse((self.target / 'VERSION.json').exists())
 
+    def test_install_and_rollback_preserve_seven_held_unknown_records(self):
+        queue = self.target / 'Haike_video/.backlot/production-queue.sqlite3'
+        queue.parent.mkdir(parents=True)
+        with closing(sqlite3.connect(queue)) as db:
+            db.execute('CREATE TABLE production_jobs(job_id TEXT,status TEXT,worker_id TEXT,lease_expires_at TEXT,frozen_request TEXT)')
+            db.executemany('INSERT INTO production_jobs VALUES (?,?,?,?,?)',
+                [(f'PQ-{i}', 'ambiguous', None, None, '{"synthetic":"preserve"}') for i in range(7)])
+            db.commit()
+        before = queue.read_bytes()
+        result = self.install()
+        self.assertEqual(result['held_jobs_preserved'], 7)
+        receipt = upgrade.read(Path(result['backup']) / 'receipt.json')
+        copy = Path(result['backup']) / receipt['preserved_queue']['filename']
+        self.assertEqual(len(upgrade.queue_module().inspect(copy)['held']), 7)
+        self.assertEqual(queue.read_bytes(), before)
+        upgrade.restore(self.target, Path(result['backup']))
+        self.assertEqual(queue.read_bytes(), before)
+
     def modern_base(self):
         identity = 'base-1-2-1-' + 'c' * 12
         release = {**self.plan['release'], 'version': '1.2.1', 'source_commit': 'c' * 40}

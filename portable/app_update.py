@@ -1,7 +1,8 @@
 """Transactional, dependency-compatible application patches for portable installs.
 
-Only shipped program files are replaced.  User directories are never copied,
-deleted, migrated, or included in a backup.  The external update worker owns
+Only shipped program files are replaced. User directories are never replaced,
+deleted or migrated. Held queue records get a separate local recovery snapshot.
+The external update worker owns
 stopping services and supplies the post-restart health check.
 """
 from __future__ import annotations
@@ -9,6 +10,7 @@ from __future__ import annotations
 from contextlib import contextmanager
 from datetime import datetime, timezone
 import hashlib
+import importlib.util
 import json
 import os
 from pathlib import Path, PurePosixPath
@@ -401,8 +403,13 @@ def apply_update(bundle_dir, root, health_check=None):
         return {"ok": True, "already_current": True, "status": "complete", "version": plan["version"], "files_updated": 0}
     with _install_lock(root):
         plan = preflight(bundle_dir, root)
+        spec = importlib.util.spec_from_file_location('haike_patch_queue_guard', Path(__file__).with_name('queue_update_guard.py'))
+        queue_guard = importlib.util.module_from_spec(spec); spec.loader.exec_module(queue_guard)
+        queue_path = safe_path(root, 'Haike_video/.backlot/production-queue.sqlite3')
+        held = queue_guard.require_idle(queue_path)
         directory = safe_path(root, ".local/app-updates/" + plan["version"] + "-" + uuid4().hex)
         directory.mkdir(parents=True, exist_ok=False)
+        queue_copy = queue_guard.snapshot(queue_path, directory, held)
         contents = {item["path"]: safe_path(bundle_dir / "payload", item["path"]).read_bytes() for item in plan["files"]}
         contents.update(_new_metadata(root, plan))
         rows = []
@@ -416,7 +423,8 @@ def apply_update(bundle_dir, root, health_check=None):
                 row["before_sha256"] = digest(backup)
             rows.append(row)
         receipt = {"schema": 1, "installation": str(root), "status": "prepared", "created_at": _time(),
-                   "base_version": plan["base_version"], "version": plan["version"], "files": rows}
+                   "base_version": plan["base_version"], "version": plan["version"], "files": rows,
+                   'preserved_queue': queue_copy}
         receipt_path = directory / "receipt.json"
         _atomic_write(receipt_path, json_bytes(receipt))
         try:
@@ -428,6 +436,7 @@ def apply_update(bundle_dir, root, health_check=None):
             _atomic_write(receipt_path, json_bytes(receipt))
             if health_check is not None and not health_check(root, plan):
                 raise UpdateError("新版工作台启动检查未通过")
+            queue_guard.verify_preserved(queue_path, held)
             receipt.update(status="complete", completed_at=_time())
             _atomic_write(receipt_path, json_bytes(receipt))
         except Exception as error:
@@ -438,7 +447,7 @@ def apply_update(bundle_dir, root, health_check=None):
                 raise UpdateError("更新失败，自动恢复未完成；请保留更新备份并恢复：" + str(directory)) from recovery_error
             raise UpdateError("更新失败，程序已回退到原版本：" + str(error)) from error
         return {"ok": True, "status": "complete", "version": plan["version"], "backup": str(directory),
-                "files_updated": len(plan["files"])}
+                "files_updated": len(plan["files"]), 'held_jobs_preserved': len(held['held'])}
 
 
 def _rollback(root, backup_dir, check_hashes=True):

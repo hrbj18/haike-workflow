@@ -46,6 +46,12 @@ def dependency_module():
     return module
 
 
+def queue_module():
+    spec = importlib.util.spec_from_file_location('haike_queue_update_guard', Path(__file__).with_name('queue_update_guard.py'))
+    module = importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
+    return module
+
+
 def reconcile_audio(target):
     spec = importlib.util.spec_from_file_location('haike_audio_update_guard', Path(__file__).with_name('audio_update_guard.py'))
     module = importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
@@ -122,13 +128,7 @@ def stopped(target):
             if row['ProcessId'] != os.getpid() and exe.startswith(prefix) and 'backlot' in cmd and 'serve' in cmd:
                 raise ValueError('目标工作台后台仍在运行，请关闭目标副本后台后重试；其他副本无需关闭')
     queue = safe_path(target, 'Haike_video/.backlot/production-queue.sqlite3')
-    if queue.is_file():
-        with database(queue, readonly=True) as db:
-            exists = db.execute("SELECT 1 FROM sqlite_master WHERE name='production_jobs'").fetchone()
-            if exists:
-                count = db.execute("SELECT COUNT(*) FROM production_jobs WHERE "
-                                   "status NOT IN ('completed','failed','cancelled') OR status IS NULL").fetchone()[0]
-                require(not count, '目标副本有未完成或结果待确认的制作任务，请先核对原任务再更新')
+    queue_module().require_idle(queue)
     # This installer is also a standalone offline entry: never rely solely on
     # the network wrapper's guard or import unverified installed application code.
     studio = safe_path(target, 'Haike_video/.backlot/studio.sqlite3')
@@ -466,15 +466,19 @@ def apply(bundle, target, resource, *, check=False, health_check=probe, dependen
     if not check:
         reconcile_audio(target)
     stopped(target)
+    queue_path = safe_path(target, 'Haike_video/.backlot/production-queue.sqlite3')
+    held = queue_module().require_idle(queue_path)
     unchanged = current and all(safe_path(target, r['path']).is_file()
                                 and digest(safe_path(target, r['path'])) == r['sha256'] for r in rows)
     if check or (unchanged and not dependency_plan):
         return {'ok': True, 'check_only': check, 'already_current': current,
-                'version': plan['release']['version'] if current else '1.1 / 1027', 'files': len(rows)}
+                'version': plan['release']['version'] if current else '1.1 / 1027', 'files': len(rows),
+                'held_jobs_preserved': len(held['held'])}
     records = registry_records(target, resources['packages'])
     stamp = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')
     backup = safe_path(target, '.local/release-updates/' + ID + '-' + stamp)
     backup.mkdir(parents=True, exist_ok=False)
+    queue_copy = queue_module().snapshot(queue_path, backup, held)
     writes = []
     manifest = read(target / 'PACKAGE-MANIFEST.json')
     entries = {row['path']: row for row in manifest['files']}
@@ -512,7 +516,7 @@ def apply(bundle, target, resource, *, check=False, health_check=probe, dependen
     manifest['files'] = [entries[name] for name in sorted(entries)]
     writes.append(('PACKAGE-MANIFEST.json', json_bytes(manifest)))
     receipt = {'schema': 1, 'target': str(target), 'id': ID, 'status': 'installing',
-               'registry': records, 'registry_applied': False, 'files': []}
+               'registry': records, 'registry_applied': False, 'files': [], 'preserved_queue': queue_copy}
     for name, content in writes:
         destination = safe_path(target, name)
         after = hashlib.sha256(content).hexdigest()
@@ -536,6 +540,7 @@ def apply(bundle, target, resource, *, check=False, health_check=probe, dependen
         _atomic_write(backup / 'receipt.json', json_bytes(receipt))
         registry(target, records)
         receipt['probe'] = health_check(target)
+        queue_module().verify_preserved(queue_path, held)
         receipt['status'] = 'complete'
         _atomic_write(backup / 'receipt.json', json_bytes(receipt))
     except BaseException:
@@ -547,6 +552,7 @@ def apply(bundle, target, resource, *, check=False, health_check=probe, dependen
         raise
     return {'ok': True, 'version': plan['release']['version'], 'files_updated': len(receipt['files']),
             'backup': str(backup), 'templates': receipt['probe']['templates'],
+            'held_jobs_preserved': len(held['held']),
             'next': '用原目录02-start.cmd启动，Ctrl+F5刷新；首次制作绑定自己的素材'}
 
 
