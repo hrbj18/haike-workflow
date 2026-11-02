@@ -74,6 +74,21 @@ class LegacyUpgradeTests(unittest.TestCase):
         return upgrade.apply(self.bundle, self.target, self.resource,
                              health_check=lambda _: {'ok': True, 'templates': []}, **kwargs)
 
+    def test_snapshot_failure_is_marked_incomplete_without_program_changes_and_can_retry(self):
+        module = upgrade.audio_module()
+        original = (self.target / 'Haike_video/backlot/legacy_test.py').read_bytes()
+        with patch.object(module, 'snapshot', side_effect=OSError('synthetic Windows path failure')), \
+                patch.object(upgrade, 'audio_module', return_value=module):
+            with self.assertRaises(OSError): self.install()
+        receipt_path = next((self.target / '.local/release-updates').glob('*/receipt.json'))
+        receipt = upgrade.read(receipt_path)
+        self.assertEqual(receipt['status'], 'preparation_failed')
+        self.assertFalse(receipt['backup_complete']); self.assertFalse(receipt['program_changes_started'])
+        self.assertEqual((self.target / 'Haike_video/backlot/legacy_test.py').read_bytes(), original)
+        with self.assertRaisesRegex(ValueError, '备份准备'):
+            upgrade.restore(self.target, receipt_path.parent)
+        self.assertTrue(self.install()['ok'])
+
     def test_full_upgrade_reuses_browser_keeps_private_files_and_is_idempotent(self):
         result = self.install()
         self.assertTrue(result['ok'])

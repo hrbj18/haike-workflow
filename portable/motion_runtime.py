@@ -123,8 +123,8 @@ def configuration_writes(root, value):
                    f'executable = {runtime / "python.exe"}\n').encode('utf-8')
         path = core.safe_path(root, name)
         if path.exists():
-            require(path.is_file() and path.stat().st_size < 4096, '模板运行环境配置异常')
-            old = path.read_bytes()
+            require(core.native_path(path).is_file() and core.native_path(path).stat().st_size < 4096, '模板运行环境配置异常')
+            old = core.native_path(path).read_bytes()
             require(old == content or old.decode('utf-8-sig').splitlines()[0:1] == [marker],
                     '模板依赖目录已有其他环境配置，已停止保留：' + row['id'])
         result.append((name, content))
@@ -141,14 +141,14 @@ def verify(root, value=None, *, configuration=True):
     def checked(item):
         name, digest = item
         path = core.safe_path(root, name)
-        require(path.is_file() and core.digest(path) == digest, '模板运行依赖缺失或已改变：' + name)
+        require(core.native_path(path).is_file() and core.digest(path) == digest, '模板运行依赖缺失或已改变：' + name)
     files = [(r['cache'] + '/' + name, digest) for r in value['profiles'] for name, digest in r['files'].items()]
     with ThreadPoolExecutor(max_workers=8) as pool:
         list(pool.map(checked, files))
     if configuration:
         for name, content in configuration_writes(root, value):
             path = core.safe_path(root, name)
-            require(path.is_file() and path.read_bytes() == content,
+            require(core.native_path(path).is_file() and core.native_path(path).read_bytes() == content,
                     '模板Python环境尚未绑定当前安装位置，请用本副本启动器修复')
     return {'status': 'verified', 'profiles': [r['id'] for r in value['profiles']], 'verified_files': len(files)}
 
@@ -162,7 +162,7 @@ def relocate(root):
     count = 0
     for name, content in configuration_writes(root, value):
         path = core.safe_path(root, name)
-        if not path.is_file() or path.read_bytes() != content:
+        if not core.native_path(path).is_file() or core.native_path(path).read_bytes() != content:
             core._atomic_write(path, content); count += 1
     return {'status': 'bound', 'configurations_updated': count}
 

@@ -15,6 +15,16 @@ import urllib.request
 from uuid import uuid4
 import zipfile
 
+try:
+    from . import app_update as core
+except ImportError:
+    import importlib.util
+    _path = Path(__file__).with_name('release_core.py')
+    if not _path.is_file():
+        _path = Path(__file__).with_name('app_update.py')
+    _spec = importlib.util.spec_from_file_location('haike_dependency_path_core', _path)
+    core = importlib.util.module_from_spec(_spec); _spec.loader.exec_module(core)
+
 MAX_DOWNLOAD = 800_000_000
 COMPONENTS = {'python', 'node', 'uv', 'msvc', 'ffmpeg', 'browser'}
 
@@ -25,7 +35,7 @@ def require(value, message):
 
 
 def digest(path):
-    with Path(path).open('rb') as stream:
+    with core.native_path(path).open('rb') as stream:
         return hashlib.file_digest(stream, 'sha256').hexdigest()
 
 
@@ -36,9 +46,10 @@ def safe(root, name):
     path = Path(root)
     for part in parts:
         path = path / part
-        require(not path.is_symlink() and not (hasattr(path, 'is_junction') and path.is_junction()),
+        check = core.native_path(path)
+        require(not check.is_symlink() and not (hasattr(check, 'is_junction') and check.is_junction()),
                 '依赖路径不能经过链接')
-    require(path.resolve().is_relative_to(Path(root).resolve()), '依赖路径越界')
+    require(core.logical_path(core.native_path(path).resolve()).is_relative_to(Path(root).resolve()), '依赖路径越界')
     return path
 
 
@@ -148,8 +159,8 @@ def extract(archive, stage, name, spec):
                     continue
                 relative = parts[-1]
             path = safe(stage, 'runtime/' + name + '/' + relative)
-            path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_bytes(zipped.read(row))
+            core.native_path(path.parent).mkdir(parents=True, exist_ok=True)
+            core.native_path(path).write_bytes(zipped.read(row))
 
 
 def prepare(root, bundle, report=None):
@@ -195,12 +206,13 @@ def prepare(root, bundle, report=None):
         base = root / 'runtime/python'
         (venv / 'pyvenv.cfg').write_text(f'home = {base}\ninclude-system-site-packages = false\nexecutable = {base / "python.exe"}\n', encoding='utf-8')
     rows = []
-    for file in sorted(stage.rglob('*')):
-        if not file.is_file() or file.name == 'install.log' or '__pycache__' in file.parts:
+    for file in sorted(core.native_path(stage).rglob('*')):
+        file = core.logical_path(file)
+        if not core.native_path(file).is_file() or file.name == 'install.log' or '__pycache__' in file.parts:
             continue
         name = file.relative_to(stage).as_posix()
         require(allowed(name), '依赖修复包含非运行文件：' + name)
-        rows.append({'path': name, 'size': file.stat().st_size, 'sha256': digest(file),
+        rows.append({'path': name, 'size': core.native_path(file).stat().st_size, 'sha256': digest(file),
                      'prepared': str(file), 'repair': True, 'resource': True,
                      'mutable': file.name == 'pyvenv.cfg'})
     plan = stage / 'dependencies.json'
@@ -217,7 +229,7 @@ def rows(root, plan):
     require(len(value['rows']) < 50000, '依赖修复文件过多')
     for row in value['rows']:
         require(allowed(row['path']), '依赖修复试图覆盖用户文件')
-        file = Path(row['prepared']).resolve(strict=True)
-        require(file == safe(plan.parent, row['path']).resolve() and file.stat().st_size == row['size']
+        file = core.logical_path(core.native_path(row['prepared']).resolve(strict=True))
+        require(file == core.logical_path(core.native_path(safe(plan.parent, row['path'])).resolve()) and core.native_path(file).stat().st_size == row['size']
                 and digest(file) == row['sha256'], '准备好的依赖已损坏，请保留原程序并重新准备')
     return value['rows']
