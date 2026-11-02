@@ -163,7 +163,7 @@ async def readiness(request: Request):
     token = request.headers.get("x-haike-update-token", "")
     if not token or not hmac.compare_digest(token, command.get("token", "")):
         raise HTTPException(403, "更新助手身份无效")
-    busy = ""
+    blockers = []
     queue_service = getattr(request.app.state, "production_queue", None)
     if queue_service is None:
         from backlot.server import _ensure_production_queue
@@ -175,32 +175,37 @@ async def readiness(request: Request):
         from portable import queue_update_guard
         queue_state = await asyncio.to_thread(queue_update_guard.inspect, queue_path)
         held_count = len(queue_state['held'])
+        held_statuses = queue_state['held_statuses']
         queue_busy = (queue_state['blocked_count'] > 0
-            or any(queue.get(k, 0) for k in ('active_count', 'queued_count', 'paused_count'))
-            or queue.get('waiting_count', 0) > held_count)
+            or any(queue.get(k, 0) for k in ('active_count', 'queued_count'))
+            or queue.get('paused_count', 0) > held_statuses.get('paused', 0)
+            or queue.get('waiting_count', 0) > held_statuses.get('ambiguous', 0) + held_statuses.get('awaiting_human', 0))
     else:
-        queue_busy = any(queue.get(k, 0) for k in ("active_count", "queued_count", "waiting_count"))
+        queue_busy = any(queue.get(k, 0) for k in ("active_count", "queued_count", "paused_count", "waiting_count"))
     if queue_busy:
-        busy = "正在等待制作队列结束；结果待确认的任务请先核对，或暂缓本次更新。"
+        blockers.append("正在等待制作队列释放执行权；已停止的待审核、暂停或待核对记录可原样保留。")
     if getattr(request.app.state, "update_inflight", 0):
-        busy = "正在等待已提交的工作台操作结束。"
+        blockers.append("正在等待已提交的工作台操作结束。")
     from backlot import studio_motion_templates_api
     if studio_motion_templates_api._ACTIVE_PREPARATIONS:
-        busy = '正在等待动效模板的素材检查、准备或预览结束。'
+        blockers.append('正在等待动效模板的素材检查、准备或预览结束。')
     for name in ("recovery_tasks", "media_index_tasks", "media_index_batch_tasks", "interaction_candidate_tasks", "interaction_second_pass_tasks"):
         tasks = getattr(request.app.state, name, {})
         if isinstance(tasks, dict):
             tasks = tasks.values()
         if any(not task.done() for task in tasks):
-            busy = "正在等待后台制作或素材任务结束。"
-    if not busy:
+            if "正在等待后台制作或素材任务结束。" not in blockers:
+                blockers.append("正在等待后台制作或素材任务结束。")
+    for name, check in [('音色操作', lambda: audio_busy(request.app, root)),
+                        ('账号服务与下载发布', lambda: publisher_busy(root))]:
         try:
-            busy = await asyncio.to_thread(audio_busy, request.app, root)
-            if not busy:
-                busy = await asyncio.to_thread(publisher_busy, root)
+            message = await asyncio.to_thread(check)
+            if message:
+                blockers.append(message)
         except Exception:
-            busy = "暂时无法确认下载与发布状态，请检查本副本账号服务；原程序未修改。"
-    return {"ready": not busy, "message": busy, 'held_jobs_preserved': held_count}
+            blockers.append(name + "暂时无法安全检查；原程序未修改。")
+    return {"ready": not blockers, "message": '；'.join(blockers), 'blockers': blockers,
+            'held_jobs_preserved': held_count}
 
 
 def attach(app):

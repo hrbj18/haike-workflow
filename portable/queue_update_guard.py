@@ -13,7 +13,7 @@ def digest(path):
 
 def inspect(path):
     path = Path(path).resolve()
-    result = {'held': [], 'blocked_count': 0, 'blocked_statuses': {}}
+    result = {'held': [], 'held_statuses': {}, 'blocked_count': 0, 'blocked_statuses': {}}
     if not path.is_file():
         return result
     with closing(sqlite3.connect(path.as_uri() + '?mode=ro', uri=True)) as db:
@@ -23,12 +23,13 @@ def inspect(path):
         columns = {r['name'] for r in db.execute('PRAGMA table_info(production_jobs)')}
         can_prove_held = {'job_id', 'worker_id', 'lease_expires_at'} <= columns
         for row in db.execute("SELECT * FROM production_jobs WHERE status NOT IN ('completed','failed','cancelled') OR status IS NULL"):
-            if can_prove_held and row['status'] == 'ambiguous' and row['worker_id'] is None and row['lease_expires_at'] is None:
+            if can_prove_held and row['status'] in {'ambiguous', 'paused', 'awaiting_human'} and row['worker_id'] is None and row['lease_expires_at'] is None:
                 # Hash every field without disclosing frozen credentials/requests.
                 value = {k: (v.hex() if isinstance(v, bytes) else v) for k, v in dict(row).items()}
                 identity = hashlib.sha256(json.dumps(value, sort_keys=True, ensure_ascii=False,
                     separators=(',', ':')).encode()).hexdigest()
                 result['held'].append({'job_id': row['job_id'], 'sha256': identity})
+                result['held_statuses'][row['status']] = result['held_statuses'].get(row['status'], 0) + 1
             else:
                 result['blocked_count'] += 1
                 status = str(row['status'])

@@ -303,7 +303,7 @@ def discover():
     return roots.pop()
 
 
-def idle(root, queue_guard=None, audio_guard=None):
+def queue_idle(root, queue_guard=None):
     queue = safe(root, 'Haike_video/.backlot/production-queue.sqlite3')
     if queue_guard is not None:
         queue_guard.require_idle(queue)
@@ -312,6 +312,9 @@ def idle(root, queue_guard=None, audio_guard=None):
             if db.execute("SELECT 1 FROM sqlite_master WHERE name='production_jobs'").fetchone():
                 require(not db.execute("SELECT 1 FROM production_jobs WHERE status NOT IN ('completed','failed','cancelled') OR status IS NULL LIMIT 1").fetchone(),
                         '请先完成或核对制作队列中的任务，再更新；原任务保留')
+
+
+def audio_idle(root, audio_guard=None):
     if audio_guard is not None:
         audio_guard.require_idle(root)
         return
@@ -326,6 +329,24 @@ def idle(root, queue_guard=None, audio_guard=None):
         operation = read(safe(root, file.relative_to(root).as_posix()))
         require(operation.get('status') in {'succeeded', 'failed'},
                 '音色操作正在执行或结果待确认，请先核对原操作后更新')
+
+
+def idle_blockers(root, queue_guard=None, audio_guard=None):
+    blockers = []
+    for name, check in [('制作队列', lambda: queue_idle(root, queue_guard)),
+                        ('音色操作', lambda: audio_idle(root, audio_guard))]:
+        try:
+            check()
+        except ValueError as error:
+            blockers.append(str(error))
+        except (OSError, sqlite3.Error):
+            blockers.append(name + '记录暂无法安全检查，原数据已保留')
+    return blockers
+
+
+def idle(root, queue_guard=None, audio_guard=None):
+    blockers = idle_blockers(root, queue_guard, audio_guard)
+    require(not blockers, '；'.join(blockers))
 
 
 def stop_legacy(root, queue_guard=None, audio_guard=None):
@@ -517,11 +538,7 @@ def run(url, target=None, *, check=False, start=True):
                     return {'ok': True, 'already_current': True, 'version': current,
                             'dependencies': report, 'template_delivery': delivery}
             if check:
-                blockers = []
-                try:
-                    idle(root, queue_guard=queue_guard, audio_guard=audio_guard)
-                except ValueError as exc:
-                    blockers.append(str(exc))
+                blockers = idle_blockers(root, queue_guard=queue_guard, audio_guard=audio_guard)
                 return {'ok': not blockers, 'check_only': True, 'mode': 'project-compatible',
                     'current': current, 'target': feed['version'], 'source_commit': release.get('source_commit'),
                     'dependencies': report, 'blockers': blockers, 'can_repair_dependencies': True,

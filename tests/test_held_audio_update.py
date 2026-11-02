@@ -80,5 +80,16 @@ class HeldAudioUpdateTests(unittest.TestCase):
         with operation_lock(self.operations[0]):
             with self.assertRaisesRegex(ValueError, '音色操作'): self.guard.require_idle(self.root)
 
+    def test_online_preflight_reports_queue_and_audio_blockers_together(self):
+        from unittest.mock import Mock
+        queue = Mock()
+        queue.require_idle.side_effect = ValueError('制作队列有正在执行的任务')
+        value = json.loads((self.operations[0] / 'operation.json').read_bytes())
+        value['status'] = 'processing'
+        (self.operations[0] / 'operation.json').write_text(json.dumps(value), encoding='utf-8')
+        blockers = self.online.idle_blockers(self.root, queue_guard=queue, audio_guard=self.guard)
+        self.assertEqual(len(blockers), 2)
+        self.assertIn('制作队列', blockers[0]); self.assertIn('音色操作', blockers[1])
+
 
 if __name__ == '__main__': unittest.main()

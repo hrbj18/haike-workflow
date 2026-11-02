@@ -48,7 +48,7 @@ class QueueGuardTests(unittest.TestCase):
 
     def test_active_unknown_and_unknown_schema_still_block(self):
         for status, worker, lease in [('running', 'worker', 'future'), ('queued', None, None),
-                ('paused', None, None), ('awaiting_human', None, None),
+                ('paused', 'worker', None), ('awaiting_human', None, 'future'),
                 ('ambiguous', 'worker', None), ('ambiguous', None, 'future'), (None, None, None)]:
             with self.subTest(status=status, worker=worker, lease=lease), closing(sqlite3.connect(self.path)) as db:
                 db.execute('UPDATE production_jobs SET status=?,worker_id=?,lease_expires_at=? WHERE job_id=?',
@@ -58,6 +58,16 @@ class QueueGuardTests(unittest.TestCase):
             db.execute('DROP TABLE production_jobs'); db.execute('CREATE TABLE production_jobs(status TEXT)')
             db.execute("INSERT INTO production_jobs VALUES ('ambiguous')"); db.commit()
         with self.assertRaises(ValueError): guard.require_idle(self.path)
+
+    def test_inactive_paused_and_review_jobs_are_preserved_without_automatic_claims(self):
+        for status in ['paused', 'awaiting_human']:
+            with closing(sqlite3.connect(self.path)) as db:
+                db.execute('UPDATE production_jobs SET status=?', (status,)); db.commit()
+            before = self.path.read_bytes()
+            result = guard.require_idle(self.path)
+            self.assertEqual(len(result['held']), 7)
+            self.assertEqual(result['held_statuses'], {status: 7})
+            self.assertEqual(self.path.read_bytes(), before)
 
     def test_snapshot_retains_all_records_and_detects_any_row_change(self):
         expected = guard.require_idle(self.path)
@@ -77,10 +87,11 @@ class QueueGuardTests(unittest.TestCase):
         path = self.root / 'real.sqlite3'
         queue = ProductionQueue(path, self.root / 'projects')
         with closing(sqlite3.connect(path)) as db:
-            for i in range(7):
+            for i in range(9):
                 db.execute('INSERT INTO production_jobs(job_id,idempotency_key,project_id,project_title,kind,source,priority,priority_rank,status,stage,parent_job_id,frozen_request,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
                     (f'PQ-{i:020d}', f'synthetic-{i}', 'synthetic', 'synthetic', 'studio_avatar', 'synthetic', 'normal', 0,
-                     'ambiguous', '云端结果需核对', 'synthetic-parent', '{}', '2026-01-01', '2026-01-01'))
+                     'ambiguous' if i < 7 else 'paused' if i == 7 else 'awaiting_human',
+                     '保留原任务', 'synthetic-parent', '{}', '2026-01-01', '2026-01-01'))
             db.commit()
         before = guard.inspect(path)['held']
         self.assertIsNone(queue.claim_next('update-test'))
