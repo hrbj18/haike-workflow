@@ -1,6 +1,6 @@
 {
   "schema": "haike.motion-preset-recipe/1",
-  "parameters": {"workflow": "motion-kit", "timeline": {
+  "parameters": {"workflow": "motion-kit", "paperSupport": {"profile": "paper-evidence/1", "shots": []}, "timeline": {
     "layout": "portrait", "language": "zh", "styleProfile": "paper", "narrationComposition": "readable/1", "ending": "cut",
     "voiceover": "voice.wav", "music": "music.wav", "captions": [],
     "segments": [
@@ -14,8 +14,8 @@
   }},
   "binding": {
     "clock": "actual-voice-and-caption-events",
-    "required": ["完整口播与真实字幕", "每镜t0/t1/cues", "连续同源narrationMap", "本期两路实拍及mediaPolicies", "已授权配乐"],
+    "required": ["完整口播与真实字幕", "每镜t0/t1/cues", "连续同源narrationMap", "文字镜头逐段绑定两路真实素材paperSupport；原生实拍或同源人物镜头免叠层", "已授权配乐"],
     "optional": ["真实连续时钟人物与明确显隐区间"],
-    "instructions": "按真实字幕填写完整duration、场景时点及narrationMap，不缩放原动作速度。原生控件最短时长仍由原包裁决。人物通过公开presenter槽添加，同声源校验与原生预览不可跳过。删除素材时同步移除未使用mediaPolicies。"
+    "instructions": "按真实字幕填写完整duration、场景时点及narrationMap，不缩放原动作速度。文字段area使用paper_evidence.TEXT_AREA，paperSupport.shots逐镜提供两张卡：src/sourceStart/captionIndices/meaning，完整覆盖该镜真实时长，首镜从0秒即有素材。原生实拍或人物镜头不加卡。默认contain，不循环停帧，不复用旧口型。只验证9:16；预览与整片共用证据层，并重新审核。删除素材时同步移除未使用mediaPolicies。"
   }
 }

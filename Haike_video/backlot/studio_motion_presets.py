@@ -136,6 +136,10 @@ def _mechanisms(row, p):
                            ('compare', 'panels'), ('kinetic', 'stack'), ('device', 'phone'),
                            ('device', 'phone'), ('quote', 'reveal'), ('cta', 'button')],
                        '纸感预设需保留六段原生控件及引用揭示')
+        if row['version'] != '1.0.0':
+            from backlot.paper_evidence import PROFILE
+            motion.require(isinstance(p.get('paperSupport'), dict) and p['paperSupport'].get('profile') == PROFILE,
+                           '纸感新版需保留通用证据层；请按本期台词绑定真实素材')
     else:
         motion.require(p.get('creationProfile') == 'knowledge-story/1' and p.get('layout') == 'portrait'
                        and [s.get('family') for s in p.get('segments', [])] == [
