@@ -77,9 +77,6 @@ class ProductionQueueWorker:
         return run_motion(self._project_dir(job), job["frozen_request"])
 
     def _run_investment_recompose(self, job):
-        if job.get("frozen_request", {}).get("contract") == "haike-chalkboard-reconstruction-v1":
-            from backlot.studio_chalkboard import run
-            return run(self.queue, job)
         if job.get("frozen_request", {}).get("contract") == "motiongit-dark-native-v1":
             from backlot.studio_dark_native import run
             return run(self.queue, job)

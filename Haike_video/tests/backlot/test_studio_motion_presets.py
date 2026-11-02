@@ -43,7 +43,9 @@ def test_public_recipe_has_no_episode_bindings_or_fixed_clock(isolated):
             assert forbidden not in text
         assert not recipe['parameters'].get('provenance')
         assert recipe['binding']['clock'] == 'actual-voice-and-caption-events'
-    assert len(names) == 3
+    assert names == {'quest-approved-portrait-v1', 'sketchnote-approved-portrait-v1'}
+    with pytest.raises(WorkError, match='不存在'):
+        presets.create('paper-approved-portrait-v1')
 
 
 def test_missing_originals_are_not_ready_or_executable(isolated):
@@ -75,18 +77,18 @@ def test_update_and_clone_keep_frozen_preset_identity_and_old_draft(isolated):
 
 
 def test_current_users_exact_verified_package_is_resolved(isolated, monkeypatch):
-    row, _ = presets.load('paper-approved-portrait-v1')
+    row, _ = presets.load('sketchnote-approved-portrait-v1')
     p = fake_package(isolated, row, monkeypatch)
     created = presets.create(row['id'])
     assert created['package_id'] == p['id']
     assert created['package_sha256'] == p['sha256']
     p['version'] = '2.7.22'; motion._put_package(p)
-    with pytest.raises(WorkError, match='2.7.21-alpha.5'):
+    with pytest.raises(WorkError, match='2.7.3'):
         presets.create(row['id'])
 
 
 def test_tampered_original_or_helper_is_not_usable(isolated, monkeypatch):
-    row, _ = presets.load('paper-approved-portrait-v1')
+    row, _ = presets.load('sketchnote-approved-portrait-v1')
     p = fake_package(isolated, row, monkeypatch)
     Path(p['helper']).write_bytes(b'changed')
     assert not presets.catalog()['presets'][1]['can_create']
@@ -132,7 +134,7 @@ def test_api_creation_origins_and_shared_identity(isolated):
         capability = client.get('/api/studio/motiongit/preset-capability')
         assert capability.status_code == 200
         assert capability.json()['files'] == presets.delivery_files()
-        assert len(capability.json()['availability']) == 3
+        assert len(capability.json()['availability']) == 2
 
 
 def test_cli_lists_the_same_public_identity(isolated, monkeypatch, capsys):
