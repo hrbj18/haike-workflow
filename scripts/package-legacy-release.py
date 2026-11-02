@@ -102,7 +102,7 @@ def build(args):
     for name, source in sorted(candidates.items()):
         digest = core.digest(source)
         old = before.get(name)
-        if old and old['sha256'] == digest and all(base.get(name, {}).get('sha256') == digest for base in modern_entries.values()):
+        if not getattr(args, 'project_compatible', False) and old and old['sha256'] == digest and all(base.get(name, {}).get('sha256') == digest for base in modern_entries.values()):
             continue
         target = bundle / 'payload' / name
         target.parent.mkdir(parents=True, exist_ok=True)
@@ -125,7 +125,7 @@ def build(args):
             continue
         if '/.cache/' in name or '/__pycache__/' in name or name.endswith(('.pyc', '.pyo')):
             continue
-        if name in before and before[name]['sha256'] == entry['sha256'] and all(
+        if not getattr(args, 'project_compatible', False) and name in before and before[name]['sha256'] == entry['sha256'] and all(
                 base.get(name, {}).get('sha256') == entry['sha256'] for base in modern_entries.values()):
             continue
         sources.append((name, args.stage / name))
@@ -157,11 +157,16 @@ def build(args):
         sources.append((helper, original))
     def info(item):
         name, file = item
-        return name, file, core.digest(file), file.stat().st_size
+        digest = core.digest(file)
+        if name.startswith('Haike_video/remotion-composer/node_modules/') and name in accepted:
+            if digest != accepted[name]['sha256']:
+                raise ValueError('Audited runtime input changed: ' + name)
+        return name, file, digest, file.stat().st_size
     with ThreadPoolExecutor(max_workers=8) as pool:
         verified = list(pool.map(info, sources))
     resource_rows, written = [], set()
-    resource_zip = args.output / 'haike-templates-1.2.zip'
+    resource_zip = args.output / (f'haike-templates-{version["version"]}-compat2.zip'
+                                 if getattr(args, 'project_compatible', False) else 'haike-templates-1.2.zip')
     with zipfile.ZipFile(resource_zip, 'x', compression=zipfile.ZIP_DEFLATED, compresslevel=6) as archive:
         for name, file, sha, size in sorted(verified):
             old = before.get(name)
@@ -170,7 +175,7 @@ def build(args):
                    'before_by_base': {identity: base.get(name, {}).get('sha256') for identity, base in modern_entries.items()}}
             if sha in by_sha:
                 row['reuse_from'] = by_sha[sha]
-            else:
+            if sha not in by_sha or getattr(args, 'project_compatible', False):
                 blob = ('templates/' + name.split('/')[3] + '.motion' if name.endswith('original.motion')
                         else 'blobs/' + sha)
                 row['blob'] = blob
@@ -223,6 +228,15 @@ def build(args):
             'resources': {'filename': resource_zip.name, 'sha256': core.digest(resource_zip)},
             'release': release, 'files': rows,
             'required_files': [{k: r[k] for k in ('path', 'sha256')} for r in required]}
+    if getattr(args, 'project_compatible', False):
+        plan['project_compatibility'] = {'schema': 1, 'edition': 'haike-workflow-2',
+                                        'platform': 'windows-x64', 'data_schema': 1}
+        shutil.copyfile(args.source / 'portable/update_dependencies.py', bundle / 'update_dependencies.py')
+        downloads = read(args.source / 'config/online-downloads.json')
+        # Mirror bytes must match the existing upstream archive pin.
+        downloads['ffmpeg']['urls'].insert(0, 'https://ghfast.top/https://github.com/GyanD/codexffmpeg/releases/download/9.0.2/ffmpeg-9.0.2-essentials_build.zip')
+        (bundle / 'dependency-downloads.json').write_bytes(core.json_bytes(downloads))
+        shutil.copyfile(args.source / '_distribution-tools/locks/Haike_video.txt', bundle / 'video-dependencies.txt')
     if modern_bases:
         plan['modern_bases'] = modern_bases
     (bundle / 'UPGRADE.json').write_bytes(core.json_bytes(plan))
@@ -235,12 +249,14 @@ def build(args):
         shutil.copyfile(args.source / 'portable/motion_runtime.py', bundle / 'motion_runtime.py')
     shutil.copyfile(args.source / 'docs/releases/1.2-使用说明.txt', bundle / '使用说明.txt')
     (bundle / 'upgrade.cmd').write_text('@echo off\ncd /d "%~dp0"\npowershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0upgrade-1027.ps1" %*\npause\n', encoding='ascii')
-    update_zip = args.output / 'haike-update-1.2.zip'
+    update_zip = args.output / (f'haike-update-{version["version"]}-compat2.zip'
+                               if getattr(args, 'project_compatible', False) else 'haike-update-1.2.zip')
     with zipfile.ZipFile(update_zip, 'x', compression=zipfile.ZIP_DEFLATED, compresslevel=6) as archive:
         for file in sorted(bundle.rglob('*')):
             if file.is_file():
                 archive.write(file, file.relative_to(args.output).as_posix())
-    if update_zip.stat().st_size + resource_zip.stat().st_size > 200_000_000:
+    limit = 800_000_000 if getattr(args, 'project_compatible', False) else 200_000_000
+    if update_zip.stat().st_size + resource_zip.stat().st_size > limit:
         raise ValueError('Bootstrap program and resource download exceeds the combined 200MB contract')
     result = {'ok': True, 'version': '1.2', 'base_version': '1.1 / 1027', 'source_commit': commit,
               'program_files': len(rows), 'resource_files': len(resource_rows),
@@ -260,6 +276,7 @@ def main():
         parser.add_argument('--' + name, type=Path, required=True)
     parser.add_argument('--include-personal-motion', action='store_true',
                         help='Local private delivery only; includes signed personal credentials. Never upload publicly.')
+    parser.add_argument('--project-compatible', action='store_true', help='Accept matching Haike projects by capabilities; ship full program and dependency repair bytes')
     parser.add_argument('--paper-cache', type=Path, help='Verified rc.54 component dependency directory')
     parser.add_argument('--knowledge-cache', type=Path, help='Verified rc.54 knowledge dependency directory')
     parser.add_argument('--helper-54', type=Path, help='Independently pinned rc.54 helper bytes')

@@ -12,7 +12,7 @@ def check(path):
     if path.suffix.lower() != '.zip':
         return
     def inspect(archive, depth=0):
-        if depth > 2 or len(archive.infolist()) > 30000:
+        if depth > 2 or len(archive.infolist()) > 50000:
             raise ValueError('公开附件层数或文件数量超限')
         for item in archive.infolist():
             name = item.filename.lower()
