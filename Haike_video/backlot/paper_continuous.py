@@ -7,7 +7,11 @@ Legacy paper-evidence/1 remains in paper_evidence.py.
 from __future__ import annotations
 
 import hashlib
+import json
 import math
+from bisect import bisect_right
+from fractions import Fraction
+from functools import lru_cache
 from pathlib import Path
 import re
 import subprocess
@@ -45,6 +49,63 @@ def filename(value, suffixes):
 
 def text(value):
     return isinstance(value, str) and bool(value.strip()) and len(value) <= 28 and not any(ord(c) < 32 for c in value)
+
+
+def video_window(info, path):
+    """A long audio track cannot extend the valid picture window."""
+    video = info.get('video')
+    require(isinstance(video, dict) and video, '素材没有可显示的视频轨')
+    try:
+        origin = float(info.get('format', {}).get('start_time', 0))
+        start = float(video.get('start_time', origin))-origin
+        duration = video.get('duration')
+        if duration is None and video.get('duration_ts') is not None:
+            duration = int(video['duration_ts'])*float(Fraction(video['time_base']))
+        if duration is not None:
+            end = start+float(duration)
+        else:
+            # WebM may omit stream duration. Read timestamps from its actual
+            # video packets, never substitute format.duration or audio length.
+            from lib.ffmpeg_locator import resolve_ffmpeg_pair
+            result = subprocess.run([str(resolve_ffmpeg_pair()[1]), '-v', 'error', '-select_streams', 'v:0',
+                '-show_packets', '-show_entries', 'packet=pts_time,duration_time', '-of', 'json', str(path)],
+                check=True, capture_output=True, timeout=60, creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
+            packets = json.loads(result.stdout)['packets']
+            start = min(float(p['pts_time']) for p in packets)-origin
+            end = max(float(p['pts_time'])+float(p['duration_time']) for p in packets)-origin
+        require(math.isfinite(start) and math.isfinite(end) and end > start, '无法确定真实视频时间范围')
+        return start, end
+    except (ValueError, TypeError, KeyError, subprocess.SubprocessError) as exc:
+        raise WorkError('纸感连续主画面：无法验证视频帧源窗，请先规范化该素材') from exc
+
+
+@lru_cache(maxsize=128)
+def frozen_probe(path, digest):
+    # The queue verifies frozen file identities. Include that identity so a
+    # new source never inherits another source's cached timestamps.
+    from backlot.studio_render import media_probe
+    return media_probe(path)
+
+
+@lru_cache(maxsize=128)
+def video_timestamps(path, digest):
+    from lib.ffmpeg_locator import resolve_ffmpeg_pair
+    result = subprocess.run([str(resolve_ffmpeg_pair()[1]), '-v', 'error', '-select_streams', 'v:0',
+        '-show_frames', '-show_entries', 'frame=best_effort_timestamp_time', '-of', 'json', str(path)],
+        check=True, capture_output=True, timeout=60, creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
+    origin = float(frozen_probe(path, digest).get('format', {}).get('start_time', 0))
+    times = sorted({float(f['best_effort_timestamp_time'])-origin for f in json.loads(result.stdout)['frames']})
+    require(times and all(math.isfinite(t) for t in times), '缺少真实视频帧时间')
+    return times
+
+
+def preview_seek(path, digest, requested):
+    # A video frame holds until the next timestamp. Seeking beyond the final
+    # frame's PTS can return no image even though that frame covers requested.
+    times = video_timestamps(str(path), digest)
+    index = bisect_right(times, requested+.0000001)-1
+    require(index >= 0, '素材该时刻还没有视频帧')
+    return max(0, times[index]-.0000001)
 
 
 def validate(parameters, assets=None, probe=None):
@@ -109,7 +170,9 @@ def validate(parameters, assets=None, probe=None):
             if assets is not None:
                 require(clip['src'] in assets, '素材未导入：' + clip['src'])
                 info = probe(Path(assets[clip['src']]['path']))
-                require(info.get('video') and clip['sourceStart']+clip['end']-clip['start'] <= info['duration']+.025,
+                first, last = video_window(info, assets[clip['src']]['path'])
+                require(clip['sourceStart'] >= first-.000001
+                        and clip['sourceStart']+clip['end']-clip['start'] <= last+.000001,
                         '真实素材区间不足，不允许循环或越界停帧：' + clip['src'])
                 if clip['kind'] == 'presenter':
                     voice = assets.get(t.get('voiceover'), {})
@@ -141,16 +204,19 @@ def title_images(folder, support, assets):
     for kind, value, font in rows:
         identity = hashlib.sha256((PROFILE+kind+value+assets[support['font']]['sha256']).encode()).hexdigest()[:24]
         path = Path(folder)/('paper-title-'+identity+'.png')
-        if not path.exists():
-            size = (1080, 230) if kind == 'theme' else (960, 70)
-            im = Image.new('RGB', size, '#faf6ec')
-            draw = ImageDraw.Draw(im)
-            draw.text((60 if kind == 'theme' else 16, 38 if kind == 'theme' else 7), value,
-                      font=font, fill='#292d32', stroke_width=1, anchor='lt')
-            if kind == 'theme':
-                draw.line((60, 210, 1020, 210), fill='#c9c0ae', width=2)
-                draw.rectangle((60, 210, 180, 215), fill='#b64c3b')
-            im.save(path)
+        size = (1080, 230) if kind == 'theme' else (960, 70)
+        im = Image.new('RGB', size, '#faf6ec')
+        draw = ImageDraw.Draw(im)
+        draw.text((60 if kind == 'theme' else 16, 38 if kind == 'theme' else 7), value,
+                  font=font, fill='#292d32', stroke_width=1, anchor='lt')
+        if kind == 'theme':
+            draw.line((60, 210, 1020, 210), fill='#c9c0ae', width=2)
+            draw.rectangle((60, 210, 180, 215), fill='#b64c3b')
+        # Rebuild deterministic derived plates even if a damaged or replaced
+        # cache decodes. Atomic replace makes interrupted writes recoverable.
+        candidate = path.with_stem(path.stem+'-pending-'+uuid4().hex)
+        im.save(candidate)
+        candidate.replace(path)
         result.append(path)
     return result[0], result[1:]
 
@@ -189,6 +255,8 @@ def command(ffmpeg, source, target, parameters, assets, plates, *, at=None, colo
             continue
         index += 1
         offset = clip['sourceStart'] + (at-a if at is not None else 0)
+        if at is not None and 'sha256' in assets[clip['src']]:
+            offset = preview_seek(assets[clip['src']]['path'], assets[clip['src']]['sha256'], offset)
         args += ['-ss', f'{offset:.9f}', '-t', f'{b-a if at is None else .1:.9f}', '-i', str(assets[clip['src']]['path'])]
         graph.append(f"[{index}:v]scale=w='max(2,trunc(iw*sar/2)*2)':h=ih,setsar=1,split=2[sharp{index}][soft{index}]")
         graph.append(f'[soft{index}]scale=96:120:force_original_aspect_ratio=increase,crop=96:120,'
@@ -239,7 +307,8 @@ def check_preview(receipt):
 def compose(ffmpeg, source, target, parameters, assets, *, at=None):
     from backlot.studio_render import media_probe
     from backlot.studio_motiongit_render import encoding_layout
-    support = validate(parameters, assets, media_probe)
+    identities = {str(a['path']): a['sha256'] for a in assets.values()}
+    support = validate(parameters, assets, lambda p: frozen_probe(str(p), identities[str(p)]))
     target = Path(target)
     candidate = target.with_stem(target.stem+'-pending-'+uuid4().hex)
     plates = title_images(target.parent, support, assets)

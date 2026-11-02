@@ -58,11 +58,11 @@ def test_sources_and_same_voice_presenter_are_checked(parameters):
     clip.update(kind='presenter', voiceSha256='a'*64, videoSha256='b'*64)
     assets = {'a.mp4': {'path': 'a.mp4', 'sha256': 'b'*64}, 'b.mp4': {'path': 'b.mp4', 'sha256': 'c'*64},
               'voice.wav': {'sha256': 'd'*64}}
-    probe = lambda _: {'video': {'width': 1080}, 'duration': 2}
+    probe = lambda _: {'video': {'width': 1080, 'duration': '2'}, 'duration': 2}
     with pytest.raises(WorkError, match='不匹配'): paper.validate(parameters, assets, probe)
     assets['voice.wav']['sha256'] = 'a'*64
     with pytest.raises(WorkError, match='区间不足'):
-        paper.validate(parameters, assets, lambda _: {'video': {}, 'duration': .5})
+        paper.validate(parameters, assets, lambda _: {'video': {'duration': '.5'}, 'duration': .5})
     clip['sourceStart'] = .1
     with pytest.raises(WorkError, match='连续原声时钟'): paper.validate(parameters)
 
@@ -108,8 +108,52 @@ def test_real_output_keeps_subject_and_title_on_every_cut_frame(parameters, tmp_
     paper.compose(ff, native, output, parameters, assets)
     result = paper.check_output(ff, output, 120)
     assert result['checked_frames'] == 120 and result['empty_frames'] == 0
+    # The last frame covers its display interval even after its exact PTS.
+    # ffmpeg -ss beyond that PTS alone would produce an empty still.
+    parameters['paperSupport']['shots'][0]['clips'][1]['sourceStart'] = 1.1
+    still = tmp_path/'last-frame.png'
+    native_still = tmp_path/'native.png'
+    run(['-i', str(native), '-frames:v', '1', str(native_still)])
+    paper.compose(ff, native_still, still, parameters, assets, at=1.999)
+    assert still.is_file()
     # A native-only white frame must fail this exact per-frame gate.
     with pytest.raises(WorkError, match='空帧'): paper.check_output(ff, native, 120)
     parameters['paperSupport']['title'] = '字'*28
     with pytest.raises(WorkError, match='过长'):
-        paper.validate(parameters, assets, lambda _: {'video': {'width': 180}, 'duration': 3})
+        paper.validate(parameters, assets, lambda _: {'video': {'width': 180, 'duration': '3'}, 'duration': 3})
+
+
+def test_long_audio_does_not_extend_short_video(parameters):
+    assets = {n: {'path': n, 'sha256': 'a'*64} for n in ['a.mp4', 'b.mp4']}
+    with pytest.raises(WorkError, match='区间不足'):
+        paper.validate(parameters, assets, lambda _: {'duration': 2, 'video': {'duration': '.4', 'start_time': '0'}})
+    assert paper.video_window({'video': {'duration_ts': 10, 'time_base': '1/25', 'start_time': '.2'}}, 'unused') == pytest.approx((.2, .6))
+
+
+def test_title_cache_recovers_partial_and_decodable_wrong_content(parameters, tmp_path):
+    from PIL import Image
+    fontpath = Path(__file__).resolve().parents[2]/'remotion-composer/a2e/public/fonts/NotoSansSC.ttf'
+    assets = {'title-font.ttf': {'path': str(fontpath), 'sha256': 'f'*64}}
+    support = parameters['paperSupport']
+    title, chapters = paper.title_images(tmp_path, support, assets)
+    expected = [p.read_bytes() for p in [title, *chapters]]
+    title.write_bytes(b'partial PNG')
+    Image.new('RGB', (960, 70), 'black').save(chapters[0])
+    same_title, same_chapters = paper.title_images(tmp_path, support, assets)
+    assert [p.read_bytes() for p in [same_title, *same_chapters]] == expected
+    assert not list(tmp_path.glob('*pending*'))
+
+
+def test_actual_short_video_with_long_audio_is_rejected(parameters, tmp_path):
+    from lib.ffmpeg_locator import resolve_ffmpeg_pair
+    from backlot.studio_render import media_probe
+    ff, _ = resolve_ffmpeg_pair()
+    source = tmp_path/'short-video-long-audio.mp4'
+    subprocess.run([str(ff), '-nostdin', '-v', 'error', '-y', '-f', 'lavfi', '-t', '0.4', '-i',
+        'testsrc2=s=180x320:r=25', '-f', 'lavfi', '-t', '2', '-i', 'anullsrc=r=48000:cl=stereo',
+        '-c:v', 'libx264', '-c:a', 'aac', str(source)], check=True, capture_output=True, timeout=30)
+    info = media_probe(source)
+    assert info['duration'] >= 2 and float(info['video']['duration']) < .5
+    assets = {n: {'path': str(source), 'sha256': 'a'*64} for n in ['a.mp4', 'b.mp4']}
+    with pytest.raises(WorkError, match='区间不足'):
+        paper.validate(parameters, assets, media_probe)

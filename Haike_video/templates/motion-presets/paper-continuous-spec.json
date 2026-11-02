@@ -567,7 +567,7 @@
       "locator": "paper-evidence/2；预览和整片共用执行器",
       "method": "固定标题/主素材/辅助动作/字幕分区，显式全时钟源窗，逐帧空场检测与独立语义审核",
       "file": "../../backlot/paper_continuous.py",
-      "sha256": "62e8c94548ce6ef393ad69309caf84c6d1b4367b914fd13180fc3b332f29d397"
+      "sha256": "cd82f68fc2c0b13b611aab1707b0597aa0ed3f7c9628030f5a35c5dd00c87136"
     }
   ],
   "unknowns": [],
