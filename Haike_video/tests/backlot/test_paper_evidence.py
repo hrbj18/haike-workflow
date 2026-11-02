@@ -96,3 +96,41 @@ def test_composition_uses_owned_project_copy_not_mutable_draft_input(tmp_path):
     resolved = _frozen_assets(folder, {'assets': {'a.mp4': {'path': '/mutable-draft/a.mp4', 'sha256': 'owned-sha'}}})
     assert resolved['a.mp4']['path'] == str(tmp_path/'project/assets/motiongit/a.mp4')
     assert resolved['a.mp4']['sha256'] == 'owned-sha'
+
+
+@pytest.mark.parametrize('width,height,sar,rotation,ratio', [
+    (720, 576, '16/15', 0, 4/3), (1440, 1080, '4/3', 0, 16/9),
+    (720, 576, '16/15', 90, 3/4)])
+def test_real_composition_preserves_anamorphic_display_ratio(parameters, tmp_path, width, height, sar, rotation, ratio):
+    import subprocess
+    from PIL import Image
+    from lib.ffmpeg_locator import resolve_ffmpeg_pair
+    try:
+        ff, _ = resolve_ffmpeg_pair()
+    except (OSError, RuntimeError):
+        pytest.skip('FFmpeg unavailable')
+    def run(args):
+        subprocess.run([str(ff), '-nostdin', '-v', 'error', '-y', *args],
+                       capture_output=True, check=True, timeout=30)
+    source = tmp_path/'source.mp4'
+    run(['-f', 'lavfi', '-i', f'color=lime:s={width}x{height}:r=25', '-vf', f'setsar={sar}',
+         '-t', '0.2', '-c:v', 'libx264', '-pix_fmt', 'yuv420p', str(source)])
+    if rotation:
+        rotated = tmp_path/'rotated.mp4'
+        run(['-display_rotation', str(rotation), '-i', str(source), '-c', 'copy', str(rotated)])
+        source = rotated
+    background = tmp_path/'background.png'
+    run(['-f', 'lavfi', '-i', 'color=black:s=1080x1920', '-frames:v', '1', str(background)])
+    output = tmp_path/'composed.png'
+    assets = {name: {'path': str(source)} for name in ['a.mp4', 'b.mp4']}
+    layouts = {'opening': ((72, 790, 936, 610), (0, 0, 100, 100))}
+    subprocess.run(paper.command(ff, background, output, parameters, assets, at=0, layouts=layouts),
+                   capture_output=True, check=True, timeout=30)
+    # Measure actual green source pixels inside the first card, after autorotate,
+    # SAR normalization, contain and composition, rather than matching the filter.
+    image = Image.open(output).convert('RGB').crop((72, 802, 1008, 1412))
+    import numpy as np
+    pixels = np.asarray(image)
+    yy, xx = np.where((pixels[:, :, 1] > 180) & (pixels[:, :, 0] < 80) & (pixels[:, :, 2] < 80))
+    assert len(xx)
+    assert (xx.max()-xx.min()+1)/(yy.max()-yy.min()+1) == pytest.approx(ratio, abs=.015)

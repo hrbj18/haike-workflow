@@ -85,6 +85,29 @@ def test_current_users_exact_verified_package_is_resolved(isolated, monkeypatch)
         presets.create(row['id'])
 
 
+def test_saved_paper_draft_cannot_remove_new_support_but_legacy_can(isolated, monkeypatch):
+    row, _ = presets.load('paper-approved-portrait-v1')
+    package = fake_package(isolated, row, monkeypatch)
+    package['workflows']['motion-kit']['controls'] = {
+        'compare': {'variants': ['panels']}, 'kinetic': {'variants': ['stack']},
+        'device': {'variants': ['phone']}, 'quote': {'variants': ['reveal']}, 'cta': {'variants': ['button']}}
+    motion._put_package(package)
+    created = presets.create(row['id'])
+    p = deepcopy(created['parameters'])
+    p.pop('paperSupport')
+    p['timeline'].update(duration=6, captions=[{'s': 0, 'e': 6, 'text': '本期口播'}], narrationMap=[{}])
+    for index, segment in enumerate(p['timeline']['segments']):
+        segment.update(t0=index, t1=index+1)
+    saved = motion.save_draft(created['package_id'], created['workflow'], p,
+                             draft_id=created['id'], revision=created['revision'])
+    assert saved['preset_source'] == created['preset_source']
+    with pytest.raises(WorkError, match='需保留通用证据层'):
+        motion.validate_draft(saved['id'])
+    legacy = {**created['preset_source'], 'version': '1.0.0'}
+    old = motion.save_draft(created['package_id'], created['workflow'], p, preset_source=legacy)
+    assert motion.validate_draft(old['id'])['valid']
+
+
 def test_tampered_original_or_helper_is_not_usable(isolated, monkeypatch):
     row, _ = presets.load('paper-approved-portrait-v1')
     p = fake_package(isolated, row, monkeypatch)

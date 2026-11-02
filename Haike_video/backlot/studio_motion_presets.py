@@ -177,6 +177,11 @@ def check_binding(value):
                        '正式预设待绑定：请提供本期完整口播、真实字幕及同源证据')
     elif value['workflow'] == 'motion-kit':
         t = p.get('timeline', {})
+        source = value.get('preset_source', {})
+        if source.get('id') == 'paper-approved-portrait-v1' and source.get('version') != '1.0.0':
+            from backlot.paper_evidence import PROFILE
+            motion.require(isinstance(p.get('paperSupport'), dict) and p['paperSupport'].get('profile') == PROFILE,
+                           '纸感新版需保留通用证据层；请按本期台词绑定真实素材')
         motion.require(t.get('duration') and t.get('captions') and t.get('narrationMap')
                        and all('t0' in s and 't1' in s for s in t.get('segments', [])),
                        '正式预设待绑定：请填写本期完整时长、真实字幕和逐镜口播归属')

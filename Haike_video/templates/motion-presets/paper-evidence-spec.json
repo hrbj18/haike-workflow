@@ -530,7 +530,7 @@
       "locator": "paperSupport与paper_evidence.py",
       "method": "按实际旋转后的素材显示比例选择双竖卡或横向主辅卡，原动作区和字幕区分离",
       "file": "../../backlot/paper_evidence.py",
-      "sha256": "1cc130860da8afcd3da98c91c618372d18c89bf17bb01ef2afe5c2eb5d2945fc"
+      "sha256": "783c27df3394592e9e3ff06e16cc36c8058ba1a40aacb458d52e8b5c438ffa32"
     }
   ],
   "unknowns": [],

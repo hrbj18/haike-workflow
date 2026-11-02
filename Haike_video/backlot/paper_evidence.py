@@ -134,7 +134,10 @@ def command(ffmpeg, source, target, parameters, assets, *, at=None, color=None, 
             args += ['-t', f'{end-start if at is None else .1:.6f}', '-i', str(path)]
             origin = start if at is None else 0
             label, out = f'card{index}', f'paper{index}'
-            graph.append(f'[{index}:v]scale={w-24}:{h-24}:force_original_aspect_ratio=decrease:force_divisible_by=2,'
+            # Normalize display pixels before contain; resetting SAR after pad
+            # alone would squeeze anamorphic source footage.
+            graph.append(f"[{index}:v]scale=w='max(2,trunc(iw*sar/2)*2)':h=ih,setsar=1,"
+                         f'scale={w-24}:{h-24}:force_original_aspect_ratio=decrease:force_divisible_by=2,'
                          f'pad={w}:{h}:(ow-iw)/2:(oh-ih)/2:color=0xfaf6ec,setsar=1,'
                          f'drawbox=x=0:y=0:w=iw:h=ih:color=0xd0c7b3:t=2,'
                          f'drawbox=x=18:y=ih-8:w=84:h=3:color=0xb64c3b:t=fill,'
