@@ -45,7 +45,7 @@ def safe(root, name):
 def allowed(name):
     return '..' not in PurePosixPath(name).parts and '\\' not in name and ':' not in name and (any(name.startswith('runtime/' + key + '/') for key in COMPONENTS)
             or name.startswith('Haike_video/.venv/')) and not any(
-                p.casefold() in {'.git', 'projects', 'data', '.backlot'} or p.casefold().startswith('.env')
+                p.casefold() in {'.git', '.backlot'} or p.casefold().startswith('.env')
                 for p in PurePosixPath(name).parts)
 
 

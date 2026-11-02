@@ -203,6 +203,31 @@ class GitHubOnlineUpdateTests(unittest.TestCase):
                  patch.object(updater, 'stop_legacy', side_effect=AssertionError('no stop')):
                 self.assertTrue(updater.run('https://github.com/hrbj18/haike-workflow', root)['already_current'])
 
+    def test_project_check_inspects_missing_dependencies_even_at_current_version(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory); bundle = root / 'verified-bundle'; bundle.mkdir()
+            (root / 'PACKAGE-MANIFEST.json').write_text('{}')
+            (root / 'RELEASE.json').write_text(json.dumps({'edition': 'haike-workflow-2', 'version': '1.2.1'}))
+            feed = self.feed()
+            policy = {'schema': 1, 'edition': 'haike-workflow-2', 'platform': 'windows-x64', 'data_schema': 1}
+            feed['bootstrap']['project_compatibility'] = policy
+            (bundle / 'UPGRADE.json').write_text(json.dumps({'release': {'version': feed['version']},
+                'resources': {'sha256': feed['bootstrap']['resources']['sha256']}, 'project_compatibility': policy}))
+            (bundle / 'legacy_upgrade.py').write_text(
+                'def project_identity(*args): pass\n'
+                'class Dependency:\n'
+                '    def inspect(self, root): return {"missing": ["node"], "download_required": True}\n'
+                'def dependency_module(): return Dependency()\n')
+            with patch.object(updater, 'remote', return_value=io.BytesIO(json.dumps(feed).encode())), \
+                 patch.object(updater, 'fetch_asset', return_value=root / 'program.zip') as fetch, \
+                 patch.object(updater, 'extract_program', return_value=bundle), \
+                 patch.object(updater, 'stop_legacy', side_effect=AssertionError('read-only check')):
+                result = updater.run('https://github.com/hrbj18/haike-workflow', root, check=True)
+            self.assertEqual(result['dependencies']['missing'], ['node'])
+            self.assertTrue(result['can_repair_dependencies'])
+            self.assertNotIn('already_current', result)
+            fetch.assert_called_once()  # no template/resource download during check
+
 
 if __name__ == '__main__':
     unittest.main()

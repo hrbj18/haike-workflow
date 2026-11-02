@@ -67,6 +67,9 @@ class DependencyUpdateTests(unittest.TestCase):
                     with self.assertRaises(ValueError):
                         deps.safe(Path(directory), name)
         self.assertTrue(deps.allowed('Haike_video/.venv/Lib/site-packages/jsonschema/__init__.py'))
+        # Vendored dependencies have their own data directories, within the
+        # runtime prefix; these are not the installation's user data folders.
+        self.assertTrue(deps.allowed('runtime/node/node_modules/npm/node_modules/node-gyp/gyp/data/ninja/build.ninja'))
 
 
 if __name__ == '__main__':

@@ -443,7 +443,7 @@ def run(url, target=None, *, check=False, start=True):
     project_mode = bool(feed['bootstrap'].get('project_compatibility'))
     release = read(root / 'RELEASE.json')
     current = release.get('version')
-    if current and version(current) >= version(feed['version']):
+    if current and version(current) >= version(feed['version']) and (not project_mode or version(current) > version(feed['version'])):
         expected = feed.get('template_capability') if current == feed['version'] else release.get('template_capability')
         try:
             delivery = verify_template_capability(root, expected, required=feed.get('template_capability'))
@@ -492,6 +492,16 @@ def run(url, target=None, *, check=False, start=True):
             installer.project_identity(root, release, bootstrap['project_compatibility'])
             dependency = installer.dependency_module()
             report = dependency.inspect(root)
+            if current == feed['version'] and not report['missing']:
+                try:
+                    delivery = verify_template_capability(root, feed.get('template_capability'))
+                    if not check:
+                        delivery = confirm_template_runtime(root, delivery)
+                except ValueError:
+                    pass  # Same-version repair can restore missing template files.
+                else:
+                    return {'ok': True, 'already_current': True, 'version': current,
+                            'dependencies': report, 'template_delivery': delivery}
             if check:
                 blockers = []
                 try:
