@@ -211,7 +211,7 @@ def confirm_template_runtime(root, delivery, queue_guard=None):
         safe(root, 'portable/audio_update_guard.py'))
     guard = importlib.util.module_from_spec(guard_spec); guard_spec.loader.exec_module(guard)
     guard.reconcile(root)
-    idle(root, queue_guard=queue_guard)
+    idle(root, queue_guard=queue_guard, audio_guard=guard)
     # The verifier and its public imports were hash-checked above. Only now may
     # the single-file entry execute installed code, with no inherited Python path.
     result = subprocess.run([str(root / 'runtime/python/python.exe'), '-s',
@@ -303,7 +303,7 @@ def discover():
     return roots.pop()
 
 
-def idle(root, queue_guard=None):
+def idle(root, queue_guard=None, audio_guard=None):
     queue = safe(root, 'Haike_video/.backlot/production-queue.sqlite3')
     if queue_guard is not None:
         queue_guard.require_idle(queue)
@@ -312,6 +312,9 @@ def idle(root, queue_guard=None):
             if db.execute("SELECT 1 FROM sqlite_master WHERE name='production_jobs'").fetchone():
                 require(not db.execute("SELECT 1 FROM production_jobs WHERE status NOT IN ('completed','failed','cancelled') OR status IS NULL LIMIT 1").fetchone(),
                         '请先完成或核对制作队列中的任务，再更新；原任务保留')
+    if audio_guard is not None:
+        audio_guard.require_idle(root)
+        return
     studio = safe(root, 'Haike_video/.backlot/studio.sqlite3')
     if studio.is_file():
         with closing(sqlite3.connect(studio.as_uri() + '?mode=ro', uri=True)) as db:
@@ -325,8 +328,8 @@ def idle(root, queue_guard=None):
                 '音色操作正在执行或结果待确认，请先核对原操作后更新')
 
 
-def stop_legacy(root, queue_guard=None):
-    idle(root, queue_guard=queue_guard)
+def stop_legacy(root, queue_guard=None, audio_guard=None):
+    idle(root, queue_guard=queue_guard, audio_guard=audio_guard)
     prefix = str(root).casefold() + os.sep
     for row in processes():
         if (row.get('ExecutablePath') or '').casefold().startswith(prefix) and re.search(
@@ -425,7 +428,8 @@ def finish_bootstrap_start(root, output, installer):
         output['url'] = running_base(root) + '/avatar'
     except (ValueError, OSError, subprocess.SubprocessError) as startup:
         try:
-            stop_legacy(root, queue_guard=getattr(installer, 'queue_module', lambda: None)())
+            stop_legacy(root, queue_guard=getattr(installer, 'queue_module', lambda: None)(),
+                audio_guard=getattr(installer, 'audio_module', lambda: None)())
             with installer.lock(root):
                 installer.restore(root, Path(output['backup']))
             launch(root)
@@ -491,6 +495,7 @@ def run(url, target=None, *, check=False, start=True):
         installer = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(installer)
         queue_guard = getattr(installer, 'queue_module', lambda: None)()
+        audio_guard = getattr(installer, 'audio_module', lambda: None)()
         if project_mode:
             installer.project_identity(root, release, bootstrap['project_compatibility'])
             dependency = installer.dependency_module()
@@ -498,6 +503,9 @@ def run(url, target=None, *, check=False, start=True):
             installed_guard = safe(root, 'portable/queue_update_guard.py')
             revision_current = release.get('updater_revision', 0) >= feed.get('updater_revision', 0)
             guard_current = queue_guard is None or (installed_guard.is_file() and sha(installed_guard) == sha(bundle / 'queue_update_guard.py'))
+            installed_audio = safe(root, 'portable/audio_update_guard.py')
+            guard_current = guard_current and (audio_guard is None or (installed_audio.is_file()
+                and sha(installed_audio) == sha(bundle / 'audio_update_guard.py')))
             if current == feed['version'] and not report['missing'] and revision_current and guard_current:
                 try:
                     delivery = verify_template_capability(root, feed.get('template_capability'))
@@ -511,15 +519,16 @@ def run(url, target=None, *, check=False, start=True):
             if check:
                 blockers = []
                 try:
-                    idle(root, queue_guard=queue_guard)
+                    idle(root, queue_guard=queue_guard, audio_guard=audio_guard)
                 except ValueError as exc:
                     blockers.append(str(exc))
                 return {'ok': not blockers, 'check_only': True, 'mode': 'project-compatible',
                     'current': current, 'target': feed['version'], 'source_commit': release.get('source_commit'),
                     'dependencies': report, 'blockers': blockers, 'can_repair_dependencies': True,
-                    'held_jobs_preserved': len(queue_guard.inspect(safe(root, 'Haike_video/.backlot/production-queue.sqlite3'))['held']) if queue_guard else 0}
+                    'held_jobs_preserved': len(queue_guard.inspect(safe(root, 'Haike_video/.backlot/production-queue.sqlite3'))['held']) if queue_guard else 0,
+                    'held_audio_preserved': len(audio_guard.inspect(root)['held']) if audio_guard else 0}
         installer.reconcile_audio(root)
-        idle(root, queue_guard=queue_guard)
+        idle(root, queue_guard=queue_guard, audio_guard=audio_guard)
         if project_mode:
             dependency_plan = dependency.prepare(root, bundle, report)
         resources = fetch_asset(root, bootstrap['resources'])
@@ -535,7 +544,7 @@ def run(url, target=None, *, check=False, start=True):
         command.extend(['--dependency-plan', str(dependency_plan)])
     # Full installer preflight follows immediately; only this target's idle
     # video server is stopped. Publisher and other installations keep running.
-    stop_legacy(root, queue_guard=queue_guard)
+    stop_legacy(root, queue_guard=queue_guard, audio_guard=audio_guard)
     result = subprocess.run(command, capture_output=True, encoding='utf-8', timeout=600,
                             env=python_environment())
     if result.returncode:

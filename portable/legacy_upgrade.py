@@ -52,10 +52,14 @@ def queue_module():
     return module
 
 
-def reconcile_audio(target):
+def audio_module():
     spec = importlib.util.spec_from_file_location('haike_audio_update_guard', Path(__file__).with_name('audio_update_guard.py'))
     module = importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
-    return module.reconcile(target)
+    return module
+
+
+def reconcile_audio(target):
+    return audio_module().reconcile(target)
 
 
 def runtime_plan(bundle, plan, resources):
@@ -131,17 +135,7 @@ def stopped(target):
     queue_module().require_idle(queue)
     # This installer is also a standalone offline entry: never rely solely on
     # the network wrapper's guard or import unverified installed application code.
-    studio = safe_path(target, 'Haike_video/.backlot/studio.sqlite3')
-    if studio.is_file():
-        with database(studio, readonly=True) as db:
-            if db.execute("SELECT 1 FROM sqlite_master WHERE name='studio_audio_operations'").fetchone():
-                pending = db.execute('SELECT 1 FROM studio_audio_operations WHERE attempts>0 AND outcome IS NULL LIMIT 1').fetchone()
-                require(not pending, '音色操作结果待确认，请核对原操作后更新')
-    audio = safe_path(target, 'Haike_video/.backlot/audio-center-internal')
-    for file in audio.glob('*/operations/*/operation.json'):
-        operation = read(safe_path(target, file.relative_to(target).as_posix()))
-        require(isinstance(operation, dict) and operation.get('status') in {'succeeded', 'failed'},
-                '音色操作正在执行或结果待确认，请先核对原操作后更新')
+    audio_module().require_idle(target)
 
 
 @contextmanager
@@ -468,17 +462,19 @@ def apply(bundle, target, resource, *, check=False, health_check=probe, dependen
     stopped(target)
     queue_path = safe_path(target, 'Haike_video/.backlot/production-queue.sqlite3')
     held = queue_module().require_idle(queue_path)
+    audio = audio_module().require_idle(target)
     unchanged = current and all(safe_path(target, r['path']).is_file()
                                 and digest(safe_path(target, r['path'])) == r['sha256'] for r in rows)
     if check or (unchanged and not dependency_plan):
         return {'ok': True, 'check_only': check, 'already_current': current,
                 'version': plan['release']['version'] if current else '1.1 / 1027', 'files': len(rows),
-                'held_jobs_preserved': len(held['held'])}
+                'held_jobs_preserved': len(held['held']), 'held_audio_preserved': len(audio['held'])}
     records = registry_records(target, resources['packages'])
     stamp = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')
     backup = safe_path(target, '.local/release-updates/' + ID + '-' + stamp)
     backup.mkdir(parents=True, exist_ok=False)
     queue_copy = queue_module().snapshot(queue_path, backup, held)
+    audio_copy = audio_module().snapshot(target, backup, audio)
     writes = []
     manifest = read(target / 'PACKAGE-MANIFEST.json')
     entries = {row['path']: row for row in manifest['files']}
@@ -516,7 +512,8 @@ def apply(bundle, target, resource, *, check=False, health_check=probe, dependen
     manifest['files'] = [entries[name] for name in sorted(entries)]
     writes.append(('PACKAGE-MANIFEST.json', json_bytes(manifest)))
     receipt = {'schema': 1, 'target': str(target), 'id': ID, 'status': 'installing',
-               'registry': records, 'registry_applied': False, 'files': [], 'preserved_queue': queue_copy}
+               'registry': records, 'registry_applied': False, 'files': [], 'preserved_queue': queue_copy,
+               'preserved_audio': audio_copy}
     for name, content in writes:
         destination = safe_path(target, name)
         after = hashlib.sha256(content).hexdigest()
@@ -541,6 +538,7 @@ def apply(bundle, target, resource, *, check=False, health_check=probe, dependen
         registry(target, records)
         receipt['probe'] = health_check(target)
         queue_module().verify_preserved(queue_path, held)
+        audio_module().verify_preserved(target, audio)
         receipt['status'] = 'complete'
         _atomic_write(backup / 'receipt.json', json_bytes(receipt))
     except BaseException:
@@ -553,6 +551,7 @@ def apply(bundle, target, resource, *, check=False, health_check=probe, dependen
     return {'ok': True, 'version': plan['release']['version'], 'files_updated': len(receipt['files']),
             'backup': str(backup), 'templates': receipt['probe']['templates'],
             'held_jobs_preserved': len(held['held']),
+            'held_audio_preserved': len(audio['held']),
             'next': '用原目录02-start.cmd启动，Ctrl+F5刷新；首次制作绑定自己的素材'}
 
 
