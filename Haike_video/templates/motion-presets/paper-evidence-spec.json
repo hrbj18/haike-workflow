@@ -1,0 +1,642 @@
+{
+  "schema_version": 1,
+  "standard_version": "video-template-v1",
+  "template_id": "paper-approved-portrait-v1",
+  "template_version": "1.1.0",
+  "template_type": "material_edit",
+  "spec_kind": "implementation",
+  "stage": "specification",
+  "authority": {
+    "runbook": "PAPER-EVIDENCE.md",
+    "implementation_paths": [
+      "../../backlot/paper_evidence.py",
+      "../../backlot/studio_motiongit_render.py"
+    ],
+    "parameter_source": "paper-approved-portrait-v1.json plus backlot/paper_evidence.py constants; this spec snapshots the 30.8-second acceptance example, not default episode times"
+  },
+  "canvas": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 60,
+    "duration_seconds": 30.8,
+    "clock": "timeline.duration from actual complete narration; 30.8 here is the acceptance example, never scale speech to this value",
+    "coordinate_system": "top_left_pixels"
+  },
+  "narrative": {
+    "purpose": "保留纸感原生动作，同时用真实素材支持每个文字段；开头首帧即有主视觉",
+    "information_hierarchy": [
+      "本期真实台词与原生动作",
+      "主证据画面",
+      "辅助证据画面",
+      "字幕和明确行动"
+    ],
+    "structure": [
+      "比较",
+      "逐行强调",
+      "原生手机实拍",
+      "原生手机实拍",
+      "引用揭示",
+      "行动收尾"
+    ]
+  },
+  "scenes": [
+    {
+      "id": "paper_1",
+      "start": 0,
+      "end": 5.9,
+      "purpose": "比较；每期改用真实时钟，原包最短动作时间仍须满足",
+      "element_ids": [
+        "background",
+        "native_controls",
+        "captions",
+        "primary_card",
+        "secondary_card"
+      ],
+      "variant": "paper-evidence/1"
+    },
+    {
+      "id": "paper_2",
+      "start": 5.9,
+      "end": 11.5,
+      "purpose": "逐行强调；每期改用真实时钟，原包最短动作时间仍须满足",
+      "element_ids": [
+        "background",
+        "native_controls",
+        "captions",
+        "primary_card",
+        "secondary_card"
+      ],
+      "variant": "paper-evidence/1"
+    },
+    {
+      "id": "paper_3",
+      "start": 11.5,
+      "end": 14.7,
+      "purpose": "原生手机实拍；每期改用真实时钟，原包最短动作时间仍须满足",
+      "element_ids": [
+        "background",
+        "native_controls",
+        "captions",
+        "native_media"
+      ],
+      "variant": "paper-evidence/1"
+    },
+    {
+      "id": "paper_4",
+      "start": 14.7,
+      "end": 19.8,
+      "purpose": "原生手机实拍；每期改用真实时钟，原包最短动作时间仍须满足",
+      "element_ids": [
+        "background",
+        "native_controls",
+        "captions",
+        "native_media"
+      ],
+      "variant": "paper-evidence/1"
+    },
+    {
+      "id": "paper_5",
+      "start": 19.8,
+      "end": 22.8,
+      "purpose": "引用揭示；每期改用真实时钟，原包最短动作时间仍须满足",
+      "element_ids": [
+        "background",
+        "native_controls",
+        "captions",
+        "primary_card",
+        "secondary_card"
+      ],
+      "variant": "paper-evidence/1"
+    },
+    {
+      "id": "paper_6",
+      "start": 22.8,
+      "end": 30.8,
+      "purpose": "行动收尾；每期改用真实时钟，原包最短动作时间仍须满足",
+      "element_ids": [
+        "background",
+        "native_controls",
+        "captions",
+        "native_media"
+      ],
+      "variant": "paper-evidence/1"
+    }
+  ],
+  "assets": [],
+  "elements": [
+    {
+      "id": "background",
+      "type": "background",
+      "role": "原包纸感背景",
+      "parent_id": null,
+      "z_index": 0,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "原包纸感背景"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1080,
+          1920
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {}
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 30.8
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "按该镜职责显隐；证据卡不与原生实拍或人物窗口并存"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "paper_design"
+      ],
+      "acceptance": [
+        {
+          "check": "layout_readability",
+          "method": "逐镜实际查看组合预览和最终编码帧；检查主体、字幕与状态",
+          "pass_condition": "首帧有真实主视觉，素材完整且字幕/动作/人物无遮挡"
+        }
+      ]
+    },
+    {
+      "id": "native_controls",
+      "type": "native-controls",
+      "role": "原包六段控件；文字镜头上方独立区",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "原包六段控件；文字镜头上方独立区"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          72,
+          110,
+          936,
+          600
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {}
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 30.8
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "按该镜职责显隐；证据卡不与原生实拍或人物窗口并存"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "paper_design"
+      ],
+      "acceptance": [
+        {
+          "check": "layout_readability",
+          "method": "逐镜实际查看组合预览和最终编码帧；检查主体、字幕与状态",
+          "pass_condition": "首帧有真实主视觉，素材完整且字幕/动作/人物无遮挡"
+        }
+      ]
+    },
+    {
+      "id": "native_media",
+      "type": "media",
+      "role": "原生手机实拍或同源人物，按原包实际窗口显示",
+      "parent_id": null,
+      "z_index": 20,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "原生手机实拍或同源人物，按原包实际窗口显示"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1080,
+          1920
+        ],
+        "fit": "contain",
+        "clip": "none",
+        "style": {}
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 30.8
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "按该镜职责显隐；证据卡不与原生实拍或人物窗口并存"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "paper_design"
+      ],
+      "acceptance": [
+        {
+          "check": "layout_readability",
+          "method": "逐镜实际查看组合预览和最终编码帧；检查主体、字幕与状态",
+          "pass_condition": "首帧有真实主视觉，素材完整且字幕/动作/人物无遮挡"
+        }
+      ]
+    },
+    {
+      "id": "primary_card",
+      "type": "media",
+      "role": "本期主证据，完整源窗静音播放",
+      "parent_id": null,
+      "z_index": 30,
+      "content": {
+        "mode": "editable",
+        "binding": "primary_slot",
+        "asset_id": null,
+        "description": "本期主证据，完整源窗静音播放"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          124,
+          750,
+          392,
+          650
+        ],
+        "fit": "contain",
+        "clip": "none",
+        "style": {
+          "authority": "backlot/paper_evidence.py or native measured preview",
+          "wide_variant": [
+            72,
+            790,
+            936,
+            610
+          ]
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 30.8
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "按该镜职责显隐；证据卡不与原生实拍或人物窗口并存"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "paper_design"
+      ],
+      "acceptance": [
+        {
+          "check": "layout_readability",
+          "method": "逐镜实际查看组合预览和最终编码帧；检查主体、字幕与状态",
+          "pass_condition": "首帧有真实主视觉，素材完整且字幕/动作/人物无遮挡"
+        }
+      ]
+    },
+    {
+      "id": "secondary_card",
+      "type": "media",
+      "role": "另一真实来源辅助证据",
+      "parent_id": null,
+      "z_index": 40,
+      "content": {
+        "mode": "editable",
+        "binding": "secondary_slot",
+        "asset_id": null,
+        "description": "另一真实来源辅助证据"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          564,
+          750,
+          392,
+          650
+        ],
+        "fit": "contain",
+        "clip": "none",
+        "style": {
+          "authority": "backlot/paper_evidence.py or native measured preview",
+          "wide_variant": [
+            642,
+            1180,
+            366,
+            218
+          ]
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 30.8
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "按该镜职责显隐；证据卡不与原生实拍或人物窗口并存"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "paper_design"
+      ],
+      "acceptance": [
+        {
+          "check": "layout_readability",
+          "method": "逐镜实际查看组合预览和最终编码帧；检查主体、字幕与状态",
+          "pass_condition": "首帧有真实主视觉，素材完整且字幕/动作/人物无遮挡"
+        }
+      ]
+    },
+    {
+      "id": "captions",
+      "type": "text",
+      "role": "原生真实字幕；以实际DOM字框避让",
+      "parent_id": null,
+      "z_index": 50,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "原生真实字幕；以实际DOM字框避让"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          1432,
+          1080,
+          488
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "font": "原包登记中文字体，不分发私人字体",
+          "font_size": "原包字号，以本期实际DOM测量为准",
+          "max_lines": "本期真实分句与字幕字框",
+          "overflow": "按真实词时码重新分句，不遮挡纸卡和人物"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 30.8
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "按该镜职责显隐；证据卡不与原生实拍或人物窗口并存"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "paper_design"
+      ],
+      "acceptance": [
+        {
+          "check": "layout_readability",
+          "method": "逐镜实际查看组合预览和最终编码帧；检查主体、字幕与状态",
+          "pass_condition": "首帧有真实主视觉，素材完整且字幕/动作/人物无遮挡"
+        }
+      ]
+    }
+  ],
+  "slots": [
+    {
+      "id": "primary_slot",
+      "element_id": "primary_card",
+      "property": "content",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "fields": [
+          "src",
+          "sourceStart",
+          "captionIndices",
+          "meaning"
+        ],
+        "unique_source_sha": true,
+        "complete_source_window": true,
+        "no_loop_or_stretch": true
+      },
+      "missing": "停止冻结并补齐本期合法素材",
+      "overflow": "不裁去证据主体；调整素材组合或声明新的受测布局"
+    },
+    {
+      "id": "secondary_slot",
+      "element_id": "secondary_card",
+      "property": "content",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "fields": [
+          "src",
+          "sourceStart",
+          "captionIndices",
+          "meaning"
+        ],
+        "unique_source_sha": true,
+        "complete_source_window": true,
+        "no_loop_or_stretch": true
+      },
+      "missing": "停止冻结并补齐本期合法素材",
+      "overflow": "不裁去证据主体；调整素材组合或声明新的受测布局"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "paper_design",
+      "source_kind": "design",
+      "source": "2026-11-02用户反馈：蓝白和点阵无问题，两条纸感开头太空、实拍少，要求通用改法",
+      "locator": "paperSupport与paper_evidence.py",
+      "method": "按实际旋转后的素材显示比例选择双竖卡或横向主辅卡，原动作区和字幕区分离",
+      "file": "../../backlot/paper_evidence.py",
+      "sha256": "783c27df3394592e9e3ff06e16cc36c8058ba1a40aacb458d52e8b5c438ffa32"
+    },
+    {
+      "id": "paper_two_outputs",
+      "source_kind": "measurement",
+      "source": "两份不同完整声音经原统一队列制作的开发整片",
+      "locator": "paper-rich与paper-rich-new-input；冻结请求和输出SHA见回执",
+      "method": "原生计划、106张组合预览及79张实际编码帧查看，完整解码/帧数/码率/峰值与AAC包身份检查；连续听看单独待验",
+      "file": "PAPER-EVIDENCE-VALIDATION.json",
+      "sha256": "32867a202e5a58fd21d3fe9c250aacdb32829d5efa662ce3ec1d76fc73bb51c6"
+    }
+  ],
+  "unknowns": [],
+  "validation": {
+    "structure": {
+      "status": "pass",
+      "evidence_ids": [
+        "paper_two_outputs"
+      ],
+      "note": "本规格schema与独立静态检查通过；不代表Videohub全库通过。执行身份以manifest及源码SHA为准"
+    },
+    "technical": {
+      "status": "pass",
+      "evidence_ids": [
+        "paper_two_outputs"
+      ],
+      "note": "两份开发整片完整解码、1080×1920/60fps、1848/1983帧及视频流≥20Mbps通过；87项相关测试通过。不代表正式包更新或异机验证"
+    },
+    "visual": {
+      "status": "pass",
+      "evidence_ids": [
+        "paper_two_outputs"
+      ],
+      "note": "限定实际106张组合预览与79张编码帧：首帧双实拍、六段原生动作、字框/人物避让通过；原生手机短入场保留。连续观看和用户审美反馈另记"
+    },
+    "audio": {
+      "status": "pending",
+      "evidence_ids": [
+        "paper_two_outputs"
+      ],
+      "note": "声音/音乐输入SHA保持，支持层不改原生AAC包，最终峰值−1.73/−2.0dBTP技术通过；当前输出连续听验待反馈"
+    },
+    "platform": {
+      "status": "pending",
+      "evidence_ids": [
+        "paper_design"
+      ],
+      "note": "本机隔离安装的开发输出；第二物理机和平台实际呈现尚未验证"
+    },
+    "user_review": {
+      "status": "pass",
+      "evidence_ids": [
+        "paper_two_outputs"
+      ],
+      "note": "本轮两片问题收到用户回复：效果确实好了不少，并询问是否同一模板；已说明共用六段动作和支持层、替换本期输入。仅记录该正向视觉反馈，不据此补造新主观听验或异机/任意新稿验收"
+    },
+    "production": {
+      "status": "pending",
+      "evidence_ids": [
+        "paper_design"
+      ],
+      "note": "两份开发整片通过原统一队列；公开1.2.2只发行蓝白/点阵。纸感后续并入当前主线，以新发行身份验证真实更新，当前规格仍为开发阶段"
+    }
+  },
+  "extensions": {
+    "avatar": {
+      "clock": "完整真实音频与原字幕",
+      "presenter": "只用同源真实区间，出镜镜头不叠素材卡",
+      "audio": "支持层视频静音；只复制原生混音，不添加新声轨",
+      "face_crop": "原生人物使用已审同源完整主体，当前支持层不裁切人物",
+      "synchronization": "完整声音主钟；已有数字人只使用真实同声源区间"
+    },
+    "graphic": {
+      "fixed_content": "照片/视频内文字不可编辑；可编辑标题与原生动作另绑",
+      "fit": "默认contain，旋转按显示矩阵和SAR处理",
+      "text_policy": "原生可编辑文字，句级真实字幕；不改内嵌像素文字",
+      "asset_fit": "按实际显示方向contain；并排竖卡或横卡主辅"
+    },
+    "material_edit": {
+      "mapping": "sourceStart + globalTime - scene.t0",
+      "retime": "禁止拉伸、循环和尾帧填充",
+      "minimum": "每文字镜两路不同SHA，完整覆盖该镜；原生实拍/同源人物镜头不添加支持层",
+      "source_ranges": "sourceStart加镜头相对时钟，冻结源SHA和完整区间",
+      "cut_policy": "镜头边界依台词，不能循环/停帧填时长"
+    },
+    "paper_evidence": {
+      "profile": "paper-evidence/1",
+      "geometry_authority": "../../backlot/paper_evidence.py",
+      "preview_export": "同一FFmpeg组合函数与冻结素材；审核绑定组合帧SHA",
+      "contract": "paper-evidence/1",
+      "rules": [
+        "文字镜头两路不同SHA素材完整覆盖",
+        "原生实拍/人物镜头不叠卡",
+        "预览/整片共用执行器与冻结项目素材",
+        "实际字幕框须避让支持层全部动作范围"
+      ]
+    }
+  },
+  "operations": [
+    {
+      "id": "produce",
+      "input": "本期完整口播/真实字幕/合法素材与精确原包",
+      "action": "正式预设新建→绑定时钟与支持层→检查→原生计划审核→组合图片审核→统一队列导出",
+      "output": "冻结请求、组合预览、作品及质量回执",
+      "completion": "技术、逐镜视觉与连续听看分别记录；原包和实际设备门禁保留",
+      "recovery": "复用原job和完成产物；代码/输入变化另冻请求，不重新生成收费素材",
+      "entrypoint": "../../scripts/motiongit.py create-preset paper-approved-portrait-v1"
+    }
+  ]
+}

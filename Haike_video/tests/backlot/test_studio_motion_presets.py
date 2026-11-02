@@ -43,9 +43,7 @@ def test_public_recipe_has_no_episode_bindings_or_fixed_clock(isolated):
             assert forbidden not in text
         assert not recipe['parameters'].get('provenance')
         assert recipe['binding']['clock'] == 'actual-voice-and-caption-events'
-    assert names == {'quest-approved-portrait-v1', 'sketchnote-approved-portrait-v1'}
-    with pytest.raises(WorkError, match='不存在'):
-        presets.create('paper-approved-portrait-v1')
+    assert names == {'quest-approved-portrait-v1', 'paper-approved-portrait-v1', 'sketchnote-approved-portrait-v1'}
 
 
 def test_missing_originals_are_not_ready_or_executable(isolated):
@@ -76,22 +74,48 @@ def test_update_and_clone_keep_frozen_preset_identity_and_old_draft(isolated):
     assert sha(motion.ROOT / 'Haike_video/templates/hum-production-v1/quest/params.example.json') == old['package_sha256']
 
 
-def test_current_users_exact_verified_package_is_resolved(isolated, monkeypatch):
-    row, _ = presets.load('sketchnote-approved-portrait-v1')
+@pytest.mark.parametrize('identity,version', [('paper-approved-portrait-v1', '2.7.21-alpha.5'),
+                                            ('sketchnote-approved-portrait-v1', '2.7.3')])
+def test_current_users_exact_verified_package_is_resolved(isolated, monkeypatch, identity, version):
+    row, _ = presets.load(identity)
     p = fake_package(isolated, row, monkeypatch)
     created = presets.create(row['id'])
     assert created['package_id'] == p['id']
     assert created['package_sha256'] == p['sha256']
     p['version'] = '2.7.22'; motion._put_package(p)
-    with pytest.raises(WorkError, match='2.7.3'):
+    with pytest.raises(WorkError, match=version):
         presets.create(row['id'])
 
 
-def test_tampered_original_or_helper_is_not_usable(isolated, monkeypatch):
-    row, _ = presets.load('sketchnote-approved-portrait-v1')
+def test_saved_paper_draft_cannot_remove_new_support_but_legacy_can(isolated, monkeypatch):
+    row, _ = presets.load('paper-approved-portrait-v1')
+    package = fake_package(isolated, row, monkeypatch)
+    package['workflows']['motion-kit']['controls'] = {
+        'compare': {'variants': ['panels']}, 'kinetic': {'variants': ['stack']},
+        'device': {'variants': ['phone']}, 'quote': {'variants': ['reveal']}, 'cta': {'variants': ['button']}}
+    motion._put_package(package)
+    created = presets.create(row['id'])
+    p = deepcopy(created['parameters'])
+    p.pop('paperSupport')
+    p['timeline'].update(duration=6, captions=[{'s': 0, 'e': 6, 'text': '本期口播'}], narrationMap=[{}])
+    for index, segment in enumerate(p['timeline']['segments']):
+        segment.update(t0=index, t1=index+1)
+    saved = motion.save_draft(created['package_id'], created['workflow'], p,
+                             draft_id=created['id'], revision=created['revision'])
+    assert saved['preset_source'] == created['preset_source']
+    with pytest.raises(WorkError, match='需保留通用证据层'):
+        motion.validate_draft(saved['id'])
+    legacy = {**created['preset_source'], 'version': '1.0.0'}
+    old = motion.save_draft(created['package_id'], created['workflow'], p, preset_source=legacy)
+    assert motion.validate_draft(old['id'])['valid']
+
+
+@pytest.mark.parametrize('identity', ['paper-approved-portrait-v1', 'sketchnote-approved-portrait-v1'])
+def test_tampered_original_or_helper_is_not_usable(isolated, monkeypatch, identity):
+    row, _ = presets.load(identity)
     p = fake_package(isolated, row, monkeypatch)
     Path(p['helper']).write_bytes(b'changed')
-    assert not presets.catalog()['presets'][1]['can_create']
+    assert not next(r for r in presets.catalog()['presets'] if r['id'] == identity)['can_create']
     with pytest.raises(WorkError, match='工具'):
         presets.create(row['id'])
     p = fake_package(isolated, row, monkeypatch)
@@ -134,7 +158,7 @@ def test_api_creation_origins_and_shared_identity(isolated):
         capability = client.get('/api/studio/motiongit/preset-capability')
         assert capability.status_code == 200
         assert capability.json()['files'] == presets.delivery_files()
-        assert len(capability.json()['availability']) == 2
+        assert len(capability.json()['availability']) == 3
 
 
 def test_cli_lists_the_same_public_identity(isolated, monkeypatch, capsys):

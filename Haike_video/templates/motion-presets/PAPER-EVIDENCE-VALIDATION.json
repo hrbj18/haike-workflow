@@ -1,0 +1,47 @@
+{
+  "schema": "haike.paper-evidence-validation/1",
+  "date": "2026-11-02",
+  "scope": "Two development films in the isolated upgraded installation; personal media and protected packages stay local",
+  "source_commit": "09607ec21cea4b0896b6fd4c60e035becd76a118",
+  "profile": "paper-evidence/1",
+  "executor_sha256": "783c27df3394592e9e3ff06e16cc36c8058ba1a40aacb458d52e8b5c438ffa32",
+  "preset_version": "1.1.0",
+  "recipe_sha256": "5f11c7683170b92727ac115f9fb7e4b3eed1a1641e5881d30d273b8390dcccbe",
+  "films": [
+    {
+      "case": "paper-rich",
+      "request_sha256": "1b5a6ec4b2ae8b977c91ab2562c72a31aeb40309997cde2f528b9eede555c720",
+      "output_sha256": "7c5d36ab98018969ad2e42637cc8a711f41bf20fedc74b6959dca7895397709b",
+      "duration_seconds": 30.8, "frames": 1848, "video_bps": 20494509,
+      "true_peak_dbtp": -1.73, "preview_frames_viewed": 52, "encoded_frames_viewed": 38,
+      "text_shots_with_support": 3, "support_seconds": 14.5,
+      "continuous_watching": "pending", "continuous_listening": "pending"
+    },
+    {
+      "case": "paper-rich-new-input",
+      "request_sha256": "be6e57010a7740b610f4b8ab072aedbbd82b8004979ea11315061ac3fe24d596",
+      "output_sha256": "e549d53c419d675b08ae8889bf655ac599765a16795dac8ffd65840cd45446af",
+      "duration_seconds": 33.05, "frames": 1983, "video_bps": 20494953,
+      "true_peak_dbtp": -2.0, "preview_frames_viewed": 54, "encoded_frames_viewed": 41,
+      "text_shots_with_support": 4, "support_seconds": 23.55,
+      "continuous_watching": "pending", "continuous_listening": "pending"
+    }
+  ],
+  "common": {
+    "canvas": [1080, 1920], "fps": 60, "full_decode": "passed",
+    "opening_real_media_present": true, "source_windows_cover_text_shots": true,
+    "native_controls_retained": true, "native_transition_entrances_retained": true,
+    "caption_rectangles_measured_clear": true, "voice_and_music_inputs_unchanged": true,
+    "native_audio_packets_unchanged_by_evidence_composition": true,
+    "original_four_output_files_unchanged": true, "new_provider_calls": 0,
+    "unit_and_integration_tests": "87 passed; real anamorphic and rotated output pixels measured",
+    "review_findings": "SAR geometry and saved-draft bypass repaired and closed by both original review axes"
+  },
+  "local_receipts": "Root ignored .local/template-upgrade-20261102/paper-rich-output-proof.json and paper-rich-new-input-output-proof.json; full plans, grids and queue receipts retained there",
+  "human_visual_feedback": {
+    "source": "Current two-film complete-playback question reply",
+    "verbatim": "看不出什么区别，效果确实好了不少。这是同一个模板吗",
+    "scope": "Positive feedback on the improved visuals; same six-scene template with different content confirmed. This records no new subjective audio statement"
+  },
+  "release": "Not shipped. Public1.2.2 contains accepted bluewhite/sketchnote only; paper-only changes now integrated in a local branch on main6fa90b9; later release remains separate"
+}
