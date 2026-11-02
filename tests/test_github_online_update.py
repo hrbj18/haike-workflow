@@ -18,6 +18,26 @@ spec.loader.exec_module(updater)
 
 
 class GitHubOnlineUpdateTests(unittest.TestCase):
+    def test_reported_old_haike_build_is_discoverable_without_version_allowlist(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / 'PACKAGE-MANIFEST.json').write_text('{}')
+            (root / 'RELEASE.json').write_text(json.dumps({'edition': 'haike-workflow-2',
+                'source_commit': '594980e14d722e5c98ac4296a1a5279080f7f8d1'}))
+            self.assertTrue(updater.supported(root))
+            (root / '.git').mkdir()
+            self.assertFalse(updater.supported(root))
+
+    def test_project_compatibility_feed_allows_complete_repair_resources(self):
+        feed = self.feed()
+        feed['bootstrap']['project_compatibility'] = {'schema': 1, 'edition': 'haike-workflow-2',
+                                                     'platform': 'windows-x64', 'data_schema': 1}
+        feed['bootstrap']['resources']['size'] = 240_000_000
+        self.assertEqual(updater.validate_feed(feed), feed)
+        feed['bootstrap']['project_compatibility']['edition'] = 'unrelated-product'
+        with self.assertRaisesRegex(ValueError, '项目兼容策略'):
+            updater.validate_feed(feed)
+
     def test_unfinished_file_audio_operations_block_before_stopping_processes(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory).resolve()

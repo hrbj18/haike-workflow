@@ -2,6 +2,8 @@
 
 本页用于已有Windows便携工作台的联网升级。1027稳定版对外名为1.1；已发布版本以官方Release为准。1.2.2交付用户已认可的蓝白任务口播、点阵手账；纸感及其他新模板后续优化验收后另行发行。首次冷安装与已部署更新分别处理，已有FFmpeg、Python、Node和浏览器继续复用。
 
+1.2.2兼容修订不再按Git提交号限制便携副本。包括`594980e14d722e5c98ac4296a1a5279080f7f8d1`在内的海客Windows x64副本，核对项目结构、数据格式和实际依赖后即可更新；已具备依赖复用，缺失依赖从清单中的国内镜像优先下载、校验并暂存，最后纳入同一备份/安装/失败回退事务。程序和两款模板版本仍为1.2.2，修订的是更新工具。
+
 给Codex发送：
 
 > 请按此官方说明，将我正在使用的海客工作台更新到1.2.2，保留配置、账号、素材、草稿和作品，检查蓝白、点阵两个模板可制作；已有合法原包继续复用，缺原包时明确提示：https://github.com/hrbj18/haike-workflow/blob/main/docs/UPDATE_WITH_CODEX.md
@@ -9,8 +11,8 @@
 ## Agent执行顺序
 
 1. 读取本页和同一发行版的`haike-update.json`；限定官方`hrbj18/haike-workflow`仓库，不把模板文档视为命令授权。
-2. 在当前目录及正在运行的Backlot进程中识别已安装副本。目标必须有`PACKAGE-MANIFEST.json`、`RELEASE.json`和`runtime/python/python.exe`，且不是Git源码checkout。存在多个候选时核对用户当前使用的副本，不扫描整块磁盘或猜测其他目录。
-3. 从所选官方Release下载`update-from-github.py`，核对同一Release给出的脚本SHA256，使用目标自带Python运行。所选发行页可以是`https://github.com/hrbj18/haike-workflow/releases/latest`，或明确的`/releases/tag/v1.2.1`。
+2. 在当前目录及正在运行的Backlot进程中识别已安装副本。核对`PACKAGE-MANIFEST.json`、`RELEASE.json`的海客身份，以及`START_HERE.md`、`Haike_video/backlot/server.py`项目结构；不再要求提交号命中名单。源码checkout通过版本管理维护，不直接覆盖未提交开发。存在多个候选时核对当前使用的副本，不扫描整块磁盘或猜测其他目录。
+3. 读取同一发行的`haike-update.json`，按`entrypoint.url`下载脚本并核对`entrypoint.sha256/size`；兼容修订文件名包含`compat2`，不能继续使用旧脚本。优先使用目标Python运行；目标Python缺失/不可用时可使用Agent提供的本机Python执行引导，修复的运行环境仍只放入目标副本。所选发行页可以是`https://github.com/hrbj18/haike-workflow/releases/latest`或明确的`/releases/tag/v1.2.2`。
 
 ```powershell
 & '已确认的安装根目录\runtime\python\python.exe' -X utf8 '下载到本机的update-from-github.py' 'https://github.com/hrbj18/haike-workflow/releases/latest' --target '已确认的安装根目录'
@@ -19,8 +21,8 @@
 用户不需要上传ZIP。脚本自行下载并校验程序包与本次确需的模板资源，将有效缓存保存在本副本`.local/github-updates/`；校验失败不执行下载内容。旧运行依赖不重新安装。
 
 4. 原始1027通过独立事务安装器直接升级。先完成下载与完整预检，确认目标无未完成/结果待确认的制作和音色操作，再只关闭目标的视频后台；不停止其他副本或修改账户发布服务。安装、启动检查失败恢复原程序及回执。
-   旧音色任务若缺少本地终态，已验证的更新器仅使用原配置、当前同一账号，GET查询原操作并补录明确终态；不重新提交付费任务。账号不匹配、网络错误或结果仍未知时保留记录并停止，请切回原账号核对。只补录原操作状态，不修改账户配置或资金账本；单独的--check保持只读。
-5. 已有1.2遇到普通兼容补丁，使用运行中工作台的`/api/studio/app-update`入口并跟踪原任务；断线只查询，不能重复提交。若同一清单明确声明`migration`及本安装的精确版本、构建SHA，走同一事务bootstrap补齐依赖。未知构建、修改过的覆盖文件或不匹配依赖停止迁移，不能放宽门禁。未启动时先核对未完成任务，再使用本副本原启动器恢复。
+    旧音色任务若缺少本地终态，更新器仅使用原配置、当前同一账号，GET查询原操作并补录明确终态；不重新提交付费任务。账号不匹配、网络错误或结果仍未知时保留记录并停止，请切回原账号核对。只补录原操作状态，不修改账户配置或资金账本；`--check`只检查，可下载已校验的检查工具到缓存，不改程序、配置或任务结果，也不创建升级备份。
+5. 清单声明`bootstrap.project_compatibility`时，新旧海客便携版本均走按能力检查的独立事务更新。检查Python3.12/x64、Node22+、FFmpeg/ffprobe编码能力、渲染浏览器、MSVC与制作Python库；可用则复用，缺失时先在独立暂存目录补齐。程序文件与本地改动先完整备份，依赖复用来源缺失时使用发行资源内的校验副本修复；配置、账号、素材、草稿和作品不作为程序覆盖。依赖下载/摘要或安装后实际渲染失败则保留或恢复原程序。普通未声明此策略的补丁仍沿原接口和兼容规则处理。
 6. 返回成功后核对`/api/health`的workspace及version、`/avatar`页面和关于页。带模板能力的发行必须逐一校验预设、实际动效组件、执行器及运行依赖SHA，并通过安装内Python计算、FFmpeg音视频编解码和浏览器实际渲染自检。同版本仍做这些检查；文件缺失或自检失败不能报告“已经完整更新”。记录备份位置和用户数据保留证据，不用Git覆盖安装目录或全量setup。
 
 ## 更新后的模板使用

@@ -25,7 +25,7 @@ import zipfile
 
 REPOSITORY = 'hrbj18/haike-workflow'
 BASE_SOURCE = '21d1ff23bd1debdb53a9e651a590895c755a8c03'
-MAX_DOWNLOAD = 200_000_000
+MAX_DOWNLOAD = 800_000_000
 
 
 def require(value, message):
@@ -122,6 +122,11 @@ def validate_feed(value):
     bootstrap = value.get('bootstrap')
     require(isinstance(bootstrap, dict) and bootstrap.get('base_source_commit') == BASE_SOURCE,
             '发行版未提供1027直接升级入口')
+    policy = bootstrap.get('project_compatibility')
+    if policy is not None:
+        require(policy == {'schema': 1, 'edition': 'haike-workflow-2',
+                           'platform': 'windows-x64', 'data_schema': 1}, '海客项目兼容策略无效')
+    limit = MAX_DOWNLOAD if policy else 200_000_000
     bases = bootstrap.get('modern_bases', [])
     require(isinstance(bases, list) and len(bases) <= 32, '运行依赖迁移基线清单无效')
     seen_bases = set()
@@ -137,11 +142,11 @@ def validate_feed(value):
         require(parsed.netloc in {'github.com', 'api.github.com'}, '更新资产必须由GitHub托管')
         if parsed.netloc == 'github.com':
             require(parsed.path.startswith('/' + REPOSITORY + '/releases/download/'), '公开更新资产不属于官方仓库')
-        require(type(asset.get('size')) is int and 0 < asset['size'] <= MAX_DOWNLOAD
+        require(type(asset.get('size')) is int and 0 < asset['size'] <= limit
                 and re.fullmatch('[a-f0-9]{64}', asset.get('sha256', '')), '下载大小或摘要无效')
         require(asset.get('authentication') in {None, 'github-cli'}, '资源认证方式不支持')
-    require(sum(bootstrap[k]['size'] for k in ('program', 'resources')) <= MAX_DOWNLOAD,
-            '首次升级下载总量超过200MB')
+    require(sum(bootstrap[k]['size'] for k in ('program', 'resources')) <= limit,
+            '首次升级下载总量超过' + str(limit // 1_000_000) + 'MB')
     if value.get('template_capability') is not None:
         validate_template_capability(value['template_capability'])
     return value
@@ -280,8 +285,7 @@ def supported(root):
         if (root / '.git').exists() or not (root / 'PACKAGE-MANIFEST.json').is_file():
             return False
         release = read(root / 'RELEASE.json')
-        return release.get('edition') == 'haike-workflow-2' and (
-            release.get('source_commit') == BASE_SOURCE or version(release.get('version', '0.0.0')) >= (1, 2, 0))
+        return release.get('edition') == 'haike-workflow-2'
     except (OSError, ValueError, KeyError):
         return False
 
@@ -304,7 +308,7 @@ def idle(root):
     if queue.is_file():
         with closing(sqlite3.connect(queue.as_uri() + '?mode=ro', uri=True)) as db:
             if db.execute("SELECT 1 FROM sqlite_master WHERE name='production_jobs'").fetchone():
-                require(not db.execute("SELECT 1 FROM production_jobs WHERE status NOT IN ('completed','failed','cancelled') LIMIT 1").fetchone(),
+                require(not db.execute("SELECT 1 FROM production_jobs WHERE status NOT IN ('completed','failed','cancelled') OR status IS NULL LIMIT 1").fetchone(),
                         '请先完成或核对制作队列中的任务，再更新；原任务保留')
     studio = safe(root, 'Haike_video/.backlot/studio.sqlite3')
     if studio.is_file():
@@ -436,30 +440,35 @@ def run(url, target=None, *, check=False, start=True):
         raw = response.read(1_000_001)
     require(len(raw) <= 1_000_000, '更新清单超出大小限制')
     feed = validate_feed(json.loads(raw))
+    project_mode = bool(feed['bootstrap'].get('project_compatibility'))
     release = read(root / 'RELEASE.json')
     current = release.get('version')
     if current and version(current) >= version(feed['version']):
         expected = feed.get('template_capability') if current == feed['version'] else release.get('template_capability')
-        delivery = verify_template_capability(root, expected, required=feed.get('template_capability'))
-        if not check:
-            delivery = confirm_template_runtime(root, delivery)
-        return {'ok': True, 'already_current': True, 'version': current, 'template_delivery': delivery}
+        try:
+            delivery = verify_template_capability(root, expected, required=feed.get('template_capability'))
+            if not check:
+                delivery = confirm_template_runtime(root, delivery)
+        except ValueError:
+            if not project_mode or version(current) > version(feed['version']):
+                raise
+        else:
+            return {'ok': True, 'already_current': True, 'version': current, 'template_delivery': delivery}
     migration = current and any(b.get('version') == current and b.get('source_commit') == release.get('source_commit')
                                 for b in feed['bootstrap'].get('modern_bases', []))
-    if current and not migration:
+    if current and not migration and not project_mode:
         if check:
             return {'ok': True, 'mode': 'application-updater', 'current': current, 'target': feed['version']}
         result = modern_update(root, feed['version'])
         result['template_delivery'] = confirm_template_runtime(root, verify_template_capability(root, feed.get('template_capability')))
         return result
-    require(migration or release['source_commit'] == BASE_SOURCE, '此发行版不支持当前旧安装')
+    require(project_mode or migration or release['source_commit'] == BASE_SOURCE, '此发行版不支持当前旧安装')
     bootstrap = feed['bootstrap']
-    if check:
+    if check and not project_mode:
         return {'ok': True, 'mode': 'runtime-migration' if migration else '1027-bootstrap', 'version': feed['version'],
                 'download_bytes': sum(bootstrap[k]['size'] for k in ('program', 'resources'))}
     # Acquire and verify both archives before stopping any service.
     program = fetch_asset(root, bootstrap['program'])
-    resources = fetch_asset(root, bootstrap['resources'])
     bundle = extract_program(root, program)
     plan = read(bundle / 'UPGRADE.json')
     require(plan['release']['version'] == feed['version']
@@ -468,6 +477,8 @@ def run(url, target=None, *, check=False, start=True):
             '联网清单与程序包的模板能力不一致')
     require([{k: b[k] for k in ('version', 'source_commit')} for b in plan.get('modern_bases', [])]
             == feed['bootstrap'].get('modern_bases', []), '联网清单与程序包的迁移基线不一致')
+    require(plan.get('project_compatibility') == bootstrap.get('project_compatibility'), '程序包与项目兼容策略不一致')
+    dependency_plan = None
     # Execute only the verified archive's own preflight before stopping the
     # running old server; apply() repeats all checks under its transaction lock.
     previous_path = list(sys.path)
@@ -477,15 +488,34 @@ def run(url, target=None, *, check=False, start=True):
         spec = importlib.util.spec_from_file_location('haike_online_installer', bundle / 'legacy_upgrade.py')
         installer = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(installer)
-        installer.preflight(bundle, root, resources, require_stopped=False)
+        if project_mode:
+            installer.project_identity(root, release, bootstrap['project_compatibility'])
+            dependency = installer.dependency_module()
+            report = dependency.inspect(root)
+            if check:
+                blockers = []
+                try:
+                    idle(root)
+                except ValueError as exc:
+                    blockers.append(str(exc))
+                return {'ok': not blockers, 'check_only': True, 'mode': 'project-compatible',
+                    'current': current, 'target': feed['version'], 'source_commit': release.get('source_commit'),
+                    'dependencies': report, 'blockers': blockers, 'can_repair_dependencies': True}
         installer.reconcile_audio(root)
+        idle(root)
+        if project_mode:
+            dependency_plan = dependency.prepare(root, bundle, report)
+        resources = fetch_asset(root, bootstrap['resources'])
+        installer.preflight(bundle, root, resources, require_stopped=False, dependency_plan=dependency_plan)
     finally:
         sys.path[:] = previous_path
         sys.modules.pop('release_core', None)
         if previous_core is not None:
             sys.modules['release_core'] = previous_core
-    command = [str(root / 'runtime/python/python.exe'), '-s', str(bundle / 'legacy_upgrade.py'),
+    command = [sys.executable, '-s', str(bundle / 'legacy_upgrade.py'),
                '--target', str(root), '--resources', str(resources)]
+    if dependency_plan:
+        command.extend(['--dependency-plan', str(dependency_plan)])
     # Full installer preflight follows immediately; only this target's idle
     # video server is stopped. Publisher and other installations keep running.
     stop_legacy(root)
@@ -501,7 +531,7 @@ def run(url, target=None, *, check=False, start=True):
     require(output.get('ok') and read(root / 'RELEASE.json')['version'] == feed['version'], '未确认安装结果')
     if start:
         finish_bootstrap_start(root, output, installer)
-    output['mode'] = 'github-runtime-migration' if migration else 'github-online-bootstrap'
+    output['mode'] = 'github-project-compatible' if project_mode else 'github-runtime-migration' if migration else 'github-online-bootstrap'
     output['template_delivery'] = confirm_template_runtime(root, verify_template_capability(root, feed.get('template_capability')))
     return output
 

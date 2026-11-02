@@ -116,6 +116,61 @@ class LegacyUpgradeTests(unittest.TestCase):
         upgrade.restore(self.target, Path(result['backup']))
         self.assertEqual((self.target / 'RELEASE.json').read_bytes(), before)
 
+    def project_base(self):
+        self.modern_base()
+        release = {**self.plan['release'], 'version': '1.1.0',
+                   'source_commit': '594980e14d722e5c98ac4296a1a5279080f7f8d1'}
+        self.file('RELEASE.json', upgrade.json_bytes(release))
+        self.file('START_HERE.md', b'# Haike Workflow Agent entry\n')
+        self.file('Haike_video/backlot/server.py', b'# haike-workflow-2 server\n')
+        self.plan['project_compatibility'] = {'schema': 1, 'edition': 'haike-workflow-2',
+            'platform': 'windows-x64', 'data_schema': 1}
+        self.save_plan()
+
+    def test_project_identity_accepts_reported_594980e_build_without_commit_allowlist(self):
+        self.project_base()
+        before = (self.target / 'RELEASE.json').read_bytes()
+        result = self.install()
+        self.assertTrue(result['ok'])
+        self.assertEqual((self.target / 'Haike_video/config.local.yaml').read_bytes(), b'private-config-sentinel')
+        upgrade.restore(self.target, Path(result['backup']))
+        self.assertEqual((self.target / 'RELEASE.json').read_bytes(), before)
+
+    def test_project_update_backs_up_modified_program_and_preserves_private_data(self):
+        self.project_base()
+        self.file('Haike_video/backlot/legacy_test.py', b'other Haike build program')
+        result = self.install()
+        self.assertEqual((self.target / 'Haike_video/backlot/legacy_test.py').read_bytes(), b'new program')
+        upgrade.restore(self.target, Path(result['backup']))
+        self.assertEqual((self.target / 'Haike_video/backlot/legacy_test.py').read_bytes(), b'other Haike build program')
+
+    def test_project_update_rejects_other_product_and_incompatible_data(self):
+        self.project_base()
+        original = upgrade.read(self.target / 'RELEASE.json')
+        for change in [{'edition': 'other-product'}, {'platform': 'darwin-arm64'}, {'data_schema': 99}]:
+            self.file('RELEASE.json', upgrade.json_bytes({**original, **change}))
+            with self.assertRaisesRegex(ValueError, '不是兼容'):
+                self.install()
+
+    def test_same_version_missing_program_is_repaired_through_project_transaction(self):
+        self.project_base()
+        self.install()
+        (self.target / 'Haike_video/backlot/legacy_test.py').unlink()
+        self.assertTrue(self.install()['ok'])
+        self.assertEqual((self.target / 'Haike_video/backlot/legacy_test.py').read_bytes(), b'new program')
+
+    def test_project_resource_archive_supplies_fallback_for_missing_reuse_file(self):
+        self.project_base()
+        self.resources['files'][1]['blob'] = 'blobs/browser'
+        with zipfile.ZipFile(self.resource, 'w') as archive:
+            archive.writestr('blobs/test', b'new cache file')
+            archive.writestr('blobs/browser', b'old browser reused')
+            archive.writestr('RESOURCES.json', upgrade.json_bytes(self.resources))
+        self.plan['resources']['sha256'] = upgrade.digest(self.resource); self.save_plan()
+        (self.target / 'runtime/browser/chrome.exe').unlink()
+        self.assertTrue(self.install()['ok'])
+        self.assertEqual((self.target / 'Haike_video/remotion-composer/node_modules/.remotion/chrome.exe').read_bytes(), b'old browser reused')
+
     def test_unknown_modern_build_and_missing_per_file_baseline_are_rejected(self):
         release = self.modern_base()
         self.file('RELEASE.json', upgrade.json_bytes({**release, 'source_commit': 'd' * 40}))

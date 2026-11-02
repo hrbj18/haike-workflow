@@ -40,6 +40,12 @@ def runtime_module():
     return module
 
 
+def dependency_module():
+    spec = importlib.util.spec_from_file_location('haike_update_dependencies', Path(__file__).with_name('update_dependencies.py'))
+    module = importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
+    return module
+
+
 def reconcile_audio(target):
     spec = importlib.util.spec_from_file_location('haike_audio_update_guard', Path(__file__).with_name('audio_update_guard.py'))
     module = importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
@@ -160,7 +166,7 @@ def lock(target):
 
 
 def archive_manifest(archive, name):
-    require(len(archive.infolist()) <= 30000, '资源包文件数量超限')
+    require(len(archive.infolist()) <= 50000, '资源包文件数量超限')
     seen = set()
     for info in archive.infolist():
         _parts(info.filename)
@@ -180,24 +186,48 @@ def find_resources(bundle, filename):
 
 
 def data_for(row, bundle, target, archive):
+    if row.get('repair'):
+        return Path(row['prepared']).read_bytes()
     if row.get('payload'):
         return safe_path(bundle, row['payload']).read_bytes()
     if row.get('reuse_from'):
-        return safe_path(target, row['reuse_from']).read_bytes()
+        source = safe_path(target, row['reuse_from'])
+        if source.is_file() and digest(source) == row['sha256']:
+            return source.read_bytes()
+        require(row.get('blob'), '复用依赖损坏，资源包没有修复内容：' + row['path'])
     return archive.read(row['blob'])
 
 
-def preflight(bundle, target, resource, *, require_stopped=True):
+def project_identity(target, release, compatible):
+    require(compatible == {'schema': 1, 'edition': 'haike-workflow-2',
+                           'platform': 'windows-x64', 'data_schema': 1}, '项目兼容更新策略无效')
+    require(release.get('edition') == compatible['edition']
+            and release.get('platform', 'windows-x64') == compatible['platform']
+            and release.get('data_schema', 1) == compatible['data_schema'], '目标不是兼容的海客项目或数据格式')
+    require(all(safe_path(target, name).is_file() for name in
+                ['START_HERE.md', 'Haike_video/backlot/server.py', 'PACKAGE-MANIFEST.json']),
+            '目标缺少海客项目结构，请确认工作台目录')
+
+
+def preflight(bundle, target, resource, *, require_stopped=True, dependency_plan=None):
     target = target.resolve(strict=True)
     require(not (target / '.git').exists(), '请选择已安装的1027便携目录，不能升级源码仓库')
-    require((target / 'runtime/python/python.exe').is_file(), '目标目录缺少包内Python运行时')
     plan = read(bundle / 'UPGRADE.json')
+    require((target / 'runtime/python/python.exe').is_file()
+            or plan.get('project_compatibility') and dependency_plan, '目标目录缺少包内Python运行时')
     require(plan.get('id') == ID and plan.get('schema') == 1, '更新清单不适用')
     require(resource.is_file() and digest(resource) == plan['resources']['sha256'], '模板资源包缺失或摘要不符')
     release = read(target / 'RELEASE.json')
+    compatible = plan.get('project_compatibility')
+    if compatible:
+        project_identity(target, release, compatible)
     current = release.get('version') == plan['release']['version'] and release.get('upgrade_id') == ID
     selected = None
-    if current:
+    if compatible:
+        # Product identity and runtime probes replace the commit allowlist.
+        # All overwritten program bytes are still transactionally backed up.
+        current = current and release.get('source_commit') == plan['release']['source_commit']
+    elif current:
         require(release.get('source_commit') == plan['release']['source_commit'], '已安装其他1.2构建，不能覆盖')
     elif release.get('version'):
         selected = next((b for b in plan.get('modern_bases', []) if b.get('version') == release.get('version')
@@ -222,10 +252,14 @@ def preflight(bundle, target, resource, *, require_stopped=True):
         require(resources.get('id') == ID, '模板包与程序包不匹配')
         rows = [{**row, 'resource': False} for row in plan['files']] + [
             {**row, 'resource': True} for row in resources['files']]
+        if dependency_plan:
+            require(bool(compatible), '当前更新包未声明按能力补齐依赖')
+            rows.extend(dependency_module().rows(target, dependency_plan))
         names = set()
         for row in rows:
             name = row['path']
-            require(allowed(name, row['resource']), '更新路径不在允许范围：' + name)
+            require(dependency_module().allowed(name) if row.get('repair') else allowed(name, row['resource']),
+                    '更新路径不在允许范围：' + name)
             require(name.casefold() not in names, '更新目标路径重复')
             names.add(name.casefold())
             require(re.fullmatch('[a-f0-9]{64}', row['sha256']) and 0 <= row['size'] < 400_000_000,
@@ -247,13 +281,13 @@ def preflight(bundle, target, resource, *, require_stopped=True):
                 require(destination.is_file(), '目标路径不是文件：' + row['path'])
                 actual = digest(destination)
                 prior = row.get('before_by_base', {}).get(selected['id']) if selected else row.get('before_sha256')
-                require(actual == row['sha256'] or (not current and actual == prior),
+                require(bool(compatible) or actual == row['sha256'] or (not current and actual == prior),
                         '目标文件有本地修改，已停止保留：' + row['path'])
-            elif current:
+            elif current and not compatible:
                 raise ValueError('已安装1.2的文件缺失：' + row['path'])
         with ThreadPoolExecutor(max_workers=8) as pool:
             list(pool.map(verify, rows))
-        if not current:
+        if not current and not compatible:
             def dependency(row):
                 file = safe_path(target, row['path'])
                 require(file.is_file() and digest(file) == row['sha256'], '旧版依赖不匹配：' + row['path'])
@@ -270,7 +304,7 @@ def preflight(bundle, target, resource, *, require_stopped=True):
     if not current and cfg.exists():
         runtime = target / 'runtime/python'
         expected = f'home = {runtime}\ninclude-system-site-packages = false\nexecutable = {runtime / "python.exe"}\n'
-        require(selected is not None and cfg.read_text(encoding='utf-8-sig').replace('\r\n', '\n') == expected,
+        require(compatible or selected is not None and cfg.read_text(encoding='utf-8-sig').replace('\r\n', '\n') == expected,
                 '共享依赖目录已经有其他环境配置，请先核对，不能覆盖')
     if current:
         registry_path = safe_path(target, '.local/motiongit/registry.sqlite3')
@@ -427,12 +461,14 @@ def restore(target, backup, *, automatic=False):
     return {'ok': True, 'restored_files': len(receipt['files'])}
 
 
-def apply(bundle, target, resource, *, check=False, health_check=probe):
-    plan, resources, rows, current = preflight(bundle, target, resource, require_stopped=False)
+def apply(bundle, target, resource, *, check=False, health_check=probe, dependency_plan=None):
+    plan, resources, rows, current = preflight(bundle, target, resource, require_stopped=False, dependency_plan=dependency_plan)
     if not check:
         reconcile_audio(target)
     stopped(target)
-    if check or current:
+    unchanged = current and all(safe_path(target, r['path']).is_file()
+                                and digest(safe_path(target, r['path'])) == r['sha256'] for r in rows)
+    if check or (unchanged and not dependency_plan):
         return {'ok': True, 'check_only': check, 'already_current': current,
                 'version': plan['release']['version'] if current else '1.1 / 1027', 'files': len(rows)}
     records = registry_records(target, resources['packages'])
@@ -449,7 +485,7 @@ def apply(bundle, target, resource, *, check=False, health_check=probe):
             writes.append((row['path'], content))
             if not row['path'].startswith('.local/'):
                 entries[row['path']] = {k: row[k] for k in ('path', 'size', 'sha256')}
-                entries[row['path']]['mutable'] = False
+                entries[row['path']]['mutable'] = bool(row.get('mutable'))
     runtime = target / 'runtime/python'
     writes.append((CACHE + '.venv/pyvenv.cfg', (
         f'home = {runtime}\ninclude-system-site-packages = false\nexecutable = {runtime / "python.exe"}\n').encode()))
@@ -521,6 +557,7 @@ def main():
     parser.add_argument('--resources', type=Path)
     parser.add_argument('--check', action='store_true')
     parser.add_argument('--rollback', type=Path)
+    parser.add_argument('--dependency-plan', type=Path)
     args = parser.parse_args()
     try:
         target, bundle = args.target.resolve(strict=True), args.bundle.resolve(strict=True)
@@ -530,7 +567,7 @@ def main():
             else:
                 plan = read(bundle / 'UPGRADE.json')
                 resource = args.resources or find_resources(bundle, plan['resources']['filename'])
-                result = apply(bundle, target, resource, check=args.check)
+                result = apply(bundle, target, resource, check=args.check, dependency_plan=args.dependency_plan)
         print(json.dumps(result, ensure_ascii=False, indent=2))
     except (ValueError, OSError, KeyError, zipfile.BadZipFile, subprocess.SubprocessError) as exc:
         parser.exit(1, str(exc) + '\n')
