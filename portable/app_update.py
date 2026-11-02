@@ -60,6 +60,24 @@ class UpdateError(ValueError):
     """A Chinese, user-facing update or recovery failure."""
 
 
+def native_path(path):
+    """Filesystem-only Win32 extended path; never persist this as project identity."""
+    value = os.path.abspath(os.fspath(path))
+    if os.name == 'nt' and not value.startswith('\\\\?\\'):
+        value = '\\\\?\\UNC\\' + value[2:] if value.startswith('\\\\') else '\\\\?\\' + value
+    return Path(value)
+
+
+def logical_path(path):
+    value = os.fspath(path)
+    if os.name == 'nt':
+        if value.startswith('\\\\?\\UNC\\'):
+            value = '\\\\' + value[8:]
+        elif value.startswith('\\\\?\\'):
+            value = value[4:]
+    return Path(value)
+
+
 def version_tuple(version):
     if not isinstance(version, str) or not _VERSION.fullmatch(version):
         raise UpdateError("版本号无效，需要正式版本号，例如 1.0.1")
@@ -83,7 +101,7 @@ def validate_template_capability(value):
 
 
 def digest(path):
-    with Path(path).open("rb") as stream:
+    with native_path(path).open("rb") as stream:
         return hashlib.file_digest(stream, "sha256").hexdigest()
 
 
@@ -111,7 +129,7 @@ def _json(data):
 
 
 def _read(path):
-    path = Path(path)
+    path = native_path(path)
     limit = MAX_PACKAGE_MANIFEST_BYTES if path.name == "PACKAGE-MANIFEST.json" else MAX_MANIFEST_BYTES
     if path.stat().st_size > limit:
         raise UpdateError("更新清单超过大小限制")
@@ -133,13 +151,14 @@ def _parts(name):
 
 def safe_path(root, name):
     parts = _parts(name)
-    root = Path(root).resolve()
+    root = logical_path(native_path(root).resolve())
     current = root
     for part in parts:
         current = current / part
-        if current.is_symlink() or (hasattr(current, "is_junction") and current.is_junction()):
+        check = native_path(current)
+        if check.is_symlink() or (hasattr(check, "is_junction") and check.is_junction()):
             raise UpdateError("更新不能经过符号链接或目录联接：" + name)
-    if not current.resolve().is_relative_to(root):
+    if not logical_path(native_path(current).resolve()).is_relative_to(root):
         raise UpdateError("更新文件超出安装目录：" + name)
     return current
 
@@ -172,7 +191,7 @@ def is_program_path(name):
 
 
 def _atomic_write(path, content):
-    path = Path(path)
+    path = native_path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     fd, temporary = tempfile.mkstemp(prefix=".haike-update-", dir=path.parent)
     try:
@@ -187,6 +206,29 @@ def _atomic_write(path, content):
 
 def _time():
     return datetime.now(timezone.utc).isoformat()
+
+
+def preparation_only(receipt):
+    return (receipt.get('program_changes_started') is False
+            and receipt.get('status') in {'preparing', 'prepared', 'preparation_failed'})
+
+
+@contextmanager
+def preparing_backup(directory, identity):
+    """Persist before the first backup; incomplete backups never authorize restore."""
+    receipt = {**identity, 'status': 'preparing', 'files': [],
+               'backup_complete': False, 'program_changes_started': False}
+    path = directory / 'receipt.json'
+    _atomic_write(path, json_bytes(receipt))
+    try:
+        yield receipt
+        receipt.update(status='prepared', backup_complete=True)
+        _atomic_write(path, json_bytes(receipt))
+    except BaseException as error:
+        receipt.update(status='preparation_failed', backup_complete=False,
+                       error_type=type(error).__name__)
+        _atomic_write(path, json_bytes(receipt))
+        raise
 
 
 def read_release(root):
@@ -213,7 +255,7 @@ def pending_receipts(root):
         if not receipt.is_file():
             continue
         value = _read(receipt)
-        if value.get("status") in {"prepared", "installing", "applying", "checking"}:
+        if not preparation_only(value) and value.get("status") in {"preparing", "prepared", "installing", "applying", "checking", "preparation_failed"}:
             result.append({"backup": str(directory), "status": value["status"],
                            "version": value.get("version"), "base_version": value.get("base_version")})
     return result
@@ -312,20 +354,20 @@ def preflight(bundle_dir, root):
         raise UpdateError("更新包缺少依赖兼容性检查，请重新下载正式更新包")
     for name, item in locks.items():
         path = safe_path(root, name)
-        if not path.is_file() or digest(path) != item["sha256"]:
+        if not native_path(path).is_file() or digest(path) != item["sha256"]:
             raise UpdateError("依赖版本不兼容，请使用完整升级：" + name)
     already_current = current == plan["version"]
     for item in plan["files"]:
         name = item["path"]
         source, destination = safe_path(bundle_dir / "payload", name), safe_path(root, name)
-        if not source.is_file() or source.stat().st_size != item["size"] or digest(source) != item["sha256"]:
+        if not native_path(source).is_file() or native_path(source).stat().st_size != item["size"] or digest(source) != item["sha256"]:
             raise UpdateError("更新包文件损坏：" + name)
-        if destination.exists() and not destination.is_file():
+        if native_path(destination).exists() and not native_path(destination).is_file():
             raise UpdateError("程序文件位置被其他目录占用：" + name)
         if already_current:
-            if not destination.is_file() or digest(destination) != item["sha256"]:
+            if not native_path(destination).is_file() or digest(destination) != item["sha256"]:
                 raise UpdateError("已安装版本的程序文件有变化，请修复安装")
-        elif destination.is_file():
+        elif native_path(destination).is_file():
             before = digest(destination)
             entry = entries.get(name)
             if not entry or entry.get("mutable") or entry.get("sha256") != before:
@@ -411,28 +453,28 @@ def apply_update(bundle_dir, root, health_check=None):
         audio_guard = importlib.util.module_from_spec(spec); spec.loader.exec_module(audio_guard)
         audio = audio_guard.require_idle(root)
         directory = safe_path(root, ".local/app-updates/" + plan["version"] + "-" + uuid4().hex)
-        directory.mkdir(parents=True, exist_ok=False)
-        queue_copy = queue_guard.snapshot(queue_path, directory, held)
-        audio_copy = audio_guard.snapshot(root, directory, audio)
-        contents = {item["path"]: safe_path(bundle_dir / "payload", item["path"]).read_bytes() for item in plan["files"]}
-        contents.update(_new_metadata(root, plan))
-        rows = []
-        for name, content in contents.items():
-            original = safe_path(root, name)
-            row = {"path": name, "existed": original.is_file(), "after_sha256": hashlib.sha256(content).hexdigest()}
-            if row["existed"]:
-                backup = safe_path(directory / "files", name)
-                backup.parent.mkdir(parents=True, exist_ok=True)
-                _atomic_write(backup, original.read_bytes())
-                row["before_sha256"] = digest(backup)
-            rows.append(row)
-        receipt = {"schema": 1, "installation": str(root), "status": "prepared", "created_at": _time(),
-                   "base_version": plan["base_version"], "version": plan["version"], "files": rows,
-                   'preserved_queue': queue_copy, 'preserved_audio': audio_copy}
+        native_path(directory).mkdir(parents=True, exist_ok=False)
+        with preparing_backup(directory, {"schema": 1, "installation": str(root), "created_at": _time(),
+                "base_version": plan["base_version"], "version": plan["version"]}) as receipt:
+            queue_copy = queue_guard.snapshot(queue_path, directory, held)
+            audio_copy = audio_guard.snapshot(root, directory, audio)
+            contents = {item["path"]: native_path(safe_path(bundle_dir / "payload", item["path"])).read_bytes() for item in plan["files"]}
+            contents.update(_new_metadata(root, plan))
+            rows = []
+            for name, content in contents.items():
+                original = safe_path(root, name)
+                row = {"path": name, "existed": native_path(original).is_file(), "after_sha256": hashlib.sha256(content).hexdigest()}
+                if row["existed"]:
+                    backup = safe_path(directory / "files", name)
+                    native_path(backup.parent).mkdir(parents=True, exist_ok=True)
+                    _atomic_write(backup, native_path(original).read_bytes())
+                    row["before_sha256"] = digest(backup)
+                rows.append(row)
+            receipt.update(files=rows, preserved_queue=queue_copy, preserved_audio=audio_copy)
         receipt_path = directory / "receipt.json"
-        _atomic_write(receipt_path, json_bytes(receipt))
         try:
             receipt["status"] = "applying"
+            receipt['program_changes_started'] = True
             _atomic_write(receipt_path, json_bytes(receipt))
             for name, content in contents.items():
                 _atomic_write(safe_path(root, name), content)
@@ -465,6 +507,8 @@ def _rollback(root, backup_dir, check_hashes=True):
     relative = backup_dir.relative_to(root).as_posix()
     safe_path(root, relative)
     receipt = _read(safe_path(backup_dir, "receipt.json"))
+    if preparation_only(receipt) or receipt.get('backup_complete') is False:
+        raise UpdateError('备份准备未完成且程序未切换，不能用此目录执行回退')
     if receipt.get("schema") != 1 or receipt.get("installation") != str(root) or not isinstance(receipt.get("files"), list):
         raise UpdateError("更新回执不属于当前安装或已损坏")
     rows, seen = receipt["files"], set()
@@ -478,24 +522,24 @@ def _rollback(root, backup_dir, check_hashes=True):
         if type(row.get("existed")) is not bool or not _SHA.fullmatch(str(row.get("after_sha256", ""))):
             raise UpdateError("更新恢复记录无效")
         current = safe_path(root, name)
-        if current.exists() and not current.is_file():
+        if native_path(current).exists() and not native_path(current).is_file():
             raise UpdateError("恢复路径被目录占用：" + name)
         if row["existed"]:
             source = safe_path(backup_dir / "files", name)
-            if (not _SHA.fullmatch(str(row.get("before_sha256", ""))) or not source.is_file()
+            if (not _SHA.fullmatch(str(row.get("before_sha256", ""))) or not native_path(source).is_file()
                     or digest(source) != row["before_sha256"]):
                 raise UpdateError("更新备份校验失败：" + name)
         if check_hashes:
-            current_hash = digest(current) if current.is_file() else None
+            current_hash = digest(current) if native_path(current).is_file() else None
             accepted = {row["after_sha256"], row.get("before_sha256") if row["existed"] else None}
             if current_hash not in accepted:
                 raise UpdateError("更新后文件又被修改，已停止覆盖：" + name)
     for row in rows:
         destination = safe_path(root, row["path"])
         if row["existed"]:
-            _atomic_write(destination, safe_path(backup_dir / "files", row["path"]).read_bytes())
+            _atomic_write(destination, native_path(safe_path(backup_dir / "files", row["path"])).read_bytes())
         else:
-            destination.unlink(missing_ok=True)
+            native_path(destination).unlink(missing_ok=True)
     receipt.update(status="rolled_back", restored_at=_time())
     _atomic_write(backup_dir / "receipt.json", json_bytes(receipt))
     return {"ok": True, "status": "rolled_back", "version": receipt.get("base_version"),
@@ -562,12 +606,12 @@ def extract_bundle(zip_path, destination):
             destination.mkdir(parents=True, exist_ok=True)
             for name, info in files.items():
                 target = safe_path(destination, name)
-                target.parent.mkdir(parents=True, exist_ok=True)
-                with archive.open(info) as source, target.open("xb") as output:
+                native_path(target.parent).mkdir(parents=True, exist_ok=True)
+                with archive.open(info) as source, native_path(target).open("xb") as output:
                     shutil.copyfileobj(source, output, 1024 * 1024)
             for item in plan["files"]:
                 path = safe_path(destination / "payload", item["path"])
-                if path.stat().st_size != item["size"] or digest(path) != item["sha256"]:
+                if native_path(path).stat().st_size != item["size"] or digest(path) != item["sha256"]:
                     raise UpdateError("更新包文件校验失败：" + item["path"])
             return plan
     except (zipfile.BadZipFile, RuntimeError, OSError, NotImplementedError) as error:

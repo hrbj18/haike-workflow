@@ -10,13 +10,26 @@ import shutil
 import sqlite3
 from urllib import parse, request
 
+try:
+    from .app_update import native_path, logical_path
+except ImportError:
+    import importlib.util
+    _core_path = Path(__file__).with_name('release_core.py')
+    if not _core_path.is_file():
+        _core_path = Path(__file__).with_name('app_update.py')
+    _spec = importlib.util.spec_from_file_location('haike_audio_path_core', _core_path)
+    _core = importlib.util.module_from_spec(_spec); _spec.loader.exec_module(_core)
+    native_path, logical_path = _core.native_path, _core.logical_path
+
 TERMINAL = {'succeeded', 'failed', 'cancelled'}
 
 
 def owned(root, relative):
     path = root / relative
-    if (path.is_symlink() or any(p.is_symlink() for p in path.parents if p != root and p.is_relative_to(root))
-            or not path.resolve().is_relative_to(root)):
+    if (native_path(path).is_symlink()
+            or any(native_path(p).is_symlink() or native_path(p).is_junction()
+                   for p in path.parents if p != root and p.is_relative_to(root))
+            or not logical_path(native_path(path).resolve()).is_relative_to(root)):
         raise ValueError('音色操作记录路径异常，原数据已保留')
     return path
 
@@ -113,11 +126,12 @@ def reconcile(root, *, fetch=get):
 
 
 def file_digest(path):
-    with Path(path).open('rb') as stream:
+    with native_path(path).open('rb') as stream:
         return hashlib.file_digest(stream, 'sha256').hexdigest()
 
 
 def lock_free(path):
+    path = native_path(path)
     """Probe the producer's existing OS lock without creating/changing its bytes."""
     if not path.is_file() or path.stat().st_size != 1:
         return False
@@ -139,11 +153,12 @@ def lock_free(path):
 
 def operation_files(root, folder):
     files = {}
-    for path in sorted(folder.rglob('*')):
+    for path in sorted(native_path(folder).rglob('*')):
+        path = logical_path(path)
         path = owned(root, path.relative_to(root))
-        if path.is_file():
+        if native_path(path).is_file():
             files[path.relative_to(folder).as_posix()] = file_digest(path)
-        elif not path.is_dir():
+        elif not native_path(path).is_dir():
             raise ValueError('音色操作包含无法备份的文件，原数据已保留')
     return files
 
@@ -160,12 +175,13 @@ def inspect(root, *, private=None):
                 # infer inactivity from attempts/outcome, or from network failure.
                 result['blocked_count'] += db.execute('SELECT COUNT(*) FROM studio_audio_operations WHERE attempts>0 AND outcome IS NULL').fetchone()[0]
     directory = owned(root, private.relative_to(root) / 'audio-center-internal')
-    for record in sorted(directory.glob('*/operations/*/operation.json')):
+    for record in sorted(native_path(directory).glob('*/operations/*/operation.json')):
+        record = logical_path(record)
         record = owned(root, record.relative_to(root))
-        if record.stat().st_size > 32_000_000:
+        if native_path(record).stat().st_size > 32_000_000:
             raise ValueError('音色操作记录过大，原数据已保留')
         try:
-            value = json.loads(record.read_text(encoding='utf-8-sig'))
+            value = json.loads(native_path(record).read_text(encoding='utf-8-sig'))
         except (ValueError, OSError) as error:
             raise ValueError('音色操作记录无法读取，原数据已保留') from error
         if not isinstance(value, dict):
@@ -209,13 +225,13 @@ def snapshot(root, backup, expected):
     root = Path(root).resolve()
     verify_preserved(root, expected)
     destination = Path(backup) / 'preserved-audio-operations'
-    destination.mkdir(exist_ok=False)
+    native_path(destination).mkdir(exist_ok=False)
     for item in expected['held']:
         for name, digest in item['files'].items():
             source = owned(root, Path(item['path']) / name)
             copy = owned(destination, Path(item['path']) / name)
-            copy.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copyfile(source, copy)
+            native_path(copy.parent).mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(native_path(source), native_path(copy))
             if file_digest(copy) != digest:
                 raise ValueError('音色操作备份校验失败，原程序未改变')
     verify_preserved(root, expected)

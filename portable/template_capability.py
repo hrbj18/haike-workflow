@@ -52,6 +52,7 @@ def is_delivery_path(name):
 
 
 def _read(path):
+    path = core.native_path(path)
     require(path.is_file() and path.stat().st_size <= core.MAX_MANIFEST_BYTES, '模板交付清单缺失或过大')
     return core._json(path.read_bytes())
 
@@ -96,7 +97,7 @@ def build(root, *, frontend_root=None, generated_files=None):
     for name in sorted(names):
         require(is_delivery_path(name), '模板交付不能包含私人或运行数据：' + name)
         path = Path(generated_files[name]) if name in generated_files else core.safe_path(frontend_root if name in ui_names else root, name)
-        require(path.is_file(), '模板执行文件缺失：' + name)
+        require(core.native_path(path).is_file(), '模板执行文件缺失：' + name)
         files[name] = core.digest(path)
     value = {'schema': SCHEMA, 'sha256': _fingerprint(files), 'files': files, 'presets': presets}
     validate_expectation(expectation(value, '0' * 64))
@@ -114,7 +115,7 @@ def verify(root, expected=None):
         return {'status': 'not-declared', 'presets': []}
     if expected is not None:
         validate_expectation(expected)
-        require(path.is_file() and core.digest(path) == expected['sha256'],
+        require(core.native_path(path).is_file() and core.digest(path) == expected['sha256'],
                 '正式模板交付清单缺失或不匹配，请保留备份并修复更新')
     value = _read(path)
     require(value.get('schema') == SCHEMA and isinstance(value.get('files'), dict)
@@ -128,7 +129,7 @@ def verify(root, expected=None):
         require(is_delivery_path(name) and isinstance(digest, str) and re.fullmatch('[0-9a-f]{64}', digest),
                 '模板交付包含无效路径或摘要')
         file = core.safe_path(root, name)
-        require(file.is_file() and core.digest(file) == digest, '模板执行文件缺失或已改变：' + name)
+        require(core.native_path(file).is_file() and core.digest(file) == digest, '模板执行文件缺失或已改变：' + name)
     runtime = {'status': 'not-declared'}
     if 'Haike_video/templates/motion-presets/runtime.json' in value['files']:
         spec = importlib.util.spec_from_file_location('haike_installed_motion_runtime', Path(root) / 'portable/motion_runtime.py')

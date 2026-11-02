@@ -25,9 +25,9 @@ import urllib.request
 import zipfile
 
 try:
-    from release_core import safe_path, digest, json_bytes, _atomic_write, _parts, is_program_path
+    from release_core import safe_path, digest, json_bytes, _atomic_write, _parts, is_program_path, native_path, preparing_backup, preparation_only
 except ModuleNotFoundError:
-    from app_update import safe_path, digest, json_bytes, _atomic_write, _parts, is_program_path
+    from app_update import safe_path, digest, json_bytes, _atomic_write, _parts, is_program_path, native_path, preparing_backup, preparation_only
 
 ID = '1027-to-1.2'
 METADATA = {'VERSION.json', 'RELEASE.json', 'PACKAGE-MANIFEST.json', 'RUNTIME-INVENTORY.json'}
@@ -79,7 +79,7 @@ def runtime_plan(bundle, plan, resources):
 
 
 def read(path):
-    return json.loads(Path(path).read_text(encoding='utf-8-sig'))
+    return json.loads(native_path(path).read_text(encoding='utf-8-sig'))
 
 
 def require(value, message):
@@ -181,13 +181,13 @@ def find_resources(bundle, filename):
 
 def data_for(row, bundle, target, archive):
     if row.get('repair'):
-        return Path(row['prepared']).read_bytes()
+        return native_path(row['prepared']).read_bytes()
     if row.get('payload'):
-        return safe_path(bundle, row['payload']).read_bytes()
+        return native_path(safe_path(bundle, row['payload'])).read_bytes()
     if row.get('reuse_from'):
         source = safe_path(target, row['reuse_from'])
-        if source.is_file() and digest(source) == row['sha256']:
-            return source.read_bytes()
+        if native_path(source).is_file() and digest(source) == row['sha256']:
+            return native_path(source).read_bytes()
         require(row.get('blob'), '复用依赖损坏，资源包没有修复内容：' + row['path'])
     return archive.read(row['blob'])
 
@@ -239,7 +239,8 @@ def preflight(bundle, target, resource, *, require_stopped=True, dependency_plan
     pending = safe_path(target, '.local/release-updates')
     if pending.exists():
         for receipt in pending.glob('*/receipt.json'):
-            require(read(receipt).get('status') not in {'installing', 'rollback_failed'},
+            value = read(receipt)
+            require(value.get('status') in {'complete', 'restored', 'rolled_back'} or preparation_only(value),
                     '上次升级未完成，请先使用回执目录执行回退：' + str(receipt.parent))
     with zipfile.ZipFile(resource) as archive:
         resources = archive_manifest(archive, 'RESOURCES.json')
@@ -271,8 +272,8 @@ def preflight(bundle, target, resource, *, require_stopped=True, dependency_plan
             require(len(content) == row['size'] and hashlib.sha256(content).hexdigest() == row['sha256'],
                     '更新文件或复用依赖损坏：' + row['path'])
             destination = safe_path(target, row['path'])
-            if destination.exists():
-                require(destination.is_file(), '目标路径不是文件：' + row['path'])
+            if native_path(destination).exists():
+                require(native_path(destination).is_file(), '目标路径不是文件：' + row['path'])
                 actual = digest(destination)
                 prior = row.get('before_by_base', {}).get(selected['id']) if selected else row.get('before_sha256')
                 require(bool(compatible) or actual == row['sha256'] or (not current and actual == prior),
@@ -284,7 +285,7 @@ def preflight(bundle, target, resource, *, require_stopped=True, dependency_plan
         if not current and not compatible:
             def dependency(row):
                 file = safe_path(target, row['path'])
-                require(file.is_file() and digest(file) == row['sha256'], '旧版依赖不匹配：' + row['path'])
+                require(native_path(file).is_file() and digest(file) == row['sha256'], '旧版依赖不匹配：' + row['path'])
             with ThreadPoolExecutor(max_workers=8) as pool:
                 list(pool.map(dependency, selected['required_files'] if selected else plan['required_files']))
         require(shutil.disk_usage(target).free > sum(row['size'] for row in rows) + 600_000_000,
@@ -426,6 +427,8 @@ def restore(target, backup, *, automatic=False):
     target, backup = target.resolve(), backup.resolve(strict=True)
     require(backup.is_relative_to(safe_path(target, '.local/release-updates')), '回退记录不属于此安装')
     receipt = read(backup / 'receipt.json')
+    require(not preparation_only(receipt) and receipt.get('backup_complete') is not False,
+            '备份准备未完成且程序未切换；不能把此目录作为完整回退备份，原记录保留')
     require(Path(receipt['target']).resolve(strict=True) == target, '回退目录身份不匹配')
     if receipt['status'] == 'restored':
         return {'ok': True, 'already_restored': True}
@@ -435,7 +438,7 @@ def restore(target, backup, *, automatic=False):
         if row['existed']:
             require(digest(safe_path(backup / 'files', row['path'])) == row['before_sha256'], '备份摘要不符')
         if not automatic:
-            require(destination.is_file() and digest(destination) == row['after_sha256'],
+            require(native_path(destination).is_file() and digest(destination) == row['after_sha256'],
                     '升级后文件又被修改，已停止回退：' + row['path'])
     if not automatic and receipt.get('registry_applied'):
         with database(safe_path(target, '.local/motiongit/registry.sqlite3')) as db:
@@ -445,9 +448,9 @@ def restore(target, backup, *, automatic=False):
     for row in reversed(receipt['files']):
         destination = safe_path(target, row['path'])
         if row['existed']:
-            _atomic_write(destination, safe_path(backup / 'files', row['path']).read_bytes())
+            _atomic_write(destination, native_path(safe_path(backup / 'files', row['path'])).read_bytes())
         else:
-            destination.unlink(missing_ok=True)
+            native_path(destination).unlink(missing_ok=True)
     if receipt.get('registry_applied'):
         registry(target, receipt['registry'], restoring=True)
     receipt['status'] = 'restored'
@@ -463,7 +466,7 @@ def apply(bundle, target, resource, *, check=False, health_check=probe, dependen
     queue_path = safe_path(target, 'Haike_video/.backlot/production-queue.sqlite3')
     held = queue_module().require_idle(queue_path)
     audio = audio_module().require_idle(target)
-    unchanged = current and all(safe_path(target, r['path']).is_file()
+    unchanged = current and all(native_path(safe_path(target, r['path'])).is_file()
                                 and digest(safe_path(target, r['path'])) == r['sha256'] for r in rows)
     if check or (unchanged and not dependency_plan):
         return {'ok': True, 'check_only': check, 'already_current': current,
@@ -472,65 +475,66 @@ def apply(bundle, target, resource, *, check=False, health_check=probe, dependen
     records = registry_records(target, resources['packages'])
     stamp = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')
     backup = safe_path(target, '.local/release-updates/' + ID + '-' + stamp)
-    backup.mkdir(parents=True, exist_ok=False)
-    queue_copy = queue_module().snapshot(queue_path, backup, held)
-    audio_copy = audio_module().snapshot(target, backup, audio)
-    writes = []
-    manifest = read(target / 'PACKAGE-MANIFEST.json')
-    entries = {row['path']: row for row in manifest['files']}
-    with zipfile.ZipFile(resource) as archive:
-        for row in rows:
-            # Reuse inputs are read before writes, even when another entry replaces them.
-            content = data_for(row, bundle, target, archive)
-            writes.append((row['path'], content))
-            if not row['path'].startswith('.local/'):
-                entries[row['path']] = {k: row[k] for k in ('path', 'size', 'sha256')}
-                entries[row['path']]['mutable'] = bool(row.get('mutable'))
-    runtime = target / 'runtime/python'
-    writes.append((CACHE + '.venv/pyvenv.cfg', (
-        f'home = {runtime}\ninclude-system-site-packages = false\nexecutable = {runtime / "python.exe"}\n').encode()))
-    profiles = runtime_plan(bundle, plan, resources)
-    if profiles:
-        writes.extend(runtime_module().configuration_writes(target, profiles))
-    previous = read(target / 'RELEASE.json')
-    release = {**previous, **plan['release'], 'upgrade_id': ID,
-               'upgraded_from': previous.get('version') or '20261027 / 1.1', 'resources_sha256': plan['resources']['sha256']}
-    version = {k: release[k] for k in ('edition', 'version', 'channel', 'runtime_id', 'data_schema', 'platform')}
-    version['display_version'] = '1.2'
-    for name, content in [('VERSION.json', json_bytes(version)), ('RELEASE.json', json_bytes(release))]:
-        writes.append((name, content))
-        entries[name] = {'path': name, 'size': len(content), 'sha256': hashlib.sha256(content).hexdigest(), 'mutable': False}
-    inventory_path = target / 'RUNTIME-INVENTORY.json'
-    if inventory_path.is_file():
-        inventory = read(inventory_path)
-        inventory['runtime_origin_source_commit'] = inventory['source_commit']
-        inventory['source_commit'] = plan['release']['source_commit']
-        content = json_bytes(inventory)
-        writes.append(('RUNTIME-INVENTORY.json', content))
-        entries['RUNTIME-INVENTORY.json'] = {'path': 'RUNTIME-INVENTORY.json', 'size': len(content),
-            'sha256': hashlib.sha256(content).hexdigest(), 'mutable': False}
-    manifest['files'] = [entries[name] for name in sorted(entries)]
-    writes.append(('PACKAGE-MANIFEST.json', json_bytes(manifest)))
-    receipt = {'schema': 1, 'target': str(target), 'id': ID, 'status': 'installing',
-               'registry': records, 'registry_applied': False, 'files': [], 'preserved_queue': queue_copy,
-               'preserved_audio': audio_copy}
-    for name, content in writes:
-        destination = safe_path(target, name)
-        after = hashlib.sha256(content).hexdigest()
-        if destination.is_file() and digest(destination) == after:
-            continue
-        row = {'path': name, 'existed': destination.is_file(), 'after_sha256': after}
-        if row['existed']:
-            copy = safe_path(backup / 'files', name)
-            copy.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copyfile(destination, copy)
-            row['before_sha256'] = digest(copy)
-        receipt['files'].append(row)
+    native_path(backup).mkdir(parents=True, exist_ok=False)
+    with preparing_backup(backup, {'schema': 1, 'target': str(target), 'id': ID,
+            'registry': records, 'registry_applied': False}) as receipt:
+        queue_copy = queue_module().snapshot(queue_path, backup, held)
+        audio_copy = audio_module().snapshot(target, backup, audio)
+        writes = []
+        manifest = read(target / 'PACKAGE-MANIFEST.json')
+        entries = {row['path']: row for row in manifest['files']}
+        with zipfile.ZipFile(resource) as archive:
+            for row in rows:
+                # Reuse inputs are read before writes, even when another entry replaces them.
+                content = data_for(row, bundle, target, archive)
+                writes.append((row['path'], content))
+                if not row['path'].startswith('.local/'):
+                    entries[row['path']] = {k: row[k] for k in ('path', 'size', 'sha256')}
+                    entries[row['path']]['mutable'] = bool(row.get('mutable'))
+        runtime = target / 'runtime/python'
+        writes.append((CACHE + '.venv/pyvenv.cfg', (
+            f'home = {runtime}\ninclude-system-site-packages = false\nexecutable = {runtime / "python.exe"}\n').encode()))
+        profiles = runtime_plan(bundle, plan, resources)
+        if profiles:
+            writes.extend(runtime_module().configuration_writes(target, profiles))
+        previous = read(target / 'RELEASE.json')
+        release = {**previous, **plan['release'], 'upgrade_id': ID,
+                   'upgraded_from': previous.get('version') or '20261027 / 1.1', 'resources_sha256': plan['resources']['sha256']}
+        version = {k: release[k] for k in ('edition', 'version', 'channel', 'runtime_id', 'data_schema', 'platform')}
+        version['display_version'] = '1.2'
+        for name, content in [('VERSION.json', json_bytes(version)), ('RELEASE.json', json_bytes(release))]:
+            writes.append((name, content))
+            entries[name] = {'path': name, 'size': len(content), 'sha256': hashlib.sha256(content).hexdigest(), 'mutable': False}
+        inventory_path = target / 'RUNTIME-INVENTORY.json'
+        if inventory_path.is_file():
+            inventory = read(inventory_path)
+            inventory['runtime_origin_source_commit'] = inventory['source_commit']
+            inventory['source_commit'] = plan['release']['source_commit']
+            content = json_bytes(inventory)
+            writes.append(('RUNTIME-INVENTORY.json', content))
+            entries['RUNTIME-INVENTORY.json'] = {'path': 'RUNTIME-INVENTORY.json', 'size': len(content),
+                'sha256': hashlib.sha256(content).hexdigest(), 'mutable': False}
+        manifest['files'] = [entries[name] for name in sorted(entries)]
+        writes.append(('PACKAGE-MANIFEST.json', json_bytes(manifest)))
+        receipt.update(preserved_queue=queue_copy, preserved_audio=audio_copy)
+        for name, content in writes:
+            destination = safe_path(target, name)
+            after = hashlib.sha256(content).hexdigest()
+            if native_path(destination).is_file() and digest(destination) == after:
+                continue
+            row = {'path': name, 'existed': native_path(destination).is_file(), 'after_sha256': after}
+            if row['existed']:
+                copy = safe_path(backup / 'files', name)
+                native_path(copy.parent).mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(native_path(destination), native_path(copy))
+                row['before_sha256'] = digest(copy)
+            receipt['files'].append(row)
+    receipt.update(status='installing', program_changes_started=True)
     _atomic_write(backup / 'receipt.json', json_bytes(receipt))
     try:
         for name, content in writes:
             destination = safe_path(target, name)
-            if not destination.is_file() or digest(destination) != hashlib.sha256(content).hexdigest():
+            if not native_path(destination).is_file() or digest(destination) != hashlib.sha256(content).hexdigest():
                 _atomic_write(destination, content)
         # Persist intent first so an interruption inside SQLite is recoverable.
         receipt['registry_applied'] = True

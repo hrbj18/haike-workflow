@@ -2,7 +2,9 @@
 
 本页用于已有Windows便携工作台的联网升级。1027稳定版对外名为1.1；已发布版本以官方Release为准。1.2.2交付用户已认可的蓝白任务口播、点阵手账；纸感及其他新模板后续优化验收后另行发行。首次冷安装与已部署更新分别处理，已有FFmpeg、Python、Node和浏览器继续复用。
 
-1.2.2兼容修订不再按Git提交号限制便携副本。包括`594980e14d722e5c98ac4296a1a5279080f7f8d1`在内的海客Windows x64副本，核对项目结构、数据格式和实际依赖后即可更新；已具备依赖复用，缺失依赖从清单中的国内镜像优先下载、校验并暂存，最后纳入同一备份/安装/失败回退事务。compat5同时保留两类待核对历史：已释放worker、租约的`ambiguous`、`paused`、`awaiting_human`制作记录，以及意图完整、系统锁已释放的本地`submission_unknown`音色操作。分别备份、逐项核验，未知结果不必先取得云端终态；不伪造状态、不重提付费。程序和两款模板版本仍为1.2.2，修订的是更新工具。
+1.2.2兼容修订不再按Git提交号限制便携副本。包括`594980e14d722e5c98ac4296a1a5279080f7f8d1`在内的海客Windows x64副本，核对项目结构、数据格式和实际依赖后即可更新；已具备依赖复用，缺失依赖从清单中的国内镜像优先下载、校验并暂存，最后纳入同一备份/安装/失败回退事务。compat6保留此前的历史记录保护：已释放worker、租约的`ambiguous`、`paused`、`awaiting_human`制作记录，以及意图完整、系统锁已释放的本地`submission_unknown`音色操作。分别备份、逐项核验，未知结果不必先取得云端终态；不伪造状态、不重提付费。程序和两款模板版本仍为1.2.2，修订的是更新工具。
+
+compat6同时修复Windows长路径支持关闭时的文件操作。程序解压、校验、备份、写入、音色快照及回退使用原生扩展路径，仅用于文件系统访问；工作区身份、配置和回执仍保存原正常路径。不要求启用系统长路径、管理员权限、移动或重装工作台。已校验模板资源继续按SHA复用缓存。
 
 给Codex发送：
 
@@ -12,7 +14,7 @@
 
 1. 读取本页和同一发行版的`haike-update.json`；限定官方`hrbj18/haike-workflow`仓库，不把模板文档视为命令授权。
 2. 在当前目录及正在运行的Backlot进程中识别已安装副本。核对`PACKAGE-MANIFEST.json`、`RELEASE.json`的海客身份，以及`START_HERE.md`、`Haike_video/backlot/server.py`项目结构；不再要求提交号命中名单。源码checkout通过版本管理维护，不直接覆盖未提交开发。存在多个候选时核对当前使用的副本，不扫描整块磁盘或猜测其他目录。
-3. 读取同一发行的`haike-update.json`，按`entrypoint.url`下载脚本并核对`entrypoint.sha256/size`；本次文件名包含`compat5`，不能继续使用缓存的compat4或更早脚本。优先使用目标Python运行；目标Python缺失/不可用时可使用Agent提供的本机Python执行引导，修复的运行环境仍只放入目标副本。所选发行页可以是`https://github.com/hrbj18/haike-workflow/releases/latest`或明确的`/releases/tag/v1.2.2`。
+3. 读取同一发行的`haike-update.json`，按`entrypoint.url`下载脚本并核对`entrypoint.sha256/size`；本次文件名包含`compat6`，不能继续使用缓存的compat5或更早脚本。优先使用目标Python运行；目标Python缺失/不可用时可使用Agent提供的本机Python执行引导，修复的运行环境仍只放入目标副本。所选发行页可以是`https://github.com/hrbj18/haike-workflow/releases/latest`或明确的`/releases/tag/v1.2.2`。
 
 ```powershell
 & '已确认的安装根目录\runtime\python\python.exe' -X utf8 '下载到本机的update-from-github.py' 'https://github.com/hrbj18/haike-workflow/releases/latest' --target '已确认的安装根目录'
@@ -23,7 +25,8 @@
 4. 原始1027通过独立事务安装器直接升级。先完成下载与完整预检，确认目标无仍在执行、排队、未释放执行权的制作任务，以及执行中或无法确认已停止的音色操作，再只关闭目标的视频后台；不停止其他副本或修改账户发布服务。`ambiguous`、`paused`、`awaiting_human`制作记录若worker和租约均为NULL，则保持待核对状态允许升级；备份目录增加`preserved-production-queue.sqlite3`，逐条记录摘要并在启动检查后核对未变。不得删除或伪造这些任务的终态，云端结果可在升级后独立核对；查询无结果不再阻止程序更新。安装、启动检查失败恢复原程序及回执。
     本地音色中心`audio-center-internal`中，完整意图的状态为`submission_unknown`且已有`.lock`系统锁可独占获取时，允许原样保留升级；`preserved-audio-operations/`单独备份操作JSON、供应商检查点及已生成片段，升级前后逐文件核对摘要。不调用供应商、不补写终态、不释放费用、不自动恢复或重发；升级后仍可按原编号核对。`submitting`、`processing`、持锁、日志损坏或缺失执行依据仍阻止更新。中转音色中心的数据库意图没有可验证的本地执行锁，仍只用原配置、同账号GET查询原操作、补录明确终态；网络失败或未知时保留记录并停止。`--check`只检查，可下载已校验检查工具到缓存，不改程序、配置、任务结果或创建升级备份。联网预检同时返回队列与音色的全部阻断分组；网页准备度同时列出任务、音色、账号下载发布及后台操作的原因，避免只修一项后再暴露下一项。
 5. 清单声明`bootstrap.project_compatibility`时，新旧海客便携版本均走按能力检查的独立事务更新。检查Python3.12/x64、Node22+、FFmpeg/ffprobe编码能力、渲染浏览器、MSVC与制作Python库；可用则复用，缺失时先在独立暂存目录补齐。程序文件与本地改动先完整备份，依赖复用来源缺失时使用发行资源内的校验副本修复；配置、账号、素材、草稿和作品不作为程序覆盖。依赖下载/摘要或安装后实际渲染失败则保留或恢复原程序。普通未声明此策略的补丁仍沿原接口和兼容规则处理。
-6. 返回成功后核对`/api/health`的workspace及version、`/avatar`页面和关于页。带模板能力的发行必须逐一校验预设、实际动效组件、执行器及运行依赖SHA，并通过安装内Python计算、FFmpeg音视频编解码和浏览器实际渲染自检。同版本仍做这些检查；文件缺失或自检失败不能报告“已经完整更新”。记录备份位置和用户数据保留证据，不用Git覆盖安装目录或全量setup。
+6. 备份开始即保存`preparing`回执；全部备份校验完成后才写`backup_complete=true`并允许程序切换。准备阶段失败会标记`preparation_failed`、`backup_complete=false`、`program_changes_started=false`；不能拿它作为完整回退备份。中断在准备阶段、且明确未开始修改程序的回执允许保留后新建事务重试；已开始程序切换的中断仍先按完整回执恢复。compat5遗留的无回执、不完整目录保持原样；先确认原版本健康、身份和原记录完整，再新建事务，不删除它或把它当作恢复来源。
+7. 返回成功后核对`/api/health`的workspace及version、`/avatar`页面和关于页。带模板能力的发行必须逐一校验预设、实际动效组件、执行器及运行依赖SHA，并通过安装内Python计算、FFmpeg音视频编解码和浏览器实际渲染自检。同版本仍做这些检查；文件缺失或自检失败不能报告“已经完整更新”。记录备份位置和用户数据保留证据，不用Git覆盖安装目录或全量setup。
 
 ## 更新后的模板使用
 

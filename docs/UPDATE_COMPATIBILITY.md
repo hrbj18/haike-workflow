@@ -12,10 +12,12 @@ compat3将“云端结果仍待核对”和“本机仍在执行”分开：制�
 
 compat5修复独立的本地音色门禁：完整的submission_unknown意图且生产端同一OS锁已释放，属于已停止的历史操作。事务备份preserved-audio-operations/包含原操作、供应商检查点、已生成片段及逐文件摘要，启动后核对未变；网页准备度、联网入口、离线事务与通用补丁共用判断。submitting/processing、持锁、缺日志/锁、损坏记录仍阻止更新。中转数据库意图缺少本地执行锁，不靠失败的GET推断已停止，原同账号查询规则继续保留。升级不触发本地音色恢复、不写终态、不重新计费。
 
-使用当前haike-update.json的entrypoint重新下载compat5脚本；旧compat4仍会拦截已停止的暂停/待审核任务。产品与两款模板保持1.2.2，模板资源复用原公开附件，不需重复发行。源码checkout、其他产品、平台/数据格式不兼容、越界/链接路径仍拒绝。另一台物理机的验收与本机隔离证明分开记录。
+使用当前haike-update.json的entrypoint重新下载compat6脚本；旧compat5的普通文件操作可能在长路径支持关闭时失败。产品与两款模板保持1.2.2，模板资源复用原公开附件，不需重复发行。源码checkout、其他产品、平台/数据格式不兼容、越界/链接路径仍拒绝。另一台物理机的验收与本机隔离证明分开记录。
 
 给Agent直接发送以下链接即可按最新说明执行：
 
 https://github.com/hrbj18/haike-workflow/blob/main/docs/UPDATE_WITH_CODEX.md
 
 compat5将无worker/租约的paused、awaiting_human与ambiguous统一保留；真实队列不会自动领取这些状态。原审核和暂停状态、冻结请求不变，不自动恢复或认可作品。联网入口一次返回队列与音色分组问题；网页准备度一次列出所有独立阻断原因，不再用最后一项覆盖前项。
+
+compat6对备份、程序解压/写入/回退、模板与依赖文件校验统一使用Windows原生扩展路径访问，支持LongPathsEnabled=0；路径只用于I/O，用户配置、工作区身份及回执仍保留正常路径。不是修改系统策略或搬迁安装目录。备份准备阶段先写耐久回执；未完成时明确backup_complete=false、program_changes_started=false，不能用作恢复来源。可确认未改程序的准备失败允许保留后另建事务，已开始切换的中断仍必须恢复。无回执旧残留保持原样，不能伪称完整备份。

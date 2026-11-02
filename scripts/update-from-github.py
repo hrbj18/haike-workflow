@@ -28,17 +28,36 @@ BASE_SOURCE = '21d1ff23bd1debdb53a9e651a590895c755a8c03'
 MAX_DOWNLOAD = 800_000_000
 
 
+def native_path(path):
+    # This entry is deliberately a single downloaded file; mirror the verified
+    # transaction core's filesystem adapter until that core has been extracted.
+    value = os.path.abspath(os.fspath(path))
+    if os.name == 'nt' and not value.startswith('\\\\?\\'):
+        value = '\\\\?\\UNC\\' + value[2:] if value.startswith('\\\\') else '\\\\?\\' + value
+    return Path(value)
+
+
+def logical_path(path):
+    value = os.fspath(path)
+    if os.name == 'nt':
+        if value.startswith('\\\\?\\UNC\\'):
+            value = '\\\\' + value[8:]
+        elif value.startswith('\\\\?\\'):
+            value = value[4:]
+    return Path(value)
+
+
 def require(value, message):
     if not value:
         raise ValueError(message)
 
 
 def read(path):
-    return json.loads(Path(path).read_text(encoding='utf-8-sig'))
+    return json.loads(native_path(path).read_text(encoding='utf-8-sig'))
 
 
 def sha(path):
-    with Path(path).open('rb') as stream:
+    with native_path(path).open('rb') as stream:
         return hashlib.file_digest(stream, 'sha256').hexdigest()
 
 
@@ -53,13 +72,14 @@ def safe(root, name):
     parts = name.split('/')
     require(not PurePosixPath(name).is_absolute() and all(p not in {'', '.', '..'}
         and not p.endswith((' ', '.')) and not any(c in p for c in '*?"<>|') for p in parts), '升级路径越界')
-    root = Path(root).resolve()
+    root = logical_path(native_path(root).resolve())
     current = root
     for part in parts:
         current = current / part
-        require(not current.is_symlink() and not (hasattr(current, 'is_junction') and current.is_junction()),
+        check = native_path(current)
+        require(not check.is_symlink() and not (hasattr(check, 'is_junction') and check.is_junction()),
                 '升级目录不能经过链接')
-    require(current.resolve().is_relative_to(root), '升级目录越界')
+    require(logical_path(native_path(current).resolve()).is_relative_to(root), '升级目录越界')
     return current
 
 
@@ -176,7 +196,7 @@ def verify_template_capability(root, expected=None, *, required=None):
         return {'status': 'not-declared'}
     validate_template_capability(expected)
     path = safe(root, 'Haike_video/templates/motion-presets/delivery.json')
-    require(path.is_file() and path.stat().st_size <= 2_000_000 and sha(path) == expected['sha256'],
+    require(native_path(path).is_file() and native_path(path).stat().st_size <= 2_000_000 and sha(path) == expected['sha256'],
             '模板交付清单缺失或已改变，不能报告已更新；请安装修复发行版')
     value = read(path)
     files = value.get('files')
@@ -190,7 +210,7 @@ def verify_template_capability(root, expected=None, *, required=None):
                 and name.startswith(('Haike_video/', 'portable/', 'scripts/', 'prototypes/haike-avatar-generator/'))
                 and isinstance(digest, str) and re.fullmatch('[0-9a-f]{64}', digest), '模板交付路径或摘要无效')
         file = safe(root, name)
-        require(file.is_file() and sha(file) == digest, '模板文件缺失或已改变：' + name + '；请安装修复发行版')
+        require(native_path(file).is_file() and sha(file) == digest, '模板文件缺失或已改变：' + name + '；请安装修复发行版')
     if required is not None:
         validate_template_capability(required)
         actual = {r['id']: r for r in value['presets']}
@@ -260,8 +280,8 @@ def extract_program(root, archive):
                     and ((item.external_attr >> 16) & 0o170000) != 0o120000, '程序包有非法条目')
             names.add(item.filename.casefold())
             destination = safe(directory, item.filename)
-            destination.parent.mkdir(parents=True, exist_ok=True)
-            destination.write_bytes(zipped.read(item))
+            native_path(destination.parent).mkdir(parents=True, exist_ok=True)
+            native_path(destination).write_bytes(zipped.read(item))
     bundle = safe(directory, 'haike-update-1.2')
     require((bundle / 'legacy_upgrade.py').is_file() and (bundle / 'UPGRADE.json').is_file(), '程序包缺少升级入口')
     return bundle
@@ -433,7 +453,9 @@ def ensure_no_pending_update(root):
         require(read(state).get('operation', {}).get('status') not in
                 {'downloading', 'waiting', 'installing', 'restarting'}, '已有更新任务，请查询原更新记录，不要重复启动')
     for file in directory.glob('*/receipt.json'):
-        require(read(safe(root, file.relative_to(root).as_posix())).get('status') in {'complete', 'restored', 'rolled_back'},
+        value = read(safe(root, file.relative_to(root).as_posix()))
+        preparation = value.get('program_changes_started') is False and value.get('status') in {'preparing', 'prepared', 'preparation_failed'}
+        require(preparation or value.get('status') in {'complete', 'restored', 'rolled_back'},
                 '上次更新未恢复，请先按回执恢复备份')
 
 
