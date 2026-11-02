@@ -115,6 +115,9 @@ def freeze(queue, draft_id):
         motion.require(value.get('output_profile', 'native') == 'native', '本版纸感证据层已验证9:16，不支持裁切为4:5')
         paper_evidence.validate(value['parameters'], assets, media_probe)
         core['paper_support_sha256'] = sha(paper_evidence.__file__)
+        if value['parameters']['paperSupport']['profile'] == 'paper-evidence/2':
+            from backlot import paper_continuous
+            core['paper_continuous_sha256'] = sha(paper_continuous.__file__)
     if value['workflow']=='motion-kit':core['entry_parameters']=entry_parameters(value)
     core['project_id'] = 'studio-' + fingerprint(core)[:16]
     digest = fingerprint(core)
@@ -403,6 +406,9 @@ def _kit_prepare(package,request,state,folder,parameters):
         times = preview_times(parameters)
         if request['draft']['parameters'].get('paperSupport'):
             times = sorted(set(times) | {0.0} | {s['t0']+.05 for s in parameters['segments']})
+            if request['draft']['parameters']['paperSupport']['profile'] == 'paper-evidence/2':
+                from backlot import paper_continuous
+                times = sorted(set(times) | paper_continuous.preview_times(request['draft']['parameters']))
         _execute(package,state,'preview',project,'--times',','.join(f'{t:.3f}' for t in times),timeout=600)
     receipt=read_json(project/'preview.json');images=kit_images(receipt,project)
     public=folder/'native-preview';public.mkdir(exist_ok=True)
@@ -416,7 +422,11 @@ def _kit_prepare(package,request,state,folder,parameters):
         from backlot import paper_evidence
         from lib.ffmpeg_locator import resolve_ffmpeg_pair
         motion.require(request.get('paper_support_sha256') == sha(paper_evidence.__file__), '纸感证据层执行代码已变化，请冻结新版请求')
-        paper_evidence.check_preview(receipt)
+        if request['draft']['parameters']['paperSupport']['profile'] == 'paper-evidence/2':
+            from backlot import paper_continuous
+            motion.require(request.get('paper_continuous_sha256') == sha(paper_continuous.__file__),
+                           '纸感连续主画面代码已变化，请冻结新版请求')
+        paper_evidence.check_preview(receipt, request['draft']['parameters'])
         ffmpeg, _ = resolve_ffmpeg_pair()
         supported = folder/'paper-evidence-preview'; supported.mkdir(exist_ok=True)
         receipts = []
@@ -608,6 +618,10 @@ def run(queue, job):
             from backlot import paper_evidence
             from lib.ffmpeg_locator import resolve_ffmpeg_pair
             motion.require(request.get('paper_support_sha256') == sha(paper_evidence.__file__), '纸感证据层执行代码已变化，请冻结新版请求')
+            if request['draft']['parameters']['paperSupport']['profile'] == 'paper-evidence/2':
+                from backlot import paper_continuous
+                motion.require(request.get('paper_continuous_sha256') == sha(paper_continuous.__file__),
+                               '纸感连续主画面代码已变化，请冻结新版请求')
             motion.require(state.get('paper_support_preview') and all(
                 sha(Path(state['images_directory'])/r['name']) == r['sha256'] for r in state['paper_support_preview']),
                 '本期纸感支持画面未完成审核')
@@ -646,12 +660,17 @@ def run(queue, job):
         if request['draft'].get('output_profile') == '4:5':
             motion.require((info['video']['width'],info['video']['height']) == (1440,1800), '4:5输出尺寸不一致')
         subprocess.run([ffmpeg,'-nostdin','-v','error','-i',str(candidate),'-f','null','-'],check=True,capture_output=True)
+        paper_coverage = {}
+        if request['draft']['parameters'].get('paperSupport', {}).get('profile') == 'paper-evidence/2':
+            from backlot import paper_continuous
+            paper_coverage = paper_continuous.check_output(ffmpeg, candidate, int(video['nb_frames']))
         if output.exists():
             output.rename(folder/('unconfirmed-'+uuid4().hex+'.mp4'))
         candidate.rename(output)
         info=media_probe(output)
         atomic_private(folder/'quality.json',{'media':info,'audio':audio,'color_conversion':conversion,'full_decode':'passed','visual_review':'sampled-native-preview',
-                       'continuous_watching':'pending','continuous_listening':'pending'})
+                       'continuous_watching':'pending','continuous_listening':'pending',
+                       **({'paper_coverage':paper_coverage} if paper_coverage else {})})
         work=WorkCatalog(queue.projects_root).register(request['project_id'],output,work_key='main',mode='manual',
             event_id=job['job_id'],quality_passed=False,actor='motiongit-components',title=request['draft']['title'],
             summary='MotionGit原生组件实拍口播；原声时钟、配乐及原生音效；未发布')

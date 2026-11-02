@@ -1,7 +1,8 @@
 {
   "schema": "haike.motion-preset-recipe/1",
-  "parameters": {"workflow": "motion-kit", "paperSupport": {"profile": "paper-evidence/1", "shots": []}, "timeline": {
+  "parameters": {"workflow": "motion-kit", "paperSupport": {"profile": "paper-evidence/2", "title": "本期主题", "font": "title-font.ttf", "shots": []}, "timeline": {
     "layout": "portrait", "language": "zh", "styleProfile": "paper", "narrationComposition": "readable/1", "ending": "cut",
+    "hud": false, "captionSafeArea": "frame", "captionPosition": {"bottomRatio": 0.025, "leftRatio": 0.06, "rightRatio": 0.06},
     "voiceover": "voice.wav", "music": "music.wav", "captions": [],
     "segments": [
       {"control": "compare", "variant": "panels", "props": {"left": {"label": "本期比较", "big": "原来如此"}, "right": {"label": "本期选择", "big": "亲手体验"}, "winner": "none"}, "shotId": "paper-1", "styleProfile": "paper", "presenter": "hide"},
@@ -14,8 +15,8 @@
   }},
   "binding": {
     "clock": "actual-voice-and-caption-events",
-    "required": ["完整口播与真实字幕", "每镜t0/t1/cues", "连续同源narrationMap", "文字镜头逐段绑定两路真实素材paperSupport；原生实拍或同源人物镜头免叠层", "已授权配乐"],
-    "optional": ["真实连续时钟人物与明确显隐区间"],
-    "instructions": "按真实字幕填写完整duration、场景时点及narrationMap，不缩放原动作速度。文字段area使用paper_evidence.TEXT_AREA，paperSupport.shots逐镜提供两张卡：src/sourceStart/captionIndices/meaning，完整覆盖该镜真实时长，首镜从0秒即有素材。原生实拍或人物镜头不加卡。默认contain，不循环停帧，不复用旧口型。只验证9:16；预览与整片共用证据层，并重新审核。删除素材时同步移除未使用mediaPolicies。"
+    "required": ["完整口播与真实字幕", "每镜t0/t1/cues及连续同源narrationMap", "常驻主题标题、逐镜短标题及可分发字体", "每镜连续主素材clips覆盖全片，包括入场和结尾", "已授权配乐"],
+    "optional": ["与本期声音SHA一致的连续时钟人物主画面"],
+    "instructions": "按真实字幕填写duration、场景时点及narrationMap，不缩放原动作。所有六镜area使用paper_continuous.ACTION_AREA，presenter设hide并移除timeline.presenter；hud=false。字幕使用paper_continuous.CAPTION_POSITION及captionSafeArea=frame。paperSupport提供title/font/shots，每镜shotId/heading/clips；每片段提供src/sourceStart/start/end/captionIndices/meaning/kind，start/end相对本镜、连续覆盖整镜。人物另需voiceSha256/videoSha256且sourceStart对齐全片时钟。主画面960×1200从0秒至末帧完整contain，侧边同源柔化，禁止循环/越界停帧。固定标题64px、分段标题44px，过长拒绝。原生六段仅作辅助。原生预览测量字幕且每秒/切点检查；整片逐帧检查主体与标题非空，预览和导出共用v2执行器。只验证9:16，不复用旧口型。"
   }
 }

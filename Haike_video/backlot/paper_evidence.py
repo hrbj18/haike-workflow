@@ -30,6 +30,9 @@ def validate(parameters, assets=None, probe=None):
     support = parameters.get('paperSupport')
     if support is None:
         return None
+    if isinstance(support, dict) and support.get('profile') == 'paper-evidence/2':
+        from backlot import paper_continuous
+        return paper_continuous.validate(parameters, assets, probe)
     t = parameters.get('timeline', {})
     require(isinstance(support, dict) and set(support) == {'profile', 'shots'}
             and support['profile'] == PROFILE and isinstance(support['shots'], list), '配置格式无效')
@@ -162,8 +165,11 @@ def command(ffmpeg, source, target, parameters, assets, *, at=None, color=None, 
     return args + [str(target)]
 
 
-def check_preview(receipt):
+def check_preview(receipt, parameters=None):
     """Use measured caption rectangles, rather than assuming the default fits."""
+    if parameters and parameters.get('paperSupport', {}).get('profile') == 'paper-evidence/2':
+        from backlot import paper_continuous
+        return paper_continuous.check_preview(receipt)
     samples = receipt.get('renderer', {}).get('captionSamples')
     require(isinstance(samples, list), '原生预览缺少字幕测量')
     items = [item for sample in samples for item in sample.get('items', [])]
@@ -177,6 +183,9 @@ def check_preview(receipt):
 
 
 def compose(ffmpeg, source, target, parameters, assets, *, at=None):
+    if parameters.get('paperSupport', {}).get('profile') == 'paper-evidence/2':
+        from backlot import paper_continuous
+        return paper_continuous.compose(ffmpeg, source, target, parameters, assets, at=at)
     target = Path(target)
     candidate = target.with_stem(target.stem + '-pending-' + uuid4().hex)
     color = None

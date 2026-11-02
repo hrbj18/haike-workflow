@@ -13,7 +13,7 @@
 - 模板：[库](../../templates/TEMPLATE-LIBRARY.md)含18–21；[22–26验收](../../templates/store-opening-v1/REVIEW.md)。默认.local/store-manager/defaults.json。
 - MotionGit：[制作](../MOTION_TEMPLATE_STUDIO.md)共用网页/HTTP/CLI；[包适配](../MOTION_PACK_ADAPTERS.md)。
 - [1.2.2发行范围](../../../docs/releases/1.2.2.md)：仅蓝白、点阵两款已获用户完整听看认可，纸感及其他新模板后续发行。原三款候选记录保留为历史，本期公网升级验收另记。
-- 纸感通用补图已出两片，用户反馈效果改善；后续开发见[指导](../SINGLE_DEVELOPMENT_GUIDE_TEMPLATE_UPGRADE_20261102.md)，未发行。
+- 纸感改为[连续主体与标题](../../templates/motion-presets/PAPER-CONTINUOUS.md)；[指导](../SINGLE_DEVELOPMENT_GUIDE_TEMPLATE_UPGRADE_20261102.md)，未发行。
 
 - [Mac复刻包](../../template-kit/README.md)：47条目/35实例，字体替代复验，真机待验。
 

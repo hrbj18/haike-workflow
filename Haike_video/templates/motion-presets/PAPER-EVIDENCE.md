@@ -1,5 +1,7 @@
 # 纸感证据层通用制作规则
 
+历史版本说明：本文只描述1.1.0双卡版本。用户后续要求连续大主体与常驻标题，覆盖旧视觉结论；当前开发入口为[PAPER-CONTINUOUS.md](PAPER-CONTINUOUS.md)，旧记录不代表新版验收。
+
 文档类型：video-template-runbook。标准版本：video-template-v1。规格：[paper-evidence-spec.json](paper-evidence-spec.json)。
 
 适用预设paper-approved-portrait-v1@1.1.0，项目侧profile为paper-evidence/1。实现规格见[paper-evidence-spec.json](paper-evidence-spec.json)。规格中的30.8秒六镜为验收输入例，每期时序只从本期完整声音和真实字幕读取。两份开发整片已完成技术与抽帧检查，[回执](PAPER-EVIDENCE-VALIDATION.json)记录精确身份；用户已回复效果改善，当前记录该视觉反馈，尚未正式发行。

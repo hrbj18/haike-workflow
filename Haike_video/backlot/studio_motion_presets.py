@@ -110,6 +110,10 @@ def _merge(base, patch):
     return deepcopy(patch)
 
 
+def _paper_profile(version):
+    return 'paper-evidence/1' if version == '1.1.0' else 'paper-evidence/2'
+
+
 def _mechanisms(row, p):
     """Creation retains the named preset. Subsequent editing remains explicit."""
     if row['protocol'] == 'hum-production-v1':
@@ -137,8 +141,8 @@ def _mechanisms(row, p):
                            ('device', 'phone'), ('quote', 'reveal'), ('cta', 'button')],
                        '纸感预设需保留六段原生控件及引用揭示')
         if row['version'] != '1.0.0':
-            from backlot.paper_evidence import PROFILE
-            motion.require(isinstance(p.get('paperSupport'), dict) and p['paperSupport'].get('profile') == PROFILE,
+            motion.require(isinstance(p.get('paperSupport'), dict)
+                           and p['paperSupport'].get('profile') == _paper_profile(row['version']),
                            '纸感新版需保留通用证据层；请按本期台词绑定真实素材')
     else:
         motion.require(p.get('creationProfile') == 'knowledge-story/1' and p.get('layout') == 'portrait'
@@ -179,8 +183,8 @@ def check_binding(value):
         t = p.get('timeline', {})
         source = value.get('preset_source', {})
         if source.get('id') == 'paper-approved-portrait-v1' and source.get('version') != '1.0.0':
-            from backlot.paper_evidence import PROFILE
-            motion.require(isinstance(p.get('paperSupport'), dict) and p['paperSupport'].get('profile') == PROFILE,
+            motion.require(isinstance(p.get('paperSupport'), dict)
+                           and p['paperSupport'].get('profile') == _paper_profile(source.get('version')),
                            '纸感新版需保留通用证据层；请按本期台词绑定真实素材')
         motion.require(t.get('duration') and t.get('captions') and t.get('narrationMap')
                        and all('t0' in s and 't1' in s for s in t.get('segments', [])),
