@@ -172,10 +172,27 @@ class LegacyUpgradeTests(unittest.TestCase):
     def test_project_update_backs_up_modified_program_and_preserves_private_data(self):
         self.project_base()
         self.file('Haike_video/backlot/legacy_test.py', b'other Haike build program')
+        # Another audited Haike build owns these bytes. A product identity alone
+        # must not authorize overwriting an unrecorded user edit.
+        program = self.target / 'Haike_video/backlot/legacy_test.py'
+        self.file('PACKAGE-MANIFEST.json', upgrade.json_bytes({'schema': 1, 'files': [{
+            'path': 'Haike_video/backlot/legacy_test.py', 'size': program.stat().st_size,
+            'sha256': upgrade.digest(program), 'mutable': False}]}))
         result = self.install()
         self.assertEqual((self.target / 'Haike_video/backlot/legacy_test.py').read_bytes(), b'new program')
         upgrade.restore(self.target, Path(result['backup']))
         self.assertEqual((self.target / 'Haike_video/backlot/legacy_test.py').read_bytes(), b'other Haike build program')
+
+    def test_project_update_preserves_unrecorded_local_program_changes(self):
+        self.project_base()
+        body = b'unrecorded local WIP program'
+        self.file('Haike_video/backlot/legacy_test.py', body)
+        release = (self.target / 'RELEASE.json').read_bytes()
+        with self.assertRaisesRegex(ValueError, '本地修改'):
+            self.install()
+        self.assertEqual((self.target / 'Haike_video/backlot/legacy_test.py').read_bytes(), body)
+        self.assertEqual((self.target / 'RELEASE.json').read_bytes(), release)
+        self.assertFalse((self.target / '.local/release-updates').exists())
 
     def test_project_update_rejects_other_product_and_incompatible_data(self):
         self.project_base()
