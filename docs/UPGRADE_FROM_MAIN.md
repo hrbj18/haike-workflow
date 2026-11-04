@@ -1,5 +1,7 @@
 # 旧版通过 main 源码升级：Agent 教程
 
+Mac用户进入[Mac专用教程（Apple Silicon/Intel）](UPGRADE_FROM_MAIN_MAC.md)，包含更新后生成完整测试视频的步骤。本页命令和运行时检查面向Windows；共用数据保护原则供Mac教程引用。
+
 本教程直接使用官方 **main 的固定提交**，由 Agent 完成备份、部署、依赖恢复、前端构建和目标机验收，**不等待、不下载海客 Release 更新包**。适用于 Windows x64 的1027便携版、后续便携版及源码副本。这是 Agent 操作流程；当前没有脱离 Release、自动完成所有历史版本原地迁移的单条 CLI。
 
 ## 给旧电脑 Agent 的一句话

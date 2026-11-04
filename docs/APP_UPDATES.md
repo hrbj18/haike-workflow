@@ -1,6 +1,6 @@
 # 海客视频应用更新
 
-要直接使用main源码并在旧电脑测试，按[源码升级Agent教程](UPGRADE_FROM_MAIN.md)执行，无需等待Release更新包。本页的“关于海客视频”及联网安装属于发行包路线，不用于取得main最新源码。
+要直接使用main源码并在旧电脑测试，Agent识别系统后按[Windows教程](UPGRADE_FROM_MAIN.md)或[Mac教程（Apple Silicon/Intel）](UPGRADE_FROM_MAIN_MAC.md)执行，无需等待Release更新包。本页的“关于海客视频”及联网安装属于发行包路线，不用于取得main最新源码。
 
 已有1027（1.1）安装要直接联网升级，按[给Codex一个GitHub地址](UPDATE_WITH_CODEX.md)操作；用户无需上传ZIP。1.2的联网修订规范号为1.2.1；已有本地1.2.0可由下述“关于海客视频”检查并下载兼容补丁。没有实际公开的资产和清单时仍显示无法检查，不把本地候选包当成已上线版本。
 
