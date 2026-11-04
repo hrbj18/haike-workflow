@@ -1,0 +1,15 @@
+{
+  "contract": "haike-nana-mint-episode-v1",
+  "template_id": "nana-mint-explainer-v1",
+  "template_version": "1.0.0",
+  "request": "prepare.py --episode <authored-content.json> --assets <local-assets> --output <new-episode> --ffmpeg <runtime> --ffprobe <runtime>",
+  "content_type": "types.ts: Episode; prepare.py: validate_episode and media_duration",
+  "fixed": ["1920x1080,30fps", "13 scene IDs and order", "5 chapter navigation positions", "template-profile.json palette", "TSX geometry, typography, masking and native component animation", "same-clock full speech at1x"],
+  "replaceable": ["title/brand/partner/phrase/cards", "5 chapter labels", "scene titles/labels", "scene/cue times authored from actual ASR", "actual timed captions, maximum64 characters per cue", "same-source presenter/media/overlay file bindings", "font and complete voice/music mix"],
+  "audio": "Use one complete approved mix. If producing a new mix, invoke mix_audio.py inside the unified production queue; its fixed recipe comes from template-profile.json. New narration must be generated or supplied before producing its matching mouth video.",
+  "media_policy": "Flat local names; source identity and real duration checked; source at1x must cover each actually visible interval. Never loop/freeze people or stretch speech; only explicitly authored clean UI holds are permitted.",
+  "new_input_gate": "New content does not inherit accepted-sample technical/visual/audio status. Author complete measured timing, prepare, queue actual frames, actually review them, then export when requested.",
+  "text_policy": "Use short headings and labels; preserve the full speech in timed captions. Shorten overflowing headings, do not shrink them automatically. The36-character title guidance is an authoring limit, actual reading/layout still requires visual review.",
+  "private_defaults": ".local/template-presets/animation-template-3/preset.json relative to workspace. Private same-source portrait/voice/music and accepted sample are not distributed with public code.",
+  "failure": "Missing/short media, invalid ASR clock, changed frozen source or existing output: stop and read the original task; do not overwrite or restart paid stages."
+}

@@ -1,0 +1,196 @@
+{
+  "schema": "haike.motion-selection/1",
+  "templateId": "chromatic-six-11",
+  "version": "1.0.0-candidate.2",
+  "revision": "2026-11-03.window-c.2",
+  "runtime": "haike-remotion",
+  "durationInFrames": 720,
+  "fps": 30,
+  "minReadingFrames": 36,
+  "avatarRole": "supporting-window",
+  "palette": {
+    "paper": "#102C43",
+    "ink": "#F5F4E8",
+    "accent": "#FFAD8F",
+    "teal": "#52D3CC"
+  },
+  "scenes": [
+    {
+      "id": "route-start",
+      "from": 0,
+      "to": 180,
+      "stableFrom": 72,
+      "purpose": "定位从何处出发",
+      "subject": "起点图钉与第一张现场照片",
+      "handoff": "8帧落起点，34–56照片从节点侧展开；100帧开始长出通往下一站的弧线。主图与标题保持可读，人物仅0–149可见。",
+      "selections": [
+        {
+          "id": "talkcraft:map-route-pin",
+          "mode": "adapt",
+          "source_sha256": "fec5d18b99286f1306eb9378db59b756085a4083700c147a971926b397858ef3",
+          "reference_sha256": "2684d9bfc2cc524422eb2f4084570d62835f7fbab23579d5b39191567b8d7030",
+          "read_completed_at": "2026-11-03T18:12:47.952084+08:00",
+          "implementation": "Haike_video/templates/chromatic-six-batch-v1/window-c/Scene.tsx",
+          "reason": "定位从何处出发",
+          "changes": "不是地理图：用体验顺序的纵向折返世界。保留先落钉、加速下落/短压扁/回弹、逐段曲线路径、标签后显；不使用飞机。第一段延至110帧让巡游有方向；照片是停靠后出现的证据。",
+          "verification": "8帧落起点，34–56照片从节点侧展开；100帧开始长出通往下一站的弧线。主图与标题保持可读，人物仅0–149可见。 阅读全片72–179帧。",
+          "source": "talkcraft://template/cards/map-route-pin.tsx",
+          "reference": "talkcraft://references/cards/map-route-pin.md"
+        }
+      ],
+      "alternatives": [
+        {
+          "id": "talkcraft:step-timeline-vertical",
+          "reason": "开场先要空间地点感，不先抛三条文字步骤。"
+        }
+      ],
+      "phases": {
+        "establish": "8帧落起点，34–56照片从节点侧展开；100帧开始长出通往下一站的弧线。主图与标题保持可读，人物仅0–149可见。",
+        "emphasize": "起点图钉与第一张现场照片",
+        "handoff": "8帧落起点，34–56照片从节点侧展开；100帧开始长出通往下一站的弧线。主图与标题保持可读，人物仅0–149可见。",
+        "read": {
+          "from": 72,
+          "to": 180,
+          "frames": 108
+        }
+      },
+      "label": "定位从何处出发"
+    },
+    {
+      "id": "route-travel",
+      "from": 180,
+      "to": 390,
+      "stableFrom": 284,
+      "purpose": "沿路径走进互动现场",
+      "subject": "第二站照片与到达路径",
+      "handoff": "180–224镜头向下530px，路线210到达，图钉210–228落定，照片232–254展开；点→45度线→标签在252/258/270帧串行。",
+      "selections": [
+        {
+          "id": "talkcraft:map-route-pin",
+          "mode": "adapt",
+          "source_sha256": "fec5d18b99286f1306eb9378db59b756085a4083700c147a971926b397858ef3",
+          "reference_sha256": "2684d9bfc2cc524422eb2f4084570d62835f7fbab23579d5b39191567b8d7030",
+          "read_completed_at": "2026-11-03T18:12:47.952084+08:00",
+          "implementation": "Haike_video/templates/chromatic-six-batch-v1/window-c/Scene.tsx",
+          "reason": "沿路径走进互动现场",
+          "changes": "相机沿同一世界坐标巡游；第二站照片改到左侧，图钉在右侧，标签向左对齐避免截断。到达、图钉与图片有明确顺序。",
+          "verification": "180–224镜头向下530px，路线210到达，图钉210–228落定，照片232–254展开；点→45度线→标签在252/258/270帧串行。 阅读全片284–389帧。",
+          "source": "talkcraft://template/cards/map-route-pin.tsx",
+          "reference": "talkcraft://references/cards/map-route-pin.md"
+        },
+        {
+          "id": "talkcraft:callout-line-label",
+          "mode": "adapt",
+          "source_sha256": "58d29fcd73a8f41ae13e9cad9a281b50d817c57b2fe0b82d788e8f0e6175a314",
+          "reference_sha256": "ee858ec20a602e8fc58c1f9d4556ee06eebedb1b823e5637650884ea52426b62",
+          "read_completed_at": "2026-11-03T18:12:47.952084+08:00",
+          "implementation": "Haike_video/templates/chromatic-six-batch-v1/window-c/Scene.tsx",
+          "reason": "引导观众看现场互动",
+          "changes": "目标选在照片互动主体区；圆点6帧、45度折线12帧、标签9帧串行；文字放图片外下方，不复制上游占位手机。",
+          "verification": "252–258点，258–270线，270–279标签；落定后阅读。",
+          "source": "talkcraft://template/cards/callout-line-label.tsx",
+          "reference": "talkcraft://references/cards/callout-line-label.md"
+        }
+      ],
+      "alternatives": [
+        {
+          "id": "talkcraft:slow-pull-reveal",
+          "reason": "本段继续走向下一站，退回全貌留给结尾。"
+        }
+      ],
+      "phases": {
+        "establish": "180–224镜头向下530px，路线210到达，图钉210–228落定，照片232–254展开；点→45度线→标签在252/258/270帧串行。",
+        "emphasize": "第二站照片与到达路径",
+        "handoff": "180–224镜头向下530px，路线210到达，图钉210–228落定，照片232–254展开；点→45度线→标签在252/258/270帧串行。",
+        "read": {
+          "from": 284,
+          "to": 390,
+          "frames": 106
+        }
+      },
+      "label": "沿路径走进互动现场"
+    },
+    {
+      "id": "step-stop",
+      "from": 390,
+      "to": 540,
+      "stableFrom": 502,
+      "purpose": "说明看见、参与、理解的先后关系",
+      "subject": "第三站照片与竖向步骤线",
+      "handoff": "390–432继续向下530px；426落第三钉，446–468展开照片。450–484步骤线推进，节点按曲线反解触发，字滞后2帧，第三个节点495–502升级为空心环。",
+      "selections": [
+        {
+          "id": "talkcraft:step-timeline-vertical",
+          "mode": "adapt",
+          "source_sha256": "023f0cba47caaede7b1de3e194010d7d8294ce2a7319b8b737b09e6efaa2eebf",
+          "reference_sha256": "6bcbb02f95c8232c8da72158d50a38a1a6db1822899d05d8c6488aae41996a7e",
+          "read_completed_at": "2026-11-03T18:12:47.952084+08:00",
+          "implementation": "Haike_video/templates/chromatic-six-batch-v1/window-c/Scene.tsx",
+          "reason": "说明看见、参与、理解的先后关系",
+          "changes": "世界路径保持，步骤线只在下方说明区；节点触发由三次缓动反函数二分求得，三组文字全部出现后升级第三点；无网格壁纸穿线，保留唯一当前节点。",
+          "verification": "390–432继续向下530px；426落第三钉，446–468展开照片。450–484步骤线推进，节点按曲线反解触发，字滞后2帧，第三个节点495–502升级为空心环。 阅读全片502–539帧。",
+          "source": "talkcraft://template/cards/step-timeline-vertical.tsx",
+          "reference": "talkcraft://references/cards/step-timeline-vertical.md"
+        }
+      ],
+      "alternatives": [
+        {
+          "id": "talkcraft:map-route-pin",
+          "reason": "三站到达后需要解释体验顺序，重复另一条地图会把语义留在空间而非理解。"
+        }
+      ],
+      "phases": {
+        "establish": "390–432继续向下530px；426落第三钉，446–468展开照片。450–484步骤线推进，节点按曲线反解触发，字滞后2帧，第三个节点495–502升级为空心环。",
+        "emphasize": "第三站照片与竖向步骤线",
+        "handoff": "390–432继续向下530px；426落第三钉，446–468展开照片。450–484步骤线推进，节点按曲线反解触发，字滞后2帧，第三个节点495–502升级为空心环。",
+        "read": {
+          "from": 502,
+          "to": 540,
+          "frames": 38
+        }
+      },
+      "label": "说明看见、参与、理解的先后关系"
+    },
+    {
+      "id": "pull-overview",
+      "from": 540,
+      "to": 720,
+      "stableFrom": 665,
+      "purpose": "回看完整体验路线",
+      "subject": "同一折返路线与三张停靠照片",
+      "handoff": "540–647从第三站缓拉：scale1→0.52、y−1060→0、x0→100，同一线性进度；照片不重排、不汇入结论；665帧起全路线阅读，人物570回场且与照片横向避让。",
+      "selections": [
+        {
+          "id": "talkcraft:slow-pull-reveal",
+          "mode": "adapt",
+          "source_sha256": "79438baa13340fb21800720cedd387ea4ec228620d0c87e4da2388c30c8fe263",
+          "reference_sha256": "fcc0ce1b52ced94c001e832f3e136ba9e005c1ba1709b1197442637d5e577ffe",
+          "read_completed_at": "2026-11-03T18:12:47.952084+08:00",
+          "implementation": "Haike_video/templates/chromatic-six-batch-v1/window-c/Scene.tsx",
+          "reason": "回看完整体验路线",
+          "changes": "由单站画幅向完整760×1540世界扩展，终点世界相机0.52是世界适配画布的原样取景；无照片自身动画。相较初试0.30横向全览，改为纵向折返及0.52比例，每张照片面积约增3倍。此为世界相机适配，不声称原卡1.26→1逐参数直用。",
+          "verification": "540–647从第三站缓拉：scale1→0.52、y−1060→0、x0→100，同一线性进度；照片不重排、不汇入结论；665帧起全路线阅读，人物570回场且与照片横向避让。 阅读全片665–719帧。",
+          "source": "talkcraft://template/cards/slow-pull-reveal.tsx",
+          "reference": "talkcraft://references/cards/slow-pull-reveal.md"
+        }
+      ],
+      "alternatives": [
+        {
+          "id": "talkcraft:step-timeline-vertical",
+          "reason": "只重复三条步骤不会让观众回看完整路径及证据。"
+        }
+      ],
+      "phases": {
+        "establish": "540–647从第三站缓拉：scale1→0.52、y−1060→0、x0→100，同一线性进度；照片不重排、不汇入结论；665帧起全路线阅读，人物570回场且与照片横向避让。",
+        "emphasize": "同一折返路线与三张停靠照片",
+        "handoff": "540–647从第三站缓拉：scale1→0.52、y−1060→0、x0→100，同一线性进度；照片不重排、不汇入结论；665帧起全路线阅读，人物570回场且与照片横向避让。",
+        "read": {
+          "from": 665,
+          "to": 720,
+          "frames": 55
+        }
+      },
+      "label": "回看完整体验路线"
+    }
+  ]
+}

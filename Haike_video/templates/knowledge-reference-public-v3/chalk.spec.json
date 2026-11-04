@@ -1,0 +1,686 @@
+{
+  "schema_version": 1,
+  "standard_version": "video-template-v1",
+  "template_id": "knowledge-explainer-chalkboard",
+  "template_version": "5.1.1-independent.1",
+  "template_type": "graphic",
+  "spec_kind": "implementation",
+  "stage": "specification",
+  "authority": {
+    "runbook": "README.md",
+    "implementation_paths": [
+      "index.tsx",
+      "types.ts",
+      "drawing.ts",
+      "backgrounds.ts",
+      "chalk.ts",
+      "../../backlot/motion_knowledge_public_execution_v3.py",
+      "../../backlot/motion_knowledge_public_production_v3.py",
+      "geometry.json",
+      "geometry.ts"
+    ],
+    "parameter_source": "source-bound: geometry.json and implementation_paths own geometry/material/font/formula; private episode owns legal content, IDs and absolute events; no duplicated parameter truth in spec"
+  },
+  "canvas": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 60,
+    "duration_seconds": 59.96666666666667,
+    "clock": "Complete original audio, absolute60fps; development fixtures explicitly silent/previewOnly",
+    "coordinate_system": "top_left_pixels"
+  },
+  "narrative": {
+    "purpose": "Finite correction of already observed v2 bulb curvature, chalk material and sticky offset-shadow leakage; same complete episode/objects/events/model/audio/ASR, no layout redesign or original-private-pixel requirement",
+    "information_hierarchy": [
+      "title/chapter",
+      "persistent objects and relations",
+      "full ASR captions",
+      "Complete nonmedical clauses in original final note/conclusion slots"
+    ],
+    "structure": [
+      "compare",
+      "process",
+      "evidence",
+      "recap",
+      "definition"
+    ]
+  },
+  "scenes": [
+    {
+      "id": "s1",
+      "start": 0.0,
+      "end": 17.583333333333332,
+      "purpose": "从知道，到亲手用",
+      "element_ids": [
+        "background",
+        "title",
+        "board",
+        "objects",
+        "captions"
+      ],
+      "variant": "compare"
+    },
+    {
+      "id": "s2",
+      "start": 17.583333333333332,
+      "end": 29.333333333333332,
+      "purpose": "在真实门店，亲手体验",
+      "element_ids": [
+        "background",
+        "title",
+        "board",
+        "objects",
+        "captions"
+      ],
+      "variant": "process"
+    },
+    {
+      "id": "s3",
+      "start": 29.333333333333332,
+      "end": 41.86666666666667,
+      "purpose": "陪孩子交流、学习、体验",
+      "element_ids": [
+        "background",
+        "title",
+        "board",
+        "objects",
+        "captions"
+      ],
+      "variant": "evidence"
+    },
+    {
+      "id": "s4",
+      "start": 41.86666666666667,
+      "end": 48.46666666666667,
+      "purpose": "一起经历，一起分享",
+      "element_ids": [
+        "background",
+        "title",
+        "board",
+        "objects",
+        "captions"
+      ],
+      "variant": "recap"
+    },
+    {
+      "id": "s5",
+      "start": 48.46666666666667,
+      "end": 59.96666666666667,
+      "purpose": "免费参考，边界说清楚",
+      "element_ids": [
+        "background",
+        "title",
+        "board",
+        "objects",
+        "captions"
+      ],
+      "variant": "definition"
+    }
+  ],
+  "assets": [
+    {
+      "id": "font_0",
+      "kind": "font",
+      "path": "public/fonts/LXGWWenKai-Medium.ttf",
+      "source": "Independent pinned public upstream download; font-provenance.json",
+      "embedded_content": [
+        "Exact licensed font glyphs, no screenshot or private kernel"
+      ],
+      "rights_status": "OFL-1.1; complete upstream copyright/license included"
+    },
+    {
+      "id": "font_1",
+      "kind": "font",
+      "path": "public/fonts/LongCang.ttf",
+      "source": "Independent pinned public upstream download; font-provenance.json",
+      "embedded_content": [
+        "Exact licensed font glyphs, no screenshot or private kernel"
+      ],
+      "rights_status": "OFL-1.1; complete upstream copyright/license included"
+    },
+    {
+      "id": "font_2",
+      "kind": "font",
+      "path": "public/fonts/Fraunces.ttf",
+      "source": "Independent pinned public upstream download; font-provenance.json",
+      "embedded_content": [
+        "Exact licensed font glyphs, no screenshot or private kernel"
+      ],
+      "rights_status": "OFL-1.1; complete upstream copyright/license included"
+    },
+    {
+      "id": "font_3",
+      "kind": "font",
+      "path": "public/fonts/JetBrainsMono.ttf",
+      "source": "Independent pinned public upstream download; font-provenance.json",
+      "embedded_content": [
+        "Exact licensed font glyphs, no screenshot or private kernel"
+      ],
+      "rights_status": "OFL-1.1; complete upstream copyright/license included"
+    },
+    {
+      "id": "narration",
+      "kind": "audio",
+      "path": null,
+      "source": "Current private complete approved narration, sameSHA as real sentence evidence",
+      "embedded_content": [
+        "Entire original voice, original timing"
+      ],
+      "rights_status": "Input owner authorized; not included in public source distribution"
+    },
+    {
+      "id": "music",
+      "kind": "audio",
+      "path": null,
+      "source": "Explicit current input music or none, never author-account fallback",
+      "embedded_content": [
+        "Authorized soundtrack"
+      ],
+      "rights_status": "Input owner authorized; not included in public source distribution"
+    }
+  ],
+  "elements": [
+    {
+      "id": "background",
+      "type": "background",
+      "role": "Procedural wiped board/frame/tray",
+      "parent_id": null,
+      "z_index": 0,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "Procedural wiped board/frame/tray"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1080,
+          1920
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source_owner": "index.tsx/backgrounds.ts",
+          "font_manifest": "font-provenance.json"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 59.96666666666667
+      },
+      "states": [
+        {
+          "id": "source_controlled",
+          "visible": true,
+          "description": "Background/header/caption visibility follows index.tsx; component children follow their exact event/progress and camera in source; no scene-wide substitute interpolation"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "source geometry/material/curves"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "public_observation",
+        "independent_design",
+        "static_v3"
+      ],
+      "acceptance": [
+        {
+          "check": "targeted_failed_state",
+          "method": "Compare targeted actual queue images against lawful observed v1 failures and reference states",
+          "pass_condition": "Actual viewing and explicit approve; unresolved font/model-unit/motion differences remain declared"
+        }
+      ]
+    },
+    {
+      "id": "title",
+      "type": "text",
+      "role": "Current consumer title/chapter count",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "editable",
+        "binding": "title_slot",
+        "asset_id": null,
+        "description": "Current consumer title/chapter count"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          67,
+          75,
+          940,
+          142
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source_owner": "index.tsx/backgrounds.ts",
+          "font_manifest": "font-provenance.json",
+          "font": "LXGW WenKai Medium (bundled OFL)",
+          "font_size": 42,
+          "max_lines": 1,
+          "overflow": "reject; retain full ASR and explicitly split display text",
+          "font_weight": 700
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 59.96666666666667
+      },
+      "states": [
+        {
+          "id": "source_controlled",
+          "visible": true,
+          "description": "Background/header/caption visibility follows index.tsx; component children follow their exact event/progress and camera in source; no scene-wide substitute interpolation"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "source geometry/material/curves"
+      ],
+      "replaceable": [
+        "content",
+        "absolute event timing"
+      ],
+      "evidence_ids": [
+        "public_observation",
+        "independent_design",
+        "static_v3"
+      ],
+      "acceptance": [
+        {
+          "check": "targeted_failed_state",
+          "method": "Compare targeted actual queue images against lawful observed v1 failures and reference states",
+          "pass_condition": "Actual viewing and explicit approve; unresolved font/model-unit/motion differences remain declared"
+        }
+      ]
+    },
+    {
+      "id": "board",
+      "type": "card",
+      "role": "Sparse chalk chapter/diagram zone",
+      "parent_id": null,
+      "z_index": 20,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "Sparse chalk chapter/diagram zone"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          64,
+          245,
+          952,
+          1328
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source_owner": "chalk.ts",
+          "font_manifest": "font-provenance.json"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 59.96666666666667
+      },
+      "states": [
+        {
+          "id": "source_controlled",
+          "visible": true,
+          "description": "Background/header/caption visibility follows index.tsx; component children follow their exact event/progress and camera in source; no scene-wide substitute interpolation"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "source geometry/material/curves"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "public_observation",
+        "independent_design",
+        "static_v3"
+      ],
+      "acceptance": [
+        {
+          "check": "targeted_failed_state",
+          "method": "Compare targeted actual queue images against lawful observed v1 failures and reference states",
+          "pass_condition": "Actual viewing and explicit approve; unresolved font/model-unit/motion differences remain declared"
+        }
+      ]
+    },
+    {
+      "id": "objects",
+      "type": "custom",
+      "role": "Per-ID label/before/after/body, process node/connection, tab/note and scientific body/view/ray/condition components",
+      "parent_id": null,
+      "z_index": 30,
+      "content": {
+        "mode": "editable",
+        "binding": "objects_slot",
+        "asset_id": null,
+        "description": "Explicit item IDs, real font, own icons/lines and independent events"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          64,
+          245,
+          952,
+          1328
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source_owner": "chalk.ts",
+          "font_manifest": "font-provenance.json",
+          "child_parameter_authority": "chalk.ts/geometry.ts/geometry.json"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 59.96666666666667
+      },
+      "states": [
+        {
+          "id": "source_controlled",
+          "visible": true,
+          "description": "Background/header/caption visibility follows index.tsx; component children follow their exact event/progress and camera in source; no scene-wide substitute interpolation"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source_bound",
+          "target_id": null,
+          "rule": "Per-ID child geometry inherits source camera/clip; contents and separate event windows bind episode IDs; no editable layout/font override"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "source geometry/material/curves"
+      ],
+      "replaceable": [
+        "content",
+        "absolute event timing"
+      ],
+      "evidence_ids": [
+        "public_observation",
+        "independent_design",
+        "static_v3"
+      ],
+      "acceptance": [
+        {
+          "check": "targeted_failed_state",
+          "method": "Compare targeted actual queue images against lawful observed v1 failures and reference states",
+          "pass_condition": "Actual viewing and explicit approve; unresolved font/model-unit/motion differences remain declared"
+        }
+      ]
+    },
+    {
+      "id": "captions",
+      "type": "text",
+      "role": "Complete measured ASR caption; absolute clock",
+      "parent_id": null,
+      "z_index": 40,
+      "content": {
+        "mode": "editable",
+        "binding": "captions_slot",
+        "asset_id": null,
+        "description": "Complete measured ASR caption; absolute clock"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          48,
+          1646,
+          984,
+          125
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source_owner": "index.tsx: one-line74/two-line125 board plate; paper no plate",
+          "font_manifest": "font-provenance.json",
+          "font": "LXGW WenKai Medium (bundled OFL)",
+          "font_size": 39,
+          "max_lines": 2,
+          "overflow": "reject; retain full ASR and explicitly split display text"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 59.96666666666667
+      },
+      "states": [
+        {
+          "id": "source_controlled",
+          "visible": true,
+          "description": "Background/header/caption visibility follows index.tsx; component children follow their exact event/progress and camera in source; no scene-wide substitute interpolation"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "source geometry/material/curves"
+      ],
+      "replaceable": [
+        "content",
+        "absolute event timing"
+      ],
+      "evidence_ids": [
+        "public_observation",
+        "independent_design",
+        "static_v3"
+      ],
+      "acceptance": [
+        {
+          "check": "targeted_failed_state",
+          "method": "Compare targeted actual queue images against lawful observed v1 failures and reference states",
+          "pass_condition": "Actual viewing and explicit approve; unresolved font/model-unit/motion differences remain declared"
+        }
+      ]
+    }
+  ],
+  "slots": [
+    {
+      "id": "title_slot",
+      "element_id": "title",
+      "property": "content",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "exact_input_owner": "types.ts / validate_episode",
+        "measure_with_actual_font": true,
+        "no_geometry_or_font_override": true,
+        "source_owner": "types.ts / motion_knowledge_public_execution_v3.validate_episode / actual fonts"
+      },
+      "missing": "停在输入检查并补齐本期文本",
+      "overflow": "Reject; shorten display labels or split legal text explicitly, retaining full original audio/ASR"
+    },
+    {
+      "id": "objects_slot",
+      "element_id": "objects",
+      "property": "content",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "exact_input_owner": "types.ts / validate_episode",
+        "measure_with_actual_font": true,
+        "no_geometry_or_font_override": true,
+        "source_owner": "types.ts / motion_knowledge_public_execution_v3.validate_episode / actual fonts",
+        "boundary": "Final actual note/conclusion must contain every required clause; hidden requiredOverlay alone is insufficient"
+      },
+      "missing": "停在输入检查并补齐本期文本",
+      "overflow": "Reject; shorten display labels or split legal text explicitly, retaining full original audio/ASR"
+    },
+    {
+      "id": "captions_slot",
+      "element_id": "captions",
+      "property": "content",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "exact_input_owner": "types.ts / validate_episode",
+        "measure_with_actual_font": true,
+        "no_geometry_or_font_override": true,
+        "source_owner": "types.ts / motion_knowledge_public_execution_v3.validate_episode / actual fonts"
+      },
+      "missing": "停在输入检查并补齐本期文本",
+      "overflow": "Reject; shorten display labels or split legal text explicitly, retaining full original audio/ASR"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "public_observation",
+      "source_kind": "observation",
+      "source": "Official publicly declared gallery imageDocument and lawful current native render",
+      "locator": "sketchnote four families12 images; chalkboard eight families24 images; first/early/explanatory plus currentB6 frames",
+      "method": "Actually viewed all36 reference images and16/20 current native frames; approximate geometry estimated from1080×1920 visuals, not source extraction",
+      "file": null,
+      "sha256": null
+    },
+    {
+      "id": "independent_design",
+      "source_kind": "design",
+      "source": "Own new source modules",
+      "locator": "This directory; source parameter ownership in authority",
+      "method": "Original procedural textures, pen, shapes, page camera and stroke reveal; no private core read, no raster reference used as picture",
+      "file": null,
+      "sha256": null
+    },
+    {
+      "id": "static_v3",
+      "source_kind": "measurement",
+      "source": "Current owned /3 inherited gate tests, strict TypeScript, pure geometry/curve and shadow-state recorder",
+      "locator": "../../tests/backlot/test_motion_knowledge_public_execution_v3.py; seven TS/TSX modules; source-owned geometry JSON",
+      "method": "43 actual Python tests, strictTS5.9.3/Remotion4.0.506 zero diagnostics; ten in-memory TS checks include preserved endpoints/small tangent changes and paper-only shadow. No actual v3 image rendered.",
+      "file": "../../tests/backlot/test_motion_knowledge_public_execution_v3.py",
+      "sha256": "c317cb3f00b8b1cb858f7a30625b96a90b1a3ba754b3dba49db5f7aa6b83154c"
+    }
+  ],
+  "unknowns": [],
+  "validation": {
+    "structure": {
+      "status": "pass",
+      "evidence_ids": [
+        "static_v3"
+      ],
+      "note": "Code/queue/static geometry and shadow-state validation only; no visual acceptance"
+    },
+    "technical": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "Actual v3 targeted correction image, full output, listening, environment and registered public integration remain pending"
+    },
+    "visual": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "Actual v3 targeted correction image, full output, listening, environment and registered public integration remain pending"
+    },
+    "audio": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "Actual v3 targeted correction image, full output, listening, environment and registered public integration remain pending"
+    },
+    "platform": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "Actual v3 targeted correction image, full output, listening, environment and registered public integration remain pending"
+    },
+    "user_review": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "Actual v3 targeted correction image, full output, listening, environment and registered public integration remain pending"
+    },
+    "production": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "Actual v3 targeted correction image, full output, listening, environment and registered public integration remain pending"
+    }
+  },
+  "extensions": {
+    "graphic": {
+      "text_policy": "Full original ASR/caption clock and exact bundled fonts; source-measured labels; final boundary retained in note/conclusion; no extra constant footer",
+      "asset_fit": "No presenter/photos/B-roll; all graphics are editable original drawing objects, publicOFLfont resources only",
+      "revision_scope": "Only already observed bulb smooth curve/finer stroke, chalk grain/multidirectional residue and sticky shadow isolation. Private target plan6 paper+2 chalk, no broad scene sweep; exact v2 episode content/events unchanged",
+      "component_contracts": {
+        "paper": "Each item uses camera/write/highlight/draw/annotation; optional connection targets later ID; overview/conclusion shared; sticky-revision requires targetId and revision; return-loop requires fromId/toId and return. Child number/label/marker/icon/note use same persistent item ID and source camera.",
+        "generic": "heading shared, item per ID; compare answer per ID; process exactly3 items and connection; evidence/recap/definition tab per ID and note when nonempty. No model or scientific-only events."
+      },
+      "scientific_models": {
+        "common": "Exactly one editable id/label, no unused icon/note/text controls. Exact family fields checked in validate_model; finite/bounded values, source formulas in geometry.ts. All begin with heading.",
+        "orbit-phase": "orbit: phase/phaseSpeed/inclination/displayInclination/sunRadius/bodyRadius/orbitRadius; diagram. Actual position, illumination and same projected orbit.",
+        "surface-view": "same orbit controls; diagram+inspect. Same upper body enlarges with incident rays, original system shrinks, lower apparent disk remains.",
+        "shadow-overlap": "section: phase/phaseSpeed/bodyRadius/occluderRadius/offset/offsetSpeed; inspect, no unused diagram. Standalone cross-section scales in; real circle intersection drives same mask and fraction.",
+        "inclined-orbit": "orbit plus occluderRadius/shadowOffset; diagram. Physical inclination separate from displayed inclination; same world state/actual overlap.",
+        "projection-compare": "orbit controls; diagram. Two projections of same 3D position; height in normalized model units, not unverified centimeters.",
+        "causal-compare": "causal: phase/phaseSpeed/counterPhase/counterSpeed/bodyRadius/occluderRadius/offset/offsetSpeed; diagram. Two stacked distinct illumination/occlusion conditions.",
+        "ray-topology": "rays: startX/endX/firstY/gap/count/blockers[id,x,y,radius]; diagram. Each ray terminates at nearest real intersection, result derives from reachability, current reference instance3/7.",
+        "condition-proof": "orbit plus occluderRadius/shadowOffset; diagram and condition-opposition/condition-plane/condition-overlap each own event and independent derived truth."
+      }
+    }
+  },
+  "operations": [
+    {
+      "id": "prepare",
+      "input": "Own private data/project and complete original source/audio/cues evidence, bundled fonts and installed runtime",
+      "action": "Bind exact /3 source/input/runtime and actual v2 changes_requested parent/review; all episode fields except schema/implementation/version identical; no queue/media",
+      "output": "Immutable parent-request.json for exact /2 contract",
+      "completion": "Exact version5.1.1-independent.1, canonical gallery, source identity and targeted plan validate; v1 unchanged",
+      "recovery": "Keep old parent/source; explicit revision data/project for changed inputs; no provider repurchase",
+      "entrypoint": "backlot.motion_knowledge_public_production_v3:prepare"
+    },
+    {
+      "id": "preview",
+      "input": "Same frozen request plus root fixed-route registration and media lane handoff",
+      "action": "Public queue submit preview and execute same original parent; targeted plan only",
+      "output": "Only6 paper or2 chalk actual correction PNGs and original queue receipt",
+      "completion": "Actually view already located bulb/material/shadow states and record explicit decision; retain unchanged v2 full mechanism evidence, do not require pixel-identical independent art",
+      "recovery": "Reuse same stable phase key; completed missing artifacts report integrity and exact-byte restore/new explicit revision, never redraw silently",
+      "entrypoint": "Haike_video/scripts/motion_replay_production.py"
+    },
+    {
+      "id": "review",
+      "input": "Completed same-source original preview/all PNGs plus actual viewing and observations",
+      "action": "Bind every PNG/preview receipt to explicit approve/reject/changes_requested",
+      "output": "Decision-specific review with exact binding",
+      "completion": "Only current approve permits full export; structural/queue completion alone is insufficient",
+      "recovery": "Keep rejected old candidate; new revision retains old source/parents/review",
+      "entrypoint": "backlot.motion_knowledge_public_production_v3:review"
+    },
+    {
+      "id": "render",
+      "input": "Same frozen parent with current approve, unchanged full preview binding; previewOnly false",
+      "action": "Freeze render binding; public preclaim validate_claim before actual claim, then recheck worker/attempt/frozen/live lease/cancel; approval checks before media and after both export boundaries",
+      "output": "Whole-clock HD video, QA and execution receipt only after successful final checks",
+      "completion": "Target20Mbps1080x1920/60fps, unchanged original audio/ASR; actual decoding/visual/listening/environment dimensions separately verified",
+      "recovery": "Preclaim withdrawal leaves paused attempt0; after-claim withdrawal prevents success; preserve artifacts/original parent and resume only explicit retryable local failure",
+      "entrypoint": "Haike_video/scripts/motion_replay_production.py"
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "schema": "haike.numbered-motion-source-derivation/1",
+  "sources": [
+    {
+      "path": "Haike_video/templates/kinetic-field-v1/index.tsx",
+      "sha256": "24783cf9059804f2a9c89d7d2828dfa704896cc5c81e4a175e466c280a9ae1c9"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-motion-lab-v1/AvatarScene.tsx",
+      "sha256": "6d824f6370f0ca003fdce1cd5fc047550de9ae9179269c44f604607ab6ca3514"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-motion-lab-v1/RecipeStage.tsx",
+      "sha256": "19e8294b824d371d8b2ff5a9da6f71773404679baabdaddda6e8e4687da5d19a"
+    },
+    {
+      "path": "Haike_video/templates/nana-mint-explainer-v1/shared.tsx",
+      "sha256": "12b852587b04c28cce0f1379d3eadf881db13cd1758cfd9187cf45f651aa8f0e"
+    },
+    {
+      "path": "Haike_video/templates/nana-mint-explainer-v1/types.ts",
+      "sha256": "f237347c9a52db160172339cd4a257ecdaad4cbdb828b502cb65eb34a884519b"
+    },
+    {
+      "path": "Haike_video/templates/nana-mint-explainer-v1/scenes/Introduction.tsx",
+      "sha256": "830af743cabff9e6f893151c221af92e11cb58596f89b0b07394f2925744c34f"
+    },
+    {
+      "path": "Haike_video/templates/nana-mint-explainer-v1/scenes/Workflow.tsx",
+      "sha256": "50aa920db409e25b81e962ae2e08cd974e3860524f7e2fc941946a4872f5df4f"
+    },
+    {
+      "path": "Haike_video/templates/nana-mint-explainer-v1/scenes/Argument.tsx",
+      "sha256": "000c5ab681b42976d8c0743ad6a0cb4be495c5daf5d88edda38791b2d8dd5a2a"
+    },
+    {
+      "path": "Haike_video/templates/nana-mint-explainer-v1/scenes/Resources.tsx",
+      "sha256": "36ca4ca4c3e018309bc1009d18760d64906717180a9ba9407889e8d074437cb3"
+    },
+    {
+      "path": "Haike_video/templates/nana-mint-explainer-v1/index.tsx",
+      "sha256": "acb1d4eb9f67ca611bb13e503cb497e41413411100043967164ade2077676c41"
+    },
+    {
+      "path": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/capture-reveal/index.tsx",
+      "sha256": "0a60de6ec2a92269428db1b93eda1635af19153e2476450f5fb12476fabcb1da"
+    }
+  ],
+  "generated": [
+    {
+      "path": "Haike_video/templates/numbered02-04-production-v1/FieldMedia.tsx",
+      "sha256": "3db467d82f8bb4539e4f64e87e98a50a0748fa692bd78f123235b260e4ff64c0"
+    },
+    {
+      "path": "Haike_video/templates/numbered02-04-production-v1/FieldNotes.tsx",
+      "sha256": "7664bb656f2381a6bf36445b0ee761f962a23410467ac76722ae42ee4006642d"
+    },
+    {
+      "path": "Haike_video/templates/numbered02-04-production-v1/Kinetic.tsx",
+      "sha256": "7a920bd6329035caca80901d86d3a25e98a8db34d0c1fcdc1f2044dabccac3cf"
+    },
+    {
+      "path": "Haike_video/templates/numbered02-04-production-v1/nana/CaptureReveal.tsx",
+      "sha256": "5277a4534517c047aaddac1699ebd1b6269eea3c83b6ead9056b8bbb6e3c2db1"
+    },
+    {
+      "path": "Haike_video/templates/numbered02-04-production-v1/nana/scenes/Argument.tsx",
+      "sha256": "f1a1858ad8e325eef594bb26e192482ea5488ce6c2926204bfbb05fc25dc30ae"
+    },
+    {
+      "path": "Haike_video/templates/numbered02-04-production-v1/nana/scenes/Introduction.tsx",
+      "sha256": "849369d77b286b3eee229d92ffeca208179cb0eff6b41c7202301b5f7f3f2788"
+    },
+    {
+      "path": "Haike_video/templates/numbered02-04-production-v1/nana/scenes/Resources.tsx",
+      "sha256": "1f02299e3b4160079544fe197b462b5bcb259dd519c104209aa5caf62678d975"
+    },
+    {
+      "path": "Haike_video/templates/numbered02-04-production-v1/nana/scenes/Workflow.tsx",
+      "sha256": "e8a99b67e6b0daf00b0fefd2f06ba1d6ed8e14eb03374c9b4ec3c137b602d11b"
+    },
+    {
+      "path": "Haike_video/templates/numbered02-04-production-v1/nana/shared.tsx",
+      "sha256": "9093021814cd20471db7c402f69c19c700197dc27aba2a3696669abb61421699"
+    }
+  ],
+  "scope": "Retain original geometry/equations/native components; parameterize true semantic event instants and live source playback. No original source edits."
+}

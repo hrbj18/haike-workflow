@@ -1,0 +1,130 @@
+{
+  "schema": "haike.motion-selection/1",
+  "templateId": "chromatic-06",
+  "version": "1.1.0-candidate.1",
+  "revision": "2026-11-03.video-window-a.1",
+  "runtime": "haike-remotion",
+  "durationInFrames": 720,
+  "fps": 30,
+  "minReadingFrames": 36,
+  "avatarRole": "supporting-window",
+  "palette": {
+    "bg": "#1635F2",
+    "ink": "#FFF1C9",
+    "accent": "#FF6B1A"
+  },
+  "scenes": [
+    {
+      "id": "cut-open",
+      "from": 0,
+      "to": 180,
+      "stableFrom": 90,
+      "label": "切面打开",
+      "purpose": "建立现场，把视线穿过斜切入口交给视频",
+      "subject": "现场视频与开合切面",
+      "handoff": "开合落定，再由三层橙色斜切交到下一个现场视角",
+      "selections": [
+        {
+          "id": "talkcraft:shape-wipe-transition",
+          "mode": "adapt",
+          "source_sha256": "7df7c971a89d47e9054e17483b2367f78538c66060a45bf0217a5883faa033ea",
+          "implementation": "Haike_video/templates/chromatic-06-video-v1/Scene.tsx",
+          "reason": "建立现场，把视线穿过斜切入口交给视频；现场视频与开合切面",
+          "changes": "竖屏视频舞台三层同橙色明暗，宽2.6倍、-12度斜切、2帧错峰；保留遮挡换内容，增加前置切口打开以建立切面语言；主素材改成真实视频，场景局部Sequence原速播放，阅读期只稳定布局，素材内容继续运动",
+          "verification": "开场4–28切口打开；32–50三层错峰扫过；41帧遮挡中换视频；90–179阅读"
+        }
+      ],
+      "alternatives": [
+        {
+          "id": "talkcraft:media-pop-in",
+          "reason": "会把本方向变成压叠卡片，削弱切面空间"
+        }
+      ],
+      "readingBudgetFrames": 90
+    },
+    {
+      "id": "push-near",
+      "from": 180,
+      "to": 420,
+      "stableFrom": 290,
+      "label": "推穿现场",
+      "purpose": "由集体全景推进具体互动",
+      "subject": "全景视频与近景参与视频",
+      "handoff": "出场推近失焦，交叠14帧，入场高位沉降，落定留阅读",
+      "selections": [
+        {
+          "id": "talkcraft:push-through-transition",
+          "mode": "adapt",
+          "source_sha256": "1edc6f745d4c8ed6f674735f5d9bac1ce8883e66a588fd7e172f618bd110411f",
+          "implementation": "Haike_video/templates/chromatic-06-video-v1/Scene.tsx",
+          "reason": "由集体全景推进具体互动；全景视频与近景参与视频",
+          "changes": "独立竖屏相机；1→1.35出场，1.18→1.03入场，模糊6px，82–104余量慢推至1.045后稳定；不移植上游示意文字；主素材改成真实视频，场景局部Sequence原速播放，阅读期只稳定布局，素材内容继续运动",
+          "verification": "局部46–64推近，60–74交叠，60–82沉降；100–239阅读"
+        }
+      ],
+      "alternatives": [
+        {
+          "id": "talkcraft:media-pop-in",
+          "reason": "会把本方向变成压叠卡片，削弱切面空间"
+        }
+      ],
+      "readingBudgetFrames": 130
+    },
+    {
+      "id": "observe-colour",
+      "from": 420,
+      "to": 600,
+      "stableFrom": 564,
+      "label": "细节观察",
+      "purpose": "在同一画面的形状和色彩之间切换观察",
+      "subject": "同源视频的灰阶与原色层",
+      "handoff": "固定机位、同裁切，滑动中线后近端再回中；交给结尾",
+      "selections": [
+        {
+          "id": "talkcraft:split-compare-slider",
+          "mode": "adapt",
+          "source_sha256": "0fe6c944cc9b8144229a35576ff49c7482bc39a1de2e67001b82019e8992f475",
+          "implementation": "Haike_video/templates/chromatic-06-video-v1/Scene.tsx",
+          "reason": "在同一画面的形状和色彩之间切换观察；同源视频的灰阶与原色层",
+          "changes": "单一机器狗视频加局部灰阶滤镜，左灰阶右原色；共用edge驱动裁切与橙线；露出40%才出标签；删除nudge以适配6秒，保持一次揭示/近端/回中；主素材改成真实视频，场景局部Sequence原速播放，阅读期只稳定布局，素材内容继续运动",
+          "verification": "局部15–50揭示到中线，50–96停，96–120近端，130–144回中；144–179阅读"
+        }
+      ],
+      "alternatives": [
+        {
+          "id": "talkcraft:media-pop-in",
+          "reason": "会把本方向变成压叠卡片，削弱切面空间"
+        }
+      ],
+      "readingBudgetFrames": 36
+    },
+    {
+      "id": "cut-close",
+      "from": 600,
+      "to": 720,
+      "stableFrom": 646,
+      "label": "带回发现",
+      "purpose": "把个人体验带回集体现场",
+      "subject": "宽幅现场视频与结语",
+      "handoff": "三层切面扫屏遮挡换图，落定后人物与结语收尾",
+      "selections": [
+        {
+          "id": "talkcraft:shape-wipe-transition",
+          "mode": "adapt",
+          "source_sha256": "7df7c971a89d47e9054e17483b2367f78538c66060a45bf0217a5883faa033ea",
+          "implementation": "Haike_video/templates/chromatic-06-video-v1/Scene.tsx",
+          "reason": "把个人体验带回集体现场；宽幅集体照与结语",
+          "changes": "复用本窗Wipe，原色视频在第二层盖住时切换；只处理主视觉区，不遮字幕/人物；主素材改成真实视频，场景局部Sequence原速播放，阅读期只稳定布局，素材内容继续运动",
+          "verification": "局部2–20三层扫；11帧遮挡换图；46–119阅读"
+        }
+      ],
+      "alternatives": [
+        {
+          "id": "talkcraft:media-pop-in",
+          "reason": "会把本方向变成压叠卡片，削弱切面空间"
+        }
+      ],
+      "readingBudgetFrames": 74
+    }
+  ]
+}

@@ -32,6 +32,107 @@ except ModuleNotFoundError:
 ID = '1027-to-1.2'
 METADATA = {'VERSION.json', 'RELEASE.json', 'PACKAGE-MANIFEST.json', 'RUNTIME-INVENTORY.json'}
 CACHE = '.local/md/shared-1.2/'
+MAX_RESOURCE_FILES = 65536
+MAX_INSTALL_EXPANDED_BYTES = 4 * 1024 * 1024 * 1024
+CLOSURE_PATH = 'Haike_video/templates/motion-presets/upgrade-closure.json'
+CLOSURE_RUNTIME_PREFIXES = ('runtime/python/', 'runtime/node/', 'runtime/browser/', 'runtime/ffmpeg/',
+    'runtime/motion-public/dark/', 'runtime/motion-public/html/', 'runtime/motion-public/ffmpeg9/')
+SNAPCN_DEPENDENCIES = 'Haike_video/motion-components/snapcn/node_modules/'
+PUBLIC_COVER = re.compile(r'Haike_video/templates/public-covers/[a-z0-9][a-z0-9-]{3,79}\.(?:png|jpg|jpeg|webp)')
+CLOSURE_SITE_PACKAGES = {
+    "PIL",
+    "annotated_types",
+    "annotated_types-0.8.0.dist-info",
+    "attr",
+    "attrs",
+    "attrs-26.1.0.dist-info",
+    "certifi",
+    "certifi-2026.7.22.dist-info",
+    "charset_normalizer",
+    "charset_normalizer-3.5.2.dist-info",
+    "dotenv",
+    "idna",
+    "idna-3.20.dist-info",
+    "jsonschema",
+    "jsonschema-4.26.0.dist-info",
+    "jsonschema_specifications",
+    "jsonschema_specifications-2025.9.1.dist-info",
+    "numpy",
+    "numpy-2.5.3.dist-info",
+    "numpy.libs",
+    "packaging",
+    "packaging-26.3.dist-info",
+    "pillow-12.3.0.dist-info",
+    "pydantic",
+    "pydantic-2.14.0.dist-info",
+    "pydantic_core",
+    "pydantic_core-2.50.0.dist-info",
+    "python_dotenv-1.2.4.dist-info",
+    "referencing",
+    "referencing-0.37.0.dist-info",
+    "requests",
+    "requests-2.34.2.dist-info",
+    "rpds",
+    "rpds_py-2026.9.1.dist-info",
+    "typing_extensions-4.16.0.dist-info",
+    "typing_extensions.py",
+    "urllib3",
+    "urllib3-2.8.0.dist-info",
+}
+
+CLOSURE_STATIC_RESOURCES = {
+    "Haike_video/backlot/ui/avatar-generator/assets/.graphic-preview/detail-0.png",
+    "Haike_video/backlot/ui/avatar-generator/assets/.graphic-preview/detail-1.png",
+    "Haike_video/backlot/ui/avatar-generator/assets/.graphic-preview/detail-2.png",
+    "Haike_video/backlot/ui/avatar-generator/assets/.graphic-preview/top.png",
+    "Haike_video/backlot/ui/avatar-generator/assets/graphic-news.png",
+    "Haike_video/backlot/ui/avatar-generator/assets/haike-company-logo.png",
+    "Haike_video/backlot/ui/avatar-generator/assets/icons/LICENSE",
+    "Haike_video/backlot/ui/avatar-generator/assets/n1-public-data.png",
+    "Haike_video/backlot/ui/avatar-generator/assets/n1-public-material.png",
+    "Haike_video/backlot/ui/avatar-generator/assets/n1-public-presenter.png",
+    "Haike_video/backlot/ui/avatar-generator/assets/n1-public-sample-v1.mp4",
+    "Haike_video/backlot/ui/avatar-generator/assets/n1-public-screenshot.png",
+    "Haike_video/backlot/ui/avatar-generator/assets/template1-layout.png",
+    "Haike_video/backlot/ui/avatar-generator/assets/template2-layout.png",
+    "Haike_video/backlot/ui/avatar-generator/ui/brand/haike-company-logo.png",
+    "Haike_video/backlot/ui/avatar-generator/ui/brand/haike-logo.png",
+    "Haike_video/backlot/ui/avatar-generator/ui/brand/haike-pattern-orange.png",
+    "Haike_video/backlot/ui/avatar-generator/ui/brand/haike-pattern-yellow.png",
+    "Haike_video/backlot/ui/avatar-generator/ui/brand/icons/LICENSE",
+    "Haike_video/remotion-composer/a2e/public/fonts/NotoSansSC.ttf",
+    "Haike_video/templates/knowledge-reference-public-v3/public/fonts/Fraunces.ttf",
+    "Haike_video/templates/knowledge-reference-public-v3/public/fonts/JetBrainsMono.ttf",
+    "Haike_video/templates/knowledge-reference-public-v3/public/fonts/LXGWWenKai-Medium.ttf",
+    "Haike_video/templates/knowledge-reference-public-v3/public/fonts/LongCang.ttf",
+    "prototypes/haike-avatar-generator/dist/client/assets/.graphic-preview/detail-0.png",
+    "prototypes/haike-avatar-generator/dist/client/assets/.graphic-preview/detail-1.png",
+    "prototypes/haike-avatar-generator/dist/client/assets/.graphic-preview/detail-2.png",
+    "prototypes/haike-avatar-generator/dist/client/assets/.graphic-preview/top.png",
+    "prototypes/haike-avatar-generator/dist/client/assets/graphic-news.png",
+    "prototypes/haike-avatar-generator/dist/client/assets/haike-company-logo.png",
+    "prototypes/haike-avatar-generator/dist/client/assets/icons/LICENSE",
+    "prototypes/haike-avatar-generator/dist/client/assets/n1-public-data.png",
+    "prototypes/haike-avatar-generator/dist/client/assets/n1-public-material.png",
+    "prototypes/haike-avatar-generator/dist/client/assets/n1-public-presenter.png",
+    "prototypes/haike-avatar-generator/dist/client/assets/n1-public-sample-v1.mp4",
+    "prototypes/haike-avatar-generator/dist/client/assets/n1-public-screenshot.png",
+    "prototypes/haike-avatar-generator/dist/client/assets/template1-layout.png",
+    "prototypes/haike-avatar-generator/dist/client/assets/template2-layout.png",
+    "prototypes/haike-avatar-generator/dist/client/ui/brand/haike-company-logo.png",
+    "prototypes/haike-avatar-generator/dist/client/ui/brand/haike-logo.png",
+    "prototypes/haike-avatar-generator/dist/client/ui/brand/haike-pattern-orange.png",
+    "prototypes/haike-avatar-generator/dist/client/ui/brand/haike-pattern-yellow.png",
+    "prototypes/haike-avatar-generator/dist/client/ui/brand/icons/LICENSE",
+}
+
+APPROVED_DESIGN_COVERS = {
+    'Haike_video/templates/library-covers/motion-package-mg-178e6870ae932019c6bf2fe9.png':
+        '2d19a4eb24160556d6960090eb85453a7345f04f9efa708a628af919ffbc9b77',
+    'Haike_video/templates/library-covers/motion-package-mg-5b31b7dd6e6709861dc6ac88.png':
+        '379780b6f13ba83f69f03ee3f9ccd8ee0dc8fa234e9cc5d002841cfd8ae3ff32',
+}
+
 
 
 def runtime_module():
@@ -97,13 +198,35 @@ def database(path, readonly=False):
         db.close()
 
 
+def closure_resource(name):
+    parts = _parts(name)
+    if name == 'Haike_video/.venv/Lib/site-packages/certifi/cacert.pem':
+        return True  # Public CA bundle; still pinned by the program-bound closure.
+    base = parts[-1].casefold()
+    if (base.startswith('.env') or base in {'cookies', 'storage_state.json', 'credentials.json', 'login data', 'history'}
+            or '.private.' in base or '.local.' in base or base.endswith(('.pem', '.key'))):
+        return False
+    if any(p.casefold() in {'profiles', 'profile', 'browser_data', 'user_data'} for p in parts):
+        return False
+    if name.startswith(SNAPCN_DEPENDENCIES):
+        return not any(p.casefold() in {'.git', '.backlot', '.local', 'projects', '__pycache__'} for p in parts)
+    if PUBLIC_COVER.fullmatch(name):
+        return True  # Every image identity comes from the program-bound closure.
+    if name in CLOSURE_STATIC_RESOURCES or name in APPROVED_DESIGN_COVERS:
+        return True
+    if name.startswith(CLOSURE_RUNTIME_PREFIXES):
+        return True
+    prefix = 'Haike_video/.venv/Lib/site-packages/'
+    return name.startswith(prefix) and name[len(prefix):].split('/', 1)[0] in CLOSURE_SITE_PACKAGES
+
+
 def allowed(name, resource=False):
     _parts(name)
     if not resource:
         return is_program_path(name) or name in METADATA or name in {
             'Haike_video/remotion-composer/package.json',
             'Haike_video/remotion-composer/package-lock.json'}
-    return (name.startswith('Haike_video/remotion-composer/node_modules/')
+    return (closure_resource(name) or name.startswith('Haike_video/remotion-composer/node_modules/')
             or name.startswith(CACHE)
             or re.fullmatch(r'\.local/motiongit/packages/mg-[a-f0-9]{24}/original\.motion', name)
             or name.startswith(('.local/md/paper-rc54-v1-kit/', '.local/md/knowledge-rc54-v1/'))
@@ -160,7 +283,7 @@ def lock(target):
 
 
 def archive_manifest(archive, name):
-    require(len(archive.infolist()) <= 50000, '资源包文件数量超限')
+    require(len(archive.infolist()) <= MAX_RESOURCE_FILES, '资源包文件数量超限')
     seen = set()
     for info in archive.infolist():
         _parts(info.filename)
@@ -203,6 +326,29 @@ def project_identity(target, release, compatible):
             '目标缺少海客项目结构，请确认工作台目录')
 
 
+def verify_declared_closure(bundle, plan, resources):
+    """New runtime scopes require the exact program-bound C closure and SHA map."""
+    if not any(closure_resource(row['path']) for row in resources['files']):
+        return
+    entry = next((r for r in plan['files'] if r['path'] == CLOSURE_PATH), None)
+    require(entry and entry.get('payload') and entry['sha256'] == resources.get('component_manifest_sha256'),
+            '完整组件资源缺少本期程序绑定的闭包SHA')
+    path = safe_path(bundle, entry['payload'])
+    require(native_path(path).is_file() and digest(path) == entry['sha256'], '完整组件闭包文件损坏')
+    closure = read(path)
+    require(closure.get('schema') == "haike.motion-upgrade-closure/1" and isinstance(closure.get('resources'), dict)
+            and len(closure['resources']) <= MAX_RESOURCE_FILES, '完整组件闭包格式或数量无效')
+    require(resources.get('preferred_sha256') == closure.get('preferred_sha256'), '组件资源首选版本绑定改变')
+    for row in resources['files']:
+        name = row['path']
+        if name in APPROVED_DESIGN_COVERS:
+            require(row['sha256'] == APPROVED_DESIGN_COVERS[name], '已批准设计封面的SHA改变')
+            continue
+        declared = closure['resources'].get(name)
+        require(isinstance(declared, dict) and row['sha256'] == declared.get('sha256')
+                and row['size'] == declared.get('size'), '资源不属于本期精确闭包或SHA改变：' + name)
+
+
 def preflight(bundle, target, resource, *, require_stopped=True, dependency_plan=None):
     target = target.resolve(strict=True)
     require(not (target / '.git').exists(), '请选择已安装的1027便携目录，不能升级源码仓库')
@@ -217,6 +363,7 @@ def preflight(bundle, target, resource, *, require_stopped=True, dependency_plan
         project_identity(target, release, compatible)
     current = release.get('version') == plan['release']['version'] and release.get('upgrade_id') == ID
     selected = None
+    inventory = {r['path']: r for r in read(target / 'PACKAGE-MANIFEST.json')['files']}
     if compatible:
         # Product identity and runtime probes replace the commit allowlist.
         # All overwritten program bytes are still transactionally backed up.
@@ -245,6 +392,7 @@ def preflight(bundle, target, resource, *, require_stopped=True, dependency_plan
     with zipfile.ZipFile(resource) as archive:
         resources = archive_manifest(archive, 'RESOURCES.json')
         require(resources.get('id') == ID, '模板包与程序包不匹配')
+        verify_declared_closure(bundle, plan, resources)
         rows = [{**row, 'resource': False} for row in plan['files']] + [
             {**row, 'resource': True} for row in resources['files']]
         if dependency_plan:
@@ -265,7 +413,8 @@ def preflight(bundle, target, resource, *, require_stopped=True, dependency_plan
                 before = row['before_by_base'][selected['id']]
                 require(before is None or isinstance(before, str) and re.fullmatch('[0-9a-f]{64}', before),
                         '更新文件的迁移基线摘要无效')
-        require(sum(row['size'] for row in rows) < 2_000_000_000, '解压内容过大')
+        require(len(resources['files']) <= MAX_RESOURCE_FILES, '资源清单文件数量超限')
+        require(sum(row['size'] for row in rows) < MAX_INSTALL_EXPANDED_BYTES, '解压内容过大')
         # Validate payload bytes and ALL overwritten files before writing.
         def verify(row):
             content = data_for(row, bundle, target, archive)
@@ -276,7 +425,9 @@ def preflight(bundle, target, resource, *, require_stopped=True, dependency_plan
                 require(native_path(destination).is_file(), '目标路径不是文件：' + row['path'])
                 actual = digest(destination)
                 prior = row.get('before_by_base', {}).get(selected['id']) if selected else row.get('before_sha256')
-                require(bool(compatible) or actual == row['sha256'] or (not current and actual == prior),
+                record = inventory.get(row['path'], {})
+                require(actual == row['sha256'] or (not current and actual == prior)
+                        or compatible and not record.get('mutable') and actual == record.get('sha256'),
                         '目标文件有本地修改，已停止保留：' + row['path'])
             elif current and not compatible:
                 raise ValueError('已安装1.2的文件缺失：' + row['path'])
@@ -348,19 +499,28 @@ def probe(target):
     # Use the newly installed verifier, not a bootstrap script's import cache.
     verifier = safe_path(target, 'portable/template_capability.py')
     template_delivery = {'status': 'not-declared'}
-    if read(target / 'RELEASE.json').get('template_capability'):
+    release = read(target / 'RELEASE.json')
+    current18 = release.get('template_capability', {}).get('motion_upgrade', {}).get('schema') == 'haike.motion-replay-delivery/2'
+    if release.get('template_capability'):
         require(verifier.is_file(), '模板交付校验器缺失')
         import importlib.util
         spec = importlib.util.spec_from_file_location('haike_installed_template_capability', verifier)
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
         template_delivery = module.selftest(target)
-    expected_version = read(target / 'RELEASE.json')['version']
+    if current18:
+        component = template_delivery.get('component_selftest', {})
+        require(component.get('status') == 'passed' and component.get('template_count') == 18,
+                '新版18套声明组件实际自检未全部通过')
+    # SciPy is a versioned legacy/native resource, not a base dependency of
+    # public18. Its exact declared components have just run their own probes.
+    dependency_imports = 'cv2,numpy,PIL' if current18 else 'cv2,numpy,scipy,PIL'
+    expected_version = release['version']
     code = ("import json,sys; from pathlib import Path; "
             "from backlot import studio_motion_templates as t; "
             "from backlot.server import create_app; "
             "items=t.catalog(); assert len([x for x in items if x['id'].startswith('motiongit-')])>=3; "
-            "assert create_app(); import cv2,numpy,scipy,PIL; "
+            "assert create_app(); import " + dependency_imports + "; "
             "print(json.dumps({'ok':True,'templates':[{k:x.get(k) for k in ('id','status')} for x in items]}))")
     environment = os.environ.copy()
     environment.pop('PYTHONHOME', None)
@@ -584,3 +744,12 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
+def current_template_delivery(target, *, run_selftest=False):
+    if not read(target / 'RELEASE.json').get('template_capability'):
+        return {'status': 'not-declared'}
+    spec = importlib.util.spec_from_file_location('haike_current_template_capability',
+                                                safe_path(target, 'portable/template_capability.py'))
+    module = importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
+    return (module.selftest if run_selftest else module.verify)(target)

@@ -1,0 +1,903 @@
+{
+  "schema": "haike.motion-replay-registry/1",
+  "templates": [
+    {
+      "template_id": "knowledge-explainer-sketchnote",
+      "version": "3.0.0-independent.1",
+      "gallery_id": "knowledge-explainer-sketchnote",
+      "theme": "sketchnote",
+      "family": "imported",
+      "default_workflow": "knowledge-full",
+      "renderer": {
+        "kind": "project",
+        "entrypoint": "backlot.studio_imported_knowledge_full:prepare",
+        "adapter": "backlot.motion_replay_knowledge_full:prepare",
+        "execution": "supported"
+      },
+      "sources": [
+        {
+          "path": "Haike_video/backlot/motion_replay_knowledge_full.py",
+          "sha256": "cda703f6616bc98b70cdecc0b6e4ce3448f91107a8e2b2a3df709509b81d88bb"
+        },
+        {
+          "path": "Haike_video/backlot/studio_imported_knowledge_full.py",
+          "sha256": "e3d0a505f0efbee72d6505b2842352e33c9afe2542915b5c235fbe35e224e7f3"
+        },
+        {
+          "path": "Haike_video/remotion-composer/package-lock.json",
+          "sha256": "80be5141ee357725970da36d2117500fd3ac062902e04bc9fe1f1942d3596bee"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-full-independent-v1/Board.tsx",
+          "sha256": "0323ba0653434e57ced623bc5640e6c70dc17b50ee23814987dfd32126a269cc"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-full-independent-v1/index.tsx",
+          "sha256": "47136912bcfe4b1af570b407cfb3a08b486107122b0efdf63335083bc089001f"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-full-independent-v1/LICENSE.md",
+          "sha256": "c16f0f1803aa6314bde64a81c0080c65c23ed7c9946c25224c595e770cce7554"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-full-independent-v1/README.md",
+          "sha256": "318f72948138ee21b1633dfbb0c70272876c095a9a4971777f0289463b6ca920"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-full-independent-v1/render.cjs",
+          "sha256": "134cf18f40ab7e4da5fc417cb9679fab9cd7776c02c954b58e295c221fb80ef6"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-full-independent-v1/types.ts",
+          "sha256": "345eff3921a33aa29e32a6f947782ce3141cf3d14c427829416866dd91a93f5d"
+        }
+      ],
+      "objects": [
+        {
+          "id": "board.compare",
+          "role": "两栏对比/因果回路与持久标签、连接线、实拍窗口",
+          "authority": "templates/knowledge-full-independent-v1/Board.tsx independently authored source"
+        },
+        {
+          "id": "board.evidence",
+          "role": "实际视频证据与持久标签、连接线、实拍窗口",
+          "authority": "templates/knowledge-full-independent-v1/Board.tsx independently authored source"
+        },
+        {
+          "id": "board.invitation",
+          "role": "地址与行动邀请与持久标签、连接线、实拍窗口",
+          "authority": "templates/knowledge-full-independent-v1/Board.tsx independently authored source"
+        },
+        {
+          "id": "board.notice",
+          "role": "完整边界卡与持久标签、连接线、实拍窗口",
+          "authority": "templates/knowledge-full-independent-v1/Board.tsx independently authored source"
+        },
+        {
+          "id": "board.question",
+          "role": "问题变答案与持久标签、连接线、实拍窗口",
+          "authority": "templates/knowledge-full-independent-v1/Board.tsx independently authored source"
+        },
+        {
+          "id": "board.quote",
+          "role": "情境引用与持久标签、连接线、实拍窗口",
+          "authority": "templates/knowledge-full-independent-v1/Board.tsx independently authored source"
+        },
+        {
+          "id": "board.steps",
+          "role": "先后/分支步骤与持久标签、连接线、实拍窗口",
+          "authority": "templates/knowledge-full-independent-v1/Board.tsx independently authored source"
+        }
+      ],
+      "actions": [
+        {
+          "id": "haike.knowledge-explainer-sketchnote.knowledge-full.compare",
+          "version": "3.0.0-independent.1",
+          "implementation": {
+            "owner": "Haike independent knowledge component",
+            "path": "Haike_video/templates/knowledge-full-independent-v1/Board.tsx",
+            "recipe": "compare",
+            "theme": "sketchnote",
+            "original_protected_core_used": false
+          },
+          "objects": [
+            "board.compare"
+          ],
+          "parameters": {
+            "title": {
+              "maxLength": 22
+            },
+            "subtitle": {
+              "maxLength": 30
+            },
+            "labels": {
+              "minItems": 1,
+              "maxItems": 4
+            },
+            "events": "measured ASR sentence/word indices",
+            "media": "actual unlooped source window for evidence only"
+          },
+          "phases": {
+            "entry": "Actual scene boundary, 0.55s cubic settling and stroke draw.",
+            "active": "Actual ASR events advance labels/links; video advances at source time.",
+            "settled": "Persist completed relation and enough full-scene reading time.",
+            "exit": "Clean semantic boundary cut; never alter performed speech/video time."
+          }
+        },
+        {
+          "id": "haike.knowledge-explainer-sketchnote.knowledge-full.evidence",
+          "version": "3.0.0-independent.1",
+          "implementation": {
+            "owner": "Haike independent knowledge component",
+            "path": "Haike_video/templates/knowledge-full-independent-v1/Board.tsx",
+            "recipe": "evidence",
+            "theme": "sketchnote",
+            "original_protected_core_used": false
+          },
+          "objects": [
+            "board.evidence"
+          ],
+          "parameters": {
+            "title": {
+              "maxLength": 22
+            },
+            "subtitle": {
+              "maxLength": 30
+            },
+            "labels": {
+              "minItems": 1,
+              "maxItems": 4
+            },
+            "events": "measured ASR sentence/word indices",
+            "media": "actual unlooped source window for evidence only"
+          },
+          "phases": {
+            "entry": "Actual scene boundary, 0.55s cubic settling and stroke draw.",
+            "active": "Actual ASR events advance labels/links; video advances at source time.",
+            "settled": "Persist completed relation and enough full-scene reading time.",
+            "exit": "Clean semantic boundary cut; never alter performed speech/video time."
+          }
+        },
+        {
+          "id": "haike.knowledge-explainer-sketchnote.knowledge-full.invitation",
+          "version": "3.0.0-independent.1",
+          "implementation": {
+            "owner": "Haike independent knowledge component",
+            "path": "Haike_video/templates/knowledge-full-independent-v1/Board.tsx",
+            "recipe": "invitation",
+            "theme": "sketchnote",
+            "original_protected_core_used": false
+          },
+          "objects": [
+            "board.invitation"
+          ],
+          "parameters": {
+            "title": {
+              "maxLength": 22
+            },
+            "subtitle": {
+              "maxLength": 30
+            },
+            "labels": {
+              "minItems": 1,
+              "maxItems": 4
+            },
+            "events": "measured ASR sentence/word indices",
+            "media": "actual unlooped source window for evidence only"
+          },
+          "phases": {
+            "entry": "Actual scene boundary, 0.55s cubic settling and stroke draw.",
+            "active": "Actual ASR events advance labels/links; video advances at source time.",
+            "settled": "Persist completed relation and enough full-scene reading time.",
+            "exit": "Clean semantic boundary cut; never alter performed speech/video time."
+          }
+        },
+        {
+          "id": "haike.knowledge-explainer-sketchnote.knowledge-full.notice",
+          "version": "3.0.0-independent.1",
+          "implementation": {
+            "owner": "Haike independent knowledge component",
+            "path": "Haike_video/templates/knowledge-full-independent-v1/Board.tsx",
+            "recipe": "notice",
+            "theme": "sketchnote",
+            "original_protected_core_used": false
+          },
+          "objects": [
+            "board.notice"
+          ],
+          "parameters": {
+            "title": {
+              "maxLength": 22
+            },
+            "subtitle": {
+              "maxLength": 30
+            },
+            "labels": {
+              "minItems": 1,
+              "maxItems": 4
+            },
+            "events": "measured ASR sentence/word indices",
+            "media": "actual unlooped source window for evidence only"
+          },
+          "phases": {
+            "entry": "Actual scene boundary, 0.55s cubic settling and stroke draw.",
+            "active": "Actual ASR events advance labels/links; video advances at source time.",
+            "settled": "Persist completed relation and enough full-scene reading time.",
+            "exit": "Clean semantic boundary cut; never alter performed speech/video time."
+          }
+        },
+        {
+          "id": "haike.knowledge-explainer-sketchnote.knowledge-full.question",
+          "version": "3.0.0-independent.1",
+          "implementation": {
+            "owner": "Haike independent knowledge component",
+            "path": "Haike_video/templates/knowledge-full-independent-v1/Board.tsx",
+            "recipe": "question",
+            "theme": "sketchnote",
+            "original_protected_core_used": false
+          },
+          "objects": [
+            "board.question"
+          ],
+          "parameters": {
+            "title": {
+              "maxLength": 22
+            },
+            "subtitle": {
+              "maxLength": 30
+            },
+            "labels": {
+              "minItems": 1,
+              "maxItems": 4
+            },
+            "events": "measured ASR sentence/word indices",
+            "media": "actual unlooped source window for evidence only"
+          },
+          "phases": {
+            "entry": "Actual scene boundary, 0.55s cubic settling and stroke draw.",
+            "active": "Actual ASR events advance labels/links; video advances at source time.",
+            "settled": "Persist completed relation and enough full-scene reading time.",
+            "exit": "Clean semantic boundary cut; never alter performed speech/video time."
+          }
+        },
+        {
+          "id": "haike.knowledge-explainer-sketchnote.knowledge-full.quote",
+          "version": "3.0.0-independent.1",
+          "implementation": {
+            "owner": "Haike independent knowledge component",
+            "path": "Haike_video/templates/knowledge-full-independent-v1/Board.tsx",
+            "recipe": "quote",
+            "theme": "sketchnote",
+            "original_protected_core_used": false
+          },
+          "objects": [
+            "board.quote"
+          ],
+          "parameters": {
+            "title": {
+              "maxLength": 22
+            },
+            "subtitle": {
+              "maxLength": 30
+            },
+            "labels": {
+              "minItems": 1,
+              "maxItems": 4
+            },
+            "events": "measured ASR sentence/word indices",
+            "media": "actual unlooped source window for evidence only"
+          },
+          "phases": {
+            "entry": "Actual scene boundary, 0.55s cubic settling and stroke draw.",
+            "active": "Actual ASR events advance labels/links; video advances at source time.",
+            "settled": "Persist completed relation and enough full-scene reading time.",
+            "exit": "Clean semantic boundary cut; never alter performed speech/video time."
+          }
+        },
+        {
+          "id": "haike.knowledge-explainer-sketchnote.knowledge-full.steps",
+          "version": "3.0.0-independent.1",
+          "implementation": {
+            "owner": "Haike independent knowledge component",
+            "path": "Haike_video/templates/knowledge-full-independent-v1/Board.tsx",
+            "recipe": "steps",
+            "theme": "sketchnote",
+            "original_protected_core_used": false
+          },
+          "objects": [
+            "board.steps"
+          ],
+          "parameters": {
+            "title": {
+              "maxLength": 22
+            },
+            "subtitle": {
+              "maxLength": 30
+            },
+            "labels": {
+              "minItems": 1,
+              "maxItems": 4
+            },
+            "events": "measured ASR sentence/word indices",
+            "media": "actual unlooped source window for evidence only"
+          },
+          "phases": {
+            "entry": "Actual scene boundary, 0.55s cubic settling and stroke draw.",
+            "active": "Actual ASR events advance labels/links; video advances at source time.",
+            "settled": "Persist completed relation and enough full-scene reading time.",
+            "exit": "Clean semantic boundary cut; never alter performed speech/video time."
+          }
+        }
+      ],
+      "timeline": {
+        "mode": "semantic",
+        "clock": "完整PCM口播与同源真ASR；60fps视觉，补不足一帧静音",
+        "events": [
+          {
+            "id": "board.compare.meaning",
+            "action_id": "haike.knowledge-explainer-sketchnote.knowledge-full.compare",
+            "anchor": "本场真实ASR句词事件",
+            "window": "至少2.5秒完整场景，末事件留0.2秒以上落定",
+            "reading": "按本期字幕及实际图像复核；不能以schema通过代替"
+          },
+          {
+            "id": "board.evidence.meaning",
+            "action_id": "haike.knowledge-explainer-sketchnote.knowledge-full.evidence",
+            "anchor": "本场真实ASR句词事件",
+            "window": "至少2.5秒完整场景，末事件留0.2秒以上落定",
+            "reading": "按本期字幕及实际图像复核；不能以schema通过代替"
+          },
+          {
+            "id": "board.invitation.meaning",
+            "action_id": "haike.knowledge-explainer-sketchnote.knowledge-full.invitation",
+            "anchor": "本场真实ASR句词事件",
+            "window": "至少2.5秒完整场景，末事件留0.2秒以上落定",
+            "reading": "按本期字幕及实际图像复核；不能以schema通过代替"
+          },
+          {
+            "id": "board.notice.meaning",
+            "action_id": "haike.knowledge-explainer-sketchnote.knowledge-full.notice",
+            "anchor": "本场真实ASR句词事件",
+            "window": "至少2.5秒完整场景，末事件留0.2秒以上落定",
+            "reading": "按本期字幕及实际图像复核；不能以schema通过代替"
+          },
+          {
+            "id": "board.question.meaning",
+            "action_id": "haike.knowledge-explainer-sketchnote.knowledge-full.question",
+            "anchor": "本场真实ASR句词事件",
+            "window": "至少2.5秒完整场景，末事件留0.2秒以上落定",
+            "reading": "按本期字幕及实际图像复核；不能以schema通过代替"
+          },
+          {
+            "id": "board.quote.meaning",
+            "action_id": "haike.knowledge-explainer-sketchnote.knowledge-full.quote",
+            "anchor": "本场真实ASR句词事件",
+            "window": "至少2.5秒完整场景，末事件留0.2秒以上落定",
+            "reading": "按本期字幕及实际图像复核；不能以schema通过代替"
+          },
+          {
+            "id": "board.steps.meaning",
+            "action_id": "haike.knowledge-explainer-sketchnote.knowledge-full.steps",
+            "anchor": "本场真实ASR句词事件",
+            "window": "至少2.5秒完整场景，末事件留0.2秒以上落定",
+            "reading": "按本期字幕及实际图像复核；不能以schema通过代替"
+          }
+        ],
+        "retiming": "不变速、不循环、不截句；只重排图解，实际视频入点与人物可见域独立核验"
+      },
+      "slots": [
+        {
+          "id": "asr",
+          "kind": "measured_speech_clock",
+          "input_path": "input.asr",
+          "required": true,
+          "missing_policy": "缺少或SHA改变则阻断，沿原源补齐"
+        },
+        {
+          "id": "script",
+          "kind": "complete_script",
+          "input_path": "input.script",
+          "required": true,
+          "missing_policy": "缺少或SHA改变则阻断，沿原源补齐"
+        },
+        {
+          "id": "assets",
+          "kind": "bound_local_media",
+          "input_path": "input.assets",
+          "required": true,
+          "missing_policy": "缺少或SHA改变则阻断，沿原源补齐"
+        },
+        {
+          "id": "scenes",
+          "kind": "semantic_recipe_timeline",
+          "input_path": "input.scenes",
+          "required": true,
+          "missing_policy": "缺少或SHA改变则阻断，沿原源补齐"
+        }
+      ],
+      "capabilities": {
+        "input_asr": true,
+        "complete_voice": true,
+        "main_video": true,
+        "same_source_presenter_windows": true,
+        "independent_redistributable_source": true,
+        "personal_motion_required": false,
+        "license": "MIT for new component source; separate dependency licenses",
+        "original_reference": {
+          "template_id": "knowledge-explainer-sketchnote",
+          "version": "2.7.3"
+        },
+        "fidelity": "独立实现，不声称逐像素或同源核心；实际对照验收单列"
+      },
+      "validation": {
+        "input": {
+          "status": "pass",
+          "method": "9 targeted tests plus real B6 preflight/freeze",
+          "scope": "完整文本、实拍区间、真实句词、人物同源与窗口",
+          "evidence": "Haike_video/tests/test_studio_imported_knowledge_full.py"
+        },
+        "visual": {
+          "status": "pending",
+          "method": "actual queued preview and full encoded frames",
+          "scope": "新独立组件与参考表达的可见对照",
+          "evidence": "each actual job receipt"
+        },
+        "audio": {
+          "status": "pending",
+          "method": "full encoded audio metrics and actual listening recorded separately",
+          "scope": "完整口播/混音/人耳/真机边界分别记录",
+          "evidence": "each actual job receipt"
+        }
+      }
+    },
+    {
+      "template_id": "knowledge-explainer-chalkboard",
+      "version": "3.0.0-independent.1",
+      "gallery_id": "knowledge-explainer-chalkboard",
+      "theme": "chalkboard",
+      "family": "imported",
+      "default_workflow": "knowledge-full",
+      "renderer": {
+        "kind": "project",
+        "entrypoint": "backlot.studio_imported_knowledge_full:prepare",
+        "adapter": "backlot.motion_replay_knowledge_full:prepare",
+        "execution": "supported"
+      },
+      "sources": [
+        {
+          "path": "Haike_video/backlot/motion_replay_knowledge_full.py",
+          "sha256": "cda703f6616bc98b70cdecc0b6e4ce3448f91107a8e2b2a3df709509b81d88bb"
+        },
+        {
+          "path": "Haike_video/backlot/studio_imported_knowledge_full.py",
+          "sha256": "e3d0a505f0efbee72d6505b2842352e33c9afe2542915b5c235fbe35e224e7f3"
+        },
+        {
+          "path": "Haike_video/remotion-composer/package-lock.json",
+          "sha256": "80be5141ee357725970da36d2117500fd3ac062902e04bc9fe1f1942d3596bee"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-full-independent-v1/Board.tsx",
+          "sha256": "0323ba0653434e57ced623bc5640e6c70dc17b50ee23814987dfd32126a269cc"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-full-independent-v1/index.tsx",
+          "sha256": "47136912bcfe4b1af570b407cfb3a08b486107122b0efdf63335083bc089001f"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-full-independent-v1/LICENSE.md",
+          "sha256": "c16f0f1803aa6314bde64a81c0080c65c23ed7c9946c25224c595e770cce7554"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-full-independent-v1/README.md",
+          "sha256": "318f72948138ee21b1633dfbb0c70272876c095a9a4971777f0289463b6ca920"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-full-independent-v1/render.cjs",
+          "sha256": "134cf18f40ab7e4da5fc417cb9679fab9cd7776c02c954b58e295c221fb80ef6"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-full-independent-v1/types.ts",
+          "sha256": "345eff3921a33aa29e32a6f947782ce3141cf3d14c427829416866dd91a93f5d"
+        }
+      ],
+      "objects": [
+        {
+          "id": "board.compare",
+          "role": "两栏对比/因果回路与持久标签、连接线、实拍窗口",
+          "authority": "templates/knowledge-full-independent-v1/Board.tsx independently authored source"
+        },
+        {
+          "id": "board.evidence",
+          "role": "实际视频证据与持久标签、连接线、实拍窗口",
+          "authority": "templates/knowledge-full-independent-v1/Board.tsx independently authored source"
+        },
+        {
+          "id": "board.invitation",
+          "role": "地址与行动邀请与持久标签、连接线、实拍窗口",
+          "authority": "templates/knowledge-full-independent-v1/Board.tsx independently authored source"
+        },
+        {
+          "id": "board.notice",
+          "role": "完整边界卡与持久标签、连接线、实拍窗口",
+          "authority": "templates/knowledge-full-independent-v1/Board.tsx independently authored source"
+        },
+        {
+          "id": "board.question",
+          "role": "问题变答案与持久标签、连接线、实拍窗口",
+          "authority": "templates/knowledge-full-independent-v1/Board.tsx independently authored source"
+        },
+        {
+          "id": "board.quote",
+          "role": "情境引用与持久标签、连接线、实拍窗口",
+          "authority": "templates/knowledge-full-independent-v1/Board.tsx independently authored source"
+        },
+        {
+          "id": "board.steps",
+          "role": "先后/分支步骤与持久标签、连接线、实拍窗口",
+          "authority": "templates/knowledge-full-independent-v1/Board.tsx independently authored source"
+        }
+      ],
+      "actions": [
+        {
+          "id": "haike.knowledge-explainer-chalkboard.knowledge-full.compare",
+          "version": "3.0.0-independent.1",
+          "implementation": {
+            "owner": "Haike independent knowledge component",
+            "path": "Haike_video/templates/knowledge-full-independent-v1/Board.tsx",
+            "recipe": "compare",
+            "theme": "chalkboard",
+            "original_protected_core_used": false
+          },
+          "objects": [
+            "board.compare"
+          ],
+          "parameters": {
+            "title": {
+              "maxLength": 22
+            },
+            "subtitle": {
+              "maxLength": 30
+            },
+            "labels": {
+              "minItems": 1,
+              "maxItems": 4
+            },
+            "events": "measured ASR sentence/word indices",
+            "media": "actual unlooped source window for evidence only"
+          },
+          "phases": {
+            "entry": "Actual scene boundary, 0.55s cubic settling and stroke draw.",
+            "active": "Actual ASR events advance labels/links; video advances at source time.",
+            "settled": "Persist completed relation and enough full-scene reading time.",
+            "exit": "Clean semantic boundary cut; never alter performed speech/video time."
+          }
+        },
+        {
+          "id": "haike.knowledge-explainer-chalkboard.knowledge-full.evidence",
+          "version": "3.0.0-independent.1",
+          "implementation": {
+            "owner": "Haike independent knowledge component",
+            "path": "Haike_video/templates/knowledge-full-independent-v1/Board.tsx",
+            "recipe": "evidence",
+            "theme": "chalkboard",
+            "original_protected_core_used": false
+          },
+          "objects": [
+            "board.evidence"
+          ],
+          "parameters": {
+            "title": {
+              "maxLength": 22
+            },
+            "subtitle": {
+              "maxLength": 30
+            },
+            "labels": {
+              "minItems": 1,
+              "maxItems": 4
+            },
+            "events": "measured ASR sentence/word indices",
+            "media": "actual unlooped source window for evidence only"
+          },
+          "phases": {
+            "entry": "Actual scene boundary, 0.55s cubic settling and stroke draw.",
+            "active": "Actual ASR events advance labels/links; video advances at source time.",
+            "settled": "Persist completed relation and enough full-scene reading time.",
+            "exit": "Clean semantic boundary cut; never alter performed speech/video time."
+          }
+        },
+        {
+          "id": "haike.knowledge-explainer-chalkboard.knowledge-full.invitation",
+          "version": "3.0.0-independent.1",
+          "implementation": {
+            "owner": "Haike independent knowledge component",
+            "path": "Haike_video/templates/knowledge-full-independent-v1/Board.tsx",
+            "recipe": "invitation",
+            "theme": "chalkboard",
+            "original_protected_core_used": false
+          },
+          "objects": [
+            "board.invitation"
+          ],
+          "parameters": {
+            "title": {
+              "maxLength": 22
+            },
+            "subtitle": {
+              "maxLength": 30
+            },
+            "labels": {
+              "minItems": 1,
+              "maxItems": 4
+            },
+            "events": "measured ASR sentence/word indices",
+            "media": "actual unlooped source window for evidence only"
+          },
+          "phases": {
+            "entry": "Actual scene boundary, 0.55s cubic settling and stroke draw.",
+            "active": "Actual ASR events advance labels/links; video advances at source time.",
+            "settled": "Persist completed relation and enough full-scene reading time.",
+            "exit": "Clean semantic boundary cut; never alter performed speech/video time."
+          }
+        },
+        {
+          "id": "haike.knowledge-explainer-chalkboard.knowledge-full.notice",
+          "version": "3.0.0-independent.1",
+          "implementation": {
+            "owner": "Haike independent knowledge component",
+            "path": "Haike_video/templates/knowledge-full-independent-v1/Board.tsx",
+            "recipe": "notice",
+            "theme": "chalkboard",
+            "original_protected_core_used": false
+          },
+          "objects": [
+            "board.notice"
+          ],
+          "parameters": {
+            "title": {
+              "maxLength": 22
+            },
+            "subtitle": {
+              "maxLength": 30
+            },
+            "labels": {
+              "minItems": 1,
+              "maxItems": 4
+            },
+            "events": "measured ASR sentence/word indices",
+            "media": "actual unlooped source window for evidence only"
+          },
+          "phases": {
+            "entry": "Actual scene boundary, 0.55s cubic settling and stroke draw.",
+            "active": "Actual ASR events advance labels/links; video advances at source time.",
+            "settled": "Persist completed relation and enough full-scene reading time.",
+            "exit": "Clean semantic boundary cut; never alter performed speech/video time."
+          }
+        },
+        {
+          "id": "haike.knowledge-explainer-chalkboard.knowledge-full.question",
+          "version": "3.0.0-independent.1",
+          "implementation": {
+            "owner": "Haike independent knowledge component",
+            "path": "Haike_video/templates/knowledge-full-independent-v1/Board.tsx",
+            "recipe": "question",
+            "theme": "chalkboard",
+            "original_protected_core_used": false
+          },
+          "objects": [
+            "board.question"
+          ],
+          "parameters": {
+            "title": {
+              "maxLength": 22
+            },
+            "subtitle": {
+              "maxLength": 30
+            },
+            "labels": {
+              "minItems": 1,
+              "maxItems": 4
+            },
+            "events": "measured ASR sentence/word indices",
+            "media": "actual unlooped source window for evidence only"
+          },
+          "phases": {
+            "entry": "Actual scene boundary, 0.55s cubic settling and stroke draw.",
+            "active": "Actual ASR events advance labels/links; video advances at source time.",
+            "settled": "Persist completed relation and enough full-scene reading time.",
+            "exit": "Clean semantic boundary cut; never alter performed speech/video time."
+          }
+        },
+        {
+          "id": "haike.knowledge-explainer-chalkboard.knowledge-full.quote",
+          "version": "3.0.0-independent.1",
+          "implementation": {
+            "owner": "Haike independent knowledge component",
+            "path": "Haike_video/templates/knowledge-full-independent-v1/Board.tsx",
+            "recipe": "quote",
+            "theme": "chalkboard",
+            "original_protected_core_used": false
+          },
+          "objects": [
+            "board.quote"
+          ],
+          "parameters": {
+            "title": {
+              "maxLength": 22
+            },
+            "subtitle": {
+              "maxLength": 30
+            },
+            "labels": {
+              "minItems": 1,
+              "maxItems": 4
+            },
+            "events": "measured ASR sentence/word indices",
+            "media": "actual unlooped source window for evidence only"
+          },
+          "phases": {
+            "entry": "Actual scene boundary, 0.55s cubic settling and stroke draw.",
+            "active": "Actual ASR events advance labels/links; video advances at source time.",
+            "settled": "Persist completed relation and enough full-scene reading time.",
+            "exit": "Clean semantic boundary cut; never alter performed speech/video time."
+          }
+        },
+        {
+          "id": "haike.knowledge-explainer-chalkboard.knowledge-full.steps",
+          "version": "3.0.0-independent.1",
+          "implementation": {
+            "owner": "Haike independent knowledge component",
+            "path": "Haike_video/templates/knowledge-full-independent-v1/Board.tsx",
+            "recipe": "steps",
+            "theme": "chalkboard",
+            "original_protected_core_used": false
+          },
+          "objects": [
+            "board.steps"
+          ],
+          "parameters": {
+            "title": {
+              "maxLength": 22
+            },
+            "subtitle": {
+              "maxLength": 30
+            },
+            "labels": {
+              "minItems": 1,
+              "maxItems": 4
+            },
+            "events": "measured ASR sentence/word indices",
+            "media": "actual unlooped source window for evidence only"
+          },
+          "phases": {
+            "entry": "Actual scene boundary, 0.55s cubic settling and stroke draw.",
+            "active": "Actual ASR events advance labels/links; video advances at source time.",
+            "settled": "Persist completed relation and enough full-scene reading time.",
+            "exit": "Clean semantic boundary cut; never alter performed speech/video time."
+          }
+        }
+      ],
+      "timeline": {
+        "mode": "semantic",
+        "clock": "完整PCM口播与同源真ASR；60fps视觉，补不足一帧静音",
+        "events": [
+          {
+            "id": "board.compare.meaning",
+            "action_id": "haike.knowledge-explainer-chalkboard.knowledge-full.compare",
+            "anchor": "本场真实ASR句词事件",
+            "window": "至少2.5秒完整场景，末事件留0.2秒以上落定",
+            "reading": "按本期字幕及实际图像复核；不能以schema通过代替"
+          },
+          {
+            "id": "board.evidence.meaning",
+            "action_id": "haike.knowledge-explainer-chalkboard.knowledge-full.evidence",
+            "anchor": "本场真实ASR句词事件",
+            "window": "至少2.5秒完整场景，末事件留0.2秒以上落定",
+            "reading": "按本期字幕及实际图像复核；不能以schema通过代替"
+          },
+          {
+            "id": "board.invitation.meaning",
+            "action_id": "haike.knowledge-explainer-chalkboard.knowledge-full.invitation",
+            "anchor": "本场真实ASR句词事件",
+            "window": "至少2.5秒完整场景，末事件留0.2秒以上落定",
+            "reading": "按本期字幕及实际图像复核；不能以schema通过代替"
+          },
+          {
+            "id": "board.notice.meaning",
+            "action_id": "haike.knowledge-explainer-chalkboard.knowledge-full.notice",
+            "anchor": "本场真实ASR句词事件",
+            "window": "至少2.5秒完整场景，末事件留0.2秒以上落定",
+            "reading": "按本期字幕及实际图像复核；不能以schema通过代替"
+          },
+          {
+            "id": "board.question.meaning",
+            "action_id": "haike.knowledge-explainer-chalkboard.knowledge-full.question",
+            "anchor": "本场真实ASR句词事件",
+            "window": "至少2.5秒完整场景，末事件留0.2秒以上落定",
+            "reading": "按本期字幕及实际图像复核；不能以schema通过代替"
+          },
+          {
+            "id": "board.quote.meaning",
+            "action_id": "haike.knowledge-explainer-chalkboard.knowledge-full.quote",
+            "anchor": "本场真实ASR句词事件",
+            "window": "至少2.5秒完整场景，末事件留0.2秒以上落定",
+            "reading": "按本期字幕及实际图像复核；不能以schema通过代替"
+          },
+          {
+            "id": "board.steps.meaning",
+            "action_id": "haike.knowledge-explainer-chalkboard.knowledge-full.steps",
+            "anchor": "本场真实ASR句词事件",
+            "window": "至少2.5秒完整场景，末事件留0.2秒以上落定",
+            "reading": "按本期字幕及实际图像复核；不能以schema通过代替"
+          }
+        ],
+        "retiming": "不变速、不循环、不截句；只重排图解，实际视频入点与人物可见域独立核验"
+      },
+      "slots": [
+        {
+          "id": "asr",
+          "kind": "measured_speech_clock",
+          "input_path": "input.asr",
+          "required": true,
+          "missing_policy": "缺少或SHA改变则阻断，沿原源补齐"
+        },
+        {
+          "id": "script",
+          "kind": "complete_script",
+          "input_path": "input.script",
+          "required": true,
+          "missing_policy": "缺少或SHA改变则阻断，沿原源补齐"
+        },
+        {
+          "id": "assets",
+          "kind": "bound_local_media",
+          "input_path": "input.assets",
+          "required": true,
+          "missing_policy": "缺少或SHA改变则阻断，沿原源补齐"
+        },
+        {
+          "id": "scenes",
+          "kind": "semantic_recipe_timeline",
+          "input_path": "input.scenes",
+          "required": true,
+          "missing_policy": "缺少或SHA改变则阻断，沿原源补齐"
+        }
+      ],
+      "capabilities": {
+        "input_asr": true,
+        "complete_voice": true,
+        "main_video": true,
+        "same_source_presenter_windows": true,
+        "independent_redistributable_source": true,
+        "personal_motion_required": false,
+        "license": "MIT for new component source; separate dependency licenses",
+        "original_reference": {
+          "template_id": "knowledge-explainer-chalkboard",
+          "version": "2.7.2"
+        },
+        "fidelity": "独立实现，不声称逐像素或同源核心；实际对照验收单列"
+      },
+      "validation": {
+        "input": {
+          "status": "pass",
+          "method": "9 targeted tests plus real B6 preflight/freeze",
+          "scope": "完整文本、实拍区间、真实句词、人物同源与窗口",
+          "evidence": "Haike_video/tests/test_studio_imported_knowledge_full.py"
+        },
+        "visual": {
+          "status": "pending",
+          "method": "actual queued preview and full encoded frames",
+          "scope": "新独立组件与参考表达的可见对照",
+          "evidence": "each actual job receipt"
+        },
+        "audio": {
+          "status": "pending",
+          "method": "full encoded audio metrics and actual listening recorded separately",
+          "scope": "完整口播/混音/人耳/真机边界分别记录",
+          "evidence": "each actual job receipt"
+        }
+      }
+    }
+  ]
+}

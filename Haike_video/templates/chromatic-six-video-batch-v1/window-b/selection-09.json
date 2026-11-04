@@ -1,0 +1,129 @@
+{
+  "schema": "haike.motion-selection/1",
+  "templateId": "chromatic-09",
+  "version": "1.1.0-candidate.1",
+  "runtime": "haike-remotion",
+  "revision": "2026-11-03.real-video-b.1",
+  "durationInFrames": 720,
+  "fps": 30,
+  "minReadingFrames": 36,
+  "avatarRole": "supporting-window",
+  "scenes": [
+    {
+      "id": "fold-open",
+      "from": 0,
+      "to": 210,
+      "stableFrom": 100,
+      "purpose": "打开现场札记",
+      "subject": "照片内页与沿页脊旋转的半张纸",
+      "handoff": "封面上桌→右半页绕左边脊翻到背面→露出照片与记录，下一场该记录驻留",
+      "phases": "0–15上桌；35–88半页真实rotateY0→-178；100–209开页阅读。借用摆上桌仪式，翻折是额外原创结构",
+      "selections": [
+        {
+          "id": "talkcraft:news-card-desk",
+          "mode": "adapt",
+          "source_sha256": "76adedbbeb839241fee88d56f1eac188527fef918aa04837ede799644586a2b3",
+          "implementation": "Haike_video/templates/chromatic-six-video-batch-v1/window-b/Scene.tsx",
+          "reason": "打开现场札记；照片内页与沿页脊旋转的半张纸",
+          "changes": "新闻卡上桌适配为整本札记，未照搬示意新闻；去Ken Burns，采用真实纸页翻折强调；翻折非源组件功能；视频新版所有可见主体格用原速Video，源范围和裁切见episode.materialSlots；保留原几何，Sequence映射全局到源时钟",
+          "verification": "实际视频版需重新看图/源时钟推进/内容变化，不能继承旧照片版。0–15上桌；35–88半页真实rotateY0→-178；100–209开页阅读。借用摆上桌仪式，翻折是额外原创结构",
+          "read_at": "2026-11-03T09:50:23.037847+00:00",
+          "video_adaptation_at": "2026-11-03T12:13:37.425132+00:00"
+        }
+      ],
+      "alternatives": [
+        {
+          "id": "talkcraft:overexpose-flip-transition",
+          "reason": "已读取，当前内容更需要打开现场札记；本场不再增加第二主动作"
+        }
+      ]
+    },
+    {
+      "id": "journal-park",
+      "from": 210,
+      "to": 450,
+      "stableFrom": 408,
+      "purpose": "从记录中提取三条观察",
+      "subject": "驻留的照片记录与三张结论条",
+      "handoff": "来源先完整读，28–52驻留完成，63/104/145先实后稳发牌，说明行保留",
+      "phases": "文档左锚露出约28%并慢滚.22px/帧，驻留先于发牌；不将照片伪称论文；198–239完整清单阅读",
+      "selections": [
+        {
+          "id": "talkcraft:doc-park-left-pill-deal",
+          "mode": "adapt",
+          "source_sha256": "874d90c93efd1a9334970629d0a29f67fdb2f8900135174b2c6a882ec0d7a74b",
+          "implementation": "Haike_video/templates/chromatic-six-video-batch-v1/window-b/Scene.tsx",
+          "reason": "从记录中提取三条观察；驻留的照片记录与三张结论条",
+          "changes": "578x540来源；x-22/scale.42完整保留，最终x48宽242.76；牌列x315宽357/间隔162；总控定向修订完整紧凑来源；短说明12帧后进入而非逐词；视频新版所有可见主体格用原速Video，源范围和裁切见episode.materialSlots；保留原几何，Sequence映射全局到源时钟",
+          "verification": "实际视频版需重新看图/源时钟推进/内容变化，不能继承旧照片版。来源完整缩小驻留并慢滚.22px/帧；28–52驻留完成先于63/104/145发牌；198–239清单阅读",
+          "read_at": "2026-11-03T09:50:23.037847+00:00",
+          "video_adaptation_at": "2026-11-03T12:13:37.425132+00:00"
+        }
+      ],
+      "alternatives": [
+        {
+          "id": "talkcraft:news-card-desk",
+          "reason": "已读取，当前内容更需要从记录中提取三条观察；本场不再增加第二主动作"
+        }
+      ]
+    },
+    {
+      "id": "exposure-evidence",
+      "from": 450,
+      "to": 600,
+      "stableFrom": 530,
+      "purpose": "从亲手体验换到全场理解",
+      "subject": "两张照片与曝光重音",
+      "handoff": "推进A至1.5，切点43；12帧交叠；B从1.3拉至1.03，末70帧读图",
+      "phases": "29–46出场推，cut43，升8帧/落13帧不对称暗压峰.12，交叠12/入场沉降17；非白帧",
+      "selections": [
+        {
+          "id": "talkcraft:overexpose-flip-transition",
+          "mode": "adapt",
+          "source_sha256": "b032936e3e9615460ef3329abc5b15b0de0a05750f70329e472edca7658af575",
+          "implementation": "Haike_video/templates/chromatic-six-video-batch-v1/window-b/Scene.tsx",
+          "reason": "从亲手体验换到全场理解；两张照片与曝光重音",
+          "changes": "只在照片窗内转场；冰蓝浅底用朱红暗压；字幕标题不闪，独立源图可辨；视频新版所有可见主体格用原速Video，源范围和裁切见episode.materialSlots；保留原几何，Sequence映射全局到源时钟",
+          "verification": "实际视频版需重新看图/源时钟推进/内容变化，不能继承旧照片版。29–46出场推，cut43，升8帧/落13帧不对称暗压峰.12，交叠12/入场沉降17；非白帧",
+          "read_at": "2026-11-03T09:50:23.037847+00:00",
+          "video_adaptation_at": "2026-11-03T12:13:37.425132+00:00"
+        }
+      ],
+      "alternatives": [
+        {
+          "id": "talkcraft:doc-park-left-pill-deal",
+          "reason": "已读取，当前内容更需要从亲手体验换到全场理解；本场不再增加第二主动作"
+        }
+      ]
+    },
+    {
+      "id": "desk-recap",
+      "from": 600,
+      "to": 720,
+      "stableFrom": 684,
+      "purpose": "把体验写成自己的发现",
+      "subject": "两张实景卡与一条重点结论",
+      "handoff": "A0–12上桌，24–34划重点；B39–51从页边压叠，84–119留读",
+      "phases": "-1.5/+2度倾斜；B保留与A压叠；内图极缓1.015推；标题下线在上桌后划出",
+      "selections": [
+        {
+          "id": "talkcraft:news-card-desk",
+          "mode": "adapt",
+          "source_sha256": "76adedbbeb839241fee88d56f1eac188527fef918aa04837ede799644586a2b3",
+          "implementation": "Haike_video/templates/chromatic-six-video-batch-v1/window-b/Scene.tsx",
+          "reason": "把体验写成自己的发现；两张实景卡与一条重点结论",
+          "changes": "照片替代虚构新闻；结论为本期体验示意；红冰蓝纸面无黑色，局部影色用同朱红；视频新版所有可见主体格用原速Video，源范围和裁切见episode.materialSlots；保留原几何，Sequence映射全局到源时钟",
+          "verification": "实际视频版需重新看图/源时钟推进/内容变化，不能继承旧照片版。-1.5/+2度倾斜；B保留与A压叠；内图极缓1.015推；标题下线在上桌后划出",
+          "read_at": "2026-11-03T09:50:23.037847+00:00",
+          "video_adaptation_at": "2026-11-03T12:13:37.425132+00:00"
+        }
+      ],
+      "alternatives": [
+        {
+          "id": "talkcraft:doc-park-left-pill-deal",
+          "reason": "已读取，当前内容更需要把体验写成自己的发现；本场不再增加第二主动作"
+        }
+      ]
+    }
+  ]
+}

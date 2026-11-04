@@ -1,0 +1,144 @@
+{
+  "template_id": "kinetic-field-v1",
+  "name": "动效模板2 · 活力现场",
+  "aliases": [
+    "动效模板2",
+    "活力现场",
+    "亲子现场"
+  ],
+  "version": "1.0.0",
+  "recorded_date": "2026-11-03",
+  "user_confirmation": {
+    "quote": "这个效果可以，固化为模板，叫动效模板2，名字你来取",
+    "scope": "The exact16-second visual result; no inferred audio-only, phone, full-HD or arbitrary-duration acceptance."
+  },
+  "accepted_video": {
+    "sha256": "8207fba7c136c05c6b2d8963b2a133ff6a3446359663e9e874c93bfca632947d",
+    "video_duration": 16,
+    "container_duration": 16.042667,
+    "width": 270,
+    "height": 480,
+    "fps": 24,
+    "frames": 384,
+    "private_evidence": ".local/motion-rich-test-20261102/validation.json"
+  },
+  "technical": {
+    "complete_decode": "pass",
+    "true_peak_dbfs": -4.9
+  },
+  "visual_regression": {
+    "status": "pass",
+    "actual_keyframes": 29,
+    "pixel_exact": 27,
+    "note": "Two tiny rotated-photo sampling differences, inspected side-by-side; max mean0.017/255. Geometry, text and presenter unchanged.",
+    "private_evidence": ".local/animation-template-2-freeze-20261103/pixel-regression.json",
+    "evidence_sha256": "f172a54444a42bf9d5a492d04c4e97819aed031a4a228bf41c07d0e55cb38d74",
+    "index_sha256": "24783cf9059804f2a9c89d7d2828dfa704896cc5c81e4a175e466c280a9ae1c9"
+  },
+  "original_encoded_frames": [
+    {
+      "frame": 0,
+      "sha256": "d3d97616ebab7d57ace5fba19a173d01fcfcf7b16604b1f90003b874ff3239b0"
+    },
+    {
+      "frame": 41,
+      "sha256": "af7a28a3e78d7ed08ccfe8d5bd3ce65f6c5d4966b4f3d01453893a8926a7c2d1"
+    },
+    {
+      "frame": 77,
+      "sha256": "c0dcc3c6442fcc2e6346a372b3e280ec5f688dd6613d65a402ec0f4ab6b89d27"
+    },
+    {
+      "frame": 78,
+      "sha256": "d896422e06209b761d25a8507e22c5557c186318cefd874ed6e48560595eaeb0"
+    },
+    {
+      "frame": 87,
+      "sha256": "2f86c4f10089c3512d07ee9fe4ec906b62260a10a5f5f5f2963969906f3f0aad"
+    },
+    {
+      "frame": 88,
+      "sha256": "8f777a2d54b865926197f83ee1a06493ee4ef536d4ec4e53994655c7698d3da3"
+    },
+    {
+      "frame": 118,
+      "sha256": "4970d1b54f64607bd6fa9631f72539eb97265e9e8c0f68acbe635763d749e713"
+    },
+    {
+      "frame": 142,
+      "sha256": "2ddee2cbdedf2761c0cb23c31db46d8ac10595613c5b0f36920170c940489842"
+    },
+    {
+      "frame": 158,
+      "sha256": "9dcd278da8801c67a25b69b7d525be7028cc08eed7405ca5c232761ebcc61672"
+    },
+    {
+      "frame": 159,
+      "sha256": "7b6a18ae459c11e981652ebd6f080dfdd37cab20103b68de2d2af76801f95284"
+    },
+    {
+      "frame": 160,
+      "sha256": "573675d4743c6e8f5e7fda4fec3b12a691951d8ba265adbe7ad8e310646477a7"
+    },
+    {
+      "frame": 175,
+      "sha256": "b669e18f85242492c053b8da4ee74b641c5bfdd146c3d75830fa80990ac3466e"
+    },
+    {
+      "frame": 178,
+      "sha256": "6335418d3f0e31e0def5c28c4e8cc7da32f56e9908fbb3e9d58620e863dffc93"
+    },
+    {
+      "frame": 187,
+      "sha256": "326900f61f636d86779fa7b4c8dbfda207ea444651a6b9f40a0e64bb6ad9e8ce"
+    },
+    {
+      "frame": 192,
+      "sha256": "fcbdbb056b61479441773c439666f78d6cb2fc13c7fe1875563a2a97004cdb73"
+    },
+    {
+      "frame": 199,
+      "sha256": "2888f630c9a420736b899f6080dc6cd5d13872804e51cdc3beecfafc3ac83214"
+    },
+    {
+      "frame": 211,
+      "sha256": "6f6bde196503d58f286717b5157debf5e8792d38bdabda31e89d3f9acb1473b6"
+    },
+    {
+      "frame": 230,
+      "sha256": "1d44a8b9bbc657ad3992bc8f9fed4b62d22d6537363224eba950903d6a81ec9c"
+    },
+    {
+      "frame": 287,
+      "sha256": "7326b67269fec346c625ffe80b3158d72d8d811174122363366eaf5af66cd97b"
+    },
+    {
+      "frame": 288,
+      "sha256": "7bc7b536415b02522852a957d1f9d55b3cc707119f44a31fe1a7e738530ed2cc"
+    },
+    {
+      "frame": 289,
+      "sha256": "49863a7c0606453c09d398839082b51b89a3da52c142611a413dc93998a98722"
+    },
+    {
+      "frame": 314,
+      "sha256": "3bb74b8cb22bbeb624e516adf1684341a30dd664aa20158684e83276e3c2ae57"
+    },
+    {
+      "frame": 350,
+      "sha256": "383bd277a6042713a0a20c2159a3dd57f7b5e6803c7a499250791a30bdc692b5"
+    },
+    {
+      "frame": 383,
+      "sha256": "b98d23bbb7ef79889bd8c32ab6313a3c8cca0d80e7c4280149953e41069e7d85"
+    }
+  ],
+  "reusable_scope": "Fixed16-second portrait low-resolution template with independent per-episode copy/media and mandatory actual review.",
+  "pending": [
+    "New input visual/audio validation",
+    "Longer audio adaptation",
+    "Formal1080p/20Mbps output",
+    "Target phone/platform",
+    "Release to GitHub or legacy-client upgrade"
+  ]
+}

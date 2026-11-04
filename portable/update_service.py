@@ -247,12 +247,38 @@ class UpdateService:
                           and candidate["base_version"] == current.get("version"))
             status = "available" if newer and compatible else "incompatible" if newer else "current"
             message = {"available": "发现新的稳定版本", "incompatible": "此版本需要完整升级，请按发行说明迁移。", "current": "当前已是最新稳定版"}[status]
+            template_delivery = None
+            if status == 'current' and candidate.get('template_capability') and not current.get('development'):
+                try:
+                    from . import template_capability
+                except ImportError:
+                    import template_capability
+                try:
+                    expected = (candidate['template_capability'] if candidate['version'] == current.get('version')
+                                else current.get('template_capability'))
+                    result = template_capability.verify(self.root, expected)
+                    if 'motion_replay' in candidate['template_capability']:
+                        actual_versions={(r['template_id'],r['version'],r['registry'],r['execution'])
+                                         for r in (expected or {}).get('motion_replay',{}).get('templates',[])}
+                        required=candidate['template_capability']['motion_replay']['templates']
+                        if not all((r['template_id'],r['version'],r['registry'],r['execution']) in actual_versions for r in required):
+                            raise core.UpdateError('缺少本次18套精确动效合同')
+                    template_delivery = {'status': result['status'], 'runtime_selftest': result.get('runtime_selftest'),
+                                         'motion_replay': result.get('motion_replay', {}).get('status'),
+                                         'production_ready': False}
+                    if result.get('runtime_selftest') != 'passed':
+                        status, message = 'incomplete', '程序版本已安装；运行自检尚未通过，请让Agent核对原更新回执。'
+                except (OSError, ValueError, KeyError, ImportError):
+                    status, message = 'incomplete', '程序版本已安装；模板交付不完整，请让Agent安装修复发行版。'
+                    template_delivery = {'status': 'incomplete', 'production_ready': False}
             if status == "current" and current.get("development"):
                 message = "未发现更新的稳定版本；当前副本仍为开发状态。"
             update = {"status": status, "message": message, "version": candidate["version"],
                       "notes": candidate.get("notes", ""), "published_at": candidate.get("published_at", ""),
                       "size": candidate["package"]["size"], "candidate": candidate,
                       "feed_url": self.feed_url, "checked_at": utcnow()}
+            if template_delivery is not None:
+                update['template_delivery'] = template_delivery
         except error.HTTPError as exc:
             update = {"status": "unavailable", "message": "尚未发布可用的更新清单，请稍后重试。" if exc.code == 404 else "更新服务暂时无法访问，请稍后重试。"}
         except (OSError, ValueError, KeyError, TypeError):
@@ -298,6 +324,8 @@ class UpdateService:
             raise core.UpdateError("更新包校验信息无效")
         if not isinstance(value.get("notes", ""), str):
             raise core.UpdateError("更新说明格式无效")
+        if value.get('template_capability') is not None:
+            core.validate_template_capability(value['template_capability'])
         return value
 
     def import_archive(self, archive):
@@ -375,7 +403,7 @@ class UpdateService:
                 helper = folder / "helper"
                 helper.mkdir()
                 try:
-                    for name in ("app_update.py", "update_service.py", "update_worker.py", "template_capability.py", "queue_update_guard.py", "audio_update_guard.py"):
+                    for name in ("app_update.py", "update_service.py", "update_worker.py", "template_capability.py"):
                         shutil.copyfile(Path(__file__).parent / name, helper / name)
                     flags = (getattr(subprocess, "CREATE_NEW_PROCESS_GROUP", 0) | getattr(subprocess, "DETACHED_PROCESS", 0)) if os.name == "nt" else 0
                     with (folder / "helper.log").open("ab") as log:

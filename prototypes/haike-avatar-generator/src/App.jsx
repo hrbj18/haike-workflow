@@ -7,6 +7,7 @@ import { api, upload } from "./studio-api.js";
 import { ActionBar, Button, Dialog as Modal, Field, Heading, Notice, PreviewPanel, availableModels } from './ui.jsx';
 import {Motion} from './Motion.jsx';
 import {AvatarTemplatePicker} from './AvatarTemplatePicker.jsx';
+import {MotionProductionSelection,useProductionCard} from './MotionProductionSelection.jsx';
 import {AiMaterials,AI_DEFAULTS} from './AiMaterials.jsx';
 import {DouyinRecovery} from './DouyinRecovery.jsx';
 import { AUDIO_CENTER_API, normalizeCatalog, voiceImageUrl } from './audio-center-model.js';
@@ -73,8 +74,9 @@ function BasicAvatar() {
   const audioTicket = useRef(0), imageTicket = useRef(0), textTicket = useRef(0);
   const templateGrid = useRef(null);
   const template = TEMPLATES.find(t => t.id === input.templateId) || TEMPLATES[2];
-  const isN1 = input.templateId === N1_TEMPLATE_ID;
-  const isInvestment = input.templateId === INVESTMENT_TEMPLATE_ID;
+  const productionCard=useProductionCard(input.motion_production);
+  const isN1 = !input.motion_production && input.templateId === N1_TEMPLATE_ID;
+  const isInvestment = !input.motion_production && input.templateId === INVESTMENT_TEMPLATE_ID;
   const fixedLayout = isN1 || isInvestment;
   const audioUrl = useAssetUrl(input.audio);
   const portraitUrl = useAssetUrl(input.portrait, assetPath("portrait-placeholder.svg"));
@@ -254,14 +256,12 @@ function BasicAvatar() {
     catch { setToast("音频未能播放，请重新选择文件后再试。"); }
   }
   async function persistServer() {
-    if(input.soundMode==='audio'&&!hasAvatarAsset(input.audio))throw new Error('请先上传口播音频，再保存或生成。');
-    if(!hasAvatarAsset(input.portrait))throw new Error('请先上传人物正面图片，再保存或生成。');
     await writeDraft(input, serverDraft?.id);
     let d=await api('/api/studio/drafts',{id:serverDraft?.id,revision:serverDraft?.revision,template_id:input.templateId,title:input.title||input.text.split(/[。！？\n]/)[0].slice(0,16),text:input.text,layout,input:avatarInputForSave(input,AI_DEFAULTS)});
     setServerDraft(d);
     const assets={};
     for (const [name,kind] of [['audio','audio'],['portrait','image']]) {
-      const value=input[name]; if(name==='audio'&&input.soundMode!=='audio')continue;
+      const value=input[name]; if(!hasAvatarAsset(value)||name==='audio'&&input.soundMode!=='audio')continue;
       if(value?.id&&serverDraft){assets[name]=value;continue;}
       let file=localAvatarFile(value);
       if(!file)throw new Error(name==='audio'?'请重新上传口播音频。':'请重新上传人物正面图片。');
@@ -272,8 +272,9 @@ function BasicAvatar() {
     d=await api('/api/studio/drafts',{...d,input:{...d.input,...assets}});setServerDraft(d);
     const next={...input,...Object.fromEntries(Object.entries(assets).map(([name,value])=>[name,{...input[name],...value}]))};setInput(next);await writeDraft(next,d.id);rememberDraft(d);setSaved(true);return d;
   }
-  async function saveDraft(){setSaving(true);setError(null);try{await persistServer();setToast('制作项目已保存到工作台，可从我的作品继续编辑。');}catch(e){setError({field:'draft',message:e.message});}finally{setSaving(false);}}
+  async function saveDraft(){setSaving(true);setError(null);try{const d=await persistServer();setToast('制作项目已保存到工作台，可从我的作品继续编辑。');return d;}catch(e){setError({field:'draft',message:e.message});return null;}finally{setSaving(false);}}
   function resetTemplate(){
+    if(input.motion_production){update({motion_production:null});setToast("已返回原固定模板，当前文案、音轨和素材保留。");return;}
     if(isN1){update({n1:n1ForSave()});setToast('已恢复默认版式，人物、声音与文案已保留。');return;}
     if(isInvestment){update({investment:investmentForSave()});setToast('已恢复招商版式设置，人物、声音与文案已保留。');return;}
     setInput(initial());setSaved(false);setQuote(null);setError(null);setToast('已载入示例内容，保存后更新草稿。');
@@ -303,6 +304,7 @@ function BasicAvatar() {
     finally {setSaving(false);}
   }
   async function confirmGeneration() {
+    if(input.motion_production){const d=await saveDraft();if(d)setToast("已保存所选动效模板；请在动效制作入口复制指令或检查本期输入。");return;}
     if(refinementPending){setError({field:'portrait',message:'请先确认采用优化图，或选择使用原图继续。'});return;}
     const problem = validateInputs(input, voices);
     if (problem) { setError(problem); if (problem.field === "text") textArea.current.focus(); return; }
@@ -337,9 +339,10 @@ function BasicAvatar() {
   return <main className="workspace creation-workspace">
     <Heading title="数字人口播" helper="选择模板，放入文案、声音和人物图片。"><Button href="/task-center">查看任务进度与结果</Button></Heading>
     <AvatarDefaultsSummary data={preset} loading={presetLoading} error={presetError} sessions={sessions} onEdit={()=>setPresetOpen(true)} busy={saving||importing||draftLoading||inProgress} hasDraft={!!serverDraft||restoredDraft.current} onApply={()=>{presetHandled.current=true;void applyPreset(preset,{newTask:!!serverDraft||restoredDraft.current});}}/>
-    <p className="helper">本次使用：{template.name} · {input.soundMode==='audio'?'已选音频（不重复配音）':`${selectedVoice?.name||'待选音色'} · ${input.rate}倍速`}。{restoredDraft.current?'当前草稿沿用原参数。':'本次明确修改的参数优先。'}</p>
+    <p className="helper">本次使用：{productionCard.card?.name||(input.motion_production?'已选动效模板':template.name)} · {input.soundMode==='audio'?'已选音频（不重复配音）':`${selectedVoice?.name||'待选音色'} · ${input.rate}倍速`}。{restoredDraft.current?'当前草稿沿用原参数。':'本次明确修改的参数优先。'}</p>
     <div className="editor-shell avatar-editor"><section className="editor-content" aria-label="填写制作内容" aria-busy={draftLoading}>
-<AvatarTemplatePicker initialScript={input.text} initialInput={input} templateId={input.templateId} motion={fixedLayout?null:input.motion} onChoose={choice=>{update({...choice,ai:{...AI_DEFAULTS,...input.ai,enabled:[N1_TEMPLATE_ID,INVESTMENT_TEMPLATE_ID].includes(choice.templateId)?false:choice.motion?true:input.ai?.enabled||false}});setSamplePlaying(false);setStoryboard(null);}}/>
+<AvatarTemplatePicker initialScript={input.text} initialInput={input} templateId={input.templateId} motionProduction={input.motion_production} motion={fixedLayout?null:input.motion} onChoose={choice=>{update({...choice,...(choice.motion_production?{}:{ai:{...AI_DEFAULTS,...input.ai,enabled:[N1_TEMPLATE_ID,INVESTMENT_TEMPLATE_ID].includes(choice.templateId)?false:choice.motion?true:input.ai?.enabled||false}})});setSamplePlaying(false);setStoryboard(null);}}/>
+      {input.motion_production&&<MotionProductionSelection selection={input.motion_production} card={productionCard.card} error={productionCard.error} onSave={persistServer}/>}
       <div className="avatar-fields">
         <Step number="1" title="文案" helper="上传文案或直接粘贴内容" className="text-step" action={<div className="upload-text"><Button disabled={importing||draftLoading} loading={importing} onClick={()=>textUpload.current.click()}><Upload size={16}/>上传文案</Button><span>DOCX / TXT</span></div>}>
           <label className="sr-only" htmlFor="script-text">口播文案</label><div className="textarea-wrap"><textarea id="script-text" ref={textArea} value={input.text} disabled={draftLoading||importing} onChange={e=>update({text:e.target.value})} placeholder="粘贴你的口播文案…" aria-invalid={error?.field==="text"}/><small className="character-count">{[...input.text].length.toLocaleString()} / 5,000</small></div>
@@ -355,15 +358,15 @@ function BasicAvatar() {
         </Step>
       </div>
       <NetworkMaterialChoice enabled={input.network_materials_enabled} onChange={network_materials_enabled=>{update({network_materials_enabled});setStoryboard(null);}} busy={saving||draftLoading||inProgress} sessions={sessions}/>
-      {isN1?<N1Settings value={input.n1} title={input.title} onTitle={title=>update({title})} onChange={n1=>update({n1})} onFile={importN1Material} busy={saving||draftLoading||importing} audioDuration={input.soundMode==='audio'?Number(input.audio?.duration):undefined}/>:isInvestment?<InvestmentSettings value={input.investment} title={input.title} onTitle={title=>update({title})} onChange={investment=>update({investment})} busy={saving||draftLoading||importing}/>:<AiMaterials value={input.ai} networkRequired={input.network_materials_enabled===true} networkPolicyExplicit={typeof input.network_materials_enabled==='boolean'} busy={saving||draftLoading} onFile={importMaterial} onPlan={planPreview} onChange={ai=>{update({ai});setStoryboard(null);}} plan={storyboard}/>}
-      <section className="more-settings"><button className="settings-toggle" onClick={()=>setMore(!more)} aria-expanded={more} aria-controls="more-fields"><ChevronDown size={18} className={more?'':'collapsed'}/><strong>{fixedLayout?'字幕与声音设置':'模板排版配置'}</strong><span>{fixedLayout?'字幕与配音倍率':'标题、字号、强调色与字幕'}</span></button>
+      {isN1?<N1Settings value={input.n1} title={input.title} onTitle={title=>update({title})} onChange={n1=>update({n1})} onFile={importN1Material} busy={saving||draftLoading||importing} audioDuration={input.soundMode==='audio'?Number(input.audio?.duration):undefined}/>:isInvestment?<InvestmentSettings value={input.investment} title={input.title} onTitle={title=>update({title})} onChange={investment=>update({investment})} busy={saving||draftLoading||importing}/>:<AiMaterials value={input.ai} networkRequired={input.network_materials_enabled===true} networkPolicyExplicit={typeof input.network_materials_enabled==='boolean'} busy={saving||draftLoading} onFile={importMaterial} onPlan={input.motion_production?()=>setToast('请从所选动效入口保存并复制制作指令，由Agent保留素材并编排。'):planPreview} onChange={ai=>{update({ai});setStoryboard(null);}} plan={storyboard}/>}
+      {!input.motion_production&&<section className="more-settings"><button className="settings-toggle" onClick={()=>setMore(!more)} aria-expanded={more} aria-controls="more-fields"><ChevronDown size={18} className={more?'':'collapsed'}/><strong>{fixedLayout?'字幕与声音设置':'模板排版配置'}</strong><span>{fixedLayout?'字幕与配音倍率':'标题、字号、强调色与字幕'}</span></button>
         {more&&<div id="more-fields" className="settings-fields">{!fixedLayout&&<><Field label="视频标题"><input value={input.title} maxLength={36} placeholder="自动取文案首句，建议16字以内" onChange={e=>update({title:e.target.value})}/></Field><div className="layout-fields"><Field label="标题字号"><select value={layout.title_size} onChange={e=>updateLayout({title_size:Number(e.target.value)})}>{[48,54,60,66].map(n=><option key={n} value={n}>{n}px</option>)}</select></Field><Field label="强调色"><input type="color" value={layout.accent} onChange={e=>updateLayout({accent:e.target.value})}/></Field></div></>}<label className="checkbox-row"><input type="checkbox" checked={input.subtitles} onChange={e=>update({subtitles:e.target.checked})}/>显示字幕</label>{input.soundMode==="voice"&&<Field label="配音倍率"><input type="number" min="0.5" max="2" step="0.05" value={input.rate} onChange={e=>update({rate:Number(e.target.value)})}/></Field>}<p className="helper">画幅和人物位置跟随模板；配置效果在生成后查看。</p><Button variant="text" onClick={resetTemplate}>{fixedLayout?'恢复默认版式':'载入示例内容'}</Button></div>}
-      </section>
-      <div className="notice-stack avatar-notices"><Notice message={internal?'内部备用服务，按每次报价确认':''}/><Notice message={error?.message} error/>{blocked&&<Notice message={blocked} error={accountState!==null}><a href="/settings">查看 API 设置<ArrowRight size={14}/></a></Notice>}</div>
+      </section>}
+      <div className="notice-stack avatar-notices"><Notice message={internal?'内部备用服务，按每次报价确认':''}/><Notice message={error?.message} error/>{!input.motion_production&&blocked&&<Notice message={blocked} error={accountState!==null}><a href="/settings">查看 API 设置<ArrowRight size={14}/></a></Notice>}</div>
       {job&&<div className="job-state"><strong>{({queued:'排队中',running:'正在制作',completed:'已合成 · 待审核',failed:'需要处理',canceled:'已取消'})[job.status]||job.status}</strong><p>{job.stage}</p>{job.result?.work_id&&<Button href="/projects">观看并审核成片</Button>}{job.retryable&&<Button disabled={saving} onClick={retry}>恢复原任务</Button>}{!input.network_materials_enabled&&job.status==='failed'&&/抖音/.test(job.stage)&&<Button disabled={saving} onClick={skipDouyin}>跳过抖音并恢复原任务</Button>}</div>}
       <DouyinRecovery job={job} onJob={setJob}/>
-    </section><PreviewPanel label="模板效果预览" metadata={!fixedLayout&&input.motion?(input.motion.layout==='portrait'?'9:16':'16:9'):template.ratio}>{!fixedLayout&&input.motion?<><div className="poster-frame"><img src={motionPreview||assetPath(template.poster)} alt={`${input.motion.style} · 版式参考`}/></div><p className="preview-note">上游风格参考；AI按本期原文、素材与实际时钟安排动作。</p><Button href="/avatar?mode=motion">进入专业分镜编辑</Button></>:<TemplatePreview template={template} onPlay={()=>{setModal('sample');setSamplePlaying(true);}}/>}</PreviewPanel>
-    <ActionBar note={<span><Info size={16}/> {blocked||(refinementPending?'请先选择优化图或原图':'生成前确认本次调用费用')}</span>}><Button disabled={saving||draftLoading||importing} loading={saving&&modal!=="confirm"} onClick={saveDraft}>{saved?"草稿已保存":"保存草稿"}</Button><Button variant="primary" disabled={importing||saving||draftLoading||inProgress||!!blocked||refinementPending} onClick={confirmGeneration}>生成数字人口播<ArrowRight size={17}/></Button></ActionBar></div>
+    </section><PreviewPanel label="模板效果预览" metadata={input.motion_production?productionCard.card?.ratio:!fixedLayout&&input.motion?(input.motion.layout==='portrait'?'9:16':'16:9'):template.ratio}>{input.motion_production?<><div className="poster-frame">{productionCard.card?.poster&&<img src={productionCard.card.poster} alt={`${productionCard.card.name}样式封面`}/>}</div><p className="preview-note">原封面与既有完整样片保留；本期声音和素材按所选模板准备。</p>{productionCard.card?.sample&&<video controls preload="none" src={productionCard.card.sample}/>}</>:!fixedLayout&&input.motion?<><div className="poster-frame"><img src={motionPreview||assetPath(template.poster)} alt={`${input.motion.style} · 版式参考`}/></div><p className="preview-note">上游风格参考；AI按本期原文、素材与实际时钟安排动作。</p><Button href="/avatar?mode=motion">进入专业分镜编辑</Button></>:<TemplatePreview template={template} onPlay={()=>{setModal('sample');setSamplePlaying(true);}}/>}</PreviewPanel>
+    <ActionBar note={<span><Info size={16}/> {input.motion_production?'已有声音与素材保留；按所选动效入口准备':blocked||(refinementPending?'请先选择优化图或原图':'生成前确认本次调用费用')}</span>}><Button disabled={saving||draftLoading||importing} loading={saving&&modal!=="confirm"} onClick={saveDraft}>{saved?"草稿已保存":"保存草稿"}</Button><Button variant="primary" disabled={importing||saving||draftLoading||inProgress||(!input.motion_production&&(!!blocked||refinementPending))} onClick={confirmGeneration}>{input.motion_production?'保存动效草稿':'生成数字人口播'}<ArrowRight size={17}/></Button></ActionBar></div>
     <input hidden type="file" ref={textUpload} accept=".txt,.docx" onChange={importText} aria-label="文案文件"/><input hidden type="file" ref={audioUpload} accept=".wav,.mp3,.m4a,.ogg" onChange={importAudio} aria-label="音频文件"/><input hidden type="file" ref={portraitUpload} accept="image/jpeg,image/png" onChange={importPortrait} aria-label="人物图片文件"/>
     <audio ref={audio} src={input.soundMode==="audio"?audioUrl:undefined} onEnded={()=>setPlaying(false)} onError={()=>setPlaying(false)}/>
     <div className={`toast ${toast?"visible":""}`} role="status">{toast&&<><CheckCircle2 size={18}/>{toast}</>}</div>

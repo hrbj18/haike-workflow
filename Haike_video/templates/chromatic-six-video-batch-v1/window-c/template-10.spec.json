@@ -1,0 +1,2576 @@
+{
+  "schema_version": 1,
+  "standard_version": "video-template-v1",
+  "template_id": "chromatic-six-10",
+  "template_version": "1.1.0-candidate.1",
+  "template_type": "material_edit",
+  "spec_kind": "implementation",
+  "stage": "ready",
+  "authority": {
+    "runbook": "README-10.md",
+    "implementation_paths": [
+      "Scene.tsx",
+      "Preview.tsx",
+      "build.cjs",
+      "serve.py",
+      "video-slots-10.json",
+      "selection-10.json"
+    ],
+    "parameter_source": "Scene.tsx"
+  },
+  "canvas": {
+    "width": 720,
+    "height": 1280,
+    "fps": 30,
+    "duration_seconds": 24,
+    "clock": "global f/30, 720 frames [0,720), low silent sample. Each clip sourceFrame=sourceStart+globalFrame-from, rate1; no loops/freeze/slowdown.",
+    "coordinate_system": "top_left_pixels"
+  },
+  "narrative": {
+    "purpose": "给社区现场观察者的一页节拍画报：大字提出动作，真实现场照片逐格作答。",
+    "information_hierarchy": [
+      "actual moving现场视频",
+      "short authored motion headline",
+      "bookend supporting presenter",
+      "illustrative captions"
+    ],
+    "structure": [
+      "建立真实现场印象",
+      "用四项体验逐一对照现场证据",
+      "把亲自参与提炼为理解",
+      "收束看见、参与、理解"
+    ]
+  },
+  "scenes": [
+    {
+      "id": "impact",
+      "start": 0.0,
+      "end": 5.0,
+      "purpose": "建立真实现场印象",
+      "element_ids": [
+        "sheet",
+        "masthead",
+        "caption",
+        "footer",
+        "presenter",
+        "presenter-label",
+        "impact-title",
+        "impact-photo",
+        "impact-note",
+        "impact-brackets",
+        "video-impact"
+      ],
+      "variant": "impact"
+    },
+    {
+      "id": "relay",
+      "start": 5.0,
+      "end": 14.6,
+      "purpose": "用四项体验逐一对照现场证据",
+      "element_ids": [
+        "sheet",
+        "masthead",
+        "caption",
+        "footer",
+        "presenter",
+        "presenter-label",
+        "relay-heading",
+        "relay-photos",
+        "relay-noun",
+        "relay-verbs",
+        "relay-note",
+        "video-relay-0",
+        "video-relay-1",
+        "video-relay-2",
+        "video-relay-3",
+        "video-relay-4"
+      ],
+      "variant": "relay"
+    },
+    {
+      "id": "assemble",
+      "start": 14.6,
+      "end": 19.0,
+      "purpose": "把亲自参与提炼为理解",
+      "element_ids": [
+        "sheet",
+        "masthead",
+        "caption",
+        "footer",
+        "presenter",
+        "presenter-label",
+        "assemble-words",
+        "assemble-subline",
+        "assemble-photo",
+        "assemble-note",
+        "video-assemble"
+      ],
+      "variant": "assemble"
+    },
+    {
+      "id": "register",
+      "start": 19.0,
+      "end": 24.0,
+      "purpose": "收束看见、参与、理解",
+      "element_ids": [
+        "sheet",
+        "masthead",
+        "caption",
+        "footer",
+        "presenter",
+        "presenter-label",
+        "recap-heading",
+        "register",
+        "recap-note",
+        "video-recap-0",
+        "video-recap-1",
+        "video-recap-2"
+      ],
+      "variant": "register"
+    }
+  ],
+  "assets": [
+    {
+      "id": "asset-0",
+      "kind": "video",
+      "path": "../../../../.local/chromatic-six-video-window-c/preview/assets/c/store.mp4",
+      "source": "prepared actual media; SHA256 0f800ce0b1516ad8652634006079b0516e21c5d07a91ec233455226c14afd4fd; ancestry in preparation.json",
+      "embedded_content": [
+        "camera movement, people/devices, signage and lighting baked in; no editable interior text"
+      ],
+      "rights_status": "user-authorized private development reuse only; no external download or public redistribution"
+    },
+    {
+      "id": "asset-1",
+      "kind": "video",
+      "path": "../../../../.local/chromatic-six-video-window-c/preview/assets/c/robot.mp4",
+      "source": "prepared actual media; SHA256 73946693d063d848b8b15d5cd64340f902a8056da90db5254ba0622d40f381e9; ancestry in preparation.json",
+      "embedded_content": [
+        "camera movement, people/devices, signage and lighting baked in; no editable interior text"
+      ],
+      "rights_status": "user-authorized private development reuse only; no external download or public redistribution"
+    },
+    {
+      "id": "asset-2",
+      "kind": "video",
+      "path": "../../../../.local/chromatic-six-video-window-c/preview/assets/c/children.mp4",
+      "source": "prepared actual media; SHA256 e7cb809335cb66e385dda51192351e06c88e3755f39ac61aa7f51d1ac1834e1d; ancestry in preparation.json",
+      "embedded_content": [
+        "camera movement, people/devices, signage and lighting baked in; no editable interior text"
+      ],
+      "rights_status": "user-authorized private development reuse only; no external download or public redistribution"
+    },
+    {
+      "id": "asset-3",
+      "kind": "video",
+      "path": "../../../../.local/chromatic-six-video-window-c/preview/assets/c/dog.mp4",
+      "source": "prepared actual media; SHA256 71d6058b8612650bd5ecb83999f4b1ac9db19d059cb5fc424513074f8cc10afc; ancestry in preparation.json",
+      "embedded_content": [
+        "camera movement, people/devices, signage and lighting baked in; no editable interior text"
+      ],
+      "rights_status": "user-authorized private development reuse only; no external download or public redistribution"
+    },
+    {
+      "id": "asset-4",
+      "kind": "font",
+      "path": "../../../../.local/chromatic-six-video-window-c/preview/assets/c/font.ttf",
+      "source": "prepared actual media; SHA256 a3041811a78c361b1de50f953c805e0244951c21c5bd412f7232ef0d899af0da; ancestry in preparation.json",
+      "embedded_content": [
+        "camera movement, people/devices, signage and lighting baked in; no editable interior text"
+      ],
+      "rights_status": "user-authorized private development reuse only; no external download or public redistribution"
+    },
+    {
+      "id": "asset-5",
+      "kind": "video",
+      "path": "../../../../.local/chromatic-six-video-window-c/preview/assets/c/presenter-0000.mp4",
+      "source": "prepared actual media; SHA256 71c4e62284f28f21b8584176a61f8163d8b19eafc6b44cbbc5e211b341bb6e5c; ancestry in preparation.json",
+      "embedded_content": [
+        "camera movement, people/devices, signage and lighting baked in; no editable interior text"
+      ],
+      "rights_status": "user-authorized private development reuse only; no external download or public redistribution"
+    }
+  ],
+  "elements": [
+    {
+      "id": "sheet",
+      "type": "background",
+      "role": "background",
+      "parent_id": null,
+      "z_index": 2,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "Video version: background"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          720,
+          1280
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "current Scene.tsx; video-slots for source, crop and local/global clock",
+          "scope": "frames and values in Scene.tsx; rectangles describe base layout"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "background"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "All frame-driven transforms, masks and guards use Scene.tsx; global seconds map frame=floor(seconds*30), end exclusive."
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "transitions"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "visibility and overlap",
+          "method": "browser exact seek, fullPage screenshot and DOM rectangle crop",
+          "pass_condition": "Intended content readable; no face/caption collision; image/video decoded."
+        }
+      ]
+    },
+    {
+      "id": "masthead",
+      "type": "graphic",
+      "role": "fixed identity",
+      "parent_id": null,
+      "z_index": 2,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "Video version: FIELD identity and template number"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          48,
+          44,
+          624,
+          47
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "current Scene.tsx; video-slots for source, crop and local/global clock",
+          "scope": "frames and values in Scene.tsx; rectangles describe base layout"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "FIELD identity and template number"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "All frame-driven transforms, masks and guards use Scene.tsx; global seconds map frame=floor(seconds*30), end exclusive."
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "transitions"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "visibility and overlap",
+          "method": "browser exact seek, fullPage screenshot and DOM rectangle crop",
+          "pass_condition": "Intended content readable; no face/caption collision; image/video decoded."
+        }
+      ]
+    },
+    {
+      "id": "caption",
+      "type": "text",
+      "role": "illustrative captions",
+      "parent_id": null,
+      "z_index": 2,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "Video version: episode.captions selected by each from<=f<to; 27px, max two lines"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          48,
+          1110,
+          624,
+          88
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "current Scene.tsx; video-slots for source, crop and local/global clock",
+          "scope": "frames and values in Scene.tsx; rectangles describe base layout",
+          "font": "episode.fontFamily (loaded local TTF)",
+          "font_size": 27,
+          "max_lines": 2,
+          "overflow": "authored text within measured box; reject longer replacement before preview; dynamic sizes described in Scene.tsx"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "episode.captions selected by each from<=f<to; 27px, max two lines"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "All frame-driven transforms, masks and guards use Scene.tsx; global seconds map frame=floor(seconds*30), end exclusive."
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "transitions"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "visibility and overlap",
+          "method": "browser exact seek, fullPage screenshot and DOM rectangle crop",
+          "pass_condition": "Intended content readable; no face/caption collision; image/video decoded."
+        }
+      ]
+    },
+    {
+      "id": "footer",
+      "type": "text",
+      "role": "scope and progress",
+      "parent_id": null,
+      "z_index": 2,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "Video version: sample scope and monotonic f/720 progress; not a platform safety guarantee"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          48,
+          1222,
+          624,
+          33
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "current Scene.tsx; video-slots for source, crop and local/global clock",
+          "scope": "frames and values in Scene.tsx; rectangles describe base layout",
+          "font": "episode.fontFamily (loaded local TTF)",
+          "font_size": 15,
+          "max_lines": 2,
+          "overflow": "authored text within measured box; reject longer replacement before preview; dynamic sizes described in Scene.tsx"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "sample scope and monotonic f/720 progress; not a platform safety guarantee"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "All frame-driven transforms, masks and guards use Scene.tsx; global seconds map frame=floor(seconds*30), end exclusive."
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "transitions"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "visibility and overlap",
+          "method": "browser exact seek, fullPage screenshot and DOM rectangle crop",
+          "pass_condition": "Intended content readable; no face/caption collision; image/video decoded."
+        }
+      ]
+    },
+    {
+      "id": "presenter",
+      "type": "avatar",
+      "role": "supporting-window",
+      "parent_id": null,
+      "z_index": 8,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "Video version: single episode.presenterClips[0] 0–720 source, original rate, no loop; mounted continuously, CSS hidden during [150,570), face/mouth retained; source y objectPosition50%35%"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          514,
+          842,
+          158,
+          230
+        ],
+        "fit": "cover",
+        "clip": "self",
+        "style": {
+          "authority": "current Scene.tsx; video-slots for source, crop and local/global clock",
+          "scope": "frames and values in Scene.tsx; rectangles describe base layout"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "single episode.presenterClips[0] 0–720 source, original rate, no loop; mounted continuously, CSS hidden during [150,570), face/mouth retained; source y objectPosition50%35%"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "All frame-driven transforms, masks and guards use Scene.tsx; global seconds map frame=floor(seconds*30), end exclusive."
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "transitions"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "visibility and overlap",
+          "method": "browser exact seek, fullPage screenshot and DOM rectangle crop",
+          "pass_condition": "Intended content readable; no face/caption collision; image/video decoded."
+        }
+      ]
+    },
+    {
+      "id": "presenter-label",
+      "type": "text",
+      "role": "AI disclosure",
+      "parent_id": null,
+      "z_index": 2,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "Video version: in presenter window; hidden with parent during [150,570)"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          514,
+          1044,
+          158,
+          28
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "current Scene.tsx; video-slots for source, crop and local/global clock",
+          "scope": "frames and values in Scene.tsx; rectangles describe base layout",
+          "font": "episode.fontFamily (loaded local TTF)",
+          "font_size": 15,
+          "max_lines": 2,
+          "overflow": "authored text within measured box; reject longer replacement before preview; dynamic sizes described in Scene.tsx"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "in presenter window; hidden with parent during [150,570)"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "All frame-driven transforms, masks and guards use Scene.tsx; global seconds map frame=floor(seconds*30), end exclusive."
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "transitions"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "visibility and overlap",
+          "method": "browser exact seek, fullPage screenshot and DOM rectangle crop",
+          "pass_condition": "Intended content readable; no face/caption collision; image/video decoded."
+        }
+      ]
+    },
+    {
+      "id": "impact-title",
+      "type": "text",
+      "role": "once slam; last word delayed3f; diagonal brackets same start slower stop",
+      "parent_id": null,
+      "z_index": 2,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "Video version: once slam; last word delayed3f; diagonal brackets same start slower stop"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          48,
+          142,
+          624,
+          190
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "current Scene.tsx; video-slots for source, crop and local/global clock",
+          "scope": "frames and values in Scene.tsx; rectangles describe base layout",
+          "font": "episode.fontFamily (loaded local TTF)",
+          "font_size": 76,
+          "max_lines": 2,
+          "overflow": "authored text within measured box; reject longer replacement before preview; dynamic sizes described in Scene.tsx"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 5
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "once slam; last word delayed3f; diagonal brackets same start slower stop"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "All frame-driven transforms, masks and guards use Scene.tsx; global seconds map frame=floor(seconds*30), end exclusive."
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "transitions"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "visibility and overlap",
+          "method": "browser exact seek, fullPage screenshot and DOM rectangle crop",
+          "pass_condition": "Intended content readable; no face/caption collision; image/video decoded."
+        }
+      ]
+    },
+    {
+      "id": "impact-photo",
+      "type": "video",
+      "role": "video0; horizontal crop reveal34–58f",
+      "parent_id": null,
+      "z_index": 2,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "Video version: video0; horizontal crop reveal34–58f"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          382,
+          720,
+          414
+        ],
+        "fit": "cover",
+        "clip": "self",
+        "style": {
+          "authority": "current Scene.tsx; video-slots for source, crop and local/global clock",
+          "scope": "frames and values in Scene.tsx; rectangles describe base layout"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 5
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "photo0; horizontal crop reveal34–58f"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "All frame-driven transforms, masks and guards use Scene.tsx; global seconds map frame=floor(seconds*30), end exclusive."
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "transitions"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "visibility and overlap",
+          "method": "browser exact seek, fullPage screenshot and DOM rectangle crop",
+          "pass_condition": "Intended content readable; no face/caption collision; image/video decoded."
+        }
+      ]
+    },
+    {
+      "id": "impact-note",
+      "type": "text",
+      "role": "先看见真实，再产生好奇；62–72f reveal",
+      "parent_id": null,
+      "z_index": 2,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "Video version: 先看见真实，再产生好奇；62–72f reveal"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          48,
+          877,
+          410,
+          146
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "current Scene.tsx; video-slots for source, crop and local/global clock",
+          "scope": "frames and values in Scene.tsx; rectangles describe base layout",
+          "font": "episode.fontFamily (loaded local TTF)",
+          "font_size": 45,
+          "max_lines": 2,
+          "overflow": "authored text within measured box; reject longer replacement before preview; dynamic sizes described in Scene.tsx"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 5
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "先看见真实，再产生好奇；62–72f reveal"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "All frame-driven transforms, masks and guards use Scene.tsx; global seconds map frame=floor(seconds*30), end exclusive."
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "transitions"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "visibility and overlap",
+          "method": "browser exact seek, fullPage screenshot and DOM rectangle crop",
+          "pass_condition": "Intended content readable; no face/caption collision; image/video decoded."
+        }
+      ]
+    },
+    {
+      "id": "impact-brackets",
+      "type": "vector",
+      "role": "two equal-arm L brackets, same start as title",
+      "parent_id": null,
+      "z_index": 2,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "Video version: two equal-arm L brackets, same start as title"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          34,
+          118,
+          652,
+          240
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "current Scene.tsx; video-slots for source, crop and local/global clock",
+          "scope": "frames and values in Scene.tsx; rectangles describe base layout"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 5
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "two equal-arm L brackets, same start as title"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "All frame-driven transforms, masks and guards use Scene.tsx; global seconds map frame=floor(seconds*30), end exclusive."
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "transitions"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "visibility and overlap",
+          "method": "browser exact seek, fullPage screenshot and DOM rectangle crop",
+          "pass_condition": "Intended content readable; no face/caption collision; image/video decoded."
+        }
+      ]
+    },
+    {
+      "id": "relay-heading",
+      "type": "text",
+      "role": "fixed two-line heading",
+      "parent_id": null,
+      "z_index": 2,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "Video version: fixed two-line heading"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          48,
+          134,
+          624,
+          120
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "current Scene.tsx; video-slots for source, crop and local/global clock",
+          "scope": "frames and values in Scene.tsx; rectangles describe base layout",
+          "font": "episode.fontFamily (loaded local TTF)",
+          "font_size": 52,
+          "max_lines": 2,
+          "overflow": "authored text within measured box; reject longer replacement before preview; dynamic sizes described in Scene.tsx"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 5,
+        "end": 14.6
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "fixed two-line heading"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "All frame-driven transforms, masks and guards use Scene.tsx; global seconds map frame=floor(seconds*30), end exclusive."
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "transitions"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "visibility and overlap",
+          "method": "browser exact seek, fullPage screenshot and DOM rectangle crop",
+          "pass_condition": "Intended content readable; no face/caption collision; image/video decoded."
+        }
+      ]
+    },
+    {
+      "id": "relay-photos",
+      "type": "group",
+      "role": "five prepared images [2,4,6,1,3]; 570×430 each, stride594, current x75; x step only during14f windows at local66/138/210",
+      "parent_id": null,
+      "z_index": 2,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "Video version: five prepared images [2,4,6,1,3]; 570×430 each, stride594, current x75; x step only during14f windows at local66/138/210"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          326,
+          720,
+          474
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "authority": "current Scene.tsx; video-slots for source, crop and local/global clock",
+          "scope": "frames and values in Scene.tsx; rectangles describe base layout"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 5,
+        "end": 14.6
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "five prepared images [2,4,6,1,3]; 570×430 each, stride594, current x75; x step only during14f windows at local66/138/210"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "All frame-driven transforms, masks and guards use Scene.tsx; global seconds map frame=floor(seconds*30), end exclusive."
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "transitions"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "visibility and overlap",
+          "method": "browser exact seek, fullPage screenshot and DOM rectangle crop",
+          "pass_condition": "Intended content readable; no face/caption collision; image/video decoded."
+        }
+      ]
+    },
+    {
+      "id": "relay-noun",
+      "type": "text",
+      "role": "同一个现场，可以",
+      "parent_id": null,
+      "z_index": 2,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "Video version: 同一个现场，可以"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          48,
+          856,
+          624,
+          32
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "current Scene.tsx; video-slots for source, crop and local/global clock",
+          "scope": "frames and values in Scene.tsx; rectangles describe base layout",
+          "font": "episode.fontFamily (loaded local TTF)",
+          "font_size": 24,
+          "max_lines": 2,
+          "overflow": "authored text within measured box; reject longer replacement before preview; dynamic sizes described in Scene.tsx"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 5,
+        "end": 14.6
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "同一个现场，可以"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "All frame-driven transforms, masks and guards use Scene.tsx; global seconds map frame=floor(seconds*30), end exclusive."
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "transitions"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "visibility and overlap",
+          "method": "browser exact seek, fullPage screenshot and DOM rectangle crop",
+          "pass_condition": "Intended content readable; no face/caption collision; image/video decoded."
+        }
+      ]
+    },
+    {
+      "id": "relay-verbs",
+      "type": "text",
+      "role": "four verbs with no outgoing/incoming opacity overlap; final yellow fill",
+      "parent_id": null,
+      "z_index": 2,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "Video version: four verbs with no outgoing/incoming opacity overlap; final yellow fill"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          48,
+          908,
+          624,
+          94
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "current Scene.tsx; video-slots for source, crop and local/global clock",
+          "scope": "frames and values in Scene.tsx; rectangles describe base layout",
+          "font": "episode.fontFamily (loaded local TTF)",
+          "font_size": 76,
+          "max_lines": 2,
+          "overflow": "authored text within measured box; reject longer replacement before preview; dynamic sizes described in Scene.tsx"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 5,
+        "end": 14.6
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "four verbs with no outgoing/incoming opacity overlap; final yellow fill"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "All frame-driven transforms, masks and guards use Scene.tsx; global seconds map frame=floor(seconds*30), end exclusive."
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "transitions"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "visibility and overlap",
+          "method": "browser exact seek, fullPage screenshot and DOM rectangle crop",
+          "pass_condition": "Intended content readable; no face/caption collision; image/video decoded."
+        }
+      ]
+    },
+    {
+      "id": "relay-note",
+      "type": "text",
+      "role": "走近一点，发现就多一点。",
+      "parent_id": null,
+      "z_index": 2,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "Video version: 走近一点，发现就多一点。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          48,
+          1038,
+          624,
+          22
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "current Scene.tsx; video-slots for source, crop and local/global clock",
+          "scope": "frames and values in Scene.tsx; rectangles describe base layout",
+          "font": "episode.fontFamily (loaded local TTF)",
+          "font_size": 20,
+          "max_lines": 2,
+          "overflow": "authored text within measured box; reject longer replacement before preview; dynamic sizes described in Scene.tsx"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 5,
+        "end": 14.6
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "走近一点，发现就多一点。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "All frame-driven transforms, masks and guards use Scene.tsx; global seconds map frame=floor(seconds*30), end exclusive."
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "transitions"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "visibility and overlap",
+          "method": "browser exact seek, fullPage screenshot and DOM rectangle crop",
+          "pass_condition": "Intended content readable; no face/caption collision; image/video decoded."
+        }
+      ]
+    },
+    {
+      "id": "assemble-words",
+      "type": "text",
+      "role": "lead experience and two completing words; same easing scale/slide; lift/subline same window",
+      "parent_id": null,
+      "z_index": 2,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "Video version: lead experience and two completing words; same easing scale/slide; lift/subline same window"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          48,
+          252,
+          624,
+          90
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "current Scene.tsx; video-slots for source, crop and local/global clock",
+          "scope": "frames and values in Scene.tsx; rectangles describe base layout",
+          "font": "episode.fontFamily (loaded local TTF)",
+          "font_size": 54,
+          "max_lines": 2,
+          "overflow": "authored text within measured box; reject longer replacement before preview; dynamic sizes described in Scene.tsx"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 14.6,
+        "end": 19
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "lead experience and two completing words; same easing scale/slide; lift/subline same window"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "All frame-driven transforms, masks and guards use Scene.tsx; global seconds map frame=floor(seconds*30), end exclusive."
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "transitions"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "visibility and overlap",
+          "method": "browser exact seek, fullPage screenshot and DOM rectangle crop",
+          "pass_condition": "Intended content readable; no face/caption collision; image/video decoded."
+        }
+      ]
+    },
+    {
+      "id": "assemble-subline",
+      "type": "text",
+      "role": "把看到的，变成理解的。",
+      "parent_id": null,
+      "z_index": 2,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "Video version: 把看到的，变成理解的。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          48,
+          356,
+          624,
+          35
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "current Scene.tsx; video-slots for source, crop and local/global clock",
+          "scope": "frames and values in Scene.tsx; rectangles describe base layout",
+          "font": "episode.fontFamily (loaded local TTF)",
+          "font_size": 24,
+          "max_lines": 2,
+          "overflow": "authored text within measured box; reject longer replacement before preview; dynamic sizes described in Scene.tsx"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 14.6,
+        "end": 19
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "把看到的，变成理解的。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "All frame-driven transforms, masks and guards use Scene.tsx; global seconds map frame=floor(seconds*30), end exclusive."
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "transitions"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "visibility and overlap",
+          "method": "browser exact seek, fullPage screenshot and DOM rectangle crop",
+          "pass_condition": "Intended content readable; no face/caption collision; image/video decoded."
+        }
+      ]
+    },
+    {
+      "id": "assemble-photo",
+      "type": "video",
+      "role": "video2 reveal local65–73",
+      "parent_id": null,
+      "z_index": 2,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "Video version: video2 reveal local65–73"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          48,
+          458,
+          624,
+          450
+        ],
+        "fit": "cover",
+        "clip": "self",
+        "style": {
+          "authority": "current Scene.tsx; video-slots for source, crop and local/global clock",
+          "scope": "frames and values in Scene.tsx; rectangles describe base layout"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 14.6,
+        "end": 19
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "photo2 reveal local65–73"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "All frame-driven transforms, masks and guards use Scene.tsx; global seconds map frame=floor(seconds*30), end exclusive."
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "transitions"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "visibility and overlap",
+          "method": "browser exact seek, fullPage screenshot and DOM rectangle crop",
+          "pass_condition": "Intended content readable; no face/caption collision; image/video decoded."
+        }
+      ]
+    },
+    {
+      "id": "assemble-note",
+      "type": "text",
+      "role": "人和人之间的互动，是现场最值得记录的细节。",
+      "parent_id": null,
+      "z_index": 2,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "Video version: 人和人之间的互动，是现场最值得记录的细节。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          48,
+          950,
+          624,
+          98
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "current Scene.tsx; video-slots for source, crop and local/global clock",
+          "scope": "frames and values in Scene.tsx; rectangles describe base layout",
+          "font": "episode.fontFamily (loaded local TTF)",
+          "font_size": 33,
+          "max_lines": 2,
+          "overflow": "authored text within measured box; reject longer replacement before preview; dynamic sizes described in Scene.tsx"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 14.6,
+        "end": 19
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "人和人之间的互动，是现场最值得记录的细节。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "All frame-driven transforms, masks and guards use Scene.tsx; global seconds map frame=floor(seconds*30), end exclusive."
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "transitions"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "visibility and overlap",
+          "method": "browser exact seek, fullPage screenshot and DOM rectangle crop",
+          "pass_condition": "Intended content readable; no face/caption collision; image/video decoded."
+        }
+      ]
+    },
+    {
+      "id": "recap-heading",
+      "type": "text",
+      "role": "last once title impact; delayed last word yellow",
+      "parent_id": null,
+      "z_index": 2,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "Video version: last once title impact; delayed last word yellow"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          48,
+          132,
+          624,
+          146
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "current Scene.tsx; video-slots for source, crop and local/global clock",
+          "scope": "frames and values in Scene.tsx; rectangles describe base layout",
+          "font": "episode.fontFamily (loaded local TTF)",
+          "font_size": 62,
+          "max_lines": 2,
+          "overflow": "authored text within measured box; reject longer replacement before preview; dynamic sizes described in Scene.tsx"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 19,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "last once title impact; delayed last word yellow"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "All frame-driven transforms, masks and guards use Scene.tsx; global seconds map frame=floor(seconds*30), end exclusive."
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "transitions"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "visibility and overlap",
+          "method": "browser exact seek, fullPage screenshot and DOM rectangle crop",
+          "pass_condition": "Intended content readable; no face/caption collision; image/video decoded."
+        }
+      ]
+    },
+    {
+      "id": "register",
+      "type": "group",
+      "role": "three fixed videos [0,2,4], 206px wide; bottom labels fill in order local37/46/55",
+      "parent_id": null,
+      "z_index": 2,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "Video version: three fixed videos [0,2,4], 206px wide; bottom labels fill in order local37/46/55"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          48,
+          332,
+          624,
+          414
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "authority": "current Scene.tsx; video-slots for source, crop and local/global clock",
+          "scope": "frames and values in Scene.tsx; rectangles describe base layout"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 19,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "three fixed photos [0,2,4], 206px wide; bottom labels fill in order local37/46/55"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "All frame-driven transforms, masks and guards use Scene.tsx; global seconds map frame=floor(seconds*30), end exclusive."
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "transitions"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "visibility and overlap",
+          "method": "browser exact seek, fullPage screenshot and DOM rectangle crop",
+          "pass_condition": "Intended content readable; no face/caption collision; image/video decoded."
+        }
+      ]
+    },
+    {
+      "id": "recap-note",
+      "type": "text",
+      "role": "从现场出发，带着发现回来。",
+      "parent_id": null,
+      "z_index": 2,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "Video version: 从现场出发，带着发现回来。"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          48,
+          845,
+          416,
+          180
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "current Scene.tsx; video-slots for source, crop and local/global clock",
+          "scope": "frames and values in Scene.tsx; rectangles describe base layout",
+          "font": "episode.fontFamily (loaded local TTF)",
+          "font_size": 46,
+          "max_lines": 3,
+          "overflow": "authored text within measured box; reject longer replacement before preview; dynamic sizes described in Scene.tsx"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 19,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "从现场出发，带着发现回来。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "authority",
+          "target_id": null,
+          "rule": "All frame-driven transforms, masks and guards use Scene.tsx; global seconds map frame=floor(seconds*30), end exclusive."
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing",
+        "transitions"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "visibility and overlap",
+          "method": "browser exact seek, fullPage screenshot and DOM rectangle crop",
+          "pass_condition": "Intended content readable; no face/caption collision; image/video decoded."
+        }
+      ]
+    },
+    {
+      "id": "video-impact",
+      "type": "video",
+      "role": "independently timed actual main-video slot",
+      "parent_id": null,
+      "z_index": 2,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "asset-0",
+        "description": "asset_id is the initial native source; later authored source switches are explicitly listed in the following playlist: [{\"from\": 0, \"to\": 150, \"sourceStart\": 0, \"sourceEnd\": 150, \"src\": \"/assets/c/store.mp4\", \"fit\": \"cover\", \"objectPosition\": \"50% 45%\", \"playbackRate\": 1, \"loop\": false, \"endExclusive\": true}]"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          720,
+          1280
+        ],
+        "fit": "cover",
+        "clip": "parent",
+        "style": {
+          "authority": "Scene.tsx Material slot=impact; current video-slots-10.json per clip fit/objectPosition",
+          "coordinates": "actual visual rectangle inherited from containing card/node; source cell remains live while visible"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0.0,
+        "end": 5.0
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Each declared source clip runs original speed; switch at contiguous clip boundary, no loops or last-frame hold."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source_clock",
+          "target_id": null,
+          "rule": "SourceStart + globalFrame − clip.from is an integer source frame within decoded frame count; sourceEnd exclusive."
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content.asset_id"
+      ],
+      "evidence_ids": [
+        "implementation",
+        "motion"
+      ],
+      "acceptance": [
+        {
+          "check": "actual content motion",
+          "method": "native video clock + material-only screenshot changes at least30 frames apart after layout settled",
+          "pass_condition": "readyState≥2, nonseeking; source time advances1s for30 frames, pixel content changes, all source ranges fit actual decoded count"
+        }
+      ]
+    },
+    {
+      "id": "video-assemble",
+      "type": "video",
+      "role": "independently timed actual main-video slot",
+      "parent_id": null,
+      "z_index": 2,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "asset-2",
+        "description": "asset_id is the initial native source; later authored source switches are explicitly listed in the following playlist: [{\"from\": 438, \"to\": 570, \"sourceStart\": 180, \"sourceEnd\": 312, \"src\": \"/assets/c/children.mp4\", \"fit\": \"cover\", \"objectPosition\": \"50% 62%\", \"playbackRate\": 1, \"loop\": false, \"endExclusive\": true}]"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          720,
+          1280
+        ],
+        "fit": "cover",
+        "clip": "parent",
+        "style": {
+          "authority": "Scene.tsx Material slot=assemble; current video-slots-10.json per clip fit/objectPosition",
+          "coordinates": "actual visual rectangle inherited from containing card/node; source cell remains live while visible"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 14.6,
+        "end": 19.0
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Each declared source clip runs original speed; switch at contiguous clip boundary, no loops or last-frame hold."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source_clock",
+          "target_id": null,
+          "rule": "SourceStart + globalFrame − clip.from is an integer source frame within decoded frame count; sourceEnd exclusive."
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content.asset_id"
+      ],
+      "evidence_ids": [
+        "implementation",
+        "motion"
+      ],
+      "acceptance": [
+        {
+          "check": "actual content motion",
+          "method": "native video clock + material-only screenshot changes at least30 frames apart after layout settled",
+          "pass_condition": "readyState≥2, nonseeking; source time advances1s for30 frames, pixel content changes, all source ranges fit actual decoded count"
+        }
+      ]
+    },
+    {
+      "id": "video-relay-0",
+      "type": "video",
+      "role": "independently timed actual main-video slot",
+      "parent_id": null,
+      "z_index": 2,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "asset-2",
+        "description": "asset_id is the initial native source; later authored source switches are explicitly listed in the following playlist: [{\"from\": 150, \"to\": 438, \"sourceStart\": 0, \"sourceEnd\": 288, \"src\": \"/assets/c/children.mp4\", \"fit\": \"cover\", \"objectPosition\": \"50% 62%\", \"playbackRate\": 1, \"loop\": false, \"endExclusive\": true}]"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          720,
+          1280
+        ],
+        "fit": "cover",
+        "clip": "parent",
+        "style": {
+          "authority": "Scene.tsx Material slot=relay-0; current video-slots-10.json per clip fit/objectPosition",
+          "coordinates": "actual visual rectangle inherited from containing card/node; source cell remains live while visible"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 5.0,
+        "end": 14.6
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Each declared source clip runs original speed; switch at contiguous clip boundary, no loops or last-frame hold."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source_clock",
+          "target_id": null,
+          "rule": "SourceStart + globalFrame − clip.from is an integer source frame within decoded frame count; sourceEnd exclusive."
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content.asset_id"
+      ],
+      "evidence_ids": [
+        "implementation",
+        "motion"
+      ],
+      "acceptance": [
+        {
+          "check": "actual content motion",
+          "method": "native video clock + material-only screenshot changes at least30 frames apart after layout settled",
+          "pass_condition": "readyState≥2, nonseeking; source time advances1s for30 frames, pixel content changes, all source ranges fit actual decoded count"
+        }
+      ]
+    },
+    {
+      "id": "video-relay-1",
+      "type": "video",
+      "role": "independently timed actual main-video slot",
+      "parent_id": null,
+      "z_index": 2,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "asset-1",
+        "description": "asset_id is the initial native source; later authored source switches are explicitly listed in the following playlist: [{\"from\": 150, \"to\": 438, \"sourceStart\": 0, \"sourceEnd\": 288, \"src\": \"/assets/c/robot.mp4\", \"fit\": \"cover\", \"objectPosition\": \"50% 75%\", \"playbackRate\": 1, \"loop\": false, \"endExclusive\": true}]"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          720,
+          1280
+        ],
+        "fit": "cover",
+        "clip": "parent",
+        "style": {
+          "authority": "Scene.tsx Material slot=relay-1; current video-slots-10.json per clip fit/objectPosition",
+          "coordinates": "actual visual rectangle inherited from containing card/node; source cell remains live while visible"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 5.0,
+        "end": 14.6
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Each declared source clip runs original speed; switch at contiguous clip boundary, no loops or last-frame hold."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source_clock",
+          "target_id": null,
+          "rule": "SourceStart + globalFrame − clip.from is an integer source frame within decoded frame count; sourceEnd exclusive."
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content.asset_id"
+      ],
+      "evidence_ids": [
+        "implementation",
+        "motion"
+      ],
+      "acceptance": [
+        {
+          "check": "actual content motion",
+          "method": "native video clock + material-only screenshot changes at least30 frames apart after layout settled",
+          "pass_condition": "readyState≥2, nonseeking; source time advances1s for30 frames, pixel content changes, all source ranges fit actual decoded count"
+        }
+      ]
+    },
+    {
+      "id": "video-relay-2",
+      "type": "video",
+      "role": "independently timed actual main-video slot",
+      "parent_id": null,
+      "z_index": 2,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "asset-3",
+        "description": "asset_id is the initial native source; later authored source switches are explicitly listed in the following playlist: [{\"from\": 150, \"to\": 438, \"sourceStart\": 0, \"sourceEnd\": 288, \"src\": \"/assets/c/dog.mp4\", \"fit\": \"cover\", \"objectPosition\": \"50% 70%\", \"playbackRate\": 1, \"loop\": false, \"endExclusive\": true}]"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          720,
+          1280
+        ],
+        "fit": "cover",
+        "clip": "parent",
+        "style": {
+          "authority": "Scene.tsx Material slot=relay-2; current video-slots-10.json per clip fit/objectPosition",
+          "coordinates": "actual visual rectangle inherited from containing card/node; source cell remains live while visible"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 5.0,
+        "end": 14.6
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Each declared source clip runs original speed; switch at contiguous clip boundary, no loops or last-frame hold."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source_clock",
+          "target_id": null,
+          "rule": "SourceStart + globalFrame − clip.from is an integer source frame within decoded frame count; sourceEnd exclusive."
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content.asset_id"
+      ],
+      "evidence_ids": [
+        "implementation",
+        "motion"
+      ],
+      "acceptance": [
+        {
+          "check": "actual content motion",
+          "method": "native video clock + material-only screenshot changes at least30 frames apart after layout settled",
+          "pass_condition": "readyState≥2, nonseeking; source time advances1s for30 frames, pixel content changes, all source ranges fit actual decoded count"
+        }
+      ]
+    },
+    {
+      "id": "video-relay-3",
+      "type": "video",
+      "role": "independently timed actual main-video slot",
+      "parent_id": null,
+      "z_index": 2,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "asset-2",
+        "description": "asset_id is the initial native source; later authored source switches are explicitly listed in the following playlist: [{\"from\": 150, \"to\": 438, \"sourceStart\": 60, \"sourceEnd\": 348, \"src\": \"/assets/c/children.mp4\", \"fit\": \"cover\", \"objectPosition\": \"50% 62%\", \"playbackRate\": 1, \"loop\": false, \"endExclusive\": true}]"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          720,
+          1280
+        ],
+        "fit": "cover",
+        "clip": "parent",
+        "style": {
+          "authority": "Scene.tsx Material slot=relay-3; current video-slots-10.json per clip fit/objectPosition",
+          "coordinates": "actual visual rectangle inherited from containing card/node; source cell remains live while visible"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 5.0,
+        "end": 14.6
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Each declared source clip runs original speed; switch at contiguous clip boundary, no loops or last-frame hold."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source_clock",
+          "target_id": null,
+          "rule": "SourceStart + globalFrame − clip.from is an integer source frame within decoded frame count; sourceEnd exclusive."
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content.asset_id"
+      ],
+      "evidence_ids": [
+        "implementation",
+        "motion"
+      ],
+      "acceptance": [
+        {
+          "check": "actual content motion",
+          "method": "native video clock + material-only screenshot changes at least30 frames apart after layout settled",
+          "pass_condition": "readyState≥2, nonseeking; source time advances1s for30 frames, pixel content changes, all source ranges fit actual decoded count"
+        }
+      ]
+    },
+    {
+      "id": "video-relay-4",
+      "type": "video",
+      "role": "independently timed actual main-video slot",
+      "parent_id": null,
+      "z_index": 2,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "asset-1",
+        "description": "asset_id is the initial native source; later authored source switches are explicitly listed in the following playlist: [{\"from\": 150, \"to\": 438, \"sourceStart\": 30, \"sourceEnd\": 318, \"src\": \"/assets/c/robot.mp4\", \"fit\": \"cover\", \"objectPosition\": \"50% 75%\", \"playbackRate\": 1, \"loop\": false, \"endExclusive\": true}]"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          720,
+          1280
+        ],
+        "fit": "cover",
+        "clip": "parent",
+        "style": {
+          "authority": "Scene.tsx Material slot=relay-4; current video-slots-10.json per clip fit/objectPosition",
+          "coordinates": "actual visual rectangle inherited from containing card/node; source cell remains live while visible"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 5.0,
+        "end": 14.6
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Each declared source clip runs original speed; switch at contiguous clip boundary, no loops or last-frame hold."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source_clock",
+          "target_id": null,
+          "rule": "SourceStart + globalFrame − clip.from is an integer source frame within decoded frame count; sourceEnd exclusive."
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content.asset_id"
+      ],
+      "evidence_ids": [
+        "implementation",
+        "motion"
+      ],
+      "acceptance": [
+        {
+          "check": "actual content motion",
+          "method": "native video clock + material-only screenshot changes at least30 frames apart after layout settled",
+          "pass_condition": "readyState≥2, nonseeking; source time advances1s for30 frames, pixel content changes, all source ranges fit actual decoded count"
+        }
+      ]
+    },
+    {
+      "id": "video-recap-0",
+      "type": "video",
+      "role": "independently timed actual main-video slot",
+      "parent_id": null,
+      "z_index": 2,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "asset-1",
+        "description": "asset_id is the initial native source; later authored source switches are explicitly listed in the following playlist: [{\"from\": 570, \"to\": 720, \"sourceStart\": 90, \"sourceEnd\": 240, \"src\": \"/assets/c/robot.mp4\", \"fit\": \"cover\", \"objectPosition\": \"50% 75%\", \"playbackRate\": 1, \"loop\": false, \"endExclusive\": true}]"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          720,
+          1280
+        ],
+        "fit": "cover",
+        "clip": "parent",
+        "style": {
+          "authority": "Scene.tsx Material slot=recap-0; current video-slots-10.json per clip fit/objectPosition",
+          "coordinates": "actual visual rectangle inherited from containing card/node; source cell remains live while visible"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 19.0,
+        "end": 24.0
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Each declared source clip runs original speed; switch at contiguous clip boundary, no loops or last-frame hold."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source_clock",
+          "target_id": null,
+          "rule": "SourceStart + globalFrame − clip.from is an integer source frame within decoded frame count; sourceEnd exclusive."
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content.asset_id"
+      ],
+      "evidence_ids": [
+        "implementation",
+        "motion"
+      ],
+      "acceptance": [
+        {
+          "check": "actual content motion",
+          "method": "native video clock + material-only screenshot changes at least30 frames apart after layout settled",
+          "pass_condition": "readyState≥2, nonseeking; source time advances1s for30 frames, pixel content changes, all source ranges fit actual decoded count"
+        }
+      ]
+    },
+    {
+      "id": "video-recap-1",
+      "type": "video",
+      "role": "independently timed actual main-video slot",
+      "parent_id": null,
+      "z_index": 2,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "asset-2",
+        "description": "asset_id is the initial native source; later authored source switches are explicitly listed in the following playlist: [{\"from\": 570, \"to\": 720, \"sourceStart\": 180, \"sourceEnd\": 330, \"src\": \"/assets/c/children.mp4\", \"fit\": \"cover\", \"objectPosition\": \"50% 62%\", \"playbackRate\": 1, \"loop\": false, \"endExclusive\": true}]"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          720,
+          1280
+        ],
+        "fit": "cover",
+        "clip": "parent",
+        "style": {
+          "authority": "Scene.tsx Material slot=recap-1; current video-slots-10.json per clip fit/objectPosition",
+          "coordinates": "actual visual rectangle inherited from containing card/node; source cell remains live while visible"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 19.0,
+        "end": 24.0
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Each declared source clip runs original speed; switch at contiguous clip boundary, no loops or last-frame hold."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source_clock",
+          "target_id": null,
+          "rule": "SourceStart + globalFrame − clip.from is an integer source frame within decoded frame count; sourceEnd exclusive."
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content.asset_id"
+      ],
+      "evidence_ids": [
+        "implementation",
+        "motion"
+      ],
+      "acceptance": [
+        {
+          "check": "actual content motion",
+          "method": "native video clock + material-only screenshot changes at least30 frames apart after layout settled",
+          "pass_condition": "readyState≥2, nonseeking; source time advances1s for30 frames, pixel content changes, all source ranges fit actual decoded count"
+        }
+      ]
+    },
+    {
+      "id": "video-recap-2",
+      "type": "video",
+      "role": "independently timed actual main-video slot",
+      "parent_id": null,
+      "z_index": 2,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "asset-3",
+        "description": "asset_id is the initial native source; later authored source switches are explicitly listed in the following playlist: [{\"from\": 570, \"to\": 720, \"sourceStart\": 100, \"sourceEnd\": 250, \"src\": \"/assets/c/dog.mp4\", \"fit\": \"cover\", \"objectPosition\": \"50% 70%\", \"playbackRate\": 1, \"loop\": false, \"endExclusive\": true}]"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          720,
+          1280
+        ],
+        "fit": "cover",
+        "clip": "parent",
+        "style": {
+          "authority": "Scene.tsx Material slot=recap-2; current video-slots-10.json per clip fit/objectPosition",
+          "coordinates": "actual visual rectangle inherited from containing card/node; source cell remains live while visible"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 19.0,
+        "end": 24.0
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Each declared source clip runs original speed; switch at contiguous clip boundary, no loops or last-frame hold."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "source_clock",
+          "target_id": null,
+          "rule": "SourceStart + globalFrame − clip.from is an integer source frame within decoded frame count; sourceEnd exclusive."
+        }
+      ],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content.asset_id"
+      ],
+      "evidence_ids": [
+        "implementation",
+        "motion"
+      ],
+      "acceptance": [
+        {
+          "check": "actual content motion",
+          "method": "native video clock + material-only screenshot changes at least30 frames apart after layout settled",
+          "pass_condition": "readyState≥2, nonseeking; source time advances1s for30 frames, pixel content changes, all source ranges fit actual decoded count"
+        }
+      ]
+    }
+  ],
+  "slots": [
+    {
+      "id": "presenter",
+      "element_id": "global",
+      "property": "episode.presenterClips",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "items": 1,
+        "from": 0,
+        "to": 720,
+        "duration_seconds": 24,
+        "fps": 30,
+        "size": [
+          288,
+          360
+        ],
+        "rate": 1
+      },
+      "missing": "reject input before preview build",
+      "overflow": "reject and request authored adaptation; do not silently stretch/cycle"
+    },
+    {
+      "id": "font",
+      "element_id": "global",
+      "property": "episode.fontFamily",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "loaded_local_ttf": true,
+        "family": "Chromatic C"
+      },
+      "missing": "reject input before preview build",
+      "overflow": "reject and request authored adaptation; do not silently stretch/cycle"
+    },
+    {
+      "id": "captions",
+      "element_id": "global",
+      "property": "episode.captions",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "continuous": [
+          0,
+          720
+        ],
+        "max_lines": 2,
+        "max_chars": 30,
+        "source": "illustrative, no ASR claim"
+      },
+      "missing": "reject input before preview build",
+      "overflow": "reject and request authored adaptation; do not silently stretch/cycle"
+    },
+    {
+      "id": "video-slots",
+      "element_id": "global",
+      "property": "episode.videoSlots",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "manifest": "video-slots-10.json",
+        "native_video": true,
+        "fps": 30,
+        "speed": 1,
+        "continuous_ranges": true,
+        "actual_frame_count_guard": true,
+        "loop": false,
+        "freeze": false
+      },
+      "missing": "reject missing source/slot; never substitute photo",
+      "overflow": "reject insufficient source length; select authorized source range or declared cut"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "implementation",
+      "source_kind": "design",
+      "source": "Haike_video\\templates\\chromatic-six-video-batch-v1\\window-c\\Scene.tsx",
+      "locator": "current video version, not inherited photo approval",
+      "method": "current runtime authority, copied geometry from frozen baseline then adapted to native video",
+      "file": "Scene.tsx",
+      "sha256": "07e98d2fb628b9561a99f7e32532aa977c833d03d8d6f9ab33f4cc6cb9baea37"
+    },
+    {
+      "id": "technical",
+      "source_kind": "measurement",
+      "source": ".local\\chromatic-six-video-window-c\\preview\\build-manifest.json",
+      "locator": "current video version, not inherited photo approval",
+      "method": "recompute all source/dependency/output hashes and native full-decode frame counts",
+      "file": "../../../../.local/chromatic-six-video-window-c/preview/build-manifest.json",
+      "sha256": "ee2a84af8aa32ab563ca300523b51160f67146789c758d82a9ac77f920661f77"
+    },
+    {
+      "id": "visual",
+      "source_kind": "observation",
+      "source": ".local\\chromatic-six-video-window-c\\evidence\\10-motion-process.jpg",
+      "locator": "current video version, not inherited photo approval",
+      "method": "actual nonblank fullPage originals, DOM rectangle crop and author viewed all scenes",
+      "file": "../../../../.local/chromatic-six-video-window-c/evidence/10-motion-process.jpg",
+      "sha256": "d885efbef78325f0a45444234b8944a3e02b316e2b7f5cae62e4d060077bb6bb"
+    },
+    {
+      "id": "seek",
+      "source_kind": "measurement",
+      "source": ".local\\chromatic-six-video-window-c\\evidence\\captures-10.json",
+      "locator": "current video version, not inherited photo approval",
+      "method": "all native video source clocks and ready states at scene/cut boundaries",
+      "file": "../../../../.local/chromatic-six-video-window-c/evidence/captures-10.json",
+      "sha256": "5e93c850331e76be843ae611e27e13016d8c1041ab257a63dc14f198245c6164"
+    },
+    {
+      "id": "motion",
+      "source_kind": "measurement",
+      "source": ".local\\chromatic-six-video-window-c\\evidence\\content-motion.json",
+      "locator": "current video version, not inherited photo approval",
+      "method": "settled main-video-only screenshots ≥1s apart, pixel changes and matching native source time",
+      "file": "../../../../.local/chromatic-six-video-window-c/evidence/content-motion.json",
+      "sha256": "cbc23c92613294fb2be12ae168d087e4215ce6f834d659b83377289291e6784a"
+    },
+    {
+      "id": "playback",
+      "source_kind": "measurement",
+      "source": ".local\\chromatic-six-video-window-c\\evidence\\fullplay-10.json",
+      "locator": "current video version, not inherited photo approval",
+      "method": "clicked restart, actual read-only progress until719; never seek to manufacture completion",
+      "file": "../../../../.local/chromatic-six-video-window-c/evidence/fullplay-10.json",
+      "sha256": "46dd72e0e71ffc4c05bd229f37d2587195631bac8ea446d9971971ff86be698d"
+    }
+  ],
+  "unknowns": [],
+  "validation": {
+    "structure": {
+      "status": "pass",
+      "evidence_ids": [
+        "seek"
+      ],
+      "note": "current geometry, source ranges, slot continuity and actual media ready states; official schema checked separately"
+    },
+    "technical": {
+      "status": "pass",
+      "evidence_ids": [
+        "technical",
+        "seek",
+        "motion"
+      ],
+      "note": "native video length/full decode, actual dependencies and source clock checks; silent browser preview only"
+    },
+    "visual": {
+      "status": "pass",
+      "evidence_ids": [
+        "visual",
+        "motion",
+        "playback"
+      ],
+      "note": "current video-version actual scene crop and ≥1s content motion, full playback to719; no smooth realtime guarantee"
+    },
+    "audio": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "独立待验；不继承照片版或其它窗口通过状态。"
+    },
+    "platform": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "独立待验；不继承照片版或其它窗口通过状态。"
+    },
+    "user_review": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "独立待验；不继承照片版或其它窗口通过状态。"
+    },
+    "production": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "独立待验；不继承照片版或其它窗口通过状态。"
+    }
+  },
+  "extensions": {
+    "graphic": {
+      "text_policy": "short headings fixed in this authored recipe; episode captions controlled input, 27px, two lines max. Raw signs baked into photos are not editable.",
+      "asset_fit": "all primary cells actual video cover with per-source focus: store45%, robot75%, children62%, dog70% vertically; real crops viewed, source signs baked."
+    },
+    "avatar": {
+      "face_crop": "158×230 supporting window x514/y842, image cover50%35%, face/mouth fully inside; new person requires recalibration.",
+      "synchronization": "existing original full24-second source, continuously clocked, shown[0,150)/[570,720), CSS hidden middle including label. No new generation. Silent sample, audio/lip pending."
+    },
+    "custom": {
+      "contract": "haike.video-window/1",
+      "rules": "current Scene + video-slots authority, props{episode}, canonical /assets/c/ URLs; all visible main cells native Video. No old photo validation inherited."
+    },
+    "material_edit": {
+      "source_ranges": "video-slots-10.json: exact global from/to and sourceStart/sourceEnd for every native video slot",
+      "cut_policy": "contiguous authored cuts only, normal speed, no looping, freezing or slow motion. 11 route-0 cuts195/555; route-4 cut592 while world coordinates persist."
+    }
+  },
+  "operations": [
+    {
+      "id": "prepare",
+      "input": "authorized previous actual-video preparation and existing field-notes presenter/font",
+      "action": "python prepare.py: verify ancestry/hash, copy bytes, full decode actual frame count; freeze episodes and source slots",
+      "output": "../../../../.local/chromatic-six-video-window-c/preparation.json",
+      "completion": "each clip sourceEnd<=decoded count, contiguous ranges, rate1, correct prefixes, native stream complete",
+      "recovery": "reuse existing verified proxies; never fill a length gap with loop/freeze/slowdown",
+      "entrypoint": "prepare.py"
+    },
+    {
+      "id": "build",
+      "input": "prepared episodes, assets and current source",
+      "action": "node build.cjs using installed React18.3.1/Remotion4.0.506",
+      "output": "../../../../.local/chromatic-six-video-window-c/preview/build-manifest.json",
+      "completion": "source/dependency/asset/output SHA matches; official schema and catalogue pass",
+      "recovery": "fix only this window; preserve frozen photo source and other services",
+      "entrypoint": "build.cjs"
+    },
+    {
+      "id": "review",
+      "input": "same Scene/component and per-template built episode",
+      "action": "serve.py on127.0.0.1:14956; built-in browser original-speed play/seek and nonblank screenshots",
+      "output": "../../../../.local/chromatic-six-video-window-c/evidence",
+      "completion": "all scenes/cuts/endpoints, stable ≥1s native content change, full replay ends719 with original-speed sources; separate remaining gates",
+      "recovery": "record failed captures/playback; fix targeted issue and recheck identity; no seek masquerading as full play",
+      "entrypoint": "serve.py"
+    }
+  ]
+}

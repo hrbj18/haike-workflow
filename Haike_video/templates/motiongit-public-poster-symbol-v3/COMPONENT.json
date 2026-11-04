@@ -1,0 +1,73 @@
+{
+  "retained_upstream": {
+    "path": "../motiongit-public-components-v1",
+    "component_sha256": "bf335a15f8f71c6313c2618bbbb9ded5c598350b71f0a1607b7a4d3db379968f",
+    "verifier": "scripts/build_motion_public_components.py",
+    "verifier_sha256": "131b05de79363c3e7a6916dba244515d14038591d0713b1687c8283c8bf7ff18",
+    "source_commit": "4a52ae2cff542cfb0bfcf6e93e5120c55d0110cf",
+    "reason": "unchanged public renderer/source archives and notices reused by exact SHA; no binary copies"
+  },
+  "original_package_equivalence": false,
+  "full_original_template_closure": false,
+  "schema": "haike.motion-public-poster-components/3",
+  "component_id": "haike-public-poster-symbols-v3",
+  "component_version": "0.3.0-candidate",
+  "contract": "haike.motion-public-poster-production/3",
+  "engines": [
+    "observed-controls/3"
+  ],
+  "pack_keys": [
+    "observed-poster"
+  ],
+  "reference_ids": [
+    "vibrant-poster"
+  ],
+  "status": "candidate-static-only-media-pending",
+  "files": [
+    {
+      "path": "DEPENDENCIES.json",
+      "sha256": "c30cf57bb3f2192410d99685a771fd36f69583737e0464cce9c0bd0985ec5f1f",
+      "size": 73469
+    },
+    {
+      "path": "FFMPEG9.json",
+      "sha256": "1d7055cadccd60e2442c5d279083b3dd8c9a46c1bae6d317e78a344826e6aa29",
+      "size": 1659
+    },
+    {
+      "path": "PROVENANCE.json",
+      "sha256": "94bdc07717d7371782a7953048b445d945434d5c0ad03aee89d1f6f14588e92b",
+      "size": 1554
+    },
+    {
+      "path": "README.md",
+      "sha256": "c9df0a8ff3a0a606e322685af6e9a03b9f58909029d8fd1d0f177f7f5bf331d5",
+      "size": 638
+    },
+    {
+      "path": "TOOLS.json",
+      "sha256": "5a2bd3c270d30fd841c89116c4eabe25ad6a15e957ee40d021f77d31c5ef26f1",
+      "size": 49974
+    },
+    {
+      "path": "capture_runtime.mjs",
+      "sha256": "0bf6ec171767725922099c7dd2de7582fbd3e96d24c6c6c91531f387f4701fd8",
+      "size": 2255
+    },
+    {
+      "path": "input.schema.json",
+      "sha256": "3790284a575ee1875e1cd86044af48b2290e4a943f9d21e8a44a7bdfdcb83124",
+      "size": 7307
+    },
+    {
+      "path": "observed-controls-v3.js",
+      "sha256": "e1988dd57b101d0e71dc8fc9e829b90b38510e205242610afe88a73f24b94a97",
+      "size": 21795
+    },
+    {
+      "path": "runbook.md",
+      "sha256": "2aa4a61c9d2fd6d5ce43fa0b4b3652326f938998a643e3e89f0ca9ec8ba7ed60",
+      "size": 946
+    }
+  ]
+}

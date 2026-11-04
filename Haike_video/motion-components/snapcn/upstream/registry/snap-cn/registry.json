@@ -1,0 +1,931 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "snapcn",
+  "homepage": "https://snapcn.dev",
+  "items": [
+    {
+      "name": "answer-highlight",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/ai-input/answer-highlight?ref=cli \u2014 pass mode=\"dark\" if you are rendering onto a dark frame \u2014 these default to shadcn's light palette and a bare Remotion render is black.",
+      "title": "Answer Highlight",
+      "description": "AI answer highlight animation, ChatGPT-style chat response with a text selection. A question in a pill, an answer that writes itself a word at a time, and then the beat the whole shot is for: a caret lands mid-sentence and a selection band drags across one statement, wrapping the line the way a real one does \u2014 and settles onto the single word that matters. Name the sentence and the word as strings; the run is found in the answer for you, punctuation and all.",
+      "dependencies": ["remotion", "@remotion/google-fonts"],
+      "registryDependencies": ["https://snapcn.dev/r/snap-cn-ui.json"],
+      "files": [
+        {
+          "path": "answer-highlight/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/answer-highlight.tsx"
+        }
+      ]
+    },
+    {
+      "name": "agent-steps",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/ai-input/agent-steps?ref=cli \u2014 pass mode=\"dark\" if you are rendering onto a dark frame \u2014 these default to shadcn's light palette and a bare Remotion render is black.",
+      "title": "Agent Steps",
+      "description": "AI agent steps animation: a streaming task log with spinner and checkmarks for agent demos. An agent narrating its own work: the prompt lands in a pill, and under it a log writes itself one line at a time \u2014 each step running with a faint spinning globe, then flipping to past tense behind a check while the whole column steps up a row so the live line always sits on the centre. When the work is done the column swells and clears, and the last line slides to the middle and becomes the answer. Every proportion and every curve is fitted from frame measurements.",
+      "dependencies": ["remotion", "@remotion/google-fonts"],
+      "registryDependencies": ["https://snapcn.dev/r/snap-cn-ui.json"],
+      "files": [
+        {
+          "path": "agent-steps/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/agent-steps.tsx"
+        }
+      ]
+    },
+    {
+      "name": "announce-title",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/scenes/announce-title?ref=cli \u2014 its colours are explicit props (`paperColor`, `titleColor`, `voidColor`, \u2026) rather than a palette, and it takes no `mode`.",
+      "title": "Announce Title",
+      "description": "Launch title animation, product announcement intro with kinetic typography. A four-shot launch title: the eyebrow rushes past the camera on a receding type plane and lands on a colour field, the name assembles word by word on paper, and a macro pan across the tagline cuts wide as the line builds itself last word first while a white sweep drains it out of colour. Content, palette and the mark that leads the closing line are all props.",
+      "dependencies": ["remotion", "@remotion/google-fonts"],
+      "files": [
+        {
+          "path": "announce-title/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/announce-title.tsx"
+        }
+      ],
+      "registryDependencies": ["https://snapcn.dev/r/snap-cn-ui.json"]
+    },
+    {
+      "name": "answer-stream",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/ai-input/answer-stream?ref=cli \u2014 pass mode=\"dark\" if you are rendering onto a dark frame \u2014 these default to shadcn's light palette and a bare Remotion render is black.",
+      "title": "Answer Stream",
+      "description": "Streaming AI response animation, from the send button to the answer typing in. The beat after send: a macro shot on the button that cuts \u2014 hard, on its fastest frame \u2014 to the answer building itself on the page, while the camera pulls back 1.364\u00d7 about a focal point above the frame to keep up with it. Every word arrives hot and cools to the foreground.",
+      "dependencies": ["remotion", "@remotion/google-fonts"],
+      "registryDependencies": [
+        "https://snapcn.dev/r/snap-cn-ui.json",
+        "https://snapcn.dev/r/input.json"
+      ],
+      "files": [
+        {
+          "path": "answer-stream/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/answer-stream.tsx"
+        }
+      ]
+    },
+    {
+      "name": "text-reveal",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/text/text-reveal?ref=cli \u2014 pass mode=\"dark\" if you are rendering onto a dark frame \u2014 these default to shadcn's light palette and a bare Remotion render is black.",
+      "title": "Text Reveal",
+      "description": "Text reveal animation: word-by-word and letter-by-letter kinetic typography with blur-in, fade, slide, scale and tracking-in presets. One staggered enter/exit text animator: fade, slide, blur, scale, mask and tracking effects over character, word, line or block units, with 14 classic looks as presets.",
+      "dependencies": ["remotion"],
+      "registryDependencies": ["https://snapcn.dev/r/snap-cn-ui.json"],
+      "files": [
+        {
+          "path": "text-reveal/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/text-reveal.tsx"
+        }
+      ]
+    },
+    {
+      "name": "text-highlight",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/text/text-highlight?ref=cli \u2014 pass mode=\"dark\" if you are rendering onto a dark frame \u2014 these default to shadcn's light palette and a bare Remotion render is black.",
+      "title": "Text Highlight",
+      "description": "Text highlight animation: marker highlighter, underline, strikethrough and shimmer on a word. Animated emphasis on one span inside a static sentence \u2014 marker sweep, color shift, underline, strikethrough-replace, or shimmer.",
+      "dependencies": ["remotion"],
+      "registryDependencies": ["https://snapcn.dev/r/snap-cn-ui.json"],
+      "files": [
+        {
+          "path": "text-highlight/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/text-highlight.tsx"
+        }
+      ]
+    },
+    {
+      "name": "text-rewrite",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/text/text-rewrite?ref=cli \u2014 pass mode=\"dark\" if you are rendering onto a dark frame \u2014 these default to shadcn's light palette and a bare Remotion render is black.",
+      "title": "Text Rewrite",
+      "description": "Text rewrite animation, a typewriter line that deletes and retypes its ending. A line that writes itself a word at a time, comes forward and gets selected \u2014 then its opening is swept away by a clip that cuts letters in half as it passes, and a new ending is written on while the line slides to its new centre. The mark rides the sweeping edge throughout.",
+      "dependencies": ["remotion", "@remotion/google-fonts"],
+      "registryDependencies": ["https://snapcn.dev/r/snap-cn-ui.json"],
+      "files": [
+        {
+          "path": "text-rewrite/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/text-rewrite.tsx"
+        }
+      ]
+    },
+    {
+      "name": "text-select",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/text/text-select?ref=cli \u2014 pass mode=\"dark\" if you are rendering onto a dark frame \u2014 these default to shadcn's light palette and a bare Remotion render is black.",
+      "title": "Text Select",
+      "description": "Typewriter with text selection: a line types word by word, then gets highlighted. A line that writes itself a word at a time \u2014 each one arriving in the accent and cooling to the foreground a beat later, so exactly one word is ever coloured \u2014 then pushes forward to full size on a baseline-pivoted scale and gets selected, the drag sweeping across under a gradient sheen with a hard caret edge.",
+      "dependencies": ["remotion", "@remotion/google-fonts"],
+      "registryDependencies": ["https://snapcn.dev/r/snap-cn-ui.json"],
+      "files": [
+        {
+          "path": "text-select/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/text-select.tsx"
+        }
+      ]
+    },
+    {
+      "name": "text-swap",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/text/text-swap?ref=cli \u2014 pass mode=\"dark\" if you are rendering onto a dark frame \u2014 these default to shadcn's light palette and a bare Remotion render is black.",
+      "title": "Text Swap",
+      "description": "Text swap animation, rotating headline that replaces one line with another. Replaces one line of text with another using exit-then-enter scheduling, with five transition presets: fade-through, crossfade, shared-axis-y, shared-axis-z, and cut.",
+      "dependencies": ["remotion"],
+      "registryDependencies": ["https://snapcn.dev/r/snap-cn-ui.json"],
+      "files": [
+        {
+          "path": "text-swap/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/text-swap.tsx"
+        }
+      ]
+    },
+    {
+      "name": "text-swell",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/text/text-swell?ref=cli \u2014 pass mode=\"dark\" if you are rendering onto a dark frame \u2014 these default to shadcn's light palette and a bare Remotion render is black.",
+      "title": "Text Swell",
+      "description": "Kinetic typography title with a bouncing letter wave. A title reveal where the lead word floats toward the viewer and hangs there while the sentence assembles around it \u2014 each trailing word pushes in and its letters bounce up off the baseline in a wave \u2014 before the whole line falls back to size.",
+      "dependencies": ["remotion"],
+      "registryDependencies": ["https://snapcn.dev/r/snap-cn-ui.json"],
+      "files": [
+        {
+          "path": "text-swell/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/text-swell.tsx"
+        }
+      ]
+    },
+    {
+      "name": "text-build",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/text/text-build?ref=cli \u2014 pass mode=\"dark\" if you are rendering onto a dark frame \u2014 these default to shadcn's light palette and a bare Remotion render is black.",
+      "title": "Text Build",
+      "description": "Word-by-word text build animation that keeps the line centred. Words enter one at a time while already-placed words physically reflow to stay centered \u2014 a growing line on the x axis or a growing stack on the y axis.",
+      "dependencies": ["remotion"],
+      "registryDependencies": ["https://snapcn.dev/r/snap-cn-ui.json"],
+      "files": [
+        {
+          "path": "text-build/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/text-build.tsx"
+        }
+      ]
+    },
+    {
+      "name": "word-flip",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/text/word-flip?ref=cli \u2014 pass mode=\"dark\" if you are rendering onto a dark frame \u2014 these default to shadcn's light palette and a bare Remotion render is black.",
+      "title": "Word Flip",
+      "description": "Word flip text rotator: a typewriter headline with a 3D rotating word. A headline types itself out, then one word cycles on a 3D flip \u2014 it sinks into an anticipation dip, throws up and away about its baseline under motion blur, and the next word unfurls from below. The slot is reserved from the first keystroke, so nothing in the sentence ever reflows.",
+      "dependencies": ["remotion"],
+      "registryDependencies": ["https://snapcn.dev/r/snap-cn-ui.json"],
+      "files": [
+        {
+          "path": "word-flip/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/word-flip.tsx"
+        }
+      ]
+    },
+    {
+      "name": "word-captions",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/captions/word-captions?ref=cli \u2014 pass mode=\"dark\" if you are rendering onto a dark frame \u2014 these default to shadcn's light palette and a bare Remotion render is black.",
+      "title": "Word Captions",
+      "description": "TikTok-style captions: animated subtitles with word pop, Hormozi and MrBeast styles for Reels and Shorts. Burned-in captions in the styles big channels actually use \u2014 heavy Montserrat, a real outside outline so they read on any footage, and the spoken word springing to an accent. Four presets: beast, hormozi, pop, clean.",
+      "dependencies": ["remotion", "@remotion/google-fonts"],
+      "registryDependencies": ["https://snapcn.dev/r/snap-cn-ui.json"],
+      "files": [
+        {
+          "path": "word-captions/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/word-captions.tsx"
+        }
+      ]
+    },
+    {
+      "name": "karaoke-captions",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/captions/karaoke-captions?ref=cli \u2014 pass mode=\"dark\" if you are rendering onto a dark frame \u2014 these default to shadcn's light palette and a bare Remotion render is black.",
+      "title": "Karaoke Captions",
+      "description": "Karaoke captions: word-by-word highlighted subtitles synced to speech. A caption line that fills word by word as it is spoken \u2014 heavy outlined type that reads on any footage. Three presets: karaoke, highlight (the word rides an accent bar), clean.",
+      "dependencies": ["remotion", "@remotion/google-fonts"],
+      "registryDependencies": ["https://snapcn.dev/r/snap-cn-ui.json"],
+      "files": [
+        {
+          "path": "karaoke-captions/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/karaoke-captions.tsx"
+        }
+      ]
+    },
+    {
+      "name": "logo-drift",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/logos/logo-drift?ref=cli \u2014 pass mode=\"dark\" if you are rendering onto a dark frame \u2014 these default to shadcn's light palette and a bare Remotion render is black.",
+      "title": "Logo Drift",
+      "description": "Logo wall animation: a logo cloud of integrations drifting behind a headline. A field of tiles drifting past a headline while the camera pulls steadily back, so the wall of things-it-works-with keeps arriving from every edge. The pull-back is one linear scale measured at 0.176 per second across every tile; the words do not fade in, they arrive 1.216\u00d7 large and 4.3px soft and land in 140ms.",
+      "dependencies": ["remotion", "@remotion/google-fonts"],
+      "registryDependencies": ["https://snapcn.dev/r/snap-cn-ui.json"],
+      "files": [
+        {
+          "path": "logo-drift/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/logo-drift.tsx"
+        }
+      ]
+    },
+    {
+      "name": "logo-assemble",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/logos/logo-assemble?ref=cli \u2014 pass mode=\"dark\" if you are rendering onto a dark frame \u2014 these default to shadcn's light palette and a bare Remotion render is black.",
+      "title": "Logo Assemble",
+      "description": "Logo reveal animation: image cards orbit and collapse into your logo and brand name. A single ring of image cards revolves around a centred title, then spins inward and drains to the middle \u2014 giving birth to a simple logo that slides left as the brand name reveals to its right.",
+      "dependencies": ["remotion"],
+      "registryDependencies": ["https://snapcn.dev/r/snap-cn-ui.json"],
+      "files": [
+        {
+          "path": "logo-assemble/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/logo-assemble.tsx"
+        }
+      ]
+    },
+    {
+      "name": "logo-flicker",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/logos/logo-flicker?ref=cli \u2014 pass mode=\"dark\" if you are rendering onto a dark frame \u2014 these default to shadcn's light palette and a bare Remotion render is black.",
+      "title": "Logo Flicker",
+      "description": "Logo reveal intro: a fast image flicker that settles on your logo. Images flip across a central card very fast, the flicker decelerates and fades, and the logo and brand name resolve underneath \u2014 a strobe of imagery settling onto the mark.",
+      "dependencies": ["remotion"],
+      "registryDependencies": ["https://snapcn.dev/r/snap-cn-ui.json"],
+      "files": [
+        {
+          "path": "logo-flicker/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/logo-flicker.tsx"
+        }
+      ]
+    },
+    {
+      "name": "block-wordmark",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/logos/block-wordmark?ref=cli \u2014 pass mode=\"dark\" if you are rendering onto a dark frame \u2014 these default to shadcn's light palette and a bare Remotion render is black.",
+      "title": "Block Wordmark",
+      "description": "Logo sting and wordmark animation: blocks build into your brand name. A wordmark builds out of solid blocks \u2014 a square scales in, a coloured deck fans out around it and winds back, the stack collapses and stretches into one block per letter, then each block flashes a colour and swaps for its real letterform.",
+      "dependencies": ["remotion", "@remotion/google-fonts"],
+      "registryDependencies": ["https://snapcn.dev/r/snap-cn-ui.json"],
+      "files": [
+        {
+          "path": "block-wordmark/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/block-wordmark.tsx"
+        }
+      ]
+    },
+    {
+      "name": "phone-frame",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/screens/phone-frame?ref=cli \u2014 pass mode=\"dark\" if you are rendering onto a dark frame \u2014 these default to shadcn's light palette and a bare Remotion render is black.",
+      "title": "Phone Frame",
+      "description": "iPhone mockup animation: phone device frame for app screenshots and screen recordings. iPhone-style device frame with a dynamic island and a screen slot \u2014 flat or lightly 3D-tilted, with rise, rotate-in, or float entrances and a subtle float loop.",
+      "dependencies": ["remotion"],
+      "registryDependencies": ["https://snapcn.dev/r/snap-cn-ui.json"],
+      "files": [
+        {
+          "path": "phone-frame/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/phone-frame.tsx"
+        }
+      ]
+    },
+    {
+      "name": "laptop-frame",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/screens/laptop-frame?ref=cli \u2014 pass mode=\"dark\" if you are rendering onto a dark frame \u2014 these default to shadcn's light palette and a bare Remotion render is black.",
+      "title": "Laptop Frame",
+      "description": "MacBook laptop mockup animation that opens and zooms into your screenshot or video. MacBook-style laptop that opens, runs a dynamic-island notch notification, then dives the camera into the screen until an image or video fills the frame.",
+      "dependencies": ["remotion"],
+      "registryDependencies": ["https://snapcn.dev/r/snap-cn-ui.json"],
+      "files": [
+        {
+          "path": "laptop-frame/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/laptop-frame.tsx"
+        }
+      ]
+    },
+    {
+      "name": "terminal-simulator",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/screens/terminal-simulator?ref=cli \u2014 pass mode=\"dark\" if you are rendering onto a dark frame \u2014 these default to shadcn's light palette and a bare Remotion render is black.",
+      "title": "Terminal Simulator",
+      "description": "Terminal animation: CLI demo that types commands and prints output. Terminal window with chunked command playback, freeze-frame pauses, step scrolling, and an optional cursor-pinned zoom camera.",
+      "dependencies": ["remotion"],
+      "registryDependencies": ["https://snapcn.dev/r/snap-cn-ui.json"],
+      "files": [
+        {
+          "path": "terminal-simulator/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/terminal-simulator.tsx"
+        }
+      ]
+    },
+    {
+      "name": "screen-recording",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/screens/screen-recording?ref=cli \u2014 pass mode=\"dark\" if you are rendering onto a dark frame \u2014 these default to shadcn's light palette and a bare Remotion render is black.",
+      "title": "Screen Recording",
+      "description": "Screen recording zoom: crop and auto-zoom a product demo capture. The treatment that turns a raw screen capture into a shot: crop the browser and OS chrome off each edge as a fraction, fit what is left to the frame, and run a keyframed camera that pushes in on whatever matters at a given frame and holds until the next move. Takes a video or a still through the same track.",
+      "dependencies": ["remotion"],
+      "registryDependencies": ["https://snapcn.dev/r/snap-cn-ui.json"],
+      "files": [
+        {
+          "path": "screen-recording/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/screen-recording.tsx"
+        }
+      ]
+    },
+    {
+      "name": "count-grid",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/scenes/count-grid?ref=cli \u2014 pass cards an array of image URLs and from/to/noun for the label.",
+      "title": "Count Grid",
+      "description": "Number count-up grid: cards multiply and a counter jumps, the it-scales stat shot. A grid of cards rushes in under a horizontal smear, settles on five and a label, then the camera pulls back a fraction while every empty cell around them fills in from the middle out and the number jumps. The \"and it scales\" shot, without a cut \u2014 one card is deliberately late to land, which is what makes the entry read as five separate things arriving rather than one picture being pushed in.",
+      "dependencies": ["remotion", "@remotion/google-fonts"],
+      "registryDependencies": ["https://snapcn.dev/r/snap-cn-ui.json"],
+      "files": [
+        {
+          "path": "count-grid/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/count-grid.tsx"
+        }
+      ]
+    },
+    {
+      "name": "roster-grant",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/scenes/roster-grant?ref=cli — pass rows as three arrays of { name, role } and label for the button.",
+      "title": "Roster Grant",
+      "description": "Access granted animation: a cursor clicks a CTA and team avatars switch on. Three rows of roster cards stream past a call to action, a pointer walks in and clicks it, and the monograms start turning to the accent one every seven frames — top row, middle, bottom, top, bottom, middle, so it reads as a system granting rather than a list iterating. The camera and the middle row's clearance around the pill settle on the same measured exponential; the outer rows deliberately do not, which is what stops the two sides ever looking symmetric.",
+      "dependencies": ["remotion", "@remotion/google-fonts"],
+      "registryDependencies": ["https://snapcn.dev/r/snap-cn-ui.json"],
+      "files": [
+        {
+          "path": "roster-grant/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/roster-grant.tsx"
+        }
+      ]
+    },
+    {
+      "name": "wordmark-cut",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/scenes/wordmark-cut?ref=cli — pass word for the wordmark and dotFrom/dotTo for the gradient.",
+      "title": "Wordmark Cut",
+      "description": "Wordmark reveal end card: a huge brand name with a hard cut to a close-up. A wordmark twice the width of the frame, cooling from a lit gradient to ink while it settles, and then a hard cut onto its last letters and the dot \u2014 1.71\u00d7 nearer, with a shallow depth of field the wide shot does not have, which is the only thing that says the second shot is closer rather than just bigger. It holds a beat and pushes in, still accelerating on the last frame.",
+      "dependencies": ["remotion", "@remotion/google-fonts"],
+      "registryDependencies": ["https://snapcn.dev/r/snap-cn-ui.json"],
+      "files": [
+        {
+          "path": "wordmark-cut/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/wordmark-cut.tsx"
+        }
+      ]
+    },
+    {
+      "name": "cursor-track",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/screens/cursor-track?ref=cli \u2014 pass mode=\"dark\" if you are rendering onto a dark frame \u2014 these default to shadcn's light palette and a bare Remotion render is black.",
+      "title": "Cursor Track",
+      "description": "Cursor click animation: a mouse pointer that moves and clicks over any UI. A synthetic cursor that walks a path of normalized waypoints over any children and pulses a click ring on arrival. A hand-drawn macOS-style arrow with an outline that keeps it readable over arbitrary footage, or a touch puck \u2014 for UI sims, and for recordings whose real cursor never made it into the file.",
+      "dependencies": ["remotion"],
+      "registryDependencies": ["https://snapcn.dev/r/snap-cn-ui.json"],
+      "files": [
+        {
+          "path": "cursor-track/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/cursor-track.tsx"
+        }
+      ]
+    },
+    {
+      "name": "pulsing-border",
+      "type": "registry:component",
+      "title": "Pulsing Border",
+      "description": "AI glow border: a pulsing thinking frame around the screen. Glowing 'AI is working' frame \u2014 a soft pulsing border overlay that breathes around the scene edges while a response streams.",
+      "docs": "Docs and props: https://snapcn.dev/docs?ref=cli \u2014 pulsing-border draws with WebGL, and Remotion's headless Chromium has no GL context by default \u2014 render it with `npx remotion render --gl=angle` (or set `Config.setChromiumOpenGlRenderer(\"angle\")`), or the render fails with 'WebGL is not supported in this browser'.",
+      "dependencies": ["remotion", "@paper-design/shaders-react"],
+      "registryDependencies": ["https://snapcn.dev/r/snap-cn-ui.json"],
+      "files": [
+        {
+          "path": "pulsing-border/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/pulsing-border.tsx"
+        }
+      ]
+    },
+    {
+      "name": "follower-rush",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/social/follower-rush?ref=cli \u2014 pass mode=\"dark\" if you are rendering onto a dark frame \u2014 these default to shadcn's light palette and a bare Remotion render is black.",
+      "title": "Follower Rush",
+      "description": "Follower count animation: X/Twitter follower notification with a count-up and avatar wave, for social proof. An X-style follower notification that piles up \u2014 avatars stack in and the count explodes, then the row bends into an undulating wave of faces.",
+      "dependencies": ["remotion", "@remotion/google-fonts"],
+      "registryDependencies": ["https://snapcn.dev/r/snap-cn-ui.json"],
+      "files": [
+        {
+          "path": "follower-rush/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/follower-rush.tsx"
+        }
+      ]
+    },
+    {
+      "name": "prompt-send",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/ai-input/prompt-send?ref=cli \u2014 pass mode=\"dark\" if you are rendering onto a dark frame \u2014 these default to shadcn's light palette and a bare Remotion render is black.",
+      "title": "Prompt Send",
+      "description": "AI prompt typing animation: a chat input types a prompt and a cursor clicks send. A composer that unrolls from a hairline, writes a brief into itself while the camera cuts in and rides the caret, then cuts back out to the send button as a pointer arrives and clicks it. The typing is eased, not constant \u2014 17 chars/sec on the first word, 33 in the middle, a settle on the last three. Long copy scrolls the field under its own caret and extra suggestions wrap, so the panel fits whatever you put in it.",
+      "dependencies": ["remotion", "@remotion/google-fonts"],
+      "registryDependencies": [
+        "https://snapcn.dev/r/snap-cn-ui.json",
+        "https://snapcn.dev/r/input.json"
+      ],
+      "files": [
+        {
+          "path": "prompt-send/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/prompt-send.tsx"
+        }
+      ]
+    },
+    {
+      "name": "prompt-zoom",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/ai-input/prompt-zoom?ref=cli \u2014 pass mode=\"dark\" if you are rendering onto a dark frame \u2014 these default to shadcn's light palette and a bare Remotion render is black.",
+      "title": "Prompt Zoom",
+      "description": "AI prompt zoom: an assistant home screen that cuts into the chat input as the prompt types. An assistant landing screen that offers its suggestions, then cuts \u2014 hard, in a single frame \u2014 into the caret, where the prompt types itself. The push-in is a measured 2.547\u00d7 anchored on the text insertion point, not an animated zoom.",
+      "dependencies": ["remotion", "@remotion/google-fonts"],
+      "registryDependencies": [
+        "https://snapcn.dev/r/snap-cn-ui.json",
+        "https://snapcn.dev/r/input.json"
+      ],
+      "files": [
+        {
+          "path": "prompt-zoom/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/prompt-zoom.tsx"
+        }
+      ]
+    },
+    {
+      "name": "punch-lines",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/text/punch-lines?ref=cli \u2014 pass mode=\"dark\" if you are rendering onto a dark frame \u2014 these default to shadcn's light palette and a bare Remotion render is black.",
+      "title": "Punch Lines",
+      "description": "Kinetic typography title cards: bold statements that cut hard between beats. A run of full-frame title cards that cut hard between beats. A statement card is flicked in from the left line by line and settles on a critically damped curve, then rushes past the camera; a hero card punches its words up from a third of their size in a wave and pushes slowly forward until it cuts. Every curve is fitted from frame measurements \u2014 the slide to 0.42px rms over 37 frames.",
+      "dependencies": ["remotion", "@remotion/google-fonts"],
+      "registryDependencies": ["https://snapcn.dev/r/snap-cn-ui.json"],
+      "files": [
+        {
+          "path": "punch-lines/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/punch-lines.tsx"
+        }
+      ]
+    },
+    {
+      "name": "orbit-gallery",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/scenes/orbit-gallery?ref=cli \u2014 pass mode=\"dark\" if you are rendering onto a dark frame \u2014 these default to shadcn's light palette and a bare Remotion render is black.",
+      "title": "Orbit Gallery",
+      "description": "Image gallery intro: photos spiral into the centre around a title. An image-universe hero: a continuous stream of photos flows along an Archimedean spiral (a vortex) from the frame edges into the center \u2014 evenly spaced by arc length, shrinking and rotating to follow the coil, with the title held in the clear middle. A slow, cinematic opener for launch and editorial videos.",
+      "dependencies": ["remotion"],
+      "registryDependencies": ["https://snapcn.dev/r/snap-cn-ui.json"],
+      "files": [
+        {
+          "path": "orbit-gallery/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/orbit-gallery.tsx"
+        }
+      ]
+    },
+    {
+      "name": "hero-launch",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/scenes/hero-launch?ref=cli \u2014 pass mode=\"dark\" if you are rendering onto a dark frame \u2014 these default to shadcn's light palette and a bare Remotion render is black.",
+      "title": "Product Hero",
+      "description": "Product launch hero scene for a SaaS launch video intro. Cinematic product-launch hero \u2014 two cards slide into formation as the headline reveals above.",
+      "dependencies": ["remotion", "@remotion/google-fonts"],
+      "registryDependencies": ["https://snapcn.dev/r/snap-cn-ui.json"],
+      "files": [
+        {
+          "path": "hero-launch/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/hero-launch.tsx"
+        }
+      ]
+    },
+    {
+      "name": "moodboard-reveal",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/scenes/moodboard-reveal?ref=cli \u2014 this scene spans light and dark by design, so it takes no `mode` \u2014 pass `theme` to repaint it.",
+      "title": "Moodboard Reveal",
+      "description": "Photo gallery reveal: a moodboard fly-through that lands on a hero image. A kinetic headline with a swapping inline image, then a scattered gallery of photos flies in, the camera pushes through it as the background lifts from near-black to off-white, and it lands on a single hero image.",
+      "dependencies": ["remotion"],
+      "registryDependencies": ["https://snapcn.dev/r/snap-cn-ui.json"],
+      "files": [
+        {
+          "path": "moodboard-reveal/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/moodboard-reveal.tsx"
+        }
+      ]
+    },
+    {
+      "name": "reel-collage",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/scenes/reel-collage?ref=cli \u2014 the page, glow and flush are props; the captions take the theme's foreground.",
+      "title": "Reel Collage",
+      "description": "Photo reel that shuts into a collage. A picture cuts through a quick reel between two captions and slowly zooms, then shuts like an eyelid while the captions fold into one stacked line; the copy swaps, the lines split, and a scattered collage blooms in around them on a peach flush. Every curve is fitted from a reference recording, frame by frame.",
+      "dependencies": ["remotion"],
+      "registryDependencies": ["https://snapcn.dev/r/snap-cn-ui.json"],
+      "files": [
+        {
+          "path": "reel-collage/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/reel-collage.tsx"
+        }
+      ]
+    },
+    {
+      "name": "reel-wall",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/scenes/reel-wall?ref=cli \u2014 pass your own vertical clips as videos; they repeat around the ring.",
+      "title": "Reel Wall",
+      "description": "Curved video wall for Remotion. A ring of vertical clips turns past in the dark: it eases in from rest on twos, then keeps turning at an even speed. The ring, lens and ease are fitted frame by frame from a reference recording.",
+      "dependencies": ["remotion"],
+      "files": [
+        {
+          "path": "reel-wall/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/reel-wall.tsx"
+        }
+      ]
+    },
+    {
+      "name": "phone-stack",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/screens/phone-stack?ref=cli \u2014 pass one clip per screen as videos; the page and glow are props.",
+      "title": "Phone Stack",
+      "description": "Stacked phone screens with video. Phone screens rise out of a blur from below one after another, and each new one pushes the stack back: the older screens shrink and step up so only their tops peek out above the newest. Every screen plays its own clip under an iOS status bar. Proportions measured off a reference recording.",
+      "dependencies": ["remotion"],
+      "files": [
+        {
+          "path": "phone-stack/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/phone-stack.tsx"
+        }
+      ]
+    },
+    {
+      "name": "portal-intro",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/scenes/portal-intro?ref=cli \u2014 pass mode=\"dark\" if you are rendering onto a dark frame; the picture, title and mark are props.",
+      "title": "Portal Intro",
+      "description": "Sentence-to-picture intro. The lead words fade up one at a time, the line re-sets with a small rounded picture chip inside it and leans in until the chip takes the frame; a title types itself over the picture, lifts away, and the mark and the name arrive. Fitted frame by frame from a reference recording.",
+      "dependencies": ["remotion"],
+      "registryDependencies": ["https://snapcn.dev/r/snap-cn-ui.json"],
+      "files": [
+        {
+          "path": "portal-intro/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/portal-intro.tsx"
+        }
+      ]
+    },
+    {
+      "name": "dot-bloom",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/transitions/dot-bloom?ref=cli \u2014 lay it over both shots and cut under it at DOT_BLOOM_CUT, where the cream covers the frame.",
+      "title": "Dot Bloom",
+      "description": "Halftone dot transition. White dots spark over the outgoing shot while it washes out to cream, then the cream breaks into warm coral, peach and blush dots in drifting diagonal bands that thin out cell by cell until the incoming shot is all that is left. Every cell of every step is replayed from a reference recording.",
+      "dependencies": ["remotion"],
+      "files": [
+        {
+          "path": "dot-bloom/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/dot-bloom.tsx"
+        }
+      ]
+    },
+    {
+      "name": "search-typing",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/ai-input/search-typing?ref=cli \u2014 pass mode=\"dark\" if you are rendering onto a dark frame \u2014 these default to shadcn's light palette and a bare Remotion render is black.",
+      "title": "Search Typing",
+      "description": "Search bar typing animation for AI search and command palette demos. A search field wider than the shot: two thirds in frame, then it comes forward, types across its left half, pages to its right half, and goes back. Every proportion is measured, and the scale pivots on the text baseline so the type never climbs the pixel grid.",
+      "dependencies": ["remotion", "@remotion/google-fonts"],
+      "registryDependencies": [
+        "https://snapcn.dev/r/snap-cn-ui.json",
+        "https://snapcn.dev/r/caret.json",
+        "https://snapcn.dev/r/input.json"
+      ],
+      "files": [
+        {
+          "path": "search-typing/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/search-typing.tsx"
+        }
+      ]
+    },
+    {
+      "name": "status-cycle",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/scenes/status-cycle?ref=cli \u2014 pass mode=\"dark\" if you are rendering onto a dark frame \u2014 these default to shadcn's light palette and a bare Remotion render is black.",
+      "title": "Status Cycle",
+      "description": "Status badge animation: a pill whose label cycles through states. A centred line whose status pill cycles: the label rolls up behind a hard clip while the pill's width springs past its target and back, and the line re-centres around it. The field then crossfades and a column of chips steps up from below. Copy, palette and every timing are props; the curves are fitted from frame measurements, not eyeballed.",
+      "dependencies": ["remotion", "@remotion/google-fonts"],
+      "registryDependencies": ["https://snapcn.dev/r/snap-cn-ui.json"],
+      "files": [
+        {
+          "path": "status-cycle/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/status-cycle.tsx"
+        }
+      ]
+    },
+    {
+      "name": "type-morph",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/text/type-morph?ref=cli \u2014 pass mode=\"dark\" if you are rendering onto a dark frame \u2014 these default to shadcn's light palette and a bare Remotion render is black.",
+      "title": "Type Morph",
+      "description": "Typewriter effect: a headline types with a blinking caret, then morphs letter by letter. A headline that types itself under a glowing caret, sheds its lead, morphs letter by letter, and ends under a colour flood.",
+      "dependencies": ["remotion", "@remotion/google-fonts"],
+      "registryDependencies": [
+        "https://snapcn.dev/r/snap-cn-ui.json",
+        "https://snapcn.dev/r/text-reveal.json"
+      ],
+      "files": [
+        {
+          "path": "type-morph/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/type-morph.tsx"
+        },
+        {
+          "path": "type-morph/type-morph-timeline.ts",
+          "type": "registry:file",
+          "target": "components/snap-cn/type-morph-timeline.ts"
+        }
+      ]
+    },
+  {
+      "name": "orb-swarm",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/scenes/orb-swarm?ref=cli — script is six cards separated by |; the first, second and last arrive whole and the three in the middle reveal word by word. softness is the blur on the type in card pixels (0 is crisp). background and ink are the page and the settled type; orbColor recolours the orbs (and the word tints) by hue, keeping their shading.",
+      "title": "Orb Swarm",
+      "description": "Kinetic typography scene with glass orbs: a sentence told one beat at a time while four orbs burst out of it, split into eight and sixteen, wind into a clockwise vortex, collapse into a knot, pay out as a chain, loop around the closing words and shrink away bead by bead. Every phase was measured frame by frame off a 24fps reference and is replayed on the same clock; the orbs are shaded per pixel into a canvas (a scrolling band texture bowed like latitude lines, a soft glass edge) and the type is drawn into the same canvas four times finer than the frame so its baselines land between pixels.",
+      "dependencies": [
+          "remotion",
+          "@remotion/google-fonts"
+      ],
+      "registryDependencies": [
+          "https://snapcn.dev/r/snap-cn-ui.json"
+      ],
+      "files": [
+          {
+              "path": "orb-swarm/index.tsx",
+              "type": "registry:component",
+              "target": "components/snap-cn/orb-swarm.tsx"
+          }
+      ]
+  },
+  {
+      "name": "word-gather",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/text/word-gather?ref=cli — text is the sentence and its first word is the one that holds the frame alone; maxWidth is where the line breaks, in card pixels; accent is the colour a word wears while it is still travelling. Pass mode=\"dark\" if you are rendering onto a dark frame — these default to shadcn's light palette.",
+      "title": "Word Gather",
+      "description": "Word-by-word sentence animation: words fly in out of order and settle into the line. A sentence that arrives one word at a time, out of order, and gathers. The first word holds the middle of the frame on its own; then the rest drop in around it — not in reading order and not where they belong — each landing near its slot in the accent colour and sliding the last of the way home, turning to ink as it settles. The line makes room for them as they come, and when the last one is down the whole block eases back to its real size. The layout is solved here rather than left to the browser, because a word has to be transformed from somewhere else to its slot and knowing where its slot is means having laid the line out yourself — which also means the line break cannot move while the block's scale is changing under it.",
+      "dependencies": [
+          "remotion",
+          "@remotion/google-fonts"
+      ],
+      "registryDependencies": [
+          "https://snapcn.dev/r/snap-cn-ui.json"
+      ],
+      "files": [
+          {
+              "path": "word-gather/index.tsx",
+              "type": "registry:component",
+              "target": "components/snap-cn/word-gather.tsx"
+          }
+      ]
+  },
+    {
+      "name": "word-wheel",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/text/word-wheel?ref=cli — headline is the part of the line that never changes; words is the reel, comma separated, and its FIRST entry is the one the scene comes to rest on; spin is how many rows the reel travels, and left at the list's own length it turns exactly once and comes home. Pass mode=\"dark\" if you are rendering onto a dark frame — these default to shadcn's light palette.",
+      "title": "Word Wheel",
+      "description": "Rotating words text: a slot machine word wheel that spins and stops on one word. A column of words that spins like a reel and stops on one of them. A fixed lead-in holds the left of the line and the word that finishes the sentence lives in a slot beside it — one row of a taller column whose other words are visible above and below, smaller and grey, fading out toward the top and bottom of the frame. The reel rolls, decelerates over a second and three quarters and comes to rest with one word at full size and in ink. Every number in it was recovered frame by frame from a recording: the 34px row pitch that every baseline including the oversized one sits on, the 1.665x the selected word grows by, and the deceleration itself — which ships as a measured table rather than a curve, because the closest cubic-bezier is five pixels out at its worst and a fifth of a row is a visibly different frame.",
+      "dependencies": [
+        "remotion",
+        "@remotion/google-fonts"
+      ],
+      "registryDependencies": [
+        "https://snapcn.dev/r/snap-cn-ui.json"
+      ],
+      "files": [
+        {
+          "path": "word-wheel/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/word-wheel.tsx"
+        }
+      ]
+    },
+    {
+      "name": "check-cycle",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/text/check-cycle?ref=cli — headline is the part of the sentence that never changes; words is what finishes it, comma separated, rolled through in order beside a ticked checkbox, then the line steps back to 80% and rests. Pass mode=\"dark\" if you are rendering onto a dark frame — these default to shadcn's light palette.",
+      "title": "Check Cycle",
+      "description": "Rotating words beside a checkbox: a sentence that finishes itself several ways. \"Create your own\" sits left of a ticked shadcn-style checkbox and the word to its right rolls up out of a slot — Intros, Demos, Launches, Changelogs, Tutorials, And more — then the line steps back a little and rests. Every number came off a recording, frame by frame: the two words in the slot move as one strip on the in-out cubic over exactly half a second, a roll every twenty frames. The type moves by fractions of a pixel instead of the whole-pixel steps a browser snaps text to.",
+      "dependencies": [
+        "remotion",
+        "@remotion/google-fonts"
+      ],
+      "registryDependencies": [
+        "https://snapcn.dev/r/snap-cn-ui.json"
+      ],
+      "files": [
+        {
+          "path": "check-cycle/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/check-cycle.tsx"
+        }
+      ]
+    },
+    {
+      "name": "font-shuffle",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/text/font-shuffle?ref=cli \u2014 lead stays serif, subject tries on eleven typefaces; accent is the colour the line flashes before it settles. Pass mode=\"dark\" if you are rendering onto a dark frame \u2014 these default to shadcn's light palette.",
+      "title": "Font Shuffle",
+      "description": "Launch title animation: the line decodes out of scrambled glyphs set in the wrong typeface, flashes the accent, settles to ink, then the product name cycles through eleven typefaces (mono, light, humanist, pixel, script, slab, condensed, italic, blackletter, wide, bold grotesk) while the line zooms a step closer on each swap. Every beat is a held state measured off a recording frame by frame \u2014 timing, masks, layout, zoom and colour.",
+      "dependencies": [
+        "remotion"
+      ],
+      "registryDependencies": [
+        "https://snapcn.dev/r/snap-cn-ui.json"
+      ],
+      "files": [
+        {
+          "path": "font-shuffle/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/font-shuffle.tsx"
+        }
+      ]
+    },
+    {
+      "name": "button-press",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/cursor/button-press?ref=cli — label, pending and done are the three states; width is fixed so the button never reflows. Pass mode=\"dark\" if you are rendering onto a dark frame — these default to shadcn's light palette.",
+      "title": "Button Press",
+      "description": "Cursor clicks a button: a cursor walks onto a split action button (label, divider, chevron), it darkens on hover, gives on press, spins while pending and lands on a drawn tick. The deploy, publish or send beat of every launch video. Built on cursor-track.",
+      "dependencies": [
+        "remotion",
+        "@remotion/google-fonts"
+      ],
+      "registryDependencies": [
+        "https://snapcn.dev/r/snap-cn-ui.json",
+        "https://snapcn.dev/r/cursor-track.json"
+      ],
+      "files": [
+        {
+          "path": "button-press/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/button-press.tsx"
+        }
+      ]
+    },
+    {
+      "name": "click-type",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/cursor/click-type?ref=cli — placeholder writes itself in the wide shot; prompt is what types after the click, in the close-up. Pass mode=\"dark\" if you are rendering onto a dark frame — these default to shadcn's light palette.",
+      "title": "Click Type",
+      "description": "Click to type: a prompt composer (Prompt Send's glass panel, writing surface and round send button) whose placeholder writes itself while a cursor flies in from the edge and clicks the field, then a hard cut into the field where the real prompt types at the caret and send arms. Two shots of one composer under a constant camera, anchored on the first letter, so the type never scales while it moves. Built on cursor-track.",
+      "dependencies": [
+        "remotion",
+        "@remotion/google-fonts"
+      ],
+      "registryDependencies": [
+        "https://snapcn.dev/r/snap-cn-ui.json",
+        "https://snapcn.dev/r/input.json",
+        "https://snapcn.dev/r/caret.json",
+        "https://snapcn.dev/r/cursor-track.json"
+      ],
+      "files": [
+        {
+          "path": "click-type/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/click-type.tsx"
+        }
+      ]
+    },
+    {
+      "name": "capture-reveal",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/screens/capture-reveal?ref=cli \u2014 src is the screenshot in the window (laid in at full width, top first); headline breaks lines on |; capturing and copied are the two toast messages. Pass mode=\"dark\" if you are rendering onto a dark frame \u2014 these default to shadcn's light palette.",
+      "title": "Capture Reveal",
+      "description": "Screenshot capture animation: a toast counts \"Capturing selection\u2026\" up to 100% over a browser window, the window drops away and shrinks, the toast pops to \"Copied to clipboard.\" and a two-line headline rises out from behind the window while the cursor glides up. Every curve was measured off a recording frame by frame: the window's drop and shrink share one cubic-bezier, the toast pops on another, the headline rises without scaling or blurring, and type moves by fractions of a pixel.",
+      "dependencies": [
+        "remotion",
+        "@remotion/google-fonts"
+      ],
+      "registryDependencies": [
+        "https://snapcn.dev/r/snap-cn-ui.json"
+      ],
+      "files": [
+        {
+          "path": "capture-reveal/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/capture-reveal.tsx"
+        }
+      ]
+    },
+    {
+      "name": "channel-thread",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/text/channel-thread?ref=cli — script is the conversation, groups split by `;` and a group's messages by `|`; people is one `name time` per group; beats is the frame each message lands on and opens is the frame its row appears, so a pause before someone answers is a number rather than a gap you have to guess at. avatars takes one image per group, split by `|` (not by comma — a data: URL has one of its own). Pass mode=\"dark\" if you are rendering onto a dark frame — these default to shadcn's light palette.",
+      "title": "Channel Thread",
+      "description": "Slack-style chat animation: team messages arrive with typing dots. A work chat filling itself in, the way the channel actually reads: an avatar, a name in bold, a quiet timestamp and the messages as plain lines under them. Messages land one at a time, a second message from the same person joins the group without repeating the name, and when somebody new starts typing three dots hold their line until the words arrive. The transcript never creeps — it sits perfectly still between arrivals and then scrolls, once, by exactly the room the new line needs, and only when the newest line would fall past the anchor. Every vertical number came off a recording and closes on it: carry the layout's arithmetic across the whole scene and it predicts the last frame's baselines to within a pixel.",
+      "dependencies": [
+        "remotion",
+        "@remotion/google-fonts"
+      ],
+      "registryDependencies": [
+        "https://snapcn.dev/r/snap-cn-ui.json"
+      ],
+      "files": [
+        {
+          "path": "channel-thread/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/channel-thread.tsx"
+        }
+      ]
+    },
+    {
+      "name": "logo-collapse",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/logos/logo-collapse?ref=cli — images is the stack, split by `|` (not by comma: a data: URL has one of its own); sizes and holds are parallel to it, one entry per shot, sizes as a share of the frame height where `0.48` is square and `0.82x0.461` is 16:9; mark is what the stack collapses into and wordmark the word that lands beside it. background takes an optional plate and accent the colour the two brackets ping in. Pass mode=\"dark\" if you are rendering onto a dark frame — these default to shadcn's light palette.",
+      "title": "Logo Collapse",
+      "description": "Logo reveal intro: a stack of photos flicks through and collapses into your logo. A stack of shots flicked through, collapsing into your mark, and the wordmark landing beside it. One card holds the middle of the frame and cuts to the next shot, each smaller and each held for less time than the last, so the sequence winds itself up instead of running at a constant clip. Nothing cross-fades and nothing tweens between shots — the reference holds each card at a fixed size for its whole beat and then cuts, which reads as a stack of prints being dealt rather than as a zoom. At the end of the run the card cuts to a plain tile with the mark on it, the mark overshoots its resting size by a third and settles in three frames, the tile goes, and the mark steps aside twice to make room for the word.",
+      "dependencies": [
+        "remotion",
+        "@remotion/google-fonts"
+      ],
+      "registryDependencies": [
+        "https://snapcn.dev/r/snap-cn-ui.json"
+      ],
+      "files": [
+        {
+          "path": "logo-collapse/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/logo-collapse.tsx"
+        }
+      ]
+    },
+    {
+      "name": "card-rail",
+      "type": "registry:component",
+      "docs": "Docs and props: https://snapcn.dev/docs/scenes/card-rail?ref=cli — images, titles, notes and tags are parallel lists split by `|` (not by comma: a data: URL has one of its own), one entry per card, and the rail repeats them rather than running out. Leave the text fields blank and the picture becomes the whole card, which is how a card designed elsewhere is handed in as one image. heading holds the top of the frame; from is the frame the flick starts on and may be negative to open mid-flight; offset is where the rail sits before it moves. backdrop takes two colour stops or one picture. Pass mode=\"dark\" if you are rendering onto a dark frame — these default to shadcn's light palette.",
+      "title": "Card Rail",
+      "description": "Card carousel animation: cards flicked sideways on a tilted 3D plane. A rail of cards flicked sideways across a tilted plane. The cards do not crawl past on a loop — they are flicked: the rail leaves at speed, decelerates for well over a second and comes to rest about a card further along, the way a carousel behaves under a thumb rather than under a timer. The plane is not flat to the camera either. Measured on a recording's card edges, the horizontal scale grows 0.000825 per pixel of height about the frame's own centre line, so the foot of a card is a fifth wider than its head while horizontals stay horizontal and the type stays upright — which is why a row of plain rectangles reads as a surface receding into the frame rather than as a filmstrip.",
+      "dependencies": [
+        "remotion",
+        "@remotion/google-fonts"
+      ],
+      "registryDependencies": [
+        "https://snapcn.dev/r/snap-cn-ui.json"
+      ],
+      "files": [
+        {
+          "path": "card-rail/index.tsx",
+          "type": "registry:component",
+          "target": "components/snap-cn/card-rail.tsx"
+        }
+      ]
+    }
+  ]
+}

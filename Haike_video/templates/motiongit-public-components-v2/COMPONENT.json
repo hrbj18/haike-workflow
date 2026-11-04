@@ -1,0 +1,133 @@
+{
+  "schema": "haike.motion-public-components/2",
+  "component_id": "haike-public-motion-source-v2",
+  "component_version": "0.2.0-candidate",
+  "contract": "haike.motion-public-production/2",
+  "engines": [
+    "observed-controls/2",
+    "dark-remotion/2"
+  ],
+  "retained_upstream": {
+    "path": "../motiongit-public-components-v1",
+    "component_sha256": "bf335a15f8f71c6313c2618bbbb9ded5c598350b71f0a1607b7a4d3db379968f",
+    "verifier": "scripts/build_motion_public_components.py",
+    "verifier_sha256": "131b05de79363c3e7a6916dba244515d14038591d0713b1687c8283c8bf7ff18",
+    "source_commit": "4a52ae2cff542cfb0bfcf6e93e5120c55d0110cf",
+    "reason": "unchanged public renderer/source archives and notices reused by exact SHA; no binary copies"
+  },
+  "original_package_equivalence": false,
+  "full_original_template_closure": false,
+  "status": "candidate-static-only-media-pending",
+  "files": [
+    {
+      "path": "capture_runtime.mjs",
+      "sha256": "0bf6ec171767725922099c7dd2de7582fbd3e96d24c6c6c91531f387f4701fd8",
+      "size": 2255
+    },
+    {
+      "path": "dark-v2/CONTENT_FIELDS.json",
+      "sha256": "5a27cde0d73f9b58beb7b5f7083fc407738fb4b595a8e2001f2fa18526ebdfa6",
+      "size": 3539
+    },
+    {
+      "path": "dark-v2/defaults.json",
+      "sha256": "56664db1de2a71c599d059522389dcc6833a5b56521ecf891b3a7394885614d7",
+      "size": 616
+    },
+    {
+      "path": "dark-v2/input.schema.json",
+      "sha256": "123880f61d808d75f62af2f52b518ecbe480c7f18471b4a18060b9be72e19a74",
+      "size": 5244
+    },
+    {
+      "path": "dark-v2/LICENSE-AGPL-3.0.txt",
+      "sha256": "0d96a4ff68ad6d4b6f1f30f713b18d5184912ba8dd389f86aa7710db079abcb0",
+      "size": 34523
+    },
+    {
+      "path": "dark-v2/REMOTION_RUNTIME.json",
+      "sha256": "996578c8bebe4b147fda95454a20917a73aff8048840fc339102b12c0ce64ee1",
+      "size": 2753024
+    },
+    {
+      "path": "dark-v2/SOURCE.json",
+      "sha256": "26bdd84db5f1e4267a912aaf77cf2b3ce6cd4870c5af35792c42314d885a8a06",
+      "size": 3912
+    },
+    {
+      "path": "dark-v2/template/catalog.json",
+      "sha256": "513a3dcf6c8c4d50f0bf2430ad5b22d8aa20b4dd1888fafd1daeb31176487bfa",
+      "size": 13663
+    },
+    {
+      "path": "dark-v2/template/GroupsA.tsx",
+      "sha256": "94acf08583c88dea0806cf9923d368b630b28d5ecc4e797e68be4faac1bd1c25",
+      "size": 40217
+    },
+    {
+      "path": "dark-v2/template/GroupsB.tsx",
+      "sha256": "4540699cc2dc7be5e0c4c27e7ae125ed164d152434d38bc917ac3327eb2ab712",
+      "size": 42963
+    },
+    {
+      "path": "dark-v2/template/index.tsx",
+      "sha256": "1661aaa836135a7a351e5555a4bdd0c41533a8611030538f9c50f8912247e972",
+      "size": 8210
+    },
+    {
+      "path": "dark-v2/template/presenter-clock.ts",
+      "sha256": "45e915237111b3e4738089ba231bd1b843955a466da40b4366b13bc8a65de70f",
+      "size": 833
+    },
+    {
+      "path": "dark-v2/template/shared.tsx",
+      "sha256": "72a2b9e5bf201d386bc92ed0dc91d6865dc6272678c12d52a39ccc0cc9cddb29",
+      "size": 9482
+    },
+    {
+      "path": "dark-v2/template/types.ts",
+      "sha256": "68d865d33820abca05770701fdb087f37e754b9b9c73e7eeef41b723b6b5cc76",
+      "size": 1351
+    },
+    {
+      "path": "defaults.json",
+      "sha256": "51b38a958f8489e047f831d1e6c27e7ab063ecec46545ed14fb500bc252f2bb1",
+      "size": 3134
+    },
+    {
+      "path": "DEPENDENCIES.json",
+      "sha256": "c30cf57bb3f2192410d99685a771fd36f69583737e0464cce9c0bd0985ec5f1f",
+      "size": 73469
+    },
+    {
+      "path": "FFMPEG9.json",
+      "sha256": "1d7055cadccd60e2442c5d279083b3dd8c9a46c1bae6d317e78a344826e6aa29",
+      "size": 1659
+    },
+    {
+      "path": "input.schema.json",
+      "sha256": "a9f770cb5ed0972fef8007f3c38ff0be073328793beb5ca9b71eed8b89fd5d6c",
+      "size": 7855
+    },
+    {
+      "path": "observed-controls-v2.js",
+      "sha256": "e81cb2c2d3f1bc4e4c78e99f6c3495bb32d13ecfee72532943422926fb59320e",
+      "size": 21933
+    },
+    {
+      "path": "README.md",
+      "sha256": "55d421aa641af995c3ab16e9b868c5cfbe0c047a53ae7c41951cc0845deb0bfd",
+      "size": 2976
+    },
+    {
+      "path": "runbook.md",
+      "sha256": "5b67975fab98e9618f3040743789c9120fc3e820fc0a40543ebf867cd6b79b5d",
+      "size": 2883
+    },
+    {
+      "path": "TOOLS.json",
+      "sha256": "5a2bd3c270d30fd841c89116c4eabe25ad6a15e957ee40d021f77d31c5ef26f1",
+      "size": 49974
+    }
+  ]
+}

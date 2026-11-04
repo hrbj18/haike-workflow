@@ -1,0 +1,2519 @@
+{
+  "schema": "haike.motion-replay-registry/1",
+  "templates": [
+    {
+      "template_id": "knowledge-explainer-sketchnote",
+      "version": "4.0.0-native-production.1",
+      "family": "imported",
+      "gallery_id": "motion-package-mg-178e6870ae932019c6bf2fe9",
+      "default_workflow": "native",
+      "renderer": {
+        "kind": "native_package",
+        "entrypoint": "backlot.studio_imported_native_knowledge:prepare",
+        "adapter": "backlot.motion_replay_imported_native_full:prepare",
+        "execution": "supported"
+      },
+      "package_identity": {
+        "template_id": "knowledge-explainer-sketchnote",
+        "version": "2.7.3",
+        "sha256": "178e6870ae932019c6bf2fe9aa08c2faf34bcf06369af3fe67abc279a803929b",
+        "helper": {
+          "version": "1.0.0-rc.54",
+          "sha256": "90f00d37cafdc9a204babce24b86b683c097c8a60b74b862b28cfe1a081b2a3f"
+        },
+        "license": "Local authorized personal package required; hash is identity, not distribution permission."
+      },
+      "routes": [
+        {
+          "workflow": "native",
+          "status": "supported",
+          "contract": "haike.native-knowledge-full/1",
+          "original_public_helper": true
+        }
+      ],
+      "sources": [
+        {
+          "path": "Haike_video/backlot/studio_imported_native_knowledge.py",
+          "sha256": "140a7e5fc91ec906ef6d664abcb92ac72ab92b196be0a1a147abd0709258e4f7"
+        },
+        {
+          "path": "Haike_video/backlot/motion_replay_imported_native_full.py",
+          "sha256": "2b0b76324f07fe4adddbe6d821916ed47239230ebf7bedb27fa3630f30a5cc88"
+        }
+      ],
+      "objects": [
+        {
+          "id": "native.definition",
+          "role": "coordinated scene and its persistent children",
+          "authority": {
+            "owner": "native family definition",
+            "protocol": "knowledge-story-v1",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "definition",
+            "dispatch": "Haike_video/backlot/studio_motion_knowledge.py::freeze",
+            "package_sha256": "178e6870ae932019c6bf2fe9aa08c2faf34bcf06369af3fe67abc279a803929b"
+          }
+        },
+        {
+          "id": "native.compare",
+          "role": "coordinated scene and its persistent children",
+          "authority": {
+            "owner": "native family compare",
+            "protocol": "knowledge-story-v1",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "compare",
+            "dispatch": "Haike_video/backlot/studio_motion_knowledge.py::freeze",
+            "package_sha256": "178e6870ae932019c6bf2fe9aa08c2faf34bcf06369af3fe67abc279a803929b"
+          }
+        },
+        {
+          "id": "native.process",
+          "role": "coordinated scene and its persistent children",
+          "authority": {
+            "owner": "native family process",
+            "protocol": "knowledge-story-v1",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "process",
+            "dispatch": "Haike_video/backlot/studio_motion_knowledge.py::freeze",
+            "package_sha256": "178e6870ae932019c6bf2fe9aa08c2faf34bcf06369af3fe67abc279a803929b"
+          }
+        },
+        {
+          "id": "native.causal",
+          "role": "coordinated scene and its persistent children",
+          "authority": {
+            "owner": "native family causal",
+            "protocol": "knowledge-story-v1",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "causal",
+            "dispatch": "Haike_video/backlot/studio_motion_knowledge.py::freeze",
+            "package_sha256": "178e6870ae932019c6bf2fe9aa08c2faf34bcf06369af3fe67abc279a803929b"
+          }
+        },
+        {
+          "id": "native.cycle",
+          "role": "coordinated scene and its persistent children",
+          "authority": {
+            "owner": "native family cycle",
+            "protocol": "knowledge-story-v1",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "cycle",
+            "dispatch": "Haike_video/backlot/studio_motion_knowledge.py::freeze",
+            "package_sha256": "178e6870ae932019c6bf2fe9aa08c2faf34bcf06369af3fe67abc279a803929b"
+          }
+        },
+        {
+          "id": "native.hierarchy",
+          "role": "coordinated scene and its persistent children",
+          "authority": {
+            "owner": "native family hierarchy",
+            "protocol": "knowledge-story-v1",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "hierarchy",
+            "dispatch": "Haike_video/backlot/studio_motion_knowledge.py::freeze",
+            "package_sha256": "178e6870ae932019c6bf2fe9aa08c2faf34bcf06369af3fe67abc279a803929b"
+          }
+        },
+        {
+          "id": "native.data-bar",
+          "role": "coordinated scene and its persistent children",
+          "authority": {
+            "owner": "native family data-bar",
+            "protocol": "knowledge-story-v1",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "data-bar",
+            "dispatch": "Haike_video/backlot/studio_motion_knowledge.py::freeze",
+            "package_sha256": "178e6870ae932019c6bf2fe9aa08c2faf34bcf06369af3fe67abc279a803929b"
+          }
+        },
+        {
+          "id": "native.data-line",
+          "role": "coordinated scene and its persistent children",
+          "authority": {
+            "owner": "native family data-line",
+            "protocol": "knowledge-story-v1",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "data-line",
+            "dispatch": "Haike_video/backlot/studio_motion_knowledge.py::freeze",
+            "package_sha256": "178e6870ae932019c6bf2fe9aa08c2faf34bcf06369af3fe67abc279a803929b"
+          }
+        },
+        {
+          "id": "native.parts",
+          "role": "coordinated scene and its persistent children",
+          "authority": {
+            "owner": "native family parts",
+            "protocol": "knowledge-story-v1",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "parts",
+            "dispatch": "Haike_video/backlot/studio_motion_knowledge.py::freeze",
+            "package_sha256": "178e6870ae932019c6bf2fe9aa08c2faf34bcf06369af3fe67abc279a803929b"
+          }
+        },
+        {
+          "id": "native.experiment",
+          "role": "coordinated scene and its persistent children",
+          "authority": {
+            "owner": "native family experiment",
+            "protocol": "knowledge-story-v1",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "experiment",
+            "dispatch": "Haike_video/backlot/studio_motion_knowledge.py::freeze",
+            "package_sha256": "178e6870ae932019c6bf2fe9aa08c2faf34bcf06369af3fe67abc279a803929b"
+          }
+        },
+        {
+          "id": "native.evidence",
+          "role": "coordinated scene and its persistent children",
+          "authority": {
+            "owner": "native family evidence",
+            "protocol": "knowledge-story-v1",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "evidence",
+            "dispatch": "Haike_video/backlot/studio_motion_knowledge.py::freeze",
+            "package_sha256": "178e6870ae932019c6bf2fe9aa08c2faf34bcf06369af3fe67abc279a803929b"
+          }
+        },
+        {
+          "id": "native.formula",
+          "role": "coordinated scene and its persistent children",
+          "authority": {
+            "owner": "native family formula",
+            "protocol": "knowledge-story-v1",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "formula",
+            "dispatch": "Haike_video/backlot/studio_motion_knowledge.py::freeze",
+            "package_sha256": "178e6870ae932019c6bf2fe9aa08c2faf34bcf06369af3fe67abc279a803929b"
+          }
+        },
+        {
+          "id": "native.recap",
+          "role": "coordinated scene and its persistent children",
+          "authority": {
+            "owner": "native family recap",
+            "protocol": "knowledge-story-v1",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "recap",
+            "dispatch": "Haike_video/backlot/studio_motion_knowledge.py::freeze",
+            "package_sha256": "178e6870ae932019c6bf2fe9aa08c2faf34bcf06369af3fe67abc279a803929b"
+          }
+        },
+        {
+          "id": "native.sketchnote.step-sequence",
+          "role": "coordinated scene and its persistent children",
+          "authority": {
+            "owner": "native family sketchnote.step-sequence",
+            "protocol": "knowledge-story-v1",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "sketchnote.step-sequence",
+            "dispatch": "Haike_video/backlot/studio_motion_knowledge.py::freeze",
+            "package_sha256": "178e6870ae932019c6bf2fe9aa08c2faf34bcf06369af3fe67abc279a803929b"
+          }
+        },
+        {
+          "id": "native.sketchnote.keyword-annotation",
+          "role": "coordinated scene and its persistent children",
+          "authority": {
+            "owner": "native family sketchnote.keyword-annotation",
+            "protocol": "knowledge-story-v1",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "sketchnote.keyword-annotation",
+            "dispatch": "Haike_video/backlot/studio_motion_knowledge.py::freeze",
+            "package_sha256": "178e6870ae932019c6bf2fe9aa08c2faf34bcf06369af3fe67abc279a803929b"
+          }
+        },
+        {
+          "id": "native.sketchnote.sticky-revision",
+          "role": "coordinated scene and its persistent children",
+          "authority": {
+            "owner": "native family sketchnote.sticky-revision",
+            "protocol": "knowledge-story-v1",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "sketchnote.sticky-revision",
+            "dispatch": "Haike_video/backlot/studio_motion_knowledge.py::freeze",
+            "package_sha256": "178e6870ae932019c6bf2fe9aa08c2faf34bcf06369af3fe67abc279a803929b"
+          }
+        },
+        {
+          "id": "native.sketchnote.return-loop",
+          "role": "coordinated scene and its persistent children",
+          "authority": {
+            "owner": "native family sketchnote.return-loop",
+            "protocol": "knowledge-story-v1",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "sketchnote.return-loop",
+            "dispatch": "Haike_video/backlot/studio_motion_knowledge.py::freeze",
+            "package_sha256": "178e6870ae932019c6bf2fe9aa08c2faf34bcf06369af3fe67abc279a803929b"
+          }
+        }
+      ],
+      "actions": [
+        {
+          "id": "haike.knowledge-explainer-sketchnote.native.definition",
+          "version": "4.0.0-native-production.1",
+          "implementation": {
+            "owner": "native family definition",
+            "protocol": "knowledge-story-v1",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "definition",
+            "dispatch": "Haike_video/backlot/studio_motion_knowledge.py::freeze",
+            "package_sha256": "178e6870ae932019c6bf2fe9aa08c2faf34bcf06369af3fe67abc279a803929b"
+          },
+          "objects": [
+            "native.definition"
+          ],
+          "parameters": {
+            "input_path": "parameters.segments[]",
+            "recipe": "Exact family-specific original schema",
+            "internal_events": "parameters.segments[].wordCues; real evidence required, no inferred word times"
+          },
+          "phases": {
+            "entry": "native family definition owns entry; native formulas/layout remain locked, no generic easing override.",
+            "active": "native family definition owns active; native formulas/layout remain locked, no generic easing override.",
+            "settled": "native family definition owns settled; native formulas/layout remain locked, no generic easing override.",
+            "exit": "native family definition owns exit; native formulas/layout remain locked, no generic easing override."
+          }
+        },
+        {
+          "id": "haike.knowledge-explainer-sketchnote.native.compare",
+          "version": "4.0.0-native-production.1",
+          "implementation": {
+            "owner": "native family compare",
+            "protocol": "knowledge-story-v1",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "compare",
+            "dispatch": "Haike_video/backlot/studio_motion_knowledge.py::freeze",
+            "package_sha256": "178e6870ae932019c6bf2fe9aa08c2faf34bcf06369af3fe67abc279a803929b"
+          },
+          "objects": [
+            "native.compare"
+          ],
+          "parameters": {
+            "input_path": "parameters.segments[]",
+            "recipe": "Exact family-specific original schema",
+            "internal_events": "parameters.segments[].wordCues; real evidence required, no inferred word times"
+          },
+          "phases": {
+            "entry": "native family compare owns entry; native formulas/layout remain locked, no generic easing override.",
+            "active": "native family compare owns active; native formulas/layout remain locked, no generic easing override.",
+            "settled": "native family compare owns settled; native formulas/layout remain locked, no generic easing override.",
+            "exit": "native family compare owns exit; native formulas/layout remain locked, no generic easing override."
+          }
+        },
+        {
+          "id": "haike.knowledge-explainer-sketchnote.native.process",
+          "version": "4.0.0-native-production.1",
+          "implementation": {
+            "owner": "native family process",
+            "protocol": "knowledge-story-v1",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "process",
+            "dispatch": "Haike_video/backlot/studio_motion_knowledge.py::freeze",
+            "package_sha256": "178e6870ae932019c6bf2fe9aa08c2faf34bcf06369af3fe67abc279a803929b"
+          },
+          "objects": [
+            "native.process"
+          ],
+          "parameters": {
+            "input_path": "parameters.segments[]",
+            "recipe": "Exact family-specific original schema",
+            "internal_events": "parameters.segments[].wordCues; real evidence required, no inferred word times"
+          },
+          "phases": {
+            "entry": "native family process owns entry; native formulas/layout remain locked, no generic easing override.",
+            "active": "native family process owns active; native formulas/layout remain locked, no generic easing override.",
+            "settled": "native family process owns settled; native formulas/layout remain locked, no generic easing override.",
+            "exit": "native family process owns exit; native formulas/layout remain locked, no generic easing override."
+          }
+        },
+        {
+          "id": "haike.knowledge-explainer-sketchnote.native.causal",
+          "version": "4.0.0-native-production.1",
+          "implementation": {
+            "owner": "native family causal",
+            "protocol": "knowledge-story-v1",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "causal",
+            "dispatch": "Haike_video/backlot/studio_motion_knowledge.py::freeze",
+            "package_sha256": "178e6870ae932019c6bf2fe9aa08c2faf34bcf06369af3fe67abc279a803929b"
+          },
+          "objects": [
+            "native.causal"
+          ],
+          "parameters": {
+            "input_path": "parameters.segments[]",
+            "recipe": "Exact family-specific original schema",
+            "internal_events": "parameters.segments[].wordCues; real evidence required, no inferred word times"
+          },
+          "phases": {
+            "entry": "native family causal owns entry; native formulas/layout remain locked, no generic easing override.",
+            "active": "native family causal owns active; native formulas/layout remain locked, no generic easing override.",
+            "settled": "native family causal owns settled; native formulas/layout remain locked, no generic easing override.",
+            "exit": "native family causal owns exit; native formulas/layout remain locked, no generic easing override."
+          }
+        },
+        {
+          "id": "haike.knowledge-explainer-sketchnote.native.cycle",
+          "version": "4.0.0-native-production.1",
+          "implementation": {
+            "owner": "native family cycle",
+            "protocol": "knowledge-story-v1",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "cycle",
+            "dispatch": "Haike_video/backlot/studio_motion_knowledge.py::freeze",
+            "package_sha256": "178e6870ae932019c6bf2fe9aa08c2faf34bcf06369af3fe67abc279a803929b"
+          },
+          "objects": [
+            "native.cycle"
+          ],
+          "parameters": {
+            "input_path": "parameters.segments[]",
+            "recipe": "Exact family-specific original schema",
+            "internal_events": "parameters.segments[].wordCues; real evidence required, no inferred word times"
+          },
+          "phases": {
+            "entry": "native family cycle owns entry; native formulas/layout remain locked, no generic easing override.",
+            "active": "native family cycle owns active; native formulas/layout remain locked, no generic easing override.",
+            "settled": "native family cycle owns settled; native formulas/layout remain locked, no generic easing override.",
+            "exit": "native family cycle owns exit; native formulas/layout remain locked, no generic easing override."
+          }
+        },
+        {
+          "id": "haike.knowledge-explainer-sketchnote.native.hierarchy",
+          "version": "4.0.0-native-production.1",
+          "implementation": {
+            "owner": "native family hierarchy",
+            "protocol": "knowledge-story-v1",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "hierarchy",
+            "dispatch": "Haike_video/backlot/studio_motion_knowledge.py::freeze",
+            "package_sha256": "178e6870ae932019c6bf2fe9aa08c2faf34bcf06369af3fe67abc279a803929b"
+          },
+          "objects": [
+            "native.hierarchy"
+          ],
+          "parameters": {
+            "input_path": "parameters.segments[]",
+            "recipe": "Exact family-specific original schema",
+            "internal_events": "parameters.segments[].wordCues; real evidence required, no inferred word times"
+          },
+          "phases": {
+            "entry": "native family hierarchy owns entry; native formulas/layout remain locked, no generic easing override.",
+            "active": "native family hierarchy owns active; native formulas/layout remain locked, no generic easing override.",
+            "settled": "native family hierarchy owns settled; native formulas/layout remain locked, no generic easing override.",
+            "exit": "native family hierarchy owns exit; native formulas/layout remain locked, no generic easing override."
+          }
+        },
+        {
+          "id": "haike.knowledge-explainer-sketchnote.native.data-bar",
+          "version": "4.0.0-native-production.1",
+          "implementation": {
+            "owner": "native family data-bar",
+            "protocol": "knowledge-story-v1",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "data-bar",
+            "dispatch": "Haike_video/backlot/studio_motion_knowledge.py::freeze",
+            "package_sha256": "178e6870ae932019c6bf2fe9aa08c2faf34bcf06369af3fe67abc279a803929b"
+          },
+          "objects": [
+            "native.data-bar"
+          ],
+          "parameters": {
+            "input_path": "parameters.segments[]",
+            "recipe": "Exact family-specific original schema",
+            "internal_events": "parameters.segments[].wordCues; real evidence required, no inferred word times"
+          },
+          "phases": {
+            "entry": "native family data-bar owns entry; native formulas/layout remain locked, no generic easing override.",
+            "active": "native family data-bar owns active; native formulas/layout remain locked, no generic easing override.",
+            "settled": "native family data-bar owns settled; native formulas/layout remain locked, no generic easing override.",
+            "exit": "native family data-bar owns exit; native formulas/layout remain locked, no generic easing override."
+          }
+        },
+        {
+          "id": "haike.knowledge-explainer-sketchnote.native.data-line",
+          "version": "4.0.0-native-production.1",
+          "implementation": {
+            "owner": "native family data-line",
+            "protocol": "knowledge-story-v1",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "data-line",
+            "dispatch": "Haike_video/backlot/studio_motion_knowledge.py::freeze",
+            "package_sha256": "178e6870ae932019c6bf2fe9aa08c2faf34bcf06369af3fe67abc279a803929b"
+          },
+          "objects": [
+            "native.data-line"
+          ],
+          "parameters": {
+            "input_path": "parameters.segments[]",
+            "recipe": "Exact family-specific original schema",
+            "internal_events": "parameters.segments[].wordCues; real evidence required, no inferred word times"
+          },
+          "phases": {
+            "entry": "native family data-line owns entry; native formulas/layout remain locked, no generic easing override.",
+            "active": "native family data-line owns active; native formulas/layout remain locked, no generic easing override.",
+            "settled": "native family data-line owns settled; native formulas/layout remain locked, no generic easing override.",
+            "exit": "native family data-line owns exit; native formulas/layout remain locked, no generic easing override."
+          }
+        },
+        {
+          "id": "haike.knowledge-explainer-sketchnote.native.parts",
+          "version": "4.0.0-native-production.1",
+          "implementation": {
+            "owner": "native family parts",
+            "protocol": "knowledge-story-v1",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "parts",
+            "dispatch": "Haike_video/backlot/studio_motion_knowledge.py::freeze",
+            "package_sha256": "178e6870ae932019c6bf2fe9aa08c2faf34bcf06369af3fe67abc279a803929b"
+          },
+          "objects": [
+            "native.parts"
+          ],
+          "parameters": {
+            "input_path": "parameters.segments[]",
+            "recipe": "Exact family-specific original schema",
+            "internal_events": "parameters.segments[].wordCues; real evidence required, no inferred word times"
+          },
+          "phases": {
+            "entry": "native family parts owns entry; native formulas/layout remain locked, no generic easing override.",
+            "active": "native family parts owns active; native formulas/layout remain locked, no generic easing override.",
+            "settled": "native family parts owns settled; native formulas/layout remain locked, no generic easing override.",
+            "exit": "native family parts owns exit; native formulas/layout remain locked, no generic easing override."
+          }
+        },
+        {
+          "id": "haike.knowledge-explainer-sketchnote.native.experiment",
+          "version": "4.0.0-native-production.1",
+          "implementation": {
+            "owner": "native family experiment",
+            "protocol": "knowledge-story-v1",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "experiment",
+            "dispatch": "Haike_video/backlot/studio_motion_knowledge.py::freeze",
+            "package_sha256": "178e6870ae932019c6bf2fe9aa08c2faf34bcf06369af3fe67abc279a803929b"
+          },
+          "objects": [
+            "native.experiment"
+          ],
+          "parameters": {
+            "input_path": "parameters.segments[]",
+            "recipe": "Exact family-specific original schema",
+            "internal_events": "parameters.segments[].wordCues; real evidence required, no inferred word times"
+          },
+          "phases": {
+            "entry": "native family experiment owns entry; native formulas/layout remain locked, no generic easing override.",
+            "active": "native family experiment owns active; native formulas/layout remain locked, no generic easing override.",
+            "settled": "native family experiment owns settled; native formulas/layout remain locked, no generic easing override.",
+            "exit": "native family experiment owns exit; native formulas/layout remain locked, no generic easing override."
+          }
+        },
+        {
+          "id": "haike.knowledge-explainer-sketchnote.native.evidence",
+          "version": "4.0.0-native-production.1",
+          "implementation": {
+            "owner": "native family evidence",
+            "protocol": "knowledge-story-v1",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "evidence",
+            "dispatch": "Haike_video/backlot/studio_motion_knowledge.py::freeze",
+            "package_sha256": "178e6870ae932019c6bf2fe9aa08c2faf34bcf06369af3fe67abc279a803929b"
+          },
+          "objects": [
+            "native.evidence"
+          ],
+          "parameters": {
+            "input_path": "parameters.segments[]",
+            "recipe": "Exact family-specific original schema",
+            "internal_events": "parameters.segments[].wordCues; real evidence required, no inferred word times"
+          },
+          "phases": {
+            "entry": "native family evidence owns entry; native formulas/layout remain locked, no generic easing override.",
+            "active": "native family evidence owns active; native formulas/layout remain locked, no generic easing override.",
+            "settled": "native family evidence owns settled; native formulas/layout remain locked, no generic easing override.",
+            "exit": "native family evidence owns exit; native formulas/layout remain locked, no generic easing override."
+          }
+        },
+        {
+          "id": "haike.knowledge-explainer-sketchnote.native.formula",
+          "version": "4.0.0-native-production.1",
+          "implementation": {
+            "owner": "native family formula",
+            "protocol": "knowledge-story-v1",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "formula",
+            "dispatch": "Haike_video/backlot/studio_motion_knowledge.py::freeze",
+            "package_sha256": "178e6870ae932019c6bf2fe9aa08c2faf34bcf06369af3fe67abc279a803929b"
+          },
+          "objects": [
+            "native.formula"
+          ],
+          "parameters": {
+            "input_path": "parameters.segments[]",
+            "recipe": "Exact family-specific original schema",
+            "internal_events": "parameters.segments[].wordCues; real evidence required, no inferred word times"
+          },
+          "phases": {
+            "entry": "native family formula owns entry; native formulas/layout remain locked, no generic easing override.",
+            "active": "native family formula owns active; native formulas/layout remain locked, no generic easing override.",
+            "settled": "native family formula owns settled; native formulas/layout remain locked, no generic easing override.",
+            "exit": "native family formula owns exit; native formulas/layout remain locked, no generic easing override."
+          }
+        },
+        {
+          "id": "haike.knowledge-explainer-sketchnote.native.recap",
+          "version": "4.0.0-native-production.1",
+          "implementation": {
+            "owner": "native family recap",
+            "protocol": "knowledge-story-v1",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "recap",
+            "dispatch": "Haike_video/backlot/studio_motion_knowledge.py::freeze",
+            "package_sha256": "178e6870ae932019c6bf2fe9aa08c2faf34bcf06369af3fe67abc279a803929b"
+          },
+          "objects": [
+            "native.recap"
+          ],
+          "parameters": {
+            "input_path": "parameters.segments[]",
+            "recipe": "Exact family-specific original schema",
+            "internal_events": "parameters.segments[].wordCues; real evidence required, no inferred word times"
+          },
+          "phases": {
+            "entry": "native family recap owns entry; native formulas/layout remain locked, no generic easing override.",
+            "active": "native family recap owns active; native formulas/layout remain locked, no generic easing override.",
+            "settled": "native family recap owns settled; native formulas/layout remain locked, no generic easing override.",
+            "exit": "native family recap owns exit; native formulas/layout remain locked, no generic easing override."
+          }
+        },
+        {
+          "id": "haike.knowledge-explainer-sketchnote.native.sketchnote.step-sequence",
+          "version": "4.0.0-native-production.1",
+          "implementation": {
+            "owner": "native family sketchnote.step-sequence",
+            "protocol": "knowledge-story-v1",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "sketchnote.step-sequence",
+            "dispatch": "Haike_video/backlot/studio_motion_knowledge.py::freeze",
+            "package_sha256": "178e6870ae932019c6bf2fe9aa08c2faf34bcf06369af3fe67abc279a803929b"
+          },
+          "objects": [
+            "native.sketchnote.step-sequence"
+          ],
+          "parameters": {
+            "input_path": "parameters.segments[]",
+            "recipe": "Exact family-specific original schema",
+            "internal_events": "parameters.segments[].wordCues; real evidence required, no inferred word times"
+          },
+          "phases": {
+            "entry": "native family sketchnote.step-sequence owns entry; native formulas/layout remain locked, no generic easing override.",
+            "active": "native family sketchnote.step-sequence owns active; native formulas/layout remain locked, no generic easing override.",
+            "settled": "native family sketchnote.step-sequence owns settled; native formulas/layout remain locked, no generic easing override.",
+            "exit": "native family sketchnote.step-sequence owns exit; native formulas/layout remain locked, no generic easing override."
+          }
+        },
+        {
+          "id": "haike.knowledge-explainer-sketchnote.native.sketchnote.keyword-annotation",
+          "version": "4.0.0-native-production.1",
+          "implementation": {
+            "owner": "native family sketchnote.keyword-annotation",
+            "protocol": "knowledge-story-v1",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "sketchnote.keyword-annotation",
+            "dispatch": "Haike_video/backlot/studio_motion_knowledge.py::freeze",
+            "package_sha256": "178e6870ae932019c6bf2fe9aa08c2faf34bcf06369af3fe67abc279a803929b"
+          },
+          "objects": [
+            "native.sketchnote.keyword-annotation"
+          ],
+          "parameters": {
+            "input_path": "parameters.segments[]",
+            "recipe": "Exact family-specific original schema",
+            "internal_events": "parameters.segments[].wordCues; real evidence required, no inferred word times"
+          },
+          "phases": {
+            "entry": "native family sketchnote.keyword-annotation owns entry; native formulas/layout remain locked, no generic easing override.",
+            "active": "native family sketchnote.keyword-annotation owns active; native formulas/layout remain locked, no generic easing override.",
+            "settled": "native family sketchnote.keyword-annotation owns settled; native formulas/layout remain locked, no generic easing override.",
+            "exit": "native family sketchnote.keyword-annotation owns exit; native formulas/layout remain locked, no generic easing override."
+          }
+        },
+        {
+          "id": "haike.knowledge-explainer-sketchnote.native.sketchnote.sticky-revision",
+          "version": "4.0.0-native-production.1",
+          "implementation": {
+            "owner": "native family sketchnote.sticky-revision",
+            "protocol": "knowledge-story-v1",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "sketchnote.sticky-revision",
+            "dispatch": "Haike_video/backlot/studio_motion_knowledge.py::freeze",
+            "package_sha256": "178e6870ae932019c6bf2fe9aa08c2faf34bcf06369af3fe67abc279a803929b"
+          },
+          "objects": [
+            "native.sketchnote.sticky-revision"
+          ],
+          "parameters": {
+            "input_path": "parameters.segments[]",
+            "recipe": "Exact family-specific original schema",
+            "internal_events": "parameters.segments[].wordCues; real evidence required, no inferred word times"
+          },
+          "phases": {
+            "entry": "native family sketchnote.sticky-revision owns entry; native formulas/layout remain locked, no generic easing override.",
+            "active": "native family sketchnote.sticky-revision owns active; native formulas/layout remain locked, no generic easing override.",
+            "settled": "native family sketchnote.sticky-revision owns settled; native formulas/layout remain locked, no generic easing override.",
+            "exit": "native family sketchnote.sticky-revision owns exit; native formulas/layout remain locked, no generic easing override."
+          }
+        },
+        {
+          "id": "haike.knowledge-explainer-sketchnote.native.sketchnote.return-loop",
+          "version": "4.0.0-native-production.1",
+          "implementation": {
+            "owner": "native family sketchnote.return-loop",
+            "protocol": "knowledge-story-v1",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "sketchnote.return-loop",
+            "dispatch": "Haike_video/backlot/studio_motion_knowledge.py::freeze",
+            "package_sha256": "178e6870ae932019c6bf2fe9aa08c2faf34bcf06369af3fe67abc279a803929b"
+          },
+          "objects": [
+            "native.sketchnote.return-loop"
+          ],
+          "parameters": {
+            "input_path": "parameters.segments[]",
+            "recipe": "Exact family-specific original schema",
+            "internal_events": "parameters.segments[].wordCues; real evidence required, no inferred word times"
+          },
+          "phases": {
+            "entry": "native family sketchnote.return-loop owns entry; native formulas/layout remain locked, no generic easing override.",
+            "active": "native family sketchnote.return-loop owns active; native formulas/layout remain locked, no generic easing override.",
+            "settled": "native family sketchnote.return-loop owns settled; native formulas/layout remain locked, no generic easing override.",
+            "exit": "native family sketchnote.return-loop owns exit; native formulas/layout remain locked, no generic easing override."
+          }
+        }
+      ],
+      "slots": [
+        {
+          "id": "native/creationProfile",
+          "kind": "native-schema",
+          "input_path": "parameters.creationProfile",
+          "required": true,
+          "workflow": "native",
+          "category": "direct",
+          "missing_policy": "Original schema/validator owns defaults and required fields; required omissions block. No synthesized material or slot."
+        },
+        {
+          "id": "native/sourcePerformance",
+          "kind": "object",
+          "input_path": "parameters.sourcePerformance",
+          "required": false,
+          "workflow": "native",
+          "category": "direct",
+          "missing_policy": "Original schema/validator owns defaults and required fields; required omissions block. No synthesized material or slot."
+        },
+        {
+          "id": "native/durationSeconds",
+          "kind": "number",
+          "input_path": "parameters.durationSeconds",
+          "required": false,
+          "workflow": "native",
+          "category": "direct",
+          "missing_policy": "Original schema/validator owns defaults and required fields; required omissions block. No synthesized material or slot."
+        },
+        {
+          "id": "native/fps",
+          "kind": "native-schema",
+          "input_path": "parameters.fps",
+          "required": false,
+          "workflow": "native",
+          "category": "direct",
+          "missing_policy": "Original schema/validator owns defaults and required fields; required omissions block. No synthesized material or slot."
+        },
+        {
+          "id": "native/layout",
+          "kind": "native-schema",
+          "input_path": "parameters.layout",
+          "required": false,
+          "workflow": "native",
+          "category": "direct",
+          "missing_policy": "Original schema/validator owns defaults and required fields; required omissions block. No synthesized material or slot."
+        },
+        {
+          "id": "native/audio",
+          "kind": "object",
+          "input_path": "parameters.audio",
+          "required": false,
+          "workflow": "native",
+          "category": "direct",
+          "missing_policy": "Original schema/validator owns defaults and required fields; required omissions block. No synthesized material or slot."
+        },
+        {
+          "id": "native/title",
+          "kind": "string",
+          "input_path": "parameters.title",
+          "required": false,
+          "workflow": "native",
+          "category": "direct",
+          "missing_policy": "Original schema/validator owns defaults and required fields; required omissions block. No synthesized material or slot."
+        },
+        {
+          "id": "native/script",
+          "kind": "string",
+          "input_path": "parameters.script",
+          "required": false,
+          "workflow": "native",
+          "category": "direct",
+          "missing_policy": "Original schema/validator owns defaults and required fields; required omissions block. No synthesized material or slot."
+        },
+        {
+          "id": "native/language",
+          "kind": "native-schema",
+          "input_path": "parameters.language",
+          "required": false,
+          "workflow": "native",
+          "category": "direct",
+          "missing_policy": "Original schema/validator owns defaults and required fields; required omissions block. No synthesized material or slot."
+        },
+        {
+          "id": "native/claims",
+          "kind": "array",
+          "input_path": "parameters.claims",
+          "required": false,
+          "workflow": "native",
+          "category": "direct",
+          "missing_policy": "Original schema/validator owns defaults and required fields; required omissions block. No synthesized material or slot."
+        },
+        {
+          "id": "native/sources",
+          "kind": "array",
+          "input_path": "parameters.sources",
+          "required": false,
+          "workflow": "native",
+          "category": "direct",
+          "missing_policy": "Original schema/validator owns defaults and required fields; required omissions block. No synthesized material or slot."
+        },
+        {
+          "id": "native/captions",
+          "kind": "array",
+          "input_path": "parameters.captions",
+          "required": false,
+          "workflow": "native",
+          "category": "direct",
+          "missing_policy": "Original schema/validator owns defaults and required fields; required omissions block. No synthesized material or slot."
+        },
+        {
+          "id": "native/segments",
+          "kind": "array",
+          "input_path": "parameters.segments",
+          "required": false,
+          "workflow": "native",
+          "category": "direct",
+          "missing_policy": "Original schema/validator owns defaults and required fields; required omissions block. No synthesized material or slot."
+        },
+        {
+          "id": "native/presenter",
+          "kind": "native-schema",
+          "input_path": "parameters.presenter",
+          "required": false,
+          "workflow": "native",
+          "category": "direct",
+          "missing_policy": "Original schema/validator owns defaults and required fields; required omissions block. No synthesized material or slot."
+        },
+        {
+          "id": "native/composition",
+          "kind": "object",
+          "input_path": "parameters.composition",
+          "required": false,
+          "workflow": "native",
+          "category": "direct",
+          "missing_policy": "Original schema/validator owns defaults and required fields; required omissions block. No synthesized material or slot."
+        },
+        {
+          "id": "native/contextFacts",
+          "kind": "array",
+          "input_path": "parameters.contextFacts",
+          "required": false,
+          "workflow": "native",
+          "category": "direct",
+          "missing_policy": "Original schema/validator owns defaults and required fields; required omissions block. No synthesized material or slot."
+        },
+        {
+          "id": "native/timeCorner",
+          "kind": "object",
+          "input_path": "parameters.timeCorner",
+          "required": false,
+          "workflow": "native",
+          "category": "direct",
+          "missing_policy": "Original schema/validator owns defaults and required fields; required omissions block. No synthesized material or slot."
+        },
+        {
+          "id": "native/sentenceEvidence",
+          "kind": "object",
+          "input_path": "parameters.sentenceEvidence",
+          "required": false,
+          "workflow": "native",
+          "category": "direct",
+          "missing_policy": "Original schema/validator owns defaults and required fields; required omissions block. No synthesized material or slot."
+        },
+        {
+          "id": "native/wordEvidence",
+          "kind": "object",
+          "input_path": "parameters.wordEvidence",
+          "required": false,
+          "workflow": "native",
+          "category": "direct",
+          "missing_policy": "Original schema/validator owns defaults and required fields; required omissions block. No synthesized material or slot."
+        }
+      ],
+      "timeline": {
+        "mode": "native",
+        "clock": "Original native/project clock; new speech uses actual full audio and evidence. Never stretch speech.",
+        "events": [
+          {
+            "id": "native.definition.window",
+            "action_id": "haike.knowledge-explainer-sketchnote.native.definition",
+            "anchor": "parameters.segments[].start/end",
+            "window": "Original absolute seconds",
+            "reading": "Original family reading/capacity constraints"
+          },
+          {
+            "id": "native.definition.word-events",
+            "action_id": "haike.knowledge-explainer-sketchnote.native.definition",
+            "anchor": "parameters.segments[].wordCues[]",
+            "window": "Original wordCues absolute values, when supplied",
+            "reading": "Measured source evidence, not interpolated character timing"
+          },
+          {
+            "id": "native.compare.window",
+            "action_id": "haike.knowledge-explainer-sketchnote.native.compare",
+            "anchor": "parameters.segments[].start/end",
+            "window": "Original absolute seconds",
+            "reading": "Original family reading/capacity constraints"
+          },
+          {
+            "id": "native.compare.word-events",
+            "action_id": "haike.knowledge-explainer-sketchnote.native.compare",
+            "anchor": "parameters.segments[].wordCues[]",
+            "window": "Original wordCues absolute values, when supplied",
+            "reading": "Measured source evidence, not interpolated character timing"
+          },
+          {
+            "id": "native.process.window",
+            "action_id": "haike.knowledge-explainer-sketchnote.native.process",
+            "anchor": "parameters.segments[].start/end",
+            "window": "Original absolute seconds",
+            "reading": "Original family reading/capacity constraints"
+          },
+          {
+            "id": "native.process.word-events",
+            "action_id": "haike.knowledge-explainer-sketchnote.native.process",
+            "anchor": "parameters.segments[].wordCues[]",
+            "window": "Original wordCues absolute values, when supplied",
+            "reading": "Measured source evidence, not interpolated character timing"
+          },
+          {
+            "id": "native.causal.window",
+            "action_id": "haike.knowledge-explainer-sketchnote.native.causal",
+            "anchor": "parameters.segments[].start/end",
+            "window": "Original absolute seconds",
+            "reading": "Original family reading/capacity constraints"
+          },
+          {
+            "id": "native.causal.word-events",
+            "action_id": "haike.knowledge-explainer-sketchnote.native.causal",
+            "anchor": "parameters.segments[].wordCues[]",
+            "window": "Original wordCues absolute values, when supplied",
+            "reading": "Measured source evidence, not interpolated character timing"
+          },
+          {
+            "id": "native.cycle.window",
+            "action_id": "haike.knowledge-explainer-sketchnote.native.cycle",
+            "anchor": "parameters.segments[].start/end",
+            "window": "Original absolute seconds",
+            "reading": "Original family reading/capacity constraints"
+          },
+          {
+            "id": "native.cycle.word-events",
+            "action_id": "haike.knowledge-explainer-sketchnote.native.cycle",
+            "anchor": "parameters.segments[].wordCues[]",
+            "window": "Original wordCues absolute values, when supplied",
+            "reading": "Measured source evidence, not interpolated character timing"
+          },
+          {
+            "id": "native.hierarchy.window",
+            "action_id": "haike.knowledge-explainer-sketchnote.native.hierarchy",
+            "anchor": "parameters.segments[].start/end",
+            "window": "Original absolute seconds",
+            "reading": "Original family reading/capacity constraints"
+          },
+          {
+            "id": "native.hierarchy.word-events",
+            "action_id": "haike.knowledge-explainer-sketchnote.native.hierarchy",
+            "anchor": "parameters.segments[].wordCues[]",
+            "window": "Original wordCues absolute values, when supplied",
+            "reading": "Measured source evidence, not interpolated character timing"
+          },
+          {
+            "id": "native.data-bar.window",
+            "action_id": "haike.knowledge-explainer-sketchnote.native.data-bar",
+            "anchor": "parameters.segments[].start/end",
+            "window": "Original absolute seconds",
+            "reading": "Original family reading/capacity constraints"
+          },
+          {
+            "id": "native.data-bar.word-events",
+            "action_id": "haike.knowledge-explainer-sketchnote.native.data-bar",
+            "anchor": "parameters.segments[].wordCues[]",
+            "window": "Original wordCues absolute values, when supplied",
+            "reading": "Measured source evidence, not interpolated character timing"
+          },
+          {
+            "id": "native.data-line.window",
+            "action_id": "haike.knowledge-explainer-sketchnote.native.data-line",
+            "anchor": "parameters.segments[].start/end",
+            "window": "Original absolute seconds",
+            "reading": "Original family reading/capacity constraints"
+          },
+          {
+            "id": "native.data-line.word-events",
+            "action_id": "haike.knowledge-explainer-sketchnote.native.data-line",
+            "anchor": "parameters.segments[].wordCues[]",
+            "window": "Original wordCues absolute values, when supplied",
+            "reading": "Measured source evidence, not interpolated character timing"
+          },
+          {
+            "id": "native.parts.window",
+            "action_id": "haike.knowledge-explainer-sketchnote.native.parts",
+            "anchor": "parameters.segments[].start/end",
+            "window": "Original absolute seconds",
+            "reading": "Original family reading/capacity constraints"
+          },
+          {
+            "id": "native.parts.word-events",
+            "action_id": "haike.knowledge-explainer-sketchnote.native.parts",
+            "anchor": "parameters.segments[].wordCues[]",
+            "window": "Original wordCues absolute values, when supplied",
+            "reading": "Measured source evidence, not interpolated character timing"
+          },
+          {
+            "id": "native.experiment.window",
+            "action_id": "haike.knowledge-explainer-sketchnote.native.experiment",
+            "anchor": "parameters.segments[].start/end",
+            "window": "Original absolute seconds",
+            "reading": "Original family reading/capacity constraints"
+          },
+          {
+            "id": "native.experiment.word-events",
+            "action_id": "haike.knowledge-explainer-sketchnote.native.experiment",
+            "anchor": "parameters.segments[].wordCues[]",
+            "window": "Original wordCues absolute values, when supplied",
+            "reading": "Measured source evidence, not interpolated character timing"
+          },
+          {
+            "id": "native.evidence.window",
+            "action_id": "haike.knowledge-explainer-sketchnote.native.evidence",
+            "anchor": "parameters.segments[].start/end",
+            "window": "Original absolute seconds",
+            "reading": "Original family reading/capacity constraints"
+          },
+          {
+            "id": "native.evidence.word-events",
+            "action_id": "haike.knowledge-explainer-sketchnote.native.evidence",
+            "anchor": "parameters.segments[].wordCues[]",
+            "window": "Original wordCues absolute values, when supplied",
+            "reading": "Measured source evidence, not interpolated character timing"
+          },
+          {
+            "id": "native.formula.window",
+            "action_id": "haike.knowledge-explainer-sketchnote.native.formula",
+            "anchor": "parameters.segments[].start/end",
+            "window": "Original absolute seconds",
+            "reading": "Original family reading/capacity constraints"
+          },
+          {
+            "id": "native.formula.word-events",
+            "action_id": "haike.knowledge-explainer-sketchnote.native.formula",
+            "anchor": "parameters.segments[].wordCues[]",
+            "window": "Original wordCues absolute values, when supplied",
+            "reading": "Measured source evidence, not interpolated character timing"
+          },
+          {
+            "id": "native.recap.window",
+            "action_id": "haike.knowledge-explainer-sketchnote.native.recap",
+            "anchor": "parameters.segments[].start/end",
+            "window": "Original absolute seconds",
+            "reading": "Original family reading/capacity constraints"
+          },
+          {
+            "id": "native.recap.word-events",
+            "action_id": "haike.knowledge-explainer-sketchnote.native.recap",
+            "anchor": "parameters.segments[].wordCues[]",
+            "window": "Original wordCues absolute values, when supplied",
+            "reading": "Measured source evidence, not interpolated character timing"
+          },
+          {
+            "id": "native.sketchnote.step-sequence.window",
+            "action_id": "haike.knowledge-explainer-sketchnote.native.sketchnote.step-sequence",
+            "anchor": "parameters.segments[].start/end",
+            "window": "Original absolute seconds",
+            "reading": "Original family reading/capacity constraints"
+          },
+          {
+            "id": "native.sketchnote.step-sequence.word-events",
+            "action_id": "haike.knowledge-explainer-sketchnote.native.sketchnote.step-sequence",
+            "anchor": "parameters.segments[].wordCues[]",
+            "window": "Original wordCues absolute values, when supplied",
+            "reading": "Measured source evidence, not interpolated character timing"
+          },
+          {
+            "id": "native.sketchnote.keyword-annotation.window",
+            "action_id": "haike.knowledge-explainer-sketchnote.native.sketchnote.keyword-annotation",
+            "anchor": "parameters.segments[].start/end",
+            "window": "Original absolute seconds",
+            "reading": "Original family reading/capacity constraints"
+          },
+          {
+            "id": "native.sketchnote.keyword-annotation.word-events",
+            "action_id": "haike.knowledge-explainer-sketchnote.native.sketchnote.keyword-annotation",
+            "anchor": "parameters.segments[].wordCues[]",
+            "window": "Original wordCues absolute values, when supplied",
+            "reading": "Measured source evidence, not interpolated character timing"
+          },
+          {
+            "id": "native.sketchnote.sticky-revision.window",
+            "action_id": "haike.knowledge-explainer-sketchnote.native.sketchnote.sticky-revision",
+            "anchor": "parameters.segments[].start/end",
+            "window": "Original absolute seconds",
+            "reading": "Original family reading/capacity constraints"
+          },
+          {
+            "id": "native.sketchnote.sticky-revision.word-events",
+            "action_id": "haike.knowledge-explainer-sketchnote.native.sketchnote.sticky-revision",
+            "anchor": "parameters.segments[].wordCues[]",
+            "window": "Original wordCues absolute values, when supplied",
+            "reading": "Measured source evidence, not interpolated character timing"
+          },
+          {
+            "id": "native.sketchnote.return-loop.window",
+            "action_id": "haike.knowledge-explainer-sketchnote.native.sketchnote.return-loop",
+            "anchor": "parameters.segments[].start/end",
+            "window": "Original absolute seconds",
+            "reading": "Original family reading/capacity constraints"
+          },
+          {
+            "id": "native.sketchnote.return-loop.word-events",
+            "action_id": "haike.knowledge-explainer-sketchnote.native.sketchnote.return-loop",
+            "anchor": "parameters.segments[].wordCues[]",
+            "window": "Original wordCues absolute values, when supplied",
+            "reading": "Measured source evidence, not interpolated character timing"
+          }
+        ],
+        "retiming": "Only native published cues/wordCues or project cueTimes/shotPlan; this bridge never derives semantic timestamps or redistributes internal events."
+      },
+      "capabilities": {
+        "reference_fidelity": "Original package/project renderer and original inputs retained; wrapper does not rewrite motion/layout. New inputs need existing preview gates.",
+        "replacement": "Only fields declared by the selected exact workflow; native and project inputs remain separate.",
+        "semantic_retiming": "No automatic rewrite. Supply real full-audio sentence/word evidence and all required internal cues; current renderer retains capacity/order/phase gates.",
+        "hd": "Existing native/project profiles only; no new HD export verified by this sidecar.",
+        "audio": "Original full narration + independent music/source receipts required for production; no new listening claim.",
+        "native_production": true,
+        "distribution": "Public metadata/adapters only. Personal .motion, envelopes, restricted fonts and private media excluded.",
+        "default_workflow": "native",
+        "execution_by_route": {
+          "native": {
+            "execution": "supported",
+            "category": "direct",
+            "output_profiles": [
+              "native"
+            ]
+          }
+        },
+        "default_presenter": "none",
+        "original_native_production": true,
+        "private_personal_package_required": true,
+        "redistribution": "adapter source only; original template core excluded; independent public closure remains separate candidate"
+      },
+      "validation": {
+        "structural": {
+          "status": "pass",
+          "method": "Exact two-package support, eight targeted adapter tests including native parameter-relative evidence resolution, real B6 schema/bindings/freeze",
+          "scope": "完整声音/同源真实字幕/原包及helper精确SHA",
+          "evidence": "Haike_video/tests/test_studio_imported_native_knowledge.py"
+        },
+        "visual": {
+          "status": "pending",
+          "method": "Original declared gallery actual viewing plus new actual native previews/full encoding",
+          "scope": "原生材质、字体、内部动作、论证对应分项",
+          "evidence": "each original native queue job"
+        },
+        "audio": {
+          "status": "pending",
+          "method": "Full decoding/audio metrics/listening separately",
+          "scope": "原声音主钟，不拉伸、不用参考测试音代替",
+          "evidence": "each original native queue job"
+        }
+      },
+      "reference_version": "2.7.3"
+    },
+    {
+      "template_id": "knowledge-explainer-chalkboard",
+      "version": "4.0.0-native-production.1",
+      "family": "imported",
+      "gallery_id": "motion-package-mg-5b31b7dd6e6709861dc6ac88",
+      "default_workflow": "native",
+      "renderer": {
+        "kind": "native_package",
+        "entrypoint": "backlot.studio_imported_native_knowledge:prepare",
+        "adapter": "backlot.motion_replay_imported_native_full:prepare",
+        "execution": "supported"
+      },
+      "package_identity": {
+        "template_id": "knowledge-explainer-chalkboard",
+        "version": "2.7.2",
+        "sha256": "5b31b7dd6e6709861dc6ac88a57ee18df28d6a61db9ea03a3ea879c53640ec93",
+        "helper": {
+          "version": "1.0.0-rc.51",
+          "sha256": "2748865645a5a0911de4ca79a4186c7ee5f1c7157e09eb72904bd2330463304b"
+        },
+        "license": "Local authorized personal package required; hash is identity, not distribution permission."
+      },
+      "routes": [
+        {
+          "workflow": "native",
+          "status": "supported",
+          "contract": "haike.native-knowledge-full/1",
+          "original_public_helper": true
+        }
+      ],
+      "sources": [
+        {
+          "path": "Haike_video/backlot/studio_imported_native_knowledge.py",
+          "sha256": "140a7e5fc91ec906ef6d664abcb92ac72ab92b196be0a1a147abd0709258e4f7"
+        },
+        {
+          "path": "Haike_video/backlot/motion_replay_imported_native_full.py",
+          "sha256": "2b0b76324f07fe4adddbe6d821916ed47239230ebf7bedb27fa3630f30a5cc88"
+        }
+      ],
+      "objects": [
+        {
+          "id": "native.definition",
+          "role": "coordinated scene and its persistent children",
+          "authority": {
+            "owner": "native family definition",
+            "protocol": "parameter-editor-only",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "definition",
+            "dispatch": "Haike_video/backlot/studio_motiongit.py::validate_parameters",
+            "package_sha256": "5b31b7dd6e6709861dc6ac88a57ee18df28d6a61db9ea03a3ea879c53640ec93"
+          }
+        },
+        {
+          "id": "native.compare",
+          "role": "coordinated scene and its persistent children",
+          "authority": {
+            "owner": "native family compare",
+            "protocol": "parameter-editor-only",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "compare",
+            "dispatch": "Haike_video/backlot/studio_motiongit.py::validate_parameters",
+            "package_sha256": "5b31b7dd6e6709861dc6ac88a57ee18df28d6a61db9ea03a3ea879c53640ec93"
+          }
+        },
+        {
+          "id": "native.process",
+          "role": "coordinated scene and its persistent children",
+          "authority": {
+            "owner": "native family process",
+            "protocol": "parameter-editor-only",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "process",
+            "dispatch": "Haike_video/backlot/studio_motiongit.py::validate_parameters",
+            "package_sha256": "5b31b7dd6e6709861dc6ac88a57ee18df28d6a61db9ea03a3ea879c53640ec93"
+          }
+        },
+        {
+          "id": "native.causal",
+          "role": "coordinated scene and its persistent children",
+          "authority": {
+            "owner": "native family causal",
+            "protocol": "parameter-editor-only",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "causal",
+            "dispatch": "Haike_video/backlot/studio_motiongit.py::validate_parameters",
+            "package_sha256": "5b31b7dd6e6709861dc6ac88a57ee18df28d6a61db9ea03a3ea879c53640ec93"
+          }
+        },
+        {
+          "id": "native.cycle",
+          "role": "coordinated scene and its persistent children",
+          "authority": {
+            "owner": "native family cycle",
+            "protocol": "parameter-editor-only",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "cycle",
+            "dispatch": "Haike_video/backlot/studio_motiongit.py::validate_parameters",
+            "package_sha256": "5b31b7dd6e6709861dc6ac88a57ee18df28d6a61db9ea03a3ea879c53640ec93"
+          }
+        },
+        {
+          "id": "native.hierarchy",
+          "role": "coordinated scene and its persistent children",
+          "authority": {
+            "owner": "native family hierarchy",
+            "protocol": "parameter-editor-only",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "hierarchy",
+            "dispatch": "Haike_video/backlot/studio_motiongit.py::validate_parameters",
+            "package_sha256": "5b31b7dd6e6709861dc6ac88a57ee18df28d6a61db9ea03a3ea879c53640ec93"
+          }
+        },
+        {
+          "id": "native.data-bar",
+          "role": "coordinated scene and its persistent children",
+          "authority": {
+            "owner": "native family data-bar",
+            "protocol": "parameter-editor-only",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "data-bar",
+            "dispatch": "Haike_video/backlot/studio_motiongit.py::validate_parameters",
+            "package_sha256": "5b31b7dd6e6709861dc6ac88a57ee18df28d6a61db9ea03a3ea879c53640ec93"
+          }
+        },
+        {
+          "id": "native.data-line",
+          "role": "coordinated scene and its persistent children",
+          "authority": {
+            "owner": "native family data-line",
+            "protocol": "parameter-editor-only",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "data-line",
+            "dispatch": "Haike_video/backlot/studio_motiongit.py::validate_parameters",
+            "package_sha256": "5b31b7dd6e6709861dc6ac88a57ee18df28d6a61db9ea03a3ea879c53640ec93"
+          }
+        },
+        {
+          "id": "native.parts",
+          "role": "coordinated scene and its persistent children",
+          "authority": {
+            "owner": "native family parts",
+            "protocol": "parameter-editor-only",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "parts",
+            "dispatch": "Haike_video/backlot/studio_motiongit.py::validate_parameters",
+            "package_sha256": "5b31b7dd6e6709861dc6ac88a57ee18df28d6a61db9ea03a3ea879c53640ec93"
+          }
+        },
+        {
+          "id": "native.experiment",
+          "role": "coordinated scene and its persistent children",
+          "authority": {
+            "owner": "native family experiment",
+            "protocol": "parameter-editor-only",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "experiment",
+            "dispatch": "Haike_video/backlot/studio_motiongit.py::validate_parameters",
+            "package_sha256": "5b31b7dd6e6709861dc6ac88a57ee18df28d6a61db9ea03a3ea879c53640ec93"
+          }
+        },
+        {
+          "id": "native.evidence",
+          "role": "coordinated scene and its persistent children",
+          "authority": {
+            "owner": "native family evidence",
+            "protocol": "parameter-editor-only",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "evidence",
+            "dispatch": "Haike_video/backlot/studio_motiongit.py::validate_parameters",
+            "package_sha256": "5b31b7dd6e6709861dc6ac88a57ee18df28d6a61db9ea03a3ea879c53640ec93"
+          }
+        },
+        {
+          "id": "native.formula",
+          "role": "coordinated scene and its persistent children",
+          "authority": {
+            "owner": "native family formula",
+            "protocol": "parameter-editor-only",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "formula",
+            "dispatch": "Haike_video/backlot/studio_motiongit.py::validate_parameters",
+            "package_sha256": "5b31b7dd6e6709861dc6ac88a57ee18df28d6a61db9ea03a3ea879c53640ec93"
+          }
+        },
+        {
+          "id": "native.recap",
+          "role": "coordinated scene and its persistent children",
+          "authority": {
+            "owner": "native family recap",
+            "protocol": "parameter-editor-only",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "recap",
+            "dispatch": "Haike_video/backlot/studio_motiongit.py::validate_parameters",
+            "package_sha256": "5b31b7dd6e6709861dc6ac88a57ee18df28d6a61db9ea03a3ea879c53640ec93"
+          }
+        },
+        {
+          "id": "native.chalkboard.orbit-phase",
+          "role": "coordinated scene and its persistent children",
+          "authority": {
+            "owner": "native family chalkboard.orbit-phase",
+            "protocol": "parameter-editor-only",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "chalkboard.orbit-phase",
+            "dispatch": "Haike_video/backlot/studio_motiongit.py::validate_parameters",
+            "package_sha256": "5b31b7dd6e6709861dc6ac88a57ee18df28d6a61db9ea03a3ea879c53640ec93"
+          }
+        },
+        {
+          "id": "native.chalkboard.surface-view",
+          "role": "coordinated scene and its persistent children",
+          "authority": {
+            "owner": "native family chalkboard.surface-view",
+            "protocol": "parameter-editor-only",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "chalkboard.surface-view",
+            "dispatch": "Haike_video/backlot/studio_motiongit.py::validate_parameters",
+            "package_sha256": "5b31b7dd6e6709861dc6ac88a57ee18df28d6a61db9ea03a3ea879c53640ec93"
+          }
+        },
+        {
+          "id": "native.chalkboard.shadow-overlap",
+          "role": "coordinated scene and its persistent children",
+          "authority": {
+            "owner": "native family chalkboard.shadow-overlap",
+            "protocol": "parameter-editor-only",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "chalkboard.shadow-overlap",
+            "dispatch": "Haike_video/backlot/studio_motiongit.py::validate_parameters",
+            "package_sha256": "5b31b7dd6e6709861dc6ac88a57ee18df28d6a61db9ea03a3ea879c53640ec93"
+          }
+        },
+        {
+          "id": "native.chalkboard.inclined-orbit",
+          "role": "coordinated scene and its persistent children",
+          "authority": {
+            "owner": "native family chalkboard.inclined-orbit",
+            "protocol": "parameter-editor-only",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "chalkboard.inclined-orbit",
+            "dispatch": "Haike_video/backlot/studio_motiongit.py::validate_parameters",
+            "package_sha256": "5b31b7dd6e6709861dc6ac88a57ee18df28d6a61db9ea03a3ea879c53640ec93"
+          }
+        },
+        {
+          "id": "native.chalkboard.projection-compare",
+          "role": "coordinated scene and its persistent children",
+          "authority": {
+            "owner": "native family chalkboard.projection-compare",
+            "protocol": "parameter-editor-only",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "chalkboard.projection-compare",
+            "dispatch": "Haike_video/backlot/studio_motiongit.py::validate_parameters",
+            "package_sha256": "5b31b7dd6e6709861dc6ac88a57ee18df28d6a61db9ea03a3ea879c53640ec93"
+          }
+        },
+        {
+          "id": "native.chalkboard.causal-compare",
+          "role": "coordinated scene and its persistent children",
+          "authority": {
+            "owner": "native family chalkboard.causal-compare",
+            "protocol": "parameter-editor-only",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "chalkboard.causal-compare",
+            "dispatch": "Haike_video/backlot/studio_motiongit.py::validate_parameters",
+            "package_sha256": "5b31b7dd6e6709861dc6ac88a57ee18df28d6a61db9ea03a3ea879c53640ec93"
+          }
+        },
+        {
+          "id": "native.chalkboard.ray-topology",
+          "role": "coordinated scene and its persistent children",
+          "authority": {
+            "owner": "native family chalkboard.ray-topology",
+            "protocol": "parameter-editor-only",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "chalkboard.ray-topology",
+            "dispatch": "Haike_video/backlot/studio_motiongit.py::validate_parameters",
+            "package_sha256": "5b31b7dd6e6709861dc6ac88a57ee18df28d6a61db9ea03a3ea879c53640ec93"
+          }
+        },
+        {
+          "id": "native.chalkboard.condition-proof",
+          "role": "coordinated scene and its persistent children",
+          "authority": {
+            "owner": "native family chalkboard.condition-proof",
+            "protocol": "parameter-editor-only",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "chalkboard.condition-proof",
+            "dispatch": "Haike_video/backlot/studio_motiongit.py::validate_parameters",
+            "package_sha256": "5b31b7dd6e6709861dc6ac88a57ee18df28d6a61db9ea03a3ea879c53640ec93"
+          }
+        }
+      ],
+      "actions": [
+        {
+          "id": "haike.knowledge-explainer-chalkboard.native.definition",
+          "version": "4.0.0-native-production.1",
+          "implementation": {
+            "owner": "native family definition",
+            "protocol": "parameter-editor-only",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "definition",
+            "dispatch": "Haike_video/backlot/studio_motiongit.py::validate_parameters",
+            "package_sha256": "5b31b7dd6e6709861dc6ac88a57ee18df28d6a61db9ea03a3ea879c53640ec93"
+          },
+          "objects": [
+            "native.definition"
+          ],
+          "parameters": {
+            "input_path": "parameters.segments[]",
+            "recipe": "Exact family-specific original schema",
+            "internal_events": "parameters.segments[].wordCues; real evidence required, no inferred word times"
+          },
+          "phases": {
+            "entry": "native family definition owns entry; native formulas/layout remain locked, no generic easing override.",
+            "active": "native family definition owns active; native formulas/layout remain locked, no generic easing override.",
+            "settled": "native family definition owns settled; native formulas/layout remain locked, no generic easing override.",
+            "exit": "native family definition owns exit; native formulas/layout remain locked, no generic easing override."
+          }
+        },
+        {
+          "id": "haike.knowledge-explainer-chalkboard.native.compare",
+          "version": "4.0.0-native-production.1",
+          "implementation": {
+            "owner": "native family compare",
+            "protocol": "parameter-editor-only",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "compare",
+            "dispatch": "Haike_video/backlot/studio_motiongit.py::validate_parameters",
+            "package_sha256": "5b31b7dd6e6709861dc6ac88a57ee18df28d6a61db9ea03a3ea879c53640ec93"
+          },
+          "objects": [
+            "native.compare"
+          ],
+          "parameters": {
+            "input_path": "parameters.segments[]",
+            "recipe": "Exact family-specific original schema",
+            "internal_events": "parameters.segments[].wordCues; real evidence required, no inferred word times"
+          },
+          "phases": {
+            "entry": "native family compare owns entry; native formulas/layout remain locked, no generic easing override.",
+            "active": "native family compare owns active; native formulas/layout remain locked, no generic easing override.",
+            "settled": "native family compare owns settled; native formulas/layout remain locked, no generic easing override.",
+            "exit": "native family compare owns exit; native formulas/layout remain locked, no generic easing override."
+          }
+        },
+        {
+          "id": "haike.knowledge-explainer-chalkboard.native.process",
+          "version": "4.0.0-native-production.1",
+          "implementation": {
+            "owner": "native family process",
+            "protocol": "parameter-editor-only",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "process",
+            "dispatch": "Haike_video/backlot/studio_motiongit.py::validate_parameters",
+            "package_sha256": "5b31b7dd6e6709861dc6ac88a57ee18df28d6a61db9ea03a3ea879c53640ec93"
+          },
+          "objects": [
+            "native.process"
+          ],
+          "parameters": {
+            "input_path": "parameters.segments[]",
+            "recipe": "Exact family-specific original schema",
+            "internal_events": "parameters.segments[].wordCues; real evidence required, no inferred word times"
+          },
+          "phases": {
+            "entry": "native family process owns entry; native formulas/layout remain locked, no generic easing override.",
+            "active": "native family process owns active; native formulas/layout remain locked, no generic easing override.",
+            "settled": "native family process owns settled; native formulas/layout remain locked, no generic easing override.",
+            "exit": "native family process owns exit; native formulas/layout remain locked, no generic easing override."
+          }
+        },
+        {
+          "id": "haike.knowledge-explainer-chalkboard.native.causal",
+          "version": "4.0.0-native-production.1",
+          "implementation": {
+            "owner": "native family causal",
+            "protocol": "parameter-editor-only",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "causal",
+            "dispatch": "Haike_video/backlot/studio_motiongit.py::validate_parameters",
+            "package_sha256": "5b31b7dd6e6709861dc6ac88a57ee18df28d6a61db9ea03a3ea879c53640ec93"
+          },
+          "objects": [
+            "native.causal"
+          ],
+          "parameters": {
+            "input_path": "parameters.segments[]",
+            "recipe": "Exact family-specific original schema",
+            "internal_events": "parameters.segments[].wordCues; real evidence required, no inferred word times"
+          },
+          "phases": {
+            "entry": "native family causal owns entry; native formulas/layout remain locked, no generic easing override.",
+            "active": "native family causal owns active; native formulas/layout remain locked, no generic easing override.",
+            "settled": "native family causal owns settled; native formulas/layout remain locked, no generic easing override.",
+            "exit": "native family causal owns exit; native formulas/layout remain locked, no generic easing override."
+          }
+        },
+        {
+          "id": "haike.knowledge-explainer-chalkboard.native.cycle",
+          "version": "4.0.0-native-production.1",
+          "implementation": {
+            "owner": "native family cycle",
+            "protocol": "parameter-editor-only",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "cycle",
+            "dispatch": "Haike_video/backlot/studio_motiongit.py::validate_parameters",
+            "package_sha256": "5b31b7dd6e6709861dc6ac88a57ee18df28d6a61db9ea03a3ea879c53640ec93"
+          },
+          "objects": [
+            "native.cycle"
+          ],
+          "parameters": {
+            "input_path": "parameters.segments[]",
+            "recipe": "Exact family-specific original schema",
+            "internal_events": "parameters.segments[].wordCues; real evidence required, no inferred word times"
+          },
+          "phases": {
+            "entry": "native family cycle owns entry; native formulas/layout remain locked, no generic easing override.",
+            "active": "native family cycle owns active; native formulas/layout remain locked, no generic easing override.",
+            "settled": "native family cycle owns settled; native formulas/layout remain locked, no generic easing override.",
+            "exit": "native family cycle owns exit; native formulas/layout remain locked, no generic easing override."
+          }
+        },
+        {
+          "id": "haike.knowledge-explainer-chalkboard.native.hierarchy",
+          "version": "4.0.0-native-production.1",
+          "implementation": {
+            "owner": "native family hierarchy",
+            "protocol": "parameter-editor-only",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "hierarchy",
+            "dispatch": "Haike_video/backlot/studio_motiongit.py::validate_parameters",
+            "package_sha256": "5b31b7dd6e6709861dc6ac88a57ee18df28d6a61db9ea03a3ea879c53640ec93"
+          },
+          "objects": [
+            "native.hierarchy"
+          ],
+          "parameters": {
+            "input_path": "parameters.segments[]",
+            "recipe": "Exact family-specific original schema",
+            "internal_events": "parameters.segments[].wordCues; real evidence required, no inferred word times"
+          },
+          "phases": {
+            "entry": "native family hierarchy owns entry; native formulas/layout remain locked, no generic easing override.",
+            "active": "native family hierarchy owns active; native formulas/layout remain locked, no generic easing override.",
+            "settled": "native family hierarchy owns settled; native formulas/layout remain locked, no generic easing override.",
+            "exit": "native family hierarchy owns exit; native formulas/layout remain locked, no generic easing override."
+          }
+        },
+        {
+          "id": "haike.knowledge-explainer-chalkboard.native.data-bar",
+          "version": "4.0.0-native-production.1",
+          "implementation": {
+            "owner": "native family data-bar",
+            "protocol": "parameter-editor-only",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "data-bar",
+            "dispatch": "Haike_video/backlot/studio_motiongit.py::validate_parameters",
+            "package_sha256": "5b31b7dd6e6709861dc6ac88a57ee18df28d6a61db9ea03a3ea879c53640ec93"
+          },
+          "objects": [
+            "native.data-bar"
+          ],
+          "parameters": {
+            "input_path": "parameters.segments[]",
+            "recipe": "Exact family-specific original schema",
+            "internal_events": "parameters.segments[].wordCues; real evidence required, no inferred word times"
+          },
+          "phases": {
+            "entry": "native family data-bar owns entry; native formulas/layout remain locked, no generic easing override.",
+            "active": "native family data-bar owns active; native formulas/layout remain locked, no generic easing override.",
+            "settled": "native family data-bar owns settled; native formulas/layout remain locked, no generic easing override.",
+            "exit": "native family data-bar owns exit; native formulas/layout remain locked, no generic easing override."
+          }
+        },
+        {
+          "id": "haike.knowledge-explainer-chalkboard.native.data-line",
+          "version": "4.0.0-native-production.1",
+          "implementation": {
+            "owner": "native family data-line",
+            "protocol": "parameter-editor-only",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "data-line",
+            "dispatch": "Haike_video/backlot/studio_motiongit.py::validate_parameters",
+            "package_sha256": "5b31b7dd6e6709861dc6ac88a57ee18df28d6a61db9ea03a3ea879c53640ec93"
+          },
+          "objects": [
+            "native.data-line"
+          ],
+          "parameters": {
+            "input_path": "parameters.segments[]",
+            "recipe": "Exact family-specific original schema",
+            "internal_events": "parameters.segments[].wordCues; real evidence required, no inferred word times"
+          },
+          "phases": {
+            "entry": "native family data-line owns entry; native formulas/layout remain locked, no generic easing override.",
+            "active": "native family data-line owns active; native formulas/layout remain locked, no generic easing override.",
+            "settled": "native family data-line owns settled; native formulas/layout remain locked, no generic easing override.",
+            "exit": "native family data-line owns exit; native formulas/layout remain locked, no generic easing override."
+          }
+        },
+        {
+          "id": "haike.knowledge-explainer-chalkboard.native.parts",
+          "version": "4.0.0-native-production.1",
+          "implementation": {
+            "owner": "native family parts",
+            "protocol": "parameter-editor-only",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "parts",
+            "dispatch": "Haike_video/backlot/studio_motiongit.py::validate_parameters",
+            "package_sha256": "5b31b7dd6e6709861dc6ac88a57ee18df28d6a61db9ea03a3ea879c53640ec93"
+          },
+          "objects": [
+            "native.parts"
+          ],
+          "parameters": {
+            "input_path": "parameters.segments[]",
+            "recipe": "Exact family-specific original schema",
+            "internal_events": "parameters.segments[].wordCues; real evidence required, no inferred word times"
+          },
+          "phases": {
+            "entry": "native family parts owns entry; native formulas/layout remain locked, no generic easing override.",
+            "active": "native family parts owns active; native formulas/layout remain locked, no generic easing override.",
+            "settled": "native family parts owns settled; native formulas/layout remain locked, no generic easing override.",
+            "exit": "native family parts owns exit; native formulas/layout remain locked, no generic easing override."
+          }
+        },
+        {
+          "id": "haike.knowledge-explainer-chalkboard.native.experiment",
+          "version": "4.0.0-native-production.1",
+          "implementation": {
+            "owner": "native family experiment",
+            "protocol": "parameter-editor-only",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "experiment",
+            "dispatch": "Haike_video/backlot/studio_motiongit.py::validate_parameters",
+            "package_sha256": "5b31b7dd6e6709861dc6ac88a57ee18df28d6a61db9ea03a3ea879c53640ec93"
+          },
+          "objects": [
+            "native.experiment"
+          ],
+          "parameters": {
+            "input_path": "parameters.segments[]",
+            "recipe": "Exact family-specific original schema",
+            "internal_events": "parameters.segments[].wordCues; real evidence required, no inferred word times"
+          },
+          "phases": {
+            "entry": "native family experiment owns entry; native formulas/layout remain locked, no generic easing override.",
+            "active": "native family experiment owns active; native formulas/layout remain locked, no generic easing override.",
+            "settled": "native family experiment owns settled; native formulas/layout remain locked, no generic easing override.",
+            "exit": "native family experiment owns exit; native formulas/layout remain locked, no generic easing override."
+          }
+        },
+        {
+          "id": "haike.knowledge-explainer-chalkboard.native.evidence",
+          "version": "4.0.0-native-production.1",
+          "implementation": {
+            "owner": "native family evidence",
+            "protocol": "parameter-editor-only",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "evidence",
+            "dispatch": "Haike_video/backlot/studio_motiongit.py::validate_parameters",
+            "package_sha256": "5b31b7dd6e6709861dc6ac88a57ee18df28d6a61db9ea03a3ea879c53640ec93"
+          },
+          "objects": [
+            "native.evidence"
+          ],
+          "parameters": {
+            "input_path": "parameters.segments[]",
+            "recipe": "Exact family-specific original schema",
+            "internal_events": "parameters.segments[].wordCues; real evidence required, no inferred word times"
+          },
+          "phases": {
+            "entry": "native family evidence owns entry; native formulas/layout remain locked, no generic easing override.",
+            "active": "native family evidence owns active; native formulas/layout remain locked, no generic easing override.",
+            "settled": "native family evidence owns settled; native formulas/layout remain locked, no generic easing override.",
+            "exit": "native family evidence owns exit; native formulas/layout remain locked, no generic easing override."
+          }
+        },
+        {
+          "id": "haike.knowledge-explainer-chalkboard.native.formula",
+          "version": "4.0.0-native-production.1",
+          "implementation": {
+            "owner": "native family formula",
+            "protocol": "parameter-editor-only",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "formula",
+            "dispatch": "Haike_video/backlot/studio_motiongit.py::validate_parameters",
+            "package_sha256": "5b31b7dd6e6709861dc6ac88a57ee18df28d6a61db9ea03a3ea879c53640ec93"
+          },
+          "objects": [
+            "native.formula"
+          ],
+          "parameters": {
+            "input_path": "parameters.segments[]",
+            "recipe": "Exact family-specific original schema",
+            "internal_events": "parameters.segments[].wordCues; real evidence required, no inferred word times"
+          },
+          "phases": {
+            "entry": "native family formula owns entry; native formulas/layout remain locked, no generic easing override.",
+            "active": "native family formula owns active; native formulas/layout remain locked, no generic easing override.",
+            "settled": "native family formula owns settled; native formulas/layout remain locked, no generic easing override.",
+            "exit": "native family formula owns exit; native formulas/layout remain locked, no generic easing override."
+          }
+        },
+        {
+          "id": "haike.knowledge-explainer-chalkboard.native.recap",
+          "version": "4.0.0-native-production.1",
+          "implementation": {
+            "owner": "native family recap",
+            "protocol": "parameter-editor-only",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "recap",
+            "dispatch": "Haike_video/backlot/studio_motiongit.py::validate_parameters",
+            "package_sha256": "5b31b7dd6e6709861dc6ac88a57ee18df28d6a61db9ea03a3ea879c53640ec93"
+          },
+          "objects": [
+            "native.recap"
+          ],
+          "parameters": {
+            "input_path": "parameters.segments[]",
+            "recipe": "Exact family-specific original schema",
+            "internal_events": "parameters.segments[].wordCues; real evidence required, no inferred word times"
+          },
+          "phases": {
+            "entry": "native family recap owns entry; native formulas/layout remain locked, no generic easing override.",
+            "active": "native family recap owns active; native formulas/layout remain locked, no generic easing override.",
+            "settled": "native family recap owns settled; native formulas/layout remain locked, no generic easing override.",
+            "exit": "native family recap owns exit; native formulas/layout remain locked, no generic easing override."
+          }
+        },
+        {
+          "id": "haike.knowledge-explainer-chalkboard.native.chalkboard.orbit-phase",
+          "version": "4.0.0-native-production.1",
+          "implementation": {
+            "owner": "native family chalkboard.orbit-phase",
+            "protocol": "parameter-editor-only",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "chalkboard.orbit-phase",
+            "dispatch": "Haike_video/backlot/studio_motiongit.py::validate_parameters",
+            "package_sha256": "5b31b7dd6e6709861dc6ac88a57ee18df28d6a61db9ea03a3ea879c53640ec93"
+          },
+          "objects": [
+            "native.chalkboard.orbit-phase"
+          ],
+          "parameters": {
+            "input_path": "parameters.segments[]",
+            "recipe": "Exact family-specific original schema",
+            "internal_events": "parameters.segments[].wordCues; real evidence required, no inferred word times"
+          },
+          "phases": {
+            "entry": "native family chalkboard.orbit-phase owns entry; native formulas/layout remain locked, no generic easing override.",
+            "active": "native family chalkboard.orbit-phase owns active; native formulas/layout remain locked, no generic easing override.",
+            "settled": "native family chalkboard.orbit-phase owns settled; native formulas/layout remain locked, no generic easing override.",
+            "exit": "native family chalkboard.orbit-phase owns exit; native formulas/layout remain locked, no generic easing override."
+          }
+        },
+        {
+          "id": "haike.knowledge-explainer-chalkboard.native.chalkboard.surface-view",
+          "version": "4.0.0-native-production.1",
+          "implementation": {
+            "owner": "native family chalkboard.surface-view",
+            "protocol": "parameter-editor-only",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "chalkboard.surface-view",
+            "dispatch": "Haike_video/backlot/studio_motiongit.py::validate_parameters",
+            "package_sha256": "5b31b7dd6e6709861dc6ac88a57ee18df28d6a61db9ea03a3ea879c53640ec93"
+          },
+          "objects": [
+            "native.chalkboard.surface-view"
+          ],
+          "parameters": {
+            "input_path": "parameters.segments[]",
+            "recipe": "Exact family-specific original schema",
+            "internal_events": "parameters.segments[].wordCues; real evidence required, no inferred word times"
+          },
+          "phases": {
+            "entry": "native family chalkboard.surface-view owns entry; native formulas/layout remain locked, no generic easing override.",
+            "active": "native family chalkboard.surface-view owns active; native formulas/layout remain locked, no generic easing override.",
+            "settled": "native family chalkboard.surface-view owns settled; native formulas/layout remain locked, no generic easing override.",
+            "exit": "native family chalkboard.surface-view owns exit; native formulas/layout remain locked, no generic easing override."
+          }
+        },
+        {
+          "id": "haike.knowledge-explainer-chalkboard.native.chalkboard.shadow-overlap",
+          "version": "4.0.0-native-production.1",
+          "implementation": {
+            "owner": "native family chalkboard.shadow-overlap",
+            "protocol": "parameter-editor-only",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "chalkboard.shadow-overlap",
+            "dispatch": "Haike_video/backlot/studio_motiongit.py::validate_parameters",
+            "package_sha256": "5b31b7dd6e6709861dc6ac88a57ee18df28d6a61db9ea03a3ea879c53640ec93"
+          },
+          "objects": [
+            "native.chalkboard.shadow-overlap"
+          ],
+          "parameters": {
+            "input_path": "parameters.segments[]",
+            "recipe": "Exact family-specific original schema",
+            "internal_events": "parameters.segments[].wordCues; real evidence required, no inferred word times"
+          },
+          "phases": {
+            "entry": "native family chalkboard.shadow-overlap owns entry; native formulas/layout remain locked, no generic easing override.",
+            "active": "native family chalkboard.shadow-overlap owns active; native formulas/layout remain locked, no generic easing override.",
+            "settled": "native family chalkboard.shadow-overlap owns settled; native formulas/layout remain locked, no generic easing override.",
+            "exit": "native family chalkboard.shadow-overlap owns exit; native formulas/layout remain locked, no generic easing override."
+          }
+        },
+        {
+          "id": "haike.knowledge-explainer-chalkboard.native.chalkboard.inclined-orbit",
+          "version": "4.0.0-native-production.1",
+          "implementation": {
+            "owner": "native family chalkboard.inclined-orbit",
+            "protocol": "parameter-editor-only",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "chalkboard.inclined-orbit",
+            "dispatch": "Haike_video/backlot/studio_motiongit.py::validate_parameters",
+            "package_sha256": "5b31b7dd6e6709861dc6ac88a57ee18df28d6a61db9ea03a3ea879c53640ec93"
+          },
+          "objects": [
+            "native.chalkboard.inclined-orbit"
+          ],
+          "parameters": {
+            "input_path": "parameters.segments[]",
+            "recipe": "Exact family-specific original schema",
+            "internal_events": "parameters.segments[].wordCues; real evidence required, no inferred word times"
+          },
+          "phases": {
+            "entry": "native family chalkboard.inclined-orbit owns entry; native formulas/layout remain locked, no generic easing override.",
+            "active": "native family chalkboard.inclined-orbit owns active; native formulas/layout remain locked, no generic easing override.",
+            "settled": "native family chalkboard.inclined-orbit owns settled; native formulas/layout remain locked, no generic easing override.",
+            "exit": "native family chalkboard.inclined-orbit owns exit; native formulas/layout remain locked, no generic easing override."
+          }
+        },
+        {
+          "id": "haike.knowledge-explainer-chalkboard.native.chalkboard.projection-compare",
+          "version": "4.0.0-native-production.1",
+          "implementation": {
+            "owner": "native family chalkboard.projection-compare",
+            "protocol": "parameter-editor-only",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "chalkboard.projection-compare",
+            "dispatch": "Haike_video/backlot/studio_motiongit.py::validate_parameters",
+            "package_sha256": "5b31b7dd6e6709861dc6ac88a57ee18df28d6a61db9ea03a3ea879c53640ec93"
+          },
+          "objects": [
+            "native.chalkboard.projection-compare"
+          ],
+          "parameters": {
+            "input_path": "parameters.segments[]",
+            "recipe": "Exact family-specific original schema",
+            "internal_events": "parameters.segments[].wordCues; real evidence required, no inferred word times"
+          },
+          "phases": {
+            "entry": "native family chalkboard.projection-compare owns entry; native formulas/layout remain locked, no generic easing override.",
+            "active": "native family chalkboard.projection-compare owns active; native formulas/layout remain locked, no generic easing override.",
+            "settled": "native family chalkboard.projection-compare owns settled; native formulas/layout remain locked, no generic easing override.",
+            "exit": "native family chalkboard.projection-compare owns exit; native formulas/layout remain locked, no generic easing override."
+          }
+        },
+        {
+          "id": "haike.knowledge-explainer-chalkboard.native.chalkboard.causal-compare",
+          "version": "4.0.0-native-production.1",
+          "implementation": {
+            "owner": "native family chalkboard.causal-compare",
+            "protocol": "parameter-editor-only",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "chalkboard.causal-compare",
+            "dispatch": "Haike_video/backlot/studio_motiongit.py::validate_parameters",
+            "package_sha256": "5b31b7dd6e6709861dc6ac88a57ee18df28d6a61db9ea03a3ea879c53640ec93"
+          },
+          "objects": [
+            "native.chalkboard.causal-compare"
+          ],
+          "parameters": {
+            "input_path": "parameters.segments[]",
+            "recipe": "Exact family-specific original schema",
+            "internal_events": "parameters.segments[].wordCues; real evidence required, no inferred word times"
+          },
+          "phases": {
+            "entry": "native family chalkboard.causal-compare owns entry; native formulas/layout remain locked, no generic easing override.",
+            "active": "native family chalkboard.causal-compare owns active; native formulas/layout remain locked, no generic easing override.",
+            "settled": "native family chalkboard.causal-compare owns settled; native formulas/layout remain locked, no generic easing override.",
+            "exit": "native family chalkboard.causal-compare owns exit; native formulas/layout remain locked, no generic easing override."
+          }
+        },
+        {
+          "id": "haike.knowledge-explainer-chalkboard.native.chalkboard.ray-topology",
+          "version": "4.0.0-native-production.1",
+          "implementation": {
+            "owner": "native family chalkboard.ray-topology",
+            "protocol": "parameter-editor-only",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "chalkboard.ray-topology",
+            "dispatch": "Haike_video/backlot/studio_motiongit.py::validate_parameters",
+            "package_sha256": "5b31b7dd6e6709861dc6ac88a57ee18df28d6a61db9ea03a3ea879c53640ec93"
+          },
+          "objects": [
+            "native.chalkboard.ray-topology"
+          ],
+          "parameters": {
+            "input_path": "parameters.segments[]",
+            "recipe": "Exact family-specific original schema",
+            "internal_events": "parameters.segments[].wordCues; real evidence required, no inferred word times"
+          },
+          "phases": {
+            "entry": "native family chalkboard.ray-topology owns entry; native formulas/layout remain locked, no generic easing override.",
+            "active": "native family chalkboard.ray-topology owns active; native formulas/layout remain locked, no generic easing override.",
+            "settled": "native family chalkboard.ray-topology owns settled; native formulas/layout remain locked, no generic easing override.",
+            "exit": "native family chalkboard.ray-topology owns exit; native formulas/layout remain locked, no generic easing override."
+          }
+        },
+        {
+          "id": "haike.knowledge-explainer-chalkboard.native.chalkboard.condition-proof",
+          "version": "4.0.0-native-production.1",
+          "implementation": {
+            "owner": "native family chalkboard.condition-proof",
+            "protocol": "parameter-editor-only",
+            "document": "params.schema.json#/properties/segments/items",
+            "native_family": "chalkboard.condition-proof",
+            "dispatch": "Haike_video/backlot/studio_motiongit.py::validate_parameters",
+            "package_sha256": "5b31b7dd6e6709861dc6ac88a57ee18df28d6a61db9ea03a3ea879c53640ec93"
+          },
+          "objects": [
+            "native.chalkboard.condition-proof"
+          ],
+          "parameters": {
+            "input_path": "parameters.segments[]",
+            "recipe": "Exact family-specific original schema",
+            "internal_events": "parameters.segments[].wordCues; real evidence required, no inferred word times"
+          },
+          "phases": {
+            "entry": "native family chalkboard.condition-proof owns entry; native formulas/layout remain locked, no generic easing override.",
+            "active": "native family chalkboard.condition-proof owns active; native formulas/layout remain locked, no generic easing override.",
+            "settled": "native family chalkboard.condition-proof owns settled; native formulas/layout remain locked, no generic easing override.",
+            "exit": "native family chalkboard.condition-proof owns exit; native formulas/layout remain locked, no generic easing override."
+          }
+        }
+      ],
+      "slots": [
+        {
+          "id": "native/creationProfile",
+          "kind": "native-schema",
+          "input_path": "parameters.creationProfile",
+          "required": true,
+          "workflow": "native",
+          "category": "direct",
+          "missing_policy": "Original schema/validator owns defaults and required fields; required omissions block. No synthesized material or slot."
+        },
+        {
+          "id": "native/sourcePerformance",
+          "kind": "object",
+          "input_path": "parameters.sourcePerformance",
+          "required": false,
+          "workflow": "native",
+          "category": "direct",
+          "missing_policy": "Original schema/validator owns defaults and required fields; required omissions block. No synthesized material or slot."
+        },
+        {
+          "id": "native/durationSeconds",
+          "kind": "number",
+          "input_path": "parameters.durationSeconds",
+          "required": false,
+          "workflow": "native",
+          "category": "direct",
+          "missing_policy": "Original schema/validator owns defaults and required fields; required omissions block. No synthesized material or slot."
+        },
+        {
+          "id": "native/fps",
+          "kind": "native-schema",
+          "input_path": "parameters.fps",
+          "required": false,
+          "workflow": "native",
+          "category": "direct",
+          "missing_policy": "Original schema/validator owns defaults and required fields; required omissions block. No synthesized material or slot."
+        },
+        {
+          "id": "native/layout",
+          "kind": "native-schema",
+          "input_path": "parameters.layout",
+          "required": false,
+          "workflow": "native",
+          "category": "direct",
+          "missing_policy": "Original schema/validator owns defaults and required fields; required omissions block. No synthesized material or slot."
+        },
+        {
+          "id": "native/audio",
+          "kind": "object",
+          "input_path": "parameters.audio",
+          "required": false,
+          "workflow": "native",
+          "category": "direct",
+          "missing_policy": "Original schema/validator owns defaults and required fields; required omissions block. No synthesized material or slot."
+        },
+        {
+          "id": "native/title",
+          "kind": "string",
+          "input_path": "parameters.title",
+          "required": false,
+          "workflow": "native",
+          "category": "direct",
+          "missing_policy": "Original schema/validator owns defaults and required fields; required omissions block. No synthesized material or slot."
+        },
+        {
+          "id": "native/script",
+          "kind": "string",
+          "input_path": "parameters.script",
+          "required": false,
+          "workflow": "native",
+          "category": "direct",
+          "missing_policy": "Original schema/validator owns defaults and required fields; required omissions block. No synthesized material or slot."
+        },
+        {
+          "id": "native/language",
+          "kind": "native-schema",
+          "input_path": "parameters.language",
+          "required": false,
+          "workflow": "native",
+          "category": "direct",
+          "missing_policy": "Original schema/validator owns defaults and required fields; required omissions block. No synthesized material or slot."
+        },
+        {
+          "id": "native/claims",
+          "kind": "array",
+          "input_path": "parameters.claims",
+          "required": false,
+          "workflow": "native",
+          "category": "direct",
+          "missing_policy": "Original schema/validator owns defaults and required fields; required omissions block. No synthesized material or slot."
+        },
+        {
+          "id": "native/sources",
+          "kind": "array",
+          "input_path": "parameters.sources",
+          "required": false,
+          "workflow": "native",
+          "category": "direct",
+          "missing_policy": "Original schema/validator owns defaults and required fields; required omissions block. No synthesized material or slot."
+        },
+        {
+          "id": "native/captions",
+          "kind": "array",
+          "input_path": "parameters.captions",
+          "required": false,
+          "workflow": "native",
+          "category": "direct",
+          "missing_policy": "Original schema/validator owns defaults and required fields; required omissions block. No synthesized material or slot."
+        },
+        {
+          "id": "native/segments",
+          "kind": "array",
+          "input_path": "parameters.segments",
+          "required": false,
+          "workflow": "native",
+          "category": "direct",
+          "missing_policy": "Original schema/validator owns defaults and required fields; required omissions block. No synthesized material or slot."
+        },
+        {
+          "id": "native/presenter",
+          "kind": "native-schema",
+          "input_path": "parameters.presenter",
+          "required": false,
+          "workflow": "native",
+          "category": "direct",
+          "missing_policy": "Original schema/validator owns defaults and required fields; required omissions block. No synthesized material or slot."
+        },
+        {
+          "id": "native/composition",
+          "kind": "object",
+          "input_path": "parameters.composition",
+          "required": false,
+          "workflow": "native",
+          "category": "direct",
+          "missing_policy": "Original schema/validator owns defaults and required fields; required omissions block. No synthesized material or slot."
+        },
+        {
+          "id": "native/contextFacts",
+          "kind": "array",
+          "input_path": "parameters.contextFacts",
+          "required": false,
+          "workflow": "native",
+          "category": "direct",
+          "missing_policy": "Original schema/validator owns defaults and required fields; required omissions block. No synthesized material or slot."
+        },
+        {
+          "id": "native/timeCorner",
+          "kind": "object",
+          "input_path": "parameters.timeCorner",
+          "required": false,
+          "workflow": "native",
+          "category": "direct",
+          "missing_policy": "Original schema/validator owns defaults and required fields; required omissions block. No synthesized material or slot."
+        },
+        {
+          "id": "native/sentenceEvidence",
+          "kind": "object",
+          "input_path": "parameters.sentenceEvidence",
+          "required": false,
+          "workflow": "native",
+          "category": "direct",
+          "missing_policy": "Original schema/validator owns defaults and required fields; required omissions block. No synthesized material or slot."
+        },
+        {
+          "id": "native/wordEvidence",
+          "kind": "object",
+          "input_path": "parameters.wordEvidence",
+          "required": false,
+          "workflow": "native",
+          "category": "direct",
+          "missing_policy": "Original schema/validator owns defaults and required fields; required omissions block. No synthesized material or slot."
+        }
+      ],
+      "timeline": {
+        "mode": "native",
+        "clock": "Original native/project clock; new speech uses actual full audio and evidence. Never stretch speech.",
+        "events": [
+          {
+            "id": "native.definition.window",
+            "action_id": "haike.knowledge-explainer-chalkboard.native.definition",
+            "anchor": "parameters.segments[].start/end",
+            "window": "Original absolute seconds",
+            "reading": "Original family reading/capacity constraints"
+          },
+          {
+            "id": "native.definition.word-events",
+            "action_id": "haike.knowledge-explainer-chalkboard.native.definition",
+            "anchor": "parameters.segments[].wordCues[]",
+            "window": "Original wordCues absolute values, when supplied",
+            "reading": "Measured source evidence, not interpolated character timing"
+          },
+          {
+            "id": "native.compare.window",
+            "action_id": "haike.knowledge-explainer-chalkboard.native.compare",
+            "anchor": "parameters.segments[].start/end",
+            "window": "Original absolute seconds",
+            "reading": "Original family reading/capacity constraints"
+          },
+          {
+            "id": "native.compare.word-events",
+            "action_id": "haike.knowledge-explainer-chalkboard.native.compare",
+            "anchor": "parameters.segments[].wordCues[]",
+            "window": "Original wordCues absolute values, when supplied",
+            "reading": "Measured source evidence, not interpolated character timing"
+          },
+          {
+            "id": "native.process.window",
+            "action_id": "haike.knowledge-explainer-chalkboard.native.process",
+            "anchor": "parameters.segments[].start/end",
+            "window": "Original absolute seconds",
+            "reading": "Original family reading/capacity constraints"
+          },
+          {
+            "id": "native.process.word-events",
+            "action_id": "haike.knowledge-explainer-chalkboard.native.process",
+            "anchor": "parameters.segments[].wordCues[]",
+            "window": "Original wordCues absolute values, when supplied",
+            "reading": "Measured source evidence, not interpolated character timing"
+          },
+          {
+            "id": "native.causal.window",
+            "action_id": "haike.knowledge-explainer-chalkboard.native.causal",
+            "anchor": "parameters.segments[].start/end",
+            "window": "Original absolute seconds",
+            "reading": "Original family reading/capacity constraints"
+          },
+          {
+            "id": "native.causal.word-events",
+            "action_id": "haike.knowledge-explainer-chalkboard.native.causal",
+            "anchor": "parameters.segments[].wordCues[]",
+            "window": "Original wordCues absolute values, when supplied",
+            "reading": "Measured source evidence, not interpolated character timing"
+          },
+          {
+            "id": "native.cycle.window",
+            "action_id": "haike.knowledge-explainer-chalkboard.native.cycle",
+            "anchor": "parameters.segments[].start/end",
+            "window": "Original absolute seconds",
+            "reading": "Original family reading/capacity constraints"
+          },
+          {
+            "id": "native.cycle.word-events",
+            "action_id": "haike.knowledge-explainer-chalkboard.native.cycle",
+            "anchor": "parameters.segments[].wordCues[]",
+            "window": "Original wordCues absolute values, when supplied",
+            "reading": "Measured source evidence, not interpolated character timing"
+          },
+          {
+            "id": "native.hierarchy.window",
+            "action_id": "haike.knowledge-explainer-chalkboard.native.hierarchy",
+            "anchor": "parameters.segments[].start/end",
+            "window": "Original absolute seconds",
+            "reading": "Original family reading/capacity constraints"
+          },
+          {
+            "id": "native.hierarchy.word-events",
+            "action_id": "haike.knowledge-explainer-chalkboard.native.hierarchy",
+            "anchor": "parameters.segments[].wordCues[]",
+            "window": "Original wordCues absolute values, when supplied",
+            "reading": "Measured source evidence, not interpolated character timing"
+          },
+          {
+            "id": "native.data-bar.window",
+            "action_id": "haike.knowledge-explainer-chalkboard.native.data-bar",
+            "anchor": "parameters.segments[].start/end",
+            "window": "Original absolute seconds",
+            "reading": "Original family reading/capacity constraints"
+          },
+          {
+            "id": "native.data-bar.word-events",
+            "action_id": "haike.knowledge-explainer-chalkboard.native.data-bar",
+            "anchor": "parameters.segments[].wordCues[]",
+            "window": "Original wordCues absolute values, when supplied",
+            "reading": "Measured source evidence, not interpolated character timing"
+          },
+          {
+            "id": "native.data-line.window",
+            "action_id": "haike.knowledge-explainer-chalkboard.native.data-line",
+            "anchor": "parameters.segments[].start/end",
+            "window": "Original absolute seconds",
+            "reading": "Original family reading/capacity constraints"
+          },
+          {
+            "id": "native.data-line.word-events",
+            "action_id": "haike.knowledge-explainer-chalkboard.native.data-line",
+            "anchor": "parameters.segments[].wordCues[]",
+            "window": "Original wordCues absolute values, when supplied",
+            "reading": "Measured source evidence, not interpolated character timing"
+          },
+          {
+            "id": "native.parts.window",
+            "action_id": "haike.knowledge-explainer-chalkboard.native.parts",
+            "anchor": "parameters.segments[].start/end",
+            "window": "Original absolute seconds",
+            "reading": "Original family reading/capacity constraints"
+          },
+          {
+            "id": "native.parts.word-events",
+            "action_id": "haike.knowledge-explainer-chalkboard.native.parts",
+            "anchor": "parameters.segments[].wordCues[]",
+            "window": "Original wordCues absolute values, when supplied",
+            "reading": "Measured source evidence, not interpolated character timing"
+          },
+          {
+            "id": "native.experiment.window",
+            "action_id": "haike.knowledge-explainer-chalkboard.native.experiment",
+            "anchor": "parameters.segments[].start/end",
+            "window": "Original absolute seconds",
+            "reading": "Original family reading/capacity constraints"
+          },
+          {
+            "id": "native.experiment.word-events",
+            "action_id": "haike.knowledge-explainer-chalkboard.native.experiment",
+            "anchor": "parameters.segments[].wordCues[]",
+            "window": "Original wordCues absolute values, when supplied",
+            "reading": "Measured source evidence, not interpolated character timing"
+          },
+          {
+            "id": "native.evidence.window",
+            "action_id": "haike.knowledge-explainer-chalkboard.native.evidence",
+            "anchor": "parameters.segments[].start/end",
+            "window": "Original absolute seconds",
+            "reading": "Original family reading/capacity constraints"
+          },
+          {
+            "id": "native.evidence.word-events",
+            "action_id": "haike.knowledge-explainer-chalkboard.native.evidence",
+            "anchor": "parameters.segments[].wordCues[]",
+            "window": "Original wordCues absolute values, when supplied",
+            "reading": "Measured source evidence, not interpolated character timing"
+          },
+          {
+            "id": "native.formula.window",
+            "action_id": "haike.knowledge-explainer-chalkboard.native.formula",
+            "anchor": "parameters.segments[].start/end",
+            "window": "Original absolute seconds",
+            "reading": "Original family reading/capacity constraints"
+          },
+          {
+            "id": "native.formula.word-events",
+            "action_id": "haike.knowledge-explainer-chalkboard.native.formula",
+            "anchor": "parameters.segments[].wordCues[]",
+            "window": "Original wordCues absolute values, when supplied",
+            "reading": "Measured source evidence, not interpolated character timing"
+          },
+          {
+            "id": "native.recap.window",
+            "action_id": "haike.knowledge-explainer-chalkboard.native.recap",
+            "anchor": "parameters.segments[].start/end",
+            "window": "Original absolute seconds",
+            "reading": "Original family reading/capacity constraints"
+          },
+          {
+            "id": "native.recap.word-events",
+            "action_id": "haike.knowledge-explainer-chalkboard.native.recap",
+            "anchor": "parameters.segments[].wordCues[]",
+            "window": "Original wordCues absolute values, when supplied",
+            "reading": "Measured source evidence, not interpolated character timing"
+          },
+          {
+            "id": "native.chalkboard.orbit-phase.window",
+            "action_id": "haike.knowledge-explainer-chalkboard.native.chalkboard.orbit-phase",
+            "anchor": "parameters.segments[].start/end",
+            "window": "Original absolute seconds",
+            "reading": "Original family reading/capacity constraints"
+          },
+          {
+            "id": "native.chalkboard.orbit-phase.word-events",
+            "action_id": "haike.knowledge-explainer-chalkboard.native.chalkboard.orbit-phase",
+            "anchor": "parameters.segments[].wordCues[]",
+            "window": "Original wordCues absolute values, when supplied",
+            "reading": "Measured source evidence, not interpolated character timing"
+          },
+          {
+            "id": "native.chalkboard.surface-view.window",
+            "action_id": "haike.knowledge-explainer-chalkboard.native.chalkboard.surface-view",
+            "anchor": "parameters.segments[].start/end",
+            "window": "Original absolute seconds",
+            "reading": "Original family reading/capacity constraints"
+          },
+          {
+            "id": "native.chalkboard.surface-view.word-events",
+            "action_id": "haike.knowledge-explainer-chalkboard.native.chalkboard.surface-view",
+            "anchor": "parameters.segments[].wordCues[]",
+            "window": "Original wordCues absolute values, when supplied",
+            "reading": "Measured source evidence, not interpolated character timing"
+          },
+          {
+            "id": "native.chalkboard.shadow-overlap.window",
+            "action_id": "haike.knowledge-explainer-chalkboard.native.chalkboard.shadow-overlap",
+            "anchor": "parameters.segments[].start/end",
+            "window": "Original absolute seconds",
+            "reading": "Original family reading/capacity constraints"
+          },
+          {
+            "id": "native.chalkboard.shadow-overlap.word-events",
+            "action_id": "haike.knowledge-explainer-chalkboard.native.chalkboard.shadow-overlap",
+            "anchor": "parameters.segments[].wordCues[]",
+            "window": "Original wordCues absolute values, when supplied",
+            "reading": "Measured source evidence, not interpolated character timing"
+          },
+          {
+            "id": "native.chalkboard.inclined-orbit.window",
+            "action_id": "haike.knowledge-explainer-chalkboard.native.chalkboard.inclined-orbit",
+            "anchor": "parameters.segments[].start/end",
+            "window": "Original absolute seconds",
+            "reading": "Original family reading/capacity constraints"
+          },
+          {
+            "id": "native.chalkboard.inclined-orbit.word-events",
+            "action_id": "haike.knowledge-explainer-chalkboard.native.chalkboard.inclined-orbit",
+            "anchor": "parameters.segments[].wordCues[]",
+            "window": "Original wordCues absolute values, when supplied",
+            "reading": "Measured source evidence, not interpolated character timing"
+          },
+          {
+            "id": "native.chalkboard.projection-compare.window",
+            "action_id": "haike.knowledge-explainer-chalkboard.native.chalkboard.projection-compare",
+            "anchor": "parameters.segments[].start/end",
+            "window": "Original absolute seconds",
+            "reading": "Original family reading/capacity constraints"
+          },
+          {
+            "id": "native.chalkboard.projection-compare.word-events",
+            "action_id": "haike.knowledge-explainer-chalkboard.native.chalkboard.projection-compare",
+            "anchor": "parameters.segments[].wordCues[]",
+            "window": "Original wordCues absolute values, when supplied",
+            "reading": "Measured source evidence, not interpolated character timing"
+          },
+          {
+            "id": "native.chalkboard.causal-compare.window",
+            "action_id": "haike.knowledge-explainer-chalkboard.native.chalkboard.causal-compare",
+            "anchor": "parameters.segments[].start/end",
+            "window": "Original absolute seconds",
+            "reading": "Original family reading/capacity constraints"
+          },
+          {
+            "id": "native.chalkboard.causal-compare.word-events",
+            "action_id": "haike.knowledge-explainer-chalkboard.native.chalkboard.causal-compare",
+            "anchor": "parameters.segments[].wordCues[]",
+            "window": "Original wordCues absolute values, when supplied",
+            "reading": "Measured source evidence, not interpolated character timing"
+          },
+          {
+            "id": "native.chalkboard.ray-topology.window",
+            "action_id": "haike.knowledge-explainer-chalkboard.native.chalkboard.ray-topology",
+            "anchor": "parameters.segments[].start/end",
+            "window": "Original absolute seconds",
+            "reading": "Original family reading/capacity constraints"
+          },
+          {
+            "id": "native.chalkboard.ray-topology.word-events",
+            "action_id": "haike.knowledge-explainer-chalkboard.native.chalkboard.ray-topology",
+            "anchor": "parameters.segments[].wordCues[]",
+            "window": "Original wordCues absolute values, when supplied",
+            "reading": "Measured source evidence, not interpolated character timing"
+          },
+          {
+            "id": "native.chalkboard.condition-proof.window",
+            "action_id": "haike.knowledge-explainer-chalkboard.native.chalkboard.condition-proof",
+            "anchor": "parameters.segments[].start/end",
+            "window": "Original absolute seconds",
+            "reading": "Original family reading/capacity constraints"
+          },
+          {
+            "id": "native.chalkboard.condition-proof.word-events",
+            "action_id": "haike.knowledge-explainer-chalkboard.native.chalkboard.condition-proof",
+            "anchor": "parameters.segments[].wordCues[]",
+            "window": "Original wordCues absolute values, when supplied",
+            "reading": "Measured source evidence, not interpolated character timing"
+          }
+        ],
+        "retiming": "Only native published cues/wordCues or project cueTimes/shotPlan; this bridge never derives semantic timestamps or redistributes internal events."
+      },
+      "capabilities": {
+        "reference_fidelity": "Original package/project renderer and original inputs retained; wrapper does not rewrite motion/layout. New inputs need existing preview gates.",
+        "replacement": "Only fields declared by the selected exact workflow; native and project inputs remain separate.",
+        "semantic_retiming": "No automatic rewrite. Supply real full-audio sentence/word evidence and all required internal cues; current renderer retains capacity/order/phase gates.",
+        "hd": "Existing native/project profiles only; no new HD export verified by this sidecar.",
+        "audio": "Original full narration + independent music/source receipts required for production; no new listening claim.",
+        "native_production": false,
+        "distribution": "Public metadata/adapters only. Personal .motion, envelopes, restricted fonts and private media excluded.",
+        "default_workflow": "native",
+        "execution_by_route": {
+          "native": {
+            "execution": "inspect_only",
+            "category": "direct",
+            "output_profiles": [
+              "native"
+            ]
+          }
+        },
+        "default_presenter": "none",
+        "original_native_production": true,
+        "private_personal_package_required": true,
+        "redistribution": "adapter source only; original template core excluded; independent public closure remains separate candidate"
+      },
+      "validation": {
+        "structural": {
+          "status": "pass",
+          "method": "Exact two-package support, eight targeted adapter tests including native parameter-relative evidence resolution, real B6 schema/bindings/freeze",
+          "scope": "完整声音/同源真实字幕/原包及helper精确SHA",
+          "evidence": "Haike_video/tests/test_studio_imported_native_knowledge.py"
+        },
+        "visual": {
+          "status": "pending",
+          "method": "Original declared gallery actual viewing plus new actual native previews/full encoding",
+          "scope": "原生材质、字体、内部动作、论证对应分项",
+          "evidence": "each original native queue job"
+        },
+        "audio": {
+          "status": "pending",
+          "method": "Full decoding/audio metrics/listening separately",
+          "scope": "原声音主钟，不拉伸、不用参考测试音代替",
+          "evidence": "each original native queue job"
+        }
+      },
+      "reference_version": "2.7.2"
+    }
+  ]
+}

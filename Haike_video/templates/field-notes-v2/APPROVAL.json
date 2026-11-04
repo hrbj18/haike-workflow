@@ -1,0 +1,10 @@
+{
+  "schema": "haike.motion-user-review/1",
+  "templateId": "field-notes-v2-candidate",
+  "version": "2.0.0-candidate.1",
+  "date": "2026-11-03",
+  "source": "本聊天用户反馈",
+  "quote": "这个效果是可以的，规则已经更新到最新的md规则里了吗",
+  "status": "pass",
+  "scope": "当前24秒低清静音模板效果获认可；不扩展为正式有声、高清、生产、平台或异机验收；未要求替换原正式模板4"
+}

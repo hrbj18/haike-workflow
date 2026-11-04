@@ -1,0 +1,3617 @@
+{
+  "schema": "haike.motion-catalogue/1",
+  "revision": "2026-11-03.1",
+  "counting": "unique origin-qualified component/action IDs; presets/backgrounds/SFX/grammar references not added",
+  "counts": {
+    "snapcn": 53,
+    "talkcraft": 108,
+    "remocn": 3,
+    "haike": 4
+  },
+  "total": 168,
+  "entries": [
+    {
+      "id": "snapcn:answer-highlight",
+      "origin": "snapcn",
+      "name": "回答重点标记",
+      "category": "AI演示",
+      "purpose": "先显示回答，再圈定一句话和关键词。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/answer-highlight/index.tsx",
+      "source_sha256": "699cf7994e7c41c3b4c6a2c9b0448fb0e5c47e23447272b911f70146ebf47afd",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:agent-steps",
+      "origin": "snapcn",
+      "name": "任务步骤推进",
+      "category": "AI演示",
+      "purpose": "依次展示检索、理解素材、编排和完成状态。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/agent-steps/index.tsx",
+      "source_sha256": "78e85730c5f65d267b26262e964f51e68396f984cd784b20963bde2e8402a2e6",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:announce-title",
+      "origin": "snapcn",
+      "name": "发布标题舞台",
+      "category": "开场场景",
+      "purpose": "标志、巨字标题与收尾光效组成完整开场。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/announce-title/index.tsx",
+      "source_sha256": "3467c690d9e075b99192dea6ad7ca5cd6b41351b9e1e4158ae820710dbe286ce",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:answer-stream",
+      "origin": "snapcn",
+      "name": "AI回答逐字输出",
+      "category": "AI演示",
+      "purpose": "模拟提问后回答逐渐出现的过程。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/answer-stream/index.tsx",
+      "source_sha256": "31e52cf1c35135171ccfe2cf24183ff20110ea55a6818d1440717f8fe9914628",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:text-reveal",
+      "origin": "snapcn",
+      "name": "文字聚合入场",
+      "category": "文字标题",
+      "purpose": "文字从分散状态移动并聚合成标题。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/text-reveal/index.tsx",
+      "source_sha256": "8b4984e9a54e9b38e640414f449b0002ba8478eb2e5898479526b7449e96e0d7",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:text-highlight",
+      "origin": "snapcn",
+      "name": "重点词高亮替换",
+      "category": "文字标题",
+      "purpose": "突出关键词，再替换成新的重点。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/text-highlight/index.tsx",
+      "source_sha256": "b232c18e8b0342f0d549e59e4dea3a985745a88dd85231926aeabb3e1b7515cc",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:text-rewrite",
+      "origin": "snapcn",
+      "name": "标题补写",
+      "category": "文字标题",
+      "purpose": "在已有标题后补写新的文字。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/text-rewrite/index.tsx",
+      "source_sha256": "1da9248ef95ff25e60d0d14c1b1a432cb1d131bcd5537e6aac8258ac452a9d10",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:text-select",
+      "origin": "snapcn",
+      "name": "文字选择标记",
+      "category": "文字标题",
+      "purpose": "模拟选择文字，形成清楚的重点强调。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/text-select/index.tsx",
+      "source_sha256": "2c448e032119b5c21c282c475321726defb5a453f7bdc0a373abc298582bbe1f",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:text-swap",
+      "origin": "snapcn",
+      "name": "前后文字切换",
+      "category": "文字标题",
+      "purpose": "适合展示改变前与改变后的表达。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/text-swap/index.tsx",
+      "source_sha256": "955a2f705bb406f4c53352ed710599313da1df94bad8c59699472826a8a568f7",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:text-swell",
+      "origin": "snapcn",
+      "name": "文字弹性放大",
+      "category": "文字标题",
+      "purpose": "短句放大、回弹后落定。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/text-swell/index.tsx",
+      "source_sha256": "68161d3803883fc94708c799e2ba91b617e7113f41d0cbe22e9dc6d5aabd3fb4",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:text-build",
+      "origin": "snapcn",
+      "name": "短句逐段搭建",
+      "category": "文字标题",
+      "purpose": "多个短词依次出现，组成一句话。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/text-build/index.tsx",
+      "source_sha256": "0efdea0b262152d5b61bd52bd62d3596ccb630cd37784f2c305efd5d10591088",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:word-flip",
+      "origin": "snapcn",
+      "name": "关键词翻转",
+      "category": "文字标题",
+      "purpose": "保持句子主体，循环翻转中间的关键词。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/word-flip/index.tsx",
+      "source_sha256": "f1f5aa877860e911c16e93520b7cbd3af933405f3c61a8e2c5ecf08033cc2837",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:word-captions",
+      "origin": "snapcn",
+      "name": "逐词字幕",
+      "category": "字幕",
+      "purpose": "一组词按时间依次出现；此处使用示意时钟。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/word-captions/index.tsx",
+      "source_sha256": "924463100e7f45ce9a8493470432eb6a4f703b889d95f5789a1c8611494445b1",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:karaoke-captions",
+      "origin": "snapcn",
+      "name": "逐词高亮字幕",
+      "category": "字幕",
+      "purpose": "字幕保持可读，当前词逐步高亮；此处使用示意时钟。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/karaoke-captions/index.tsx",
+      "source_sha256": "22dd7ae660760ac247f2643e52fc441a05aca37ffedae7d76723c54ff50fc14c",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:logo-drift",
+      "origin": "snapcn",
+      "name": "标志方块漂移",
+      "category": "品牌标志",
+      "purpose": "多张标志卡片漂移并拉开空间。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/logo-drift/index.tsx",
+      "source_sha256": "e28e5b412ed89e6f006fb4c3b155b78b3bb94c289a287c49d6ea88d8b478f9ad",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:logo-assemble",
+      "origin": "snapcn",
+      "name": "图片环绕聚标",
+      "category": "品牌标志",
+      "purpose": "本地图片组成环形，最后聚合为品牌。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/logo-assemble/index.tsx",
+      "source_sha256": "294244940cade152d1e89b12426077541b48d12954a341a0a027141a49065e86",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:logo-flicker",
+      "origin": "snapcn",
+      "name": "实拍闪切出标",
+      "category": "品牌标志",
+      "purpose": "本地照片快速闪切，最后出现品牌标志。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/logo-flicker/index.tsx",
+      "source_sha256": "2fd88a55cb96446852d5dd194ac3d3bfeb7b086e27ae88e0a5f3ab936bef963e",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:block-wordmark",
+      "origin": "snapcn",
+      "name": "积木文字标志",
+      "category": "品牌标志",
+      "purpose": "彩色块拼合成文字标志。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/block-wordmark/index.tsx",
+      "source_sha256": "cc44dedf6b563a118667f0625d570c8242171eb32934ad0b7a036b60ac7830d0",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:phone-frame",
+      "origin": "snapcn",
+      "name": "手机运镜展示",
+      "category": "设备素材",
+      "purpose": "本地实拍放进手机，展示倾斜、推进与拉回。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/phone-frame/index.tsx",
+      "source_sha256": "f1b1ec6a62d52aeb7281fe5de6617235b0125639bc1c6ba9f8c6e21bd9307f9e",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:laptop-frame",
+      "origin": "snapcn",
+      "name": "电脑屏幕展示",
+      "category": "设备素材",
+      "purpose": "本地素材进入笔记本屏幕，配合设备运镜。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/laptop-frame/index.tsx",
+      "source_sha256": "4d6011bc92afb86c89a07249da95ecee1eee01b77767c68ec433b5e0c3f155f7",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:terminal-simulator",
+      "origin": "snapcn",
+      "name": "终端操作演示",
+      "category": "AI演示",
+      "purpose": "模拟命令输入和处理结果，全部内容为示意。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/terminal-simulator/index.tsx",
+      "source_sha256": "a1535fe316d5e26186c459b50f4259e41d895ae2213ccc8bb27fbd94d45f484c",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:screen-recording",
+      "origin": "snapcn",
+      "name": "画面镜头推进",
+      "category": "设备素材",
+      "purpose": "对本地画面做有节奏的取景与推进。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/screen-recording/index.tsx",
+      "source_sha256": "ba941cd484c9cc2613fab97db47f408d7be3dba92d3166ff1b34554ce6373eea",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:count-grid",
+      "origin": "snapcn",
+      "name": "数字阵列递增",
+      "category": "数据名单",
+      "purpose": "数字及卡片阵列快速增长；数值仅作效果示意。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/count-grid/index.tsx",
+      "source_sha256": "8ceccd2899fa4429bccbc243f6a04063d75fcb1ee5600e4575bf133415b06f8a",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:roster-grant",
+      "origin": "snapcn",
+      "name": "名单卡片展开",
+      "category": "数据名单",
+      "purpose": "多人名单与角色卡片组成动态阵列。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/roster-grant/index.tsx",
+      "source_sha256": "e6f1e05fffef24c7a536e68bc9579aee65e8be39bf461993f27d985a7e0906e5",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:wordmark-cut",
+      "origin": "snapcn",
+      "name": "文字标志亮起",
+      "category": "品牌标志",
+      "purpose": "文字和渐变圆点依次出现并落定。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/wordmark-cut/index.tsx",
+      "source_sha256": "17e533480a75a190081a805cc1264bec709d9dcbdd28a9f77b590c085cbbc106",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:cursor-track",
+      "origin": "snapcn",
+      "name": "光标移动点击",
+      "category": "操作转场",
+      "purpose": "在本地画面上演示光标移动与点击。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/cursor-track/index.tsx",
+      "source_sha256": "7ecd00b60c930ef897c77c6a11f7d9363bf36fd747d75cae6a7144c29970ccfa",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:pulsing-border",
+      "origin": "snapcn",
+      "name": "发光边框",
+      "category": "操作转场",
+      "purpose": "在本地实拍周围叠加随时钟变化的光效边框。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/pulsing-border/index.tsx",
+      "source_sha256": "3f6d810161e97ccfb446fef78036a311be0559806191fc3e351f0977e9613a2f",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:follower-rush",
+      "origin": "snapcn",
+      "name": "人物卡片涌入",
+      "category": "数据名单",
+      "purpose": "人物头像和名字逐渐涌入，适合展示参与者。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/follower-rush/index.tsx",
+      "source_sha256": "e18005e3fd524e7809d7dcfe10706f674c64213337304737c93f95629efd6143",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:prompt-send",
+      "origin": "snapcn",
+      "name": "输入内容并发送",
+      "category": "AI演示",
+      "purpose": "中文提示内容输入后，移动到发送动作。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/prompt-send/index.tsx",
+      "source_sha256": "6884020104076009c7bb9b232657098e77758dfcb3e3fcdbf340414aeae03e7e",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:prompt-zoom",
+      "origin": "snapcn",
+      "name": "提示框镜头推进",
+      "category": "AI演示",
+      "purpose": "镜头聚焦输入框，演示中文提问。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/prompt-zoom/index.tsx",
+      "source_sha256": "df7f655c3284f2028013579dcca71ec9330fbea30ac91a44f60ce3468ecb5fbb",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:punch-lines",
+      "origin": "snapcn",
+      "name": "短句连续冲击",
+      "category": "文字标题",
+      "purpose": "短句按不同大小和入场方式连续切换。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/punch-lines/index.tsx",
+      "source_sha256": "8b77a976e5291b59d0b61e55a020f486b692d5e1d0d982bf65a1a409b17269ab",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:orbit-gallery",
+      "origin": "snapcn",
+      "name": "照片环绕长廊",
+      "category": "图片场景",
+      "purpose": "本地图片沿螺旋路径流动，中央保留标题。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/orbit-gallery/index.tsx",
+      "source_sha256": "979b83024d10518ddd3e009675dfd4208bd80ebbe56ea584970f8a10d2a749d0",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:hero-launch",
+      "origin": "snapcn",
+      "name": "双画面发布",
+      "category": "开场场景",
+      "purpose": "两路本地实拍卡片展开，最后给出主题。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/hero-launch/index.tsx",
+      "source_sha256": "3cb108ccbfa23f6c8a9998635b31cc3afe99a92cdb80880eacc42cd733c8a336",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:moodboard-reveal",
+      "origin": "snapcn",
+      "name": "照片拼贴展开",
+      "category": "图片场景",
+      "purpose": "本地图片在文字之间出现，再展开成拼贴。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/moodboard-reveal/index.tsx",
+      "source_sha256": "696053fd5c4fc19d68ffd44b666fd3a27e3ef03ecdfeb0e2416b20346b3b6cfe",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:reel-collage",
+      "origin": "snapcn",
+      "name": "实拍快切拼贴",
+      "category": "图片场景",
+      "purpose": "本地素材先快切，再散开成多画面拼贴。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/reel-collage/index.tsx",
+      "source_sha256": "0b1e0c28404aa4bf3b5ed25610dc0634a73291aae8a3aa85bf8a3575739c107e",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:reel-wall",
+      "origin": "snapcn",
+      "name": "立体视频墙",
+      "category": "设备素材",
+      "purpose": "多路本地实拍组成弧形视频墙。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/reel-wall/index.tsx",
+      "source_sha256": "002be02ce2c826c95e49e890be5b2835bc2590b5de6b908a61dbfcbd73f0fb81",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:phone-stack",
+      "origin": "snapcn",
+      "name": "多手机依次展开",
+      "category": "设备素材",
+      "purpose": "五个手机屏幕依次进入，展示不同本地素材。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/phone-stack/index.tsx",
+      "source_sha256": "ca0b19b84ebd06bc4960951a703222b034b37db73374efaeeee382df15bfff65",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:portal-intro",
+      "origin": "snapcn",
+      "name": "穿越式片头",
+      "category": "开场场景",
+      "purpose": "标题和品牌沿纵深方向展开。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/portal-intro/index.tsx",
+      "source_sha256": "75067ffeb0761f13e8aafc1348bd4e87706e8bb7ea1aecdf1900000dfd4700c2",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:dot-bloom",
+      "origin": "snapcn",
+      "name": "圆点扩散转场",
+      "category": "操作转场",
+      "purpose": "圆点扩散覆盖画面，适合连接两个镜头。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/dot-bloom/index.tsx",
+      "source_sha256": "d01ae53c91160ccc8c78d887ffd73c5e7bf2218997b9b17fa89a154efa338950",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:search-typing",
+      "origin": "snapcn",
+      "name": "搜索框输入",
+      "category": "AI演示",
+      "purpose": "模拟用户在搜索框里逐字输入中文。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/search-typing/index.tsx",
+      "source_sha256": "ac31757b61f6d590d7319fc34a101a8e7ef4293b6315a6e8b0b94cdcbad3e015",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:status-cycle",
+      "origin": "snapcn",
+      "name": "状态标签切换",
+      "category": "AI演示",
+      "purpose": "多个状态和标签依次切换。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/status-cycle/index.tsx",
+      "source_sha256": "d69e68be1e2c8c5ee32c6633f7d8b0d4a2a54a8ff1eaa472d091e32300eb2d74",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:type-morph",
+      "origin": "snapcn",
+      "name": "打字与文字变形",
+      "category": "文字标题",
+      "purpose": "输入短句、突出尾词，再把文字变成下一句。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/type-morph/index.tsx",
+      "source_sha256": "f984a78b128159d7a583697ac536bf4ca00e022a5e41bc4face11370756b769a",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:orb-swarm",
+      "origin": "snapcn",
+      "name": "玻璃球群编舞",
+      "category": "开场场景",
+      "purpose": "玻璃球分裂、聚集和环绕，配合多段短句。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/orb-swarm/index.tsx",
+      "source_sha256": "767d9aba2cfa1b588501c267cbd8d7b1ac02e01915537fde67dc18529b0e5c9b",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:word-gather",
+      "origin": "snapcn",
+      "name": "文字汇聚",
+      "category": "文字标题",
+      "purpose": "分散的词语汇聚成一句话。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/word-gather/index.tsx",
+      "source_sha256": "36c1c00af212c8674b3eb29b0bbc72c075031a557f36e8fa50f23d5125610f48",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:word-wheel",
+      "origin": "snapcn",
+      "name": "关键词滚轮",
+      "category": "文字标题",
+      "purpose": "多个词语围绕滚轮依次转动。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/word-wheel/index.tsx",
+      "source_sha256": "e41bdb78943078541edf495d858fbccf2b2e48a6f54d5d541ded96a79ecb1d4a",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:check-cycle",
+      "origin": "snapcn",
+      "name": "勾选词条切换",
+      "category": "文字标题",
+      "purpose": "关键词切换并配合勾选确认。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/check-cycle/index.tsx",
+      "source_sha256": "ff66108e3386125996e36676f5579cddc24c075cba5cfa4851e2615aa2310907",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:font-shuffle",
+      "origin": "snapcn",
+      "name": "字体连续变换",
+      "category": "文字标题",
+      "purpose": "同一短句切换多种字体；保留少量英文以看清字形差异。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/font-shuffle/index.tsx",
+      "source_sha256": "07ef5414b6b6b9a0fb6ade13d0390928155118f413689ecd4f90a0940702ed22",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:button-press",
+      "origin": "snapcn",
+      "name": "按钮点击状态",
+      "category": "操作转场",
+      "purpose": "按钮被点击后从进行中切换到完成。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/button-press/index.tsx",
+      "source_sha256": "aedf6a21a45f298a9d5fcd828cdbfc21734f41376efe50b1615d95fe1a8aac09",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:click-type",
+      "origin": "snapcn",
+      "name": "点击后输入",
+      "category": "AI演示",
+      "purpose": "光标进入输入框，中文需求逐字出现。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/click-type/index.tsx",
+      "source_sha256": "84095b6e04b660eb0b35e1561ac532f4beb7e81379459f066656e4d356b4aaad",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:capture-reveal",
+      "origin": "snapcn",
+      "name": "截图收起出标题",
+      "category": "设备素材",
+      "purpose": "本地画面模拟截图完成后缩小，露出标题。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/capture-reveal/index.tsx",
+      "source_sha256": "0a60de6ec2a92269428db1b93eda1635af19153e2476450f5fb12476fabcb1da",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:channel-thread",
+      "origin": "snapcn",
+      "name": "群聊消息出现",
+      "category": "AI演示",
+      "purpose": "用本地头像演示多条中文消息依次出现。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/channel-thread/index.tsx",
+      "source_sha256": "4238a14120ef32b1e8ed763ded344ca4290a6f9f64b88a5c9c304ad34f4aa7b2",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:logo-collapse",
+      "origin": "snapcn",
+      "name": "照片堆叠收标",
+      "category": "品牌标志",
+      "purpose": "本地照片逐张缩小快切，最后收成品牌标志。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/logo-collapse/index.tsx",
+      "source_sha256": "53d357752fef6b8768c13f073071f7cabbfb5a5292cca11b33662721e4705bf2",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "snapcn:card-rail",
+      "origin": "snapcn",
+      "name": "立体素材卡片滑轨",
+      "category": "图片场景",
+      "purpose": "本地照片卡片沿倾斜轨道甩动并减速停留。",
+      "source": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/card-rail/index.tsx",
+      "source_sha256": "dbd98365f62affcaf2aca5df51097d2a22d094461fd9e6739a512a9cf6483fd9",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing-gallery-scope; new content/layout needs checking"
+    },
+    {
+      "id": "talkcraft:alt-block-lines",
+      "origin": "talkcraft",
+      "name": "双色块对句",
+      "category": "字幕花字",
+      "purpose": "口播里的两句对照——\"先做减法 / 再做加法\"、\"不是 A / 而是 B\"、\"以前 X / 现在 Y\"；方法论型、有编辑气质的知识区口播；也可当双行小标题",
+      "input_kind": "文, 人(可选)",
+      "semantics": "对比, 论点, 列举",
+      "source": "talkcraft://template/cards/alt-block-lines.tsx",
+      "source_sha256": "9676728d2d7176abf7b3e214adec83a30ddb31ec78e962ee665355d291933265",
+      "reference": "talkcraft://references/cards/alt-block-lines.md",
+      "reference_sha256": "accf022d54183b0aa1f22b9f7a453faba543affcb3b8ac0a009fc695b96515b1",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 91
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:bar-chart-growth",
+      "origin": "talkcraft",
+      "name": "柱状增长",
+      "category": "数据信息图",
+      "purpose": "口播讲一个连续区间的增长/下滑趋势（\"半年翻了一倍\"、\"从 1 月到 7 月一路涨\"）；需要\"整体形状\"而不是\"逐项对比\"的数据段；节奏偏快的口播（整组 1.0s 内长完，跟得上语速）",
+      "input_kind": "文, 人(可选)",
+      "semantics": "数据",
+      "source": "talkcraft://template/cards/bar-chart-growth.tsx",
+      "source_sha256": "3c9ca039d3f7eea3327028e633c5c80c4d2c919b1f062c584707a073b132df4f",
+      "reference": "talkcraft://references/cards/bar-chart-growth.md",
+      "reference_sha256": "2e8b31c4bc6ebcc9a4a025794c4b6f3e9701b0acac738e9e5162fa478c61fe8d",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 110
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:bed-echo-blur",
+      "origin": "talkcraft",
+      "name": "同源模糊底床",
+      "category": "素材呈现",
+      "purpose": "竖屏素材放横屏不留黑边——竖拍实拍 / 竖屏录屏 / 竖版采访与网友投稿的口播片段 / 竖图（海报、长截图局部；tsx 直出仅收视频，静图需换 `<Img>`）；只有一条可用素材的镜头；中性、克制的调性",
+      "input_kind": "V, 人(可选)",
+      "semantics": "例证, 引用",
+      "source": "talkcraft://template/cards/bed-echo-blur.tsx",
+      "source_sha256": "bdae9cbb330d3870ce39cb34db429eac7db85d7e3abdb0731df99260a137aa5a",
+      "reference": "talkcraft://references/cards/bed-echo-blur.md",
+      "reference_sha256": "3aa6f8dd4cc26a4f8a4c7dc98cd23ddf37bbee4e50a808a74fe96de98271a13b",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 243
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:behind-text-title",
+      "origin": "talkcraft",
+      "name": "人后大字视差",
+      "category": "人物互动",
+      "purpose": "开场题眼、章节大标题、结尾点题；vlog 化 / 电影感调性的真人出镜口播（人物层需抠像，无出镜场景不适用）",
+      "input_kind": "人(必需), 文",
+      "semantics": "钩子, 标题",
+      "source": "talkcraft://template/cards/behind-text-title.tsx",
+      "source_sha256": "dedbcae9399eda679507e3f5451bb32df702bad44a92aa2b3ded66dc84e44d87",
+      "reference": "talkcraft://references/cards/behind-text-title.md",
+      "reference_sha256": "0e54e0046f56130f31aceef8f9afbde62b95b72cdb713697b97196d8215b3fe5",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 95
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:black-slam-transition",
+      "origin": "talkcraft",
+      "name": "黑震切转场",
+      "category": "转场结构",
+      "purpose": "全片最大的那一次反转/揭示，**一部片只许用一次**；前一句是悬念或结论前的停顿，后一句是答案",
+      "input_kind": "场",
+      "semantics": "转场, 转折",
+      "source": "talkcraft://template/cards/black-slam-transition.tsx",
+      "source_sha256": "35e06a31af863fe9edbfa4f002660dca2289cbd13419758f04a4f2549e90d6b3",
+      "reference": "talkcraft://references/cards/black-slam-transition.md",
+      "reference_sha256": "8908cc9359d6ea520b6d72dac5692501b67a26f459ef01165bd036dc1959cc6c",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 82
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:callout-line-label",
+      "origin": "talkcraft",
+      "name": "标注引出线",
+      "category": "强调标注",
+      "purpose": "口播念到\"这里/这个部位/这两处\"时，在截图或产品图上指哪看哪；评测、拆解、地图解说类调性，冷静专业不抢戏",
+      "input_kind": "图, 文",
+      "semantics": "强调",
+      "source": "talkcraft://template/cards/callout-line-label.tsx",
+      "source_sha256": "58d29fcd73a8f41ae13e9cad9a281b50d817c57b2fe0b82d788e8f0e6175a314",
+      "reference": "talkcraft://references/cards/callout-line-label.md",
+      "reference_sha256": "ee858ec20a602e8fc58c1f9d4556ee06eebedb1b823e5637650884ea52426b62",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 148
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:caret-wipe-transition",
+      "origin": "talkcraft",
+      "name": "光标擦除转场",
+      "category": "转场结构",
+      "purpose": "讲代码/编辑器/文档/AI 生成内容的镜头边界——\"改完了\"\"重写这一段\"\"换个版本\"；边界本身要有语义的时刻；不适合真人出镜之间的切换（光标隐喻与人像无关）",
+      "input_kind": "场",
+      "semantics": "转场",
+      "source": "talkcraft://template/cards/caret-wipe-transition.tsx",
+      "source_sha256": "40be04725ff8381fed5b952345a45873ae617ff274c0adfdc589fc5ea69dad3f",
+      "reference": "talkcraft://references/cards/caret-wipe-transition.md",
+      "reference_sha256": "c89e41e030a5b41765ef683b10bbd9a688446ccf9de500d3685147ef560c1392",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 103
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:chapter-progress-list",
+      "origin": "talkcraft",
+      "name": "章节进度",
+      "category": "转场结构",
+      "purpose": "长口播的分段处——\"接下来第二部分\"、\"我们先说第一件事\"；开场先给全片目录；多集系列片的\"本集进度\"；需要观众知道\"讲到哪了、还剩几段\"的时刻。不适合只有两段的短口播（两条列表撑不起一次转场）",
+      "input_kind": "文, 人(可选)",
+      "semantics": "章节",
+      "source": "talkcraft://template/cards/chapter-progress-list.tsx",
+      "source_sha256": "16c5457e98671023f0a0dfc361caff0f8a9619118665fb30aef93b3b974a4560",
+      "reference": "talkcraft://references/cards/chapter-progress-list.md",
+      "reference_sha256": "ae49b89e3dcb392fc87489621f206d2546b41dcb9de3ffd271201cca12a5016a",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 111
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:chapter-title-card",
+      "origin": "talkcraft",
+      "name": "章节标题卡",
+      "category": "转场结构",
+      "purpose": "长口播（5 分钟以上）的段落切换点；财经解读、事件复盘、纪录片式叙事等需要\"翻页感\"的调性",
+      "input_kind": "文, 人(可选)",
+      "semantics": "章节, 转场",
+      "source": "talkcraft://template/cards/chapter-title-card.tsx",
+      "source_sha256": "f30ac52ebb7095b61aa9515de4eac911edd658e5244a0e6209f45c9246662c50",
+      "reference": "talkcraft://references/cards/chapter-title-card.md",
+      "reference_sha256": "b4d19e62c2492d293df9805af75f3a7d6f5b590b3359ccfa8c8666fae2553fcd",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 201
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:chart-grow",
+      "origin": "talkcraft",
+      "name": "图表生长",
+      "category": "数据信息图",
+      "purpose": "口播里念数据对比的段落（\"营收翻了七倍\"）；财经/科普/评测类横屏视频的标配，配合逐项列举的语速",
+      "input_kind": "文",
+      "semantics": "数据, 对比",
+      "source": "talkcraft://template/cards/chart-grow.tsx",
+      "source_sha256": "3026616f4d18dfd4dfe35e972fb357f49f1d04f7ed4121591fb7e276c6c9c7f8",
+      "reference": "talkcraft://references/cards/chart-grow.md",
+      "reference_sha256": "fed8966d0eddb0c0a9df7e7cb0568a3f8cadac4dd8013645be7ab56872a43dcb",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 68
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:chat-gpt",
+      "origin": "talkcraft",
+      "name": "ChatGPT 对话框",
+      "category": "素材呈现",
+      "purpose": "口播讲 AI 话题时把「我是这么问的、它是这么答的」演成现在进行时——ChatGPT 相关的提示词技巧、AI 工具测评、模型能力讨论；不适合需要展示长对话历史的场景（自演只演一问一答）",
+      "input_kind": "界, 人(可选)",
+      "semantics": "过程演示, 例证",
+      "source": "talkcraft://template/cards/chat-gpt.tsx",
+      "source_sha256": "019843122d6b61447c72e635d90e8fa0138eab17c7596341d45caab4917ee862",
+      "reference": "talkcraft://references/cards/chat-gpt.md",
+      "reference_sha256": "8d74d8dc775934976b95d78986660d0dabc652d28e9e9c85911553e09289ba09",
+      "native": {},
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:chat-message-flow",
+      "origin": "talkcraft",
+      "name": "聊天记录自演",
+      "category": "素材呈现",
+      "purpose": "口播甩聊天记录当证据的时刻——\"客户是这么说的\"\"团队当时的讨论\"\"我问了它，它这么回\"；产品复盘、职场沟通、AI 对话演示、争议还原；不适合需要展示大量历史消息的场景（自演只演 2~4 条）",
+      "input_kind": "界, 人(可选)",
+      "semantics": "例证, 引用, 过程演示",
+      "source": "talkcraft://template/cards/chat-message-flow.tsx",
+      "source_sha256": "c841669eefc46253286cc37a3545db7e5eed45dbfb22f9e82c411fda18c6a0df",
+      "reference": "talkcraft://references/cards/chat-message-flow.md",
+      "reference_sha256": "387513d4e6b704400b947a000df32df805481a0e376dad2336e6f2a0fd697bad",
+      "native": {},
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:chevron-lower-third",
+      "origin": "talkcraft",
+      "name": "动态人名条",
+      "category": "人物互动",
+      "purpose": "真人出镜嘉宾首次开口的 3~5 秒；也用于连线、自我介绍、引用他人观点时标注身份；比 lower-third-nameplate 多一档\"节目感/动态感\"（vlog、播客、体育/科技节目）；正式访谈与纪录片建议用那张更克制的",
+      "input_kind": "人(可选), 文",
+      "semantics": "自我介绍, 引用, 介绍他人",
+      "source": "talkcraft://template/cards/chevron-lower-third.tsx",
+      "source_sha256": "6eb05135628410f79495d9134f50a5a6e5600ba5b6ebd6a8b6d9c9dece8a9535",
+      "reference": "talkcraft://references/cards/chevron-lower-third.md",
+      "reference_sha256": "2d0b99db0478fc8603cc4643a28f873399aa3be259bdf61fb43131452f42c43e",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 108
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:chip-grid-single-select",
+      "origin": "talkcraft",
+      "name": "五选一反黑",
+      "category": "数据信息图",
+      "purpose": "口播里\"N 个方案 / 套餐 / 工具我选哪个 → 选了它之后会怎样\"的决策 + 因果镜头；投票 / 调研结果揭晓；排除法收到最后一个。输入是纯文字，人物不参与",
+      "input_kind": "文",
+      "semantics": "对比, 数据, 选择",
+      "source": "talkcraft://template/cards/chip-grid-single-select.tsx",
+      "source_sha256": "432460135c0ac2d1007a7824f0f24f675aac7f6c3e17aeac557cc3aa6e403586",
+      "reference": "talkcraft://references/cards/chip-grid-single-select.md",
+      "reference_sha256": "1be380f8c432c7d3de896042988457637dd279cee4a2b60964922edfe4d053a6",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 216
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:claude-code",
+      "origin": "talkcraft",
+      "name": "编码智能体终端",
+      "category": "素材呈现",
+      "purpose": "口播讲 AI 编程——「我让它改了一行，它是这么改的」；AI 编码工具测评/对比、Agent 工作流讲解、开发者向教程与踩坑复盘；不适合非技术受众的软性内容（终端本身会筛掉观众）",
+      "input_kind": "界, 人(可选)",
+      "semantics": "过程演示, 例证",
+      "source": "talkcraft://template/cards/claude-code.tsx",
+      "source_sha256": "b2cfc9ddb2c110164839e3f99ab5843fac0dcece628838c9c77ce0070fd16707",
+      "reference": "talkcraft://references/cards/claude-code.md",
+      "reference_sha256": "f7046baf952540e8ee45cc8d9671eb5b79557ce3c69f6639c7945baaf72c50dd",
+      "native": {},
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:color-slam-beat-card",
+      "origin": "talkcraft",
+      "name": "纯色硬切节拍卡",
+      "category": "转场结构",
+      "purpose": "短口播（60s 内）抛观点/下判断/列条目的每一个重音；快节奏、态度鲜明的调性，AI/科技/带货/观点号常用，长口播里当\"重锤句\"也成立",
+      "input_kind": "场, 文, 人(可选)",
+      "semantics": "金句, 转场",
+      "source": "talkcraft://template/cards/color-slam-beat-card.tsx",
+      "source_sha256": "9e61532bb89bcf3ad1e0f02833d805d7da75ccc1de9057fd4af07e9e76971323",
+      "reference": "talkcraft://references/cards/color-slam-beat-card.md",
+      "reference_sha256": "8802b450cd3b51f190b7139f4bd1647b6be1815bbd9a4ae8b99623e9a207bb82",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 215
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:converging-arrows",
+      "origin": "talkcraft",
+      "name": "双箭头聚焦",
+      "category": "强调标注",
+      "purpose": "口播抛出\"记住这 3 点\"\"关键就在这里\"这种**要观众钉住一个词**的时候；教学、清单、方法论口播；需要比手绘圈更强的指向性（箭头有方向，圈没有）；不适合同屏有多个候选词（双箭头只能夹一个目标）",
+      "input_kind": "文, 人(可选)",
+      "semantics": "强调",
+      "source": "talkcraft://template/cards/converging-arrows.tsx",
+      "source_sha256": "429f963d636c31e9ce9a9aa2ae9cfe2ea11f8cc4999c358a2ef8bd57097aa4ce",
+      "reference": "talkcraft://references/cards/converging-arrows.md",
+      "reference_sha256": "ce6e32f21a1a7f351e5edc867ff671f31bdf95daea7a38ecc326bdb44c76c5f2",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 89
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:corner-bracket-frame",
+      "origin": "talkcraft",
+      "name": "对角角框",
+      "category": "强调标注",
+      "purpose": "一段口播的\"本集只讲这一件事\"式定题——开场立论点、章节小标题、把一句话从口播流里\"框出来\"；克制而有取景感的调性（知识区、行业分析、纪录片式旁白）；不适合需要砸重音的爆点句",
+      "input_kind": "文, 人(可选)",
+      "semantics": "标题",
+      "source": "talkcraft://template/cards/corner-bracket-frame.tsx",
+      "source_sha256": "4c39c67354ce057edb7050891367d0300ab9b4e407e2c107ef67701bb3c6deb0",
+      "reference": "talkcraft://references/cards/corner-bracket-frame.md",
+      "reference_sha256": "50fdef43594cddbac4b3e10ca58eb7ed1940681b162d939b9c236d24b9005b1a",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 94
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:count-badge-title",
+      "origin": "talkcraft",
+      "name": "数字重音标题",
+      "category": "字幕花字",
+      "purpose": "口播开场承诺条数——\"三个方法\"\"五个坑\"\"两件事\"；章节内的分点预告；需要观众记住\"有几条\"的每一次（列表卡之前的那一屏）",
+      "input_kind": "文, 人(可选)",
+      "semantics": "钩子, 数据, 列举, 标题",
+      "source": "talkcraft://template/cards/count-badge-title.tsx",
+      "source_sha256": "ba43d69ea8f2378cccd3aaa9587311928f9faf75a5a4a192294a6b82ccbf0836",
+      "reference": "talkcraft://references/cards/count-badge-title.md",
+      "reference_sha256": "11dc7deef400fbdc9540688563b7f25f39ee93a3e1fd631fdee8f37d570889fc",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 112
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:countdown-arc-scatter",
+      "origin": "talkcraft",
+      "name": "数字弧落标题",
+      "category": "字幕花字",
+      "purpose": "数字本身是悬念的标题——时长承诺（\"5 分钟搭好创作系统\"）、数量揭晓（\"3 个原则\"）、倒计时语义的开场、需要\"仪表盘\"语汇的短镜；数字先从一串候选里被\"扫停\"再落位，比数字直接落更有揭晓感",
+      "input_kind": "文",
+      "semantics": "钩子, 数据",
+      "source": "talkcraft://template/cards/countdown-arc-scatter.tsx",
+      "source_sha256": "33650e5dcf308e0badf6832a2c02a5c3a738e86908ef240e9baf20c74eb85fac",
+      "reference": "talkcraft://references/cards/countdown-arc-scatter.md",
+      "reference_sha256": "737a9c31aede5ac99268f990b1191a72a40b92f3e133c6c8ddaf2e86b413c8ce",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 162
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:crash-zoom-punch",
+      "origin": "talkcraft",
+      "name": "急推特写",
+      "category": "强调标注",
+      "purpose": "口播说\"就是这一行 / 看这里\"时把观众视线一拍按到截图的某一行、某个单元格、某句话上（账单 / 设置 / 条款 / 聊天记录 / 表格）；一支片 ≤2 次。输入是图片（含 B-roll 截帧），人物不参与",
+      "input_kind": "图, 截图",
+      "semantics": "强调, 例证",
+      "source": "talkcraft://template/cards/crash-zoom-punch.tsx",
+      "source_sha256": "3e4bc7d7ad3eb4fcfe52de07a9e2976d90b69dc01de460eab82dae389ff05a69",
+      "reference": "talkcraft://references/cards/crash-zoom-punch.md",
+      "reference_sha256": "a102f5f2383cd04e7cde8c2ccec64fe05dc110b39c2a2e62bf6f2b1932ee1adb",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 144
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:cursor-actor-demo",
+      "origin": "talkcraft",
+      "name": "光标演员演示",
+      "category": "素材呈现",
+      "purpose": "口播演示工具/软件怎么用的段落——\"你就点这里\"\"把图拖进来\"\"这两个开关先打开\"；工具测评、AI 产品讲解、教程类口播的标配呈现方式。输入是**可重建的界面**（活控件），不是静态截图——截图只能当底，要响应的元素得在其上重画",
+      "input_kind": "界, 人(可选)",
+      "semantics": "过程演示, 步骤",
+      "source": "talkcraft://template/cards/cursor-actor-demo.tsx",
+      "source_sha256": "411baf57cd319fe5b72a089fe876501f4b5bef3592ce273a23aaa18587340f2d",
+      "reference": "talkcraft://references/cards/cursor-actor-demo.md",
+      "reference_sha256": "4b98f8d8ef2ef56dabae5dc8bdec686f2f37b2ab87d8b746216acfceb43da55c",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 135
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:cursor-locked-zoom",
+      "origin": "talkcraft",
+      "name": "光标锁定跟拍",
+      "category": "运镜",
+      "purpose": "竖屏/小屏里念一条长命令、长路径、长配置、长代码行——\"你要跑的是这一条\"；tsx 只实现终端打字光标这一种锚点，要跟拍进度点 / 正在被填的表单字段等其他移动目标，按复用指引改锚点函数",
+      "input_kind": "界",
+      "semantics": "过程演示, 步骤",
+      "source": "talkcraft://template/cards/cursor-locked-zoom.tsx",
+      "source_sha256": "0e4a042428cd14457c3de5475b82da27208e24a46cbf4eef4fe73fd74cf7a57d",
+      "reference": "talkcraft://references/cards/cursor-locked-zoom.md",
+      "reference_sha256": "7f3a9819db0b967e6841f1ec04f264029934b1bb3860a2ec219685c417ec84d4",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 192
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:danmu-bubble-praise",
+      "origin": "talkcraft",
+      "name": "弹幕气泡",
+      "category": "人物互动",
+      "purpose": "口播讲到\"评论区都在说\"\"大家反馈最多的就是这点\"时；开场证明这条内容有共识；结尾引导互动前的铺垫；社区感、轻快调性的口播（知识区、测评、生活方式）",
+      "input_kind": "文, 人(可选)",
+      "semantics": "引用, 例证",
+      "source": "talkcraft://template/cards/danmu-bubble-praise.tsx",
+      "source_sha256": "b87a28ce6b1d16b8b4a8591ad7448aff565d7028c52f9af287f1cff0174cd37a",
+      "reference": "talkcraft://references/cards/danmu-bubble-praise.md",
+      "reference_sha256": "e95959c3b67c671e89e30d8857302b6b11f905b694c5e28c3223be920f6e1a3d",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 131
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:doc-park-left-pill-deal",
+      "origin": "talkcraft",
+      "name": "文档驻留发牌",
+      "category": "素材呈现",
+      "purpose": "\"读完这份报告 / 论文 / 长文，我记下三条\"式的要点提炼；评审意见逐条给出（左边是被评的东西）；\"这个页面告诉我三件事\"；文档理解类 AI 话题的结论镜头。输入是一张文档 / 长截图 + 三条结论文案；无人物在场",
+      "input_kind": "截图, 文",
+      "semantics": "引用",
+      "source": "talkcraft://template/cards/doc-park-left-pill-deal.tsx",
+      "source_sha256": "874d90c93efd1a9334970629d0a29f67fdb2f8900135174b2c6a882ec0d7a74b",
+      "reference": "talkcraft://references/cards/doc-park-left-pill-deal.md",
+      "reference_sha256": "e1494c9728e9237748df6e9c23b1b7e9de1a683e4f65ad0788348249c8daebf4",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 222
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:douyin-follow-card",
+      "origin": "talkcraft",
+      "name": "抖音主页关注卡",
+      "category": "人物互动",
+      "purpose": "口播里介绍某个人/账号——嘉宾出场、\"这个人你该关注\"、引用某人观点时给出处、推荐同行/作者；一条视频里同一张卡只出现一次",
+      "input_kind": "界, 图",
+      "semantics": "引用, 介绍他人",
+      "source": "talkcraft://template/cards/douyin-follow-card.tsx",
+      "source_sha256": "f94ef9efca1ab2db43d49ac56c016c5db5a93a3a14fcf48b034283aa038461cb",
+      "reference": "talkcraft://references/cards/douyin-follow-card.md",
+      "reference_sha256": "28df69566ddf1d5febba03c1b5536e19626f32469fe6f1c2238680a367d418ae",
+      "native": {},
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:error-retype",
+      "origin": "talkcraft",
+      "name": "打字改口",
+      "category": "字幕花字",
+      "purpose": "否定式文案（\"靠的不是 X，是 Y\"）、纠正常见误解（\"大家以为是 A，其实是 B\"）、金句反转（先写出错的那半句）、片头 hook 的自我修正；作用于标题 / 主张句层，不作用于底部字幕",
+      "input_kind": "文",
+      "semantics": "转折",
+      "source": "talkcraft://template/cards/error-retype.tsx",
+      "source_sha256": "a1d8f1898808bb37c1978c834b186d0be231370318be99b22ac1b7c6d074bcfc",
+      "reference": "talkcraft://references/cards/error-retype.md",
+      "reference_sha256": "38233dba9bd98daf5fc15f0c4b0f5291c4902cf1180d6e75bdb80ce32f5552a2",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 177
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:evidence-scroll-tour",
+      "origin": "talkcraft",
+      "name": "证据长页慢滚",
+      "category": "素材呈现",
+      "purpose": "口播出示文档/协议/README/搜索结果等长页证据、需要\"我们从头看一遍，重点在这一条\"的时刻；财经拆解、测评对比、事件梳理等冷静举证的调性",
+      "input_kind": "截图, 人(可选)",
+      "semantics": "例证, 引用, 强调",
+      "source": "talkcraft://template/cards/evidence-scroll-tour.tsx",
+      "source_sha256": "b29eac867833599bad85f43798f52cc98f9d1682f167ca8b7c2636d52fda34b2",
+      "reference": "talkcraft://references/cards/evidence-scroll-tour.md",
+      "reference_sha256": "fd52bdc0de5842099f977ec1f7e49c4085bf3a569313529fa4d1f324e0028dab",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 320
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:filmstrip-conveyor",
+      "origin": "talkcraft",
+      "name": "传送带列举 + 减速停靠",
+      "category": "素材呈现",
+      "purpose": "列举 ≥5 项且只有一项要重点说的段落——六种构图、十个 App、一年的作品、盘点 / 回顾 / 片尾作品流；\"其中第 N 个最重要\"就在第 N 格减速",
+      "input_kind": "图",
+      "semantics": "例证, 列举",
+      "source": "talkcraft://template/cards/filmstrip-conveyor.tsx",
+      "source_sha256": "ffc4ff9ae7fe18120f081b32b69268528e245b0b2386a2aa2aa38f9cac2e479d",
+      "reference": "talkcraft://references/cards/filmstrip-conveyor.md",
+      "reference_sha256": "a264ee89dc56955a46c320eab1fdced43e610f185a0684d9692aa6b8f4f1605e",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 250
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:flying-words",
+      "origin": "talkcraft",
+      "name": "关键词隧道",
+      "category": "字幕花字",
+      "purpose": "名词科普片的开场底层（\"这期讲的 22 个概念\"）、片头片尾的\"信息量\"垫底、能力清单的动态背景（前景放人物或标题）、纵深穿越感的转场垫层；深底专用（白底整套失效）；一支片 ≤1 段",
+      "input_kind": "文",
+      "semantics": "氛围, 钩子",
+      "source": "talkcraft://template/cards/flying-words.tsx",
+      "source_sha256": "9b4c7e727b18b78931cc053757132fd4be734a9f5206cc853288182c0de31166",
+      "reference": "talkcraft://references/cards/flying-words.md",
+      "reference_sha256": "971f55ae0d5372693ced7287b29c7dc202ecd7a8d69d52b64fa82fd10c11695a",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 192
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:focus-dim-spotlight",
+      "origin": "talkcraft",
+      "name": "聚焦压暗切换",
+      "category": "强调标注",
+      "purpose": "口播出示表格/清单/代码/多卡版面，逐项讲\"这一行→下一行\"的时刻；也用于整屏退让给一句结论。财经财报拆解、AI 工具演示、评测参数对比等信息密度高、需要\"我说到哪你看哪\"的冷静调性",
+      "input_kind": "截图, 人(可选)",
+      "semantics": "强调, 数据",
+      "source": "talkcraft://template/cards/focus-dim-spotlight.tsx",
+      "source_sha256": "d1d5e488a783639ccbd9078119b4ccba8a809603cdb1f8c63a331da527fd0d09",
+      "reference": "talkcraft://references/cards/focus-dim-spotlight.md",
+      "reference_sha256": "e870589c0f3f2215760c1986783a7824dc4aec9880dadaed1303432392de1760",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 275
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:gallery-wall-dolly",
+      "origin": "talkcraft",
+      "name": "照片墙推轨",
+      "category": "素材呈现",
+      "purpose": "\"接下来三个例子一个一个看\"、作品集 / 案例集巡览、三个方案巡完再拉回比较；三个**平级**的东西（有先后关系的几站用 timeline-photo-strip）；口播逐个讲、讲完还要看全貌的段落",
+      "input_kind": "图",
+      "semantics": "例证, 对比, 列举",
+      "source": "talkcraft://template/cards/gallery-wall-dolly.tsx",
+      "source_sha256": "2b4d214d058d26c10655763e826336e376edd200e03a70b2e427d94f99a7410f",
+      "reference": "talkcraft://references/cards/gallery-wall-dolly.md",
+      "reference_sha256": "ab295c08c4913e27966b501f74e1d56722725c922af0c5bf9008db34e65eb676",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 258
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:glass-code-walk",
+      "origin": "talkcraft",
+      "name": "玻璃代码走读",
+      "category": "素材呈现",
+      "purpose": "口播里带观众读一小段真实代码/配置——技术教程、代码讲解、开源项目介绍、\"这几行就是关键\"的时刻；6~10 行、每行都值得念一句的量",
+      "input_kind": "界",
+      "semantics": "例证, 强调",
+      "source": "talkcraft://template/cards/glass-code-walk.tsx",
+      "source_sha256": "af01ece4a25974caf914475ac5e6b513ea805a9a53f8a91cb929ae827ec5c232",
+      "reference": "talkcraft://references/cards/glass-code-walk.md",
+      "reference_sha256": "b514a9fcb89b34401012f1d91c75a881544a6832dfa8792c0a0e0d4358e4aa4f",
+      "native": {},
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:gooey-morph",
+      "origin": "talkcraft",
+      "name": "图块拼入",
+      "category": "素材呈现",
+      "purpose": "一次性把 3~6 张并列证据摆上来的时刻——\"这几个案例/这四个平台/这几张对比图\"；需要\"它们是一组\"而不是\"一张一张讲\"的语义；组图、九宫格式素材、多平台横排",
+      "input_kind": "图, 人(可选)",
+      "semantics": "例证",
+      "source": "talkcraft://template/cards/gooey-morph.tsx",
+      "source_sha256": "3a573f5da6643f46629a18e2615d64be570cb42360db788a8818f82d42684889",
+      "reference": "talkcraft://references/cards/gooey-morph.md",
+      "reference_sha256": "16df4f875e8c098cbd7956ac7ee0f8a28a1d27341a6428a061d2a923e4a6d670",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 97
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:grid-to-hero",
+      "origin": "talkcraft",
+      "name": "网格收成主角",
+      "category": "素材呈现",
+      "purpose": "\"四个里我们选了这个\"——封面候选 / 四条评论最狠一条 / 四个版本的最终版；任何\"先并列再聚焦\"的选择题，且选项之间要保留对照关系",
+      "input_kind": "图, V",
+      "semantics": "对比, 列举, 选择",
+      "source": "talkcraft://template/cards/grid-to-hero.tsx",
+      "source_sha256": "e9e550223301f791e46e0afc60c5d1ab171fc777c81ca130b56ef2951cf389f4",
+      "reference": "talkcraft://references/cards/grid-to-hero.md",
+      "reference_sha256": "5a4c931995ecc40509a502675f154f12adf4530e1c48d12289a9e8be6deae127",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 232
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:hand-drawn-ellipse",
+      "origin": "talkcraft",
+      "name": "手绘圈重点",
+      "category": "强调标注",
+      "purpose": "口播说\"就是这一点\"\"记住这个词\"这种**指认单个短语**的时候；观点类、方法论、锐评口播；需要比双线更强、比爆点字更克制的强调档；不适合圈整句（圈的语义是\"就这几个字\"，圈一整行读作框选）",
+      "input_kind": "文, 人(可选)",
+      "semantics": "强调",
+      "source": "talkcraft://template/cards/hand-drawn-ellipse.tsx",
+      "source_sha256": "31b3c51a9a2201795e0192ce7d8b5219cf59dbcf3d9134b006106c636721c961",
+      "reference": "talkcraft://references/cards/hand-drawn-ellipse.md",
+      "reference_sha256": "7b51a020a987f25190c3427cab42da0f2c1976ddc33eef6e20ab67a90f345d94",
+      "native": {
+        "width": 3,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 102
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:highlighter-sweep",
+      "origin": "talkcraft",
+      "name": "荧光笔高亮扫过",
+      "category": "强调标注",
+      "purpose": "口播引用报告/文献/新闻里的一句话（引文重排成文字卡，tsx 不贴截图）、念到\"就是这一句\"的时刻；纪录片解说、知识区拆解等冷静讲证据的调性",
+      "input_kind": "文",
+      "semantics": "引用, 强调",
+      "source": "talkcraft://template/cards/highlighter-sweep.tsx",
+      "source_sha256": "f04a519c5c0167b1da4b54b5a7082893e89f10ccf526ea080732cadc769893b6",
+      "reference": "talkcraft://references/cards/highlighter-sweep.md",
+      "reference_sha256": "3911439c459f784c95e9d092921e6b0967cc7aacd72c9e5874ab2aae40e1d800",
+      "native": {
+        "width": 960,
+        "height": 1,
+        "fps": 30,
+        "durationInFrames": 60
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:host-card-glass-board",
+      "origin": "talkcraft",
+      "name": "人物竖卡玻璃台",
+      "category": "人物互动",
+      "purpose": "讲工作流 / 系统 / 步骤（\"文稿 → 配音 → 成片\"）；讲工具链（tile 换 logo）；多步教程（板上 tile 按词锚逐个 pop、人不动）；竖屏口播原片放横屏成片（竖卡刚好 9:16）。\"人一直在、板上换道具\"——同一块板能连讲几个道具而不换镜",
+      "input_kind": "人(必需), 文, 界",
+      "semantics": "步骤",
+      "source": "talkcraft://template/cards/host-card-glass-board.tsx",
+      "source_sha256": "23389c67e5daa18ace4caac08fcaf5645f2ef44fc70a0873bea055655491a22e",
+      "reference": "talkcraft://references/cards/host-card-glass-board.md",
+      "reference_sha256": "c8f90471a568022d320d2506d91e42d905ad58b5e94cbd4e81fb794450c0eb9e",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 210
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:host-shrink-to-chip",
+      "origin": "talkcraft",
+      "name": "人物缩位让台",
+      "category": "人物互动",
+      "purpose": "口播从\"我说给你听\"切到\"我给你看图/数据/截图\"的每一次交接；讲解、财经拆解、教程类需要反复在人与图之间来回的长口播",
+      "input_kind": "人(必需), 文, 图",
+      "semantics": "例证",
+      "source": "talkcraft://template/cards/host-shrink-to-chip.tsx",
+      "source_sha256": "84ca07795d6f7a228a478e7e2345f2d5fecf153fdfa666889cd02b05532a8a49",
+      "reference": "talkcraft://references/cards/host-shrink-to-chip.md",
+      "reference_sha256": "3eee081c3251860fb0e062d45ab8772b5960ab1a1dc0acf0496bef110d6974b7",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 114
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:impact-open-title",
+      "origin": "talkcraft",
+      "name": "冲击开场",
+      "category": "字幕花字",
+      "purpose": "视频最开头的 3 秒钩子（\"三秒抓住重点\"这类承诺句）、大章节的开幕标题；节奏快、态度强的短口播与知识区开场；全片只用 1~2 次",
+      "input_kind": "文, 人(可选)",
+      "semantics": "钩子, 章节, 标题",
+      "source": "talkcraft://template/cards/impact-open-title.tsx",
+      "source_sha256": "127581f5a1cdccfbe9e332d271beb2ccb8168c29196c7a8533b0b968929e0084",
+      "reference": "talkcraft://references/cards/impact-open-title.md",
+      "reference_sha256": "3f52db9b74b9a6b4777a53ba0a877afe725b175dc1c5f83ff70880dfbb9be05d",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 97
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:info-card-assemble",
+      "origin": "talkcraft",
+      "name": "信息卡逐字段自建",
+      "category": "素材呈现",
+      "purpose": "口播介绍\"一本书 / 一个工具 / 一个人 / 一门课\"的信息卡；\"结构化抽取 / 自动填充 / 数据自己长出来\"类 AI 话题的演示。输入是文字 + 一张封面 / 头像图，人物不参与",
+      "input_kind": "图, 文",
+      "semantics": "例证",
+      "source": "talkcraft://template/cards/info-card-assemble.tsx",
+      "source_sha256": "c6fe0ace4d61c6ed9c53a66334230aa0a1ef8ef19d45904f9f03d5f28befeb65",
+      "reference": "talkcraft://references/cards/info-card-assemble.md",
+      "reference_sha256": "99f119b095502cd1943ee3c47bc2507c2edc58e500195f13f6e3e7606bb89bd1",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 216
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:info-term-card",
+      "origin": "talkcraft",
+      "name": "名词解释悬浮卡",
+      "category": "数据信息图",
+      "purpose": "口播里第一次抛出专业名词/黑话时（QE、市盈率、Transformer）；财经、科普、知识区讲解调性，节奏平稳不抢戏",
+      "input_kind": "文, 人(可选)",
+      "semantics": "定义",
+      "source": "talkcraft://template/cards/info-term-card.tsx",
+      "source_sha256": "40bb632b621afca9b27ee2ee653bc1f92cd0006c10a7f9e2452f743e94b391b6",
+      "reference": "talkcraft://references/cards/info-term-card.md",
+      "reference_sha256": "d55ec6db90f46a7b96eaeea3753370663b564d8289e5c3591c1e5eb64240337e",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 197
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:ink-underline",
+      "origin": "talkcraft",
+      "name": "墨迹下划线",
+      "category": "强调标注",
+      "purpose": "口播念到\"重点是这三个字\"的时刻；一句话里给 1~2 个关键词划线（对比式论述尤其合适：先划错的说法、再划对的）；书评/拆解/教学等\"我在替你标注\"的调性",
+      "input_kind": "文, 人(可选)",
+      "semantics": "强调, 对比",
+      "source": "talkcraft://template/cards/ink-underline.tsx",
+      "source_sha256": "e1d692b1fb5560ed64d97f31559650bc10c3f6daacca0e313fdb0769276e19a0",
+      "reference": "talkcraft://references/cards/ink-underline.md",
+      "reference_sha256": "5686392fd1b21d309c7c143eb571606516e3ba6d482b65810997072cc377d802",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 109
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:keyword-pop-highlight",
+      "origin": "talkcraft",
+      "name": "关键词弹出强调",
+      "category": "字幕花字",
+      "purpose": "每段口播的信息峰值（数字、结论、反转词）；真人出镜与无出镜都通用，是口播强调的第一默认动作",
+      "input_kind": "文, 人(可选)",
+      "semantics": "强调, 数据",
+      "source": "talkcraft://template/cards/keyword-pop-highlight.tsx",
+      "source_sha256": "0ff812e4fef3dc1e9b91575063737ac61848eb47e818c4f969a611e3758b9306",
+      "reference": "talkcraft://references/cards/keyword-pop-highlight.md",
+      "reference_sha256": "0a847997a25270383dada2f539f43fa60baac0bb9deee62e3be66d16b882c5de",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 42
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:lead-word-zoom-assemble",
+      "origin": "talkcraft",
+      "name": "首词占满补句",
+      "category": "字幕花字",
+      "purpose": "一句话主张先让主语立住（\"效率 才是唯一的护城河\"）、产品名 / 人名 introducing 字卡、数字先行（\"3 倍 的产出，同样的时间\"）、反转句先亮否定词（\"不是 → 不是不努力，是方向错了\"）；金句 / 转折镜头的文字面，首词 ≤4 字",
+      "input_kind": "文",
+      "semantics": "金句, 转折, 标题",
+      "source": "talkcraft://template/cards/lead-word-zoom-assemble.tsx",
+      "source_sha256": "fc3c59b8a4834f436da9143b7677d1223e5ee85cd1d3dfa752594170b120f84e",
+      "reference": "talkcraft://references/cards/lead-word-zoom-assemble.md",
+      "reference_sha256": "521c246b1e8eefa89b2c1f33237eacb39427f36a58094eaf027386c1ef40d8bb",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 156
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:line-by-line-slide",
+      "origin": "talkcraft",
+      "name": "逐行滑入",
+      "category": "字幕花字",
+      "purpose": "3~4 行并列要点/步骤/清单的整段上屏——\"三件事\"\"两个前提\"\"四步走\"这种口播段落；也用于分行的金句（每行一个短句）；不适合单行文字（退化成普通滑入）与 5 行以上（首行早已淡出，\"一叠\"读不出来）",
+      "input_kind": "文",
+      "semantics": "步骤, 列举",
+      "source": "talkcraft://template/cards/line-by-line-slide.tsx",
+      "source_sha256": "41cf138ce7ba628dc5d83f00b891898dfb2726041e127b6f679d0ffec65c2aa3",
+      "reference": "talkcraft://references/cards/line-by-line-slide.md",
+      "reference_sha256": "ec881dada8f213dfff33c0aa5808565421bd71e140b6a8a66aa3373e14bc7416",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 120
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:line-carry-transition",
+      "origin": "talkcraft",
+      "name": "线条接力转场",
+      "category": "转场结构",
+      "purpose": "章节 A → 章节 B 的接缝（A 的标题下划线变成 B 的画框）；进度条 → 图表坐标轴、一条数据线 → 下一镜卡片边框等有图形亲缘的两镜之间；全片唯一的\"招牌转场位\"（Saul Bass / Catch Me If You Can 片头语法）。作用于前后两镜，B 内容可为图片 / 截图",
+      "input_kind": "场, 图, 文",
+      "semantics": "转场, 章节",
+      "source": "talkcraft://template/cards/line-carry-transition.tsx",
+      "source_sha256": "9e380f85c1f72d220c1b02bf8a88d9c6795921e3c4115c2b6c52fbb806523b22",
+      "reference": "talkcraft://references/cards/line-carry-transition.md",
+      "reference_sha256": "9aa9bf5ca72904ebe69a562cd5225791b5b52c48ea610bd01b365b56d8629f25",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 204
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:line-chart-story-draw",
+      "origin": "talkcraft",
+      "name": "折线分段推演",
+      "category": "数据信息图",
+      "purpose": "口播做\"如果当时…那么现在…\"的假设推演、给同一起点算两种未来、讲某段区间的相关性；财经拆解、政策复盘、投资算账类冷静推理的调性",
+      "input_kind": "文, 人(可选)",
+      "semantics": "数据, 对比",
+      "source": "talkcraft://template/cards/line-chart-story-draw.tsx",
+      "source_sha256": "937320d2bf1ed2e3f09b5c7abf8085eb42b086b386d0dd58fb1fb05807edebb3",
+      "reference": "talkcraft://references/cards/line-chart-story-draw.md",
+      "reference_sha256": "d2f1ce7bccc588d2273f72e56b82e4072d50230d48438d0f8df87442a40d1359",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 156
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:logo-enter",
+      "origin": "talkcraft",
+      "name": "Logo 登场",
+      "category": "素材呈现",
+      "purpose": "片头的身份交代（\"我是…\"）与片尾的品牌收束；系列视频每期固定的开场/落幕；产品名/机构名的正式立牌。一片各用一次（开头一次、结尾一次）",
+      "input_kind": "文, 图",
+      "semantics": "自我介绍, 结尾",
+      "source": "talkcraft://template/cards/logo-enter.tsx",
+      "source_sha256": "4489e6dda20b6e1eb444e6f3efe53a275e594c1a64039ece515d5697db8628da",
+      "reference": "talkcraft://references/cards/logo-enter.md",
+      "reference_sha256": "d2cf05cd9e8190758c4ae1038d57d00549f870ac1e1406e2d518df56960c21e1",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 90
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:long-take-world",
+      "origin": "talkcraft",
+      "name": "长镜头世界画布",
+      "category": "转场结构",
+      "purpose": "有空间/流程/地图隐喻的话题（管线、时间线、生态图景）；想要\"一镜到底\"的高级感段落",
+      "input_kind": "文",
+      "semantics": "转场, 步骤, 空间叙事",
+      "source": "talkcraft://template/cards/long-take-world.tsx",
+      "source_sha256": "70e059a6ec67097d2d097d0ea52acb61ed6066f7e8f44f97ca7e23afc8ea1a32",
+      "reference": "talkcraft://references/cards/long-take-world.md",
+      "reference_sha256": "a0ba7f730f724868ac86469a08fe93d243be95da4e0662db7011c3e5719a257a",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 213
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:lower-third-nameplate",
+      "origin": "talkcraft",
+      "name": "人名条展示牌",
+      "category": "人物互动",
+      "purpose": "真人出镜/访谈嘉宾首次开口的 3~5 秒；也用于自我介绍、连线、引用他人观点时标注身份；新闻、评测、访谈调性",
+      "input_kind": "人(可选), 文",
+      "semantics": "自我介绍, 引用, 介绍他人",
+      "source": "talkcraft://template/cards/lower-third-nameplate.tsx",
+      "source_sha256": "a22273f51010dd153b089341e80deba9097965f3b702e04e4956bbb33af7d91c",
+      "reference": "talkcraft://references/cards/lower-third-nameplate.md",
+      "reference_sha256": "217bd07eb591a1cb35c9c9c732697c830bd41189ce77914d81ab1b09315e85be",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 107
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:magnifier-detail",
+      "origin": "talkcraft",
+      "name": "局部放大镜",
+      "category": "强调标注",
+      "purpose": "评测/教程口播说到截图里某个具体数字、按钮、条款时——\"注意看这里\"；信息密度高的证据截图必备，理性讲解调性",
+      "input_kind": "图, 截图",
+      "semantics": "强调",
+      "source": "talkcraft://template/cards/magnifier-detail.tsx",
+      "source_sha256": "59ca146586bf0f56826dd80e33edfb29c10a7da8cb31aa23a72bc28e49f1544b",
+      "reference": "talkcraft://references/cards/magnifier-detail.md",
+      "reference_sha256": "738b148ebc7bc3b3439b335d1fa0446e0b132b6ac65ee07b1b94d1e6e4c6078f",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 101
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:map-route-pin",
+      "origin": "talkcraft",
+      "name": "地图路线图钉",
+      "category": "数据信息图",
+      "purpose": "口播讲到地理转移/行程/事件链时（\"从北京到上海，再到深圳\"）；纪实解说、商业分析、事件复盘调性",
+      "input_kind": "文, 人(可选)",
+      "semantics": "时间地点, 步骤, 空间叙事",
+      "source": "talkcraft://template/cards/map-route-pin.tsx",
+      "source_sha256": "fec5d18b99286f1306eb9378db59b756085a4083700c147a971926b397858ef3",
+      "reference": "talkcraft://references/cards/map-route-pin.md",
+      "reference_sha256": "2684d9bfc2cc524422eb2f4084570d62835f7fbab23579d5b39191567b8d7030",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 155
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:media-pop-in",
+      "origin": "talkcraft",
+      "name": "素材弹入堆叠",
+      "category": "素材呈现",
+      "purpose": "口播甩证据的时刻（截图、聊天记录、转账单、报道）；\"一张一张给你看\"的列举语感；爆料、辟谣、盘点调性",
+      "input_kind": "图, 截图, 人(可选)",
+      "semantics": "例证, 列举",
+      "source": "talkcraft://template/cards/media-pop-in.tsx",
+      "source_sha256": "7156764244dd7ac4840e19b12c15ccbe72f4c38e4d5d9b168882a9f577494552",
+      "reference": "talkcraft://references/cards/media-pop-in.md",
+      "reference_sha256": "185b4945d978246aebda1cb45f24742977ec06646950843209f0400517b070c6",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 92
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:metric-with-sparkline",
+      "origin": "talkcraft",
+      "name": "数字带趋势",
+      "category": "数据信息图",
+      "purpose": "口播念一个带方向的指标时（\"效率提升了 67%\"、\"退货率降到 3%\"）；财经/评测/复盘类段落里\"一个数 + 它怎么来的\"这种双层信息；不适合只报一个孤立数字（那用 number-slab-pop）",
+      "input_kind": "文, 人(可选)",
+      "semantics": "数据",
+      "source": "talkcraft://template/cards/metric-with-sparkline.tsx",
+      "source_sha256": "8568f46f620ccec15e4f1fe7258d2f0be8c500f01f05ccfa4dd2cb1c607d69e8",
+      "reference": "talkcraft://references/cards/metric-with-sparkline.md",
+      "reference_sha256": "2d557daf71f3a112f90af86d09dd6b8f2fec3783efd0d89b54e624e9ea693f9d",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 114
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:motion-blur-slam-in",
+      "origin": "talkcraft",
+      "name": "模糊甩入急停",
+      "category": "素材呈现",
+      "purpose": "口播\"直接甩给你看\"的压上时刻（数据卡、产品截图、对比图）；凌厉、有攻击性的高能段落；AI 工具盘点、爆点拆解、观点硬怼",
+      "input_kind": "图, 截图, 人(可选)",
+      "semantics": "例证",
+      "source": "talkcraft://template/cards/motion-blur-slam-in.tsx",
+      "source_sha256": "52b833847f1da7e7cd47b3cbf03cc6de27e868c14510ae772c0ff9ce85f3812b",
+      "reference": "talkcraft://references/cards/motion-blur-slam-in.md",
+      "reference_sha256": "1df8fe77e75d1256cd329db8e69884bfc505911f9d119273f3cdf29353517a8e",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 45
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:news-card-desk",
+      "origin": "talkcraft",
+      "name": "新闻卡片划重点",
+      "category": "素材呈现",
+      "purpose": "解读/评论新闻、引用报道原文做证据的段落；财经、时事、盘点类口播的\"先看这条新闻\"时刻，调性冷静专业",
+      "input_kind": "图, 截图",
+      "semantics": "引用, 例证",
+      "source": "talkcraft://template/cards/news-card-desk.tsx",
+      "source_sha256": "76adedbbeb839241fee88d56f1eac188527fef918aa04837ede799644586a2b3",
+      "reference": "talkcraft://references/cards/news-card-desk.md",
+      "reference_sha256": "ea2ee48232665cf48fcef345a3e200800b7c46a9dfb5302ecf6933448d6ce544",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 321
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:number-counter",
+      "origin": "talkcraft",
+      "name": "数字滚动计数",
+      "category": "数据信息图",
+      "purpose": "财经/科普口播抛出关键数字的时刻（营收、销量、涨幅）；让数字\"长\"出来而不是贴出来；数据密集调性",
+      "input_kind": "文, 人(可选)",
+      "semantics": "数据",
+      "source": "talkcraft://template/cards/number-counter.tsx",
+      "source_sha256": "34a00653402a52d6925c5ef06da3988cf82f200f6ea9bb9f2d1ea5e5a93609a3",
+      "reference": "talkcraft://references/cards/number-counter.md",
+      "reference_sha256": "298a9d5430788834dd289b1bd181cb6662ccce24057ca9abe039a17eeef37efa",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 86
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:number-slab-pop",
+      "origin": "talkcraft",
+      "name": "数字弹出",
+      "category": "数据信息图",
+      "purpose": "口播抛出一个结论数字时（\"23.6%，这是去年的增幅\"、\"只要 3 步\"）；一句话就要立住的钩子数字、封面数、章节里的单点结论；不适合需要展示\"怎么算出来的\"的数（那用 number-counter / metric-with-sparkline）",
+      "input_kind": "文, 人(可选)",
+      "semantics": "数据, 钩子",
+      "source": "talkcraft://template/cards/number-slab-pop.tsx",
+      "source_sha256": "26facbd762315fb5f5d196d7b1d439470c29f0e2ad7265d34185dbe4fb6df806",
+      "reference": "talkcraft://references/cards/number-slab-pop.md",
+      "reference_sha256": "f6f4d0b46ec28c53b9923ba9f784ea43a3ce9860cc278b2a55245c56f108298d",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 101
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:numbered-step-stack",
+      "origin": "talkcraft",
+      "name": "编号步骤堆入",
+      "category": "数据信息图",
+      "purpose": "口播里\"给方法\"的段落——\"记住这四条\"、\"操作就三步\"、清单式干货；需要观众截图保存的时刻；带货/教程类口播的要点罗列。不适合有先后依赖的流程（那用 step-timeline-vertical）",
+      "input_kind": "文, 人(可选)",
+      "semantics": "步骤, 列举",
+      "source": "talkcraft://template/cards/numbered-step-stack.tsx",
+      "source_sha256": "cb16806443f00085f3b2b3334c4fa97f1fe87494ce6c7906c1be1caea5ca2dfe",
+      "reference": "talkcraft://references/cards/numbered-step-stack.md",
+      "reference_sha256": "de2441aac11a66c84f59fd2c323bd6724a85fec8592444d627109fcf1f87e9f5",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 107
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:orbit-drift",
+      "origin": "talkcraft",
+      "name": "环绕微漂",
+      "category": "运镜",
+      "purpose": "静态页面要在屏上停留很久的段落（长讲述、逐条分析、边看边聊），需要一条\"永不重复得太明显\"的持续底噪；也用于让页面稳定地当背景道具，前面叠字幕/图表/数据",
+      "input_kind": "图, 截图",
+      "semantics": "氛围",
+      "source": "talkcraft://template/cards/orbit-drift.tsx",
+      "source_sha256": "1039d20ad1d033d195be51cac7ae8e1c7dc07870d938da22e5ea7bedf2d89c7d",
+      "reference": "talkcraft://references/cards/orbit-drift.md",
+      "reference_sha256": "bbaede59a120935758fe747486cf6cebaabadf895ffd93d7a09614c52642304a",
+      "native": {
+        "width": 960,
+        "height": 436,
+        "fps": 30,
+        "durationInFrames": 180
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:outline-box-title",
+      "origin": "talkcraft",
+      "name": "描边框标题",
+      "category": "字幕花字",
+      "purpose": "口播里\"我的核心观点是…\"这类**给结论加框**的时刻——立论点、下定义、把一个短语标成术语；理性、条理、有条款感的调性（行业分析、产品讲解、教程）；不适合情绪爆点与手绘调性的片子",
+      "input_kind": "文, 人(可选)",
+      "semantics": "定义, 标题",
+      "source": "talkcraft://template/cards/outline-box-title.tsx",
+      "source_sha256": "4984e614edd2e10c58140f91f0771f2ab9cd08437e5f3db502ae9c35115a003c",
+      "reference": "talkcraft://references/cards/outline-box-title.md",
+      "reference_sha256": "208c01e29ce5777d912ff057197a933053ead61c83f04f409305bb26ea4cc48a",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 103
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:overexpose-flip-transition",
+      "origin": "talkcraft",
+      "name": "过曝翻页转场",
+      "category": "转场结构",
+      "purpose": "章节翻页、\"讲完这一段进入下一段\"的语义断点；也用在推进到一张关键截图/图表之后跳走的时刻。调性偏郑重，一片 2~4 次",
+      "input_kind": "场",
+      "semantics": "转场, 章节",
+      "source": "talkcraft://template/cards/overexpose-flip-transition.tsx",
+      "source_sha256": "b032936e3e9615460ef3329abc5b15b0de0a05750f70329e472edca7658af575",
+      "reference": "talkcraft://references/cards/overexpose-flip-transition.md",
+      "reference_sha256": "a9fb10b3acd832651c4ef22fb55eb31db3e88dcd57fc42d4e013dc4efc9cdcc1",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 93
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:parallel-items-with-host",
+      "origin": "talkcraft",
+      "name": "并列句排版（人物在场）",
+      "category": "人物互动",
+      "purpose": "任何\"三件事 / 三个地方 / 三步 / 三种\"的并列句，且人物出镜（抠像或原片）；知识、生活、旅行、效率类口播最高频的一种镜头",
+      "input_kind": "人(必需), 图",
+      "semantics": "步骤, 例证, 列举",
+      "source": "talkcraft://template/cards/parallel-items-with-host.tsx",
+      "source_sha256": "162290efbb146397a49d39efa13cd529236d7baf4a8088c3af9b05d725fcb27e",
+      "reference": "talkcraft://references/cards/parallel-items-with-host.md",
+      "reference_sha256": "4bb15d67e09dbecf7919fd158048e2a2d96c5a484a3a98356c9191930d3255f6",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 663
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:particle-weld-transition",
+      "origin": "talkcraft",
+      "name": "粒子溶接转场",
+      "category": "转场结构",
+      "purpose": "有\"同一件东西换了形态\"语义的镜头边界：数据变成图表、概念变成实例、素材变成结论；也用在幕与幕之间的诗意衔接。一片 1~2 次",
+      "input_kind": "场",
+      "semantics": "转场",
+      "source": "talkcraft://template/cards/particle-weld-transition.tsx",
+      "source_sha256": "99190675adbd6bf30f120c69d2b1e494a897f2de597d298a9d77a0ba24043739",
+      "reference": "talkcraft://references/cards/particle-weld-transition.md",
+      "reference_sha256": "df48b69531f5c56690d4725fc5a092acddf9a2e69fc9f6b0875796fbe4339426",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 98
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:pencil-sketch-draw",
+      "origin": "talkcraft",
+      "name": "铅笔手绘揭示",
+      "category": "素材呈现",
+      "purpose": "讲概念/流程时\"现场画给你看\"；亲和、手作、低科技感调性；配 TTS 讲解节奏逐笔出图",
+      "input_kind": "图",
+      "semantics": "定义, 步骤",
+      "source": "talkcraft://template/cards/pencil-sketch-draw.tsx",
+      "source_sha256": "4e648e11ec75364b8111cdff92dbdd3fa8998cadc4b93b18e5e2766a849b41e3",
+      "reference": "talkcraft://references/cards/pencil-sketch-draw.md",
+      "reference_sha256": "e4e4c94a0fe83f6fd8c56f453636f01ae3829d5da128aece075ec15f70cc2841",
+      "native": {
+        "width": 6,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 134
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:per-character-rise",
+      "origin": "talkcraft",
+      "name": "逐字升起",
+      "category": "字幕花字",
+      "purpose": "一句话的判断/主张/口号立在画面上——段落开头的论点句、结论句、口号；语速稳、句子短（6~10 字）的时刻；想要方向感与\"顶起来\"的力道但不要弹跳廉价感的调性；不适合连续跟读的常规字幕（每句都升会让整片有下往上的抖）",
+      "input_kind": "文",
+      "semantics": "论点, 金句",
+      "source": "talkcraft://template/cards/per-character-rise.tsx",
+      "source_sha256": "ddcdfd303810b22051f754295ff11034980a08219db88620279877a2ec19a027",
+      "reference": "talkcraft://references/cards/per-character-rise.md",
+      "reference_sha256": "deda7fbd0e60a7a70320ec015cd836d650869efa8b4e20651c15e24fd1c3a47d",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 85
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:pip-zoom-box",
+      "origin": "talkcraft",
+      "name": "画中画放大",
+      "category": "运镜",
+      "purpose": "口播说到\"我们把这一块单独拎出来看\"——需要在保留全景的同时长期展示某个局部；讲解手部动作/表情/产品细节/截图局部；后半程还要继续讲全景时（局部留在侧边不撤）",
+      "input_kind": "人(可选), 图",
+      "semantics": "强调",
+      "source": "talkcraft://template/cards/pip-zoom-box.tsx",
+      "source_sha256": "3162d14b5c15e60fbf7cb2f13cd38151c089c1569c4adf59f433aa23c5ca1df2",
+      "reference": "talkcraft://references/cards/pip-zoom-box.md",
+      "reference_sha256": "d5711c6384b5bb9555e70e5c211fb20a0b0e8f65efb4506767d26329a8e4a316",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 112
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:pullback-cool-transition",
+      "origin": "talkcraft",
+      "name": "后拉冷却转场",
+      "category": "转场结构",
+      "purpose": "一段情绪的收尾：讲完激烈论证进入沉淀、结论前的呼吸、段落间的\"我们退一步看\"；也用在色温转冷/转暖的幕边界",
+      "input_kind": "场",
+      "semantics": "转场",
+      "source": "talkcraft://template/cards/pullback-cool-transition.tsx",
+      "source_sha256": "766065471f36cd8a6087bf5c07f1df642f29a22f71b49bcc291eb9b9ca76d232",
+      "reference": "talkcraft://references/cards/pullback-cool-transition.md",
+      "reference_sha256": "2bb49ece695d34568bd0bb3cc07a00140e449d42c279edb3ae0d0a649fe54051",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 104
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:push-through-transition",
+      "origin": "talkcraft",
+      "name": "推穿转场",
+      "category": "转场结构",
+      "purpose": "从概念推进到证据、从全景推进到细节的镜头边界；六式里最中性的一式，同一片可以反复用而不腻",
+      "input_kind": "场",
+      "semantics": "转场",
+      "source": "talkcraft://template/cards/push-through-transition.tsx",
+      "source_sha256": "1edc6f745d4c8ed6f674735f5d9bac1ce8883e66a588fd7e172f618bd110411f",
+      "reference": "talkcraft://references/cards/push-through-transition.md",
+      "reference_sha256": "36502bc9e285c8d734d036a0d471833038929cc357dca809c5d4aa573e25f50f",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 95
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:quote-bracket-pull",
+      "origin": "talkcraft",
+      "name": "引号夹句",
+      "category": "字幕花字",
+      "purpose": "金句要\"被引用\"的时刻——引别人的话、复述观众留言、把自己的一句话立成引文；不想遮住人物的金句（本卡不盖底板，人物全程在画面里）；克制调性的知识区/访谈类口播。不适合需要\"让位仪式\"的暴论式金句（那用 quote-card）",
+      "input_kind": "文, 人(可选)",
+      "semantics": "引用, 金句",
+      "source": "talkcraft://template/cards/quote-bracket-pull.tsx",
+      "source_sha256": "5235dfe8b864fdb197fc6624ed5731084329c80b753b9e22170e96f672649e9c",
+      "reference": "talkcraft://references/cards/quote-bracket-pull.md",
+      "reference_sha256": "4f2a8a4c53a9449549ebf1b7482d0fbeacf7f6f4a4aa3549f1389a3f19da1931",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 119
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:quote-card",
+      "origin": "talkcraft",
+      "name": "金句大字卡",
+      "category": "字幕花字",
+      "purpose": "口播的观点峰值（金句、结论、暴论）；商业类/情感类竖屏口播的招牌收束动作，罗翔式纯黑白变体适合严肃调性",
+      "input_kind": "文, 人(可选)",
+      "semantics": "金句, 结尾",
+      "source": "talkcraft://template/cards/quote-card.tsx",
+      "source_sha256": "3e8f1233c31453f4492eb4076fed680fc029be0056dd8c6eeb6914bdbcc0e18e",
+      "reference": "talkcraft://references/cards/quote-card.md",
+      "reference_sha256": "51cd4fac787cdcf7b0a4d2ad82329c900b73b540200ec4c0cf94f748c30238b9",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 123
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:quote-hold-arrow",
+      "origin": "talkcraft",
+      "name": "金句停留",
+      "category": "强调标注",
+      "purpose": "口播里\"话到这儿才是重点\"的时刻——铺垫两句后落到结论、转折句、行动号召前的那一句；需要观众记住**整句里的哪一句**（不是哪个词）的场合。不适合一上屏就要砸的钩子句（那没有铺垫可升级）",
+      "input_kind": "人(可选), 文",
+      "semantics": "金句, 转折",
+      "source": "talkcraft://template/cards/quote-hold-arrow.tsx",
+      "source_sha256": "9b3cbd6a29ec4580ac0d53b54d8ef82bfa5d7c00100562e370dee2f57b30daef",
+      "reference": "talkcraft://references/cards/quote-hold-arrow.md",
+      "reference_sha256": "fbf64430fe4384f2333d816fe63d02307849c29be175f46af4226d90407a0056",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 128
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:rack-focus-pair",
+      "origin": "talkcraft",
+      "name": "焦点接力",
+      "category": "素材呈现",
+      "purpose": "\"A 和 B\"两件东西被来回提及（纸书 vs 电子书、两款产品）；两个人物 / 两个观点交替讨论、不切镜头只换焦点；新旧对照；引用 + 反驳。默认输入是两张图片；B-roll 要先把 tsx 的 <Img> 换成 <OffthreadVideo>（见复用指引）；人物不参与",
+      "input_kind": "图",
+      "semantics": "对比",
+      "source": "talkcraft://template/cards/rack-focus-pair.tsx",
+      "source_sha256": "79e8f4009f111c7cb698f0e59543e02a73e8afb1ffa747b81a31c8093351f123",
+      "reference": "talkcraft://references/cards/rack-focus-pair.md",
+      "reference_sha256": "fb3fd36cff8ea16e382e30ea1649f1438e61d1aa4812f2d29192556a22e927f5",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 216
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:reticle-lock-on",
+      "origin": "talkcraft",
+      "name": "准星咬合",
+      "category": "强调标注",
+      "purpose": "口播\"就是这个按钮 / 这个数字 / 这一条\"的重音点名；评测里锁定关键参数；踩音效重拍的目标点名；替代箭头圈红且画面不冻结。输入是截图（含视频截帧），人物不参与",
+      "input_kind": "截图, 图",
+      "semantics": "强调",
+      "source": "talkcraft://template/cards/reticle-lock-on.tsx",
+      "source_sha256": "267372d5e16401608fa30557ace5b078121e5a4ba347ac7f1d9a4ecfcc7209e6",
+      "reference": "talkcraft://references/cards/reticle-lock-on.md",
+      "reference_sha256": "78e8c669788988af54c9b4779aaa23e332635af17b1008242c3c54e9f3856e7f",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 192
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:scanline-annotate",
+      "origin": "talkcraft",
+      "name": "扫描线逐处点名",
+      "category": "强调标注",
+      "purpose": "一张截图上有 3～6 处要逐个点评（落地页问题、功能点、合同条款、财报要点）；\"AI 帮我读了这份文档\"的过程镜头。输入是图片（含视频截帧），人物不参与",
+      "input_kind": "截图, 图",
+      "semantics": "强调",
+      "source": "talkcraft://template/cards/scanline-annotate.tsx",
+      "source_sha256": "d51fb08a3cb1ef8648e57cbcbac31a4e94a3518fa72736088c840915cbe6de94",
+      "reference": "talkcraft://references/cards/scanline-annotate.md",
+      "reference_sha256": "142ccbe881a15f086db486aa549d22a9fd223024cb98e3689281c2d8680e1d32",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 180
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:scribble-annotation",
+      "origin": "talkcraft",
+      "name": "手绘圈注箭头",
+      "category": "强调标注",
+      "purpose": "口播点名素材/截图里的具体位置时（\"看这个价\"\"就这行小字\"\"点这里\"）；测评、锐评、扒皮解说等有\"作者在场\"感的调性",
+      "input_kind": "截图, 图",
+      "semantics": "强调",
+      "source": "talkcraft://template/cards/scribble-annotation.tsx",
+      "source_sha256": "373f659948a7c7997590afa935a26a635fdbf195195633ed628992f536305786",
+      "reference": "talkcraft://references/cards/scribble-annotation.md",
+      "reference_sha256": "c609e46d91cf1759e253fb89e163e6f9547b4ac799ec2e331c39e8549560c6dd",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 104
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:shape-wipe-transition",
+      "origin": "talkcraft",
+      "name": "色块扫屏转场",
+      "category": "转场结构",
+      "purpose": "口播换章节、换话题、\"讲完概念上数据\"式的节奏切分点；综艺化/快节奏调性，正片与竖屏切片都常用",
+      "input_kind": "场, 人(可选)",
+      "semantics": "转场, 章节",
+      "source": "talkcraft://template/cards/shape-wipe-transition.tsx",
+      "source_sha256": "7df7c971a89d47e9054e17483b2367f78538c66060a45bf0217a5883faa033ea",
+      "reference": "talkcraft://references/cards/shape-wipe-transition.md",
+      "reference_sha256": "0c2a6b5de379c610db6573bf4941a17925511db5822f603c6fabbc1f2b8696ba",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 74
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:slab-punch-title",
+      "origin": "talkcraft",
+      "name": "重点放大",
+      "category": "字幕花字",
+      "purpose": "一句口播里\"前半句铺垫 + 后半句是重点\"的对照句式（\"找到 / 关键点\"、\"问题不在 A / 在 B\"）；态度鲜明的观点号、干货号、带货口播；也可当短口播的段落小标题",
+      "input_kind": "人(可选), 文",
+      "semantics": "转折, 标题",
+      "source": "talkcraft://template/cards/slab-punch-title.tsx",
+      "source_sha256": "4c527c14b83de154076bc3a7d8a0fe84679754f572fe6b039df132456c9fee4d",
+      "reference": "talkcraft://references/cards/slab-punch-title.md",
+      "reference_sha256": "863e175f00ff7499ebee0a087a9d5450bc52f40a68e702eeabb0f27bc5297996",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 91
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:slow-pull-reveal",
+      "origin": "talkcraft",
+      "name": "缓拉全貌",
+      "category": "运镜",
+      "purpose": "出示的静态素材本身\"量大\"时——数据看板、长清单、密集表格、全景图；开场悬念（先看一个数字再揭示它在哪张表里）、段落收束（从细节退回全局做总结）两个时机最稳",
+      "input_kind": "图, 截图",
+      "semantics": "钩子",
+      "source": "talkcraft://template/cards/slow-pull-reveal.tsx",
+      "source_sha256": "79438baa13340fb21800720cedd387ea4ec228620d0c87e4da2388c30c8fe263",
+      "reference": "talkcraft://references/cards/slow-pull-reveal.md",
+      "reference_sha256": "fcc0ce1b52ced94c001e832f3e136ba9e005c1ba1709b1197442637d5e577ffe",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 189
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:slow-push-in",
+      "origin": "talkcraft",
+      "name": "缓推特写",
+      "category": "运镜",
+      "purpose": "口播出示网页截图/文档/图片/UI 界面时的默认底噪运镜——静态素材一上屏就该有这条曲线；讲解、评测、财经拆解等冷静举证调性；也是\"讲到这一段时把视线收拢到这一处\"的引导手段",
+      "input_kind": "图, 截图",
+      "semantics": "例证",
+      "source": "talkcraft://template/cards/slow-push-in.tsx",
+      "source_sha256": "ec3a24f96e52320e3036c8584d591d63c927e64b067e8843a80f0ba49579534e",
+      "reference": "talkcraft://references/cards/slow-push-in.md",
+      "reference_sha256": "49744f05e17ef0923e0ad0d14d00bef56cee04d3f0ae78d53fca98e4e210ad08",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 186
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:soft-blur-in",
+      "origin": "talkcraft",
+      "name": "柔焦淡入",
+      "category": "字幕花字",
+      "purpose": "需要\"轻\"的字幕入场——冷静的旁白句、结论句、章节内的小标题；柔和调性的口播（知识区、访谈、品牌片）；素材切换后第一句上屏的字；不适合要打点的重音词与要跟语速的连续跟读字幕",
+      "input_kind": "文",
+      "semantics": "论点",
+      "source": "talkcraft://template/cards/soft-blur-in.tsx",
+      "source_sha256": "72cfd018a6d1ce18226ae9b77a7fe5c0b08887d740bfdad4a9239332784ed307",
+      "reference": "talkcraft://references/cards/soft-blur-in.md",
+      "reference_sha256": "b790cabca7ff2ede465f61b42f3a68cc294ba5b02048417c53643e93e3c3417b",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 92
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:source-converge",
+      "origin": "talkcraft",
+      "name": "多源汇聚",
+      "category": "数据信息图",
+      "purpose": "\"把 N 个来源的数据汇到一处\"的工作流讲解；\"这几件事最后都指向同一个结论\"；多渠道 → 一个入口（客服 / 收件箱 / 中台）；倒放即\"一分多\"。输入只有文字（来源名 / 汇聚点 / 说明），卡自带矢量；人物不参与",
+      "input_kind": "文",
+      "semantics": "机制",
+      "source": "talkcraft://template/cards/source-converge.tsx",
+      "source_sha256": "a00163db942ec12861a243ad46e6b980804e8dd245cdcf5359b9bf06c5260673",
+      "reference": "talkcraft://references/cards/source-converge.md",
+      "reference_sha256": "705e105954d9a82efb19c53e11de73aa6cf0eadba901841eb0b6c2dda85c4daf",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 198
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:speed-slab-title",
+      "origin": "talkcraft",
+      "name": "速度块标题",
+      "category": "字幕花字",
+      "purpose": "需要\"快\"这个语义的标题——效率/提速/抢先/立刻的观点句，节奏快的短口播（60s 内）开场或段落重音；不适合冷静的结论句与需要停留阅读的金句",
+      "input_kind": "人(可选), 文",
+      "semantics": "钩子, 标题",
+      "source": "talkcraft://template/cards/speed-slab-title.tsx",
+      "source_sha256": "58c74373a2662539447665192ed45e695da4b85cac29639f43d8e4191f839290",
+      "reference": "talkcraft://references/cards/speed-slab-title.md",
+      "reference_sha256": "0a62b898d3cefc8ebe52d96a0d91d63a808b3d9c2c2a250d1a774bfffa9f4aba",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 98
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:split-60-40-story",
+      "origin": "talkcraft",
+      "name": "60/40 主从分屏",
+      "category": "素材呈现",
+      "purpose": "\"看着它干活，边听边记要点\"——录屏 / 实拍 + 三条要点；人 + 要点（左格放口播本人）；产品演示 + 三个卖点；教程步骤旁白。要点 ≤4 条",
+      "input_kind": "人(可选), V, 文",
+      "semantics": "步骤, 列举",
+      "source": "talkcraft://template/cards/split-60-40-story.tsx",
+      "source_sha256": "1ce1395ea3fb54df8a83e98252d45e85866c1cbf7dcfd7ed4379ebf765edb1dc",
+      "reference": "talkcraft://references/cards/split-60-40-story.md",
+      "reference_sha256": "3150c5f9e4ff3cecf2a8d7fe1a10ba1fb865606027a287356dd24c8bdaf8419f",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 216
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:split-compare-slider",
+      "origin": "talkcraft",
+      "name": "对比双分屏（滑动揭示）",
+      "category": "素材呈现",
+      "purpose": "\"前 / 后\"\"新 / 旧\"\"A / B\"两张同构图的对比时刻（同机位两段视频要按复用指引换组件）；修图调色、改造前后、界面改版、参数 A/B；冷静举证调性",
+      "input_kind": "图",
+      "semantics": "对比",
+      "source": "talkcraft://template/cards/split-compare-slider.tsx",
+      "source_sha256": "0fe6c944cc9b8144229a35576ff49c7482bc39a1de2e67001b82019e8992f475",
+      "reference": "talkcraft://references/cards/split-compare-slider.md",
+      "reference_sha256": "177aea125a211c810fa6b5799fc79e53b01481f6d1fe039f6f6981f07ec709dc",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 296
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:split-text-stagger",
+      "origin": "talkcraft",
+      "name": "逐字裂升",
+      "category": "字幕花字",
+      "purpose": "章节题 / 金句的利落入场、片名 / 频道名字卡、要点句逐条上台（每条一次）、与下划线类卡衔接（基线即下划线）；是 per-character-rise 的\"裁切 + 基线\"变体——要版式感（字被线裁着长出来）选它，要\"一股气顶上来\"的纯气势选 per-character-rise",
+      "input_kind": "文",
+      "semantics": "金句, 标题",
+      "source": "talkcraft://template/cards/split-text-stagger.tsx",
+      "source_sha256": "9c9c4d9aaa1c001a0d69bd013cedd864431f9be175cbb70242e072f6b329072e",
+      "reference": "talkcraft://references/cards/split-text-stagger.md",
+      "reference_sha256": "fa505ab97067c8a3d9beacc8a57756eb994c87f16292db476171c14a172c7024",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 156
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:stack-fan-out",
+      "origin": "talkcraft",
+      "name": "卡堆扇形展开",
+      "category": "素材呈现",
+      "purpose": "\"我收集了这几张 / 今年拍了五张候选 / 本期要讲这几件事\"——汇总 → 展开的任何清单（≤6 张）；图片专用（截图 / 照片 / 评论卡），人物不在此镜",
+      "input_kind": "图",
+      "semantics": "例证, 列举",
+      "source": "talkcraft://template/cards/stack-fan-out.tsx",
+      "source_sha256": "f4eafd9935f0ad3c14713d3036967927a389c3820a8a4467063b0048d1370146",
+      "reference": "talkcraft://references/cards/stack-fan-out.md",
+      "reference_sha256": "1aa455453a8e501ff6a3b5617d158e54c871aa0a2f899acce34bbaea808f0a29",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 204
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:stage-keyframe-tour",
+      "origin": "talkcraft",
+      "name": "长页兴趣点巡游",
+      "category": "运镜",
+      "purpose": "讲一张超出画幅的长东西——长落地页、长截图、长对话记录、长报表——且要\"讲到哪儿镜头停到哪儿\"的段落；产品巡览（Hero → 数据 → 价格）、\"我们改了这三处\"、把一张长图当一条时间线走完",
+      "input_kind": "图, 截图",
+      "semantics": "例证, 强调, 空间叙事",
+      "source": "talkcraft://template/cards/stage-keyframe-tour.tsx",
+      "source_sha256": "155ac1ffc5a442d85307a128495f878fe4a33f5cb6a1ed3a753e1b28967be9d7",
+      "reference": "talkcraft://references/cards/stage-keyframe-tour.md",
+      "reference_sha256": "de3c8979a60eb65592f82f24b6c3c5a6bea27879e37f28143458dd6955e23d4c",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 275
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:step-timeline-vertical",
+      "origin": "talkcraft",
+      "name": "竖向步骤线",
+      "category": "数据信息图",
+      "purpose": "讲有先后依赖的流程——\"三步走\"、\"我是这样一步步做的\"、复盘时间线；需要观众理解\"顺序不能颠倒\"的时刻；也能当\"当前进度\"用（空心环指向进行中的那一步）。不适合并列的清单（那用 numbered-step-stack）",
+      "input_kind": "人(可选), 文",
+      "semantics": "步骤",
+      "source": "talkcraft://template/cards/step-timeline-vertical.tsx",
+      "source_sha256": "023f0cba47caaede7b1de3e194010d7d8294ce2a7319b8b737b09e6efaa2eebf",
+      "reference": "talkcraft://references/cards/step-timeline-vertical.md",
+      "reference_sha256": "6bcbb02f95c8232c8da72158d50a38a1a6db1822899d05d8c6488aae41996a7e",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 118
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:still-layout-relay",
+      "origin": "talkcraft",
+      "name": "多图排版 + 焦点接力",
+      "category": "素材呈现",
+      "purpose": "\"论点 + 两条证据\"（评测主图 + 细节、主截图 + 两条评论）用一主两辅；\"三个人 / 三个时期 / 三张竖屏截图\"用三联竖图；人物不在此镜，素材本身是主角",
+      "input_kind": "图",
+      "semantics": "例证, 强调, 列举",
+      "source": "talkcraft://template/cards/still-layout-relay.tsx",
+      "source_sha256": "acf431e96eefbe478be5b82ae8cfeb11cccc734580367667a8f3fd3210c602dc",
+      "reference": "talkcraft://references/cards/still-layout-relay.md",
+      "reference_sha256": "5c013648a88b9bded0c7d7cf8065987b7ca05aa818903ef209ec1559d8bdb8c8",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 467
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:strike-and-replace",
+      "origin": "talkcraft",
+      "name": "划线纠错替换",
+      "category": "强调标注",
+      "purpose": "口播里\"不是 A，而是 B\"这个高频句式——旧观念纠正、旧价格/旧参数作废、版本对比、辟谣；一句话里只替换一个值的时刻",
+      "input_kind": "人(可选), 文",
+      "semantics": "转折",
+      "source": "talkcraft://template/cards/strike-and-replace.tsx",
+      "source_sha256": "75e994e167cd94f6d118f4cd1ff2b1e794be443b4e705fbf01031a605013269d",
+      "reference": "talkcraft://references/cards/strike-and-replace.md",
+      "reference_sha256": "c503ece18fbf7c65d8969520d1dec6b6ef5e34f178795d0cd03a82424ad4008d",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 98
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:subscribe-cta",
+      "origin": "talkcraft",
+      "name": "多平台关注 CTA",
+      "category": "人物互动",
+      "purpose": "口播的收尾或价值兑现点（\"觉得有用点个关注\"）；按平台取其中一种式样，一条视频最多出现一次",
+      "input_kind": "人(可选), 界",
+      "semantics": "号召",
+      "source": "talkcraft://template/cards/subscribe-cta.tsx",
+      "source_sha256": "87c3b952819317432f25e1ec40b9b6561c00cdaf8819c404a146d092cc0dda32",
+      "reference": "talkcraft://references/cards/subscribe-cta.md",
+      "reference_sha256": "40da367296cf2c9f80a885e26759c9a2e5bb1de408d3ff8a9bb1100e594b7098",
+      "native": {},
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:sway-parallax",
+      "origin": "talkcraft",
+      "name": "左右摇移",
+      "category": "运镜",
+      "purpose": "素材横向比画幅宽得多时——宽横幅、流程图、时间线、并列对比长图、超宽截图；口播正在顺着讲一条横向序列（\"第一步…第二步…\"）时最贴，摇移速度就是讲述节奏",
+      "input_kind": "图, 截图",
+      "semantics": "例证, 氛围",
+      "source": "talkcraft://template/cards/sway-parallax.tsx",
+      "source_sha256": "4fa9cca75dd02ab13b7163b8a33bd7e0a7e5cb1ab2f703f501de2631d0c07231",
+      "reference": "talkcraft://references/cards/sway-parallax.md",
+      "reference_sha256": "e77c325be957b9d5c751599d791385fcf3684d0f1bc23c53aa9c767982514f06",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 198
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:terminal-typing-log",
+      "origin": "talkcraft",
+      "name": "终端逐行推进",
+      "category": "素材呈现",
+      "purpose": "口播讲\"我跑了一遍\"\"它真的能装上\"\"构建/部署/测试的结果\"——需要拿命令行当证据的时刻；开发工具测评、AI 编程演示、技术教程与踩坑复盘；不适合非技术受众的软性内容（终端本身会筛掉观众）",
+      "input_kind": "人(可选), 界",
+      "semantics": "例证, 过程演示",
+      "source": "talkcraft://template/cards/terminal-typing-log.tsx",
+      "source_sha256": "337090493417804c462f5905ddea89d30dbf90d9badc243b4e808113953ecfaa",
+      "reference": "talkcraft://references/cards/terminal-typing-log.md",
+      "reference_sha256": "8f91791ea8742fc4cf433651f6c7b88c9d8e2bc5d7a3acd270d8e1a4f1afb2ac",
+      "native": {},
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:tilt-3d-page",
+      "origin": "talkcraft",
+      "name": "3D 立面展示",
+      "category": "运镜",
+      "purpose": "把网页/落地页/UI 界面当\"产品\"来展示的时刻——作品展示、产品介绍、\"我们做了这么个东西\"、案例墙；也用于让页面从\"文档\"降级为\"背景道具\"，好在它前面叠字幕或图表",
+      "input_kind": "图, 截图",
+      "semantics": "例证, 氛围",
+      "source": "talkcraft://template/cards/tilt-3d-page.tsx",
+      "source_sha256": "6abd2141e995365190923694201154d01adf0610482c20b1b868ef57f8343a6c",
+      "reference": "talkcraft://references/cards/tilt-3d-page.md",
+      "reference_sha256": "3352b7de484012e16cbb403c65b1cb009b2cc32596a765fdb8897a5468292088",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 162
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:timeline-photo-strip",
+      "origin": "talkcraft",
+      "name": "时间线照片带",
+      "category": "素材呈现",
+      "purpose": "成长史、版本演进、四个时间点、年度回顾、事件梳理——**有先后**的 3~5 站（三个平级例子用 gallery-wall-dolly）；口播逐站讲、讲完还要看全条的段落",
+      "input_kind": "图",
+      "semantics": "时间地点, 步骤",
+      "source": "talkcraft://template/cards/timeline-photo-strip.tsx",
+      "source_sha256": "ddcaa579f3210fd751cc350776f6561d0f4a7156cb3cb8a5896ab7b76c484f05",
+      "reference": "talkcraft://references/cards/timeline-photo-strip.md",
+      "reference_sha256": "57dcec9c9562f43fe84f34147689721c2cbceb8f1bd0a5f26cdea405214b31a7",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 309
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:title-demote-to-label",
+      "origin": "talkcraft",
+      "name": "标题降格成标签",
+      "category": "字幕花字",
+      "purpose": "教程 / 方法论口播的小节交接（标题先当主角再让位给内容）、\"第 N 点\"结构（每点标题降格后留在左上角当路标直到下一点）、问答式（问题降格成标签、答案在下方展开）、与 chapter-progress-list 配合接进度条；内容 ≤4 条",
+      "input_kind": "文",
+      "semantics": "章节, 步骤, 列举, 标题, 设问",
+      "source": "talkcraft://template/cards/title-demote-to-label.tsx",
+      "source_sha256": "9bdb8c8f826a274cb76bf6959302ee9eddf1bb7a9b466cefc7dbbb1a3f865d91",
+      "reference": "talkcraft://references/cards/title-demote-to-label.md",
+      "reference_sha256": "8da54b7decab006e7c8f6f180bfb2bc3cf70c3d402564c226f34a225bbe0fe8f",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 189
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:tracking-in",
+      "origin": "talkcraft",
+      "name": "字距收拢",
+      "category": "字幕花字",
+      "purpose": "整屏让位给一句大标题的时刻——开场标题、章节论点、片尾落版、品牌短句（4~8 字）；需要\"大片感/发布会气质\"的单句；不适合多行文本、不适合常规字幕（这是标题动作不是字幕动作）",
+      "input_kind": "文",
+      "semantics": "金句, 标题",
+      "source": "talkcraft://template/cards/tracking-in.tsx",
+      "source_sha256": "b45ee0b45164a5286c31d9b75b1673a798cbc1f9fe75397eb2873094f073b21a",
+      "reference": "talkcraft://references/cards/tracking-in.md",
+      "reference_sha256": "c91f6f636db1b9e43638aa70c8099d4748265e6513e1118a42ddea3555a67635",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 90
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:type-contrast-emphasis",
+      "origin": "talkcraft",
+      "name": "字体对比重音",
+      "category": "字幕花字",
+      "purpose": "每段口播的判断句/反转句/结论词——尤其\"不是 A，是 B\"这种对照句式；克制、有编辑气质的知识区与个人观点口播，想要重音但不想要综艺弹跳的调性",
+      "input_kind": "人(可选), 文",
+      "semantics": "对比, 转折, 强调",
+      "source": "talkcraft://template/cards/type-contrast-emphasis.tsx",
+      "source_sha256": "a32939c7f34212449ede31eab9e49a7e096b3f48231723b80043f65cc3bdcad6",
+      "reference": "talkcraft://references/cards/type-contrast-emphasis.md",
+      "reference_sha256": "ae59de8d56cdbd975ba56377eb44f32fe55025163bea76f32080898e848a258d",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 67
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:typewriter-reveal",
+      "origin": "talkcraft",
+      "name": "打字机档案戳",
+      "category": "字幕花字",
+      "purpose": "纪录片式口播交代时间/地点/人物档案的时刻；悬疑、调查、盘点类调性；不适合高能快剪段落",
+      "input_kind": "人(可选), 文",
+      "semantics": "时间地点",
+      "source": "talkcraft://template/cards/typewriter-reveal.tsx",
+      "source_sha256": "778a4cbc833c2d52e852a3afffd535d9f94bd49f049b3fe7042fc56ce12c9dba",
+      "reference": "talkcraft://references/cards/typewriter-reveal.md",
+      "reference_sha256": "eb681acd161f9cb8908a92428843f79ada76260dd7edb50d6714568f095b576b",
+      "native": {},
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:ui-flow-theater",
+      "origin": "talkcraft",
+      "name": "界面流程剧场",
+      "category": "素材呈现",
+      "purpose": "口播讲\"这个产品/功能怎么用\"的完整流程段落——\"进设置把这个打开、主题换成深色、音量拉到七成、保存\"；工具测评、SaaS/AI 产品讲解、教程与上手引导类口播；真录屏拿不到（产品未上线/要脱敏/流程太长）时的唯一不穿帮做法",
+      "input_kind": "界",
+      "semantics": "过程演示, 步骤",
+      "source": "talkcraft://template/cards/ui-flow-theater.tsx",
+      "source_sha256": "05d1aa1e495221f067ab5b8c9bb186275fe4450c59b2fb84f12276ab30c135de",
+      "reference": "talkcraft://references/cards/ui-flow-theater.md",
+      "reference_sha256": "fa64b76ba187c3c51e66206ad55172f64e6770cc60ced5047ac3b8a8ef2e2e85",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 281
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:ui-prop-theater",
+      "origin": "talkcraft",
+      "name": "界面道具剧场",
+      "category": "数据信息图",
+      "purpose": "口播讲\"这东西怎么跑起来的\"\"要等多久\"\"要满足这几个条件\"——进度/清单两类内容的默认呈现方式（滑杆拖动 + 数字联动见 ui-flow-theater◇）；工具测评、AI 产品讲解、教程与流程拆解类口播",
+      "input_kind": "界, 人(可选)",
+      "semantics": "过程演示, 步骤",
+      "source": "talkcraft://template/cards/ui-prop-theater.tsx",
+      "source_sha256": "f85f9c49ecbc1cf170ce977bed5536eacdf7aacddfc9f3051c4f7d7c627bd08b",
+      "reference": "talkcraft://references/cards/ui-prop-theater.md",
+      "reference_sha256": "512d0f45884c50673cfe08c86709a1b96e29f4297aec38d604babbad0d9ff64c",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 179
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:unit-grid-proportion",
+      "origin": "talkcraft",
+      "name": "点阵比例图",
+      "category": "数据信息图",
+      "purpose": "比例型结论（\"每 100 个 / 10 个人里有 N 个\"）、转化率 / 留存率 / 成功率、社会统计与用户调研类口播；两组比例对比可左右各一个点阵。输入只有数据，卡自带矢量；人物不参与",
+      "input_kind": "文",
+      "semantics": "数据",
+      "source": "talkcraft://template/cards/unit-grid-proportion.tsx",
+      "source_sha256": "b06dc875caf9745ad1f48ae72b3b760cfca9c586badde5b212a05796eb12d465",
+      "reference": "talkcraft://references/cards/unit-grid-proportion.md",
+      "reference_sha256": "63e0fa0e1086ecb63600f0dae7c7da93e385bd78bf8d7f02436aa0981114ca30",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 195
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:whip-pan-transition",
+      "origin": "talkcraft",
+      "name": "横甩转场",
+      "category": "转场结构",
+      "purpose": "平级并列的镜头边界——\"这是 A，那是 B\"、切到对比案例、切到另一个人物/另一个市场；快节奏与综艺化调性，也是竖屏切片最常用的一式",
+      "input_kind": "场",
+      "semantics": "转场",
+      "source": "talkcraft://template/cards/whip-pan-transition.tsx",
+      "source_sha256": "735e00f3e7173b0a63a0bde557ffdf9bbdd10f542eff8e908d1783dbc2a46551",
+      "reference": "talkcraft://references/cards/whip-pan-transition.md",
+      "reference_sha256": "fbaff5160bddb08bb133eb157ca32d5c01ca1b688ad92b6568bd258d4c342fe6",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 84
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:word-relay-filmstrip",
+      "origin": "talkcraft",
+      "name": "动词接力胶片",
+      "category": "素材呈现",
+      "purpose": "\"一个主体 × 多种能力\"的枚举（AI 能写 / 画 / 剪 / 配，每个动词配一张截图）、作品集 / 案例流（每个案例一张图一个词）、产品多场景巡礼、\"这些年我做过……\"的个人经历列举；4~6 个词，每词一张图；无人物在场",
+      "input_kind": "图, 截图, 文",
+      "semantics": "例证, 列举",
+      "source": "talkcraft://template/cards/word-relay-filmstrip.tsx",
+      "source_sha256": "07ce275988732be32ddddc9e9d6f38221201b2a369b469553bf112874f462635",
+      "reference": "talkcraft://references/cards/word-relay-filmstrip.md",
+      "reference_sha256": "b2cf856686a6a9ca528915d869959b9b499bf59b0abe90fca3f5721c13696cc3",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 204
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:word-slot-cycle",
+      "origin": "talkcraft",
+      "name": "词槽轮换",
+      "category": "字幕花字",
+      "purpose": "口播里\"它能帮你 A / B / C / D\"式的功能或用途列举、受众列举（学生 / 上班族 / 创作者 → 所有人）、章节预告（今天讲 选品 / 定价 / 投放）、反复句式（不是 X，不是 Y，是 Z）；4~6 个短语、末词是结论；比逐条列表快、比逐词淡入有节拍",
+      "input_kind": "文",
+      "semantics": "转折, 列举",
+      "source": "talkcraft://template/cards/word-slot-cycle.tsx",
+      "source_sha256": "71be5941fff1635cdbe14ab62bdd318b46fa8203dc21e60daa0f0b923ad389a7",
+      "reference": "talkcraft://references/cards/word-slot-cycle.md",
+      "reference_sha256": "345701103e11b23c38896cea35bc8e48e0a9927df1a761f5a87f7b0d4fcf9927",
+      "native": {
+        "width": 960,
+        "height": 540,
+        "fps": 30,
+        "durationInFrames": 206
+      },
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "talkcraft:x-follow-card",
+      "origin": "talkcraft",
+      "name": "关注卡弹出",
+      "category": "人物互动",
+      "purpose": "口播里介绍某个人或账号——嘉宾出场、\"这个人你该关注\"、引用某人观点时给出处、推荐同行/作者；一条视频里同一张卡只出现一次",
+      "input_kind": "界",
+      "semantics": "引用, 介绍他人",
+      "source": "talkcraft://template/cards/x-follow-card.tsx",
+      "source_sha256": "a555ec01a8330af0e13447173673f9a5f3d09f491ca52d9cee5e79f92ca9d2ac",
+      "reference": "talkcraft://references/cards/x-follow-card.md",
+      "reference_sha256": "9a2127808f64001517be626a276e4f816b564704e9d1c6945cf04c415b038266",
+      "native": {},
+      "runtime_modes": {
+        "talkcraft-native": "direct",
+        "haike-remotion": "adapt",
+        "design-only": "reference"
+      },
+      "license": "upstream private installation; noncommercial research scope; no source redistributed",
+      "validation": "catalogued; native prior checks and new host adaptation are separate"
+    },
+    {
+      "id": "remocn:cloth-reveal",
+      "origin": "remocn",
+      "name": "cloth-reveal",
+      "category": "material-or-transition",
+      "purpose": "inspect local source and template adapter",
+      "source": "Haike_video/templates/hum-production-v1/vendor/remocn/cloth-reveal.tsx",
+      "source_sha256": "26329fb2afdaf44eaa0d60208752ee28b0bce63ead76bbf77c2636d226018a6e",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "per-template evidence"
+    },
+    {
+      "id": "remocn:mondrian-split",
+      "origin": "remocn",
+      "name": "mondrian-split",
+      "category": "material-or-transition",
+      "purpose": "inspect local source and template adapter",
+      "source": "Haike_video/templates/hum-production-v1/vendor/remocn/mondrian-split.tsx",
+      "source_sha256": "d8e8f76f731b2c519a27f69cd4570f16c0c3936386138be25c169075f297f661",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "per-template evidence"
+    },
+    {
+      "id": "remocn:parallax-depth",
+      "origin": "remocn",
+      "name": "parallax-depth",
+      "category": "material-or-transition",
+      "purpose": "inspect local source and template adapter",
+      "source": "Haike_video/templates/hum-production-v1/vendor/remocn/parallax-depth.tsx",
+      "source_sha256": "6660bea1dfdd7be897b1ca6ef850edfe44d4f1cdc4a8b9432ac20998b1d8ecb6",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "per-template evidence"
+    },
+    {
+      "id": "haike:waterfall",
+      "origin": "haike",
+      "name": "waterfall",
+      "category": "material",
+      "purpose": "existing deterministic media choreography",
+      "source": "Haike_video/templates/hum-production-v1/dynamic/motion.ts",
+      "source_sha256": "b1e6b38a69162e6a56ffc7e7af767a1d8f3354ea52c8abe74ed50aa1f3fed1bb",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing dynamic/Chromatic adapters; new layout needs checking"
+    },
+    {
+      "id": "haike:reflow",
+      "origin": "haike",
+      "name": "reflow",
+      "category": "material",
+      "purpose": "existing deterministic media choreography",
+      "source": "Haike_video/templates/hum-production-v1/dynamic/motion.ts",
+      "source_sha256": "b1e6b38a69162e6a56ffc7e7af767a1d8f3354ea52c8abe74ed50aa1f3fed1bb",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing dynamic/Chromatic adapters; new layout needs checking"
+    },
+    {
+      "id": "haike:click-open",
+      "origin": "haike",
+      "name": "click-open",
+      "category": "material",
+      "purpose": "existing deterministic media choreography",
+      "source": "Haike_video/templates/hum-production-v1/dynamic/motion.ts",
+      "source_sha256": "b1e6b38a69162e6a56ffc7e7af767a1d8f3354ea52c8abe74ed50aa1f3fed1bb",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing dynamic/Chromatic adapters; new layout needs checking"
+    },
+    {
+      "id": "haike:spatial-gallery",
+      "origin": "haike",
+      "name": "spatial-gallery",
+      "category": "material",
+      "purpose": "existing deterministic media choreography",
+      "source": "Haike_video/templates/hum-production-v1/dynamic/motion.ts",
+      "source_sha256": "b1e6b38a69162e6a56ffc7e7af767a1d8f3354ea52c8abe74ed50aa1f3fed1bb",
+      "runtime_modes": {
+        "haike-remotion": "direct",
+        "design-only": "reference"
+      },
+      "validation": "existing dynamic/Chromatic adapters; new layout needs checking"
+    }
+  ]
+}

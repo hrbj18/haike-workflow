@@ -21,10 +21,16 @@ KIND = 'studio_investment_recompose'
 COMPONENT_WORKFLOWS = {'poster-kit', 'motion-kit'}
 
 
+def _frozen_assets(folder, request):
+    return {name: {**asset, 'path': str(folder.parents[1]/'assets/motiongit'/name)}
+            for name, asset in request['assets'].items()}
+
+
 def entry_parameters(value):
     """The newer entry resolves media relative to --inputs, not the JSON file."""
     result=deepcopy(value['parameters'])
     if value['workflow']!='motion-kit':return result
+    result.pop('paperSupport', None)
     def walk(item):
         if isinstance(item,dict):
             for key,child in item.items():
@@ -103,6 +109,12 @@ def freeze(queue, draft_id):
     core = {'contract':CONTRACT,'draft':value,'package_id':package['id'],'package_sha256':package['sha256'],
             'helper_sha256':motion.helper_identity(package)['sha256'],'assets':assets,'adapter_sha256':sha(__file__),
             'publication':False,'paid_calls':0}
+    if 'paperSupport' in value['parameters']:
+        from backlot import paper_evidence
+        from backlot.studio_render import media_probe
+        motion.require(value.get('output_profile', 'native') == 'native', '本版纸感证据层已验证9:16，不支持裁切为4:5')
+        paper_evidence.validate(value['parameters'], assets, media_probe)
+        core['paper_support_sha256'] = sha(paper_evidence.__file__)
     if value['workflow']=='motion-kit':core['entry_parameters']=entry_parameters(value)
     core['project_id'] = 'studio-' + fingerprint(core)[:16]
     digest = fingerprint(core)
@@ -388,7 +400,10 @@ def _kit_prepare(package,request,state,folder,parameters):
                    and approval.get('inputs_sha256')==sha(plan/'inputs.json'),'本期完整计划尚未实际审核')
     if not project.exists():_execute(package,state,'prepare','@vault','--inputs','@vault','--plan',plan,'--out',project,timeout=600)
     if not (project/'preview.json').exists():
-        _execute(package,state,'preview',project,'--times',','.join(f'{t:.3f}' for t in preview_times(parameters)),timeout=600)
+        times = preview_times(parameters)
+        if request['draft']['parameters'].get('paperSupport'):
+            times = sorted(set(times) | {0.0} | {s['t0']+.05 for s in parameters['segments']})
+        _execute(package,state,'preview',project,'--times',','.join(f'{t:.3f}' for t in times),timeout=600)
     receipt=read_json(project/'preview.json');images=kit_images(receipt,project)
     public=folder/'native-preview';public.mkdir(exist_ok=True)
     names=[]
@@ -397,6 +412,20 @@ def _kit_prepare(package,request,state,folder,parameters):
     shutil.copy2(project/'preview.json',folder/'preview-review.json')
     state.update(prepared_project=str(project),preview_directory=str(project),preview_receipt=str(folder/'preview-review.json'),
                  images=names,images_directory=str(public),original_preview_images=images)
+    if request['draft']['parameters'].get('paperSupport'):
+        from backlot import paper_evidence
+        from lib.ffmpeg_locator import resolve_ffmpeg_pair
+        motion.require(request.get('paper_support_sha256') == sha(paper_evidence.__file__), '纸感证据层执行代码已变化，请冻结新版请求')
+        paper_evidence.check_preview(receipt)
+        ffmpeg, _ = resolve_ffmpeg_pair()
+        supported = folder/'paper-evidence-preview'; supported.mkdir(exist_ok=True)
+        receipts = []
+        for name, row in zip(names, images):
+            at = float(Path(row['path']).stem.removeprefix('t_'))
+            target = supported/name
+            paper_evidence.compose(ffmpeg, public/name, target, request['draft']['parameters'], _frozen_assets(folder, request), at=at)
+            receipts.append({'name': name, 'at': at, 'sha256': sha(target)})
+        state.update(images_directory=str(supported), paper_support_preview=receipts)
     if request['draft'].get('output_profile')=='4:5':
         from PIL import Image
         check_portrait_captions(receipt)
@@ -441,6 +470,10 @@ def review(queue, request, evidence):
                    and evidence.get('inspected_images') == state['images'], '审核证据未绑定本期全部预览图')
     motion.require(preview.is_file() and sha(preview)==sha(persistent),'原生制作实例已改变，请保留原成片并重新生成预览')
     receipt = read_json(preview)
+    if request['draft']['parameters'].get('paperSupport'):
+        motion.require(state.get('paper_support_preview') and all(
+            sha(Path(state['images_directory'])/r['name']) == r['sha256'] for r in state['paper_support_preview']),
+            '本期纸感证据层预览已改变，请重新预览')
     if kit:
         originals=kit_images(receipt,Path(state['prepared_project']))
         motion.require(originals==state['original_preview_images'],'本期原生组件预览已变化')
@@ -452,6 +485,7 @@ def review(queue, request, evidence):
     atomic_private(preview,receipt)
     if persistent!=preview: shutil.copy2(preview,persistent)
     atomic_private(folder/'visual-review.json',{**evidence,'reviewed_preview_sha256':sha(preview),
+                                              'paper_support_preview':state.get('paper_support_preview'),
                                               'scope':'sampled-preview','continuous_watching':'pending','continuous_listening':'pending'})
     return {'reviewed':True,'scope':'sampled-preview'}
 
@@ -554,6 +588,9 @@ def run(queue, job):
         review_file=preview/('preview.json' if state['workflow']=='motion-kit' else 'preview-review.json')
         motion.require(visual and visual.get('reviewed_preview_sha256') == sha(review_file)
                        and read_json(review_file).get('reviewed'), '本期原生预览尚未完成实际画面审核')
+        if request['draft']['parameters'].get('paperSupport'):
+            motion.require(visual.get('paper_support_preview') == state.get('paper_support_preview'),
+                           '纸感证据层预览与已审核版本不一致，请重新审核')
         raw=Path(state.get('raw_output') or inst/'native-film.mp4')
         if raw.exists():
             from backlot.studio_render import media_probe
@@ -567,6 +604,20 @@ def run(queue, job):
         if not raw.exists():
             if state['workflow']=='motion-kit':_execute(package,state,'render',state['prepared_project'],'--out',raw,timeout=1800)
             else:_execute(package,state,'render','--timeline','@vault','--plan',plan,'--preview-review',preview,'--out',raw,timeout=1800)
+        if request['draft']['parameters'].get('paperSupport'):
+            from backlot import paper_evidence
+            from lib.ffmpeg_locator import resolve_ffmpeg_pair
+            motion.require(request.get('paper_support_sha256') == sha(paper_evidence.__file__), '纸感证据层执行代码已变化，请冻结新版请求')
+            motion.require(state.get('paper_support_preview') and all(
+                sha(Path(state['images_directory'])/r['name']) == r['sha256'] for r in state['paper_support_preview']),
+                '本期纸感支持画面未完成审核')
+            supported = inst/'paper-evidence-film.mp4'
+            if not supported.exists() or state.get('paper_support_output_sha256') != sha(supported):
+                paper_evidence.compose(resolve_ffmpeg_pair()[0], raw, supported,
+                                       request['draft']['parameters'], _frozen_assets(folder, request))
+                state['paper_support_output_sha256'] = sha(supported)
+                atomic_private(folder/'native-state.json', state)
+            raw = supported
         from lib.ffmpeg_locator import resolve_ffmpeg_pair
         from backlot.studio_render import media_probe
         from backlot.studio_investment_audio_v5 import measure_audio

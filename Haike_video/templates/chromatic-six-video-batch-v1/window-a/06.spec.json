@@ -1,0 +1,1774 @@
+{
+  "schema_version": 1,
+  "standard_version": "video-template-v1",
+  "template_id": "chromatic-06",
+  "template_version": "1.1.0-candidate.1",
+  "template_type": "avatar",
+  "spec_kind": "implementation",
+  "stage": "ready",
+  "authority": {
+    "runbook": "06.README.md",
+    "implementation_paths": [
+      "Scene.tsx",
+      "Preview.tsx",
+      "build.cjs",
+      "prepare.py",
+      "../../chromatic-06-video-v1/Scene.tsx"
+    ],
+    "parameter_source": "06.selection.json"
+  },
+  "canvas": {
+    "width": 720,
+    "height": 1280,
+    "fps": 30,
+    "duration_seconds": 24,
+    "clock": "Explicit 720-frame silent local design clock; illustrative captions",
+    "coordinate_system": "top_left_pixels"
+  },
+  "narrative": {
+    "purpose": "真实视频改版；用切面和镜头推进把社区AI现场看得有层次",
+    "information_hierarchy": [
+      "主照片与本拍主动作",
+      "短标题/关系注释",
+      "首尾辅助人物",
+      "稳定示意字幕"
+    ],
+    "structure": [
+      "建立现场，把视线穿过斜切入口交给照片",
+      "由集体全景推进具体互动",
+      "在同一画面的形状和色彩之间切换观察",
+      "把个人体验带回集体现场"
+    ]
+  },
+  "scenes": [
+    {
+      "id": "cut-open",
+      "start": 0.0,
+      "end": 6.0,
+      "purpose": "建立现场，把视线穿过斜切入口交给照片",
+      "element_ids": [
+        "background",
+        "brand",
+        "headline",
+        "media",
+        "note",
+        "presenter",
+        "caption",
+        "footer",
+        "progress",
+        "photo-0",
+        "photo-1",
+        "photo-2",
+        "photo-3",
+        "photo-4",
+        "photo-5",
+        "photo-6",
+        "photo-7",
+        "wipe-layers"
+      ],
+      "variant": "cut-open"
+    },
+    {
+      "id": "push-near",
+      "start": 6.0,
+      "end": 14.0,
+      "purpose": "由集体全景推进具体互动",
+      "element_ids": [
+        "background",
+        "brand",
+        "headline",
+        "media",
+        "note",
+        "presenter",
+        "caption",
+        "footer",
+        "progress",
+        "photo-0",
+        "photo-1",
+        "photo-2",
+        "photo-3",
+        "photo-4",
+        "photo-5",
+        "photo-6",
+        "photo-7",
+        "wipe-layers"
+      ],
+      "variant": "push-near"
+    },
+    {
+      "id": "observe-colour",
+      "start": 14.0,
+      "end": 20.0,
+      "purpose": "在同一画面的形状和色彩之间切换观察",
+      "element_ids": [
+        "background",
+        "brand",
+        "headline",
+        "media",
+        "note",
+        "presenter",
+        "caption",
+        "footer",
+        "progress",
+        "photo-0",
+        "photo-1",
+        "photo-2",
+        "photo-3",
+        "photo-4",
+        "photo-5",
+        "photo-6",
+        "photo-7",
+        "wipe-layers"
+      ],
+      "variant": "observe-colour"
+    },
+    {
+      "id": "cut-close",
+      "start": 20.0,
+      "end": 24.0,
+      "purpose": "把个人体验带回集体现场",
+      "element_ids": [
+        "background",
+        "brand",
+        "headline",
+        "media",
+        "note",
+        "presenter",
+        "caption",
+        "footer",
+        "progress",
+        "photo-0",
+        "photo-1",
+        "photo-2",
+        "photo-3",
+        "photo-4",
+        "photo-5",
+        "photo-6",
+        "photo-7",
+        "wipe-layers"
+      ],
+      "variant": "cut-close"
+    }
+  ],
+  "assets": [
+    {
+      "id": "store",
+      "kind": "video",
+      "path": "../../../../.local/chromatic-six-video-window-a/preview/assets/a/store.mp4",
+      "source": "既有已授权素材原速低清代理；SHA256=0f800ce0b1516ad8652634006079b0516e21c5d07a91ec233455226c14afd4fd",
+      "embedded_content": [
+        "视频原有人物/标识/文字为固化内容，非可编辑图层"
+      ],
+      "rights_status": "本机私有开发授权；未授权公开分发"
+    },
+    {
+      "id": "robot",
+      "kind": "video",
+      "path": "../../../../.local/chromatic-six-video-window-a/preview/assets/a/robot.mp4",
+      "source": "既有已授权素材原速低清代理；SHA256=73946693d063d848b8b15d5cd64340f902a8056da90db5254ba0622d40f381e9",
+      "embedded_content": [
+        "视频原有人物/标识/文字为固化内容，非可编辑图层"
+      ],
+      "rights_status": "本机私有开发授权；未授权公开分发"
+    },
+    {
+      "id": "children",
+      "kind": "video",
+      "path": "../../../../.local/chromatic-six-video-window-a/preview/assets/a/children.mp4",
+      "source": "既有已授权素材原速低清代理；SHA256=e7cb809335cb66e385dda51192351e06c88e3755f39ac61aa7f51d1ac1834e1d",
+      "embedded_content": [
+        "视频原有人物/标识/文字为固化内容，非可编辑图层"
+      ],
+      "rights_status": "本机私有开发授权；未授权公开分发"
+    },
+    {
+      "id": "dog",
+      "kind": "video",
+      "path": "../../../../.local/chromatic-six-video-window-a/preview/assets/a/dog.mp4",
+      "source": "既有已授权素材原速低清代理；SHA256=71d6058b8612650bd5ecb83999f4b1ac9db19d059cb5fc424513074f8cc10afc",
+      "embedded_content": [
+        "视频原有人物/标识/文字为固化内容，非可编辑图层"
+      ],
+      "rights_status": "本机私有开发授权；未授权公开分发"
+    },
+    {
+      "id": "font",
+      "kind": "font",
+      "path": "../../../../.local/chromatic-six-video-window-a/preview/assets/a/font.ttf",
+      "source": "既有已授权素材原速低清代理；SHA256=a3041811a78c361b1de50f953c805e0244951c21c5bd412f7232ef0d899af0da",
+      "embedded_content": [],
+      "rights_status": "本机私有开发授权；未授权公开分发"
+    },
+    {
+      "id": "presenter-0000",
+      "kind": "video",
+      "path": "../../../../.local/chromatic-six-video-window-a/preview/assets/a/presenter-0000.mp4",
+      "source": "既有已授权素材原速低清代理；SHA256=71c4e62284f28f21b8584176a61f8163d8b19eafc6b44cbbc5e211b341bb6e5c",
+      "embedded_content": [
+        "视频原有人物/标识/文字为固化内容，非可编辑图层"
+      ],
+      "rights_status": "本机私有开发授权；未授权公开分发"
+    }
+  ],
+  "elements": [
+    {
+      "id": "background",
+      "type": "layer",
+      "role": "固定撞色背景与标题底面",
+      "parent_id": null,
+      "z_index": 1,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "固定撞色背景与标题底面"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          720,
+          1280
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Scene.tsx; deterministic per-frame styles are authoritative",
+          "box_scope": "layout box is coverage envelope for photo/annotation children; independent per-scene exact rectangles in Scene.tsx"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "evaluated",
+          "visible": true,
+          "description": "Exact visibility, geometry, masking, easing and stable state are frame-evaluated in Scene.tsx; selection documents scene-local build/emphasis/handoff/reading"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "avoidance",
+          "target_id": "caption",
+          "rule": "人物/主图/注释下边不超过1084；字幕从1110开始"
+        }
+      ],
+      "fixed": [
+        "geometry",
+        "motion",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "readable-and-correct-crop",
+          "method": "Actual browser fullPage screenshots, DOM bounds and playback",
+          "pass_condition": "照片为主体，脸嘴字幕分区；每场动作落定可读"
+        }
+      ]
+    },
+    {
+      "id": "brand",
+      "type": "layer",
+      "role": "上方方向/编号",
+      "parent_id": null,
+      "z_index": 1,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "上方方向/编号"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          44,
+          40,
+          632,
+          28
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Scene.tsx; deterministic per-frame styles are authoritative",
+          "box_scope": "layout box is coverage envelope for photo/annotation children; independent per-scene exact rectangles in Scene.tsx"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "evaluated",
+          "visible": true,
+          "description": "Exact visibility, geometry, masking, easing and stable state are frame-evaluated in Scene.tsx; selection documents scene-local build/emphasis/handoff/reading"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "avoidance",
+          "target_id": "caption",
+          "rule": "人物/主图/注释下边不超过1084；字幕从1110开始"
+        }
+      ],
+      "fixed": [
+        "geometry",
+        "motion",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "readable-and-correct-crop",
+          "method": "Actual browser fullPage screenshots, DOM bounds and playback",
+          "pass_condition": "照片为主体，脸嘴字幕分区；每场动作落定可读"
+        }
+      ]
+    },
+    {
+      "id": "headline",
+      "type": "layer",
+      "role": "Scene.tsx titles06/07中的短双行标题",
+      "parent_id": null,
+      "z_index": 1,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Scene.tsx titles06/07中的短双行标题"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          44,
+          112,
+          632,
+          162
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Scene.tsx; deterministic per-frame styles are authoritative",
+          "box_scope": "layout box is coverage envelope for photo/annotation children; independent per-scene exact rectangles in Scene.tsx"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "evaluated",
+          "visible": true,
+          "description": "Exact visibility, geometry, masking, easing and stable state are frame-evaluated in Scene.tsx; selection documents scene-local build/emphasis/handoff/reading"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "avoidance",
+          "target_id": "caption",
+          "rule": "人物/主图/注释下边不超过1084；字幕从1110开始"
+        }
+      ],
+      "fixed": [
+        "geometry",
+        "motion",
+        "timing"
+      ],
+      "replaceable": [
+        "episode.fontFamily"
+      ],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "readable-and-correct-crop",
+          "method": "Actual browser fullPage screenshots, DOM bounds and playback",
+          "pass_condition": "照片为主体，脸嘴字幕分区；每场动作落定可读"
+        }
+      ]
+    },
+    {
+      "id": "media",
+      "type": "layer",
+      "role": "照片/切面/压叠容器；每个子图的独立坐标与求值见Scene.tsx",
+      "parent_id": null,
+      "z_index": 1,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "主素材全部为真实Video；布局/剪辑与独立活动槽见Scene与preparation"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          284,
+          720,
+          760
+        ],
+        "fit": "cover",
+        "clip": "self",
+        "style": {
+          "authority": "Scene.tsx; deterministic per-frame styles are authoritative",
+          "box_scope": "layout box is coverage envelope for photo/annotation children; independent per-scene exact rectangles in Scene.tsx"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "evaluated",
+          "visible": true,
+          "description": "Exact visibility, geometry, masking, easing and stable state are frame-evaluated in Scene.tsx; selection documents scene-local build/emphasis/handoff/reading"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "avoidance",
+          "target_id": "caption",
+          "rule": "人物/主图/注释下边不超过1084；字幕从1110开始"
+        }
+      ],
+      "fixed": [
+        "geometry",
+        "motion",
+        "timing"
+      ],
+      "replaceable": [
+        "episode.materialClips"
+      ],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "readable-and-correct-crop",
+          "method": "Actual browser fullPage screenshots, DOM bounds and playback",
+          "pass_condition": "照片为主体，脸嘴字幕分区；每场动作落定可读"
+        }
+      ]
+    },
+    {
+      "id": "note",
+      "type": "layer",
+      "role": "场内关系注释，区别于示意口播字幕",
+      "parent_id": null,
+      "z_index": 1,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "场内关系注释，区别于示意口播字幕"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          44,
+          842,
+          632,
+          208
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Scene.tsx; deterministic per-frame styles are authoritative",
+          "box_scope": "layout box is coverage envelope for photo/annotation children; independent per-scene exact rectangles in Scene.tsx"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "evaluated",
+          "visible": true,
+          "description": "Exact visibility, geometry, masking, easing and stable state are frame-evaluated in Scene.tsx; selection documents scene-local build/emphasis/handoff/reading"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "avoidance",
+          "target_id": "caption",
+          "rule": "人物/主图/注释下边不超过1084；字幕从1110开始"
+        }
+      ],
+      "fixed": [
+        "geometry",
+        "motion",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "readable-and-correct-crop",
+          "method": "Actual browser fullPage screenshots, DOM bounds and playback",
+          "pass_condition": "照片为主体，脸嘴字幕分区；每场动作落定可读"
+        }
+      ]
+    },
+    {
+      "id": "presenter",
+      "type": "layer",
+      "role": "全局唯一原速视频；首尾可见，中段visibility hidden",
+      "parent_id": null,
+      "z_index": 30,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "presenter-0000",
+        "description": "全局唯一原速视频；首尾可见，中段visibility hidden"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          496,
+          864,
+          176,
+          220
+        ],
+        "fit": "cover",
+        "clip": "self",
+        "style": {
+          "authority": "Scene.tsx; deterministic per-frame styles are authoritative",
+          "box_scope": "layout box is coverage envelope for photo/annotation children; independent per-scene exact rectangles in Scene.tsx"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "evaluated",
+          "visible": true,
+          "description": "Exact visibility, geometry, masking, easing and stable state are frame-evaluated in Scene.tsx; selection documents scene-local build/emphasis/handoff/reading"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "avoidance",
+          "target_id": "caption",
+          "rule": "人物/主图/注释下边不超过1084；字幕从1110开始"
+        }
+      ],
+      "fixed": [
+        "geometry",
+        "motion",
+        "timing"
+      ],
+      "replaceable": [
+        "episode.presenterClips"
+      ],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "readable-and-correct-crop",
+          "method": "Actual browser fullPage screenshots, DOM bounds and playback",
+          "pass_condition": "照片为主体，脸嘴字幕分区；每场动作落定可读"
+        }
+      ]
+    },
+    {
+      "id": "caption",
+      "type": "layer",
+      "role": "按episode.captions全局帧读取的静音示意字幕",
+      "parent_id": null,
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "captions",
+        "asset_id": null,
+        "description": "按episode.captions全局帧读取的静音示意字幕"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          44,
+          1110,
+          632,
+          88
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Scene.tsx; deterministic per-frame styles are authoritative",
+          "box_scope": "layout box is coverage envelope for photo/annotation children; independent per-scene exact rectangles in Scene.tsx"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "evaluated",
+          "visible": true,
+          "description": "Exact visibility, geometry, masking, easing and stable state are frame-evaluated in Scene.tsx; selection documents scene-local build/emphasis/handoff/reading"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "avoidance",
+          "target_id": "caption",
+          "rule": "人物/主图/注释下边不超过1084；字幕从1110开始"
+        }
+      ],
+      "fixed": [
+        "geometry",
+        "motion",
+        "timing"
+      ],
+      "replaceable": [
+        "episode.captions"
+      ],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "readable-and-correct-crop",
+          "method": "Actual browser fullPage screenshots, DOM bounds and playback",
+          "pass_condition": "照片为主体，脸嘴字幕分区；每场动作落定可读"
+        }
+      ]
+    },
+    {
+      "id": "footer",
+      "type": "layer",
+      "role": "页码/固定短语",
+      "parent_id": null,
+      "z_index": 1,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "页码/固定短语"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          44,
+          1226,
+          632,
+          24
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Scene.tsx; deterministic per-frame styles are authoritative",
+          "box_scope": "layout box is coverage envelope for photo/annotation children; independent per-scene exact rectangles in Scene.tsx"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "evaluated",
+          "visible": true,
+          "description": "Exact visibility, geometry, masking, easing and stable state are frame-evaluated in Scene.tsx; selection documents scene-local build/emphasis/handoff/reading"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "avoidance",
+          "target_id": "caption",
+          "rule": "人物/主图/注释下边不超过1084；字幕从1110开始"
+        }
+      ],
+      "fixed": [
+        "geometry",
+        "motion",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "readable-and-correct-crop",
+          "method": "Actual browser fullPage screenshots, DOM bounds and playback",
+          "pass_condition": "照片为主体，脸嘴字幕分区；每场动作落定可读"
+        }
+      ]
+    },
+    {
+      "id": "progress",
+      "type": "layer",
+      "role": "全局帧线性进度",
+      "parent_id": null,
+      "z_index": 1,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "全局帧线性进度"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          1270,
+          720,
+          10
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Scene.tsx; deterministic per-frame styles are authoritative",
+          "box_scope": "layout box is coverage envelope for photo/annotation children; independent per-scene exact rectangles in Scene.tsx"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "evaluated",
+          "visible": true,
+          "description": "Exact visibility, geometry, masking, easing and stable state are frame-evaluated in Scene.tsx; selection documents scene-local build/emphasis/handoff/reading"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "avoidance",
+          "target_id": "caption",
+          "rule": "人物/主图/注释下边不超过1084；字幕从1110开始"
+        }
+      ],
+      "fixed": [
+        "geometry",
+        "motion",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "readable-and-correct-crop",
+          "method": "Actual browser fullPage screenshots, DOM bounds and playback",
+          "pass_condition": "照片为主体，脸嘴字幕分区；每场动作落定可读"
+        }
+      ]
+    },
+    {
+      "id": "photo-0",
+      "type": "video",
+      "role": "真实视频槽0",
+      "parent_id": null,
+      "z_index": 1,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "store",
+        "description": "真实原速视频；场景局部时钟和源入点见preparation.slots；无loop/freeze"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          720,
+          1060
+        ],
+        "fit": "cover",
+        "clip": "self",
+        "style": {
+          "authority": "Scene.tsx; deterministic per-frame styles are authoritative",
+          "box_scope": "layout box is coverage envelope for photo/annotation children; independent per-scene exact rectangles in Scene.tsx"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "evaluated",
+          "visible": true,
+          "description": "Exact visibility, geometry, masking, easing and stable state are frame-evaluated in Scene.tsx; selection documents scene-local build/emphasis/handoff/reading"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "avoidance",
+          "target_id": "caption",
+          "rule": "人物/主图/注释下边不超过1084；字幕从1110开始"
+        }
+      ],
+      "fixed": [
+        "geometry",
+        "motion",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "readable-and-correct-crop",
+          "method": "Actual browser fullPage screenshots, DOM bounds and playback",
+          "pass_condition": "照片为主体，脸嘴字幕分区；每场动作落定可读"
+        }
+      ]
+    },
+    {
+      "id": "photo-1",
+      "type": "video",
+      "role": "真实视频槽1",
+      "parent_id": null,
+      "z_index": 1,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "robot",
+        "description": "真实原速视频；场景局部时钟和源入点见preparation.slots；无loop/freeze"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          720,
+          1060
+        ],
+        "fit": "cover",
+        "clip": "self",
+        "style": {
+          "authority": "Scene.tsx; deterministic per-frame styles are authoritative",
+          "box_scope": "layout box is coverage envelope for photo/annotation children; independent per-scene exact rectangles in Scene.tsx"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "evaluated",
+          "visible": true,
+          "description": "Exact visibility, geometry, masking, easing and stable state are frame-evaluated in Scene.tsx; selection documents scene-local build/emphasis/handoff/reading"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "avoidance",
+          "target_id": "caption",
+          "rule": "人物/主图/注释下边不超过1084；字幕从1110开始"
+        }
+      ],
+      "fixed": [
+        "geometry",
+        "motion",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "readable-and-correct-crop",
+          "method": "Actual browser fullPage screenshots, DOM bounds and playback",
+          "pass_condition": "照片为主体，脸嘴字幕分区；每场动作落定可读"
+        }
+      ]
+    },
+    {
+      "id": "photo-2",
+      "type": "video",
+      "role": "真实视频槽2",
+      "parent_id": null,
+      "z_index": 1,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "children",
+        "description": "真实原速视频；场景局部时钟和源入点见preparation.slots；无loop/freeze"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          720,
+          1060
+        ],
+        "fit": "cover",
+        "clip": "self",
+        "style": {
+          "authority": "Scene.tsx; deterministic per-frame styles are authoritative",
+          "box_scope": "layout box is coverage envelope for photo/annotation children; independent per-scene exact rectangles in Scene.tsx"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "evaluated",
+          "visible": true,
+          "description": "Exact visibility, geometry, masking, easing and stable state are frame-evaluated in Scene.tsx; selection documents scene-local build/emphasis/handoff/reading"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "avoidance",
+          "target_id": "caption",
+          "rule": "人物/主图/注释下边不超过1084；字幕从1110开始"
+        }
+      ],
+      "fixed": [
+        "geometry",
+        "motion",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "readable-and-correct-crop",
+          "method": "Actual browser fullPage screenshots, DOM bounds and playback",
+          "pass_condition": "照片为主体，脸嘴字幕分区；每场动作落定可读"
+        }
+      ]
+    },
+    {
+      "id": "photo-3",
+      "type": "video",
+      "role": "真实视频槽3",
+      "parent_id": null,
+      "z_index": 1,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "children",
+        "description": "真实原速视频；场景局部时钟和源入点见preparation.slots；无loop/freeze"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          720,
+          1060
+        ],
+        "fit": "cover",
+        "clip": "self",
+        "style": {
+          "authority": "Scene.tsx; deterministic per-frame styles are authoritative",
+          "box_scope": "layout box is coverage envelope for photo/annotation children; independent per-scene exact rectangles in Scene.tsx"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "evaluated",
+          "visible": true,
+          "description": "Exact visibility, geometry, masking, easing and stable state are frame-evaluated in Scene.tsx; selection documents scene-local build/emphasis/handoff/reading"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "avoidance",
+          "target_id": "caption",
+          "rule": "人物/主图/注释下边不超过1084；字幕从1110开始"
+        }
+      ],
+      "fixed": [
+        "geometry",
+        "motion",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "readable-and-correct-crop",
+          "method": "Actual browser fullPage screenshots, DOM bounds and playback",
+          "pass_condition": "照片为主体，脸嘴字幕分区；每场动作落定可读"
+        }
+      ]
+    },
+    {
+      "id": "photo-4",
+      "type": "video",
+      "role": "真实视频槽4",
+      "parent_id": null,
+      "z_index": 1,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "robot",
+        "description": "真实原速视频；场景局部时钟和源入点见preparation.slots；无loop/freeze"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          720,
+          1060
+        ],
+        "fit": "cover",
+        "clip": "self",
+        "style": {
+          "authority": "Scene.tsx; deterministic per-frame styles are authoritative",
+          "box_scope": "layout box is coverage envelope for photo/annotation children; independent per-scene exact rectangles in Scene.tsx"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "evaluated",
+          "visible": true,
+          "description": "Exact visibility, geometry, masking, easing and stable state are frame-evaluated in Scene.tsx; selection documents scene-local build/emphasis/handoff/reading"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "avoidance",
+          "target_id": "caption",
+          "rule": "人物/主图/注释下边不超过1084；字幕从1110开始"
+        }
+      ],
+      "fixed": [
+        "geometry",
+        "motion",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "readable-and-correct-crop",
+          "method": "Actual browser fullPage screenshots, DOM bounds and playback",
+          "pass_condition": "照片为主体，脸嘴字幕分区；每场动作落定可读"
+        }
+      ]
+    },
+    {
+      "id": "photo-5",
+      "type": "video",
+      "role": "真实视频槽5",
+      "parent_id": null,
+      "z_index": 1,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "dog",
+        "description": "真实原速视频；场景局部时钟和源入点见preparation.slots；无loop/freeze"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          720,
+          1060
+        ],
+        "fit": "cover",
+        "clip": "self",
+        "style": {
+          "authority": "Scene.tsx; deterministic per-frame styles are authoritative",
+          "box_scope": "layout box is coverage envelope for photo/annotation children; independent per-scene exact rectangles in Scene.tsx"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "evaluated",
+          "visible": true,
+          "description": "Exact visibility, geometry, masking, easing and stable state are frame-evaluated in Scene.tsx; selection documents scene-local build/emphasis/handoff/reading"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "avoidance",
+          "target_id": "caption",
+          "rule": "人物/主图/注释下边不超过1084；字幕从1110开始"
+        }
+      ],
+      "fixed": [
+        "geometry",
+        "motion",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "readable-and-correct-crop",
+          "method": "Actual browser fullPage screenshots, DOM bounds and playback",
+          "pass_condition": "照片为主体，脸嘴字幕分区；每场动作落定可读"
+        }
+      ]
+    },
+    {
+      "id": "photo-6",
+      "type": "video",
+      "role": "真实视频槽6",
+      "parent_id": null,
+      "z_index": 1,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "dog",
+        "description": "真实原速视频；场景局部时钟和源入点见preparation.slots；无loop/freeze"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          720,
+          1060
+        ],
+        "fit": "cover",
+        "clip": "self",
+        "style": {
+          "authority": "Scene.tsx; deterministic per-frame styles are authoritative",
+          "box_scope": "layout box is coverage envelope for photo/annotation children; independent per-scene exact rectangles in Scene.tsx"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "evaluated",
+          "visible": true,
+          "description": "Exact visibility, geometry, masking, easing and stable state are frame-evaluated in Scene.tsx; selection documents scene-local build/emphasis/handoff/reading"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "avoidance",
+          "target_id": "caption",
+          "rule": "人物/主图/注释下边不超过1084；字幕从1110开始"
+        }
+      ],
+      "fixed": [
+        "geometry",
+        "motion",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "readable-and-correct-crop",
+          "method": "Actual browser fullPage screenshots, DOM bounds and playback",
+          "pass_condition": "照片为主体，脸嘴字幕分区；每场动作落定可读"
+        }
+      ]
+    },
+    {
+      "id": "photo-7",
+      "type": "video",
+      "role": "真实视频槽7",
+      "parent_id": null,
+      "z_index": 1,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "children",
+        "description": "真实原速视频；场景局部时钟和源入点见preparation.slots；无loop/freeze"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          720,
+          1060
+        ],
+        "fit": "cover",
+        "clip": "self",
+        "style": {
+          "authority": "Scene.tsx; deterministic per-frame styles are authoritative",
+          "box_scope": "layout box is coverage envelope for photo/annotation children; independent per-scene exact rectangles in Scene.tsx"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "evaluated",
+          "visible": true,
+          "description": "Exact visibility, geometry, masking, easing and stable state are frame-evaluated in Scene.tsx; selection documents scene-local build/emphasis/handoff/reading"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "avoidance",
+          "target_id": "caption",
+          "rule": "人物/主图/注释下边不超过1084；字幕从1110开始"
+        }
+      ],
+      "fixed": [
+        "geometry",
+        "motion",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "readable-and-correct-crop",
+          "method": "Actual browser fullPage screenshots, DOM bounds and playback",
+          "pass_condition": "照片为主体，脸嘴字幕分区；每场动作落定可读"
+        }
+      ]
+    },
+    {
+      "id": "wipe-layers",
+      "type": "layer",
+      "role": "三层斜切遮挡",
+      "parent_id": null,
+      "z_index": 1,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "三层斜切遮挡"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          270,
+          720,
+          810
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Scene.tsx; deterministic per-frame styles are authoritative",
+          "box_scope": "layout box is coverage envelope for photo/annotation children; independent per-scene exact rectangles in Scene.tsx"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "evaluated",
+          "visible": true,
+          "description": "Exact visibility, geometry, masking, easing and stable state are frame-evaluated in Scene.tsx; selection documents scene-local build/emphasis/handoff/reading"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "avoidance",
+          "target_id": "caption",
+          "rule": "人物/主图/注释下边不超过1084；字幕从1110开始"
+        }
+      ],
+      "fixed": [
+        "geometry",
+        "motion",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "readable-and-correct-crop",
+          "method": "Actual browser fullPage screenshots, DOM bounds and playback",
+          "pass_condition": "照片为主体，脸嘴字幕分区；每场动作落定可读"
+        }
+      ]
+    }
+  ],
+  "slots": [
+    {
+      "id": "materialClips",
+      "element_id": "media",
+      "property": "episode.materialClips",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "count": 8,
+        "mediaType": "video",
+        "speed": 1,
+        "loop": false,
+        "freeze": false
+      },
+      "missing": "停止构建并请求同批已授权素材；不自动生成",
+      "overflow": "拒绝不合规输入；新字长/尺寸重新验收"
+    },
+    {
+      "id": "presenterClips",
+      "element_id": "presenter",
+      "property": "episode.presenterClips",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "count": 1,
+        "from": 0,
+        "to": 720,
+        "speed": 1
+      },
+      "missing": "停止构建并请求同批已授权素材；不自动生成",
+      "overflow": "拒绝不合规输入；新字长/尺寸重新验收"
+    },
+    {
+      "id": "captions",
+      "element_id": "caption",
+      "property": "episode.captions",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "maxCharsPerCue": 24,
+        "maxLines": 2,
+        "clock": "global frames"
+      },
+      "missing": "停止构建并请求同批已授权素材；不自动生成",
+      "overflow": "拒绝不合规输入；新字长/尺寸重新验收"
+    },
+    {
+      "id": "fontFamily",
+      "element_id": "headline",
+      "property": "episode.fontFamily",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "requiresLoadedTTF": true
+      },
+      "missing": "停止构建并请求同批已授权素材；不自动生成",
+      "overflow": "拒绝不合规输入；新字长/尺寸重新验收"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "implementation",
+      "source_kind": "design",
+      "source": "新视频改版实现与实际输入",
+      "locator": "Scene.tsx; preparation.slots",
+      "method": "来源读取/裁切与时钟设计，不继承照片验收",
+      "file": "Scene.tsx",
+      "sha256": "2eca8693d8739e6215b962e2ffc3ca159ceefe63319407376a00ac169e438e1b"
+    },
+    {
+      "id": "video_checks",
+      "source_kind": "measurement",
+      "source": "本期真实视频新证据",
+      "locator": ".local/chromatic-six-video-window-a/checks.json",
+      "method": "Actual identity/dependency, spec/selection, source coverage and browser clock checks",
+      "file": "../../../../.local/chromatic-six-video-window-a/checks.json",
+      "sha256": "c8cd0db8c732fadc42f4c01ec922c8770b5d39e02eeac41a0d9a761d53c4cfa7"
+    },
+    {
+      "id": "video_visual",
+      "source_kind": "observation",
+      "source": "本期真实视频新证据",
+      "locator": ".local/chromatic-six-video-window-a/evidence/06-process.jpg",
+      "method": "Actually viewed fullPage scene establish/motion/settled screenshots cropped using DOM rectangle+scroll",
+      "file": "../../../../.local/chromatic-six-video-window-a/evidence/06-process.jpg",
+      "sha256": "90f3fd2421eb0fbb8953e11ce0b9ab95efc40b4672d0d40b900ace700dccb0ea"
+    },
+    {
+      "id": "video_activity",
+      "source_kind": "measurement",
+      "source": "本期真实视频新证据",
+      "locator": ".local/chromatic-six-video-window-a/evidence/activity.json",
+      "method": "Actual source decoded pairs>=1sec plus browser clocks; manually inspected both stage-pair sheets",
+      "file": "../../../../.local/chromatic-six-video-window-a/evidence/activity.json",
+      "sha256": "62497c13c492e311fc27c99c9dd799a2ece39e38d4f4f2daae2cd073aad96874"
+    },
+    {
+      "id": "video_play",
+      "source_kind": "measurement",
+      "source": "本期真实视频新证据",
+      "locator": ".local/chromatic-six-video-window-a/evidence/playback-06.json",
+      "method": "From-head1x playback; nativeEnd video times retained separately from terminal seek; UI lag not realtime frame proof",
+      "file": "../../../../.local/chromatic-six-video-window-a/evidence/playback-06.json",
+      "sha256": "1cdcdf67dacf9e1a916af49308473c7c664a2d0786f6399fc9baf159e8aebd25"
+    },
+    {
+      "id": "video_tail",
+      "source_kind": "measurement",
+      "source": "本期真实视频新证据",
+      "locator": ".local/chromatic-six-video-window-a/evidence/tail-06.json",
+      "method": "Directed frame680->end playback and actual719 decode; source clocks inspected",
+      "file": "../../../../.local/chromatic-six-video-window-a/evidence/tail-06.json",
+      "sha256": "570c36fc1d5af73f143f090df5f7d4b576de5c3316287c0c5d387d2add626b22"
+    }
+  ],
+  "unknowns": [],
+  "validation": {
+    "structure": {
+      "status": "pass",
+      "evidence_ids": [
+        "video_checks"
+      ],
+      "note": "仅本期低清静音浏览器视频；来源覆盖、实际解码、聚合接口和身份通过"
+    },
+    "technical": {
+      "status": "pass",
+      "evidence_ids": [
+        "video_checks"
+      ],
+      "note": "仅本期低清静音浏览器视频；来源覆盖、实际解码、聚合接口和身份通过"
+    },
+    "visual": {
+      "status": "pass",
+      "evidence_ids": [
+        "video_visual",
+        "video_activity",
+        "video_play",
+        "video_tail"
+      ],
+      "note": "真实内容运动/裁切/避让与逻辑全片播放；自然ended与补定位719分开，UI负载滞后不作实时逐帧30fps结论"
+    },
+    "audio": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "新视频版本需独立验证；不继承照片版或其他候选结论"
+    },
+    "platform": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "新视频版本需独立验证；不继承照片版或其他候选结论"
+    },
+    "user_review": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "新视频版本需独立验证；不继承照片版或其他候选结论"
+    },
+    "production": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "新视频版本需独立验证；不继承照片版或其他候选结论"
+    }
+  },
+  "extensions": {
+    "avatar": {
+      "role": "supporting-window",
+      "synchronization": "同一全局720帧原速Video仅首尾可见；静音示意字幕，无口型声明",
+      "face_crop": "existing288x360 video; cover50%/35% in source-owned frame"
+    },
+    "graphic": {
+      "photoCrop": "cover; subject review needed for each replacement",
+      "embeddedBoundary": "image pixels are fixed; labels are editable layers",
+      "missing": "refuse missing assets",
+      "text_policy": "短标题最多双行；关系注释最多双行；字幕最多24字/2行，源内文字不可编辑",
+      "asset_fit": "主素材使用真实Video cover，裁切依每槽objectPosition；标签/静态材质不是运动证据"
+    },
+    "chromatic-motion": {
+      "version": 1,
+      "opening": "signature visible motion in first5s",
+      "reading": "selection.stableFrom to scene.to >=36 frames",
+      "contract": "720 frames deterministic local silent candidate; no formal production claim",
+      "rules": [
+        "scene stable hold >=36frames",
+        "one main focus per beat",
+        "same continuous presenter clock"
+      ]
+    },
+    "material_edit": {
+      "source_ranges": {
+        "episode": "episode-06.json",
+        "slots": [
+          {
+            "template": "06",
+            "scene": 0,
+            "slot": 0,
+            "src": "/assets/a/store.mp4",
+            "proxyFrames": 161,
+            "globalVisible": [
+              0,
+              41
+            ],
+            "sceneVisible": [
+              0,
+              41
+            ],
+            "sourceVisible": [
+              0,
+              41
+            ],
+            "sourceAtSceneZero": 0,
+            "speed": 1,
+            "loop": false,
+            "freeze": false,
+            "fit": "cover",
+            "objectPosition": "50% 35%"
+          },
+          {
+            "template": "06",
+            "scene": 0,
+            "slot": 1,
+            "src": "/assets/a/robot.mp4",
+            "proxyFrames": 360,
+            "globalVisible": [
+              41,
+              180
+            ],
+            "sceneVisible": [
+              41,
+              180
+            ],
+            "sourceVisible": [
+              41,
+              180
+            ],
+            "sourceAtSceneZero": 0,
+            "speed": 1,
+            "loop": false,
+            "freeze": false,
+            "fit": "cover",
+            "objectPosition": "50% 62%"
+          },
+          {
+            "template": "06",
+            "scene": 1,
+            "slot": 4,
+            "src": "/assets/a/robot.mp4",
+            "proxyFrames": 360,
+            "globalVisible": [
+              180,
+              254
+            ],
+            "sceneVisible": [
+              0,
+              74
+            ],
+            "sourceVisible": [
+              0,
+              74
+            ],
+            "sourceAtSceneZero": 0,
+            "speed": 1,
+            "loop": false,
+            "freeze": false,
+            "fit": "cover",
+            "objectPosition": "50% 62%"
+          },
+          {
+            "template": "06",
+            "scene": 1,
+            "slot": 2,
+            "src": "/assets/a/children.mp4",
+            "proxyFrames": 360,
+            "globalVisible": [
+              240,
+              420
+            ],
+            "sceneVisible": [
+              60,
+              240
+            ],
+            "sourceVisible": [
+              60,
+              240
+            ],
+            "sourceAtSceneZero": 0,
+            "speed": 1,
+            "loop": false,
+            "freeze": false,
+            "fit": "cover",
+            "objectPosition": "50% 58%"
+          },
+          {
+            "template": "06",
+            "scene": 2,
+            "slot": 6,
+            "src": "/assets/a/dog.mp4",
+            "proxyFrames": 360,
+            "globalVisible": [
+              420,
+              600
+            ],
+            "sceneVisible": [
+              0,
+              180
+            ],
+            "sourceVisible": [
+              0,
+              180
+            ],
+            "sourceAtSceneZero": 0,
+            "speed": 1,
+            "loop": false,
+            "freeze": false,
+            "fit": "cover",
+            "objectPosition": "50% 67%"
+          },
+          {
+            "template": "06",
+            "scene": 3,
+            "slot": 6,
+            "src": "/assets/a/dog.mp4",
+            "proxyFrames": 360,
+            "globalVisible": [
+              600,
+              611
+            ],
+            "sceneVisible": [
+              0,
+              11
+            ],
+            "sourceVisible": [
+              0,
+              11
+            ],
+            "sourceAtSceneZero": 0,
+            "speed": 1,
+            "loop": false,
+            "freeze": false,
+            "fit": "cover",
+            "objectPosition": "50% 67%"
+          },
+          {
+            "template": "06",
+            "scene": 3,
+            "slot": 4,
+            "src": "/assets/a/robot.mp4",
+            "proxyFrames": 360,
+            "globalVisible": [
+              611,
+              720
+            ],
+            "sceneVisible": [
+              11,
+              120
+            ],
+            "sourceVisible": [
+              251,
+              360
+            ],
+            "sourceAtSceneZero": 240,
+            "speed": 1,
+            "loop": false,
+            "freeze": false,
+            "fit": "cover",
+            "objectPosition": "50% 62%"
+          }
+        ]
+      },
+      "cut_policy": "场景局部帧驱动，源入点+局部帧；速度1，无循环/尾帧冻结；所有源窗口不超过实际解码帧数"
+    }
+  },
+  "operations": [
+    {
+      "id": "prepare-build-review",
+      "input": "既有06代理和原同源人物/字体；新episode",
+      "action": "prepare.py核SHA/完整解码/槽长度；build.cjs核冻结身份；14954内置预览",
+      "output": "两份实际episode、preparation、同源bundle与新视频证据",
+      "completion": "规格/选型、源长度、落定后内容运动、随机跳转、24秒播放至719；验收维度独立",
+      "recovery": "仅改本窗新目录及.local；复用原素材，失败定位原场景，不触发生成",
+      "entrypoint": "prepare.py; build.cjs; 06.README.md"
+    }
+  ]
+}

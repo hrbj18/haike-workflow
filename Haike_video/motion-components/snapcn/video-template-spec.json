@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "standard_version": "video-template-v1",
+  "template_id": "snapcn-component-catalogue-v1",
+  "template_version": "1.0.0",
+  "template_type": "graphic",
+  "spec_kind": "implementation",
+  "stage": "specification",
+  "authority": {
+    "runbook": "README.md",
+    "implementation_paths": ["Demo.tsx", "Gallery.tsx", "Compositions.tsx", "catalogue.json", "UPSTREAM.json", "build.cjs", "render.cjs", "../../scripts/motion_components.py", "../../scripts/motion_components_preview.py"],
+    "parameter_source": "Each upstream/registry/snap-cn/<id>/config.ts owns its dimensions, fps, frame count and controls; its index.tsx owns geometry and motion. Demo.tsx owns the fixed local demonstration bindings. Canvas below describes the default phone-frame preview, not a shared timeline for all effects."
+  },
+  "canvas": {"width": 1280, "height": 720, "fps": 30, "duration_seconds": 8, "clock": "Default phone-frame: 240 frames at 30fps. Selecting another independent composition uses that component's native config; reel-wall is 24fps and search-typing is 60fps. No speech clock and no audio.", "coordinate_system": "top_left_pixels"},
+  "narrative": {"purpose": "Browse and select 53 independent local motion demonstrations; not a complete talking-head template.", "information_hierarchy": ["Selected motion", "Chinese name and purpose", "Local media indicator", "Stable component ID"], "structure": ["Select one independent effect", "Play or scrub its native timeline", "Select the next effect"]},
+  "scenes": [{"id": "selected_effect", "start": 0, "end": 8, "purpose": "Default phone-frame demonstration; other selected effects replace this whole composition with native config timing.", "element_ids": ["effect"], "variant": "phone-frame"}],
+  "assets": [
+    {"id": "local_media", "kind": "video", "path": null, "source": "User-authorized existing local venue, robot, family and robot-dog footage; private per-run materials.json records source hashes and derived asset hashes.", "embedded_content": ["Venue signs and people remain baked into the source frames."], "rights_status": "Private demonstrations only; not redistributed with source."},
+    {"id": "local_photos", "kind": "image", "path": null, "source": "Eight stills extracted from the same authorized local videos.", "embedded_content": ["Real-world image contents are not separately editable."], "rights_status": "Private demonstrations only."},
+    {"id": "local_font", "kind": "font", "path": null, "source": "Caller-supplied local Chinese font and declared FontFace cache; per-run materials.json records hashes.", "embedded_content": [], "rights_status": "Font files remain in the local preview cache."},
+    {"id": "demo_mark", "kind": "image", "path": null, "source": "prepare_snapcn_demo.py draws a simple H demonstration symbol.", "embedded_content": ["One SVG symbol."], "rights_status": "Project-authored demonstration asset."}
+  ],
+  "elements": [{
+    "id": "effect", "type": "component", "role": "The selected native Snapcn motion component, treated as one catalogue item. Its public controls retain the original config and index.tsx as geometry and state authority.", "parent_id": null, "z_index": 1,
+    "content": {"mode": "generated", "binding": null, "asset_id": null, "description": "Demo.tsx catalogue[id].props supplies Chinese content and local assets. Subtitle timings and data values are illustrative."},
+    "layout": {"coordinate_space": "canvas", "anchor": "top_left", "box": [0, 0, 1280, 720], "fit": "none", "clip": "self", "style": {"authority": "Demo.tsx and pinned component index.tsx", "overflow": "Native component masks and the outer viewport clip apply. This is a native landscape preview; portrait reflow is not asserted."}},
+    "timing": {"relative_to": "global", "start": 0, "end": 8},
+    "states": [{"id": "native_timeline", "visible": true, "description": "Entry, transitions and exit come from the selected native source. Empty backgrounds at an authored entry/exit are part of the effect demo, not an approved talking-head scene."}],
+    "transitions": [], "constraints": [{"kind": "catalogue", "target_id": null, "rule": "Only registered free component IDs; local assets and fixed demo content; no paid provider calls."}],
+    "fixed": ["Pinned upstream identity", "Native motion and timeline", "Local-only resource policy"], "replaceable": ["Selected catalogue ID", "Authored demonstration props"],
+    "evidence_ids": ["source", "implementation"],
+    "acceptance": [{"check": "native_component_preview", "method": "Switch all 53 catalogue items and inspect three representative frames per component.", "pass_condition": "No component exception; local media visible where applicable; representative visual state matches the named effect."}]
+  }],
+  "slots": [],
+  "evidence": [
+    {"id": "source", "source_kind": "measurement", "source": "https://github.com/shadcn-labs/snapcn", "locator": "814a0ab7a69afa0c0da5499ee5ccffdbbccf950a", "method": "Pinned full free-source catalogue and per-file SHA256.", "file": "UPSTREAM.json", "sha256": null},
+    {"id": "implementation", "source_kind": "design", "source": "User requested all free components and simple local-material demonstrations.", "locator": "Demo.tsx, catalogue.json and Gallery.tsx", "method": "One preview at a time with common local media and declared font adaptation.", "file": "Demo.tsx", "sha256": null}
+  ],
+  "unknowns": [],
+  "validation": {
+    "structure": {"status": "pending", "evidence_ids": ["source", "implementation"], "note": "Run schema and local catalogue interface checks."},
+    "technical": {"status": "pending", "evidence_ids": ["implementation"], "note": "Current queue and per-component frame results are recorded privately under .local/snapcn-gallery/."},
+    "visual": {"status": "pending", "evidence_ids": ["implementation"], "note": "Actual representative-frame review is separate from successful rendering."},
+    "audio": {"status": "not_applicable", "evidence_ids": ["implementation"], "note": "Silent motion demonstrations; no new speech or music."},
+    "platform": {"status": "pending", "evidence_ids": ["implementation"], "note": "Desktop in-app browser only; social-platform and another physical machine are not validated."},
+    "user_review": {"status": "pending", "evidence_ids": ["implementation"], "note": "User will browse and choose effects."},
+    "production": {"status": "pending", "evidence_ids": ["implementation"], "note": "Local library and preview producer only; automated complete talking-head templates are a later task."}
+  },
+  "extensions": {
+    "graphic": {"text_policy": "Chinese caller-supplied local font for normal content; Latin font-shuffle sample preserves visible typeface differences. Timing for caption examples is illustrative, not ASR evidence.", "asset_fit": "Native source masks and cover/contain policies are retained. Inputs are private local footage, stills and project-authored symbol."},
+    "component_catalogue": {"contract": "53 independent variants from the exact free registry; one active variant at a time.", "rules": ["Native per-ID config overrides the default canvas fps and duration when selected.", "Demo.tsx is shared by Player and representative-frame rendering.", "No Pro components or templates are fetched.", "Google font imports use declared local fallback; explicit FontFace resources are cached locally.", "No claim of arbitrary portrait reflow or whole-video production readiness."]}
+  },
+  "operations": [{
+    "id": "local_preview",
+    "entrypoint": "../../scripts/motion_components.py list|serve; build.cjs build; registered ../../scripts/motion_components_preview.py for queued representative frames",
+    "input": "Pinned catalogue, declared extra dependencies, existing shared React/Remotion host, private local demonstration assets and materials.json.",
+    "action": "Build the local player; serve only localhost; freeze the local preview request and submit the registered queue handler; review actual images and browser behavior.",
+    "output": "Interactive effect catalogue, local query interface, per-component representative images, posters and private review evidence.",
+    "completion": "All 53 free IDs are present and playable; each has representative images; affected visual and interaction checks recorded without extrapolating to full talking-head production.",
+    "recovery": "Read private preview-job.json and original queue/log. Preserve completed images; rebuild changed code/assets into a new frozen request. No provider generation or publication is part of this action."
+  }]
+}

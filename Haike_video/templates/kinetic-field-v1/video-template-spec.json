@@ -1,0 +1,3417 @@
+{
+  "schema_version": 1,
+  "standard_version": "video-template-v1",
+  "template_id": "kinetic-field-v1",
+  "template_version": "1.0.0",
+  "template_type": "avatar",
+  "spec_kind": "implementation",
+  "stage": "ready",
+  "authority": {
+    "runbook": "README.md",
+    "implementation_paths": [
+      "index.tsx",
+      "layout.json",
+      "render.cjs",
+      "prepare.py",
+      "../../scripts/kinetic_field_preview.py",
+      "content.json",
+      "input-contract.json",
+      "content-contract.cjs",
+      "prepare_inputs.py",
+      "verify-release.cjs"
+    ],
+    "parameter_source": "layout.json"
+  },
+  "canvas": {
+    "width": 540,
+    "height": 960,
+    "fps": 24,
+    "duration_seconds": 16,
+    "clock": "16-second whole-utterance audio,24fps; source media remains original speed. Outputs8..12 and12..16 use matching presenter intervals.",
+    "coordinate_system": "top_left_pixels"
+  },
+  "narrative": {
+    "purpose": "动效模板2 · 活力现场：用户已确认五段撞色编排，按每期独立输入受控复用。",
+    "information_hierarchy": [
+      "Real subject",
+      "Persistent short topic",
+      "Sequential emphasis",
+      "Quiet supporting texture"
+    ],
+    "structure": [
+      "duo",
+      "hands",
+      "collage",
+      "location",
+      "invitation"
+    ]
+  },
+  "scenes": [
+    {
+      "id": "duo",
+      "start": 0,
+      "end": 3.2,
+      "purpose": "机器人与机器狗共同成为实拍主角",
+      "element_ids": [
+        "background",
+        "title",
+        "duo",
+        "copy-brand",
+        "copy-upperLabel",
+        "copy-lowerLabel",
+        "copy-tape",
+        "duo-upper-video",
+        "duo-lower-video",
+        "duo-split-line",
+        "duo-paper"
+      ],
+      "variant": "duo"
+    },
+    {
+      "id": "hands",
+      "start": 3.2,
+      "end": 6.6,
+      "purpose": "放大亲子互动细节，画面展示近距离体验",
+      "element_ids": [
+        "background",
+        "title",
+        "hands",
+        "copy-brand",
+        "copy-detailTitle",
+        "copy-detailLabel",
+        "hands-full-video",
+        "hands-loupe",
+        "hands-arrow",
+        "hands-progress",
+        "hands-paper"
+      ],
+      "variant": "hands"
+    },
+    {
+      "id": "collage",
+      "start": 6.6,
+      "end": 8,
+      "purpose": "把体验现场聚合成交接画面",
+      "element_ids": [
+        "background",
+        "title",
+        "collage",
+        "copy-brand",
+        "copy-collageLabel",
+        "collage-robot-photo",
+        "collage-store-photo",
+        "collage-children-photo",
+        "collage-paper"
+      ],
+      "variant": "collage"
+    },
+    {
+      "id": "location",
+      "start": 8,
+      "end": 12,
+      "purpose": "门店与真实开口人物接力，呈现楼层位置",
+      "element_ids": [
+        "background",
+        "title",
+        "location",
+        "copy-brand",
+        "copy-venue",
+        "copy-floor",
+        "copy-address",
+        "location-store-video",
+        "location-presenter-video",
+        "location-pin",
+        "location-floor-band",
+        "location-paper"
+      ],
+      "variant": "location"
+    },
+    {
+      "id": "invitation",
+      "start": 12,
+      "end": 16,
+      "purpose": "数字人作为大主体收尾，现场照片围绕并形成邀请",
+      "element_ids": [
+        "background",
+        "title",
+        "invitation",
+        "copy-brand",
+        "copy-closingTitle",
+        "copy-stamp",
+        "invitation-burst",
+        "invitation-presenter-video",
+        "invitation-photo-fan",
+        "invitation-title-band",
+        "invitation-paper"
+      ],
+      "variant": "invitation"
+    }
+  ],
+  "assets": [
+    {
+      "id": "private-media",
+      "kind": "video",
+      "path": null,
+      "source": "Private episode.json binds input-contract.json media slots bySHA; new files never alter the template.",
+      "embedded_content": [
+        "Original faces, venue signs and backgrounds; not editable speech overlays."
+      ],
+      "rights_status": "User-authorized private tests, no redistribution."
+    },
+    {
+      "id": "master-mix",
+      "kind": "audio",
+      "path": null,
+      "source": "Private public/sample.wav:16-second full-utterance mix, original speed, gain from layout.json.",
+      "embedded_content": [
+        "Existing Hou voice and music."
+      ],
+      "rights_status": "Previously authorized local reuse."
+    },
+    {
+      "id": "chinese-font",
+      "kind": "font",
+      "path": null,
+      "source": "Previously verified local NotoSC, kept private.",
+      "embedded_content": [],
+      "rights_status": "Private runtime asset."
+    }
+  ],
+  "elements": [
+    {
+      "id": "background",
+      "type": "background",
+      "role": "Persistent halftone/cobalt/coral geometry",
+      "parent_id": null,
+      "z_index": 2,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Persistent halftone/cobalt/coral geometry"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          540,
+          960
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "authority": "index.tsx scene function background"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 16
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Exact child objects, masks and states in index.tsx; no empty scene first frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "readability",
+          "target_id": null,
+          "rule": "Actual Chinese glyphs, no clipped face or caption/title collision; meaningful main media."
+        }
+      ],
+      "fixed": [
+        "Selected visual identity and frame-driven native component structure"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-scene",
+          "method": "Source-bound entry/middle/exit images and encoded output",
+          "pass_condition": "Real main subject is clear; no verbal sentences; meaning of emphasis visible; no accidental mask gaps."
+        }
+      ]
+    },
+    {
+      "id": "title",
+      "type": "text",
+      "role": "Permanent six-character topic",
+      "parent_id": null,
+      "z_index": 100,
+      "content": {
+        "mode": "editable",
+        "binding": "topic",
+        "asset_id": null,
+        "description": "Permanent six-character topic"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          540,
+          960
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "authority": "index.tsx scene function title",
+          "font": "Haike Sans/local Noto SC",
+          "font_size": 25,
+          "max_lines": 1,
+          "overflow": "Shorten topic before rendering; never shrink to unreadable size."
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 16
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Exact child objects, masks and states in index.tsx; no empty scene first frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "readability",
+          "target_id": null,
+          "rule": "Actual Chinese glyphs, no clipped face or caption/title collision; meaningful main media."
+        }
+      ],
+      "fixed": [
+        "Selected visual identity and frame-driven native component structure"
+      ],
+      "replaceable": [
+        "content.topic"
+      ],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-scene",
+          "method": "Source-bound entry/middle/exit images and encoded output",
+          "pass_condition": "Real main subject is clear; no verbal sentences; meaning of emphasis visible; no accidental mask gaps."
+        }
+      ]
+    },
+    {
+      "id": "duo",
+      "type": "media",
+      "role": "机器人与机器狗共同成为实拍主角",
+      "parent_id": null,
+      "z_index": 2,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "机器人与机器狗共同成为实拍主角"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          540,
+          960
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "authority": "index.tsx scene function duo"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 3.2
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Exact child objects, masks and states in index.tsx; no empty scene first frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "readability",
+          "target_id": null,
+          "rule": "Actual Chinese glyphs, no clipped face or caption/title collision; meaningful main media."
+        }
+      ],
+      "fixed": [
+        "Selected visual identity and frame-driven native component structure"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-scene",
+          "method": "Source-bound entry/middle/exit images and encoded output",
+          "pass_condition": "Real main subject is clear; no verbal sentences; meaning of emphasis visible; no accidental mask gaps."
+        }
+      ]
+    },
+    {
+      "id": "hands",
+      "type": "media",
+      "role": "放大亲子互动细节，画面展示近距离体验",
+      "parent_id": null,
+      "z_index": 2,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "放大亲子互动细节，画面展示近距离体验"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          540,
+          960
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "authority": "index.tsx scene function hands"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 3.2,
+        "end": 6.6
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Exact child objects, masks and states in index.tsx; no empty scene first frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "readability",
+          "target_id": null,
+          "rule": "Actual Chinese glyphs, no clipped face or caption/title collision; meaningful main media."
+        }
+      ],
+      "fixed": [
+        "Selected visual identity and frame-driven native component structure"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-scene",
+          "method": "Source-bound entry/middle/exit images and encoded output",
+          "pass_condition": "Real main subject is clear; no verbal sentences; meaning of emphasis visible; no accidental mask gaps."
+        }
+      ]
+    },
+    {
+      "id": "collage",
+      "type": "media",
+      "role": "把体验现场聚合成交接画面",
+      "parent_id": null,
+      "z_index": 2,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "把体验现场聚合成交接画面"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          540,
+          960
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "authority": "index.tsx scene function collage"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 6.6,
+        "end": 8
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Exact child objects, masks and states in index.tsx; no empty scene first frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "readability",
+          "target_id": null,
+          "rule": "Actual Chinese glyphs, no clipped face or caption/title collision; meaningful main media."
+        }
+      ],
+      "fixed": [
+        "Selected visual identity and frame-driven native component structure"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-scene",
+          "method": "Source-bound entry/middle/exit images and encoded output",
+          "pass_condition": "Real main subject is clear; no verbal sentences; meaning of emphasis visible; no accidental mask gaps."
+        }
+      ]
+    },
+    {
+      "id": "location",
+      "type": "media",
+      "role": "门店与真实开口人物接力，呈现楼层位置",
+      "parent_id": null,
+      "z_index": 2,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "门店与真实开口人物接力，呈现楼层位置"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          540,
+          960
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "authority": "index.tsx scene function location"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 8,
+        "end": 12
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Exact child objects, masks and states in index.tsx; no empty scene first frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "readability",
+          "target_id": null,
+          "rule": "Actual Chinese glyphs, no clipped face or caption/title collision; meaningful main media."
+        }
+      ],
+      "fixed": [
+        "Selected visual identity and frame-driven native component structure"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-scene",
+          "method": "Source-bound entry/middle/exit images and encoded output",
+          "pass_condition": "Real main subject is clear; no verbal sentences; meaning of emphasis visible; no accidental mask gaps."
+        }
+      ]
+    },
+    {
+      "id": "invitation",
+      "type": "media",
+      "role": "数字人作为大主体收尾，现场照片围绕并形成邀请",
+      "parent_id": null,
+      "z_index": 2,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "数字人作为大主体收尾，现场照片围绕并形成邀请"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          540,
+          960
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "authority": "index.tsx scene function invitation"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 12,
+        "end": 16
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Exact child objects, masks and states in index.tsx; no empty scene first frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "readability",
+          "target_id": null,
+          "rule": "Actual Chinese glyphs, no clipped face or caption/title collision; meaningful main media."
+        }
+      ],
+      "fixed": [
+        "Selected visual identity and frame-driven native component structure"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-scene",
+          "method": "Source-bound entry/middle/exit images and encoded output",
+          "pass_condition": "Real main subject is clear; no verbal sentences; meaning of emphasis visible; no accidental mask gaps."
+        }
+      ]
+    },
+    {
+      "id": "copy-brand",
+      "type": "text",
+      "role": "brand",
+      "parent_id": null,
+      "z_index": 100,
+      "content": {
+        "mode": "editable",
+        "binding": "brand",
+        "asset_id": null,
+        "description": "episode.content.brand"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          540,
+          960
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "authority": "index.tsx brand",
+          "font": "Haike Sans/local Noto SC",
+          "font_size": 17,
+          "max_lines": 1,
+          "overflow": "Shorten topic before rendering; never shrink to unreadable size."
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 16
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Exact child objects, masks and states in index.tsx; no empty scene first frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "readability",
+          "target_id": null,
+          "rule": "Actual Chinese glyphs, no clipped face or caption/title collision; meaningful main media."
+        }
+      ],
+      "fixed": [
+        "Selected visual identity and frame-driven native component structure"
+      ],
+      "replaceable": [
+        "content.brand"
+      ],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-scene",
+          "method": "Source-bound entry/middle/exit images and encoded output",
+          "pass_condition": "Real main subject is clear; no verbal sentences; meaning of emphasis visible; no accidental mask gaps."
+        }
+      ]
+    },
+    {
+      "id": "copy-upperLabel",
+      "type": "text",
+      "role": "upperLabel",
+      "parent_id": null,
+      "z_index": 100,
+      "content": {
+        "mode": "editable",
+        "binding": "upperLabel",
+        "asset_id": null,
+        "description": "episode.content.upperLabel"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          540,
+          960
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "authority": "index.tsx duo",
+          "font": "Haike Sans/local Noto SC",
+          "font_size": 34,
+          "max_lines": 1,
+          "overflow": "Shorten topic before rendering; never shrink to unreadable size."
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0.65,
+        "end": 3.65
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Exact child objects, masks and states in index.tsx; no empty scene first frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "readability",
+          "target_id": null,
+          "rule": "Actual Chinese glyphs, no clipped face or caption/title collision; meaningful main media."
+        }
+      ],
+      "fixed": [
+        "Selected visual identity and frame-driven native component structure"
+      ],
+      "replaceable": [
+        "content.upperLabel"
+      ],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-scene",
+          "method": "Source-bound entry/middle/exit images and encoded output",
+          "pass_condition": "Real main subject is clear; no verbal sentences; meaning of emphasis visible; no accidental mask gaps."
+        }
+      ]
+    },
+    {
+      "id": "copy-lowerLabel",
+      "type": "text",
+      "role": "lowerLabel",
+      "parent_id": null,
+      "z_index": 100,
+      "content": {
+        "mode": "editable",
+        "binding": "lowerLabel",
+        "asset_id": null,
+        "description": "episode.content.lowerLabel"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          540,
+          960
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "authority": "index.tsx duo",
+          "font": "Haike Sans/local Noto SC",
+          "font_size": 34,
+          "max_lines": 1,
+          "overflow": "Shorten topic before rendering; never shrink to unreadable size."
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 1,
+        "end": 3.65
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Exact child objects, masks and states in index.tsx; no empty scene first frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "readability",
+          "target_id": null,
+          "rule": "Actual Chinese glyphs, no clipped face or caption/title collision; meaningful main media."
+        }
+      ],
+      "fixed": [
+        "Selected visual identity and frame-driven native component structure"
+      ],
+      "replaceable": [
+        "content.lowerLabel"
+      ],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-scene",
+          "method": "Source-bound entry/middle/exit images and encoded output",
+          "pass_condition": "Real main subject is clear; no verbal sentences; meaning of emphasis visible; no accidental mask gaps."
+        }
+      ]
+    },
+    {
+      "id": "copy-tape",
+      "type": "text",
+      "role": "tape",
+      "parent_id": null,
+      "z_index": 100,
+      "content": {
+        "mode": "editable",
+        "binding": "tape",
+        "asset_id": null,
+        "description": "episode.content.tape"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          540,
+          960
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "authority": "index.tsx duo",
+          "font": "Haike Sans/local Noto SC",
+          "font_size": 24,
+          "max_lines": 1,
+          "overflow": "Shorten topic before rendering; never shrink to unreadable size."
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 2.4,
+        "end": 3.65
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Exact child objects, masks and states in index.tsx; no empty scene first frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "readability",
+          "target_id": null,
+          "rule": "Actual Chinese glyphs, no clipped face or caption/title collision; meaningful main media."
+        }
+      ],
+      "fixed": [
+        "Selected visual identity and frame-driven native component structure"
+      ],
+      "replaceable": [
+        "content.tape"
+      ],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-scene",
+          "method": "Source-bound entry/middle/exit images and encoded output",
+          "pass_condition": "Real main subject is clear; no verbal sentences; meaning of emphasis visible; no accidental mask gaps."
+        }
+      ]
+    },
+    {
+      "id": "copy-detailTitle",
+      "type": "text",
+      "role": "detailTitle",
+      "parent_id": null,
+      "z_index": 100,
+      "content": {
+        "mode": "editable",
+        "binding": "detailTitle",
+        "asset_id": null,
+        "description": "episode.content.detailTitle"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          540,
+          960
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "authority": "index.tsx hands",
+          "font": "Haike Sans/local Noto SC",
+          "font_size": 62,
+          "max_lines": 1,
+          "overflow": "Shorten topic before rendering; never shrink to unreadable size."
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 3.8,
+        "end": 6.6
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Exact child objects, masks and states in index.tsx; no empty scene first frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "readability",
+          "target_id": null,
+          "rule": "Actual Chinese glyphs, no clipped face or caption/title collision; meaningful main media."
+        }
+      ],
+      "fixed": [
+        "Selected visual identity and frame-driven native component structure"
+      ],
+      "replaceable": [
+        "content.detailTitle"
+      ],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-scene",
+          "method": "Source-bound entry/middle/exit images and encoded output",
+          "pass_condition": "Real main subject is clear; no verbal sentences; meaning of emphasis visible; no accidental mask gaps."
+        }
+      ]
+    },
+    {
+      "id": "copy-detailLabel",
+      "type": "text",
+      "role": "detailLabel",
+      "parent_id": null,
+      "z_index": 100,
+      "content": {
+        "mode": "editable",
+        "binding": "detailLabel",
+        "asset_id": null,
+        "description": "episode.content.detailLabel"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          540,
+          960
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "authority": "index.tsx hands",
+          "font": "Haike Sans/local Noto SC",
+          "font_size": 35,
+          "max_lines": 1,
+          "overflow": "Shorten topic before rendering; never shrink to unreadable size."
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 5.6,
+        "end": 6.6
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Exact child objects, masks and states in index.tsx; no empty scene first frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "readability",
+          "target_id": null,
+          "rule": "Actual Chinese glyphs, no clipped face or caption/title collision; meaningful main media."
+        }
+      ],
+      "fixed": [
+        "Selected visual identity and frame-driven native component structure"
+      ],
+      "replaceable": [
+        "content.detailLabel"
+      ],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-scene",
+          "method": "Source-bound entry/middle/exit images and encoded output",
+          "pass_condition": "Real main subject is clear; no verbal sentences; meaning of emphasis visible; no accidental mask gaps."
+        }
+      ]
+    },
+    {
+      "id": "copy-collageLabel",
+      "type": "text",
+      "role": "collageLabel",
+      "parent_id": null,
+      "z_index": 100,
+      "content": {
+        "mode": "editable",
+        "binding": "collageLabel",
+        "asset_id": null,
+        "description": "episode.content.collageLabel"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          540,
+          960
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "authority": "index.tsx collage",
+          "font": "Haike Sans/local Noto SC",
+          "font_size": 34,
+          "max_lines": 1,
+          "overflow": "Shorten topic before rendering; never shrink to unreadable size."
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 7.3,
+        "end": 8.3
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Exact child objects, masks and states in index.tsx; no empty scene first frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "readability",
+          "target_id": null,
+          "rule": "Actual Chinese glyphs, no clipped face or caption/title collision; meaningful main media."
+        }
+      ],
+      "fixed": [
+        "Selected visual identity and frame-driven native component structure"
+      ],
+      "replaceable": [
+        "content.collageLabel"
+      ],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-scene",
+          "method": "Source-bound entry/middle/exit images and encoded output",
+          "pass_condition": "Real main subject is clear; no verbal sentences; meaning of emphasis visible; no accidental mask gaps."
+        }
+      ]
+    },
+    {
+      "id": "copy-venue",
+      "type": "text",
+      "role": "venue",
+      "parent_id": null,
+      "z_index": 100,
+      "content": {
+        "mode": "editable",
+        "binding": "venue",
+        "asset_id": null,
+        "description": "episode.content.venue"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          540,
+          960
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "authority": "index.tsx location",
+          "font": "Haike Sans/local Noto SC",
+          "font_size": 45,
+          "max_lines": 1,
+          "overflow": "Shorten topic before rendering; never shrink to unreadable size."
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 9.3,
+        "end": 12
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Exact child objects, masks and states in index.tsx; no empty scene first frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "readability",
+          "target_id": null,
+          "rule": "Actual Chinese glyphs, no clipped face or caption/title collision; meaningful main media."
+        }
+      ],
+      "fixed": [
+        "Selected visual identity and frame-driven native component structure"
+      ],
+      "replaceable": [
+        "content.venue"
+      ],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-scene",
+          "method": "Source-bound entry/middle/exit images and encoded output",
+          "pass_condition": "Real main subject is clear; no verbal sentences; meaning of emphasis visible; no accidental mask gaps."
+        }
+      ]
+    },
+    {
+      "id": "copy-floor",
+      "type": "text",
+      "role": "floor",
+      "parent_id": null,
+      "z_index": 100,
+      "content": {
+        "mode": "editable",
+        "binding": "floor",
+        "asset_id": null,
+        "description": "episode.content.floor"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          540,
+          960
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "authority": "index.tsx location",
+          "font": "Haike Sans/local Noto SC",
+          "font_size": 45,
+          "max_lines": 1,
+          "overflow": "Shorten topic before rendering; never shrink to unreadable size."
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 9.3,
+        "end": 12
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Exact child objects, masks and states in index.tsx; no empty scene first frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "readability",
+          "target_id": null,
+          "rule": "Actual Chinese glyphs, no clipped face or caption/title collision; meaningful main media."
+        }
+      ],
+      "fixed": [
+        "Selected visual identity and frame-driven native component structure"
+      ],
+      "replaceable": [
+        "content.floor"
+      ],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-scene",
+          "method": "Source-bound entry/middle/exit images and encoded output",
+          "pass_condition": "Real main subject is clear; no verbal sentences; meaning of emphasis visible; no accidental mask gaps."
+        }
+      ]
+    },
+    {
+      "id": "copy-address",
+      "type": "text",
+      "role": "address",
+      "parent_id": null,
+      "z_index": 100,
+      "content": {
+        "mode": "editable",
+        "binding": "address",
+        "asset_id": null,
+        "description": "episode.content.address"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          540,
+          960
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "authority": "index.tsx location",
+          "font": "Haike Sans/local Noto SC",
+          "font_size": 23,
+          "max_lines": 1,
+          "overflow": "Shorten topic before rendering; never shrink to unreadable size."
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 7.4,
+        "end": 12
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Exact child objects, masks and states in index.tsx; no empty scene first frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "readability",
+          "target_id": null,
+          "rule": "Actual Chinese glyphs, no clipped face or caption/title collision; meaningful main media."
+        }
+      ],
+      "fixed": [
+        "Selected visual identity and frame-driven native component structure"
+      ],
+      "replaceable": [
+        "content.address"
+      ],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-scene",
+          "method": "Source-bound entry/middle/exit images and encoded output",
+          "pass_condition": "Real main subject is clear; no verbal sentences; meaning of emphasis visible; no accidental mask gaps."
+        }
+      ]
+    },
+    {
+      "id": "copy-closingTitle",
+      "type": "text",
+      "role": "closingTitle",
+      "parent_id": null,
+      "z_index": 100,
+      "content": {
+        "mode": "editable",
+        "binding": "closingTitle",
+        "asset_id": null,
+        "description": "episode.content.closingTitle"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          540,
+          960
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "authority": "index.tsx invitation",
+          "font": "Haike Sans/local Noto SC",
+          "font_size": 66,
+          "max_lines": 1,
+          "overflow": "Shorten topic before rendering; never shrink to unreadable size."
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 12.7,
+        "end": 16
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Exact child objects, masks and states in index.tsx; no empty scene first frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "readability",
+          "target_id": null,
+          "rule": "Actual Chinese glyphs, no clipped face or caption/title collision; meaningful main media."
+        }
+      ],
+      "fixed": [
+        "Selected visual identity and frame-driven native component structure"
+      ],
+      "replaceable": [
+        "content.closingTitle"
+      ],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-scene",
+          "method": "Source-bound entry/middle/exit images and encoded output",
+          "pass_condition": "Real main subject is clear; no verbal sentences; meaning of emphasis visible; no accidental mask gaps."
+        }
+      ]
+    },
+    {
+      "id": "copy-stamp",
+      "type": "text",
+      "role": "stamp",
+      "parent_id": null,
+      "z_index": 100,
+      "content": {
+        "mode": "editable",
+        "binding": "stamp",
+        "asset_id": null,
+        "description": "episode.content.stamp"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          540,
+          960
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "authority": "index.tsx invitation",
+          "font": "Haike Sans/local Noto SC",
+          "font_size": 38,
+          "max_lines": 1,
+          "overflow": "Shorten topic before rendering; never shrink to unreadable size."
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 14.4,
+        "end": 16
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Exact child objects, masks and states in index.tsx; no empty scene first frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "readability",
+          "target_id": null,
+          "rule": "Actual Chinese glyphs, no clipped face or caption/title collision; meaningful main media."
+        }
+      ],
+      "fixed": [
+        "Selected visual identity and frame-driven native component structure"
+      ],
+      "replaceable": [
+        "content.stamp"
+      ],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-scene",
+          "method": "Source-bound entry/middle/exit images and encoded output",
+          "pass_condition": "Real main subject is clear; no verbal sentences; meaning of emphasis visible; no accidental mask gaps."
+        }
+      ]
+    },
+    {
+      "id": "duo-upper-video",
+      "type": "media",
+      "role": "upper-video",
+      "parent_id": "duo",
+      "z_index": 2,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "机器人与机器狗共同成为实拍主角"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          540,
+          960
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "authority": "index.tsx duo/upper-video exact child geometry, inherited masks and global frame states"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 3.2
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Exact child objects, masks and states in index.tsx; no empty scene first frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "readability",
+          "target_id": null,
+          "rule": "Actual Chinese glyphs, no clipped face or caption/title collision; meaningful main media."
+        }
+      ],
+      "fixed": [
+        "Selected visual identity and frame-driven native component structure"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-scene",
+          "method": "Source-bound entry/middle/exit images and encoded output",
+          "pass_condition": "Real main subject is clear; no verbal sentences; meaning of emphasis visible; no accidental mask gaps."
+        }
+      ]
+    },
+    {
+      "id": "duo-lower-video",
+      "type": "media",
+      "role": "lower-video",
+      "parent_id": "duo",
+      "z_index": 2,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "机器人与机器狗共同成为实拍主角"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          540,
+          960
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "authority": "index.tsx duo/lower-video exact child geometry, inherited masks and global frame states"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 3.2
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Exact child objects, masks and states in index.tsx; no empty scene first frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "readability",
+          "target_id": null,
+          "rule": "Actual Chinese glyphs, no clipped face or caption/title collision; meaningful main media."
+        }
+      ],
+      "fixed": [
+        "Selected visual identity and frame-driven native component structure"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-scene",
+          "method": "Source-bound entry/middle/exit images and encoded output",
+          "pass_condition": "Real main subject is clear; no verbal sentences; meaning of emphasis visible; no accidental mask gaps."
+        }
+      ]
+    },
+    {
+      "id": "duo-split-line",
+      "type": "media",
+      "role": "split-line",
+      "parent_id": "duo",
+      "z_index": 2,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "机器人与机器狗共同成为实拍主角"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          540,
+          960
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "authority": "index.tsx duo/split-line exact child geometry, inherited masks and global frame states"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 3.2
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Exact child objects, masks and states in index.tsx; no empty scene first frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "readability",
+          "target_id": null,
+          "rule": "Actual Chinese glyphs, no clipped face or caption/title collision; meaningful main media."
+        }
+      ],
+      "fixed": [
+        "Selected visual identity and frame-driven native component structure"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-scene",
+          "method": "Source-bound entry/middle/exit images and encoded output",
+          "pass_condition": "Real main subject is clear; no verbal sentences; meaning of emphasis visible; no accidental mask gaps."
+        }
+      ]
+    },
+    {
+      "id": "duo-paper",
+      "type": "media",
+      "role": "paper",
+      "parent_id": "duo",
+      "z_index": 2,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "机器人与机器狗共同成为实拍主角"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          540,
+          960
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "authority": "index.tsx duo/paper exact child geometry, inherited masks and global frame states"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 3.2
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Exact child objects, masks and states in index.tsx; no empty scene first frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "readability",
+          "target_id": null,
+          "rule": "Actual Chinese glyphs, no clipped face or caption/title collision; meaningful main media."
+        }
+      ],
+      "fixed": [
+        "Selected visual identity and frame-driven native component structure"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-scene",
+          "method": "Source-bound entry/middle/exit images and encoded output",
+          "pass_condition": "Real main subject is clear; no verbal sentences; meaning of emphasis visible; no accidental mask gaps."
+        }
+      ]
+    },
+    {
+      "id": "hands-full-video",
+      "type": "media",
+      "role": "full-video",
+      "parent_id": "hands",
+      "z_index": 2,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "放大亲子互动细节，画面展示近距离体验"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          540,
+          960
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "authority": "index.tsx hands/full-video exact child geometry, inherited masks and global frame states"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 3.2,
+        "end": 6.6
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Exact child objects, masks and states in index.tsx; no empty scene first frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "readability",
+          "target_id": null,
+          "rule": "Actual Chinese glyphs, no clipped face or caption/title collision; meaningful main media."
+        }
+      ],
+      "fixed": [
+        "Selected visual identity and frame-driven native component structure"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-scene",
+          "method": "Source-bound entry/middle/exit images and encoded output",
+          "pass_condition": "Real main subject is clear; no verbal sentences; meaning of emphasis visible; no accidental mask gaps."
+        }
+      ]
+    },
+    {
+      "id": "hands-loupe",
+      "type": "media",
+      "role": "loupe",
+      "parent_id": "hands",
+      "z_index": 2,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "放大亲子互动细节，画面展示近距离体验"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          540,
+          960
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "authority": "index.tsx hands/loupe exact child geometry, inherited masks and global frame states"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 3.2,
+        "end": 6.6
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Exact child objects, masks and states in index.tsx; no empty scene first frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "readability",
+          "target_id": null,
+          "rule": "Actual Chinese glyphs, no clipped face or caption/title collision; meaningful main media."
+        }
+      ],
+      "fixed": [
+        "Selected visual identity and frame-driven native component structure"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-scene",
+          "method": "Source-bound entry/middle/exit images and encoded output",
+          "pass_condition": "Real main subject is clear; no verbal sentences; meaning of emphasis visible; no accidental mask gaps."
+        }
+      ]
+    },
+    {
+      "id": "hands-arrow",
+      "type": "media",
+      "role": "arrow",
+      "parent_id": "hands",
+      "z_index": 2,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "放大亲子互动细节，画面展示近距离体验"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          540,
+          960
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "authority": "index.tsx hands/arrow exact child geometry, inherited masks and global frame states"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 3.2,
+        "end": 6.6
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Exact child objects, masks and states in index.tsx; no empty scene first frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "readability",
+          "target_id": null,
+          "rule": "Actual Chinese glyphs, no clipped face or caption/title collision; meaningful main media."
+        }
+      ],
+      "fixed": [
+        "Selected visual identity and frame-driven native component structure"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-scene",
+          "method": "Source-bound entry/middle/exit images and encoded output",
+          "pass_condition": "Real main subject is clear; no verbal sentences; meaning of emphasis visible; no accidental mask gaps."
+        }
+      ]
+    },
+    {
+      "id": "hands-progress",
+      "type": "media",
+      "role": "progress",
+      "parent_id": "hands",
+      "z_index": 2,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "放大亲子互动细节，画面展示近距离体验"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          540,
+          960
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "authority": "index.tsx hands/progress exact child geometry, inherited masks and global frame states"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 3.2,
+        "end": 6.6
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Exact child objects, masks and states in index.tsx; no empty scene first frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "readability",
+          "target_id": null,
+          "rule": "Actual Chinese glyphs, no clipped face or caption/title collision; meaningful main media."
+        }
+      ],
+      "fixed": [
+        "Selected visual identity and frame-driven native component structure"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-scene",
+          "method": "Source-bound entry/middle/exit images and encoded output",
+          "pass_condition": "Real main subject is clear; no verbal sentences; meaning of emphasis visible; no accidental mask gaps."
+        }
+      ]
+    },
+    {
+      "id": "hands-paper",
+      "type": "media",
+      "role": "paper",
+      "parent_id": "hands",
+      "z_index": 2,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "放大亲子互动细节，画面展示近距离体验"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          540,
+          960
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "authority": "index.tsx hands/paper exact child geometry, inherited masks and global frame states"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 3.2,
+        "end": 6.6
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Exact child objects, masks and states in index.tsx; no empty scene first frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "readability",
+          "target_id": null,
+          "rule": "Actual Chinese glyphs, no clipped face or caption/title collision; meaningful main media."
+        }
+      ],
+      "fixed": [
+        "Selected visual identity and frame-driven native component structure"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-scene",
+          "method": "Source-bound entry/middle/exit images and encoded output",
+          "pass_condition": "Real main subject is clear; no verbal sentences; meaning of emphasis visible; no accidental mask gaps."
+        }
+      ]
+    },
+    {
+      "id": "collage-robot-photo",
+      "type": "media",
+      "role": "robot-photo",
+      "parent_id": "collage",
+      "z_index": 2,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "把体验现场聚合成交接画面"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          540,
+          960
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "authority": "index.tsx collage/robot-photo exact child geometry, inherited masks and global frame states"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 6.6,
+        "end": 8
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Exact child objects, masks and states in index.tsx; no empty scene first frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "readability",
+          "target_id": null,
+          "rule": "Actual Chinese glyphs, no clipped face or caption/title collision; meaningful main media."
+        }
+      ],
+      "fixed": [
+        "Selected visual identity and frame-driven native component structure"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-scene",
+          "method": "Source-bound entry/middle/exit images and encoded output",
+          "pass_condition": "Real main subject is clear; no verbal sentences; meaning of emphasis visible; no accidental mask gaps."
+        }
+      ]
+    },
+    {
+      "id": "collage-store-photo",
+      "type": "media",
+      "role": "store-photo",
+      "parent_id": "collage",
+      "z_index": 2,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "把体验现场聚合成交接画面"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          540,
+          960
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "authority": "index.tsx collage/store-photo exact child geometry, inherited masks and global frame states"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 6.6,
+        "end": 8
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Exact child objects, masks and states in index.tsx; no empty scene first frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "readability",
+          "target_id": null,
+          "rule": "Actual Chinese glyphs, no clipped face or caption/title collision; meaningful main media."
+        }
+      ],
+      "fixed": [
+        "Selected visual identity and frame-driven native component structure"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-scene",
+          "method": "Source-bound entry/middle/exit images and encoded output",
+          "pass_condition": "Real main subject is clear; no verbal sentences; meaning of emphasis visible; no accidental mask gaps."
+        }
+      ]
+    },
+    {
+      "id": "collage-children-photo",
+      "type": "media",
+      "role": "children-photo",
+      "parent_id": "collage",
+      "z_index": 2,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "把体验现场聚合成交接画面"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          540,
+          960
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "authority": "index.tsx collage/children-photo exact child geometry, inherited masks and global frame states"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 6.6,
+        "end": 8
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Exact child objects, masks and states in index.tsx; no empty scene first frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "readability",
+          "target_id": null,
+          "rule": "Actual Chinese glyphs, no clipped face or caption/title collision; meaningful main media."
+        }
+      ],
+      "fixed": [
+        "Selected visual identity and frame-driven native component structure"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-scene",
+          "method": "Source-bound entry/middle/exit images and encoded output",
+          "pass_condition": "Real main subject is clear; no verbal sentences; meaning of emphasis visible; no accidental mask gaps."
+        }
+      ]
+    },
+    {
+      "id": "collage-paper",
+      "type": "media",
+      "role": "paper",
+      "parent_id": "collage",
+      "z_index": 2,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "把体验现场聚合成交接画面"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          540,
+          960
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "authority": "index.tsx collage/paper exact child geometry, inherited masks and global frame states"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 6.6,
+        "end": 8
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Exact child objects, masks and states in index.tsx; no empty scene first frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "readability",
+          "target_id": null,
+          "rule": "Actual Chinese glyphs, no clipped face or caption/title collision; meaningful main media."
+        }
+      ],
+      "fixed": [
+        "Selected visual identity and frame-driven native component structure"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-scene",
+          "method": "Source-bound entry/middle/exit images and encoded output",
+          "pass_condition": "Real main subject is clear; no verbal sentences; meaning of emphasis visible; no accidental mask gaps."
+        }
+      ]
+    },
+    {
+      "id": "location-store-video",
+      "type": "media",
+      "role": "store-video",
+      "parent_id": "location",
+      "z_index": 2,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "门店与真实开口人物接力，呈现楼层位置"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          540,
+          960
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "authority": "index.tsx location/store-video exact child geometry, inherited masks and global frame states"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 8,
+        "end": 12
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Exact child objects, masks and states in index.tsx; no empty scene first frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "readability",
+          "target_id": null,
+          "rule": "Actual Chinese glyphs, no clipped face or caption/title collision; meaningful main media."
+        }
+      ],
+      "fixed": [
+        "Selected visual identity and frame-driven native component structure"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-scene",
+          "method": "Source-bound entry/middle/exit images and encoded output",
+          "pass_condition": "Real main subject is clear; no verbal sentences; meaning of emphasis visible; no accidental mask gaps."
+        }
+      ]
+    },
+    {
+      "id": "location-presenter-video",
+      "type": "media",
+      "role": "presenter-video",
+      "parent_id": "location",
+      "z_index": 2,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "门店与真实开口人物接力，呈现楼层位置"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          540,
+          960
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "authority": "index.tsx location/presenter-video exact child geometry, inherited masks and global frame states"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 8,
+        "end": 12
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Exact child objects, masks and states in index.tsx; no empty scene first frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "readability",
+          "target_id": null,
+          "rule": "Actual Chinese glyphs, no clipped face or caption/title collision; meaningful main media."
+        }
+      ],
+      "fixed": [
+        "Selected visual identity and frame-driven native component structure"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-scene",
+          "method": "Source-bound entry/middle/exit images and encoded output",
+          "pass_condition": "Real main subject is clear; no verbal sentences; meaning of emphasis visible; no accidental mask gaps."
+        }
+      ]
+    },
+    {
+      "id": "location-pin",
+      "type": "media",
+      "role": "pin",
+      "parent_id": "location",
+      "z_index": 2,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "门店与真实开口人物接力，呈现楼层位置"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          540,
+          960
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "authority": "index.tsx location/pin exact child geometry, inherited masks and global frame states"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 8,
+        "end": 12
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Exact child objects, masks and states in index.tsx; no empty scene first frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "readability",
+          "target_id": null,
+          "rule": "Actual Chinese glyphs, no clipped face or caption/title collision; meaningful main media."
+        }
+      ],
+      "fixed": [
+        "Selected visual identity and frame-driven native component structure"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-scene",
+          "method": "Source-bound entry/middle/exit images and encoded output",
+          "pass_condition": "Real main subject is clear; no verbal sentences; meaning of emphasis visible; no accidental mask gaps."
+        }
+      ]
+    },
+    {
+      "id": "location-floor-band",
+      "type": "media",
+      "role": "floor-band",
+      "parent_id": "location",
+      "z_index": 2,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "门店与真实开口人物接力，呈现楼层位置"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          540,
+          960
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "authority": "index.tsx location/floor-band exact child geometry, inherited masks and global frame states"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 8,
+        "end": 12
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Exact child objects, masks and states in index.tsx; no empty scene first frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "readability",
+          "target_id": null,
+          "rule": "Actual Chinese glyphs, no clipped face or caption/title collision; meaningful main media."
+        }
+      ],
+      "fixed": [
+        "Selected visual identity and frame-driven native component structure"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-scene",
+          "method": "Source-bound entry/middle/exit images and encoded output",
+          "pass_condition": "Real main subject is clear; no verbal sentences; meaning of emphasis visible; no accidental mask gaps."
+        }
+      ]
+    },
+    {
+      "id": "location-paper",
+      "type": "media",
+      "role": "paper",
+      "parent_id": "location",
+      "z_index": 2,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "门店与真实开口人物接力，呈现楼层位置"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          540,
+          960
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "authority": "index.tsx location/paper exact child geometry, inherited masks and global frame states"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 8,
+        "end": 12
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Exact child objects, masks and states in index.tsx; no empty scene first frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "readability",
+          "target_id": null,
+          "rule": "Actual Chinese glyphs, no clipped face or caption/title collision; meaningful main media."
+        }
+      ],
+      "fixed": [
+        "Selected visual identity and frame-driven native component structure"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-scene",
+          "method": "Source-bound entry/middle/exit images and encoded output",
+          "pass_condition": "Real main subject is clear; no verbal sentences; meaning of emphasis visible; no accidental mask gaps."
+        }
+      ]
+    },
+    {
+      "id": "invitation-burst",
+      "type": "media",
+      "role": "burst",
+      "parent_id": "invitation",
+      "z_index": 2,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "数字人作为大主体收尾，现场照片围绕并形成邀请"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          540,
+          960
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "authority": "index.tsx invitation/burst exact child geometry, inherited masks and global frame states"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 12,
+        "end": 16
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Exact child objects, masks and states in index.tsx; no empty scene first frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "readability",
+          "target_id": null,
+          "rule": "Actual Chinese glyphs, no clipped face or caption/title collision; meaningful main media."
+        }
+      ],
+      "fixed": [
+        "Selected visual identity and frame-driven native component structure"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-scene",
+          "method": "Source-bound entry/middle/exit images and encoded output",
+          "pass_condition": "Real main subject is clear; no verbal sentences; meaning of emphasis visible; no accidental mask gaps."
+        }
+      ]
+    },
+    {
+      "id": "invitation-presenter-video",
+      "type": "media",
+      "role": "presenter-video",
+      "parent_id": "invitation",
+      "z_index": 2,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "数字人作为大主体收尾，现场照片围绕并形成邀请"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          540,
+          960
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "authority": "index.tsx invitation/presenter-video exact child geometry, inherited masks and global frame states"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 12,
+        "end": 16
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Exact child objects, masks and states in index.tsx; no empty scene first frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "readability",
+          "target_id": null,
+          "rule": "Actual Chinese glyphs, no clipped face or caption/title collision; meaningful main media."
+        }
+      ],
+      "fixed": [
+        "Selected visual identity and frame-driven native component structure"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-scene",
+          "method": "Source-bound entry/middle/exit images and encoded output",
+          "pass_condition": "Real main subject is clear; no verbal sentences; meaning of emphasis visible; no accidental mask gaps."
+        }
+      ]
+    },
+    {
+      "id": "invitation-photo-fan",
+      "type": "media",
+      "role": "photo-fan",
+      "parent_id": "invitation",
+      "z_index": 2,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "数字人作为大主体收尾，现场照片围绕并形成邀请"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          540,
+          960
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "authority": "index.tsx invitation/photo-fan exact child geometry, inherited masks and global frame states"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 12,
+        "end": 16
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Exact child objects, masks and states in index.tsx; no empty scene first frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "readability",
+          "target_id": null,
+          "rule": "Actual Chinese glyphs, no clipped face or caption/title collision; meaningful main media."
+        }
+      ],
+      "fixed": [
+        "Selected visual identity and frame-driven native component structure"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-scene",
+          "method": "Source-bound entry/middle/exit images and encoded output",
+          "pass_condition": "Real main subject is clear; no verbal sentences; meaning of emphasis visible; no accidental mask gaps."
+        }
+      ]
+    },
+    {
+      "id": "invitation-title-band",
+      "type": "media",
+      "role": "title-band",
+      "parent_id": "invitation",
+      "z_index": 2,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "数字人作为大主体收尾，现场照片围绕并形成邀请"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          540,
+          960
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "authority": "index.tsx invitation/title-band exact child geometry, inherited masks and global frame states"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 12,
+        "end": 16
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Exact child objects, masks and states in index.tsx; no empty scene first frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "readability",
+          "target_id": null,
+          "rule": "Actual Chinese glyphs, no clipped face or caption/title collision; meaningful main media."
+        }
+      ],
+      "fixed": [
+        "Selected visual identity and frame-driven native component structure"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-scene",
+          "method": "Source-bound entry/middle/exit images and encoded output",
+          "pass_condition": "Real main subject is clear; no verbal sentences; meaning of emphasis visible; no accidental mask gaps."
+        }
+      ]
+    },
+    {
+      "id": "invitation-paper",
+      "type": "media",
+      "role": "paper",
+      "parent_id": "invitation",
+      "z_index": 2,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "数字人作为大主体收尾，现场照片围绕并形成邀请"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          540,
+          960
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "authority": "index.tsx invitation/paper exact child geometry, inherited masks and global frame states"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 12,
+        "end": 16
+      },
+      "states": [
+        {
+          "id": "active",
+          "visible": true,
+          "description": "Exact child objects, masks and states in index.tsx; no empty scene first frame."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "readability",
+          "target_id": null,
+          "rule": "Actual Chinese glyphs, no clipped face or caption/title collision; meaningful main media."
+        }
+      ],
+      "fixed": [
+        "Selected visual identity and frame-driven native component structure"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "design"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-scene",
+          "method": "Source-bound entry/middle/exit images and encoded output",
+          "pass_condition": "Real main subject is clear; no verbal sentences; meaning of emphasis visible; no accidental mask gaps."
+        }
+      ]
+    }
+  ],
+  "slots": [
+    {
+      "id": "topic",
+      "element_id": "title",
+      "property": "content.topic",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "max_chinese_equivalent_chars": 6
+      },
+      "missing": "New episodes must provide every short label; no inherited old address.",
+      "overflow": "Reject and shorten copy; no raw spoken sentences or tiny font."
+    },
+    {
+      "id": "brand",
+      "element_id": "copy-brand",
+      "property": "content.brand",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "max_chinese_equivalent_chars": 6
+      },
+      "missing": "New episodes must provide every short label; no inherited old address.",
+      "overflow": "Reject and shorten copy; no raw spoken sentences or tiny font."
+    },
+    {
+      "id": "upperLabel",
+      "element_id": "copy-upperLabel",
+      "property": "content.upperLabel",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "max_chinese_equivalent_chars": 4
+      },
+      "missing": "New episodes must provide every short label; no inherited old address.",
+      "overflow": "Reject and shorten copy; no raw spoken sentences or tiny font."
+    },
+    {
+      "id": "lowerLabel",
+      "element_id": "copy-lowerLabel",
+      "property": "content.lowerLabel",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "max_chinese_equivalent_chars": 4
+      },
+      "missing": "New episodes must provide every short label; no inherited old address.",
+      "overflow": "Reject and shorten copy; no raw spoken sentences or tiny font."
+    },
+    {
+      "id": "tape",
+      "element_id": "copy-tape",
+      "property": "content.tape",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "max_chinese_equivalent_chars": 12
+      },
+      "missing": "New episodes must provide every short label; no inherited old address.",
+      "overflow": "Reject and shorten copy; no raw spoken sentences or tiny font."
+    },
+    {
+      "id": "detailTitle",
+      "element_id": "copy-detailTitle",
+      "property": "content.detailTitle",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "max_chinese_equivalent_chars": 6
+      },
+      "missing": "New episodes must provide every short label; no inherited old address.",
+      "overflow": "Reject and shorten copy; no raw spoken sentences or tiny font."
+    },
+    {
+      "id": "detailLabel",
+      "element_id": "copy-detailLabel",
+      "property": "content.detailLabel",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "max_chinese_equivalent_chars": 9
+      },
+      "missing": "New episodes must provide every short label; no inherited old address.",
+      "overflow": "Reject and shorten copy; no raw spoken sentences or tiny font."
+    },
+    {
+      "id": "collageLabel",
+      "element_id": "copy-collageLabel",
+      "property": "content.collageLabel",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "max_chinese_equivalent_chars": 8
+      },
+      "missing": "New episodes must provide every short label; no inherited old address.",
+      "overflow": "Reject and shorten copy; no raw spoken sentences or tiny font."
+    },
+    {
+      "id": "venue",
+      "element_id": "copy-venue",
+      "property": "content.venue",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "max_chinese_equivalent_chars": 5
+      },
+      "missing": "New episodes must provide every short label; no inherited old address.",
+      "overflow": "Reject and shorten copy; no raw spoken sentences or tiny font."
+    },
+    {
+      "id": "floor",
+      "element_id": "copy-floor",
+      "property": "content.floor",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "max_chinese_equivalent_chars": 3
+      },
+      "missing": "New episodes must provide every short label; no inherited old address.",
+      "overflow": "Reject and shorten copy; no raw spoken sentences or tiny font."
+    },
+    {
+      "id": "address",
+      "element_id": "copy-address",
+      "property": "content.address",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "max_chinese_equivalent_chars": 20
+      },
+      "missing": "New episodes must provide every short label; no inherited old address.",
+      "overflow": "Reject and shorten copy; no raw spoken sentences or tiny font."
+    },
+    {
+      "id": "closingTitle",
+      "element_id": "copy-closingTitle",
+      "property": "content.closingTitle",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "max_chinese_equivalent_chars": 6
+      },
+      "missing": "New episodes must provide every short label; no inherited old address.",
+      "overflow": "Reject and shorten copy; no raw spoken sentences or tiny font."
+    },
+    {
+      "id": "stamp",
+      "element_id": "copy-stamp",
+      "property": "content.stamp",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "max_chinese_equivalent_chars": 4
+      },
+      "missing": "New episodes must provide every short label; no inherited old address.",
+      "overflow": "Reject and shorten copy; no raw spoken sentences or tiny font."
+    },
+    {
+      "id": "asset-robot-mp4",
+      "element_id": "global",
+      "property": "episode.files.robot.mp4",
+      "value_type": "asset",
+      "required": true,
+      "limits": {
+        "kind": "video",
+        "min_seconds": 3.65,
+        "role": "开场主对象，0秒开始取样"
+      },
+      "missing": "Reject before copying or rendering.",
+      "overflow": "Keep full speech; wrong duration needs separate adaptation, never automatic stretch."
+    },
+    {
+      "id": "asset-dog-mp4",
+      "element_id": "global",
+      "property": "episode.files.dog.mp4",
+      "value_type": "asset",
+      "required": true,
+      "limits": {
+        "kind": "video",
+        "min_seconds": 3.65,
+        "role": "开场第二对象，0秒开始取样"
+      },
+      "missing": "Reject before copying or rendering.",
+      "overflow": "Keep full speech; wrong duration needs separate adaptation, never automatic stretch."
+    },
+    {
+      "id": "asset-children-mp4",
+      "element_id": "global",
+      "property": "episode.files.children.mp4",
+      "value_type": "asset",
+      "required": true,
+      "limits": {
+        "kind": "video",
+        "min_seconds": 6.4,
+        "role": "互动细节，素材3秒起取；放大区须实际看帧"
+      },
+      "missing": "Reject before copying or rendering.",
+      "overflow": "Keep full speech; wrong duration needs separate adaptation, never automatic stretch."
+    },
+    {
+      "id": "asset-store-mp4",
+      "element_id": "global",
+      "property": "episode.files.store.mp4",
+      "value_type": "asset",
+      "required": true,
+      "limits": {
+        "kind": "video",
+        "min_seconds": 6.6,
+        "approved_tail_hold": {
+          "sha256": "a17c20a9d5b1e6c3fcb6a8e230ce0f0e8bfe5f1f5a7b33cb069e0b99b7aba948",
+          "min_seconds": 5.46,
+          "note": "已确认样片原片5.466667秒，末约1.2秒保留场所尾帧，人物持续开口；只允许该SHA复现，其他素材须足长"
+        },
+        "role": "场所实拍，素材2秒起取"
+      },
+      "missing": "Reject before copying or rendering.",
+      "overflow": "Keep full speech; wrong duration needs separate adaptation, never automatic stretch."
+    },
+    {
+      "id": "asset-host-close-mp4",
+      "element_id": "global",
+      "property": "episode.files.host-close.mp4",
+      "value_type": "asset",
+      "required": true,
+      "limits": {
+        "kind": "video",
+        "min_seconds": 4,
+        "role": "本期声音8–12秒对应表演，已原速预切"
+      },
+      "missing": "Reject before copying or rendering.",
+      "overflow": "Keep full speech; wrong duration needs separate adaptation, never automatic stretch."
+    },
+    {
+      "id": "asset-host-open-mp4",
+      "element_id": "global",
+      "property": "episode.files.host-open.mp4",
+      "value_type": "asset",
+      "required": true,
+      "limits": {
+        "kind": "video",
+        "min_seconds": 4,
+        "role": "本期声音12–16秒对应表演，已原速预切"
+      },
+      "missing": "Reject before copying or rendering.",
+      "overflow": "Keep full speech; wrong duration needs separate adaptation, never automatic stretch."
+    },
+    {
+      "id": "asset-robot-jpg",
+      "element_id": "global",
+      "property": "episode.files.robot.jpg",
+      "value_type": "asset",
+      "required": true,
+      "limits": {
+        "kind": "image",
+        "role": "开场对象的真实静帧"
+      },
+      "missing": "Reject before copying or rendering.",
+      "overflow": "Keep full speech; wrong duration needs separate adaptation, never automatic stretch."
+    },
+    {
+      "id": "asset-dog-jpg",
+      "element_id": "global",
+      "property": "episode.files.dog.jpg",
+      "value_type": "asset",
+      "required": true,
+      "limits": {
+        "kind": "image",
+        "role": "第二对象的真实静帧"
+      },
+      "missing": "Reject before copying or rendering.",
+      "overflow": "Keep full speech; wrong duration needs separate adaptation, never automatic stretch."
+    },
+    {
+      "id": "asset-children-jpg",
+      "element_id": "global",
+      "property": "episode.files.children.jpg",
+      "value_type": "asset",
+      "required": true,
+      "limits": {
+        "kind": "image",
+        "role": "互动现场真实静帧"
+      },
+      "missing": "Reject before copying or rendering.",
+      "overflow": "Keep full speech; wrong duration needs separate adaptation, never automatic stretch."
+    },
+    {
+      "id": "asset-store-jpg",
+      "element_id": "global",
+      "property": "episode.files.store.jpg",
+      "value_type": "asset",
+      "required": true,
+      "limits": {
+        "kind": "image",
+        "role": "场所真实静帧"
+      },
+      "missing": "Reject before copying or rendering.",
+      "overflow": "Keep full speech; wrong duration needs separate adaptation, never automatic stretch."
+    },
+    {
+      "id": "asset-font-ttf",
+      "element_id": "global",
+      "property": "episode.files.font.ttf",
+      "value_type": "asset",
+      "required": true,
+      "limits": {
+        "kind": "font",
+        "role": "既有Haike Sans中文字体"
+      },
+      "missing": "Reject before copying or rendering.",
+      "overflow": "Keep full speech; wrong duration needs separate adaptation, never automatic stretch."
+    },
+    {
+      "id": "asset-sample-wav",
+      "element_id": "global",
+      "property": "episode.files.sample.wav",
+      "value_type": "asset",
+      "required": true,
+      "limits": {
+        "kind": "audio",
+        "role": "完整16秒本期人声和配乐，不拉伸或截断原句"
+      },
+      "missing": "Reject before copying or rendering.",
+      "overflow": "Keep full speech; wrong duration needs separate adaptation, never automatic stretch."
+    }
+  ],
+  "evidence": [
+    {
+      "id": "design",
+      "source_kind": "design",
+      "source": "User asks a single test after rejecting sparse moving frames. Actual reference21..36 observed separately in private evidence.",
+      "locator": "layout.json/reference and index.tsx",
+      "method": "Reference-led portrait art direction; source-bound actual keyframe review.",
+      "file": "layout.json",
+      "sha256": null
+    },
+    {
+      "id": "accepted-baseline",
+      "source_kind": "observation",
+      "source": "Actual accepted16-second output, encoded frames, pixel comparison and explicit user confirmation; scope inAPPROVAL.json.",
+      "locator": "APPROVAL.json; private paths relative to workspace recorded there",
+      "method": "Original full decode,29 source frames/24 encoded frames; current29-frame visual regression; user message.",
+      "file": "APPROVAL.json",
+      "sha256": "9520f8d0a029d6a7d175e97b37fdca2248f183feca9e90f8355b7daca636308c"
+    }
+  ],
+  "unknowns": [],
+  "validation": {
+    "structure": {
+      "status": "pass",
+      "evidence_ids": [
+        "accepted-baseline"
+      ],
+      "note": "Approved16-second low-resolution design and exact default-content regression only; new inputs require their own review."
+    },
+    "technical": {
+      "status": "pass",
+      "evidence_ids": [
+        "accepted-baseline"
+      ],
+      "note": "Approved16-second low-resolution design and exact default-content regression only; new inputs require their own review."
+    },
+    "visual": {
+      "status": "pass",
+      "evidence_ids": [
+        "accepted-baseline"
+      ],
+      "note": "Approved16-second low-resolution design and exact default-content regression only; new inputs require their own review."
+    },
+    "audio": {
+      "status": "pending",
+      "evidence_ids": [
+        "accepted-baseline"
+      ],
+      "note": "Audio subjective acceptance, actual target phone and general formal/full-HD production not inferred from visual approval. Gallery is visible; bounded CLI queue works."
+    },
+    "platform": {
+      "status": "pending",
+      "evidence_ids": [
+        "accepted-baseline"
+      ],
+      "note": "Audio subjective acceptance, actual target phone and general formal/full-HD production not inferred from visual approval. Gallery is visible; bounded CLI queue works."
+    },
+    "user_review": {
+      "status": "pass",
+      "evidence_ids": [
+        "accepted-baseline"
+      ],
+      "note": "Approved16-second low-resolution design and exact default-content regression only; new inputs require their own review."
+    },
+    "production": {
+      "status": "pending",
+      "evidence_ids": [
+        "accepted-baseline"
+      ],
+      "note": "Audio subjective acceptance, actual target phone and general formal/full-HD production not inferred from visual approval. Gallery is visible; bounded CLI queue works."
+    }
+  },
+  "extensions": {
+    "avatar": {
+      "face_crop": "Location lower window and final oval; source original background retained, anchor50%28%/25%.",
+      "synchronization": "Per-episode master16s; host-close.mp4 locally0..4 maps8..12, host-open.mp4 locally0..4 maps12..16. Actual same-source sync reviewed each episode."
+    },
+    "material_edit": {
+      "source_ranges": "index.tsx Clip calls own exact source clocks:robot/dog0..3.65;children3..6.4;store2..6.6;photos actual1s source; avatar exact paired intervals.",
+      "cut_policy": "Real subject maintained on both sides of iris/wipe. Photos only for B-roll. No blank scene or raw speech text. Approved store SHA may hold final photograph-like frame for~1.2s while avatar continues; all new store media require6.6s. See input-contract.json."
+    },
+    "motion_language": {
+      "contract": "kinetic-field-test-v1",
+      "rules": [
+        "Sequential primary actions; paired labels count as one reveal group.",
+        "Actual reference action mapping required; no same-container repetition as richness proof."
+      ],
+      "taste_profile": {
+        "design_read": "A lively community field report: large real subjects, bold graphic punctuation and sequential motion; readable for older viewers.",
+        "visual_variance": 8,
+        "motion_intensity": 8,
+        "information_density": 4,
+        "palette_discipline": "Acid lime, cobalt and ink; coral only for a focal mark.",
+        "layout_variation": "Diagonal paired footage, immersive detail, photo cascade, location split, circular presenter.",
+        "anti_patterns": [
+          "a single repeated moving frame",
+          "spoken sentence slides",
+          "multiple competing entrance effects",
+          "blank first frames"
+        ]
+      },
+      "actions": [
+        [
+          0,
+          0.5,
+          "angled-panel-settle"
+        ],
+        [
+          0.65,
+          1.5,
+          "keyword-assemble"
+        ],
+        [
+          1.5,
+          2.15,
+          "split-divider-morph"
+        ],
+        [
+          2.4,
+          2.85,
+          "tape-reveal"
+        ],
+        [
+          3.2,
+          3.65,
+          "footage-iris"
+        ],
+        [
+          3.8,
+          4.25,
+          "short-marker"
+        ],
+        [
+          4.6,
+          5.25,
+          "detail-loupe"
+        ],
+        [
+          5.6,
+          6.05,
+          "hand-drawn-arrow"
+        ],
+        [
+          6.6,
+          7.2,
+          "photo-cascade"
+        ],
+        [
+          7.4,
+          8.3,
+          "stack-to-location"
+        ],
+        [
+          8.5,
+          9.05,
+          "pin-pop"
+        ],
+        [
+          9.3,
+          9.85,
+          "floor-strip"
+        ],
+        [
+          10.7,
+          11.2,
+          "location-focus"
+        ],
+        [
+          12,
+          12.55,
+          "portrait-disc"
+        ],
+        [
+          12.7,
+          13.4,
+          "headline-assemble"
+        ],
+        [
+          13.65,
+          14.2,
+          "photo-fan"
+        ],
+        [
+          14.4,
+          14.85,
+          "invitation-stamp"
+        ]
+      ]
+    },
+    "reuse": {
+      "contract": "kinetic-field-request-v1",
+      "rules": [
+        "Geometry, palette, scene order and all action clocks are fixed atv1.0.0.",
+        "Per-episode content and media live outside the template.",
+        "Only16-second9:16 low-resolution route is ready; longer audio,1080p and new-phone delivery need separate adaptation/verification.",
+        "release.json hashes are checked by render.cjs; modifying design requires a new version."
+      ]
+    }
+  },
+  "operations": [
+    {
+      "id": "prepare",
+      "entrypoint": "prepare_inputs.py --request <private-request.json> --data <new-private-directory> --ffprobe <runtime>",
+      "input": "All13 copy slots and12 SHA-bound media/font/audio slots; same-source avatar intervals; rights.",
+      "action": "Validate bounds/durations/identity before copying into new per-episode public folder.",
+      "output": "episode/public",
+      "completion": "Private episode/public created without modifying template or original assets.",
+      "recovery": "Existing output rejected; read episode and original queue before continuing."
+    },
+    {
+      "id": "stills",
+      "entrypoint": "../../scripts/kinetic_field_preview.py --phase stills --install-root <install> --data <private>",
+      "input": "Source/schema/assets/bundle.",
+      "action": "Owned unified queue renders critical states.",
+      "output": "stills-job and actual PNGs",
+      "completion": "Actual review of images, source-bound design-review.",
+      "recovery": "Fix source then refreeze."
+    },
+    {
+      "id": "video",
+      "entrypoint": "../../scripts/kinetic_field_preview.py --phase video --install-root <install> --data <private>",
+      "input": "Matching source-bound actual image review.",
+      "action": "Owned queue renders one16s test.",
+      "output": "MP4/proofs and local comparison page",
+      "completion": "Decode, critical frames, audio metrics; subjective acceptance remains separate.",
+      "recovery": "Read original queue/output before retry."
+    }
+  ]
+}

@@ -1,0 +1,93 @@
+import {
+  type ComponentConfig,
+  FONT_FAMILY_CONTROL,
+  FPS,
+  H,
+  W,
+} from "@/lib/customizer-config";
+
+export const phoneFrameConfig: ComponentConfig = {
+  componentName: "PhoneFrame",
+  importPath: "@/components/snap-cn/phone-frame",
+  controls: {
+    variant: {
+      type: "select",
+      default: "showcase",
+      options: ["flat", "tilt", "showcase"],
+      label: "Variant",
+    },
+    entrance: {
+      type: "select",
+      default: "float",
+      options: ["rise", "rotate-in", "float"],
+      label: "Entrance",
+    },
+    screenSrc: {
+      type: "image",
+      default: "https://media.snapcn.dev/showcase-mobile-videos/boss-energy-roundup.mp4",
+      label: "Screen (image or video)",
+    },
+    bezelColor: { type: "color", default: "#C7C9CE", label: "Bezel color" },
+    screenColor: { type: "color", default: "#0A0A0B", label: "Screen color" },
+    radius: {
+      type: "number",
+      default: 53,
+      min: 24,
+      max: 90,
+      step: 1,
+      label: "Body radius",
+    },
+    screenRadius: {
+      type: "number",
+      default: 41,
+      min: 12,
+      max: 78,
+      step: 1,
+      label: "Screen radius",
+    },
+    scale: {
+      type: "number",
+      default: 0.92,
+      min: 0.4,
+      max: 1.5,
+      step: 0.05,
+      label: "Scale",
+    },
+    tiltAngle: {
+      type: "number",
+      default: -12,
+      min: -30,
+      max: 30,
+      step: 1,
+      label: "Tilt angle",
+    },
+    showDynamicIsland: {
+      type: "boolean",
+      default: true,
+      label: "Dynamic island",
+    },
+    floatLoop: { type: "boolean", default: false, label: "Float loop" },
+    floatAmplitude: {
+      type: "number",
+      default: 6,
+      min: 0,
+      max: 20,
+      step: 1,
+      label: "Float amplitude",
+    },
+    shadow: {
+      type: "text",
+      default: "0 30px 70px rgba(16,24,40,0.28)",
+      label: "Shadow",
+    },
+    fontFamily: FONT_FAMILY_CONTROL,
+  },
+  durationInFrames: 240,
+  fps: FPS,
+  compositionWidth: W,
+  compositionHeight: H,
+  previewBackdrop: {
+    type: "gradient",
+    value: "linear-gradient(180deg, #FBFBFC 0%, #F3F4F6 60%, #ECEDF0 100%)",
+  },
+};

@@ -1,0 +1,3042 @@
+{
+  "schema": "haike.motion-replay-registry/1",
+  "templates": [
+    {
+      "template_id": "kinetic-field-v1",
+      "version": "2.0.0",
+      "gallery_id": "kinetic-field-v1",
+      "family": "numbered",
+      "number": 2,
+      "renderer": {
+        "kind": "project",
+        "entrypoint": "backlot.motion_replay_numbered_02_05_production:run",
+        "adapter": "backlot.motion_replay_numbered_02_05_full:prepare",
+        "execution": "supported"
+      },
+      "sources": [
+        {
+          "path": "Haike_video/backlot/motion_replay_field_notes_render.py",
+          "sha256": "66979a41a50384fd714dfccde3f3ccfae046da3cdc18836b634fb5b22cb0173a"
+        },
+        {
+          "path": "Haike_video/backlot/motion_replay_field_notes_video.py",
+          "sha256": "1cf248fc432410dddc64e2c367000af107a781376ac0c85d0662e3ca1b881b8c"
+        },
+        {
+          "path": "Haike_video/backlot/motion_replay_numbered_02_05_full.py",
+          "sha256": "dcd8a0be9c0188c9e24548a800ffa4f2a13764533ee579a6dfb2194d5d207de5"
+        },
+        {
+          "path": "Haike_video/backlot/motion_replay_numbered_02_05_production.py",
+          "sha256": "36b7927c1307f3547bdfb9faca819eb20abec75f8d69fc7a9504d0e7c477fe47"
+        },
+        {
+          "path": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/capture-reveal/index.tsx",
+          "sha256": "0a60de6ec2a92269428db1b93eda1635af19153e2476450f5fb12476fabcb1da"
+        },
+        {
+          "path": "Haike_video/remotion-composer/package-lock.json",
+          "sha256": "80be5141ee357725970da36d2117500fd3ac062902e04bc9fe1f1942d3596bee"
+        },
+        {
+          "path": "Haike_video/templates/animation-signatures-v2/shared.tsx",
+          "sha256": "c0afba4e266749ba6f1f1b8e280e7899adeef3cebaf6d8edfef89f21ea3112c1"
+        },
+        {
+          "path": "Haike_video/templates/chromatic-motion-lab-v1/AvatarScene.tsx",
+          "sha256": "6d824f6370f0ca003fdce1cd5fc047550de9ae9179269c44f604607ab6ca3514"
+        },
+        {
+          "path": "Haike_video/templates/chromatic-motion-lab-v1/custom-recipes/field-notes.json",
+          "sha256": "8547c0b71af0b5cd7660c7865d3430a5063d51e8dfeedbba8af93db65e2c7ab0"
+        },
+        {
+          "path": "Haike_video/templates/chromatic-motion-lab-v1/palettes.json",
+          "sha256": "d1235670824eee045cc85427f91b8b0eaa4c24c4c05bc9653ae215456cffea31"
+        },
+        {
+          "path": "Haike_video/templates/chromatic-motion-lab-v1/recipes.json",
+          "sha256": "a63b6ee705cd58d771f865bfa6e938a3c9ece869effab0a73e299f94d9d13e1a"
+        },
+        {
+          "path": "Haike_video/templates/chromatic-motion-lab-v1/RecipeStage.tsx",
+          "sha256": "19e8294b824d371d8b2ff5a9da6f71773404679baabdaddda6e8e4687da5d19a"
+        },
+        {
+          "path": "Haike_video/templates/chromatic-motion-lab-v1/runtime.ts",
+          "sha256": "743f31ab8a4aa82e50bb08f3329c9d36df6ba965f3d6e4fb88b04869fe1c3389"
+        },
+        {
+          "path": "Haike_video/templates/hum-production-v1/dynamic/motion.ts",
+          "sha256": "b1e6b38a69162e6a56ffc7e7af767a1d8f3354ea52c8abe74ed50aa1f3fed1bb"
+        },
+        {
+          "path": "Haike_video/templates/hum-production-v1/dynamic/vendor/layouts.ts",
+          "sha256": "51a04ac34423eb5de3099545274c7aacb0cae1c3ca25ee0ea9bad9bd24af2da5"
+        },
+        {
+          "path": "Haike_video/templates/hum-production-v1/vendor/remocn/parallax-depth.tsx",
+          "sha256": "6660bea1dfdd7be897b1ca6ef850edfe44d4f1cdc4a8b9432ac20998b1d8ecb6"
+        },
+        {
+          "path": "Haike_video/templates/kinetic-field-v1/content.json",
+          "sha256": "8c2b211e065e4e8d4b90722a0d761766aedc2475afd55c9b8be3bdb05549e91a"
+        },
+        {
+          "path": "Haike_video/templates/kinetic-field-v1/index.tsx",
+          "sha256": "24783cf9059804f2a9c89d7d2828dfa704896cc5c81e4a175e466c280a9ae1c9"
+        },
+        {
+          "path": "Haike_video/templates/kinetic-field-v1/layout.json",
+          "sha256": "66f37fe7c3ef3f15e8625e228f8d9fe6a1031b66c9f5b0ff8058ef5959bac3db"
+        },
+        {
+          "path": "Haike_video/templates/nana-mint-explainer-v1/index.tsx",
+          "sha256": "acb1d4eb9f67ca611bb13e503cb497e41413411100043967164ade2077676c41"
+        },
+        {
+          "path": "Haike_video/templates/nana-mint-explainer-v1/scenes/Argument.tsx",
+          "sha256": "000c5ab681b42976d8c0743ad6a0cb4be495c5daf5d88edda38791b2d8dd5a2a"
+        },
+        {
+          "path": "Haike_video/templates/nana-mint-explainer-v1/scenes/Introduction.tsx",
+          "sha256": "830af743cabff9e6f893151c221af92e11cb58596f89b0b07394f2925744c34f"
+        },
+        {
+          "path": "Haike_video/templates/nana-mint-explainer-v1/scenes/Resources.tsx",
+          "sha256": "36ca4ca4c3e018309bc1009d18760d64906717180a9ba9407889e8d074437cb3"
+        },
+        {
+          "path": "Haike_video/templates/nana-mint-explainer-v1/scenes/Workflow.tsx",
+          "sha256": "50aa920db409e25b81e962ae2e08cd974e3860524f7e2fc941946a4872f5df4f"
+        },
+        {
+          "path": "Haike_video/templates/nana-mint-explainer-v1/shared.tsx",
+          "sha256": "12b852587b04c28cce0f1379d3eadf881db13cd1758cfd9187cf45f651aa8f0e"
+        },
+        {
+          "path": "Haike_video/templates/nana-mint-explainer-v1/types.ts",
+          "sha256": "f237347c9a52db160172339cd4a257ecdaad4cbdb828b502cb65eb34a884519b"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/build_sources.py",
+          "sha256": "c0cffe9fc424f616f13d2c41bd9807bc66a624d7aa13e02027ab652c655aaa23"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/Common.tsx",
+          "sha256": "a8f0d69c0f702ebb2b2bb436c9eb9733dcde43cf2addaed2e31462ba19bcdf89"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/derivation.json",
+          "sha256": "3637f23dd4873380bb869b1c23d59af1034a7fb12201396d487f642eb348b3e1"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/FieldMedia.tsx",
+          "sha256": "3db467d82f8bb4539e4f64e87e98a50a0748fa692bd78f123235b260e4ff64c0"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/FieldNotes.tsx",
+          "sha256": "7664bb656f2381a6bf36445b0ee761f962a23410467ac76722ae42ee4006642d"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/index.tsx",
+          "sha256": "d271e55e09795ca8bd10f4bbcbebeb3df2b7eb802537a94c401da4c290824237"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/Kinetic.tsx",
+          "sha256": "7a920bd6329035caca80901d86d3a25e98a8db34d0c1fcdc1f2044dabccac3cf"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/nana/CaptureReveal.tsx",
+          "sha256": "5277a4534517c047aaddac1699ebd1b6269eea3c83b6ead9056b8bbb6e3c2db1"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/nana/index.tsx",
+          "sha256": "e86d4ed584d9b834728627545ab2178caa0cc4a4d5a2b0b740649184248840f5"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/nana/scenes/Argument.tsx",
+          "sha256": "f1a1858ad8e325eef594bb26e192482ea5488ce6c2926204bfbb05fc25dc30ae"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/nana/scenes/Introduction.tsx",
+          "sha256": "849369d77b286b3eee229d92ffeca208179cb0eff6b41c7202301b5f7f3f2788"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/nana/scenes/Resources.tsx",
+          "sha256": "1f02299e3b4160079544fe197b462b5bcb259dd519c104209aa5caf62678d975"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/nana/scenes/Workflow.tsx",
+          "sha256": "e8a99b67e6b0daf00b0fefd2f06ba1d6ed8e14eb03374c9b4ec3c137b602d11b"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/nana/shared.tsx",
+          "sha256": "9093021814cd20471db7c402f69c19c700197dc27aba2a3696669abb61421699"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/nana/types.ts",
+          "sha256": "fbc992196652ab4e356fa777d80b0d953d266f6a5d746ca524ab888ccfaae21e"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/registry.py",
+          "sha256": "dd7ea4d3d3f1c587fe3bb71bf168f69a368c492b3a7be13c5dff5745cf6ec7ee"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/render.cjs",
+          "sha256": "f7652d49d5f12aee9c6d01bfb061712e3ba4e841113235674bc23c53b6f29ba9"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/types.ts",
+          "sha256": "80308298402fa75bac7fabccb9995f30efdd0a56b3e30612908e129394f4475c"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/webpack.cjs",
+          "sha256": "c3d0a655136855503cfcd1e370715caccf14363c47af6a9dad6e25fd17e339ca"
+        },
+        {
+          "path": "Haike_video/templates/warm-workbench-v1/webpack.cjs",
+          "sha256": "cfb862a18ef029ef3d8fdd980aa6d3ac49766a9d0d63cf4a1c213a357b24551e"
+        }
+      ],
+      "objects": [
+        {
+          "id": "scene",
+          "role": "原动效和场景",
+          "authority": {
+            "path": "Haike_video/templates/numbered02-04-production-v1/Kinetic.tsx",
+            "scope": "Derived frozen native geometry/easing; source owns placement, clips follow absolute full-audio clock"
+          }
+        },
+        {
+          "id": "media",
+          "role": "连续真实视频",
+          "authority": {
+            "path": "Haike_video/templates/numbered02-04-production-v1/Kinetic.tsx",
+            "scope": "Derived frozen native geometry/easing; source owns placement, clips follow absolute full-audio clock"
+          }
+        },
+        {
+          "id": "presenter",
+          "role": "同声源真实人物窗口",
+          "authority": {
+            "path": "Haike_video/templates/numbered02-04-production-v1/Kinetic.tsx",
+            "scope": "Derived frozen native geometry/easing; source owns placement, clips follow absolute full-audio clock"
+          }
+        },
+        {
+          "id": "caption",
+          "role": "完整ASR字幕",
+          "authority": {
+            "path": "Haike_video/templates/numbered02-04-production-v1/Kinetic.tsx",
+            "scope": "Derived frozen native geometry/easing; source owns placement, clips follow absolute full-audio clock"
+          }
+        },
+        {
+          "id": "sound",
+          "role": "完整原速主声音",
+          "authority": {
+            "path": "Haike_video/templates/numbered02-04-production-v1/Kinetic.tsx",
+            "scope": "Derived frozen native geometry/easing; source owns placement, clips follow absolute full-audio clock"
+          }
+        }
+      ],
+      "actions": [
+        {
+          "id": "haike.kinetic-field-v1.video.angled-panel-settle",
+          "version": "2.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/numbered02-04-production-v1/Kinetic.tsx",
+            "symbol": "useActionWindows -> angled-panel-settle",
+            "dispatch": "Exact action windows consumed by original-derived component; unknown/partial/reordered selections rejected"
+          },
+          "objects": [
+            "scene",
+            "media",
+            "presenter",
+            "caption",
+            "sound"
+          ],
+          "parameters": {
+            "window": "episode.actions[\"haike.kinetic-field-v1.video.angled-panel-settle\"]",
+            "geometry": "bound source, not caller supplied",
+            "media": "episode.media; actual video frame clock independent from frozen geometry"
+          },
+          "phases": {
+            "entry": "actions[haike.kinetic-field-v1.video.angled-panel-settle].from",
+            "active": "actions[haike.kinetic-field-v1.video.angled-panel-settle].from/to",
+            "settled": "Original settled geometry continues while footage and master voice stay1x",
+            "exit": "owning stage.to"
+          }
+        },
+        {
+          "id": "haike.kinetic-field-v1.video.keyword-assemble",
+          "version": "2.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/numbered02-04-production-v1/Kinetic.tsx",
+            "symbol": "useActionWindows -> keyword-assemble",
+            "dispatch": "Exact action windows consumed by original-derived component; unknown/partial/reordered selections rejected"
+          },
+          "objects": [
+            "scene",
+            "media",
+            "presenter",
+            "caption",
+            "sound"
+          ],
+          "parameters": {
+            "window": "episode.actions[\"haike.kinetic-field-v1.video.keyword-assemble\"]",
+            "geometry": "bound source, not caller supplied",
+            "media": "episode.media; actual video frame clock independent from frozen geometry"
+          },
+          "phases": {
+            "entry": "actions[haike.kinetic-field-v1.video.keyword-assemble].from",
+            "active": "actions[haike.kinetic-field-v1.video.keyword-assemble].from/to",
+            "settled": "Original settled geometry continues while footage and master voice stay1x",
+            "exit": "owning stage.to"
+          }
+        },
+        {
+          "id": "haike.kinetic-field-v1.video.split-divider-morph",
+          "version": "2.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/numbered02-04-production-v1/Kinetic.tsx",
+            "symbol": "useActionWindows -> split-divider-morph",
+            "dispatch": "Exact action windows consumed by original-derived component; unknown/partial/reordered selections rejected"
+          },
+          "objects": [
+            "scene",
+            "media",
+            "presenter",
+            "caption",
+            "sound"
+          ],
+          "parameters": {
+            "window": "episode.actions[\"haike.kinetic-field-v1.video.split-divider-morph\"]",
+            "geometry": "bound source, not caller supplied",
+            "media": "episode.media; actual video frame clock independent from frozen geometry"
+          },
+          "phases": {
+            "entry": "actions[haike.kinetic-field-v1.video.split-divider-morph].from",
+            "active": "actions[haike.kinetic-field-v1.video.split-divider-morph].from/to",
+            "settled": "Original settled geometry continues while footage and master voice stay1x",
+            "exit": "owning stage.to"
+          }
+        },
+        {
+          "id": "haike.kinetic-field-v1.video.tape-reveal",
+          "version": "2.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/numbered02-04-production-v1/Kinetic.tsx",
+            "symbol": "useActionWindows -> tape-reveal",
+            "dispatch": "Exact action windows consumed by original-derived component; unknown/partial/reordered selections rejected"
+          },
+          "objects": [
+            "scene",
+            "media",
+            "presenter",
+            "caption",
+            "sound"
+          ],
+          "parameters": {
+            "window": "episode.actions[\"haike.kinetic-field-v1.video.tape-reveal\"]",
+            "geometry": "bound source, not caller supplied",
+            "media": "episode.media; actual video frame clock independent from frozen geometry"
+          },
+          "phases": {
+            "entry": "actions[haike.kinetic-field-v1.video.tape-reveal].from",
+            "active": "actions[haike.kinetic-field-v1.video.tape-reveal].from/to",
+            "settled": "Original settled geometry continues while footage and master voice stay1x",
+            "exit": "owning stage.to"
+          }
+        },
+        {
+          "id": "haike.kinetic-field-v1.video.footage-iris",
+          "version": "2.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/numbered02-04-production-v1/Kinetic.tsx",
+            "symbol": "useActionWindows -> footage-iris",
+            "dispatch": "Exact action windows consumed by original-derived component; unknown/partial/reordered selections rejected"
+          },
+          "objects": [
+            "scene",
+            "media",
+            "presenter",
+            "caption",
+            "sound"
+          ],
+          "parameters": {
+            "window": "episode.actions[\"haike.kinetic-field-v1.video.footage-iris\"]",
+            "geometry": "bound source, not caller supplied",
+            "media": "episode.media; actual video frame clock independent from frozen geometry"
+          },
+          "phases": {
+            "entry": "actions[haike.kinetic-field-v1.video.footage-iris].from",
+            "active": "actions[haike.kinetic-field-v1.video.footage-iris].from/to",
+            "settled": "Original settled geometry continues while footage and master voice stay1x",
+            "exit": "owning stage.to"
+          }
+        },
+        {
+          "id": "haike.kinetic-field-v1.video.short-marker",
+          "version": "2.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/numbered02-04-production-v1/Kinetic.tsx",
+            "symbol": "useActionWindows -> short-marker",
+            "dispatch": "Exact action windows consumed by original-derived component; unknown/partial/reordered selections rejected"
+          },
+          "objects": [
+            "scene",
+            "media",
+            "presenter",
+            "caption",
+            "sound"
+          ],
+          "parameters": {
+            "window": "episode.actions[\"haike.kinetic-field-v1.video.short-marker\"]",
+            "geometry": "bound source, not caller supplied",
+            "media": "episode.media; actual video frame clock independent from frozen geometry"
+          },
+          "phases": {
+            "entry": "actions[haike.kinetic-field-v1.video.short-marker].from",
+            "active": "actions[haike.kinetic-field-v1.video.short-marker].from/to",
+            "settled": "Original settled geometry continues while footage and master voice stay1x",
+            "exit": "owning stage.to"
+          }
+        },
+        {
+          "id": "haike.kinetic-field-v1.video.detail-loupe",
+          "version": "2.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/numbered02-04-production-v1/Kinetic.tsx",
+            "symbol": "useActionWindows -> detail-loupe",
+            "dispatch": "Exact action windows consumed by original-derived component; unknown/partial/reordered selections rejected"
+          },
+          "objects": [
+            "scene",
+            "media",
+            "presenter",
+            "caption",
+            "sound"
+          ],
+          "parameters": {
+            "window": "episode.actions[\"haike.kinetic-field-v1.video.detail-loupe\"]",
+            "geometry": "bound source, not caller supplied",
+            "media": "episode.media; actual video frame clock independent from frozen geometry"
+          },
+          "phases": {
+            "entry": "actions[haike.kinetic-field-v1.video.detail-loupe].from",
+            "active": "actions[haike.kinetic-field-v1.video.detail-loupe].from/to",
+            "settled": "Original settled geometry continues while footage and master voice stay1x",
+            "exit": "owning stage.to"
+          }
+        },
+        {
+          "id": "haike.kinetic-field-v1.video.hand-drawn-arrow",
+          "version": "2.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/numbered02-04-production-v1/Kinetic.tsx",
+            "symbol": "useActionWindows -> hand-drawn-arrow",
+            "dispatch": "Exact action windows consumed by original-derived component; unknown/partial/reordered selections rejected"
+          },
+          "objects": [
+            "scene",
+            "media",
+            "presenter",
+            "caption",
+            "sound"
+          ],
+          "parameters": {
+            "window": "episode.actions[\"haike.kinetic-field-v1.video.hand-drawn-arrow\"]",
+            "geometry": "bound source, not caller supplied",
+            "media": "episode.media; actual video frame clock independent from frozen geometry"
+          },
+          "phases": {
+            "entry": "actions[haike.kinetic-field-v1.video.hand-drawn-arrow].from",
+            "active": "actions[haike.kinetic-field-v1.video.hand-drawn-arrow].from/to",
+            "settled": "Original settled geometry continues while footage and master voice stay1x",
+            "exit": "owning stage.to"
+          }
+        },
+        {
+          "id": "haike.kinetic-field-v1.video.photo-cascade",
+          "version": "2.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/numbered02-04-production-v1/Kinetic.tsx",
+            "symbol": "useActionWindows -> photo-cascade",
+            "dispatch": "Exact action windows consumed by original-derived component; unknown/partial/reordered selections rejected"
+          },
+          "objects": [
+            "scene",
+            "media",
+            "presenter",
+            "caption",
+            "sound"
+          ],
+          "parameters": {
+            "window": "episode.actions[\"haike.kinetic-field-v1.video.photo-cascade\"]",
+            "geometry": "bound source, not caller supplied",
+            "media": "episode.media; actual video frame clock independent from frozen geometry"
+          },
+          "phases": {
+            "entry": "actions[haike.kinetic-field-v1.video.photo-cascade].from",
+            "active": "actions[haike.kinetic-field-v1.video.photo-cascade].from/to",
+            "settled": "Original settled geometry continues while footage and master voice stay1x",
+            "exit": "owning stage.to"
+          }
+        },
+        {
+          "id": "haike.kinetic-field-v1.video.stack-to-location",
+          "version": "2.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/numbered02-04-production-v1/Kinetic.tsx",
+            "symbol": "useActionWindows -> stack-to-location",
+            "dispatch": "Exact action windows consumed by original-derived component; unknown/partial/reordered selections rejected"
+          },
+          "objects": [
+            "scene",
+            "media",
+            "presenter",
+            "caption",
+            "sound"
+          ],
+          "parameters": {
+            "window": "episode.actions[\"haike.kinetic-field-v1.video.stack-to-location\"]",
+            "geometry": "bound source, not caller supplied",
+            "media": "episode.media; actual video frame clock independent from frozen geometry"
+          },
+          "phases": {
+            "entry": "actions[haike.kinetic-field-v1.video.stack-to-location].from",
+            "active": "actions[haike.kinetic-field-v1.video.stack-to-location].from/to",
+            "settled": "Original settled geometry continues while footage and master voice stay1x",
+            "exit": "owning stage.to"
+          }
+        },
+        {
+          "id": "haike.kinetic-field-v1.video.pin-pop",
+          "version": "2.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/numbered02-04-production-v1/Kinetic.tsx",
+            "symbol": "useActionWindows -> pin-pop",
+            "dispatch": "Exact action windows consumed by original-derived component; unknown/partial/reordered selections rejected"
+          },
+          "objects": [
+            "scene",
+            "media",
+            "presenter",
+            "caption",
+            "sound"
+          ],
+          "parameters": {
+            "window": "episode.actions[\"haike.kinetic-field-v1.video.pin-pop\"]",
+            "geometry": "bound source, not caller supplied",
+            "media": "episode.media; actual video frame clock independent from frozen geometry"
+          },
+          "phases": {
+            "entry": "actions[haike.kinetic-field-v1.video.pin-pop].from",
+            "active": "actions[haike.kinetic-field-v1.video.pin-pop].from/to",
+            "settled": "Original settled geometry continues while footage and master voice stay1x",
+            "exit": "owning stage.to"
+          }
+        },
+        {
+          "id": "haike.kinetic-field-v1.video.floor-strip",
+          "version": "2.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/numbered02-04-production-v1/Kinetic.tsx",
+            "symbol": "useActionWindows -> floor-strip",
+            "dispatch": "Exact action windows consumed by original-derived component; unknown/partial/reordered selections rejected"
+          },
+          "objects": [
+            "scene",
+            "media",
+            "presenter",
+            "caption",
+            "sound"
+          ],
+          "parameters": {
+            "window": "episode.actions[\"haike.kinetic-field-v1.video.floor-strip\"]",
+            "geometry": "bound source, not caller supplied",
+            "media": "episode.media; actual video frame clock independent from frozen geometry"
+          },
+          "phases": {
+            "entry": "actions[haike.kinetic-field-v1.video.floor-strip].from",
+            "active": "actions[haike.kinetic-field-v1.video.floor-strip].from/to",
+            "settled": "Original settled geometry continues while footage and master voice stay1x",
+            "exit": "owning stage.to"
+          }
+        },
+        {
+          "id": "haike.kinetic-field-v1.video.location-focus",
+          "version": "2.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/numbered02-04-production-v1/Kinetic.tsx",
+            "symbol": "useActionWindows -> location-focus",
+            "dispatch": "Exact action windows consumed by original-derived component; unknown/partial/reordered selections rejected"
+          },
+          "objects": [
+            "scene",
+            "media",
+            "presenter",
+            "caption",
+            "sound"
+          ],
+          "parameters": {
+            "window": "episode.actions[\"haike.kinetic-field-v1.video.location-focus\"]",
+            "geometry": "bound source, not caller supplied",
+            "media": "episode.media; actual video frame clock independent from frozen geometry"
+          },
+          "phases": {
+            "entry": "actions[haike.kinetic-field-v1.video.location-focus].from",
+            "active": "actions[haike.kinetic-field-v1.video.location-focus].from/to",
+            "settled": "Original settled geometry continues while footage and master voice stay1x",
+            "exit": "owning stage.to"
+          }
+        },
+        {
+          "id": "haike.kinetic-field-v1.video.portrait-disc",
+          "version": "2.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/numbered02-04-production-v1/Kinetic.tsx",
+            "symbol": "useActionWindows -> portrait-disc",
+            "dispatch": "Exact action windows consumed by original-derived component; unknown/partial/reordered selections rejected"
+          },
+          "objects": [
+            "scene",
+            "media",
+            "presenter",
+            "caption",
+            "sound"
+          ],
+          "parameters": {
+            "window": "episode.actions[\"haike.kinetic-field-v1.video.portrait-disc\"]",
+            "geometry": "bound source, not caller supplied",
+            "media": "episode.media; actual video frame clock independent from frozen geometry"
+          },
+          "phases": {
+            "entry": "actions[haike.kinetic-field-v1.video.portrait-disc].from",
+            "active": "actions[haike.kinetic-field-v1.video.portrait-disc].from/to",
+            "settled": "Original settled geometry continues while footage and master voice stay1x",
+            "exit": "owning stage.to"
+          }
+        },
+        {
+          "id": "haike.kinetic-field-v1.video.headline-assemble",
+          "version": "2.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/numbered02-04-production-v1/Kinetic.tsx",
+            "symbol": "useActionWindows -> headline-assemble",
+            "dispatch": "Exact action windows consumed by original-derived component; unknown/partial/reordered selections rejected"
+          },
+          "objects": [
+            "scene",
+            "media",
+            "presenter",
+            "caption",
+            "sound"
+          ],
+          "parameters": {
+            "window": "episode.actions[\"haike.kinetic-field-v1.video.headline-assemble\"]",
+            "geometry": "bound source, not caller supplied",
+            "media": "episode.media; actual video frame clock independent from frozen geometry"
+          },
+          "phases": {
+            "entry": "actions[haike.kinetic-field-v1.video.headline-assemble].from",
+            "active": "actions[haike.kinetic-field-v1.video.headline-assemble].from/to",
+            "settled": "Original settled geometry continues while footage and master voice stay1x",
+            "exit": "owning stage.to"
+          }
+        },
+        {
+          "id": "haike.kinetic-field-v1.video.photo-fan",
+          "version": "2.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/numbered02-04-production-v1/Kinetic.tsx",
+            "symbol": "useActionWindows -> photo-fan",
+            "dispatch": "Exact action windows consumed by original-derived component; unknown/partial/reordered selections rejected"
+          },
+          "objects": [
+            "scene",
+            "media",
+            "presenter",
+            "caption",
+            "sound"
+          ],
+          "parameters": {
+            "window": "episode.actions[\"haike.kinetic-field-v1.video.photo-fan\"]",
+            "geometry": "bound source, not caller supplied",
+            "media": "episode.media; actual video frame clock independent from frozen geometry"
+          },
+          "phases": {
+            "entry": "actions[haike.kinetic-field-v1.video.photo-fan].from",
+            "active": "actions[haike.kinetic-field-v1.video.photo-fan].from/to",
+            "settled": "Original settled geometry continues while footage and master voice stay1x",
+            "exit": "owning stage.to"
+          }
+        },
+        {
+          "id": "haike.kinetic-field-v1.video.invitation-stamp",
+          "version": "2.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/numbered02-04-production-v1/Kinetic.tsx",
+            "symbol": "useActionWindows -> invitation-stamp",
+            "dispatch": "Exact action windows consumed by original-derived component; unknown/partial/reordered selections rejected"
+          },
+          "objects": [
+            "scene",
+            "media",
+            "presenter",
+            "caption",
+            "sound"
+          ],
+          "parameters": {
+            "window": "episode.actions[\"haike.kinetic-field-v1.video.invitation-stamp\"]",
+            "geometry": "bound source, not caller supplied",
+            "media": "episode.media; actual video frame clock independent from frozen geometry"
+          },
+          "phases": {
+            "entry": "actions[haike.kinetic-field-v1.video.invitation-stamp].from",
+            "active": "actions[haike.kinetic-field-v1.video.invitation-stamp].from/to",
+            "settled": "Original settled geometry continues while footage and master voice stay1x",
+            "exit": "owning stage.to"
+          }
+        }
+      ],
+      "timeline": {
+        "mode": "semantic",
+        "clock": {
+          "fps": 24,
+          "duration": "ceil(full native narration seconds*fps)",
+          "speech_speed": 1
+        },
+        "events": [
+          {
+            "id": "angled-panel-settle",
+            "action_id": "haike.kinetic-field-v1.video.angled-panel-settle",
+            "anchor": {
+              "input_path": "episode.actions[\"haike.kinetic-field-v1.video.angled-panel-settle\"].from",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "input_path": "episode.actions[\"haike.kinetic-field-v1.video.angled-panel-settle\"]"
+            },
+            "reading": {
+              "rule": "scene retains full measured semantic passage; individual motion keeps original duration"
+            }
+          },
+          {
+            "id": "keyword-assemble",
+            "action_id": "haike.kinetic-field-v1.video.keyword-assemble",
+            "anchor": {
+              "input_path": "episode.actions[\"haike.kinetic-field-v1.video.keyword-assemble\"].from",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "input_path": "episode.actions[\"haike.kinetic-field-v1.video.keyword-assemble\"]"
+            },
+            "reading": {
+              "rule": "scene retains full measured semantic passage; individual motion keeps original duration"
+            }
+          },
+          {
+            "id": "keyword-assemble.internal.keyword.lower-pop",
+            "action_id": "haike.kinetic-field-v1.video.keyword-assemble",
+            "anchor": {
+              "source": "backlot/motion_replay_numbered_02_05_production.py:resolve_events",
+              "control": "keyword.lower-pop",
+              "stage_index": 1
+            },
+            "window": {
+              "scope": "consumed source cue or native fixed frame interval; resolved event receipt records absolute frame"
+            },
+            "reading": {
+              "until": "owning stage.to"
+            }
+          },
+          {
+            "id": "split-divider-morph",
+            "action_id": "haike.kinetic-field-v1.video.split-divider-morph",
+            "anchor": {
+              "input_path": "episode.actions[\"haike.kinetic-field-v1.video.split-divider-morph\"].from",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "input_path": "episode.actions[\"haike.kinetic-field-v1.video.split-divider-morph\"]"
+            },
+            "reading": {
+              "rule": "scene retains full measured semantic passage; individual motion keeps original duration"
+            }
+          },
+          {
+            "id": "tape-reveal",
+            "action_id": "haike.kinetic-field-v1.video.tape-reveal",
+            "anchor": {
+              "input_path": "episode.actions[\"haike.kinetic-field-v1.video.tape-reveal\"].from",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "input_path": "episode.actions[\"haike.kinetic-field-v1.video.tape-reveal\"]"
+            },
+            "reading": {
+              "rule": "scene retains full measured semantic passage; individual motion keeps original duration"
+            }
+          },
+          {
+            "id": "footage-iris",
+            "action_id": "haike.kinetic-field-v1.video.footage-iris",
+            "anchor": {
+              "input_path": "episode.actions[\"haike.kinetic-field-v1.video.footage-iris\"].from",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "input_path": "episode.actions[\"haike.kinetic-field-v1.video.footage-iris\"]"
+            },
+            "reading": {
+              "rule": "scene retains full measured semantic passage; individual motion keeps original duration"
+            }
+          },
+          {
+            "id": "short-marker",
+            "action_id": "haike.kinetic-field-v1.video.short-marker",
+            "anchor": {
+              "input_path": "episode.actions[\"haike.kinetic-field-v1.video.short-marker\"].from",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "input_path": "episode.actions[\"haike.kinetic-field-v1.video.short-marker\"]"
+            },
+            "reading": {
+              "rule": "scene retains full measured semantic passage; individual motion keeps original duration"
+            }
+          },
+          {
+            "id": "detail-loupe",
+            "action_id": "haike.kinetic-field-v1.video.detail-loupe",
+            "anchor": {
+              "input_path": "episode.actions[\"haike.kinetic-field-v1.video.detail-loupe\"].from",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "input_path": "episode.actions[\"haike.kinetic-field-v1.video.detail-loupe\"]"
+            },
+            "reading": {
+              "rule": "scene retains full measured semantic passage; individual motion keeps original duration"
+            }
+          },
+          {
+            "id": "hand-drawn-arrow",
+            "action_id": "haike.kinetic-field-v1.video.hand-drawn-arrow",
+            "anchor": {
+              "input_path": "episode.actions[\"haike.kinetic-field-v1.video.hand-drawn-arrow\"].from",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "input_path": "episode.actions[\"haike.kinetic-field-v1.video.hand-drawn-arrow\"]"
+            },
+            "reading": {
+              "rule": "scene retains full measured semantic passage; individual motion keeps original duration"
+            }
+          },
+          {
+            "id": "hand-drawn-arrow.internal.arrow.head",
+            "action_id": "haike.kinetic-field-v1.video.hand-drawn-arrow",
+            "anchor": {
+              "source": "backlot/motion_replay_numbered_02_05_production.py:resolve_events",
+              "control": "arrow.head",
+              "stage_index": 7
+            },
+            "window": {
+              "scope": "consumed source cue or native fixed frame interval; resolved event receipt records absolute frame"
+            },
+            "reading": {
+              "until": "owning stage.to"
+            }
+          },
+          {
+            "id": "photo-cascade",
+            "action_id": "haike.kinetic-field-v1.video.photo-cascade",
+            "anchor": {
+              "input_path": "episode.actions[\"haike.kinetic-field-v1.video.photo-cascade\"].from",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "input_path": "episode.actions[\"haike.kinetic-field-v1.video.photo-cascade\"]"
+            },
+            "reading": {
+              "rule": "scene retains full measured semantic passage; individual motion keeps original duration"
+            }
+          },
+          {
+            "id": "stack-to-location",
+            "action_id": "haike.kinetic-field-v1.video.stack-to-location",
+            "anchor": {
+              "input_path": "episode.actions[\"haike.kinetic-field-v1.video.stack-to-location\"].from",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "input_path": "episode.actions[\"haike.kinetic-field-v1.video.stack-to-location\"]"
+            },
+            "reading": {
+              "rule": "scene retains full measured semantic passage; individual motion keeps original duration"
+            }
+          },
+          {
+            "id": "pin-pop",
+            "action_id": "haike.kinetic-field-v1.video.pin-pop",
+            "anchor": {
+              "input_path": "episode.actions[\"haike.kinetic-field-v1.video.pin-pop\"].from",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "input_path": "episode.actions[\"haike.kinetic-field-v1.video.pin-pop\"]"
+            },
+            "reading": {
+              "rule": "scene retains full measured semantic passage; individual motion keeps original duration"
+            }
+          },
+          {
+            "id": "floor-strip",
+            "action_id": "haike.kinetic-field-v1.video.floor-strip",
+            "anchor": {
+              "input_path": "episode.actions[\"haike.kinetic-field-v1.video.floor-strip\"].from",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "input_path": "episode.actions[\"haike.kinetic-field-v1.video.floor-strip\"]"
+            },
+            "reading": {
+              "rule": "scene retains full measured semantic passage; individual motion keeps original duration"
+            }
+          },
+          {
+            "id": "location-focus",
+            "action_id": "haike.kinetic-field-v1.video.location-focus",
+            "anchor": {
+              "input_path": "episode.actions[\"haike.kinetic-field-v1.video.location-focus\"].from",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "input_path": "episode.actions[\"haike.kinetic-field-v1.video.location-focus\"]"
+            },
+            "reading": {
+              "rule": "scene retains full measured semantic passage; individual motion keeps original duration"
+            }
+          },
+          {
+            "id": "portrait-disc",
+            "action_id": "haike.kinetic-field-v1.video.portrait-disc",
+            "anchor": {
+              "input_path": "episode.actions[\"haike.kinetic-field-v1.video.portrait-disc\"].from",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "input_path": "episode.actions[\"haike.kinetic-field-v1.video.portrait-disc\"]"
+            },
+            "reading": {
+              "rule": "scene retains full measured semantic passage; individual motion keeps original duration"
+            }
+          },
+          {
+            "id": "headline-assemble",
+            "action_id": "haike.kinetic-field-v1.video.headline-assemble",
+            "anchor": {
+              "input_path": "episode.actions[\"haike.kinetic-field-v1.video.headline-assemble\"].from",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "input_path": "episode.actions[\"haike.kinetic-field-v1.video.headline-assemble\"]"
+            },
+            "reading": {
+              "rule": "scene retains full measured semantic passage; individual motion keeps original duration"
+            }
+          },
+          {
+            "id": "headline-assemble.internal.title.actual-mounted",
+            "action_id": "haike.kinetic-field-v1.video.headline-assemble",
+            "anchor": {
+              "source": "backlot/motion_replay_numbered_02_05_production.py:resolve_events",
+              "control": "title.actual-mounted",
+              "stage_index": 14
+            },
+            "window": {
+              "scope": "consumed source cue or native fixed frame interval; resolved event receipt records absolute frame"
+            },
+            "reading": {
+              "until": "owning stage.to"
+            }
+          },
+          {
+            "id": "headline-assemble.internal.title.native2word-assembled",
+            "action_id": "haike.kinetic-field-v1.video.headline-assemble",
+            "anchor": {
+              "source": "backlot/motion_replay_numbered_02_05_production.py:resolve_events",
+              "control": "title.native2word-assembled",
+              "stage_index": 14
+            },
+            "window": {
+              "scope": "consumed source cue or native fixed frame interval; resolved event receipt records absolute frame"
+            },
+            "reading": {
+              "until": "owning stage.to"
+            }
+          },
+          {
+            "id": "photo-fan",
+            "action_id": "haike.kinetic-field-v1.video.photo-fan",
+            "anchor": {
+              "input_path": "episode.actions[\"haike.kinetic-field-v1.video.photo-fan\"].from",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "input_path": "episode.actions[\"haike.kinetic-field-v1.video.photo-fan\"]"
+            },
+            "reading": {
+              "rule": "scene retains full measured semantic passage; individual motion keeps original duration"
+            }
+          },
+          {
+            "id": "invitation-stamp",
+            "action_id": "haike.kinetic-field-v1.video.invitation-stamp",
+            "anchor": {
+              "input_path": "episode.actions[\"haike.kinetic-field-v1.video.invitation-stamp\"].from",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "input_path": "episode.actions[\"haike.kinetic-field-v1.video.invitation-stamp\"]"
+            },
+            "reading": {
+              "rule": "scene retains full measured semantic passage; individual motion keeps original duration"
+            }
+          }
+        ],
+        "retiming": "真实ASR分别锚定内部事件/原场景，延长阅读与真实视频持有期，不整片等比拉长，不改变声音速度"
+      },
+      "slots": [
+        {
+          "id": "prepared",
+          "kind": "local_prepared_directory",
+          "input_path": "request.data",
+          "required": true,
+          "missing_policy": "阻断；不得照片/静音/冻结人物补长"
+        },
+        {
+          "id": "voice",
+          "kind": "complete_original_audio",
+          "input_path": "public/master.wav",
+          "required": true,
+          "missing_policy": "阻断；不得照片/静音/冻结人物补长"
+        },
+        {
+          "id": "asr",
+          "kind": "real_alignment",
+          "input_path": "reuse-source.json",
+          "required": true,
+          "missing_policy": "阻断；不得照片/静音/冻结人物补长"
+        },
+        {
+          "id": "videos",
+          "kind": "real_original_video",
+          "input_path": "episode.media",
+          "required": true,
+          "missing_policy": "阻断；不得照片/静音/冻结人物补长"
+        },
+        {
+          "id": "presenters",
+          "kind": "same_voice_hq",
+          "input_path": "episode.presenters",
+          "required": true,
+          "missing_policy": "阻断；不得照片/静音/冻结人物补长"
+        }
+      ],
+      "capabilities": {
+        "full_production": true,
+        "high_definition": [
+          1080,
+          1920
+        ],
+        "fps": 24,
+        "complete_audio": true,
+        "script_replacement": "通过完整原声音/ASR和受控原组件输入准备",
+        "reference_fidelity": "原组件源码派生并保留几何/运动公式；视频替换与标题/法律字幕适配另验，非旧媒体逐像素重播",
+        "arbitrary_action_replacement": false
+      },
+      "validation": {
+        "structure": {
+          "status": "pending",
+          "method": "strict manifest/action/source/ASR/voice-window checks",
+          "scope": "Per-template actual full output required; registration alone is not acceptance",
+          "evidence": ".local/motion-full-delivery-20261104/A/DELIVERY_INDEX.json"
+        },
+        "visual": {
+          "status": "pending",
+          "method": "actual original/reference and new semantic-state frames",
+          "scope": "Per-template actual full output required; registration alone is not acceptance",
+          "evidence": ".local/motion-full-delivery-20261104/A/DELIVERY_INDEX.json"
+        },
+        "production": {
+          "status": "pending",
+          "method": "single-lane parent/full encoded file",
+          "scope": "Per-template actual full output required; registration alone is not acceptance",
+          "evidence": ".local/motion-full-delivery-20261104/A/DELIVERY_INDEX.json"
+        },
+        "audio": {
+          "status": "pending",
+          "method": "full source/master/AAC technical and separate device listen",
+          "scope": "Per-template actual full output required; registration alone is not acceptance",
+          "evidence": ".local/motion-full-delivery-20261104/A/DELIVERY_INDEX.json"
+        }
+      }
+    },
+    {
+      "template_id": "nana-mint-explainer-v1",
+      "version": "2.0.0",
+      "gallery_id": "nana-mint-explainer-v1",
+      "family": "numbered",
+      "number": 3,
+      "renderer": {
+        "kind": "project",
+        "entrypoint": "backlot.motion_replay_numbered_02_05_production:run",
+        "adapter": "backlot.motion_replay_numbered_02_05_full:prepare",
+        "execution": "supported"
+      },
+      "sources": [
+        {
+          "path": "Haike_video/backlot/motion_replay_field_notes_render.py",
+          "sha256": "66979a41a50384fd714dfccde3f3ccfae046da3cdc18836b634fb5b22cb0173a"
+        },
+        {
+          "path": "Haike_video/backlot/motion_replay_field_notes_video.py",
+          "sha256": "1cf248fc432410dddc64e2c367000af107a781376ac0c85d0662e3ca1b881b8c"
+        },
+        {
+          "path": "Haike_video/backlot/motion_replay_numbered_02_05_full.py",
+          "sha256": "dcd8a0be9c0188c9e24548a800ffa4f2a13764533ee579a6dfb2194d5d207de5"
+        },
+        {
+          "path": "Haike_video/backlot/motion_replay_numbered_02_05_production.py",
+          "sha256": "36b7927c1307f3547bdfb9faca819eb20abec75f8d69fc7a9504d0e7c477fe47"
+        },
+        {
+          "path": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/capture-reveal/index.tsx",
+          "sha256": "0a60de6ec2a92269428db1b93eda1635af19153e2476450f5fb12476fabcb1da"
+        },
+        {
+          "path": "Haike_video/remotion-composer/package-lock.json",
+          "sha256": "80be5141ee357725970da36d2117500fd3ac062902e04bc9fe1f1942d3596bee"
+        },
+        {
+          "path": "Haike_video/templates/animation-signatures-v2/shared.tsx",
+          "sha256": "c0afba4e266749ba6f1f1b8e280e7899adeef3cebaf6d8edfef89f21ea3112c1"
+        },
+        {
+          "path": "Haike_video/templates/chromatic-motion-lab-v1/AvatarScene.tsx",
+          "sha256": "6d824f6370f0ca003fdce1cd5fc047550de9ae9179269c44f604607ab6ca3514"
+        },
+        {
+          "path": "Haike_video/templates/chromatic-motion-lab-v1/custom-recipes/field-notes.json",
+          "sha256": "8547c0b71af0b5cd7660c7865d3430a5063d51e8dfeedbba8af93db65e2c7ab0"
+        },
+        {
+          "path": "Haike_video/templates/chromatic-motion-lab-v1/palettes.json",
+          "sha256": "d1235670824eee045cc85427f91b8b0eaa4c24c4c05bc9653ae215456cffea31"
+        },
+        {
+          "path": "Haike_video/templates/chromatic-motion-lab-v1/recipes.json",
+          "sha256": "a63b6ee705cd58d771f865bfa6e938a3c9ece869effab0a73e299f94d9d13e1a"
+        },
+        {
+          "path": "Haike_video/templates/chromatic-motion-lab-v1/RecipeStage.tsx",
+          "sha256": "19e8294b824d371d8b2ff5a9da6f71773404679baabdaddda6e8e4687da5d19a"
+        },
+        {
+          "path": "Haike_video/templates/chromatic-motion-lab-v1/runtime.ts",
+          "sha256": "743f31ab8a4aa82e50bb08f3329c9d36df6ba965f3d6e4fb88b04869fe1c3389"
+        },
+        {
+          "path": "Haike_video/templates/hum-production-v1/dynamic/motion.ts",
+          "sha256": "b1e6b38a69162e6a56ffc7e7af767a1d8f3354ea52c8abe74ed50aa1f3fed1bb"
+        },
+        {
+          "path": "Haike_video/templates/hum-production-v1/dynamic/vendor/layouts.ts",
+          "sha256": "51a04ac34423eb5de3099545274c7aacb0cae1c3ca25ee0ea9bad9bd24af2da5"
+        },
+        {
+          "path": "Haike_video/templates/hum-production-v1/vendor/remocn/parallax-depth.tsx",
+          "sha256": "6660bea1dfdd7be897b1ca6ef850edfe44d4f1cdc4a8b9432ac20998b1d8ecb6"
+        },
+        {
+          "path": "Haike_video/templates/kinetic-field-v1/content.json",
+          "sha256": "8c2b211e065e4e8d4b90722a0d761766aedc2475afd55c9b8be3bdb05549e91a"
+        },
+        {
+          "path": "Haike_video/templates/kinetic-field-v1/index.tsx",
+          "sha256": "24783cf9059804f2a9c89d7d2828dfa704896cc5c81e4a175e466c280a9ae1c9"
+        },
+        {
+          "path": "Haike_video/templates/kinetic-field-v1/layout.json",
+          "sha256": "66f37fe7c3ef3f15e8625e228f8d9fe6a1031b66c9f5b0ff8058ef5959bac3db"
+        },
+        {
+          "path": "Haike_video/templates/nana-mint-explainer-v1/index.tsx",
+          "sha256": "acb1d4eb9f67ca611bb13e503cb497e41413411100043967164ade2077676c41"
+        },
+        {
+          "path": "Haike_video/templates/nana-mint-explainer-v1/scenes/Argument.tsx",
+          "sha256": "000c5ab681b42976d8c0743ad6a0cb4be495c5daf5d88edda38791b2d8dd5a2a"
+        },
+        {
+          "path": "Haike_video/templates/nana-mint-explainer-v1/scenes/Introduction.tsx",
+          "sha256": "830af743cabff9e6f893151c221af92e11cb58596f89b0b07394f2925744c34f"
+        },
+        {
+          "path": "Haike_video/templates/nana-mint-explainer-v1/scenes/Resources.tsx",
+          "sha256": "36ca4ca4c3e018309bc1009d18760d64906717180a9ba9407889e8d074437cb3"
+        },
+        {
+          "path": "Haike_video/templates/nana-mint-explainer-v1/scenes/Workflow.tsx",
+          "sha256": "50aa920db409e25b81e962ae2e08cd974e3860524f7e2fc941946a4872f5df4f"
+        },
+        {
+          "path": "Haike_video/templates/nana-mint-explainer-v1/shared.tsx",
+          "sha256": "12b852587b04c28cce0f1379d3eadf881db13cd1758cfd9187cf45f651aa8f0e"
+        },
+        {
+          "path": "Haike_video/templates/nana-mint-explainer-v1/types.ts",
+          "sha256": "f237347c9a52db160172339cd4a257ecdaad4cbdb828b502cb65eb34a884519b"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/build_sources.py",
+          "sha256": "c0cffe9fc424f616f13d2c41bd9807bc66a624d7aa13e02027ab652c655aaa23"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/Common.tsx",
+          "sha256": "a8f0d69c0f702ebb2b2bb436c9eb9733dcde43cf2addaed2e31462ba19bcdf89"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/derivation.json",
+          "sha256": "3637f23dd4873380bb869b1c23d59af1034a7fb12201396d487f642eb348b3e1"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/FieldMedia.tsx",
+          "sha256": "3db467d82f8bb4539e4f64e87e98a50a0748fa692bd78f123235b260e4ff64c0"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/FieldNotes.tsx",
+          "sha256": "7664bb656f2381a6bf36445b0ee761f962a23410467ac76722ae42ee4006642d"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/index.tsx",
+          "sha256": "d271e55e09795ca8bd10f4bbcbebeb3df2b7eb802537a94c401da4c290824237"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/Kinetic.tsx",
+          "sha256": "7a920bd6329035caca80901d86d3a25e98a8db34d0c1fcdc1f2044dabccac3cf"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/nana/CaptureReveal.tsx",
+          "sha256": "5277a4534517c047aaddac1699ebd1b6269eea3c83b6ead9056b8bbb6e3c2db1"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/nana/index.tsx",
+          "sha256": "e86d4ed584d9b834728627545ab2178caa0cc4a4d5a2b0b740649184248840f5"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/nana/scenes/Argument.tsx",
+          "sha256": "f1a1858ad8e325eef594bb26e192482ea5488ce6c2926204bfbb05fc25dc30ae"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/nana/scenes/Introduction.tsx",
+          "sha256": "849369d77b286b3eee229d92ffeca208179cb0eff6b41c7202301b5f7f3f2788"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/nana/scenes/Resources.tsx",
+          "sha256": "1f02299e3b4160079544fe197b462b5bcb259dd519c104209aa5caf62678d975"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/nana/scenes/Workflow.tsx",
+          "sha256": "e8a99b67e6b0daf00b0fefd2f06ba1d6ed8e14eb03374c9b4ec3c137b602d11b"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/nana/shared.tsx",
+          "sha256": "9093021814cd20471db7c402f69c19c700197dc27aba2a3696669abb61421699"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/nana/types.ts",
+          "sha256": "fbc992196652ab4e356fa777d80b0d953d266f6a5d746ca524ab888ccfaae21e"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/registry.py",
+          "sha256": "dd7ea4d3d3f1c587fe3bb71bf168f69a368c492b3a7be13c5dff5745cf6ec7ee"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/render.cjs",
+          "sha256": "f7652d49d5f12aee9c6d01bfb061712e3ba4e841113235674bc23c53b6f29ba9"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/types.ts",
+          "sha256": "80308298402fa75bac7fabccb9995f30efdd0a56b3e30612908e129394f4475c"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/webpack.cjs",
+          "sha256": "c3d0a655136855503cfcd1e370715caccf14363c47af6a9dad6e25fd17e339ca"
+        },
+        {
+          "path": "Haike_video/templates/warm-workbench-v1/webpack.cjs",
+          "sha256": "cfb862a18ef029ef3d8fdd980aa6d3ac49766a9d0d63cf4a1c213a357b24551e"
+        }
+      ],
+      "objects": [
+        {
+          "id": "scene",
+          "role": "原动效和场景",
+          "authority": {
+            "path": "Haike_video/templates/numbered02-04-production-v1/nana/index.tsx",
+            "scope": "Derived frozen native geometry/easing; source owns placement, clips follow absolute full-audio clock"
+          }
+        },
+        {
+          "id": "media",
+          "role": "连续真实视频",
+          "authority": {
+            "path": "Haike_video/templates/numbered02-04-production-v1/nana/index.tsx",
+            "scope": "Derived frozen native geometry/easing; source owns placement, clips follow absolute full-audio clock"
+          }
+        },
+        {
+          "id": "presenter",
+          "role": "同声源真实人物窗口",
+          "authority": {
+            "path": "Haike_video/templates/numbered02-04-production-v1/nana/index.tsx",
+            "scope": "Derived frozen native geometry/easing; source owns placement, clips follow absolute full-audio clock"
+          }
+        },
+        {
+          "id": "caption",
+          "role": "完整ASR字幕",
+          "authority": {
+            "path": "Haike_video/templates/numbered02-04-production-v1/nana/index.tsx",
+            "scope": "Derived frozen native geometry/easing; source owns placement, clips follow absolute full-audio clock"
+          }
+        },
+        {
+          "id": "sound",
+          "role": "完整原速主声音",
+          "authority": {
+            "path": "Haike_video/templates/numbered02-04-production-v1/nana/index.tsx",
+            "scope": "Derived frozen native geometry/easing; source owns placement, clips follow absolute full-audio clock"
+          }
+        }
+      ],
+      "actions": [
+        {
+          "id": "haike.nana-mint-explainer-v1.video.integration",
+          "version": "2.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/numbered02-04-production-v1/nana/index.tsx",
+            "symbol": "NanaTemplate.scenes -> integration",
+            "dispatch": "Exact action windows consumed by original-derived component; unknown/partial/reordered selections rejected"
+          },
+          "objects": [
+            "scene",
+            "media",
+            "presenter",
+            "caption",
+            "sound"
+          ],
+          "parameters": {
+            "window": "episode.actions[\"haike.nana-mint-explainer-v1.video.integration\"]",
+            "geometry": "bound source, not caller supplied",
+            "media": "episode.media; actual video frame clock independent from frozen geometry"
+          },
+          "phases": {
+            "entry": "actions[haike.nana-mint-explainer-v1.video.integration].from",
+            "active": "actions[haike.nana-mint-explainer-v1.video.integration].from/to",
+            "settled": "Original settled geometry continues while footage and master voice stay1x",
+            "exit": "owning stage.to"
+          }
+        },
+        {
+          "id": "haike.nana-mint-explainer-v1.video.terms",
+          "version": "2.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/numbered02-04-production-v1/nana/index.tsx",
+            "symbol": "NanaTemplate.scenes -> terms",
+            "dispatch": "Exact action windows consumed by original-derived component; unknown/partial/reordered selections rejected"
+          },
+          "objects": [
+            "scene",
+            "media",
+            "presenter",
+            "caption",
+            "sound"
+          ],
+          "parameters": {
+            "window": "episode.actions[\"haike.nana-mint-explainer-v1.video.terms\"]",
+            "geometry": "bound source, not caller supplied",
+            "media": "episode.media; actual video frame clock independent from frozen geometry"
+          },
+          "phases": {
+            "entry": "actions[haike.nana-mint-explainer-v1.video.terms].from",
+            "active": "actions[haike.nana-mint-explainer-v1.video.terms].from/to",
+            "settled": "Original settled geometry continues while footage and master voice stay1x",
+            "exit": "owning stage.to"
+          }
+        },
+        {
+          "id": "haike.nana-mint-explainer-v1.video.brief",
+          "version": "2.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/numbered02-04-production-v1/nana/index.tsx",
+            "symbol": "NanaTemplate.scenes -> brief",
+            "dispatch": "Exact action windows consumed by original-derived component; unknown/partial/reordered selections rejected"
+          },
+          "objects": [
+            "scene",
+            "media",
+            "presenter",
+            "caption",
+            "sound"
+          ],
+          "parameters": {
+            "window": "episode.actions[\"haike.nana-mint-explainer-v1.video.brief\"]",
+            "geometry": "bound source, not caller supplied",
+            "media": "episode.media; actual video frame clock independent from frozen geometry"
+          },
+          "phases": {
+            "entry": "actions[haike.nana-mint-explainer-v1.video.brief].from",
+            "active": "actions[haike.nana-mint-explainer-v1.video.brief].from/to",
+            "settled": "Original settled geometry continues while footage and master voice stay1x",
+            "exit": "owning stage.to"
+          }
+        },
+        {
+          "id": "haike.nana-mint-explainer-v1.video.result",
+          "version": "2.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/numbered02-04-production-v1/nana/index.tsx",
+            "symbol": "NanaTemplate.scenes -> result",
+            "dispatch": "Exact action windows consumed by original-derived component; unknown/partial/reordered selections rejected"
+          },
+          "objects": [
+            "scene",
+            "media",
+            "presenter",
+            "caption",
+            "sound"
+          ],
+          "parameters": {
+            "window": "episode.actions[\"haike.nana-mint-explainer-v1.video.result\"]",
+            "geometry": "bound source, not caller supplied",
+            "media": "episode.media; actual video frame clock independent from frozen geometry"
+          },
+          "phases": {
+            "entry": "actions[haike.nana-mint-explainer-v1.video.result].from",
+            "active": "actions[haike.nana-mint-explainer-v1.video.result].from/to",
+            "settled": "Original settled geometry continues while footage and master voice stay1x",
+            "exit": "owning stage.to"
+          }
+        },
+        {
+          "id": "haike.nana-mint-explainer-v1.video.workflow",
+          "version": "2.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/numbered02-04-production-v1/nana/index.tsx",
+            "symbol": "NanaTemplate.scenes -> workflow",
+            "dispatch": "Exact action windows consumed by original-derived component; unknown/partial/reordered selections rejected"
+          },
+          "objects": [
+            "scene",
+            "media",
+            "presenter",
+            "caption",
+            "sound"
+          ],
+          "parameters": {
+            "window": "episode.actions[\"haike.nana-mint-explainer-v1.video.workflow\"]",
+            "geometry": "bound source, not caller supplied",
+            "media": "episode.media; actual video frame clock independent from frozen geometry"
+          },
+          "phases": {
+            "entry": "actions[haike.nana-mint-explainer-v1.video.workflow].from",
+            "active": "actions[haike.nana-mint-explainer-v1.video.workflow].from/to",
+            "settled": "Original settled geometry continues while footage and master voice stay1x",
+            "exit": "owning stage.to"
+          }
+        },
+        {
+          "id": "haike.nana-mint-explainer-v1.video.compare",
+          "version": "2.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/numbered02-04-production-v1/nana/index.tsx",
+            "symbol": "NanaTemplate.scenes -> compare",
+            "dispatch": "Exact action windows consumed by original-derived component; unknown/partial/reordered selections rejected"
+          },
+          "objects": [
+            "scene",
+            "media",
+            "presenter",
+            "caption",
+            "sound"
+          ],
+          "parameters": {
+            "window": "episode.actions[\"haike.nana-mint-explainer-v1.video.compare\"]",
+            "geometry": "bound source, not caller supplied",
+            "media": "episode.media; actual video frame clock independent from frozen geometry"
+          },
+          "phases": {
+            "entry": "actions[haike.nana-mint-explainer-v1.video.compare].from",
+            "active": "actions[haike.nana-mint-explainer-v1.video.compare].from/to",
+            "settled": "Original settled geometry continues while footage and master voice stay1x",
+            "exit": "owning stage.to"
+          }
+        },
+        {
+          "id": "haike.nana-mint-explainer-v1.video.question",
+          "version": "2.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/numbered02-04-production-v1/nana/index.tsx",
+            "symbol": "NanaTemplate.scenes -> question",
+            "dispatch": "Exact action windows consumed by original-derived component; unknown/partial/reordered selections rejected"
+          },
+          "objects": [
+            "scene",
+            "media",
+            "presenter",
+            "caption",
+            "sound"
+          ],
+          "parameters": {
+            "window": "episode.actions[\"haike.nana-mint-explainer-v1.video.question\"]",
+            "geometry": "bound source, not caller supplied",
+            "media": "episode.media; actual video frame clock independent from frozen geometry"
+          },
+          "phases": {
+            "entry": "actions[haike.nana-mint-explainer-v1.video.question].from",
+            "active": "actions[haike.nana-mint-explainer-v1.video.question].from/to",
+            "settled": "Original settled geometry continues while footage and master voice stay1x",
+            "exit": "owning stage.to"
+          }
+        },
+        {
+          "id": "haike.nana-mint-explainer-v1.video.examples",
+          "version": "2.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/numbered02-04-production-v1/nana/index.tsx",
+            "symbol": "NanaTemplate.scenes -> examples",
+            "dispatch": "Exact action windows consumed by original-derived component; unknown/partial/reordered selections rejected"
+          },
+          "objects": [
+            "scene",
+            "media",
+            "presenter",
+            "caption",
+            "sound"
+          ],
+          "parameters": {
+            "window": "episode.actions[\"haike.nana-mint-explainer-v1.video.examples\"]",
+            "geometry": "bound source, not caller supplied",
+            "media": "episode.media; actual video frame clock independent from frozen geometry"
+          },
+          "phases": {
+            "entry": "actions[haike.nana-mint-explainer-v1.video.examples].from",
+            "active": "actions[haike.nana-mint-explainer-v1.video.examples].from/to",
+            "settled": "Original settled geometry continues while footage and master voice stay1x",
+            "exit": "owning stage.to"
+          }
+        },
+        {
+          "id": "haike.nana-mint-explainer-v1.video.value",
+          "version": "2.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/numbered02-04-production-v1/nana/index.tsx",
+            "symbol": "NanaTemplate.scenes -> value",
+            "dispatch": "Exact action windows consumed by original-derived component; unknown/partial/reordered selections rejected"
+          },
+          "objects": [
+            "scene",
+            "media",
+            "presenter",
+            "caption",
+            "sound"
+          ],
+          "parameters": {
+            "window": "episode.actions[\"haike.nana-mint-explainer-v1.video.value\"]",
+            "geometry": "bound source, not caller supplied",
+            "media": "episode.media; actual video frame clock independent from frozen geometry"
+          },
+          "phases": {
+            "entry": "actions[haike.nana-mint-explainer-v1.video.value].from",
+            "active": "actions[haike.nana-mint-explainer-v1.video.value].from/to",
+            "settled": "Original settled geometry continues while footage and master voice stay1x",
+            "exit": "owning stage.to"
+          }
+        },
+        {
+          "id": "haike.nana-mint-explainer-v1.video.logic",
+          "version": "2.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/numbered02-04-production-v1/nana/index.tsx",
+            "symbol": "NanaTemplate.scenes -> logic",
+            "dispatch": "Exact action windows consumed by original-derived component; unknown/partial/reordered selections rejected"
+          },
+          "objects": [
+            "scene",
+            "media",
+            "presenter",
+            "caption",
+            "sound"
+          ],
+          "parameters": {
+            "window": "episode.actions[\"haike.nana-mint-explainer-v1.video.logic\"]",
+            "geometry": "bound source, not caller supplied",
+            "media": "episode.media; actual video frame clock independent from frozen geometry"
+          },
+          "phases": {
+            "entry": "actions[haike.nana-mint-explainer-v1.video.logic].from",
+            "active": "actions[haike.nana-mint-explainer-v1.video.logic].from/to",
+            "settled": "Original settled geometry continues while footage and master voice stay1x",
+            "exit": "owning stage.to"
+          }
+        },
+        {
+          "id": "haike.nana-mint-explainer-v1.video.difference",
+          "version": "2.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/numbered02-04-production-v1/nana/index.tsx",
+            "symbol": "NanaTemplate.scenes -> difference",
+            "dispatch": "Exact action windows consumed by original-derived component; unknown/partial/reordered selections rejected"
+          },
+          "objects": [
+            "scene",
+            "media",
+            "presenter",
+            "caption",
+            "sound"
+          ],
+          "parameters": {
+            "window": "episode.actions[\"haike.nana-mint-explainer-v1.video.difference\"]",
+            "geometry": "bound source, not caller supplied",
+            "media": "episode.media; actual video frame clock independent from frozen geometry"
+          },
+          "phases": {
+            "entry": "actions[haike.nana-mint-explainer-v1.video.difference].from",
+            "active": "actions[haike.nana-mint-explainer-v1.video.difference].from/to",
+            "settled": "Original settled geometry continues while footage and master voice stay1x",
+            "exit": "owning stage.to"
+          }
+        },
+        {
+          "id": "haike.nana-mint-explainer-v1.video.course",
+          "version": "2.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/numbered02-04-production-v1/nana/index.tsx",
+            "symbol": "NanaTemplate.scenes -> course",
+            "dispatch": "Exact action windows consumed by original-derived component; unknown/partial/reordered selections rejected"
+          },
+          "objects": [
+            "scene",
+            "media",
+            "presenter",
+            "caption",
+            "sound"
+          ],
+          "parameters": {
+            "window": "episode.actions[\"haike.nana-mint-explainer-v1.video.course\"]",
+            "geometry": "bound source, not caller supplied",
+            "media": "episode.media; actual video frame clock independent from frozen geometry"
+          },
+          "phases": {
+            "entry": "actions[haike.nana-mint-explainer-v1.video.course].from",
+            "active": "actions[haike.nana-mint-explainer-v1.video.course].from/to",
+            "settled": "Original settled geometry continues while footage and master voice stay1x",
+            "exit": "owning stage.to"
+          }
+        },
+        {
+          "id": "haike.nana-mint-explainer-v1.video.closing",
+          "version": "2.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/numbered02-04-production-v1/nana/index.tsx",
+            "symbol": "NanaTemplate.scenes -> closing",
+            "dispatch": "Exact action windows consumed by original-derived component; unknown/partial/reordered selections rejected"
+          },
+          "objects": [
+            "scene",
+            "media",
+            "presenter",
+            "caption",
+            "sound"
+          ],
+          "parameters": {
+            "window": "episode.actions[\"haike.nana-mint-explainer-v1.video.closing\"]",
+            "geometry": "bound source, not caller supplied",
+            "media": "episode.media; actual video frame clock independent from frozen geometry"
+          },
+          "phases": {
+            "entry": "actions[haike.nana-mint-explainer-v1.video.closing].from",
+            "active": "actions[haike.nana-mint-explainer-v1.video.closing].from/to",
+            "settled": "Original settled geometry continues while footage and master voice stay1x",
+            "exit": "owning stage.to"
+          }
+        }
+      ],
+      "timeline": {
+        "mode": "semantic",
+        "clock": {
+          "fps": 30,
+          "duration": "ceil(full native narration seconds*fps)",
+          "speech_speed": 1
+        },
+        "events": [
+          {
+            "id": "integration",
+            "action_id": "haike.nana-mint-explainer-v1.video.integration",
+            "anchor": {
+              "input_path": "episode.actions[\"haike.nana-mint-explainer-v1.video.integration\"].from",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "input_path": "episode.actions[\"haike.nana-mint-explainer-v1.video.integration\"]"
+            },
+            "reading": {
+              "rule": "scene retains full measured semantic passage; individual motion keeps original duration"
+            }
+          },
+          {
+            "id": "integration.internal.partner",
+            "action_id": "haike.nana-mint-explainer-v1.video.integration",
+            "anchor": {
+              "source": "backlot/motion_replay_numbered_02_05_production.py:resolve_events",
+              "control": "partner",
+              "stage_index": 0
+            },
+            "window": {
+              "scope": "consumed source cue or native fixed frame interval; resolved event receipt records absolute frame"
+            },
+            "reading": {
+              "until": "owning stage.to"
+            }
+          },
+          {
+            "id": "integration.internal.arrow",
+            "action_id": "haike.nana-mint-explainer-v1.video.integration",
+            "anchor": {
+              "source": "backlot/motion_replay_numbered_02_05_production.py:resolve_events",
+              "control": "arrow",
+              "stage_index": 0
+            },
+            "window": {
+              "scope": "consumed source cue or native fixed frame interval; resolved event receipt records absolute frame"
+            },
+            "reading": {
+              "until": "owning stage.to"
+            }
+          },
+          {
+            "id": "terms",
+            "action_id": "haike.nana-mint-explainer-v1.video.terms",
+            "anchor": {
+              "input_path": "episode.actions[\"haike.nana-mint-explainer-v1.video.terms\"].from",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "input_path": "episode.actions[\"haike.nana-mint-explainer-v1.video.terms\"]"
+            },
+            "reading": {
+              "rule": "scene retains full measured semantic passage; individual motion keeps original duration"
+            }
+          },
+          {
+            "id": "brief",
+            "action_id": "haike.nana-mint-explainer-v1.video.brief",
+            "anchor": {
+              "input_path": "episode.actions[\"haike.nana-mint-explainer-v1.video.brief\"].from",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "input_path": "episode.actions[\"haike.nana-mint-explainer-v1.video.brief\"]"
+            },
+            "reading": {
+              "rule": "scene retains full measured semantic passage; individual motion keeps original duration"
+            }
+          },
+          {
+            "id": "brief.internal.presenter",
+            "action_id": "haike.nana-mint-explainer-v1.video.brief",
+            "anchor": {
+              "source": "backlot/motion_replay_numbered_02_05_production.py:resolve_events",
+              "control": "presenter",
+              "stage_index": 2
+            },
+            "window": {
+              "scope": "consumed source cue or native fixed frame interval; resolved event receipt records absolute frame"
+            },
+            "reading": {
+              "until": "owning stage.to"
+            }
+          },
+          {
+            "id": "brief.internal.labelStart",
+            "action_id": "haike.nana-mint-explainer-v1.video.brief",
+            "anchor": {
+              "source": "backlot/motion_replay_numbered_02_05_production.py:resolve_events",
+              "control": "labelStart",
+              "stage_index": 2
+            },
+            "window": {
+              "scope": "consumed source cue or native fixed frame interval; resolved event receipt records absolute frame"
+            },
+            "reading": {
+              "until": "owning stage.to"
+            }
+          },
+          {
+            "id": "brief.internal.labelStagger",
+            "action_id": "haike.nana-mint-explainer-v1.video.brief",
+            "anchor": {
+              "source": "backlot/motion_replay_numbered_02_05_production.py:resolve_events",
+              "control": "labelStagger",
+              "stage_index": 2
+            },
+            "window": {
+              "scope": "consumed source cue or native fixed frame interval; resolved event receipt records absolute frame"
+            },
+            "reading": {
+              "until": "owning stage.to"
+            }
+          },
+          {
+            "id": "result",
+            "action_id": "haike.nana-mint-explainer-v1.video.result",
+            "anchor": {
+              "input_path": "episode.actions[\"haike.nana-mint-explainer-v1.video.result\"].from",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "input_path": "episode.actions[\"haike.nana-mint-explainer-v1.video.result\"]"
+            },
+            "reading": {
+              "rule": "scene retains full measured semantic passage; individual motion keeps original duration"
+            }
+          },
+          {
+            "id": "workflow",
+            "action_id": "haike.nana-mint-explainer-v1.video.workflow",
+            "anchor": {
+              "input_path": "episode.actions[\"haike.nana-mint-explainer-v1.video.workflow\"].from",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "input_path": "episode.actions[\"haike.nana-mint-explainer-v1.video.workflow\"]"
+            },
+            "reading": {
+              "rule": "scene retains full measured semantic passage; individual motion keeps original duration"
+            }
+          },
+          {
+            "id": "workflow.internal.prompt",
+            "action_id": "haike.nana-mint-explainer-v1.video.workflow",
+            "anchor": {
+              "source": "backlot/motion_replay_numbered_02_05_production.py:resolve_events",
+              "control": "prompt",
+              "stage_index": 4
+            },
+            "window": {
+              "scope": "consumed source cue or native fixed frame interval; resolved event receipt records absolute frame"
+            },
+            "reading": {
+              "until": "owning stage.to"
+            }
+          },
+          {
+            "id": "workflow.internal.steps",
+            "action_id": "haike.nana-mint-explainer-v1.video.workflow",
+            "anchor": {
+              "source": "backlot/motion_replay_numbered_02_05_production.py:resolve_events",
+              "control": "steps",
+              "stage_index": 4
+            },
+            "window": {
+              "scope": "consumed source cue or native fixed frame interval; resolved event receipt records absolute frame"
+            },
+            "reading": {
+              "until": "owning stage.to"
+            }
+          },
+          {
+            "id": "workflow.internal.preview",
+            "action_id": "haike.nana-mint-explainer-v1.video.workflow",
+            "anchor": {
+              "source": "backlot/motion_replay_numbered_02_05_production.py:resolve_events",
+              "control": "preview",
+              "stage_index": 4
+            },
+            "window": {
+              "scope": "consumed source cue or native fixed frame interval; resolved event receipt records absolute frame"
+            },
+            "reading": {
+              "until": "owning stage.to"
+            }
+          },
+          {
+            "id": "compare",
+            "action_id": "haike.nana-mint-explainer-v1.video.compare",
+            "anchor": {
+              "input_path": "episode.actions[\"haike.nana-mint-explainer-v1.video.compare\"].from",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "input_path": "episode.actions[\"haike.nana-mint-explainer-v1.video.compare\"]"
+            },
+            "reading": {
+              "rule": "scene retains full measured semantic passage; individual motion keeps original duration"
+            }
+          },
+          {
+            "id": "compare.internal.arrow",
+            "action_id": "haike.nana-mint-explainer-v1.video.compare",
+            "anchor": {
+              "source": "backlot/motion_replay_numbered_02_05_production.py:resolve_events",
+              "control": "arrow",
+              "stage_index": 5
+            },
+            "window": {
+              "scope": "consumed source cue or native fixed frame interval; resolved event receipt records absolute frame"
+            },
+            "reading": {
+              "until": "owning stage.to"
+            }
+          },
+          {
+            "id": "compare.internal.after",
+            "action_id": "haike.nana-mint-explainer-v1.video.compare",
+            "anchor": {
+              "source": "backlot/motion_replay_numbered_02_05_production.py:resolve_events",
+              "control": "after",
+              "stage_index": 5
+            },
+            "window": {
+              "scope": "consumed source cue or native fixed frame interval; resolved event receipt records absolute frame"
+            },
+            "reading": {
+              "until": "owning stage.to"
+            }
+          },
+          {
+            "id": "question",
+            "action_id": "haike.nana-mint-explainer-v1.video.question",
+            "anchor": {
+              "input_path": "episode.actions[\"haike.nana-mint-explainer-v1.video.question\"].from",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "input_path": "episode.actions[\"haike.nana-mint-explainer-v1.video.question\"]"
+            },
+            "reading": {
+              "rule": "scene retains full measured semantic passage; individual motion keeps original duration"
+            }
+          },
+          {
+            "id": "question.internal.answer",
+            "action_id": "haike.nana-mint-explainer-v1.video.question",
+            "anchor": {
+              "source": "backlot/motion_replay_numbered_02_05_production.py:resolve_events",
+              "control": "answer",
+              "stage_index": 6
+            },
+            "window": {
+              "scope": "consumed source cue or native fixed frame interval; resolved event receipt records absolute frame"
+            },
+            "reading": {
+              "until": "owning stage.to"
+            }
+          },
+          {
+            "id": "examples",
+            "action_id": "haike.nana-mint-explainer-v1.video.examples",
+            "anchor": {
+              "input_path": "episode.actions[\"haike.nana-mint-explainer-v1.video.examples\"].from",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "input_path": "episode.actions[\"haike.nana-mint-explainer-v1.video.examples\"]"
+            },
+            "reading": {
+              "rule": "scene retains full measured semantic passage; individual motion keeps original duration"
+            }
+          },
+          {
+            "id": "value",
+            "action_id": "haike.nana-mint-explainer-v1.video.value",
+            "anchor": {
+              "input_path": "episode.actions[\"haike.nana-mint-explainer-v1.video.value\"].from",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "input_path": "episode.actions[\"haike.nana-mint-explainer-v1.video.value\"]"
+            },
+            "reading": {
+              "rule": "scene retains full measured semantic passage; individual motion keeps original duration"
+            }
+          },
+          {
+            "id": "logic",
+            "action_id": "haike.nana-mint-explainer-v1.video.logic",
+            "anchor": {
+              "input_path": "episode.actions[\"haike.nana-mint-explainer-v1.video.logic\"].from",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "input_path": "episode.actions[\"haike.nana-mint-explainer-v1.video.logic\"]"
+            },
+            "reading": {
+              "rule": "scene retains full measured semantic passage; individual motion keeps original duration"
+            }
+          },
+          {
+            "id": "logic.internal.overlayEnd",
+            "action_id": "haike.nana-mint-explainer-v1.video.logic",
+            "anchor": {
+              "source": "backlot/motion_replay_numbered_02_05_production.py:resolve_events",
+              "control": "overlayEnd",
+              "stage_index": 9
+            },
+            "window": {
+              "scope": "consumed source cue or native fixed frame interval; resolved event receipt records absolute frame"
+            },
+            "reading": {
+              "until": "owning stage.to"
+            }
+          },
+          {
+            "id": "difference",
+            "action_id": "haike.nana-mint-explainer-v1.video.difference",
+            "anchor": {
+              "input_path": "episode.actions[\"haike.nana-mint-explainer-v1.video.difference\"].from",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "input_path": "episode.actions[\"haike.nana-mint-explainer-v1.video.difference\"]"
+            },
+            "reading": {
+              "rule": "scene retains full measured semantic passage; individual motion keeps original duration"
+            }
+          },
+          {
+            "id": "course",
+            "action_id": "haike.nana-mint-explainer-v1.video.course",
+            "anchor": {
+              "input_path": "episode.actions[\"haike.nana-mint-explainer-v1.video.course\"].from",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "input_path": "episode.actions[\"haike.nana-mint-explainer-v1.video.course\"]"
+            },
+            "reading": {
+              "rule": "scene retains full measured semantic passage; individual motion keeps original duration"
+            }
+          },
+          {
+            "id": "closing",
+            "action_id": "haike.nana-mint-explainer-v1.video.closing",
+            "anchor": {
+              "input_path": "episode.actions[\"haike.nana-mint-explainer-v1.video.closing\"].from",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "input_path": "episode.actions[\"haike.nana-mint-explainer-v1.video.closing\"]"
+            },
+            "reading": {
+              "rule": "scene retains full measured semantic passage; individual motion keeps original duration"
+            }
+          },
+          {
+            "id": "workflow.prompt.typing-start",
+            "action_id": "haike.nana-mint-explainer-v1.video.workflow",
+            "anchor": {
+              "input_path": "episode.nativeNana.scenes[4].cues.prompt",
+              "offset_seconds": 0.5
+            },
+            "window": {
+              "source": "nana/scenes/Workflow.tsx:PromptSend"
+            },
+            "reading": {
+              "until": "steps cue mounts native AgentSteps"
+            }
+          },
+          {
+            "id": "workflow.prompt.typing-end",
+            "action_id": "haike.nana-mint-explainer-v1.video.workflow",
+            "anchor": {
+              "input_path": "episode.nativeNana.scenes[4].cues.prompt",
+              "offset_seconds": 1.6
+            },
+            "window": {
+              "source": "nana/scenes/Workflow.tsx:PromptSend"
+            },
+            "reading": {
+              "until": "steps cue mounts native AgentSteps"
+            }
+          },
+          {
+            "id": "workflow.prompt.cursor",
+            "action_id": "haike.nana-mint-explainer-v1.video.workflow",
+            "anchor": {
+              "input_path": "episode.nativeNana.scenes[4].cues.prompt",
+              "offset_seconds": 1.8
+            },
+            "window": {
+              "source": "nana/scenes/Workflow.tsx:PromptSend"
+            },
+            "reading": {
+              "until": "steps cue mounts native AgentSteps"
+            }
+          },
+          {
+            "id": "workflow.prompt.click",
+            "action_id": "haike.nana-mint-explainer-v1.video.workflow",
+            "anchor": {
+              "input_path": "episode.nativeNana.scenes[4].cues.prompt",
+              "offset_seconds": 2.1
+            },
+            "window": {
+              "source": "nana/scenes/Workflow.tsx:PromptSend"
+            },
+            "reading": {
+              "until": "steps cue mounts native AgentSteps"
+            }
+          }
+        ],
+        "retiming": "真实ASR分别锚定内部事件/原场景，延长阅读与真实视频持有期，不整片等比拉长，不改变声音速度"
+      },
+      "slots": [
+        {
+          "id": "prepared",
+          "kind": "local_prepared_directory",
+          "input_path": "request.data",
+          "required": true,
+          "missing_policy": "阻断；不得照片/静音/冻结人物补长"
+        },
+        {
+          "id": "voice",
+          "kind": "complete_original_audio",
+          "input_path": "public/master.wav",
+          "required": true,
+          "missing_policy": "阻断；不得照片/静音/冻结人物补长"
+        },
+        {
+          "id": "asr",
+          "kind": "real_alignment",
+          "input_path": "reuse-source.json",
+          "required": true,
+          "missing_policy": "阻断；不得照片/静音/冻结人物补长"
+        },
+        {
+          "id": "videos",
+          "kind": "real_original_video",
+          "input_path": "episode.media",
+          "required": true,
+          "missing_policy": "阻断；不得照片/静音/冻结人物补长"
+        },
+        {
+          "id": "presenters",
+          "kind": "same_voice_hq",
+          "input_path": "episode.presenters",
+          "required": true,
+          "missing_policy": "阻断；不得照片/静音/冻结人物补长"
+        }
+      ],
+      "capabilities": {
+        "full_production": true,
+        "high_definition": [
+          1920,
+          1080
+        ],
+        "fps": 30,
+        "complete_audio": true,
+        "script_replacement": "通过完整原声音/ASR和受控原组件输入准备",
+        "reference_fidelity": "原组件源码派生并保留几何/运动公式；视频替换与标题/法律字幕适配另验，非旧媒体逐像素重播",
+        "arbitrary_action_replacement": false
+      },
+      "validation": {
+        "structure": {
+          "status": "pending",
+          "method": "strict manifest/action/source/ASR/voice-window checks",
+          "scope": "Per-template actual full output required; registration alone is not acceptance",
+          "evidence": ".local/motion-full-delivery-20261104/A/DELIVERY_INDEX.json"
+        },
+        "visual": {
+          "status": "pending",
+          "method": "actual original/reference and new semantic-state frames",
+          "scope": "Per-template actual full output required; registration alone is not acceptance",
+          "evidence": ".local/motion-full-delivery-20261104/A/DELIVERY_INDEX.json"
+        },
+        "production": {
+          "status": "pending",
+          "method": "single-lane parent/full encoded file",
+          "scope": "Per-template actual full output required; registration alone is not acceptance",
+          "evidence": ".local/motion-full-delivery-20261104/A/DELIVERY_INDEX.json"
+        },
+        "audio": {
+          "status": "pending",
+          "method": "full source/master/AAC technical and separate device listen",
+          "scope": "Per-template actual full output required; registration alone is not acceptance",
+          "evidence": ".local/motion-full-delivery-20261104/A/DELIVERY_INDEX.json"
+        }
+      }
+    },
+    {
+      "template_id": "field-notes-v1",
+      "version": "2.0.0",
+      "gallery_id": "field-notes-v1",
+      "family": "numbered",
+      "number": 4,
+      "renderer": {
+        "kind": "project",
+        "entrypoint": "backlot.motion_replay_numbered_02_05_production:run",
+        "adapter": "backlot.motion_replay_numbered_02_05_full:prepare",
+        "execution": "supported"
+      },
+      "sources": [
+        {
+          "path": "Haike_video/backlot/motion_replay_field_notes_render.py",
+          "sha256": "66979a41a50384fd714dfccde3f3ccfae046da3cdc18836b634fb5b22cb0173a"
+        },
+        {
+          "path": "Haike_video/backlot/motion_replay_field_notes_video.py",
+          "sha256": "1cf248fc432410dddc64e2c367000af107a781376ac0c85d0662e3ca1b881b8c"
+        },
+        {
+          "path": "Haike_video/backlot/motion_replay_numbered_02_05_full.py",
+          "sha256": "dcd8a0be9c0188c9e24548a800ffa4f2a13764533ee579a6dfb2194d5d207de5"
+        },
+        {
+          "path": "Haike_video/backlot/motion_replay_numbered_02_05_production.py",
+          "sha256": "36b7927c1307f3547bdfb9faca819eb20abec75f8d69fc7a9504d0e7c477fe47"
+        },
+        {
+          "path": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/capture-reveal/index.tsx",
+          "sha256": "0a60de6ec2a92269428db1b93eda1635af19153e2476450f5fb12476fabcb1da"
+        },
+        {
+          "path": "Haike_video/remotion-composer/package-lock.json",
+          "sha256": "80be5141ee357725970da36d2117500fd3ac062902e04bc9fe1f1942d3596bee"
+        },
+        {
+          "path": "Haike_video/templates/animation-signatures-v2/shared.tsx",
+          "sha256": "c0afba4e266749ba6f1f1b8e280e7899adeef3cebaf6d8edfef89f21ea3112c1"
+        },
+        {
+          "path": "Haike_video/templates/chromatic-motion-lab-v1/AvatarScene.tsx",
+          "sha256": "6d824f6370f0ca003fdce1cd5fc047550de9ae9179269c44f604607ab6ca3514"
+        },
+        {
+          "path": "Haike_video/templates/chromatic-motion-lab-v1/custom-recipes/field-notes.json",
+          "sha256": "8547c0b71af0b5cd7660c7865d3430a5063d51e8dfeedbba8af93db65e2c7ab0"
+        },
+        {
+          "path": "Haike_video/templates/chromatic-motion-lab-v1/palettes.json",
+          "sha256": "d1235670824eee045cc85427f91b8b0eaa4c24c4c05bc9653ae215456cffea31"
+        },
+        {
+          "path": "Haike_video/templates/chromatic-motion-lab-v1/recipes.json",
+          "sha256": "a63b6ee705cd58d771f865bfa6e938a3c9ece869effab0a73e299f94d9d13e1a"
+        },
+        {
+          "path": "Haike_video/templates/chromatic-motion-lab-v1/RecipeStage.tsx",
+          "sha256": "19e8294b824d371d8b2ff5a9da6f71773404679baabdaddda6e8e4687da5d19a"
+        },
+        {
+          "path": "Haike_video/templates/chromatic-motion-lab-v1/runtime.ts",
+          "sha256": "743f31ab8a4aa82e50bb08f3329c9d36df6ba965f3d6e4fb88b04869fe1c3389"
+        },
+        {
+          "path": "Haike_video/templates/hum-production-v1/dynamic/motion.ts",
+          "sha256": "b1e6b38a69162e6a56ffc7e7af767a1d8f3354ea52c8abe74ed50aa1f3fed1bb"
+        },
+        {
+          "path": "Haike_video/templates/hum-production-v1/dynamic/vendor/layouts.ts",
+          "sha256": "51a04ac34423eb5de3099545274c7aacb0cae1c3ca25ee0ea9bad9bd24af2da5"
+        },
+        {
+          "path": "Haike_video/templates/hum-production-v1/vendor/remocn/parallax-depth.tsx",
+          "sha256": "6660bea1dfdd7be897b1ca6ef850edfe44d4f1cdc4a8b9432ac20998b1d8ecb6"
+        },
+        {
+          "path": "Haike_video/templates/kinetic-field-v1/content.json",
+          "sha256": "8c2b211e065e4e8d4b90722a0d761766aedc2475afd55c9b8be3bdb05549e91a"
+        },
+        {
+          "path": "Haike_video/templates/kinetic-field-v1/index.tsx",
+          "sha256": "24783cf9059804f2a9c89d7d2828dfa704896cc5c81e4a175e466c280a9ae1c9"
+        },
+        {
+          "path": "Haike_video/templates/kinetic-field-v1/layout.json",
+          "sha256": "66f37fe7c3ef3f15e8625e228f8d9fe6a1031b66c9f5b0ff8058ef5959bac3db"
+        },
+        {
+          "path": "Haike_video/templates/nana-mint-explainer-v1/index.tsx",
+          "sha256": "acb1d4eb9f67ca611bb13e503cb497e41413411100043967164ade2077676c41"
+        },
+        {
+          "path": "Haike_video/templates/nana-mint-explainer-v1/scenes/Argument.tsx",
+          "sha256": "000c5ab681b42976d8c0743ad6a0cb4be495c5daf5d88edda38791b2d8dd5a2a"
+        },
+        {
+          "path": "Haike_video/templates/nana-mint-explainer-v1/scenes/Introduction.tsx",
+          "sha256": "830af743cabff9e6f893151c221af92e11cb58596f89b0b07394f2925744c34f"
+        },
+        {
+          "path": "Haike_video/templates/nana-mint-explainer-v1/scenes/Resources.tsx",
+          "sha256": "36ca4ca4c3e018309bc1009d18760d64906717180a9ba9407889e8d074437cb3"
+        },
+        {
+          "path": "Haike_video/templates/nana-mint-explainer-v1/scenes/Workflow.tsx",
+          "sha256": "50aa920db409e25b81e962ae2e08cd974e3860524f7e2fc941946a4872f5df4f"
+        },
+        {
+          "path": "Haike_video/templates/nana-mint-explainer-v1/shared.tsx",
+          "sha256": "12b852587b04c28cce0f1379d3eadf881db13cd1758cfd9187cf45f651aa8f0e"
+        },
+        {
+          "path": "Haike_video/templates/nana-mint-explainer-v1/types.ts",
+          "sha256": "f237347c9a52db160172339cd4a257ecdaad4cbdb828b502cb65eb34a884519b"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/build_sources.py",
+          "sha256": "c0cffe9fc424f616f13d2c41bd9807bc66a624d7aa13e02027ab652c655aaa23"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/Common.tsx",
+          "sha256": "a8f0d69c0f702ebb2b2bb436c9eb9733dcde43cf2addaed2e31462ba19bcdf89"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/derivation.json",
+          "sha256": "3637f23dd4873380bb869b1c23d59af1034a7fb12201396d487f642eb348b3e1"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/FieldMedia.tsx",
+          "sha256": "3db467d82f8bb4539e4f64e87e98a50a0748fa692bd78f123235b260e4ff64c0"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/FieldNotes.tsx",
+          "sha256": "7664bb656f2381a6bf36445b0ee761f962a23410467ac76722ae42ee4006642d"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/index.tsx",
+          "sha256": "d271e55e09795ca8bd10f4bbcbebeb3df2b7eb802537a94c401da4c290824237"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/Kinetic.tsx",
+          "sha256": "7a920bd6329035caca80901d86d3a25e98a8db34d0c1fcdc1f2044dabccac3cf"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/nana/CaptureReveal.tsx",
+          "sha256": "5277a4534517c047aaddac1699ebd1b6269eea3c83b6ead9056b8bbb6e3c2db1"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/nana/index.tsx",
+          "sha256": "e86d4ed584d9b834728627545ab2178caa0cc4a4d5a2b0b740649184248840f5"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/nana/scenes/Argument.tsx",
+          "sha256": "f1a1858ad8e325eef594bb26e192482ea5488ce6c2926204bfbb05fc25dc30ae"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/nana/scenes/Introduction.tsx",
+          "sha256": "849369d77b286b3eee229d92ffeca208179cb0eff6b41c7202301b5f7f3f2788"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/nana/scenes/Resources.tsx",
+          "sha256": "1f02299e3b4160079544fe197b462b5bcb259dd519c104209aa5caf62678d975"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/nana/scenes/Workflow.tsx",
+          "sha256": "e8a99b67e6b0daf00b0fefd2f06ba1d6ed8e14eb03374c9b4ec3c137b602d11b"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/nana/shared.tsx",
+          "sha256": "9093021814cd20471db7c402f69c19c700197dc27aba2a3696669abb61421699"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/nana/types.ts",
+          "sha256": "fbc992196652ab4e356fa777d80b0d953d266f6a5d746ca524ab888ccfaae21e"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/registry.py",
+          "sha256": "dd7ea4d3d3f1c587fe3bb71bf168f69a368c492b3a7be13c5dff5745cf6ec7ee"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/render.cjs",
+          "sha256": "f7652d49d5f12aee9c6d01bfb061712e3ba4e841113235674bc23c53b6f29ba9"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/types.ts",
+          "sha256": "80308298402fa75bac7fabccb9995f30efdd0a56b3e30612908e129394f4475c"
+        },
+        {
+          "path": "Haike_video/templates/numbered02-04-production-v1/webpack.cjs",
+          "sha256": "c3d0a655136855503cfcd1e370715caccf14363c47af6a9dad6e25fd17e339ca"
+        },
+        {
+          "path": "Haike_video/templates/warm-workbench-v1/webpack.cjs",
+          "sha256": "cfb862a18ef029ef3d8fdd980aa6d3ac49766a9d0d63cf4a1c213a357b24551e"
+        }
+      ],
+      "objects": [
+        {
+          "id": "scene",
+          "role": "原动效和场景",
+          "authority": {
+            "path": "Haike_video/templates/numbered02-04-production-v1/FieldNotes.tsx",
+            "scope": "Derived frozen native geometry/easing; source owns placement, clips follow absolute full-audio clock"
+          }
+        },
+        {
+          "id": "media",
+          "role": "连续真实视频",
+          "authority": {
+            "path": "Haike_video/templates/numbered02-04-production-v1/FieldNotes.tsx",
+            "scope": "Derived frozen native geometry/easing; source owns placement, clips follow absolute full-audio clock"
+          }
+        },
+        {
+          "id": "presenter",
+          "role": "同声源真实人物窗口",
+          "authority": {
+            "path": "Haike_video/templates/numbered02-04-production-v1/FieldNotes.tsx",
+            "scope": "Derived frozen native geometry/easing; source owns placement, clips follow absolute full-audio clock"
+          }
+        },
+        {
+          "id": "caption",
+          "role": "完整ASR字幕",
+          "authority": {
+            "path": "Haike_video/templates/numbered02-04-production-v1/FieldNotes.tsx",
+            "scope": "Derived frozen native geometry/easing; source owns placement, clips follow absolute full-audio clock"
+          }
+        },
+        {
+          "id": "sound",
+          "role": "完整原速主声音",
+          "authority": {
+            "path": "Haike_video/templates/numbered02-04-production-v1/FieldNotes.tsx",
+            "scope": "Derived frozen native geometry/easing; source owns placement, clips follow absolute full-audio clock"
+          }
+        }
+      ],
+      "actions": [
+        {
+          "id": "haike.field-notes-v1.video.arrive",
+          "version": "2.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/numbered02-04-production-v1/FieldNotes.tsx",
+            "symbol": "RecipeStage.Stage -> arrive",
+            "dispatch": "Exact action windows consumed by original-derived component; unknown/partial/reordered selections rejected"
+          },
+          "objects": [
+            "scene",
+            "media",
+            "presenter",
+            "caption",
+            "sound"
+          ],
+          "parameters": {
+            "window": "episode.actions[\"haike.field-notes-v1.video.arrive\"]",
+            "geometry": "bound source, not caller supplied",
+            "media": "episode.media; actual video frame clock independent from frozen geometry"
+          },
+          "phases": {
+            "entry": "actions[haike.field-notes-v1.video.arrive].from",
+            "active": "actions[haike.field-notes-v1.video.arrive].from/to",
+            "settled": "Original settled geometry continues while footage and master voice stay1x",
+            "exit": "owning stage.to"
+          }
+        },
+        {
+          "id": "haike.field-notes-v1.video.compare",
+          "version": "2.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/numbered02-04-production-v1/FieldNotes.tsx",
+            "symbol": "RecipeStage.Stage -> compare",
+            "dispatch": "Exact action windows consumed by original-derived component; unknown/partial/reordered selections rejected"
+          },
+          "objects": [
+            "scene",
+            "media",
+            "presenter",
+            "caption",
+            "sound"
+          ],
+          "parameters": {
+            "window": "episode.actions[\"haike.field-notes-v1.video.compare\"]",
+            "geometry": "bound source, not caller supplied",
+            "media": "episode.media; actual video frame clock independent from frozen geometry"
+          },
+          "phases": {
+            "entry": "actions[haike.field-notes-v1.video.compare].from",
+            "active": "actions[haike.field-notes-v1.video.compare].from/to",
+            "settled": "Original settled geometry continues while footage and master voice stay1x",
+            "exit": "owning stage.to"
+          }
+        },
+        {
+          "id": "haike.field-notes-v1.video.connect",
+          "version": "2.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/numbered02-04-production-v1/FieldNotes.tsx",
+            "symbol": "RecipeStage.Stage -> connect",
+            "dispatch": "Exact action windows consumed by original-derived component; unknown/partial/reordered selections rejected"
+          },
+          "objects": [
+            "scene",
+            "media",
+            "presenter",
+            "caption",
+            "sound"
+          ],
+          "parameters": {
+            "window": "episode.actions[\"haike.field-notes-v1.video.connect\"]",
+            "geometry": "bound source, not caller supplied",
+            "media": "episode.media; actual video frame clock independent from frozen geometry"
+          },
+          "phases": {
+            "entry": "actions[haike.field-notes-v1.video.connect].from",
+            "active": "actions[haike.field-notes-v1.video.connect].from/to",
+            "settled": "Original settled geometry continues while footage and master voice stay1x",
+            "exit": "owning stage.to"
+          }
+        },
+        {
+          "id": "haike.field-notes-v1.video.recap",
+          "version": "2.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/numbered02-04-production-v1/FieldNotes.tsx",
+            "symbol": "RecipeStage.Stage -> recap",
+            "dispatch": "Exact action windows consumed by original-derived component; unknown/partial/reordered selections rejected"
+          },
+          "objects": [
+            "scene",
+            "media",
+            "presenter",
+            "caption",
+            "sound"
+          ],
+          "parameters": {
+            "window": "episode.actions[\"haike.field-notes-v1.video.recap\"]",
+            "geometry": "bound source, not caller supplied",
+            "media": "episode.media; actual video frame clock independent from frozen geometry"
+          },
+          "phases": {
+            "entry": "actions[haike.field-notes-v1.video.recap].from",
+            "active": "actions[haike.field-notes-v1.video.recap].from/to",
+            "settled": "Original settled geometry continues while footage and master voice stay1x",
+            "exit": "owning stage.to"
+          }
+        }
+      ],
+      "timeline": {
+        "mode": "semantic",
+        "clock": {
+          "fps": 30,
+          "duration": "ceil(full native narration seconds*fps)",
+          "speech_speed": 1
+        },
+        "events": [
+          {
+            "id": "arrive",
+            "action_id": "haike.field-notes-v1.video.arrive",
+            "anchor": {
+              "input_path": "episode.actions[\"haike.field-notes-v1.video.arrive\"].from",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "input_path": "episode.actions[\"haike.field-notes-v1.video.arrive\"]"
+            },
+            "reading": {
+              "rule": "scene retains full measured semantic passage; individual motion keeps original duration"
+            }
+          },
+          {
+            "id": "arrive.internal.title.start",
+            "action_id": "haike.field-notes-v1.video.arrive",
+            "anchor": {
+              "source": "backlot/motion_replay_numbered_02_05_production.py:resolve_events",
+              "control": "title.start",
+              "stage_index": 0
+            },
+            "window": {
+              "scope": "consumed source cue or native fixed frame interval; resolved event receipt records absolute frame"
+            },
+            "reading": {
+              "until": "owning stage.to"
+            }
+          },
+          {
+            "id": "arrive.internal.title.settled",
+            "action_id": "haike.field-notes-v1.video.arrive",
+            "anchor": {
+              "source": "backlot/motion_replay_numbered_02_05_production.py:resolve_events",
+              "control": "title.settled",
+              "stage_index": 0
+            },
+            "window": {
+              "scope": "consumed source cue or native fixed frame interval; resolved event receipt records absolute frame"
+            },
+            "reading": {
+              "until": "owning stage.to"
+            }
+          },
+          {
+            "id": "arrive.internal.media.start",
+            "action_id": "haike.field-notes-v1.video.arrive",
+            "anchor": {
+              "source": "backlot/motion_replay_numbered_02_05_production.py:resolve_events",
+              "control": "media.start",
+              "stage_index": 0
+            },
+            "window": {
+              "scope": "consumed source cue or native fixed frame interval; resolved event receipt records absolute frame"
+            },
+            "reading": {
+              "until": "owning stage.to"
+            }
+          },
+          {
+            "id": "arrive.internal.media.settled",
+            "action_id": "haike.field-notes-v1.video.arrive",
+            "anchor": {
+              "source": "backlot/motion_replay_numbered_02_05_production.py:resolve_events",
+              "control": "media.settled",
+              "stage_index": 0
+            },
+            "window": {
+              "scope": "consumed source cue or native fixed frame interval; resolved event receipt records absolute frame"
+            },
+            "reading": {
+              "until": "owning stage.to"
+            }
+          },
+          {
+            "id": "arrive.internal.note.start",
+            "action_id": "haike.field-notes-v1.video.arrive",
+            "anchor": {
+              "source": "backlot/motion_replay_numbered_02_05_production.py:resolve_events",
+              "control": "note.start",
+              "stage_index": 0
+            },
+            "window": {
+              "scope": "consumed source cue or native fixed frame interval; resolved event receipt records absolute frame"
+            },
+            "reading": {
+              "until": "owning stage.to"
+            }
+          },
+          {
+            "id": "arrive.internal.note.settled",
+            "action_id": "haike.field-notes-v1.video.arrive",
+            "anchor": {
+              "source": "backlot/motion_replay_numbered_02_05_production.py:resolve_events",
+              "control": "note.settled",
+              "stage_index": 0
+            },
+            "window": {
+              "scope": "consumed source cue or native fixed frame interval; resolved event receipt records absolute frame"
+            },
+            "reading": {
+              "until": "owning stage.to"
+            }
+          },
+          {
+            "id": "compare",
+            "action_id": "haike.field-notes-v1.video.compare",
+            "anchor": {
+              "input_path": "episode.actions[\"haike.field-notes-v1.video.compare\"].from",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "input_path": "episode.actions[\"haike.field-notes-v1.video.compare\"]"
+            },
+            "reading": {
+              "rule": "scene retains full measured semantic passage; individual motion keeps original duration"
+            }
+          },
+          {
+            "id": "compare.internal.title.start",
+            "action_id": "haike.field-notes-v1.video.compare",
+            "anchor": {
+              "source": "backlot/motion_replay_numbered_02_05_production.py:resolve_events",
+              "control": "title.start",
+              "stage_index": 1
+            },
+            "window": {
+              "scope": "consumed source cue or native fixed frame interval; resolved event receipt records absolute frame"
+            },
+            "reading": {
+              "until": "owning stage.to"
+            }
+          },
+          {
+            "id": "compare.internal.title.settled",
+            "action_id": "haike.field-notes-v1.video.compare",
+            "anchor": {
+              "source": "backlot/motion_replay_numbered_02_05_production.py:resolve_events",
+              "control": "title.settled",
+              "stage_index": 1
+            },
+            "window": {
+              "scope": "consumed source cue or native fixed frame interval; resolved event receipt records absolute frame"
+            },
+            "reading": {
+              "until": "owning stage.to"
+            }
+          },
+          {
+            "id": "compare.internal.media.start",
+            "action_id": "haike.field-notes-v1.video.compare",
+            "anchor": {
+              "source": "backlot/motion_replay_numbered_02_05_production.py:resolve_events",
+              "control": "media.start",
+              "stage_index": 1
+            },
+            "window": {
+              "scope": "consumed source cue or native fixed frame interval; resolved event receipt records absolute frame"
+            },
+            "reading": {
+              "until": "owning stage.to"
+            }
+          },
+          {
+            "id": "compare.internal.media.settled",
+            "action_id": "haike.field-notes-v1.video.compare",
+            "anchor": {
+              "source": "backlot/motion_replay_numbered_02_05_production.py:resolve_events",
+              "control": "media.settled",
+              "stage_index": 1
+            },
+            "window": {
+              "scope": "consumed source cue or native fixed frame interval; resolved event receipt records absolute frame"
+            },
+            "reading": {
+              "until": "owning stage.to"
+            }
+          },
+          {
+            "id": "compare.internal.note.start",
+            "action_id": "haike.field-notes-v1.video.compare",
+            "anchor": {
+              "source": "backlot/motion_replay_numbered_02_05_production.py:resolve_events",
+              "control": "note.start",
+              "stage_index": 1
+            },
+            "window": {
+              "scope": "consumed source cue or native fixed frame interval; resolved event receipt records absolute frame"
+            },
+            "reading": {
+              "until": "owning stage.to"
+            }
+          },
+          {
+            "id": "compare.internal.note.settled",
+            "action_id": "haike.field-notes-v1.video.compare",
+            "anchor": {
+              "source": "backlot/motion_replay_numbered_02_05_production.py:resolve_events",
+              "control": "note.settled",
+              "stage_index": 1
+            },
+            "window": {
+              "scope": "consumed source cue or native fixed frame interval; resolved event receipt records absolute frame"
+            },
+            "reading": {
+              "until": "owning stage.to"
+            }
+          },
+          {
+            "id": "connect",
+            "action_id": "haike.field-notes-v1.video.connect",
+            "anchor": {
+              "input_path": "episode.actions[\"haike.field-notes-v1.video.connect\"].from",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "input_path": "episode.actions[\"haike.field-notes-v1.video.connect\"]"
+            },
+            "reading": {
+              "rule": "scene retains full measured semantic passage; individual motion keeps original duration"
+            }
+          },
+          {
+            "id": "connect.internal.title.start",
+            "action_id": "haike.field-notes-v1.video.connect",
+            "anchor": {
+              "source": "backlot/motion_replay_numbered_02_05_production.py:resolve_events",
+              "control": "title.start",
+              "stage_index": 2
+            },
+            "window": {
+              "scope": "consumed source cue or native fixed frame interval; resolved event receipt records absolute frame"
+            },
+            "reading": {
+              "until": "owning stage.to"
+            }
+          },
+          {
+            "id": "connect.internal.title.settled",
+            "action_id": "haike.field-notes-v1.video.connect",
+            "anchor": {
+              "source": "backlot/motion_replay_numbered_02_05_production.py:resolve_events",
+              "control": "title.settled",
+              "stage_index": 2
+            },
+            "window": {
+              "scope": "consumed source cue or native fixed frame interval; resolved event receipt records absolute frame"
+            },
+            "reading": {
+              "until": "owning stage.to"
+            }
+          },
+          {
+            "id": "connect.internal.media.start",
+            "action_id": "haike.field-notes-v1.video.connect",
+            "anchor": {
+              "source": "backlot/motion_replay_numbered_02_05_production.py:resolve_events",
+              "control": "media.start",
+              "stage_index": 2
+            },
+            "window": {
+              "scope": "consumed source cue or native fixed frame interval; resolved event receipt records absolute frame"
+            },
+            "reading": {
+              "until": "owning stage.to"
+            }
+          },
+          {
+            "id": "connect.internal.media.settled",
+            "action_id": "haike.field-notes-v1.video.connect",
+            "anchor": {
+              "source": "backlot/motion_replay_numbered_02_05_production.py:resolve_events",
+              "control": "media.settled",
+              "stage_index": 2
+            },
+            "window": {
+              "scope": "consumed source cue or native fixed frame interval; resolved event receipt records absolute frame"
+            },
+            "reading": {
+              "until": "owning stage.to"
+            }
+          },
+          {
+            "id": "connect.internal.note.start",
+            "action_id": "haike.field-notes-v1.video.connect",
+            "anchor": {
+              "source": "backlot/motion_replay_numbered_02_05_production.py:resolve_events",
+              "control": "note.start",
+              "stage_index": 2
+            },
+            "window": {
+              "scope": "consumed source cue or native fixed frame interval; resolved event receipt records absolute frame"
+            },
+            "reading": {
+              "until": "owning stage.to"
+            }
+          },
+          {
+            "id": "connect.internal.note.settled",
+            "action_id": "haike.field-notes-v1.video.connect",
+            "anchor": {
+              "source": "backlot/motion_replay_numbered_02_05_production.py:resolve_events",
+              "control": "note.settled",
+              "stage_index": 2
+            },
+            "window": {
+              "scope": "consumed source cue or native fixed frame interval; resolved event receipt records absolute frame"
+            },
+            "reading": {
+              "until": "owning stage.to"
+            }
+          },
+          {
+            "id": "recap",
+            "action_id": "haike.field-notes-v1.video.recap",
+            "anchor": {
+              "input_path": "episode.actions[\"haike.field-notes-v1.video.recap\"].from",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "input_path": "episode.actions[\"haike.field-notes-v1.video.recap\"]"
+            },
+            "reading": {
+              "rule": "scene retains full measured semantic passage; individual motion keeps original duration"
+            }
+          },
+          {
+            "id": "recap.internal.title.start",
+            "action_id": "haike.field-notes-v1.video.recap",
+            "anchor": {
+              "source": "backlot/motion_replay_numbered_02_05_production.py:resolve_events",
+              "control": "title.start",
+              "stage_index": 3
+            },
+            "window": {
+              "scope": "consumed source cue or native fixed frame interval; resolved event receipt records absolute frame"
+            },
+            "reading": {
+              "until": "owning stage.to"
+            }
+          },
+          {
+            "id": "recap.internal.title.settled",
+            "action_id": "haike.field-notes-v1.video.recap",
+            "anchor": {
+              "source": "backlot/motion_replay_numbered_02_05_production.py:resolve_events",
+              "control": "title.settled",
+              "stage_index": 3
+            },
+            "window": {
+              "scope": "consumed source cue or native fixed frame interval; resolved event receipt records absolute frame"
+            },
+            "reading": {
+              "until": "owning stage.to"
+            }
+          },
+          {
+            "id": "recap.internal.media.start",
+            "action_id": "haike.field-notes-v1.video.recap",
+            "anchor": {
+              "source": "backlot/motion_replay_numbered_02_05_production.py:resolve_events",
+              "control": "media.start",
+              "stage_index": 3
+            },
+            "window": {
+              "scope": "consumed source cue or native fixed frame interval; resolved event receipt records absolute frame"
+            },
+            "reading": {
+              "until": "owning stage.to"
+            }
+          },
+          {
+            "id": "recap.internal.media.settled",
+            "action_id": "haike.field-notes-v1.video.recap",
+            "anchor": {
+              "source": "backlot/motion_replay_numbered_02_05_production.py:resolve_events",
+              "control": "media.settled",
+              "stage_index": 3
+            },
+            "window": {
+              "scope": "consumed source cue or native fixed frame interval; resolved event receipt records absolute frame"
+            },
+            "reading": {
+              "until": "owning stage.to"
+            }
+          },
+          {
+            "id": "recap.internal.note.start",
+            "action_id": "haike.field-notes-v1.video.recap",
+            "anchor": {
+              "source": "backlot/motion_replay_numbered_02_05_production.py:resolve_events",
+              "control": "note.start",
+              "stage_index": 3
+            },
+            "window": {
+              "scope": "consumed source cue or native fixed frame interval; resolved event receipt records absolute frame"
+            },
+            "reading": {
+              "until": "owning stage.to"
+            }
+          },
+          {
+            "id": "recap.internal.note.settled",
+            "action_id": "haike.field-notes-v1.video.recap",
+            "anchor": {
+              "source": "backlot/motion_replay_numbered_02_05_production.py:resolve_events",
+              "control": "note.settled",
+              "stage_index": 3
+            },
+            "window": {
+              "scope": "consumed source cue or native fixed frame interval; resolved event receipt records absolute frame"
+            },
+            "reading": {
+              "until": "owning stage.to"
+            }
+          }
+        ],
+        "retiming": "真实ASR分别锚定内部事件/原场景，延长阅读与真实视频持有期，不整片等比拉长，不改变声音速度"
+      },
+      "slots": [
+        {
+          "id": "prepared",
+          "kind": "local_prepared_directory",
+          "input_path": "request.data",
+          "required": true,
+          "missing_policy": "阻断；不得照片/静音/冻结人物补长"
+        },
+        {
+          "id": "voice",
+          "kind": "complete_original_audio",
+          "input_path": "public/master.wav",
+          "required": true,
+          "missing_policy": "阻断；不得照片/静音/冻结人物补长"
+        },
+        {
+          "id": "asr",
+          "kind": "real_alignment",
+          "input_path": "reuse-source.json",
+          "required": true,
+          "missing_policy": "阻断；不得照片/静音/冻结人物补长"
+        },
+        {
+          "id": "videos",
+          "kind": "real_original_video",
+          "input_path": "episode.media",
+          "required": true,
+          "missing_policy": "阻断；不得照片/静音/冻结人物补长"
+        },
+        {
+          "id": "presenters",
+          "kind": "same_voice_hq",
+          "input_path": "episode.presenters",
+          "required": true,
+          "missing_policy": "阻断；不得照片/静音/冻结人物补长"
+        }
+      ],
+      "capabilities": {
+        "full_production": true,
+        "high_definition": [
+          1080,
+          1920
+        ],
+        "fps": 30,
+        "complete_audio": true,
+        "script_replacement": "通过完整原声音/ASR和受控原组件输入准备",
+        "reference_fidelity": "原组件源码派生并保留几何/运动公式；视频替换与标题/法律字幕适配另验，非旧媒体逐像素重播",
+        "arbitrary_action_replacement": false
+      },
+      "validation": {
+        "structure": {
+          "status": "pending",
+          "method": "strict manifest/action/source/ASR/voice-window checks",
+          "scope": "Per-template actual full output required; registration alone is not acceptance",
+          "evidence": ".local/motion-full-delivery-20261104/A/DELIVERY_INDEX.json"
+        },
+        "visual": {
+          "status": "pending",
+          "method": "actual original/reference and new semantic-state frames",
+          "scope": "Per-template actual full output required; registration alone is not acceptance",
+          "evidence": ".local/motion-full-delivery-20261104/A/DELIVERY_INDEX.json"
+        },
+        "production": {
+          "status": "pending",
+          "method": "single-lane parent/full encoded file",
+          "scope": "Per-template actual full output required; registration alone is not acceptance",
+          "evidence": ".local/motion-full-delivery-20261104/A/DELIVERY_INDEX.json"
+        },
+        "audio": {
+          "status": "pending",
+          "method": "full source/master/AAC technical and separate device listen",
+          "scope": "Per-template actual full output required; registration alone is not acceptance",
+          "evidence": ".local/motion-full-delivery-20261104/A/DELIVERY_INDEX.json"
+        }
+      }
+    }
+  ]
+}

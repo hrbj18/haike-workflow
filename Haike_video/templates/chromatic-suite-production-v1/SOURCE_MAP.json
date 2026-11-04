@@ -1,0 +1,23 @@
+[
+  {
+    "source": "Haike_video/templates/chromatic-six-video-batch-v1/window-a/Scene.tsx",
+    "source_sha256": "2eca8693d8739e6215b962e2ffc3ca159ceefe63319407376a00ac169e438e1b",
+    "derived": "Haike_video/templates/chromatic-suite-production-v1/Derived-A.tsx",
+    "derived_sha256": "273054b840aea8667f4765b5db316b382ca7f0ab53524f54e8c0fcf98b62d853",
+    "changes": "real-video Media helper; motion-only context; root removed;07 tracking respects actual measured source extent; geometry/formulas retained"
+  },
+  {
+    "source": "Haike_video/templates/chromatic-six-video-batch-v1/window-b/Scene.tsx",
+    "source_sha256": "d81c90df29c7aaa4348325014cfa5d507ff7675e686f79f54866399247aa57fb",
+    "derived": "Haike_video/templates/chromatic-suite-production-v1/Derived-B.tsx",
+    "derived_sha256": "7990c9534b360600bcba4fcd29c6b6fa46eeb9be7eb5b93824d50593ba4df1bd",
+    "changes": "real-video Media helper; motion-only context; root removed;07 tracking respects actual measured source extent; geometry/formulas retained"
+  },
+  {
+    "source": "Haike_video/templates/chromatic-six-video-batch-v1/window-c/Scene.tsx",
+    "source_sha256": "07e98d2fb628b9561a99f7e32532aa977c833d03d8d6f9ab33f4cc6cb9baea37",
+    "derived": "Haike_video/templates/chromatic-suite-production-v1/Derived-C.tsx",
+    "derived_sha256": "9abf1131ed787c3e5a80bf91580bafd60f42775d185eb57395b620044a300059",
+    "changes": "real-video Media helper; motion-only context; root removed;07 tracking respects actual measured source extent; geometry/formulas retained"
+  }
+]

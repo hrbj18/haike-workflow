@@ -1,0 +1,1338 @@
+{
+  "schema_version": 1,
+  "standard_version": "video-template-v1",
+  "template_id": "field-notes-v2",
+  "template_version": "2.0.0",
+  "template_type": "avatar",
+  "spec_kind": "implementation",
+  "stage": "ready",
+  "authority": {
+    "runbook": "README.md",
+    "implementation_paths": [
+      "Scene.tsx",
+      "Preview.tsx",
+      "build.cjs"
+    ],
+    "parameter_source": "selection.json"
+  },
+  "canvas": {
+    "width": 720,
+    "height": 1280,
+    "fps": 30,
+    "duration_seconds": 24,
+    "clock": "Explicit visual-preview720-frame clock; silent illustrative captions",
+    "coordinate_system": "top_left_pixels"
+  },
+  "narrative": {
+    "purpose": "正式动效模板5：青珊瑚线索接力，24秒低清静音样式受控复用",
+    "information_hierarchy": [
+      "本场主动作/主图",
+      "章节标题与结论",
+      "连续辅助人物",
+      "稳定示意字幕"
+    ],
+    "structure": [
+      "建立现场印象",
+      "从四个视角中聚焦现场互动",
+      "把看到、参与与理解串联",
+      "将三项体验提炼为结论"
+    ]
+  },
+  "scenes": [
+    {
+      "id": "title-demote-to-label",
+      "start": 0.0,
+      "end": 6.0,
+      "purpose": "建立现场印象",
+      "element_ids": [
+        "background",
+        "brand",
+        "chapter",
+        "headline",
+        "media",
+        "note",
+        "presenter",
+        "caption",
+        "footer",
+        "progress"
+      ],
+      "variant": "title-demote-to-label"
+    },
+    {
+      "id": "grid-to-hero",
+      "start": 6.0,
+      "end": 14.0,
+      "purpose": "从四个视角中聚焦现场互动",
+      "element_ids": [
+        "background",
+        "brand",
+        "chapter",
+        "headline",
+        "media",
+        "note",
+        "presenter",
+        "caption",
+        "footer",
+        "progress",
+        "grid-caption"
+      ],
+      "variant": "grid-to-hero"
+    },
+    {
+      "id": "line-carry-transition",
+      "start": 14.0,
+      "end": 19.0,
+      "purpose": "把看到、参与与理解串联",
+      "element_ids": [
+        "background",
+        "brand",
+        "chapter",
+        "headline",
+        "media",
+        "note",
+        "presenter",
+        "caption",
+        "footer",
+        "progress",
+        "handoff-line"
+      ],
+      "variant": "line-carry-transition"
+    },
+    {
+      "id": "source-converge",
+      "start": 19.0,
+      "end": 24.0,
+      "purpose": "将三项体验提炼为结论",
+      "element_ids": [
+        "background",
+        "brand",
+        "chapter",
+        "headline",
+        "media",
+        "note",
+        "presenter",
+        "caption",
+        "footer",
+        "progress",
+        "source-paths",
+        "conclusion",
+        "source-0",
+        "source-1",
+        "source-2"
+      ],
+      "variant": "source-converge"
+    }
+  ],
+  "assets": [
+    {
+      "id": "presenter-0000",
+      "kind": "video",
+      "path": "../../../.local/field-notes-v2-preview/assets/presenter-0000.mp4",
+      "source": "复用原批准低清预览；本期build-manifest.assets SHA256=71c4e62284f28f21b8584176a61f8163d8b19eafc6b44cbbc5e211b341bb6e5c",
+      "embedded_content": [
+        "图像/视频内原有文字、标识、人物及场景不作为可编辑层"
+      ],
+      "rights_status": "用户授权本机既有素材复用；未声明可公开分发"
+    },
+    {
+      "id": "font",
+      "kind": "font",
+      "path": "../../../.local/field-notes-v2-preview/assets/font.ttf",
+      "source": "复用原批准低清预览；本期build-manifest.assets SHA256=a3041811a78c361b1de50f953c805e0244951c21c5bd412f7232ef0d899af0da",
+      "embedded_content": [],
+      "rights_status": "用户授权本机既有素材复用；未声明可公开分发"
+    },
+    {
+      "id": "photo-001",
+      "kind": "image",
+      "path": "../../../.local/field-notes-v2-preview/assets/photo-001.jpg",
+      "source": "复用原批准低清预览；本期build-manifest.assets SHA256=fa25acd8ed71789c3d71e2d0faaf649855cf49a31576acbc6b06a48666f412b5",
+      "embedded_content": [
+        "图像/视频内原有文字、标识、人物及场景不作为可编辑层"
+      ],
+      "rights_status": "用户授权本机既有素材复用；未声明可公开分发"
+    },
+    {
+      "id": "photo-002",
+      "kind": "image",
+      "path": "../../../.local/field-notes-v2-preview/assets/photo-002.jpg",
+      "source": "复用原批准低清预览；本期build-manifest.assets SHA256=1096dad089ad6b7354a749c591774df1d29f2cb00c9ab06f52fbf4644b819a86",
+      "embedded_content": [
+        "图像/视频内原有文字、标识、人物及场景不作为可编辑层"
+      ],
+      "rights_status": "用户授权本机既有素材复用；未声明可公开分发"
+    },
+    {
+      "id": "photo-003",
+      "kind": "image",
+      "path": "../../../.local/field-notes-v2-preview/assets/photo-003.jpg",
+      "source": "复用原批准低清预览；本期build-manifest.assets SHA256=4f6b5658949d44a9d192f4de1a5801e8e17af8fd826b8067c9fc5d0a6d545efe",
+      "embedded_content": [
+        "图像/视频内原有文字、标识、人物及场景不作为可编辑层"
+      ],
+      "rights_status": "用户授权本机既有素材复用；未声明可公开分发"
+    },
+    {
+      "id": "photo-004",
+      "kind": "image",
+      "path": "../../../.local/field-notes-v2-preview/assets/photo-004.jpg",
+      "source": "复用原批准低清预览；本期build-manifest.assets SHA256=14b8df9e4644523e06aa1a36682cfda83d771b1c6b91adf6151a53f12d826792",
+      "embedded_content": [
+        "图像/视频内原有文字、标识、人物及场景不作为可编辑层"
+      ],
+      "rights_status": "用户授权本机既有素材复用；未声明可公开分发"
+    },
+    {
+      "id": "photo-005",
+      "kind": "image",
+      "path": "../../../.local/field-notes-v2-preview/assets/photo-005.jpg",
+      "source": "复用原批准低清预览；本期build-manifest.assets SHA256=3b9f8153edd35da4f71814defde7ca58a8aee7c8b53f1fcd5ad83aa130a1d710",
+      "embedded_content": [
+        "图像/视频内原有文字、标识、人物及场景不作为可编辑层"
+      ],
+      "rights_status": "用户授权本机既有素材复用；未声明可公开分发"
+    },
+    {
+      "id": "photo-006",
+      "kind": "image",
+      "path": "../../../.local/field-notes-v2-preview/assets/photo-006.jpg",
+      "source": "复用原批准低清预览；本期build-manifest.assets SHA256=94390156d884977856202f8babc479a8234598fe999acd572910017db8a8252c",
+      "embedded_content": [
+        "图像/视频内原有文字、标识、人物及场景不作为可编辑层"
+      ],
+      "rights_status": "用户授权本机既有素材复用；未声明可公开分发"
+    },
+    {
+      "id": "photo-007",
+      "kind": "image",
+      "path": "../../../.local/field-notes-v2-preview/assets/photo-007.jpg",
+      "source": "复用原批准低清预览；本期build-manifest.assets SHA256=b588f64aff3c3d82e6256f5d62d04bd357af12d169b8c3b1d84e19f83000dd73",
+      "embedded_content": [
+        "图像/视频内原有文字、标识、人物及场景不作为可编辑层"
+      ],
+      "rights_status": "用户授权本机既有素材复用；未声明可公开分发"
+    },
+    {
+      "id": "photo-008",
+      "kind": "image",
+      "path": "../../../.local/field-notes-v2-preview/assets/photo-008.jpg",
+      "source": "复用原批准低清预览；本期build-manifest.assets SHA256=b738fa77148026a67569a36fb9ef33795405627bea92c4ee869d94d465bba747",
+      "embedded_content": [
+        "图像/视频内原有文字、标识、人物及场景不作为可编辑层"
+      ],
+      "rights_status": "用户授权本机既有素材复用；未声明可公开分发"
+    }
+  ],
+  "elements": [
+    {
+      "id": "background",
+      "type": "layer",
+      "role": "纸白底色、珊瑚左边及持续边界",
+      "parent_id": null,
+      "z_index": 0,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "纸白底色、珊瑚左边及持续边界"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          720,
+          1280
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Scene.tsx + selection.json; component geometry is source-owned; per-scene boxes below"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "source_evaluated",
+          "visible": true,
+          "description": "显隐、位置、曲线及局部时钟见Scene.tsx；逐场建立/强调/交接/阅读期见selection.json，勿沿用v1时序。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "visible_state",
+          "method": "Actual browser frames and playback",
+          "pass_condition": "关键文字/人物完整，素材不跨区，动作后可读，段落切点无黑帧"
+        }
+      ]
+    },
+    {
+      "id": "brand",
+      "type": "text",
+      "role": "配方brand及卷号",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "FIELD NOTES / 现场笔记；VOL. 02"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          48,
+          42,
+          624,
+          26
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Scene.tsx + selection.json; component geometry is source-owned; per-scene boxes below",
+          "font": "assets/font.ttf SHA in build-manifest",
+          "font_size": "Scene.tsx corresponding element",
+          "max_lines": "source-owned frozen text; no open replacement slots",
+          "overflow": "frozen input only; new text requires author validation"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "source_evaluated",
+          "visible": true,
+          "description": "显隐、位置、曲线及局部时钟见Scene.tsx；逐场建立/强调/交接/阅读期见selection.json，勿沿用v1时序。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "visible_state",
+          "method": "Actual browser frames and playback",
+          "pass_condition": "关键文字/人物完整，素材不跨区，动作后可读，段落切点无黑帧"
+        }
+      ]
+    },
+    {
+      "id": "chapter",
+      "type": "text",
+      "role": "章节编号与短标签",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "selection.scenes[].kicker，自然内容标签，不将动作实现名写入视频"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          48,
+          91,
+          624,
+          22
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Scene.tsx + selection.json; component geometry is source-owned; per-scene boxes below",
+          "font": "assets/font.ttf SHA in build-manifest",
+          "font_size": "Scene.tsx corresponding element",
+          "max_lines": "source-owned frozen text; no open replacement slots",
+          "overflow": "frozen input only; new text requires author validation"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "source_evaluated",
+          "visible": true,
+          "description": "显隐、位置、曲线及局部时钟见Scene.tsx；逐场建立/强调/交接/阅读期见selection.json，勿沿用v1时序。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "visible_state",
+          "method": "Actual browser frames and playback",
+          "pass_condition": "关键文字/人物完整，素材不跨区，动作后可读，段落切点无黑帧"
+        }
+      ]
+    },
+    {
+      "id": "headline",
+      "type": "text",
+      "role": "章节标题，首章同一对象从主标题让位为路标",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "冻结episode.segments[].headline；首章80→38字号、y348→136，其他章76字号y136；两行，行距1.08"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          48,
+          136,
+          624,
+          422
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Scene.tsx + selection.json; component geometry is source-owned; per-scene boxes below",
+          "font": "assets/font.ttf SHA in build-manifest",
+          "font_size": "Scene.tsx corresponding element",
+          "max_lines": "source-owned frozen text; no open replacement slots",
+          "overflow": "frozen input only; new text requires author validation"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "source_evaluated",
+          "visible": true,
+          "description": "显隐、位置、曲线及局部时钟见Scene.tsx；逐场建立/强调/交接/阅读期见selection.json，勿沿用v1时序。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "visible_state",
+          "method": "Actual browser frames and playback",
+          "pass_condition": "关键文字/人物完整，素材不跨区，动作后可读，段落切点无黑帧"
+        }
+      ]
+    },
+    {
+      "id": "media",
+      "type": "layer",
+      "role": "逐场照片/网格组件容器",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "首场photo0；次场TalkCraft网格photos[0,2,4,6]；第三场photo2；末场来源节点见独立元素"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          48,
+          272,
+          624,
+          520
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "authority": "Scene.tsx + selection.json; component geometry is source-owned; per-scene boxes below",
+          "per_scene": "首场48,272,624,514；网格48,362,624,351含960×540等比.65；线框内72,424,576,344；末章三节点及结论独立登记"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "source_evaluated",
+          "visible": true,
+          "description": "显隐、位置、曲线及局部时钟见Scene.tsx；逐场建立/强调/交接/阅读期见selection.json，勿沿用v1时序。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "visible_state",
+          "method": "Actual browser frames and playback",
+          "pass_condition": "关键文字/人物完整，素材不跨区，动作后可读，段落切点无黑帧"
+        }
+      ]
+    },
+    {
+      "id": "note",
+      "type": "text",
+      "role": "动作后的短句/划线强调",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "selection.scenes[].note；noteFrom后14帧显现，先于stableFrom完成"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          48,
+          884,
+          410,
+          164
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Scene.tsx + selection.json; component geometry is source-owned; per-scene boxes below",
+          "font": "assets/font.ttf SHA in build-manifest",
+          "font_size": "Scene.tsx corresponding element",
+          "max_lines": "source-owned frozen text; no open replacement slots",
+          "overflow": "frozen input only; new text requires author validation"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "source_evaluated",
+          "visible": true,
+          "description": "显隐、位置、曲线及局部时钟见Scene.tsx；逐场建立/强调/交接/阅读期见selection.json，勿沿用v1时序。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "visible_state",
+          "method": "Actual browser frames and playback",
+          "pass_condition": "关键文字/人物完整，素材不跨区，动作后可读，段落切点无黑帧"
+        }
+      ]
+    },
+    {
+      "id": "presenter",
+      "type": "avatar",
+      "role": "连续人物与下沿AI标签；内部cover按源码",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "复用已批准24秒人物288×360代理，独立全局时钟；无Sequence重挂载、无循环或静帧补时"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          486,
+          850,
+          186,
+          232
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "authority": "Scene.tsx + selection.json; component geometry is source-owned; per-scene boxes below"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "source_evaluated",
+          "visible": true,
+          "description": "显隐、位置、曲线及局部时钟见Scene.tsx；逐场建立/强调/交接/阅读期见selection.json，勿沿用v1时序。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "visible_state",
+          "method": "Actual browser frames and playback",
+          "pass_condition": "关键文字/人物完整，素材不跨区，动作后可读，段落切点无黑帧"
+        }
+      ]
+    },
+    {
+      "id": "caption",
+      "type": "text",
+      "role": "本期示意字幕，允许两行",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "原四条静音示意字幕，按selection场景时钟重排；非ASR，不证明口型"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          48,
+          1110,
+          624,
+          88
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Scene.tsx + selection.json; component geometry is source-owned; per-scene boxes below",
+          "font": "assets/font.ttf SHA in build-manifest",
+          "font_size": "Scene.tsx corresponding element",
+          "max_lines": "source-owned frozen text; no open replacement slots",
+          "overflow": "frozen input only; new text requires author validation"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "source_evaluated",
+          "visible": true,
+          "description": "显隐、位置、曲线及局部时钟见Scene.tsx；逐场建立/强调/交接/阅读期见selection.json，勿沿用v1时序。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "visible_state",
+          "method": "Actual browser frames and playback",
+          "pass_condition": "关键文字/人物完整，素材不跨区，动作后可读，段落切点无黑帧"
+        }
+      ]
+    },
+    {
+      "id": "footer",
+      "type": "text",
+      "role": "固定短句和章节计数",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "固定短句和章节计数"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          48,
+          1226,
+          624,
+          22
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Scene.tsx + selection.json; component geometry is source-owned; per-scene boxes below",
+          "font": "assets/font.ttf SHA in build-manifest",
+          "font_size": "Scene.tsx corresponding element",
+          "max_lines": "source-owned frozen text; no open replacement slots",
+          "overflow": "frozen input only; new text requires author validation"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "source_evaluated",
+          "visible": true,
+          "description": "显隐、位置、曲线及局部时钟见Scene.tsx；逐场建立/强调/交接/阅读期见selection.json，勿沿用v1时序。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "visible_state",
+          "method": "Actual browser frames and playback",
+          "pass_condition": "关键文字/人物完整，素材不跨区，动作后可读，段落切点无黑帧"
+        }
+      ]
+    },
+    {
+      "id": "progress",
+      "type": "layer",
+      "role": "全片进度引导",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "全片进度引导"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          48,
+          1245,
+          624,
+          3
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Scene.tsx + selection.json; component geometry is source-owned; per-scene boxes below"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "source_evaluated",
+          "visible": true,
+          "description": "显隐、位置、曲线及局部时钟见Scene.tsx；逐场建立/强调/交接/阅读期见selection.json，勿沿用v1时序。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "visible_state",
+          "method": "Actual browser frames and playback",
+          "pass_condition": "关键文字/人物完整，素材不跨区，动作后可读，段落切点无黑帧"
+        }
+      ]
+    },
+    {
+      "id": "handoff-line",
+      "type": "layer",
+      "role": "标题下划线至闭合素材框",
+      "parent_id": null,
+      "z_index": 20,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Scene.Connect SVG path单对象；局部18–52绘制，pathLength=1，闭合后53帧素材进入"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          48,
+          326,
+          624,
+          466
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Scene.tsx + selection.json; component geometry is source-owned; per-scene boxes below"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 14,
+        "end": 19
+      },
+      "states": [
+        {
+          "id": "source_evaluated",
+          "visible": true,
+          "description": "显隐、位置、曲线及局部时钟见Scene.tsx；逐场建立/强调/交接/阅读期见selection.json，勿沿用v1时序。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "visible_state",
+          "method": "Actual browser frames and playback",
+          "pass_condition": "关键文字/人物完整，素材不跨区，动作后可读，段落切点无黑帧"
+        }
+      ]
+    },
+    {
+      "id": "source-paths",
+      "type": "layer",
+      "role": "三条来源至结论的可见路径",
+      "parent_id": null,
+      "z_index": 20,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Scene.Converge三条二次Bezier；局部30–42绘制，82–94擦除；控制点与节点轨迹相同"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          48,
+          388,
+          624,
+          322
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Scene.tsx + selection.json; component geometry is source-owned; per-scene boxes below"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 19,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "source_evaluated",
+          "visible": true,
+          "description": "显隐、位置、曲线及局部时钟见Scene.tsx；逐场建立/强调/交接/阅读期见selection.json，勿沿用v1时序。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "visible_state",
+          "method": "Actual browser frames and playback",
+          "pass_condition": "关键文字/人物完整，素材不跨区，动作后可读，段落切点无黑帧"
+        }
+      ]
+    },
+    {
+      "id": "conclusion",
+      "type": "layer",
+      "role": "汇聚后现场结论卡",
+      "parent_id": null,
+      "z_index": 20,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "局部83–99显现、83–107从汇入点上展至最终框；绑定photo4，结论把体验连成新发现，36字号；之后稳定"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          48,
+          380,
+          624,
+          410
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Scene.tsx + selection.json; component geometry is source-owned; per-scene boxes below"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 19,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "source_evaluated",
+          "visible": true,
+          "description": "显隐、位置、曲线及局部时钟见Scene.tsx；逐场建立/强调/交接/阅读期见selection.json，勿沿用v1时序。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "visible_state",
+          "method": "Actual browser frames and playback",
+          "pass_condition": "关键文字/人物完整，素材不跨区，动作后可读，段落切点无黑帧"
+        }
+      ]
+    },
+    {
+      "id": "grid-caption",
+      "type": "text",
+      "role": "网格关系说明",
+      "parent_id": null,
+      "z_index": 20,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "并列 → 聚焦 → 回到全景；局部38–48淡入；28字号"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          48,
+          758,
+          624,
+          70
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Scene.tsx + selection.json; component geometry is source-owned; per-scene boxes below",
+          "font": "assets/font.ttf SHA in build-manifest",
+          "font_size": 28,
+          "max_lines": 1,
+          "overflow": "source-owned frozen text; author revalidates changes"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 6,
+        "end": 14
+      },
+      "states": [
+        {
+          "id": "source_evaluated",
+          "visible": true,
+          "description": "显隐、位置、曲线及局部时钟见Scene.tsx；逐场建立/强调/交接/阅读期见selection.json，勿沿用v1时序。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "visible_state",
+          "method": "Actual browser frames and playback",
+          "pass_condition": "关键文字/人物完整，素材不跨区，动作后可读，段落切点无黑帧"
+        }
+      ]
+    },
+    {
+      "id": "source-0",
+      "type": "layer",
+      "role": "带缩略图的体验来源节点",
+      "parent_id": null,
+      "z_index": 20,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "绑定冻结photos[0]及文字走进现场；局部42–82沿同一Bezier至(360,694)，最后四分之一收缩；77–83淡出"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          56,
+          388,
+          270,
+          92
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Scene.tsx + selection.json; component geometry is source-owned; per-scene boxes below"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 19,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "source_evaluated",
+          "visible": true,
+          "description": "显隐、位置、曲线及局部时钟见Scene.tsx；逐场建立/强调/交接/阅读期见selection.json，勿沿用v1时序。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "visible_state",
+          "method": "Actual browser frames and playback",
+          "pass_condition": "关键文字/人物完整，素材不跨区，动作后可读，段落切点无黑帧"
+        }
+      ]
+    },
+    {
+      "id": "source-1",
+      "type": "layer",
+      "role": "带缩略图的体验来源节点",
+      "parent_id": null,
+      "z_index": 20,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "绑定冻结photos[4]及文字亲手体验；局部42–82沿同一Bezier至(360,694)，最后四分之一收缩；77–83淡出"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          394,
+          388,
+          270,
+          92
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Scene.tsx + selection.json; component geometry is source-owned; per-scene boxes below"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 19,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "source_evaluated",
+          "visible": true,
+          "description": "显隐、位置、曲线及局部时钟见Scene.tsx；逐场建立/强调/交接/阅读期见selection.json，勿沿用v1时序。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "visible_state",
+          "method": "Actual browser frames and playback",
+          "pass_condition": "关键文字/人物完整，素材不跨区，动作后可读，段落切点无黑帧"
+        }
+      ]
+    },
+    {
+      "id": "source-2",
+      "type": "layer",
+      "role": "带缩略图的体验来源节点",
+      "parent_id": null,
+      "z_index": 20,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "绑定冻结photos[2]及文字看见细节；局部42–82沿同一Bezier至(360,694)，最后四分之一收缩；77–83淡出"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          225,
+          536,
+          270,
+          92
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Scene.tsx + selection.json; component geometry is source-owned; per-scene boxes below"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 19,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "source_evaluated",
+          "visible": true,
+          "description": "显隐、位置、曲线及局部时钟见Scene.tsx；逐场建立/强调/交接/阅读期见selection.json，勿沿用v1时序。"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "visible_state",
+          "method": "Actual browser frames and playback",
+          "pass_condition": "关键文字/人物完整，素材不跨区，动作后可读，段落切点无黑帧"
+        }
+      ]
+    }
+  ],
+  "slots": [],
+  "evidence": [
+    {
+      "id": "implementation",
+      "source_kind": "design",
+      "source": "本轮独立候选实现与逐场适配决策",
+      "locator": "Scene.tsx; selection.json; build.cjs",
+      "method": "读取真实代码、源SHA及适配决策；不以静态规格证明画面",
+      "file": "Scene.tsx",
+      "sha256": "032e216c2bb2e5ebecd331cc7787b590d1319ae94051150e42b8b5b5fee851c8"
+    },
+    {
+      "id": "local_measurement",
+      "source_kind": "measurement",
+      "source": "本轮本机候选低清静音验收",
+      "locator": "VALIDATION.json and private REPORT.md",
+      "method": "来源/帧/解码/连播读回与实际查看动作过程、裁切、人物/字幕；不替代用户审美",
+      "file": "VALIDATION.json",
+      "sha256": "8600ae07367f03cb53ea519e799c511833fc74049c5d03abb48bb9197a46664f"
+    },
+    {
+      "id": "local_visual",
+      "source_kind": "observation",
+      "source": "本轮本机候选低清静音验收",
+      "locator": "VALIDATION.json and private REPORT.md",
+      "method": "来源/帧/解码/连播读回与实际查看动作过程、裁切、人物/字幕；不替代用户审美",
+      "file": "../../../.local/field-notes-v2-review/motion-process.jpg",
+      "sha256": "28b2e33d00a979026719ade7fa3474fabb2ca515911128a5f46af229b2f6c5eb"
+    },
+    {
+      "id": "user_approval",
+      "source_kind": "observation",
+      "source": "本聊天用户确认当前效果",
+      "locator": "用户原话见APPROVAL.json",
+      "method": "记录用户对本轮低清静音效果的认可；不延伸验收范围",
+      "file": "APPROVAL.json",
+      "sha256": "9177668bd242678318e6aa30dad3ad1268a83f5131cc87564b7c055ca33375b6"
+    },
+    {
+      "id": "formal_registration",
+      "source_kind": "observation",
+      "source": "本聊天用户明确要求正式编号",
+      "locator": "REGISTRATION.json",
+      "method": "保留用户已确认画面，登记独立正式编号5并冻结身份",
+      "file": "REGISTRATION.json",
+      "sha256": "e3d0c394be83ea56780736498f7f73464f99dcf3a5687307264eea79ae6df2e1"
+    }
+  ],
+  "unknowns": [],
+  "validation": {
+    "structure": {
+      "status": "pass",
+      "evidence_ids": [
+        "local_measurement"
+      ],
+      "note": "正式模板5已确认24秒低清静音样式；新输入/正式有声/高清/生产/平台/异机另验"
+    },
+    "technical": {
+      "status": "pass",
+      "evidence_ids": [
+        "local_measurement"
+      ],
+      "note": "正式模板5已确认24秒低清静音样式；新输入/正式有声/高清/生产/平台/异机另验"
+    },
+    "visual": {
+      "status": "pass",
+      "evidence_ids": [
+        "local_visual"
+      ],
+      "note": "正式模板5已确认24秒低清静音样式；新输入/正式有声/高清/生产/平台/异机另验"
+    },
+    "audio": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "候选版，仅本期本地低清静音可验证；实际结果另记，不继承v1用户批准"
+    },
+    "platform": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "候选版，仅本期本地低清静音可验证；实际结果另记，不继承v1用户批准"
+    },
+    "user_review": {
+      "status": "pass",
+      "evidence_ids": [
+        "user_approval"
+      ],
+      "note": "正式模板5已确认24秒低清静音样式；新输入/正式有声/高清/生产/平台/异机另验"
+    },
+    "production": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "候选版，仅本期本地低清静音可验证；实际结果另记，不继承v1用户批准"
+    }
+  },
+  "extensions": {
+    "avatar": {
+      "face_crop": "Source crop via existing prepare low288x360 then source-owned presenter window cover50%/35%; inspect actual face",
+      "synchronization": "全局720帧连续人物，静音示意；不声称口型/音频实测",
+      "generation_default": "supporting-window role -> economy by config/avatar-generation-policy.json; explicit current choice overrides, existing jobs retain frozen route"
+    }
+  },
+  "operations": [
+    {
+      "id": "build_review",
+      "input": "原样板低清准备目录与本机私有TalkCraft安装；冻结preparation校验",
+      "action": "build.cjs独立输出，再verify.py和loopback serve",
+      "output": "episode/baseline、私有bundle、build-manifest及验收回执",
+      "completion": "本轮动作/布局、源身份与用户效果确认有证据，正式5和原正式4分别校验；换输入重验，生产能力另验",
+      "recovery": "只修改候选并重建/复验受影响范围，保留正式v1",
+      "entrypoint": "build.cjs; verify.py; README.md; ACCEPTANCE.md"
+    }
+  ]
+}

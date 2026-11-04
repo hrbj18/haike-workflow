@@ -1,0 +1,877 @@
+{
+  "schema_version": 1,
+  "standard_version": "video-template-v1",
+  "template_id": "field-notes-v1",
+  "template_version": "1.0.0",
+  "template_type": "avatar",
+  "spec_kind": "implementation",
+  "stage": "ready",
+  "authority": {
+    "runbook": "../../../../Haike-Videohub/agent-runbooks/动效定制样板-青珊瑚现场笔记.md",
+    "implementation_paths": [
+      "../RecipeStage.tsx",
+      "../CustomPreview.tsx",
+      "../AvatarScene.tsx",
+      "../build.cjs"
+    ],
+    "parameter_source": "field-notes.json"
+  },
+  "canvas": {
+    "width": 720,
+    "height": 1280,
+    "fps": 30,
+    "duration_seconds": 24,
+    "clock": "Explicit visual-preview720-frame clock; silent illustrative captions",
+    "coordinate_system": "top_left_pixels"
+  },
+  "narrative": {
+    "purpose": "用户确认的动效模板4：24秒四段小窗辅助讲解样式受控复用",
+    "information_hierarchy": [
+      "本章标题",
+      "现场图片或对照/关联",
+      "连续讲解人",
+      "示意字幕"
+    ],
+    "structure": [
+      "先建立现场印象",
+      "并置两种现场视角",
+      "把多个体验关联起来",
+      "停止换景，完成收束"
+    ]
+  },
+  "scenes": [
+    {
+      "id": "arrive",
+      "start": 0,
+      "end": 6,
+      "purpose": "先建立现场印象",
+      "element_ids": [
+        "background",
+        "brand",
+        "chapter",
+        "headline",
+        "media",
+        "note",
+        "presenter",
+        "caption",
+        "footer",
+        "progress"
+      ],
+      "variant": "hero"
+    },
+    {
+      "id": "compare",
+      "start": 6,
+      "end": 12,
+      "purpose": "并置两种现场视角",
+      "element_ids": [
+        "background",
+        "brand",
+        "chapter",
+        "headline",
+        "media",
+        "note",
+        "presenter",
+        "caption",
+        "footer",
+        "progress"
+      ],
+      "variant": "duet"
+    },
+    {
+      "id": "connect",
+      "start": 12,
+      "end": 18,
+      "purpose": "把多个体验关联起来",
+      "element_ids": [
+        "background",
+        "brand",
+        "chapter",
+        "headline",
+        "media",
+        "note",
+        "presenter",
+        "caption",
+        "footer",
+        "progress"
+      ],
+      "variant": "cards"
+    },
+    {
+      "id": "recap",
+      "start": 18,
+      "end": 24,
+      "purpose": "停止换景，完成收束",
+      "element_ids": [
+        "background",
+        "brand",
+        "chapter",
+        "headline",
+        "media",
+        "note",
+        "presenter",
+        "caption",
+        "footer",
+        "progress"
+      ],
+      "variant": "summary"
+    }
+  ],
+  "assets": [],
+  "elements": [
+    {
+      "id": "background",
+      "type": "layer",
+      "role": "纸白底色、珊瑚左边及持续边界",
+      "parent_id": null,
+      "z_index": 0,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "纸白底色、珊瑚左边及持续边界"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          720,
+          1280
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "../RecipeStage.tsx + field-notes.json; nested independent objects are component-owned"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "source_evaluated",
+          "visible": true,
+          "description": "State from source frame; title0..18, media24..90, note96..120; remaining60frames stable. Presenter/caption use continuous global clock."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "visible_state",
+          "method": "Actual browser frames and playback",
+          "pass_condition": "关键文字/人物完整，素材不跨区，动作后可读，段落切点无黑帧"
+        }
+      ]
+    },
+    {
+      "id": "brand",
+      "type": "text",
+      "role": "配方brand及卷号",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "配方brand及卷号"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          48,
+          42,
+          624,
+          26
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "../RecipeStage.tsx + field-notes.json; nested independent objects are component-owned",
+          "font": "本期assets/font.ttf，身份读取preparation清单",
+          "font_size": 17,
+          "max_lines": 1,
+          "overflow": "reject via prepare/build; inspect actual font"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "source_evaluated",
+          "visible": true,
+          "description": "State from source frame; title0..18, media24..90, note96..120; remaining60frames stable. Presenter/caption use continuous global clock."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "visible_state",
+          "method": "Actual browser frames and playback",
+          "pass_condition": "关键文字/人物完整，素材不跨区，动作后可读，段落切点无黑帧"
+        }
+      ]
+    },
+    {
+      "id": "chapter",
+      "type": "text",
+      "role": "章节编号与短标签",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "章节编号与短标签"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          48,
+          91,
+          624,
+          22
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "../RecipeStage.tsx + field-notes.json; nested independent objects are component-owned",
+          "font": "本期assets/font.ttf，身份读取preparation清单",
+          "font_size": 18,
+          "max_lines": 1,
+          "overflow": "reject via prepare/build; inspect actual font"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "source_evaluated",
+          "visible": true,
+          "description": "State from source frame; title0..18, media24..90, note96..120; remaining60frames stable. Presenter/caption use continuous global clock."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "visible_state",
+          "method": "Actual browser frames and playback",
+          "pass_condition": "关键文字/人物完整，素材不跨区，动作后可读，段落切点无黑帧"
+        }
+      ]
+    },
+    {
+      "id": "headline",
+      "type": "text",
+      "role": "本期四章短标题",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "editable",
+        "binding": "headline",
+        "asset_id": null,
+        "description": "本期四章短标题"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          48,
+          132,
+          624,
+          182
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "../RecipeStage.tsx + field-notes.json; nested independent objects are component-owned",
+          "font": "本期assets/font.ttf，身份读取preparation清单",
+          "font_size": 76,
+          "max_lines": 2,
+          "overflow": "reject via prepare/build; inspect actual font"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "source_evaluated",
+          "visible": true,
+          "description": "State from source frame; title0..18, media24..90, note96..120; remaining60frames stable. Presenter/caption use continuous global clock."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "visible_state",
+          "method": "Actual browser frames and playback",
+          "pass_condition": "关键文字/人物完整，素材不跨区，动作后可读，段落切点无黑帧"
+        }
+      ]
+    },
+    {
+      "id": "media",
+      "type": "layer",
+      "role": "单图、双图、重排卡片及收束组合；内部元素受源码控制",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "单图、双图、重排卡片及收束组合；内部元素受源码控制"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          48,
+          354,
+          624,
+          474
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "authority": "../RecipeStage.tsx + field-notes.json; nested independent objects are component-owned"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "source_evaluated",
+          "visible": true,
+          "description": "State from source frame; title0..18, media24..90, note96..120; remaining60frames stable. Presenter/caption use continuous global clock."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "visible_state",
+          "method": "Actual browser frames and playback",
+          "pass_condition": "关键文字/人物完整，素材不跨区，动作后可读，段落切点无黑帧"
+        }
+      ]
+    },
+    {
+      "id": "note",
+      "type": "text",
+      "role": "动作后的短句/划线强调",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "动作后的短句/划线强调"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          48,
+          884,
+          410,
+          164
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "../RecipeStage.tsx + field-notes.json; nested independent objects are component-owned",
+          "font": "本期assets/font.ttf，身份读取preparation清单",
+          "font_size": 33,
+          "max_lines": 2,
+          "overflow": "reject via prepare/build; inspect actual font"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "source_evaluated",
+          "visible": true,
+          "description": "State from source frame; title0..18, media24..90, note96..120; remaining60frames stable. Presenter/caption use continuous global clock."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "visible_state",
+          "method": "Actual browser frames and playback",
+          "pass_condition": "关键文字/人物完整，素材不跨区，动作后可读，段落切点无黑帧"
+        }
+      ]
+    },
+    {
+      "id": "presenter",
+      "type": "avatar",
+      "role": "连续人物与下沿AI标签；内部cover按源码",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "连续人物与下沿AI标签；内部cover按源码"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          486,
+          850,
+          186,
+          232
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "authority": "../RecipeStage.tsx + field-notes.json; nested independent objects are component-owned"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "source_evaluated",
+          "visible": true,
+          "description": "State from source frame; title0..18, media24..90, note96..120; remaining60frames stable. Presenter/caption use continuous global clock."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "visible_state",
+          "method": "Actual browser frames and playback",
+          "pass_condition": "关键文字/人物完整，素材不跨区，动作后可读，段落切点无黑帧"
+        }
+      ]
+    },
+    {
+      "id": "caption",
+      "type": "text",
+      "role": "本期示意字幕，允许两行",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "editable",
+        "binding": "caption",
+        "asset_id": null,
+        "description": "本期示意字幕，允许两行"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          48,
+          1110,
+          624,
+          88
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "../RecipeStage.tsx + field-notes.json; nested independent objects are component-owned",
+          "font": "本期assets/font.ttf，身份读取preparation清单",
+          "font_size": 27,
+          "max_lines": 2,
+          "overflow": "reject via prepare/build; inspect actual font"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "source_evaluated",
+          "visible": true,
+          "description": "State from source frame; title0..18, media24..90, note96..120; remaining60frames stable. Presenter/caption use continuous global clock."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "visible_state",
+          "method": "Actual browser frames and playback",
+          "pass_condition": "关键文字/人物完整，素材不跨区，动作后可读，段落切点无黑帧"
+        }
+      ]
+    },
+    {
+      "id": "footer",
+      "type": "text",
+      "role": "固定短句和章节计数",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "固定短句和章节计数"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          48,
+          1226,
+          624,
+          22
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "../RecipeStage.tsx + field-notes.json; nested independent objects are component-owned",
+          "font": "本期assets/font.ttf，身份读取preparation清单",
+          "font_size": 16,
+          "max_lines": 1,
+          "overflow": "reject via prepare/build; inspect actual font"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "source_evaluated",
+          "visible": true,
+          "description": "State from source frame; title0..18, media24..90, note96..120; remaining60frames stable. Presenter/caption use continuous global clock."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "visible_state",
+          "method": "Actual browser frames and playback",
+          "pass_condition": "关键文字/人物完整，素材不跨区，动作后可读，段落切点无黑帧"
+        }
+      ]
+    },
+    {
+      "id": "progress",
+      "type": "layer",
+      "role": "全片进度引导",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "全片进度引导"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          48,
+          1245,
+          624,
+          3
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "../RecipeStage.tsx + field-notes.json; nested independent objects are component-owned"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "source_evaluated",
+          "visible": true,
+          "description": "State from source frame; title0..18, media24..90, note96..120; remaining60frames stable. Presenter/caption use continuous global clock."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "timing"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "visible_state",
+          "method": "Actual browser frames and playback",
+          "pass_condition": "关键文字/人物完整，素材不跨区，动作后可读，段落切点无黑帧"
+        }
+      ]
+    }
+  ],
+  "slots": [
+    {
+      "id": "headline",
+      "element_id": "headline",
+      "property": "content",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "authority": "../prepare.py + ../timeline.py + ../build.cjs; local v2 input, four180frame chapters; material/font files per preparation manifest"
+      },
+      "missing": "补齐声明输入再准备",
+      "overflow": "按现有校验精简文字或换合规素材；重新验收受影响范围"
+    },
+    {
+      "id": "caption",
+      "element_id": "caption",
+      "property": "content",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "authority": "../prepare.py + ../timeline.py + ../build.cjs; local v2 input, four180frame chapters; material/font files per preparation manifest"
+      },
+      "missing": "补齐声明输入再准备",
+      "overflow": "按现有校验精简文字或换合规素材；重新验收受影响范围"
+    },
+    {
+      "id": "presenter",
+      "element_id": "presenter",
+      "property": "content",
+      "value_type": "asset",
+      "required": true,
+      "limits": {
+        "authority": "../prepare.py + ../timeline.py + ../build.cjs; local v2 input, four180frame chapters; material/font files per preparation manifest"
+      },
+      "missing": "补齐声明输入再准备",
+      "overflow": "按现有校验精简文字或换合规素材；重新验收受影响范围"
+    },
+    {
+      "id": "media",
+      "element_id": "media",
+      "property": "content",
+      "value_type": "asset",
+      "required": true,
+      "limits": {
+        "authority": "../prepare.py + ../timeline.py + ../build.cjs; local v2 input, four180frame chapters; material/font files per preparation manifest"
+      },
+      "missing": "补齐声明输入再准备",
+      "overflow": "按现有校验精简文字或换合规素材；重新验收受影响范围"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "implementation",
+      "source_kind": "design",
+      "source": "本期单方向开发设计与共享组件复用",
+      "locator": "field-notes.json; ../RecipeStage.tsx; private REPORT.md and build-manifest.json",
+      "method": "参数和适配源码身份；实际画面验收另外记录",
+      "file": "../RecipeStage.tsx",
+      "sha256": "19e8294b824d371d8b2ff5a9da6f71773404679baabdaddda6e8e4687da5d19a"
+    },
+    {
+      "id": "technical_preview",
+      "source_kind": "measurement",
+      "source": "2026-11-03本机样板及用户确认",
+      "locator": "读取本机准备、构建、帧时钟与播放记录；范围限定为静音低清",
+      "method": "读取本机准备、构建、帧时钟与播放记录；范围限定为静音低清",
+      "file": "VALIDATION.json",
+      "sha256": "09266e4ae03174d3139df0f5b548656ab86411ada216e273c7213e533e95ef2e"
+    },
+    {
+      "id": "visual_preview",
+      "source_kind": "observation",
+      "source": "2026-11-03本机样板及用户确认",
+      "locator": "实际查看四段稳定画面，另有动作中点与切点记录",
+      "method": "实际查看四段稳定画面，另有动作中点与切点记录",
+      "file": "../../../../.local/custom-template-review/four-stages.jpg",
+      "sha256": "c4dd92e159be607541f6b16f64513695f4fbfb0d3064cdfd3dc577e03a27434f"
+    },
+    {
+      "id": "user_approval",
+      "source_kind": "observation",
+      "source": "2026-11-03本机样板及用户确认",
+      "locator": "本聊天用户确认并要求编号纳入正式模板",
+      "method": "本聊天用户确认并要求编号纳入正式模板",
+      "file": "APPROVAL.json",
+      "sha256": "c743289120e463a595e646635729949cd386fea1da4f4a0c5e92df0610236eda"
+    }
+  ],
+  "unknowns": [],
+  "validation": {
+    "structure": {
+      "status": "pass",
+      "evidence_ids": [
+        "technical_preview"
+      ],
+      "note": "仅本机24秒低清静音样式；用户确认不代替有声/高清/平台/生产验收"
+    },
+    "technical": {
+      "status": "pass",
+      "evidence_ids": [
+        "technical_preview"
+      ],
+      "note": "仅本机24秒低清静音样式；用户确认不代替有声/高清/平台/生产验收"
+    },
+    "visual": {
+      "status": "pass",
+      "evidence_ids": [
+        "visual_preview"
+      ],
+      "note": "仅本机24秒低清静音样式；用户确认不代替有声/高清/平台/生产验收"
+    },
+    "audio": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "开发预览；本期实际检查范围读私有REPORT，不推定高清/有声/平台/用户通过"
+    },
+    "platform": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "开发预览；本期实际检查范围读私有REPORT，不推定高清/有声/平台/用户通过"
+    },
+    "user_review": {
+      "status": "pass",
+      "evidence_ids": [
+        "user_approval"
+      ],
+      "note": "仅本机24秒低清静音样式；用户确认不代替有声/高清/平台/生产验收"
+    },
+    "production": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "开发预览；本期实际检查范围读私有REPORT，不推定高清/有声/平台/用户通过"
+    }
+  },
+  "extensions": {
+    "avatar": {
+      "face_crop": "Source crop via existing prepare low288x360 then source-owned presenter window cover50%/35%; inspect actual face",
+      "synchronization": "Silent illustrative preview; continuous24s presenter; no lip-sync claim",
+      "generation_default": "supporting-window role -> economy by config/avatar-generation-policy.json; explicit current choice overrides, existing jobs retain frozen route"
+    }
+  },
+  "operations": [
+    {
+      "id": "prepare_build_view",
+      "input": "Local visual-preview v2 input, four180frame chapters and authorized media/font",
+      "action": "prepare --preview-quality low; build.cjs --custom; verify.py; serve.py",
+      "output": "Prepared episode/assets, frozen build and interactive preview",
+      "completion": "Four stages and read timing valid, identity check passes, actual frames and playback inspected for declared scope",
+      "recovery": "Correct inputs and reprepare; source/recipe changes rebuild; preserve existing evidence",
+      "entrypoint": "../prepare.py; ../build.cjs; ../verify.py; ../serve.py"
+    }
+  ]
+}

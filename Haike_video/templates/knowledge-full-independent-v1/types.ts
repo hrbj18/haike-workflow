@@ -1,0 +1,2 @@
+export type Scene={id:string;start:number;end:number;title:string;subtitle:string;recipe:'question'|'steps'|'evidence'|'compare'|'quote'|'notice'|'invitation';labels:string[];cues:number[];media?:{src:string;offset:number;label:string}[]};
+export type Props={theme:'sketchnote'|'chalkboard';width:number;height:number;fps:number;durationFrames:number;brand:string;title:string;font:string;audio?:string;captions:{s:number;e:number;text:string}[];scenes:Scene[];presenter?:{src:string;windows:{start:number;end:number;offset:number}[]}};

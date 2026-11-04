@@ -1,0 +1,5 @@
+export type Cue={text:string;startMs:number;endMs:number;timestampMs:null;confidence:null};
+export type Item={id:string;label:string;icon?:string;notes?:string[];text?:string;before?:string;after?:string;highlight?:number[]};
+export type Event={id:string;at:number;duration:number;target?:string;kind:string};
+export type Scene={id:string;from:number;to:number;family:string;title:string;items:Item[];events:Event[];conclusion?:string[];note?:string;revision?:{targetId:string;lines:string[]};return?:{fromId:string;toId:string;label:string};model?:{phase:number;inclination:number;sunRadius:number;bodyRadius:number;orbitRadius:number;occluderRadius:number}};
+export type Episode={schema:'haike.knowledge-reference-public-episode/1';implementation:'knowledge-reference-public-v1';template_id:'knowledge-explainer-sketchnote'|'knowledge-explainer-chalkboard';version:'5.0.0-independent.1';fps:number;durationFrames:number;title:string;sourceText:string;captions:Cue[];scenes:Scene[];narration:string;music?:string;musicGainDb:number;presenter:'none';requiredOverlay:string;sourceLabel:string;previewOnly?:boolean};

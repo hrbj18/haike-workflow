@@ -1,0 +1,11 @@
+export type Cue={text:string;startMs:number;endMs:number;timestampMs:null;confidence:null};
+export type Item={id:string;label:string;icon?:string;notes?:string[];text?:string;before?:string;after?:string;highlight?:number[]};
+export type Event={id:string;at:number;duration:number;target?:string;kind:string};
+export type OrbitModel={kind:'orbit';phase:number;phaseSpeed:number;inclination:number;displayInclination:number;sunRadius:number;bodyRadius:number;orbitRadius:number;occluderRadius?:number;shadowOffset?:number};
+export type SectionModel={kind:'section';phase:number;phaseSpeed:number;bodyRadius:number;occluderRadius:number;offset:number;offsetSpeed:number};
+export type CausalModel={kind:'causal';phase:number;phaseSpeed:number;counterPhase:number;counterSpeed:number;bodyRadius:number;occluderRadius:number;offset:number;offsetSpeed:number};
+export type RayBlocker={id:string;x:number;y:number;radius:number};
+export type RayModel={kind:'rays';startX:number;endX:number;firstY:number;gap:number;count:number;blockers:RayBlocker[]};
+export type Model=OrbitModel|SectionModel|CausalModel|RayModel;
+export type Scene={id:string;from:number;to:number;family:string;title:string;items:Item[];events:Event[];conclusion?:string[];note?:string;revision?:{targetId:string;lines:string[]};return?:{fromId:string;toId:string;label:string};model?:Model};
+export type Episode={schema:'haike.knowledge-reference-public-episode/3';implementation:'knowledge-reference-public-v3';template_id:'knowledge-explainer-sketchnote'|'knowledge-explainer-chalkboard';version:'5.1.1-independent.1';fps:number;durationFrames:number;title:string;sourceText:string;captions:Cue[];scenes:Scene[];narration:string;music?:string;musicGainDb:number;presenter:'none';requiredOverlay:string;sourceLabel:string;previewOnly?:boolean};

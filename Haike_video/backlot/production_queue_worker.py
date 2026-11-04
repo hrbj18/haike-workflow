@@ -77,6 +77,30 @@ class ProductionQueueWorker:
         return run_motion(self._project_dir(job), job["frozen_request"])
 
     def _run_investment_recompose(self, job):
+        if job.get("frozen_request", {}).get("contract") == "motion-replay-numbered-02-05-production-v1":
+            from backlot.motion_replay_numbered_02_05_production import run
+            return run(self.queue, job)
+        if job.get("frozen_request", {}).get("contract") == "motion-replay-chromatic-suite-production-v1":
+            from backlot.motion_replay_chromatic_suite_production import run
+            return run(self.queue, job)
+        if job.get("frozen_request", {}).get("contract") == "haike.knowledge-full/1":
+            from backlot.studio_imported_knowledge_full import run
+            return run(self.queue, job)
+        if job.get("frozen_request", {}).get("contract") == "haike.native-knowledge-full/1":
+            from backlot.studio_imported_native_knowledge import run
+            return run(self.queue, job)
+        if job.get("frozen_request", {}).get("contract") == "haike-field-notes-video-production-v1":
+            from backlot.motion_replay_field_notes_video import run
+            return run(self.queue, job)
+        if job.get("frozen_request", {}).get("contract") == "haike.motion-replay-imported-production/1":
+            from backlot.motion_replay_imported_production import run
+            return run(self.queue, job)
+        if job.get("frozen_request", {}).get("contract") == "motion-replay-chromatic-production-v1":
+            from backlot.motion_replay_chromatic_production import run
+            return run(self.queue, job)
+        if job.get("frozen_request", {}).get("contract") == "haike-chalkboard-reconstruction-v1":
+            from backlot.studio_chalkboard import run
+            return run(self.queue, job)
         if job.get("frozen_request", {}).get("contract") == "motiongit-dark-native-v1":
             from backlot.studio_dark_native import run
             return run(self.queue, job)

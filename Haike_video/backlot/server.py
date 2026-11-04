@@ -176,11 +176,11 @@ from backlot.music_library import (
 from backlot.production_queue import (
     PRIORITIES as PRODUCTION_PRIORITIES,
     QUEUE_KINDS as PRODUCTION_QUEUE_KINDS,
-    ProductionQueue,
     ProductionQueueConflict,
     ProductionQueueError,
 )
-from backlot.production_queue_worker import ProductionQueueWorker
+from backlot.motion_reference_public_queue_v1 import MotionReferencePublicProductionQueue as ProductionQueue
+from backlot.motion_reference_public_worker_v1 import MotionReferencePublicProductionWorker as ProductionQueueWorker
 from backlot.state import (LIVE_WINDOW_SECONDS, PROJECTS_DIR, REPO_ROOT, list_projects, load_board_state,
                            summarize_project)
 from backlot.script_templates import ScriptTemplateError, list_avatar_script_templates, preview_avatar_script_template

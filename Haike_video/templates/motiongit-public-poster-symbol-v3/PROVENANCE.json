@@ -1,0 +1,45 @@
+{
+  "schema": "haike.poster-symbol-source-provenance/3",
+  "origin_execution": {
+    "path": "Haike_video/backlot/motion_public_execution_v2.py",
+    "sha256": "bb3900fd95149b8f7da3e3d7dd44bbdd4a078dc500ec89eac5d81474c7532dce"
+  },
+  "origin_observed": {
+    "path": "Haike_video/backlot/motion_public_observed_v2.py",
+    "sha256": "97403417dad73d717679af83ab90811674334edc5bdd854548586001e3f06b0e"
+  },
+  "origin_component": {
+    "path": "Haike_video/templates/motiongit-public-components-v2/COMPONENT.json",
+    "sha256": "a72de0dc57579ed026ec2d10c0582d7ced4817c21be12b37008043eea2042b30"
+  },
+  "visual_change": [
+    {
+      "from": "U+275D",
+      "to": "U+201C"
+    },
+    {
+      "from": "U+275E",
+      "to": "U+201D"
+    }
+  ],
+  "preserved": "HTML renderer, font bytes and stack, geometry, timing, source media, voice, BGM/SFX and mixing; no protected font extraction",
+  "copied_descriptors": [
+    {
+      "path": "capture_runtime.mjs",
+      "origin_sha256": "0bf6ec171767725922099c7dd2de7582fbd3e96d24c6c6c91531f387f4701fd8"
+    },
+    {
+      "path": "DEPENDENCIES.json",
+      "origin_sha256": "c30cf57bb3f2192410d99685a771fd36f69583737e0464cce9c0bd0985ec5f1f"
+    },
+    {
+      "path": "TOOLS.json",
+      "origin_sha256": "5a2bd3c270d30fd841c89116c4eabe25ad6a15e957ee40d021f77d31c5ef26f1"
+    },
+    {
+      "path": "FFMPEG9.json",
+      "origin_sha256": "1d7055cadccd60e2442c5d279083b3dd8c9a46c1bae6d317e78a344826e6aa29"
+    }
+  ],
+  "actual_visual_acceptance": "pending fresh authorized v3 preview; v2 remains changes_requested"
+}

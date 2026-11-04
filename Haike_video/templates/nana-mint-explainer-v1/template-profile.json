@@ -1,0 +1,33 @@
+{
+  "template_id": "nana-mint-explainer-v1",
+  "name": "动效模板3",
+  "aliases": ["动效模板3", "动效模板三", "Nana薄荷章节模板"],
+  "version": "1.0.0",
+  "canvas": {"width": 1920, "height": 1080, "fps": 30, "design_width": 1280, "design_height": 720},
+  "palette": {"paper": "#edf5ef", "ink": "#16313a", "accent": "#167e79", "line": "#cbdad4", "sheet": "#f7fffa"},
+  "scene_ids": ["integration", "terms", "brief", "result", "workflow", "compare", "question", "value", "difference", "course", "examples", "logic", "closing"],
+  "components": ["TextBuild", "TextReveal", "TextHighlight", "TextSwap", "ScreenRecording", "PromptSend", "AgentSteps", "CaptureReveal", "WordCaptions"],
+  "visual_authority": ["index.tsx", "shared.tsx", "scenes/Introduction.tsx", "scenes/Workflow.tsx", "scenes/Argument.tsx", "scenes/Resources.tsx"],
+  "timing_policy": "Actual full speech is the master clock. Author all scene/cue/caption times from measured ASR; never stretch speech, loop people, or reuse old mouth motion for new text.",
+  "audio": {
+    "music_label": "科技风",
+    "music_source_sha256": "ee451b0bdac75728667adcf171289cc57ddcb2246ad26865ba7d2e106008ef0c",
+    "speech_gain_db": -1,
+    "music_base_gain_db": -10.5,
+    "post_duck_gain_stages_db": [3, 4],
+    "net_music_gain_db": -3.5,
+    "highpass_hz": 70,
+    "presence_eq_hz": 2500,
+    "presence_eq_gain_db": -3,
+    "crossfade_seconds": 0.35,
+    "fade_in_seconds": 0.35,
+    "fade_out_seconds": 1.2,
+    "sidechain": {"threshold": 0.04, "ratio": 2.5, "attack_ms": 35, "release_ms": 350, "mix": 0.7},
+    "limiter": {"linear_limit": 0.75, "attack_ms": 5, "release_ms": 50, "latency_compensation": true, "oversample_hz": 192000},
+    "sample_rate": 48000,
+    "channels": 2,
+    "policy": "This is the accepted v5 recipe, cumulative+7dB above the initial 科技风 mix. Other music must be loudness-matched and auditioned; do not apply+7dB blindly. User-supplied full mixes are not mixed a second time."
+  },
+  "export": {"video_target_bitrate": "22M", "minimum_video_stream_bitrate": 20000000, "audio_codec": "aac", "audio_bitrate": "192k"},
+  "reuse_scope": "Frozen13-scene landscape chapter explainer. Accepted baseline89.266667s/1080p/30fps. New scripts/media/timing require per-episode actual validation; no one-click arbitrary-script or other-aspect claim."
+}

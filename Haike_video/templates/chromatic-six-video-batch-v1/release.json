@@ -1,0 +1,194 @@
+{
+  "schema": "haike.chromatic-formal-release/1",
+  "version": "1.1.0",
+  "status": "formal-design-approved",
+  "approved_at": "2026-11-03",
+  "approval": "用户要求固定正式版；有声高清为后续制作默认，本次不重渲染",
+  "runbook": "FORMAL.md",
+  "render_profile": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "layout_width": 720,
+    "layout_height": 1280,
+    "layout_scale": 1.5,
+    "silent": false,
+    "audio_required": true,
+    "video_bitrate_min_bps": 20000000,
+    "audio_sample_rate": 48000,
+    "audio_codec": "aac",
+    "pixel_format": "yuv420p",
+    "source_policy": "HD originals, same source ranges and focus; never upscale low preview proxies as restored HD",
+    "narration": "continuous complete approved narration; actual ASR clock",
+    "material_audio": "muted unless explicitly selected in sound plan",
+    "presenter_audio": "muted when narration master is used; same voice clock",
+    "bgm": "audible under clear narration per docs/VIDEO_QUALITY.md",
+    "duration_policy": "24s baseline; new content or duration requires actual-audio re-timing"
+  },
+  "historical_preview": {
+    "version": "1.1.0-candidate.1",
+    "width": 720,
+    "height": 1280,
+    "silent": true,
+    "validation": "VALIDATION.json",
+    "validation_sha256": "82b8011d874b9e795ab42467cf1b196542e4f7e4c62517f272babe90bfa01cef",
+    "build_manifest_sha256": "4880bd3c96b50093903148bb20f0c747459d8cc388c846a1409a7b57928bf7a5"
+  },
+  "templates": [
+    {
+      "number": 6,
+      "template_id": "chromatic-06",
+      "historical_spec": "window-a/06.spec.json",
+      "source": "window-a/Scene.tsx",
+      "source_sha256": "2eca8693d8739e6215b962e2ffc3ca159ceefe63319407376a00ac169e438e1b",
+      "profile": "formal/06.json"
+    },
+    {
+      "number": 7,
+      "template_id": "chromatic-07",
+      "historical_spec": "window-a/07.spec.json",
+      "source": "window-a/Scene.tsx",
+      "source_sha256": "2eca8693d8739e6215b962e2ffc3ca159ceefe63319407376a00ac169e438e1b",
+      "profile": "formal/07.json"
+    },
+    {
+      "number": 8,
+      "template_id": "chromatic-08",
+      "historical_spec": "window-b/template-08.spec.json",
+      "source": "window-b/Scene.tsx",
+      "source_sha256": "d81c90df29c7aaa4348325014cfa5d507ff7675e686f79f54866399247aa57fb",
+      "profile": "formal/08.json"
+    },
+    {
+      "number": 9,
+      "template_id": "chromatic-09",
+      "historical_spec": "window-b/template-09.spec.json",
+      "source": "window-b/Scene.tsx",
+      "source_sha256": "d81c90df29c7aaa4348325014cfa5d507ff7675e686f79f54866399247aa57fb",
+      "profile": "formal/09.json"
+    },
+    {
+      "number": 10,
+      "template_id": "chromatic-six-10",
+      "historical_spec": "window-c/template-10.spec.json",
+      "source": "window-c/Scene.tsx",
+      "source_sha256": "07e98d2fb628b9561a99f7e32532aa977c833d03d8d6f9ab33f4cc6cb9baea37",
+      "profile": "formal/10.json"
+    },
+    {
+      "number": 11,
+      "template_id": "chromatic-six-11",
+      "historical_spec": "window-c/template-11.spec.json",
+      "source": "window-c/Scene.tsx",
+      "source_sha256": "07e98d2fb628b9561a99f7e32532aa977c833d03d8d6f9ab33f4cc6cb9baea37",
+      "profile": "formal/11.json"
+    }
+  ],
+  "validation_scope": {
+    "design": "user-approved",
+    "configuration": "checked separately",
+    "new_hd_audio_output": "not_rendered_by_user_instruction",
+    "production_queue": "not_integrated"
+  },
+  "visual_sources": [
+    {
+      "path": "Haike_video/templates/chromatic-06-video-v1/Scene.tsx",
+      "sha256": "eea5e408c7b5aec90040a0dbc9dafbd8c530eeb9a3c4596df9255cb59b80a839"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-six-video-batch-v1/Preview.tsx",
+      "sha256": "0bd8af0f832e9734e40c8bcdd643173fda79e96e5c2ecb99553a8840fd90dd67"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-six-video-batch-v1/build.cjs",
+      "sha256": "379ec951cb1605bfa7f90c16a980d6a1fd11720a0bf37587ad61e6a5d507e7d5"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-six-video-batch-v1/catalogue.json",
+      "sha256": "1520463d6ffc89a08d2d8228a2c0a7129cbedcd5ced8859a6b2f294b63f2e454"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-six-video-batch-v1/collect.py",
+      "sha256": "46dc8a59350e55e9d7239f48cbedfe7493ab2205aa19f4db828471c89076a32c"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-six-video-batch-v1/gallery.css",
+      "sha256": "c3fb37b39e60ad5b693a3cd64315a73e6c049b813776ef5fa4815e428bf6f5b1"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-six-video-batch-v1/index.html",
+      "sha256": "c1b6a299cdf3ee5d5d45c401243ef3f58cb9bb3830b5413b14cafa352ed5f217"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-six-video-batch-v1/prepare.py",
+      "sha256": "d5905d6cf91492c9522bc74a0dbd7c0730eb8d7d8cfa0e299e7be9def30a6788"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-six-video-batch-v1/window-a/06.selection.json",
+      "sha256": "ff5b4cf130e27bfe769fd4d0e07aefdb7c9fc91514ba5a421be975418fe347dd"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-six-video-batch-v1/window-a/06.spec.json",
+      "sha256": "d3d90e2e517c60c13ed7ded72add91bbf4626b4d8e2d0e248f346c8ef8c72e57"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-six-video-batch-v1/window-a/07.selection.json",
+      "sha256": "6e1e5dced75be545c820944c9549a720de703f904c0b32183c32ca8a07e842ea"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-six-video-batch-v1/window-a/07.spec.json",
+      "sha256": "2969fb7cdb7beda87d331279d7fc1df1ca83faa48310f302c6c19026760be4b6"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-six-video-batch-v1/window-a/Scene.tsx",
+      "sha256": "2eca8693d8739e6215b962e2ffc3ca159ceefe63319407376a00ac169e438e1b"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-six-video-batch-v1/window-b/Scene.tsx",
+      "sha256": "d81c90df29c7aaa4348325014cfa5d507ff7675e686f79f54866399247aa57fb"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-six-video-batch-v1/window-b/selection-08.json",
+      "sha256": "866f46372b2be6afa49462ba65813fdaaa20fe1be604bafe6c60151603dff830"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-six-video-batch-v1/window-b/selection-09.json",
+      "sha256": "c3b62045bf3982b6b81e2ae1e6ac91e91bf0127251c852dd678bb183bf16e68a"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-six-video-batch-v1/window-b/template-08.spec.json",
+      "sha256": "67ff885647c36c9d37887bd2e6600ef365e0642da31ddbc20d8fe8dc9563820f"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-six-video-batch-v1/window-b/template-09.spec.json",
+      "sha256": "a5585c9ea1c91e11c37310fbf97b6a53ef3cabac1d5fb359c85bb22f87ee1db3"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-six-video-batch-v1/window-c/Scene.tsx",
+      "sha256": "07e98d2fb628b9561a99f7e32532aa977c833d03d8d6f9ab33f4cc6cb9baea37"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-six-video-batch-v1/window-c/selection-10.json",
+      "sha256": "412f796d398e0b3f3d2940da74d41d250cafab82ee8c41bbbf440a4ffd165f14"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-six-video-batch-v1/window-c/selection-11.json",
+      "sha256": "2190a890a2ab94de00c8c2958720bec2d57a97c4be87fab52657fc2a313f6827"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-six-video-batch-v1/window-c/template-10.spec.json",
+      "sha256": "7d15b68a61469db62d2356dae16ebbb3af8631f8e7913be8e812584daca4218c"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-six-video-batch-v1/window-c/template-11.spec.json",
+      "sha256": "82811505edbc16587dd7c478948dc0bda22031904c7029fe7d855900a92d94d4"
+    }
+  ],
+  "dependencies": {
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "remotion": "4.0.506",
+    "@remotion/player": "4.0.506",
+    "esbuild": "0.28.1"
+  }
+}

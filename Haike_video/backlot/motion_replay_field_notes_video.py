@@ -1,0 +1,290 @@
+"""Versioned full-duration Field Notes video production, owned by the queue.
+
+The frozen 24-second photographic templates are never edited by this module.
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+import math
+import os
+from pathlib import Path
+import subprocess
+import wave
+
+ROOT = Path(__file__).resolve().parents[2]
+TEMPLATE = ROOT / 'Haike_video/templates/field-notes-video-v1'
+CONTRACT = 'haike-field-notes-video-production-v1'
+TEMPLATE_ID, VERSION = 'field-notes-v2', '2.1.0'
+ACTION_NAMES = ('arrive', 'compare', 'connect', 'converge')
+ACTION_IDS = tuple('haike.field-notes-v2.video.' + name for name in ACTION_NAMES)
+NO_WINDOW = 0x08000000 if os.name == 'nt' else 0
+
+
+def require(ok, message):
+    if not ok:
+        raise ValueError(message)
+
+
+def read(path):
+    return json.loads(Path(path).read_text(encoding='utf-8-sig'))
+
+
+def write(path, value):
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp = path.with_name(path.name + '.tmp')
+    tmp.write_text(json.dumps(value, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+    tmp.replace(path)
+
+
+def sha(path):
+    with Path(path).open('rb') as stream:
+        return hashlib.file_digest(stream, 'sha256').hexdigest()
+
+
+def tools():
+    from lib.ffmpeg_locator import resolve_ffmpeg_pair
+    pair = resolve_ffmpeg_pair()
+    require(pair and all(Path(p).is_file() for p in pair), '缺少本项目现有FFmpeg/FFprobe')
+    return pair
+
+
+def _ledger(data):
+    value = read(data / 'payment-ledger.json')
+    require(type(value['limit_micros']) is int and value['limit_micros'] > 0, '本期预算上限无效')
+    if (data / 'production.json').exists():
+        spec = read(data / 'production.json')
+        require(value['limit_micros'] == spec['budget_limit_micros'] and value['group'] == spec['group'], '冻结预算/项目身份不符')
+    require(isinstance(value['entries'], list) and value['entries'] and all(
+        type(row.get('reserved_micros')) is int and row['reserved_micros'] >= 0 for row in value['entries']), '预留必须为非负整数')
+    require(sum(row['reserved_micros'] for row in value['entries']) <= value['limit_micros'], '累计预留超过本组预算')
+    return value
+
+
+def _audio(data):
+    import requests
+    base = read(data / 'production.json').get('base', 'http://127.0.0.1:14756') if (data / 'production.json').exists() else 'http://127.0.0.1:14756'
+    api = base + '/api/studio/audio-center'
+    health = requests.get(base + '/api/health', timeout=15).json()
+    require(Path(health['workspace']).resolve() == ROOT and health['edition'] == 'haike-workflow-2', '配音服务不属于本checkout')
+    ledger = _ledger(data)
+    entry = next(row for row in ledger['entries'] if row['stage'] == 'tts')
+    quote, request = read(data / 'audio-quote.json'), read(data / 'audio-request.json')
+    require(quote['provider'] == 'bailian' and quote['provider_model'] == 'qwen-audio-3.1-tts-flash'
+            and int(quote['max_charge_micros']) <= entry['reserved_micros'], '本期配音报价/模型与预留不一致')
+    require(request['input']['speech_rate'] == 1.15, '本期配音须用供应商原生1.15速')
+    intent_path = data / 'audio-submission-intent.json'
+    if not intent_path.exists():
+        intent = {'quote_id': quote['id'], 'operation_id': quote['operation_id'],
+                  'max_charge_micros': int(quote['max_charge_micros']), 'confirmed': True}
+        entry.update(status='submitting', task_id=quote['operation_id'])
+        ledger['paid_submitted'] = True
+        write(data / 'payment-ledger.json', ledger)
+        write(intent_path, intent)
+        try:
+            response = requests.post(api + '/jobs', json=intent, headers={'Origin': base}, timeout=(15, 900))
+            response.raise_for_status()
+            result = response.json()
+        except requests.RequestException:
+            entry['status'] = 'ambiguous'
+            write(data / 'payment-ledger.json', ledger)
+            raise RuntimeError('配音提交响应未知；保留原operation，不重新提交') from None
+    else:
+        require(read(intent_path)['operation_id'] == quote['operation_id'], '原配音意图身份变化')
+        response = requests.get(api + '/jobs/' + quote['operation_id'], timeout=(15, 900))
+        response.raise_for_status()
+        result = response.json()
+    write(data / 'audio-provider-job.json', result)
+    require(result['status'] == 'succeeded', '配音尚未成功；保留原任务查询，不重发')
+    original, target = data / 'provider-original.wav', data / 'narration.wav'
+    if not original.exists():
+        response = requests.get(api + '/jobs/' + quote['operation_id'] + '/audio', timeout=180)
+        response.raise_for_status()
+        original.write_bytes(response.content)
+    if not target.exists():
+        subprocess.run([tools()[0], '-nostdin', '-v', 'error', '-y', '-i', str(original),
+                        '-ac', '1', '-ar', '24000', '-c:a', 'pcm_s16le', str(target)],
+                       check=True, capture_output=True, timeout=90, creationflags=NO_WINDOW)
+    with wave.open(str(target), 'rb') as stream:
+        seconds, samples, rate = stream.getnframes() / stream.getframerate(), stream.getnframes(), stream.getframerate()
+    entry.update(status='succeeded', actual_micros=int(result['charged_micros']) if result.get('charged_micros') is not None else None,
+                 task_id=quote['operation_id'], audio_sha256=sha(target))
+    # Missing real account billing keeps the full quoted reservation.
+    write(data / 'payment-ledger.json', ledger)
+    receipt = {'narration_wav': str(target), 'sha256': sha(target), 'provider_original_sha256': sha(original),
+               'duration_seconds': seconds, 'samples': samples, 'sample_rate': rate,
+               'operation_id': quote['operation_id'], 'provider': 'bailian', 'model': 'qwen-audio-3.1-tts-flash',
+               'native_rate': 1.15, 'time_stretched': False, 'full_text_sha256': hashlib.sha256(request['input']['text'].encode()).hexdigest(),
+               'quoted_max_micros': entry['reserved_micros'], 'actual_micros': entry['actual_micros']}
+    write(data / 'audio-result.json', receipt)
+    return {'status': 'completed', 'stage': 'A组完整原速配音完成', 'result': receipt}
+
+
+def _asr(data):
+    from backlot.studio_services import refresh_private_environment
+    from backlot import bailian_asr
+    refresh_private_environment()
+    ledger = _ledger(data)
+    entry = next(row for row in ledger['entries'] if row['stage'] == 'asr')
+    require(entry['provider'] == 'bailian' and type(entry['reserved_micros']) is int and entry['reserved_micros'] > 0, '百炼ASR须先单独预留本期预算')
+    audio = read(data / 'audio-result.json')
+    require(sha(data / 'narration.wav') == audio['sha256'], 'ASR必须读取本期完整原音轨')
+    converted = data / 'asr-input.mp3'
+    if not converted.exists():
+        subprocess.run([tools()[0], '-nostdin', '-v', 'error', '-y', '-i', str(data / 'narration.wav'),
+                        '-vn', '-ac', '1', '-ar', '16000', '-c:a', 'libmp3lame', '-b:a', '48k', str(converted)],
+                       check=True, capture_output=True, timeout=90, creationflags=NO_WINDOW)
+    def submitting(identity):
+        entry.update(status='submitting', input_identity=identity)
+        write(data / 'payment-ledger.json', ledger)
+    def accepted(task_id):
+        entry.update(status='accepted', task_id=task_id)
+        write(data / 'payment-ledger.json', ledger)
+    text, segments, metadata = bailian_asr.transcribe_file(converted, artifact_dir=data / 'asr-operation',
+                                                        on_submitting=submitting, on_accepted=accepted)
+    result = {'text': text, 'segments': segments, 'metadata': metadata, 'source_audio_sha256': audio['sha256'],
+              'asr_input_sha256': sha(converted), 'provider': 'bailian', 'timestamp_unit': 'seconds'}
+    write(data / 'asr-transcript.json', result)
+    estimate = float(metadata.get('estimated_cost_cny') or 0)
+    require(estimate * 1000000 <= entry['reserved_micros'], 'ASR实际用量估算超过预留；保留回执并停止新付费')
+    entry.update(status='succeeded', task_id=metadata['task_id'], actual_micros=None,
+                 usage=metadata.get('usage'), list_price_usage_estimate_micros=math.ceil(estimate * 1000000),
+                 billing_note='供应商用量×公开单价是估算；真实账单未知保留全部本期预留')
+    write(data / 'payment-ledger.json', ledger)
+    return {'status': 'completed', 'stage': 'A组百炼真实ASR时钟完成', 'result': {'transcript': str(data / 'asr-transcript.json'),
+            'segments': len(segments), 'task_id': metadata['task_id'], 'estimated_cost_cny': estimate}}
+
+
+def _avatar(data):
+    import shutil
+    import sys
+    spec, timing, portrait = read(data / 'production.json'), read(data / 'timing.json'), read(data / 'portrait-binding.json')
+    require(sha(data / 'avatar-visible.wav') == timing['avatar_visible_audio_sha256'], '仅允许本期真实出镜语音')
+    require(sha(portrait['path']) == portrait['sha256'], '已授权人物图身份变化')
+    ledger = _ledger(data)
+    entry = next(row for row in ledger['entries'] if row['stage'] == 'avatar')
+    require(entry['workflow_id'] == '2112180419025260546' and entry['instance_type'] == 'plus', '本次明确指定的高质量工作流不符')
+    require(spec['hq_budget_coins'] <= entry['reserved_coins'], '高质量数字人币上限超过台账预留')
+    common = [sys.executable, str(ROOT / 'Haike_video/scripts/motion_replay_hq_guard.py'),
+              '--price-receipt', str(data / 'rh-price-bound.json')]
+    args = ['--workspace', str(ROOT), '--audio', str(data / 'avatar-visible.wav'), '--image', portrait['path'],
+            '--ratio', spec['hq_ratio'], '--name', spec['hq_name'], '--budget-coins', str(spec['hq_budget_coins'])]
+    # This is read-only cloud validation; the native run also checks NORMAL again.
+    doctor = subprocess.run(common + ['doctor', '--cloud', *args], capture_output=True, text=True,
+                            encoding='utf-8', timeout=180, creationflags=NO_WINDOW)
+    (data / 'hq-doctor.log').write_text(doctor.stdout + doctor.stderr, encoding='utf-8')
+    require(doctor.returncode == 0, '高质量账号/节点预检失败；没有提交新生成')
+    doctor_result = json.loads(doctor.stdout.strip().splitlines()[-1])
+    require(doctor_result.get('api_type') == 'NORMAL' and doctor_result.get('workflow_binding') == entry['workflow_id'], '须确认NORMAL账号和指定工作流')
+    write(data / 'hq-doctor.json', doctor_result)
+    planned = subprocess.run(common + ['plan', *args], capture_output=True, text=True, encoding='utf-8', timeout=60, creationflags=NO_WINDOW)
+    require(planned.returncode == 0, '高质量出镜计划失败')
+    plan = json.loads(planned.stdout.strip().splitlines()[-1])
+    require(plan['reserve_coins'] <= spec['hq_budget_coins'], '当前价格保守预留超过本期币预算')
+    write(data / 'hq-plan.json', plan)
+    entry.update(status='submitting_or_resuming_original', actual_visible_seconds=plan['seconds'],
+                 current_price_plan_reserve_coins=plan['reserve_coins'], price_receipt_sha256=sha(data / 'rh-price-bound.json'),
+                 doctor_receipt_sha256=sha(data / 'hq-doctor.json'))
+    write(data / 'payment-ledger.json', ledger)
+    log = data / 'avatar.log'
+    with log.open('a', encoding='utf-8') as stream:
+        done = subprocess.run(common + ['run', *args], stdout=stream, stderr=subprocess.STDOUT,
+                              timeout=4000, creationflags=NO_WINDOW)
+    native = ROOT / 'Haike_video/workflows/runninghub-high-quality/runs' / spec['hq_name']
+    records = [read(path) for path in native.glob('segment_*/ledger.json')]
+    entry['task_ids'] = [row['task_id'] for row in records if row.get('task_id')]
+    entry['provider_usage'] = [row.get('usage') for row in records]
+    entry['status'] = 'succeeded' if done.returncode == 0 else 'failed_or_unresolved_original_task'
+    # Report numeric provider usage independently. Unknown cash remains reserved.
+    coins = [row.get('usage', {}).get('consumeCoins') for row in records]
+    money = [row.get('usage', {}).get('consumeMoney') for row in records]
+    third = [row.get('usage', {}).get('thirdPartyConsumeMoney') for row in records]
+    entry['actual_coins'] = sum(float(x) for x in coins) if records and all(x is not None for x in coins) else None
+    entry['compute_cash_cny'] = sum(float(x) for x in money) if records and all(x is not None for x in money) else None
+    entry['third_party_cash_cny'] = sum(float(x) for x in third) if records and all(x is not None for x in third) else None
+    entry['actual_micros'] = (math.ceil((entry['actual_coins'] / entry['coins_per_cny_contract'] + entry['compute_cash_cny'] + entry['third_party_cash_cny']) * 1000000)
+                              if all(entry[x] is not None for x in ('actual_coins', 'compute_cash_cny', 'third_party_cash_cny')) else None)
+    write(data / 'payment-ledger.json', ledger)
+    require(done.returncode == 0, '高质量任务未完成；原任务ID和币/现金回执已保留，不自动另建')
+    final = native / '完整口播.mp4'
+    require(final.is_file(), '高质量已完成但本地母片缺失；只恢复原任务下载')
+    target = data / 'avatar-master.mp4'
+    shutil.copyfile(final, target)
+    receipt = {'output': str(target), 'sha256': sha(target), 'native_run': str(native),
+               'task_ids': entry['task_ids'], 'workflow_id': entry['workflow_id'], 'ratio': spec['hq_ratio'],
+               'fps': 25, 'visible_seconds': plan['seconds'], 'windows': timing['avatar_windows'],
+               'price_plan_sha256': sha(data / 'hq-plan.json'), 'new_generation_count': len(records)}
+    write(data / 'avatar-result.json', receipt)
+    return {'status': 'completed', 'stage': '本期指定高质量人物母片完成', 'result': receipt}
+
+
+def _sources():
+    paths = [Path(__file__), ROOT / 'Haike_video/scripts/motion_replay_hq_guard.py',
+             ROOT / 'Haike_video/backlot/motion_replay_field_notes_render.py',
+             ROOT / 'Haike_video/scripts/motion_replay_field_notes_video.py',
+             ROOT / 'Haike_video/remotion-composer/package-lock.json']
+    if TEMPLATE.exists():
+        paths += [p for p in TEMPLATE.rglob('*') if p.is_file() and p.suffix in {'.tsx', '.ts', '.cjs', '.json', '.py'}]
+    return {p.relative_to(ROOT).as_posix(): sha(p) for p in paths}
+
+
+def admit(workspace, data, *, phase='frames'):
+    require(Path(workspace).resolve() == ROOT, '生产必须归本checkout统一队列')
+    data = Path(data).resolve()
+    require(data.is_relative_to(ROOT / '.local'), '本期输入须在本checkout私有.local目录')
+    require(phase in {'audio', 'asr', 'avatar', 'frames', 'render'}, '生产阶段无效')
+    if phase == 'audio':
+        files = ['audio-request.json', 'audio-quote.json', 'portrait-binding.json']
+    else:
+        files = ['audio-result.json']
+    if phase == 'avatar':
+        files += ['production.json', 'timing.json', 'portrait-binding.json', 'rh-price-bound.json', 'avatar-visible.wav']
+    if phase in {'frames', 'render'}:
+        files += ['preparation.json', 'public/episode.json']
+    if (data / 'production.json').exists():
+        files += ['production.json'] if 'production.json' not in files else []
+    input_identity = {name: sha(data / name) for name in files}
+    value = {'contract': CONTRACT, 'template_id': TEMPLATE_ID, 'template_version': VERSION,
+             'data': str(data), 'phase': phase, 'source_identity': _sources(),
+             'input_identity': input_identity, 'action_ids': list(ACTION_IDS), 'submitted_by': 'motion-replay-new-contract',
+             'project_id': read(data / 'production.json')['project_id'] if (data / 'production.json').exists() else 'field-notes-' + hashlib.sha256(str(data).encode()).hexdigest()[:16]}
+    if phase in {'frames', 'render'}:
+        prepared = prepare_registered(data)
+        value['render_props_sha256'] = sha(data / 'public/episode.json')
+        value['manifest_sha256'] = sha(data / 'preparation.json')
+        value['contract_preparation'] = prepared
+        from backlot.motion_replay_field_notes_render import runtime
+        value['runtime_identity'] = {str(Path(path).resolve()): sha(path) for path in runtime(data).values()}
+    value['render_id'] = phase + '-' + hashlib.sha256(json.dumps(value, sort_keys=True).encode()).hexdigest()[:16]
+    return value
+
+
+def run(queue, job):
+    request = job['frozen_request']
+    require(request['contract'] == CONTRACT and request['template_id'] == TEMPLATE_ID and request['template_version'] == VERSION,
+            '正式候选生产合同不匹配')
+    require(request['action_ids'] == list(ACTION_IDS), '动作选择或顺序与执行器不一致')
+    for name, digest in request['source_identity'].items():
+        require(sha(ROOT / name) == digest, '本期冻结执行源码变化；不能沿旧任务执行')
+    data = Path(request['data'])
+    for name, digest in request['input_identity'].items():
+        require(sha(data / name) == digest, '本期冻结输入变化；保留原任务')
+    for name, digest in request.get('runtime_identity', {}).items():
+        require(sha(name) == digest, '本期执行运行时身份变化')
+    phase = request['phase']
+    if phase == 'audio':
+        return _audio(data)
+    if phase == 'asr':
+        return _asr(data)
+    if phase == 'avatar':
+        return _avatar(data)
+    from backlot.motion_replay_field_notes_render import run as render
+    return render(queue, job)
+
+
+def prepare_registered(data):
+    from backlot.motion_replay import prepare
+    value = prepare(TEMPLATE_ID, VERSION, {'data': str(data)}, workspace=ROOT)
+    require(value['status'] == 'prepared' and value.get('invocation'), '本期新契约输入尚未准备')
+    return value

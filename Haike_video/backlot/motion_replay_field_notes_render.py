@@ -1,0 +1,298 @@
+"""Input gates and queued render stages for full-duration Field Notes video."""
+from __future__ import annotations
+import hashlib
+import json
+import math
+import os
+from pathlib import Path
+import shutil
+import subprocess
+
+ROOT = Path(__file__).resolve().parents[2]
+TEMPLATE = ROOT / 'Haike_video/templates/field-notes-video-v1'
+VERSION = '2.1.0'
+ACTIONS = ['haike.field-notes-v2.video.' + name for name in ('arrive', 'compare', 'connect', 'converge')]
+EVENTS = [
+    {'titleDemoteStart', 'titleDemoteEnd', 'mediaEnterStart', 'mediaEnterEnd', 'noteStart'},
+    {'focusStart', 'focusEnd', 'returnStart', 'returnEnd', 'noteStart'},
+    {'lineStart', 'lineEnd', 'mediaEnterStart', 'mediaEnterEnd', 'noteStart'},
+    {'pathStart', 'travelStart', 'travelEnd', 'conclusionStart', 'conclusionEnd', 'noteStart'},
+]
+NO_WINDOW = 0x08000000 if os.name == 'nt' else 0
+
+
+def require(ok, message):
+    if not ok:
+        raise ValueError(message)
+
+
+def read(path):
+    return json.loads(Path(path).read_text(encoding='utf-8-sig'))
+
+
+def sha(path):
+    with Path(path).open('rb') as stream:
+        return hashlib.file_digest(stream, 'sha256').hexdigest()
+
+
+def write(path, value):
+    path = Path(path); path.parent.mkdir(parents=True, exist_ok=True)
+    temp = path.with_name(path.name + '.tmp')
+    temp.write_text(json.dumps(value, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+    temp.replace(path)
+
+
+def integer(value, start, end):
+    return type(value) is int and start <= value <= end
+
+
+def filename(value):
+    return isinstance(value, str) and value not in {'', '.', '..'} and Path(value).name == value and not any(c in value for c in '/\\:')
+
+
+def validate_episode(episode):
+    allowed = {'template_id','version','fps','durationFrames','brand','title','scenes','captions','presenters','audio','font','requiredOverlay','address','sourceText'}
+    require(isinstance(episode, dict) and set(episode) == allowed, '正式模板输入字段缺失或含未知字段')
+    total = episode['durationFrames']
+    require(episode['template_id'] == 'field-notes-v2' and episode['version'] == VERSION and episode['fps'] == 30
+            and integer(total, 480, 18000), '需要精确版本2.1.0、30fps、16至600秒完整音轨时钟')
+    require(episode['audio'] == 'master.wav' and episode['font'] == 'font.ttf', '音轨和字体必须使用本期固定本地资源名')
+    require(episode['requiredOverlay'].replace('\n','') == 'AI体质检测：非医疗诊断。不看病不卖药，给您个参考。', '需要持续显示本期非医疗说明')
+    for key, limit in [('brand',30),('title',60),('address',40),('sourceText',10000)]:
+        require(isinstance(episode[key], str) and 0 < len(episode[key]) <= limit, '文字输入无效：' + key)
+    scenes = episode['scenes']
+    require(isinstance(scenes, list) and len(scenes) == 4 and [s.get('actionId') for s in scenes] == ACTIONS, '必须由四个精确动作编号按原信息关系执行')
+    cursor = 0
+    occurrences = []
+    for i, scene in enumerate(scenes):
+        require(set(scene) <= {'id','actionId','from','to','headline','note','kicker','events','media','labels'}, '场景含未开放字段')
+        require(scene['id'] == ('arrive','compare','connect','converge')[i] and scene['from'] == cursor
+                and integer(scene['to'], cursor+120, total), '四场必须连续覆盖主时钟并保留阅读预算')
+        cursor = scene['to']
+        for field, maximum in [('headline',24),('note',36),('kicker',30)]:
+            require(isinstance(scene[field], str) and 0 < len(scene[field]) <= maximum, '场景短文案超出已开放范围')
+        events = scene['events']
+        require(set(events) == EVENTS[i] and all(integer(v, scene['from'], scene['to']-15) for v in events.values()), '关键内部事件缺失或越界')
+        keys = (('titleDemoteStart','titleDemoteEnd'),('mediaEnterStart','mediaEnterEnd')) if i==0 else (
+            (('focusStart','focusEnd','returnStart','returnEnd'),) if i==1 else (
+            (('lineStart','lineEnd','mediaEnterStart','mediaEnterEnd'),) if i==2 else
+            (('pathStart','travelStart','travelEnd','conclusionStart','conclusionEnd'),)))
+        for chain in keys:
+            require(all(events[a] < events[b] for a,b in zip(chain,chain[1:])), '语义事件因果顺序无效')
+        require(scene['to'] - max(events.values()) >= 36, '动作结束后不足36帧阅读时间')
+        require(isinstance(scene['media'], list) and len(scene['media']) == (1,4,1,4)[i], '场景真实视频槽数量不符')
+        for playlist in scene['media']:
+            require(isinstance(playlist,list) and playlist and playlist[0]['from']==scene['from'] and playlist[-1]['to']==scene['to'], '视频槽必须连续覆盖原场景')
+            local = scene['from']
+            for clip in playlist:
+                require(set(clip) <= {'file','from','to','sourceStartFrame','position'} and filename(clip['file']) and clip['file'].endswith('.mp4'), '只接受已准备的本地真实视频槽')
+                require(clip['from']==local and integer(clip['to'],local+1,scene['to']) and integer(clip['sourceStartFrame'],0,180000), '真实视频原速采样窗口不连续')
+                require(clip.get('position','50% 35%') in {'50% 35%','50% 32%','50% 50%'}, '未开放该视频取景参数')
+                occurrences.append(clip); local=clip['to']
+    require(cursor == total, '场景没有覆盖完整音轨')
+    captions = episode['captions']; previous = 0
+    require(isinstance(captions,list) and captions and ''.join(c['text'] for c in captions) == episode['sourceText'], '字幕必须逐字完整覆盖本期原稿')
+    for cue in captions:
+        require(isinstance(cue['text'],str) and len(cue['text']) <= 28 and isinstance(cue['startMs'],(int,float))
+                and isinstance(cue['endMs'],(int,float)) and all(math.isfinite(cue[k]) for k in ('startMs','endMs'))
+                and previous <= cue['startMs'] < cue['endMs'] <= total/30*1000+.04, '字幕须使用真实ASR有序时码，不均分猜测')
+        previous=cue['endMs']
+    require(isinstance(episode['presenters'],list) and episode['presenters'], '正式版本必须绑定本期同声源高质量人物窗')
+    previous=0
+    for clip in episode['presenters']:
+        require(set(clip) <= {'file','from','to','sourceStartFrame','position'} and filename(clip['file'])
+                and previous <= clip['from'] < clip['to'] <= total and integer(clip['sourceStartFrame'],0,180000), '人物窗口有重叠、越界或非法源起点')
+        occurrences.append(clip); previous=clip['to']
+    return occurrences
+
+
+def validate_prepared(data):
+    data=Path(data).resolve(); public=data/'public'
+    manifest=read(data/'preparation.json')
+    require(manifest.get('schema')=='haike.field-notes-video-preparation/1' and manifest.get('version')==VERSION, '正式准备清单版本不符')
+    bound={}
+    for item in manifest['files']:
+        require(filename(item['path']), '本期public清单只能使用平面本地资源')
+        path=(public/item['path']).resolve()
+        require(path.is_relative_to(public) and path.is_file() and sha(path)==item['sha256'], '本期public素材身份变化')
+        require(item['path'] not in bound, '本期清单含重复资源')
+        bound[item['path']]=path
+    required_evidence={'timing.json','asr-transcript.json','avatar-result.json','audio-result.json','prepared-materials.json','material-inventory.json','mix-provenance.json'}
+    evidence=manifest.get('evidence',[])
+    require({item['path'] for item in evidence}==required_evidence and len(evidence)==len(required_evidence), '缺少同源时钟/原素材/混音证据绑定')
+    for item in evidence:
+        require(filename(item['path']) and sha(data/item['path'])==item['sha256'], '本期私有准备证据身份变化')
+    episode=read(public/'episode.json')
+    clips=validate_episode(episode)
+    require({'episode.json','master.wav','font.ttf'} <= set(bound), '缺少主输入、完整混音或字体绑定')
+    audio=read(data/'audio-result.json'); timing=read(data/'timing.json'); avatar=read(data/'avatar-result.json')
+    require(manifest['source_audio_sha256']==audio['sha256']==timing['source_audio_sha256']
+            and sha(data/'narration.wav')==audio['sha256'], '旁白/ASR/正式音轨必须同源')
+    require(timing['complete_canonical_text_covered'] is True and timing['no_voice_stretch'] is True
+            and sha(data/'asr-transcript.json')==timing['asr_sha256'], '缺少本期真实完整ASR语义时钟')
+    require(hashlib.sha256(episode['sourceText'].encode()).hexdigest()==audio['full_text_sha256']==timing['script_sha256']
+            and episode['captions']==timing['captions'] and episode['durationFrames']==timing['duration_frames']
+            and [episode['scenes'][0]['from']]+[s['to'] for s in episode['scenes']]==timing['stage_boundaries'], '正式输入与本期完整语音/ASR语义时钟不一致')
+    require(avatar['workflow_id']=='2112180419025260546' and avatar['fps']==25
+            and manifest['avatar_master_sha256']==avatar['sha256']==sha(data/'avatar-master.mp4')
+            and avatar['windows']==timing['avatar_windows'], '人物必须来自本期指定高质量工作流')
+    require([(p['from'],p['to'],p['sourceStartFrame']) for p in episode['presenters']]
+            ==[(p['fromFrame'],p['toFrame'],0) for p in timing['avatar_windows']], '人物只能使用本期实际出镜窗口')
+    for material in read(data/'prepared-materials.json'):
+        require(material['prepared_file'] in bound and sha(bound[material['prepared_file']])==material['prepared_sha256']
+                and sha(material['path'])==material['sha256'], '正式实拍与高质量原片来源不一致')
+    mix=read(data/'mix-provenance.json')
+    require(mix['source_narration_sha256']==audio['sha256'] and mix['master_sha256']==sha(bound['master.wav'])
+            and mix['speech_speed']==1, '正式混音必须使用本期完整原速主音轨')
+    from lib.ffmpeg_locator import resolve_ffmpeg_pair
+    pair=resolve_ffmpeg_pair(); require(pair, '缺少本项目FFmpeg')
+    probes={}
+    for clip in clips:
+        require(clip['file'] in bound, '实际消费的视频未绑定素材身份')
+        if clip['file'] not in probes:
+            probe=json.loads(subprocess.check_output([pair[1],'-v','error','-show_streams','-show_format','-of','json',str(bound[clip['file']])],timeout=30))
+            video=next((s for s in probe['streams'] if s['codec_type']=='video'),None)
+            require(video is not None, '实际视频槽没有视频流')
+            probes[clip['file']]={'duration':float(video.get('duration',probe['format']['duration'])),'width':video['width'],'height':video['height']}
+        require((clip['sourceStartFrame']+clip['to']-clip['from'])/30 <= probes[clip['file']]['duration']+.001, '真实视频不足，不循环或冻结补长')
+    import wave
+    with wave.open(str(bound['master.wav']),'rb') as stream:
+        require(stream.getframerate()==48000 and stream.getnchannels()==2 and stream.getsampwidth()==2
+                and stream.getnframes()==episode['durationFrames']*1600, '完整混音须精确对应最终帧时钟')
+    return episode,manifest,probes
+
+
+def prepare(template, request, *, workspace):
+    require(Path(workspace).resolve()==ROOT, '此实现须使用所属源码checkout')
+    require(template['template_id']=='field-notes-v2' and template['version']==VERSION, '正式候选精确版本不符')
+    require(isinstance(request,dict) and not(set(request)-{'data','action_ids'}), '正式准备只接受data和完整action_ids')
+    if 'action_ids' in request:
+        require(request['action_ids']==ACTIONS, '此版本只支持完整四动作顺序，不能重排或替换')
+    if 'data' not in request:
+        return {'status':'blocked','blockers':['缺少本期完整语音/ASR/真实视频准备目录'],'invocation':None,'submitted':False}
+    require(isinstance(request['data'],str) and request['data'].strip(), 'data必须为目录字符串')
+    data=Path(request['data']); data=(data if data.is_absolute() else ROOT/data).resolve()
+    episode,manifest,probes=validate_prepared(data)
+    from backlot.motion_replay_field_notes_video import _ledger
+    _ledger(data)
+    return {'status':'prepared','execution_status':'ready_for_queued_frames','submitted':False,'blockers':[],
+        'renderer':template['renderer'],'action_bindings':template['actions'],
+        'inputs':{'data':str(data),'public_dir':str(data/'public'),'episode_manifest':str(data/'preparation.json'),
+                  'renderer_input_file':str(data/'public/episode.json')},
+        'props':{'episodeFile':'episode.json','episode':episode},
+        'queue_route':{'entrypoint':'Haike_video/scripts/motion_replay_field_notes_video.py','argv':['--data',str(data),'--phase','frames']},
+        'timeline':{'clock':'full measured audio,30fps','events':[{ 'id':s['id']+'.'+name,'action_id':s['actionId'],'absolute_frame':frame} for s in episode['scenes'] for name,frame in s['events'].items()]},
+        'reproduction':{'contract':'haike-field-notes-video-production-v1','next':'queued frames -> actual review -> queued full render; no automatic paid generation'},
+        'validation_scope':'当前输入/语义/媒体时钟核验；本期实际输出仍经队列与实际画面验收'}
+
+
+def runtime(data):
+    spec=read(Path(data)/'production.json')
+    candidate=Path(spec.get('runtime_root',ROOT/'runtime'))
+    def locate(explicit, environment, candidates):
+        selected=explicit or os.environ.get(environment)
+        if selected:
+            path=Path(selected).resolve()
+            require(path.is_file(), '明确指定的本机运行时不存在：'+environment)
+            return path
+        path=next((Path(p).resolve() for p in candidates if p and Path(p).is_file()),None)
+        require(path is not None, '缺少本机现有运行时：'+environment+'；可在本期production.json显式配置')
+        return path
+    node=locate(spec.get('node_executable'),'HAIKE_NODE_EXECUTABLE',[candidate/'node/node.exe',shutil.which('node')])
+    browser=locate(spec.get('browser_executable'),'REMOTION_BROWSER_EXECUTABLE',[
+        candidate/'browser/chrome-headless-shell.exe',shutil.which('chrome-headless-shell'),
+        ROOT/'Haike_video/remotion-composer/node_modules/.remotion/chrome-headless-shell/win64/chrome-headless-shell-win64/chrome-headless-shell.exe'])
+    from lib.ffmpeg_locator import resolve_ffmpeg_pair
+    ffmpeg,ffprobe=resolve_ffmpeg_pair()
+    return {'node':str(node),'browser':str(browser),'ffmpeg':ffmpeg,'ffprobe':ffprobe}
+
+
+def identity(data):
+    from backlot.motion_replay_field_notes_video import _sources
+    result={str(ROOT/name):digest for name,digest in _sources().items()}
+    result.update({str(Path(path).resolve()):sha(path) for path in runtime(data).values()})
+    for path in [Path(data)/'preparation.json',Path(data)/'production.json',Path(data)/'bundle-binding.json',*(Path(data)/'public').glob('*')]:
+        if path.is_file():result[str(path.resolve())]=sha(path)
+    for path in (Path(data)/'bundle').rglob('*'):
+        if path.is_file():result[str(path.resolve())]=sha(path)
+    return result
+
+
+def bundle_inputs(data):
+    return {'public':{p.name:sha(p) for p in sorted((Path(data)/'public').iterdir()) if p.is_file()},
+            'visual_source':{p.name:sha(p) for p in sorted(TEMPLATE.iterdir()) if p.suffix in {'.tsx','.cjs'}},
+            'dependency_lock':sha(ROOT/'Haike_video/remotion-composer/package-lock.json')}
+
+
+def bundle_files(data):
+    return {p.relative_to(Path(data)/'bundle').as_posix():sha(p) for p in sorted((Path(data)/'bundle').rglob('*')) if p.is_file()}
+
+
+def critical_frames(episode):
+    total=episode['durationFrames']; frames={0,12,total-1}
+    for scene in episode['scenes']:
+        frames.update([scene['from'],max(0,scene['from']-1),scene['to']-1])
+        values=sorted(set(scene['events'].values()))
+        frames.update(values)
+        frames.update(min(scene['to']-1,n+7) for n in values)
+    frames.update(clip['from'] for clip in episode['presenters'])
+    return sorted(f for f in frames if 0<=f<total)
+
+
+def run(queue, job):
+    request=job['frozen_request']; data=Path(request['data'])
+    episode,manifest,probes=validate_prepared(data)
+    rt=runtime(data); project=queue.projects_root/str(job['project_id']) if hasattr(queue,'projects_root') else ROOT/'Haike_video/projects'/str(job['project_id'])
+    out=project/'renders'/request['render_id']; out.mkdir(parents=True,exist_ok=True)
+    phase=request['phase']; require(phase in {'frames','render'}, '正式渲染阶段无效')
+    if not (data/'bundle/index.html').is_file():
+        with (out/'bundle.log').open('w',encoding='utf-8') as log:
+            subprocess.run([rt['node'],str(TEMPLATE/'render.cjs'),'bundle',str(data)],check=True,stdout=log,stderr=subprocess.STDOUT,timeout=300,creationflags=NO_WINDOW)
+        write(data/'bundle-binding.json',{'inputs':bundle_inputs(data),'files':bundle_files(data)})
+    require((data/'bundle-binding.json').is_file(), '已存在bundle缺少来源绑定；保留证据并为本期重新准备，不能盲用旧节目')
+    binding=read(data/'bundle-binding.json')
+    require(binding.get('inputs')==bundle_inputs(data) and binding.get('files')==bundle_files(data), 'bundle与本期画面源码/公开资源不一致；不能渲染旧节目')
+    current=identity(data); frames=critical_frames(episode)
+    if phase=='render':
+        review=read(data/'design-review.json')
+        require(review.get('status')=='pass' and review.get('identity')==current and review.get('images'), '完整导出须绑定本期实际看过的同源关键帧')
+        for row in review['images']:
+            require(sha(row['path'])==row['sha256'], '已审核图片身份变化')
+    target=out/'frames' if phase=='frames' else out/'silent.mp4'
+    with (out/'render.log').open('w',encoding='utf-8') as log:
+        subprocess.run([rt['node'],str(TEMPLATE/'render.cjs'),phase,str(data),str(target),rt['browser'],','.join(map(str,frames))],
+                       check=True,stdout=log,stderr=subprocess.STDOUT,timeout=7200,creationflags=NO_WINDOW)
+    action_receipt={'template_id':'field-notes-v2','version':VERSION,'queue_job_id':job['job_id'],
+        'render_props_sha256':sha(data/'public/episode.json'),'manifest_sha256':sha(data/'preparation.json'),
+        'executed_action_ids':[s['actionId'] for s in episode['scenes']],
+        'implementation':'Scene.tsx:ACTIONS maps each scene.actionId to real Arrive/Compare/Connect/Converge functions',
+        'resolved_events':[{'scene':s['id'],'action_id':s['actionId'],'events':s['events']} for s in episode['scenes']],
+        'full_text_sha256':hashlib.sha256(episode['sourceText'].encode()).hexdigest(),'duration_frames':episode['durationFrames'],
+        'narration_sha256':manifest['source_audio_sha256'],'phase':phase,'source_identity':request['source_identity'],
+        'registered_preparation':request['contract_preparation'],
+        'registered_preparation_sha256':hashlib.sha256(json.dumps(request['contract_preparation'],sort_keys=True,ensure_ascii=False).encode()).hexdigest()}
+    write(out/'contract-consumption.json',action_receipt)
+    if phase=='frames':
+        proofs=[{'frame':f,'path':str(target/(str(f).zfill(5)+'.png')),'sha256':sha(target/(str(f).zfill(5)+'.png'))} for f in frames]
+        write(data/'latest-frame-job.json',{'job_id':job['job_id'],'identity':current,'images':proofs,'contract_receipt':str(out/'contract-consumption.json')})
+        return {'status':'completed','stage':'新契约正式模板全部语义关键帧完成','result':{'frames':len(proofs),'preview_dir':str(target),'contract_receipt':str(out/'contract-consumption.json')}}
+    final=out/'field-notes-full.mp4'; seconds=episode['durationFrames']/30
+    subprocess.run([rt['ffmpeg'],'-nostdin','-v','error','-y','-i',str(target),'-i',str(data/'public/master.wav'),
+                    '-map','0:v:0','-map','1:a:0','-t',str(seconds),'-c:v','copy','-c:a','aac','-b:a','192k','-movflags','+faststart',str(final)],
+                   check=True,capture_output=True,timeout=180,creationflags=NO_WINDOW)
+    probe=json.loads(subprocess.check_output([rt['ffprobe'],'-v','error','-show_streams','-show_format','-of','json',str(final)],timeout=30))
+    video=next(s for s in probe['streams'] if s['codec_type']=='video'); audio=next(s for s in probe['streams'] if s['codec_type']=='audio')
+    require((video['width'],video['height'])==(1080,1920) and int(video['nb_frames'])==episode['durationFrames']
+            and int(video['bit_rate'])>=20000000, '正式1080画幅/帧数/视频流20Mbps门槛不符')
+    subprocess.run([rt['ffmpeg'],'-nostdin','-v','error','-i',str(final),'-f','null','-'],check=True,capture_output=True,timeout=240,creationflags=NO_WINDOW)
+    quality={'status':'technical_pass_visual_output_pending','video':str(final),'sha256':sha(final),'probe':probe,
+             'full_decode':'pass','full_text_covered':True,'narration_sha256':manifest['source_audio_sha256'],
+             'continuous_device_listen':'pending','platform':'not_published','contract_receipt':str(out/'contract-consumption.json')}
+    write(out/'quality.json',quality)
+    from backlot.work_catalog import WorkCatalog
+    work=WorkCatalog(ROOT/'Haike_video/projects').register(str(job['project_id']),final,work_key='field-notes-narrated-video',mode='manual',event_id=job['job_id'],
+        quality_passed=False,title=episode['title'],actor='motion-replay-field-notes-2.1.0',summary='完整新契约视频；本期编码画面/听感待最终验收，未发布',ffprobe=rt['ffprobe'])
+    delivery={'output':str(final),'queue_job_id':job['job_id'],'work_id':work['work_id'],'project_id':job['project_id'],
+              'qa_report':str(out/'quality.json'),'contract_receipt':str(out/'contract-consumption.json')}
+    write(data/'render-result.json',delivery)
+    return {'status':'completed','stage':'新契约正式完整有声视频已生成','result':{'output_path':str(final),'work_id':work['work_id'],'qa_report':str(out/'quality.json')}}

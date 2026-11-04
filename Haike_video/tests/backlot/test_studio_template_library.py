@@ -25,6 +25,66 @@ def test_inventory_has_unique_ids_and_existing_guides():
             assert '只替换left主窗' in guide and '0.2秒网格' in guide
 
 
+def test_number_four_is_discoverable_without_claiming_one_click_production(tmp_path, monkeypatch):
+    monkeypatch.setattr(library, 'BINDINGS', tmp_path / 'no-private-binding.json')
+    app = FastAPI()
+    app.include_router(router)
+    client = TestClient(app)
+    data = client.get('/api/studio/template-library').json()
+    item = next(t for t in data['templates'] if t['id'] == 'field-notes-v1')
+    assert item['name'].startswith('动效模板4')
+    assert item['group'] == '动画模板' and item['avatar_role'] == 'supporting-window'
+    assert item['sample'] is None and 'href' not in item
+    guide = client.get(item['guide']).json()['text']
+    assert '--template-id field-notes-v1' in guide
+    assert '2094449979141218305' in guide and '有声' in guide
+
+
+def test_portable_without_private_packages_still_lists_the_eight_original_styles(tmp_path, monkeypatch):
+    monkeypatch.setattr(motion, 'STORE', tmp_path / 'no-personal-store')
+    monkeypatch.setattr(library, 'BINDINGS', tmp_path / 'no-media.json')
+    monkeypatch.setattr(library, 'COVERS', tmp_path / 'no-private-covers')
+    data = library.library()['templates']
+    imported = [row for row in data if row.get('template_id') in {
+        r['template_id'] for r in json.loads(library.PRESENTATION.read_text('utf-8'))['templates']}]
+    assert len(imported) == 8
+    assert sum(row['category'] == '动效模板' for row in data) == 18
+    assert all(row['package_installed'] is False and row['status'] == '可准备本期输入'
+               and row['source_kind'] == 'public-source-production' for row in imported)
+    assert all(not row['reference_preview'] or row['reference_preview'].startswith('https://media.openaicut.com/') for row in imported)
+    assert {row['template_id'] for row in imported if not row['reference_preview']} <= {
+        'knowledge-explainer-sketchnote', 'knowledge-explainer-chalkboard'}
+    assert all(row['presentation_dependency'] in {'public_original_reference', 'local_original_cover'} for row in imported)
+    assert all('package_id' not in row and 'href' not in row and row['preferred_production'] for row in imported)
+
+
+def test_missing_package_presentation_cannot_add_private_or_credential_preview_urls(tmp_path, monkeypatch):
+    source = json.loads(library.PRESENTATION.read_text(encoding='utf-8'))
+    for url in ['http://127.0.0.1/private.mp4', 'https://media.openaicut.com@other.example/style.mp4',
+                'https://media.openaicut.com/style.mp4?token=private']:
+        source['templates'][0]['reference_preview'] = url
+        path = tmp_path / 'presentation.json'
+        path.write_text(json.dumps(source, ensure_ascii=False), encoding='utf-8')
+        monkeypatch.setattr(library, 'PRESENTATION', path)
+        rows = library._uninstalled_motion_entries([])
+        assert len(rows) == 8 and rows[0]['reference_preview'] is None
+
+
+def test_installed_original_style_is_not_duplicated_by_portable_presentation(tmp_path, monkeypatch):
+    first = json.loads(library.PRESENTATION.read_text(encoding='utf-8'))['templates'][0]
+    store = tmp_path / 'store'
+    store.mkdir()
+    (store / 'registry.sqlite3').write_bytes(b'fixture sentinel; packages call is mocked')
+    monkeypatch.setattr(motion, 'STORE', store)
+    monkeypatch.setattr(motion, 'packages', lambda: {'packages': [{
+        'id': first['gallery_id'].removeprefix('motion-package-'), 'template_id': first['template_id'],
+        'version': first['version'], 'name': first['name'], 'runtime': 'native',
+        'verification': 'unverified', 'runnable': False, 'workflows': {}}]})
+    rows = library._imported_entries()
+    assert len(rows) == 8 and len({row['id'] for row in rows}) == 8
+    assert sum(row.get('package_installed') is False for row in rows) == 7
+
+
 def test_private_media_is_explicit_read_only_and_range_capable(tmp_path, monkeypatch):
     monkeypatch.setattr(library, 'COVERS', tmp_path / 'no-distributed-covers')
     media = tmp_path / 'sample.mp4'
@@ -86,6 +146,16 @@ def test_stale_or_malformed_private_binding_falls_back_to_portable_cover(tmp_pat
         assert library.media('store-footage-20', 'poster') == poster
 
 
+def test_png_original_cover_survives_relocation_without_conversion(tmp_path, monkeypatch):
+    monkeypatch.setattr(library, 'COVERS', tmp_path / 'relocated')
+    monkeypatch.setattr(library, 'BINDINGS', tmp_path / 'missing.json')
+    library.COVERS.mkdir()
+    cover = library.COVERS / 'avatar-interview-v7.png'
+    cover.write_bytes(b'original PNG bytes')
+    assert library.media('avatar-interview-v7', 'poster') == cover
+    assert library.media('../avatar-interview-v7', 'poster') is None
+
+
 def test_imported_motion_enters_gallery_as_metadata_without_executing_or_leaking(tmp_path, monkeypatch):
     monkeypatch.setattr(motion, 'STORE', tmp_path / 'motion-private')
     monkeypatch.setattr(motion, 'helper_command', lambda *a, **kw: (_ for _ in ()).throw(AssertionError('gallery executed helper')))
@@ -121,6 +191,22 @@ def test_gallery_does_not_create_a_motion_store_when_none_was_imported(tmp_path,
     monkeypatch.setattr(motion,'STORE',tmp_path/'not-created')
     monkeypatch.setattr(motion,'packages',lambda: (_ for _ in ()).throw(AssertionError('empty gallery read created registry')))
     assert library.entries() and not motion.STORE.exists()
+
+
+def test_gallery_has_two_categories_and_formal_six_keep_historical_media_scope(tmp_path, monkeypatch):
+    monkeypatch.setattr(motion, 'STORE', tmp_path / 'no-imports')
+    cards = library.library()['templates']
+    assert {t['category'] for t in cards} == {'固定模板', '动效模板'}
+    for identity in ['chromatic-06', 'chromatic-07', 'chromatic-08', 'chromatic-09', 'chromatic-six-10', 'chromatic-six-11']:
+        item = next(t for t in cards if t['id'] == identity)
+        assert item['category'] == '动效模板' and item['version'] == '1.1.0'
+        assert item['render_profile']['audio_required'] is True
+        assert item['render_profile']['silent'] is False
+        assert item['render_profile']['width'] == 1080
+        assert item['render_profile']['height'] == 1920
+        assert '不重渲染' in item['description']
+        assert 'href' not in item  # Gallery approval does not create a one-click production adapter.
+        assert library.document(identity).name == 'FORMAL.md'
 
 
 def test_real_static_import_appears_as_inspection_only_without_extra_registration(tmp_path, monkeypatch):

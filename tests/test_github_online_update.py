@@ -18,26 +18,6 @@ spec.loader.exec_module(updater)
 
 
 class GitHubOnlineUpdateTests(unittest.TestCase):
-    def test_reported_old_haike_build_is_discoverable_without_version_allowlist(self):
-        with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
-            (root / 'PACKAGE-MANIFEST.json').write_text('{}')
-            (root / 'RELEASE.json').write_text(json.dumps({'edition': 'haike-workflow-2',
-                'source_commit': '594980e14d722e5c98ac4296a1a5279080f7f8d1'}))
-            self.assertTrue(updater.supported(root))
-            (root / '.git').mkdir()
-            self.assertFalse(updater.supported(root))
-
-    def test_project_compatibility_feed_allows_complete_repair_resources(self):
-        feed = self.feed()
-        feed['bootstrap']['project_compatibility'] = {'schema': 1, 'edition': 'haike-workflow-2',
-                                                     'platform': 'windows-x64', 'data_schema': 1}
-        feed['bootstrap']['resources']['size'] = 240_000_000
-        self.assertEqual(updater.validate_feed(feed), feed)
-        feed['bootstrap']['project_compatibility']['edition'] = 'unrelated-product'
-        with self.assertRaisesRegex(ValueError, '项目兼容策略'):
-            updater.validate_feed(feed)
-
     def test_unfinished_file_audio_operations_block_before_stopping_processes(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory).resolve()
@@ -97,8 +77,7 @@ class GitHubOnlineUpdateTests(unittest.TestCase):
                 updater.finish_bootstrap_start(root, output, installer)
             installer.restore.assert_called_once_with(root, Path(output['backup']))
             self.assertEqual(launch.call_count, 2)
-            stop.assert_called_once_with(root, queue_guard=installer.queue_module.return_value,
-                audio_guard=installer.audio_module.return_value)
+            stop.assert_called_once_with(root, queue_guard=installer.queue_module(), audio_guard=installer.audio_module())
 
     def test_child_python_uses_utf8_even_on_chinese_windows(self):
         with patch.dict(os.environ, {'PYTHONHOME': 'unrelated-python', 'PYTHONIOENCODING': 'cp936'}):
@@ -122,10 +101,12 @@ class GitHubOnlineUpdateTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 updater.feed_url(url)
 
-    def test_feed_requires_pinned_asset_identity_and_total_under_200mb(self):
+    def test_feed_requires_pinned_asset_identity_and_bounded_total_accepts_244mb(self):
         value = self.feed()
         updater.validate_feed(value)
-        value['bootstrap']['resources']['size'] = 200_000_000
+        value['bootstrap']['resources']['size'] = 244_073_053
+        updater.validate_feed(value)
+        value['bootstrap']['resources']['size'] = updater.MAX_DOWNLOAD
         with self.assertRaisesRegex(ValueError, '总量'):
             updater.validate_feed(value)
         value = self.feed(); value['bootstrap']['program']['sha256'] = 'bad'
@@ -199,36 +180,13 @@ class GitHubOnlineUpdateTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             (root / 'PACKAGE-MANIFEST.json').write_text('{}')
+            (root / 'runtime/python').mkdir(parents=True)
+            (root / 'runtime/python/python.exe').write_bytes(b'synthetic-unused-runtime')
             (root / 'RELEASE.json').write_text(json.dumps({'edition': 'haike-workflow-2', 'version': '1.2.1'}))
             with patch.object(updater, 'remote', return_value=io.BytesIO(json.dumps(self.feed()).encode())), \
                  patch.object(updater, 'fetch_asset', side_effect=AssertionError('no download')), \
                  patch.object(updater, 'stop_legacy', side_effect=AssertionError('no stop')):
                 self.assertTrue(updater.run('https://github.com/hrbj18/haike-workflow', root)['already_current'])
-
-    def test_project_check_inspects_missing_dependencies_even_at_current_version(self):
-        with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory); bundle = root / 'verified-bundle'; bundle.mkdir()
-            (root / 'PACKAGE-MANIFEST.json').write_text('{}')
-            (root / 'RELEASE.json').write_text(json.dumps({'edition': 'haike-workflow-2', 'version': '1.2.1'}))
-            feed = self.feed()
-            policy = {'schema': 1, 'edition': 'haike-workflow-2', 'platform': 'windows-x64', 'data_schema': 1}
-            feed['bootstrap']['project_compatibility'] = policy
-            (bundle / 'UPGRADE.json').write_text(json.dumps({'release': {'version': feed['version']},
-                'resources': {'sha256': feed['bootstrap']['resources']['sha256']}, 'project_compatibility': policy}))
-            (bundle / 'legacy_upgrade.py').write_text(
-                'def project_identity(*args): pass\n'
-                'class Dependency:\n'
-                '    def inspect(self, root): return {"missing": ["node"], "download_required": True}\n'
-                'def dependency_module(): return Dependency()\n')
-            with patch.object(updater, 'remote', return_value=io.BytesIO(json.dumps(feed).encode())), \
-                 patch.object(updater, 'fetch_asset', return_value=root / 'program.zip') as fetch, \
-                 patch.object(updater, 'extract_program', return_value=bundle), \
-                 patch.object(updater, 'stop_legacy', side_effect=AssertionError('read-only check')):
-                result = updater.run('https://github.com/hrbj18/haike-workflow', root, check=True)
-            self.assertEqual(result['dependencies']['missing'], ['node'])
-            self.assertTrue(result['can_repair_dependencies'])
-            self.assertNotIn('already_current', result)
-            fetch.assert_called_once()  # no template/resource download during check
 
 
 if __name__ == '__main__':

@@ -27,6 +27,14 @@
       "scope": "已认可的七镜动效；重新绑定本期完整声音、真实字幕、素材及可选同源人物。"
     },
     {
+      "id": "paper-approved-portrait-v1", "version": "1.1.0", "name": "纸感透视 · 动效与真实素材",
+      "recipe": "paper-approved-portrait-v1.json", "sha256": "5f11c7683170b92727ac115f9fb7e4b3eed1a1641e5881d30d273b8390dcccbe",
+      "workflow": "motion-kit", "protocol": "motion-kit", "canvas": "9:16", "requires_package": true,
+      "package": {"template_id": "template-02-expanded", "version": "2.7.21-alpha.5", "helper_version": "1.0.0-rc.54"},
+      "engine_files": ["Haike_video/backlot/studio_motiongit_render.py", "Haike_video/backlot/paper_evidence.py"],
+      "scope": "需本用户合法原包；六段原生动作保留，文字段按真实台词绑定双路实拍纸卡，避免空场。"
+    },
+    {
       "id": "sketchnote-approved-portrait-v1", "version": "1.0.0", "name": "点阵手账 · 关键词与三步接力",
       "recipe": "sketchnote-approved-portrait-v1.json", "sha256": "7764dd42f2bb2b333d974ff70b1efffeb15eadb769c09b60c904927bed5769ba",
       "workflow": "native", "protocol": "knowledge-story-v1", "canvas": "9:16", "requires_package": true,

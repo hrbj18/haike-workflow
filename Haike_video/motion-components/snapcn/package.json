@@ -1,0 +1,18 @@
+{
+  "name": "haike-snapcn-components",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Pinned free Snapcn components and local interactive demonstrations",
+  "dependencies": {
+    "@paper-design/shaders-react": "0.0.76",
+    "class-variance-authority": "0.7.1",
+    "clsx": "2.1.1",
+    "culori": "4.0.2",
+    "tailwind-merge": "3.5.0"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18",
+    "remotion": "4.0.506"
+  }
+}

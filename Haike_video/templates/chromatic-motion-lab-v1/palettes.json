@@ -1,0 +1,8 @@
+[
+  {"id":"01","name":"钴蓝橙 · 色块开场","family":"蓝橙","mood":"明亮、有力量的编辑感","bg":"#F6F3EB","ink":"#1436A3","accent":"#E96529","paper":"#FFFFFF","onAccent":"#14213F","beats":["格线生长与色块展开","标题聚合、实拍入场","关键词划线与信息接力"],"effects":["MondrianSplit","TextReveal","TextHighlight","buildMotion:waterfall"],"posterFrame":100},
+  {"id":"02","name":"午夜蓝橙 · 纵深舞台","family":"蓝橙","mood":"沉稳底色、集中爆发","bg":"#101D39","ink":"#F6F1E7","accent":"#FF9C51","paper":"#1B3057","onAccent":"#101D39","beats":["文字前冲后回落","实拍与字层视差推进","结论沿纵深替换"],"effects":["TextSwell","ParallaxDepth","TextSwap"],"posterFrame":100},
+  {"id":"03","name":"青红 · 卡片接力","family":"青红","mood":"清爽、亲切的现场记录","bg":"#EFF4EE","ink":"#075C5D","accent":"#B43937","paper":"#FFFFFF","onAccent":"#FFFFFF","beats":["三张实拍错落入场","主卡放大、侧卡重排","重点词划线与标签落定"],"effects":["buildMotion:reflow","TextHighlight"],"posterFrame":100},
+  {"id":"04","name":"深青珊瑚 · 聚焦视窗","family":"青红","mood":"克制、清晰、有现场感","bg":"#073F43","ink":"#F8F1E7","accent":"#FF9D91","paper":"#0D5558","onAccent":"#073F43","beats":["素材矩阵展开","光标选中、实拍聚焦","实拍回位与结论出现"],"effects":["buildMotion:click-open"],"posterFrame":100},
+  {"id":"05","name":"淡紫酸橙 · 拼贴手账","family":"紫绿","mood":"轻快、年轻的文化拼贴","bg":"#EFEAF6","ink":"#4A2869","accent":"#C4E656","paper":"#FCFAFF","onAccent":"#342047","beats":["图片卡片错位滑入","素材与标记沿视差移动","短句逐段搭建"],"effects":["buildMotion:spatial-gallery","TextBuild"],"posterFrame":220},
+  {"id":"06","name":"深紫电绿 · 环绕汇聚","family":"紫绿","mood":"鲜明、前沿的创意舞台","bg":"#251337","ink":"#F7F2FC","accent":"#D4EF72","paper":"#3C2451","onAccent":"#251337","beats":["实拍沿螺旋轨道进入","素材围绕中心主题汇聚","文字聚合与中心落点"],"effects":["OrbitGallery","TextReveal","TextHighlight"],"posterFrame":100}
+]
