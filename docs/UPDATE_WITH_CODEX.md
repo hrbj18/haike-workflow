@@ -1,5 +1,7 @@
 # 给 Codex 一个 GitHub 地址完成更新
 
+**直接使用main源码、不等待Release更新包：进入[旧版通过 main 源码升级：Agent教程](UPGRADE_FROM_MAIN.md)。** Agent固定Git提交并完成本机依赖、数据恢复、前端构建与验收。下文属于发行包路线；`upgrade-haike.py apply`仍读取Release清单，从main取得CLI不改变这一点。
+
 适用于可识别的海客旧便携安装、历史目录布局和 Git 源码 checkout。Agent统一使用 scripts/upgrade-haike.py 的 plan/apply，由它选择原更新事务或隔离源码路线；首次安装仍按[README](../README.md)和[PORTABLE](PORTABLE.md)。
 
 给 Codex 发送这一句即可：
