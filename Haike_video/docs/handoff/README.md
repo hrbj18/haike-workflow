@@ -1,12 +1,14 @@
 # OpenMontage 交接入口
 
-更新：2026-11-02
+更新：2026-11-04
 
 ## 读取规则
 
 先读 `AGENT_GUIDE.md`；开发另读本文件与 `CURRENT_STATUS.md`。按Guide限读专题，只查当前任务。
 
 ## 任务入口
+
+- 无参考新模板：按Guide进入创建流程及依赖JSON；下载已验，异机制作待验。
 
 - 六款招商：[入口](../../templates/investment-six-v1/README.md)；恢复根`.local/codex-runs/investment-six-20261026/`。
 
