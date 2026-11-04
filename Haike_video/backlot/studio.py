@@ -171,7 +171,13 @@ class Studio:
             if template["id"] == "avatar-motion-adu-v1":
                 allowed = {"source", "motionLayout", "style", "segments", "music", "captions", "face", "subtitleBottom", "texture", "selectionMode"}
             if template["kind"] == "avatar":
-                allowed |= {"avatar_defaults_snapshot", "network_materials_enabled"}
+                allowed |= {"avatar_defaults_snapshot", "network_materials_enabled", "motion_production"}
+                if 'motion_production' in value['input']:
+                    from backlot.studio_motion_preferred import selection
+                    try:
+                        value['input']['motion_production'] = selection(value['input']['motion_production'])
+                    except ValueError as exc:
+                        raise WorkError(str(exc)) from exc
                 if "network_materials_enabled" in value["input"] and type(value["input"]["network_materials_enabled"]) is not bool:
                     raise WorkError("联网素材开关需要明确开启或关闭")
                 if "avatar_defaults_snapshot" in value["input"]:

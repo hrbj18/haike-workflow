@@ -40,7 +40,7 @@ def stage(tmp_path):
 def test_delivery_verifies_exact_files_and_contains_no_personal_inputs(stage):
     root, expected = stage
     result = capability.verify(root)
-    assert result['status'] == 'verified' and len(result['presets']) == 2
+    assert result['status'] == 'verified' and len(result['presets']) == 3
     assert result['runtime_selftest'] == 'pending'
     files = capability._read(root / capability.PATH)['files']
     assert all(capability.is_delivery_path(name) for name in files)

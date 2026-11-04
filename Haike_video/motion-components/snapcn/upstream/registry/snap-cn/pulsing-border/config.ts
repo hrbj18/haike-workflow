@@ -1,0 +1,61 @@
+import { type ComponentConfig, FPS, H, W } from "@/lib/customizer-config";
+
+export const pulsingBorderConfig: ComponentConfig = {
+  componentName: "PulsingBorder",
+  importPath: "@/components/snap-cn/pulsing-border",
+  controls: {
+    speed: {
+      type: "number",
+      default: 0.6,
+      min: 0.1,
+      max: 4,
+      step: 0.1,
+      label: "Speed",
+    },
+    thickness: {
+      type: "number",
+      default: 0.06,
+      min: 0.02,
+      max: 0.5,
+      step: 0.01,
+      label: "Thickness",
+    },
+    roundness: {
+      type: "number",
+      default: 0.08,
+      min: 0,
+      max: 1,
+      step: 0.01,
+      label: "Roundness",
+    },
+    intensity: {
+      type: "number",
+      default: 0.15,
+      min: 0,
+      max: 1,
+      step: 0.01,
+      label: "Intensity",
+    },
+    bloom: {
+      type: "number",
+      default: 0.2,
+      min: 0,
+      max: 1,
+      step: 0.05,
+      label: "Bloom",
+    },
+    glowColorA: {
+      type: "color",
+      default: "#266DF0",
+      label: "Glow A",
+      brand: "accent",
+    },
+    glowColorB: { type: "color", default: "#6D9BF5", label: "Glow B" },
+    colorBack: { type: "color", default: "#00000000", label: "Background" },
+  },
+  durationInFrames: 180,
+  fps: FPS,
+  compositionWidth: W,
+  compositionHeight: H,
+  previewBackdrop: { type: "color", value: "#FAFAFA" },
+};

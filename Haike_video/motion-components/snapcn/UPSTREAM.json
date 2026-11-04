@@ -1,0 +1,1565 @@
+{
+  "repository": "shadcn-labs/snapcn",
+  "commit": "814a0ab7a69afa0c0da5499ee5ccffdbbccf950a",
+  "license": "MIT",
+  "scope": "all-public-free-components-and-shared-ui",
+  "component_count": 53,
+  "archive_sha256": "8cd467bcb189d4f0fcaad4a78b6238727500f1205423a397d12086d190429498",
+  "files": [
+    {
+      "path": "upstream/LICENSE",
+      "bytes": 1075,
+      "sha256": "6c90b43d45308aa3485bb1e8da9418d21ce0f8a5503be83d9b3f37f05d49e517"
+    },
+    {
+      "path": "upstream/MOTION.md",
+      "bytes": 7518,
+      "sha256": "4e0870a45d70505c78a640f5c077adf9c2d165d6eabd747c6ac54fdb83a99432"
+    },
+    {
+      "path": "upstream/README.md",
+      "bytes": 6880,
+      "sha256": "54b05df4fcbdce7b7f9d260f18e860f516a81a746e71289ee950e09bc3929ca2"
+    },
+    {
+      "path": "upstream/content/docs/ai-input/agent-steps.mdx",
+      "bytes": 10205,
+      "sha256": "9c63c8247a02d2838e7965f576bb65ce4bd2c5da890ddbccdcb5811acaf9785b"
+    },
+    {
+      "path": "upstream/content/docs/ai-input/answer-highlight.mdx",
+      "bytes": 8462,
+      "sha256": "29758939ff86722ab4867b0e7d8a64ed2301a03c9bdcd327268842d358c9b2aa"
+    },
+    {
+      "path": "upstream/content/docs/ai-input/answer-stream.mdx",
+      "bytes": 5939,
+      "sha256": "ca870391da683a56a21942553c497312b28eda9f12e1e9b0f9f6b8a1791efd85"
+    },
+    {
+      "path": "upstream/content/docs/ai-input/index.mdx",
+      "bytes": 862,
+      "sha256": "0cbbb440433bdba1196423355e097d153ef0412b645e5bbcbf338b26c6627f46"
+    },
+    {
+      "path": "upstream/content/docs/ai-input/meta.json",
+      "bytes": 208,
+      "sha256": "79c3f71f3c44f72a5e4490e13c306b439550956a27135291c976107f64579da2"
+    },
+    {
+      "path": "upstream/content/docs/ai-input/prompt-send.mdx",
+      "bytes": 12299,
+      "sha256": "02fecd5664e1da38d9120d9ebacb6e7c34637bba8d24ae2583ffcd97ec8086ab"
+    },
+    {
+      "path": "upstream/content/docs/ai-input/prompt-zoom.mdx",
+      "bytes": 3150,
+      "sha256": "9b51bde54645933e72de4c700bc2dd1baa3c78940e8a8f7eb5714f6f661dd43d"
+    },
+    {
+      "path": "upstream/content/docs/ai-input/search-typing.mdx",
+      "bytes": 11589,
+      "sha256": "6de71c49e2e72410de5b236378c30ca765c7b6ce8eabf9157f9ac11de142c71c"
+    },
+    {
+      "path": "upstream/content/docs/captions/index.mdx",
+      "bytes": 536,
+      "sha256": "970a94b61d1aa695e179f1934015bc19919ed75fee3ed15a350cc5007bfef4ca"
+    },
+    {
+      "path": "upstream/content/docs/captions/karaoke-captions.mdx",
+      "bytes": 8452,
+      "sha256": "6da7787c7e5db9d85123c5cc09e0f87658eebff4249bf77714c8da5b6624d645"
+    },
+    {
+      "path": "upstream/content/docs/captions/meta.json",
+      "bytes": 124,
+      "sha256": "a3df1e6c6d27498c1fc53649e3c3222436982b28095d501a0cecc77684e81f98"
+    },
+    {
+      "path": "upstream/content/docs/captions/word-captions.mdx",
+      "bytes": 9896,
+      "sha256": "8b28f7332e2a7d51edca9533ad09ff49ae2ce4e141d1d5dd08a74ca31679106d"
+    },
+    {
+      "path": "upstream/content/docs/charts/index.mdx",
+      "bytes": 933,
+      "sha256": "6e59a80af5a1caad591f55d755a7bd28d40bb01f527a887545b98bff9ae9334e"
+    },
+    {
+      "path": "upstream/content/docs/charts/meta.json",
+      "bytes": 78,
+      "sha256": "72fe89c62588a0b680a0a2533f9b9d7c42a3ca796e6ca0723aa240dcde9fe2b8"
+    },
+    {
+      "path": "upstream/content/docs/collections/cursor-animations.mdx",
+      "bytes": 891,
+      "sha256": "72b8b1e480379463bdf41a1c271f7b6a712bb1af2e537171121536cb411242db"
+    },
+    {
+      "path": "upstream/content/docs/collections/device-mockups.mdx",
+      "bytes": 1053,
+      "sha256": "52f2c784a7481f4cb2c5e180e94eb504c91ed088dd7b3d1eff83253c5b2ce5a9"
+    },
+    {
+      "path": "upstream/content/docs/collections/image-galleries.mdx",
+      "bytes": 778,
+      "sha256": "e9d40bf5441bbba468f95d8797837564b91fec4626e2abbdfa2b2cc37e86c730"
+    },
+    {
+      "path": "upstream/content/docs/collections/meta.json",
+      "bytes": 167,
+      "sha256": "c4d04136996ff200706c7ef4cb7562e1fcffc949d01f0b5b1032264355fc2f22"
+    },
+    {
+      "path": "upstream/content/docs/collections/terminal-animations.mdx",
+      "bytes": 981,
+      "sha256": "ba7f41fecf70114e0315fc85bce7cccdf40212d551d87b9d46b001bb8438ed8d"
+    },
+    {
+      "path": "upstream/content/docs/cursor/button-press.mdx",
+      "bytes": 2217,
+      "sha256": "b9a4d88c951f0ee0f447f64071e4e57666c1189cdf4a96474b9289cca27ccda0"
+    },
+    {
+      "path": "upstream/content/docs/cursor/click-type.mdx",
+      "bytes": 2869,
+      "sha256": "159e085c716c32abce2da368821d6ac5dd3b9ca7628b8c049abe0f3cb0005516"
+    },
+    {
+      "path": "upstream/content/docs/cursor/index.mdx",
+      "bytes": 435,
+      "sha256": "ee49c24cfe7bf9de56445f89b21925ae73657986d75278b9dfb91264f5bea501"
+    },
+    {
+      "path": "upstream/content/docs/cursor/meta.json",
+      "bytes": 109,
+      "sha256": "792231ea9b961dbb0f573171524f9006c4e952ed45cda29c3497ae6397f526a2"
+    },
+    {
+      "path": "upstream/content/docs/getting-started/agent-skill.mdx",
+      "bytes": 3782,
+      "sha256": "03c5a460ce48d33fecd1e13dc3256b3f537ad868e31e93a9f0cfc818d75535da"
+    },
+    {
+      "path": "upstream/content/docs/getting-started/installation.mdx",
+      "bytes": 3369,
+      "sha256": "36bebd83ae94c0ea4d568ba3ef4f74a466e2ee8edc72ae4e57ff5dff24388a9b"
+    },
+    {
+      "path": "upstream/content/docs/getting-started/introduction.mdx",
+      "bytes": 1959,
+      "sha256": "99c6e2176aa28b92ff3b803de267dea442882bd3f3138b61c1a417984ec9fdb9"
+    },
+    {
+      "path": "upstream/content/docs/getting-started/license.mdx",
+      "bytes": 2140,
+      "sha256": "7e3d6e745b7665c3e944b46da8339caa315c0798b19376e31a189e369f45d317"
+    },
+    {
+      "path": "upstream/content/docs/getting-started/meta.json",
+      "bytes": 128,
+      "sha256": "72287a7f86f76a860a7ba23c2df3671a51aaf1497151d057099176c0515dcc70"
+    },
+    {
+      "path": "upstream/content/docs/index.mdx",
+      "bytes": 1769,
+      "sha256": "b4101ab4b641bc5b3ac1f773ae6a5b03e8d11ba9e46d723b6590fc55835578a4"
+    },
+    {
+      "path": "upstream/content/docs/logos/block-wordmark.mdx",
+      "bytes": 9419,
+      "sha256": "1a03a87c140207193006e94ec039b1cddaf6fa1d025cb51b1cfdcaf6b523a4d6"
+    },
+    {
+      "path": "upstream/content/docs/logos/index.mdx",
+      "bytes": 338,
+      "sha256": "801567d8e6663f43fd876010282195d6c4c39eb8c56507a1e1eb8f0ea9d2afd8"
+    },
+    {
+      "path": "upstream/content/docs/logos/logo-assemble.mdx",
+      "bytes": 3531,
+      "sha256": "36279943386d2f83980cfbd452ab8ae8a1de0169bc879d742786d3d6e2be8dd8"
+    },
+    {
+      "path": "upstream/content/docs/logos/logo-collapse.mdx",
+      "bytes": 5317,
+      "sha256": "0a6dd51bfab233b9173db7f2bf4175d5ad2502ea02bceefadf9fb6ef52891ebc"
+    },
+    {
+      "path": "upstream/content/docs/logos/logo-drift.mdx",
+      "bytes": 9404,
+      "sha256": "a7813720c283a2b2af95ddf0d03c5919c610a132af8ce9990c9d1752bf6f5c8d"
+    },
+    {
+      "path": "upstream/content/docs/logos/logo-flicker.mdx",
+      "bytes": 3454,
+      "sha256": "40044a5f20eb24dfe251c9bffa1c9320bd99cdecaf90fa1f556e70d6b5e47cf9"
+    },
+    {
+      "path": "upstream/content/docs/logos/meta.json",
+      "bytes": 178,
+      "sha256": "798fdf91c19ebfa42ce757ff15d837163730c2d393398fe42d674b0c1ae5bc61"
+    },
+    {
+      "path": "upstream/content/docs/meta.json",
+      "bytes": 250,
+      "sha256": "ffedf6cb380d6702fb6d194d2d7a008689dc01e8ade3423390888218304e6f4b"
+    },
+    {
+      "path": "upstream/content/docs/scenes/announce-title.mdx",
+      "bytes": 8310,
+      "sha256": "1a7713aff19e3699e8bfdb77da661d373595a7804e80a7c5b01f0def16fc8063"
+    },
+    {
+      "path": "upstream/content/docs/scenes/card-rail.mdx",
+      "bytes": 6505,
+      "sha256": "ec2e864bedc3e8b7771ceeb0654db56954e7130dc0d46c767cf0fdc457e15a6b"
+    },
+    {
+      "path": "upstream/content/docs/scenes/count-grid.mdx",
+      "bytes": 4745,
+      "sha256": "628a84ce91ac70211b75dca2420277b019fe2b37ea693cf7002a19817fe6f06d"
+    },
+    {
+      "path": "upstream/content/docs/scenes/hero-launch.mdx",
+      "bytes": 701,
+      "sha256": "0310fcbe0aa6f0a21910fc50267b3e498800cf05267960dabd4bf7ee1308e3c9"
+    },
+    {
+      "path": "upstream/content/docs/scenes/index.mdx",
+      "bytes": 294,
+      "sha256": "7b84f172c051654826e0735bc27f9c7040d8ad48b6f8dc3ee64955f42fda7dda"
+    },
+    {
+      "path": "upstream/content/docs/scenes/meta.json",
+      "bytes": 333,
+      "sha256": "d741a04b6d55ac14d3a5d80af59bdf55901a56d5f9581b39d71b5739574b61b4"
+    },
+    {
+      "path": "upstream/content/docs/scenes/moodboard-reveal.mdx",
+      "bytes": 3868,
+      "sha256": "800310b57ef4a78454cd73ef5cf4b0dd66f05fc0b2e3217183e7779c2e10d86b"
+    },
+    {
+      "path": "upstream/content/docs/scenes/orb-swarm.mdx",
+      "bytes": 6295,
+      "sha256": "da083452a005b027fb5282cf9b0fd84aac20f2bbb5e54de20ef79f42d3d99415"
+    },
+    {
+      "path": "upstream/content/docs/scenes/orbit-gallery.mdx",
+      "bytes": 3508,
+      "sha256": "bc4a3c98773408926b5c8531c3f5d9a5e72e187c803963c133be06f6602898b7"
+    },
+    {
+      "path": "upstream/content/docs/scenes/portal-intro.mdx",
+      "bytes": 2795,
+      "sha256": "4661749477ceeacdd707401fd96bc8e6779b4f97ba6545cf624fa3729340750a"
+    },
+    {
+      "path": "upstream/content/docs/scenes/reel-collage.mdx",
+      "bytes": 3818,
+      "sha256": "1d320ef1f1f69d1e87dee746f90d7a3da60c4a434b6783cdb38dafa92ebf7f0f"
+    },
+    {
+      "path": "upstream/content/docs/scenes/reel-wall.mdx",
+      "bytes": 1865,
+      "sha256": "6714998ecac0de6e2732aa274b6c398b1916c88dcbc8181a23fd91049fc65ddc"
+    },
+    {
+      "path": "upstream/content/docs/scenes/roster-grant.mdx",
+      "bytes": 3512,
+      "sha256": "986b0a07498c597ec41a9c303f8218ed05325c2744854d739980382bbc8fe2d6"
+    },
+    {
+      "path": "upstream/content/docs/scenes/status-cycle.mdx",
+      "bytes": 9425,
+      "sha256": "4ed6ffcf2c549ce146afb050950b2563a0708c712d3411466db4d3abdb04785e"
+    },
+    {
+      "path": "upstream/content/docs/scenes/wordmark-cut.mdx",
+      "bytes": 3508,
+      "sha256": "df1d6f2b269dfa76341e2bb075e5646ca576bfecc7b838b8c1b9140879a60b36"
+    },
+    {
+      "path": "upstream/content/docs/screens/capture-reveal.mdx",
+      "bytes": 4032,
+      "sha256": "2329564fee115f098a51a874f5070a791dc4797bd9c1b0bff1e3c99103fa78ad"
+    },
+    {
+      "path": "upstream/content/docs/screens/cursor-track.mdx",
+      "bytes": 5775,
+      "sha256": "0b80fde13c3e7c108acf80b739a0a6cb154b12201c5d1f2ba20cbe7e7489256a"
+    },
+    {
+      "path": "upstream/content/docs/screens/index.mdx",
+      "bytes": 405,
+      "sha256": "0311c956d89b8b97f3942f43b8cafc05049d4f1b1e2503786ebfe4735b252337"
+    },
+    {
+      "path": "upstream/content/docs/screens/laptop-frame.mdx",
+      "bytes": 6270,
+      "sha256": "fea4dc0c9a700303e610ce91379551ef37a95b54e04402998b41c1ba158ca5d8"
+    },
+    {
+      "path": "upstream/content/docs/screens/meta.json",
+      "bytes": 239,
+      "sha256": "01fa26c132b5569c057c2afa8dbab7c28420cee4dcb72dae3bbe20885b18bb6a"
+    },
+    {
+      "path": "upstream/content/docs/screens/phone-frame.mdx",
+      "bytes": 5909,
+      "sha256": "6efc1002c6d3c3b4bd71ba57c716698d6ceb877078e6f92aed52001d104334da"
+    },
+    {
+      "path": "upstream/content/docs/screens/phone-stack.mdx",
+      "bytes": 2255,
+      "sha256": "64612a419ed38132ee14c71722b5d7077005307134c2237ce9c81c7eeb63b1f6"
+    },
+    {
+      "path": "upstream/content/docs/screens/screen-recording.mdx",
+      "bytes": 7955,
+      "sha256": "976314cdb1c3d22085268d12f7b8274e92a9394cfa8832d20f5ba95351797420"
+    },
+    {
+      "path": "upstream/content/docs/screens/terminal-simulator.mdx",
+      "bytes": 5756,
+      "sha256": "c0b7ea9adb0f8aaa3031ba7df23cd57413eea4c0e90f438dcd97d5d585872443"
+    },
+    {
+      "path": "upstream/content/docs/social/channel-thread.mdx",
+      "bytes": 5417,
+      "sha256": "7376cb8189de78d36f67767bde582001fe496e400ec3c093b2b5370828f27b88"
+    },
+    {
+      "path": "upstream/content/docs/social/follower-rush.mdx",
+      "bytes": 3605,
+      "sha256": "b1cea7d8efe3430b058f5af8935fcf229d76891ebd34c38a489a59e6b9b1572a"
+    },
+    {
+      "path": "upstream/content/docs/social/index.mdx",
+      "bytes": 500,
+      "sha256": "b2dc7f4608cdf0131030a3abada0f523d49c1cc9beb5b9ee3984ed305705af0f"
+    },
+    {
+      "path": "upstream/content/docs/social/meta.json",
+      "bytes": 126,
+      "sha256": "1d76d427e9a8cd6b8de369fc6b144d3eed30eaf29ad96e7d4f0d2f9a1ae71d6f"
+    },
+    {
+      "path": "upstream/content/docs/text/check-cycle.mdx",
+      "bytes": 3465,
+      "sha256": "26667f5b41a6fdbcdb81d9023f85448bc1f51d36294afe6b36193fc47362d225"
+    },
+    {
+      "path": "upstream/content/docs/text/font-shuffle.mdx",
+      "bytes": 3437,
+      "sha256": "00fa008a69c81c130da03655f2f55ebefe37defdff3a7a7ef560ac8d3b751b51"
+    },
+    {
+      "path": "upstream/content/docs/text/index.mdx",
+      "bytes": 504,
+      "sha256": "ce26d38f910601d04be8bdb62678051f33ed19ff66a3d9f955700f31761a8c0c"
+    },
+    {
+      "path": "upstream/content/docs/text/meta.json",
+      "bytes": 348,
+      "sha256": "6d32962d9d6b89a9922350688888b9582151866a9a9d560259e9a9b68145486a"
+    },
+    {
+      "path": "upstream/content/docs/text/punch-lines.mdx",
+      "bytes": 12732,
+      "sha256": "5887f133f35d0bbbbff8f689ca4b7c92e1857a56fcc3c37eb731ecb544be0c95"
+    },
+    {
+      "path": "upstream/content/docs/text/text-build.mdx",
+      "bytes": 4049,
+      "sha256": "16268aa5463093f9e1a4e99431de641f83430f1821412fa02960524cc63b2765"
+    },
+    {
+      "path": "upstream/content/docs/text/text-highlight.mdx",
+      "bytes": 14043,
+      "sha256": "9dbffef98150b6f33b69bea8127a2f24f7c2a86de18df86377f2bd8100b8b80c"
+    },
+    {
+      "path": "upstream/content/docs/text/text-reveal.mdx",
+      "bytes": 5818,
+      "sha256": "8bc4ceee2f6034b69efa2c877e4847760841e461be03d9166e27d7cdca166b27"
+    },
+    {
+      "path": "upstream/content/docs/text/text-rewrite.mdx",
+      "bytes": 14426,
+      "sha256": "c19669857cfca5decb813148edff550077987c590b7cdc6d1e4e228a28c2bfac"
+    },
+    {
+      "path": "upstream/content/docs/text/text-select.mdx",
+      "bytes": 15232,
+      "sha256": "2c4c0cd22d89d81af226792ba0be3d385ab2fb0cc8197142a6d877828af01955"
+    },
+    {
+      "path": "upstream/content/docs/text/text-swap.mdx",
+      "bytes": 6469,
+      "sha256": "95143d2e4c0f31c041b89125641c1e81de2271d76e96618c8e82cd0250101575"
+    },
+    {
+      "path": "upstream/content/docs/text/text-swell.mdx",
+      "bytes": 10979,
+      "sha256": "81bf96d51c1c8a43f138c791c7595e8298d39bcfd779ee4f9e6e098f0800ce5b"
+    },
+    {
+      "path": "upstream/content/docs/text/type-morph.mdx",
+      "bytes": 2165,
+      "sha256": "5ee3d56731e40529482272cd9c326a413dfd10a670362ba61bac5080abda7a3e"
+    },
+    {
+      "path": "upstream/content/docs/text/word-flip.mdx",
+      "bytes": 6550,
+      "sha256": "358c95e7c789d0cd1e05d34f6cffe5643fbe68883d8b87264873264916590136"
+    },
+    {
+      "path": "upstream/content/docs/text/word-gather.mdx",
+      "bytes": 3688,
+      "sha256": "6c0c5202f07329b1cea2be11dbe3d0fa617c8176026d1d2a8c571f709eda309e"
+    },
+    {
+      "path": "upstream/content/docs/text/word-wheel.mdx",
+      "bytes": 3970,
+      "sha256": "57bfbd45028599b1a997e41ab4ff2e2418919e96cbe6a981abc3c7bc5dc85302"
+    },
+    {
+      "path": "upstream/content/docs/transitions/dot-bloom.mdx",
+      "bytes": 1243,
+      "sha256": "17972de7d08dc0fe098436fc41460e0910033e49b208ff23944757ea665ae758"
+    },
+    {
+      "path": "upstream/content/docs/transitions/index.mdx",
+      "bytes": 330,
+      "sha256": "8cc305bbeb55e562fca81567934bb13b74578d8a06adef5df63950f8dcb1fd19"
+    },
+    {
+      "path": "upstream/content/docs/transitions/meta.json",
+      "bytes": 100,
+      "sha256": "bdeb2fe672ee318c0db7f0553798c50bb74f5cafd8236ffbd6d16147e2d7f1b4"
+    },
+    {
+      "path": "upstream/lib/customizer-config.ts",
+      "bytes": 4700,
+      "sha256": "9fe23cbeb9e7672d8b5408735bd244c8a81aa2f4be71bd9e9aea101a55e59360"
+    },
+    {
+      "path": "upstream/lib/utils.ts",
+      "bytes": 169,
+      "sha256": "4acbc7165a8d54738ff62b51414e772c08fe78434e524e6d8770180d3ba2925f"
+    },
+    {
+      "path": "upstream/registry/snap-cn-ui/STYLE-GUIDE.md",
+      "bytes": 11755,
+      "sha256": "58c7a003fd605fcb3c2f468fd60e4742099f589780088c21d23b2b927de47d69"
+    },
+    {
+      "path": "upstream/registry/snap-cn-ui/caret/__tests__/caret.test.ts",
+      "bytes": 2158,
+      "sha256": "29437f74d2cd73aeee05447304118c0ca9a13f242b6a16ce209ae4ebcc2c92fb"
+    },
+    {
+      "path": "upstream/registry/snap-cn-ui/caret/config.ts",
+      "bytes": 952,
+      "sha256": "18c40919c97a794cd5dabfd15c1fb7ad16e6a73fd1a07fad5ad3f4363e150ac7"
+    },
+    {
+      "path": "upstream/registry/snap-cn-ui/caret/index.tsx",
+      "bytes": 1482,
+      "sha256": "c52f1aa250a37622bd0fa613df3302d941eaa5153ff8999f39afc9b514f853f5"
+    },
+    {
+      "path": "upstream/registry/snap-cn-ui/caret/preview.tsx",
+      "bytes": 1251,
+      "sha256": "d3af500265322b9d0647895315fe3caeb7b610bf2d97649a4e1edea41643a690"
+    },
+    {
+      "path": "upstream/registry/snap-cn-ui/core/__tests__/README.md",
+      "bytes": 4653,
+      "sha256": "ed24be00147fb9bd2b722e31e15a8121c74e6fa927e7553cf4c8c14a5815308b"
+    },
+    {
+      "path": "upstream/registry/snap-cn-ui/core/__tests__/color.test.ts",
+      "bytes": 9873,
+      "sha256": "83ee6e1c1afbcb9d9f453a695102b7c75ba42fcb1099e598a1949ed0961501a7"
+    },
+    {
+      "path": "upstream/registry/snap-cn-ui/core/__tests__/timeline.test.ts",
+      "bytes": 16066,
+      "sha256": "b584c9bcdeb444941543aeffa289bcf1f49f810ed05c7f2fee43a092a601d752"
+    },
+    {
+      "path": "upstream/registry/snap-cn-ui/core/color.ts",
+      "bytes": 3308,
+      "sha256": "60e4c6000f5e6471d901f27d3ca1896567ef8bdeefaec53dfc6c0a2286256d02"
+    },
+    {
+      "path": "upstream/registry/snap-cn-ui/core/fonts.ts",
+      "bytes": 3301,
+      "sha256": "c9f2e5f629d56dd8f2b62d0b4c4ce4766e683607814c0229648be92b93cc501b"
+    },
+    {
+      "path": "upstream/registry/snap-cn-ui/core/index.ts",
+      "bytes": 774,
+      "sha256": "e950e40bd89ff9ebd5668c84e1a0870b66791baf70c7874a5b0def67a9bbb8dc"
+    },
+    {
+      "path": "upstream/registry/snap-cn-ui/core/item.tsx",
+      "bytes": 1688,
+      "sha256": "9153fa2efaf22fd2b270ccde194048284a2b42aa61d07ec5f6812240440af7df"
+    },
+    {
+      "path": "upstream/registry/snap-cn-ui/core/motion.ts",
+      "bytes": 544,
+      "sha256": "1c9758812db916ff045448ca3d5252568d6a83a13a82da1c2dbdb531f16c0d85"
+    },
+    {
+      "path": "upstream/registry/snap-cn-ui/core/theme.ts",
+      "bytes": 5123,
+      "sha256": "2a75a5c6f20fb170451d851e746f29a7c3150d115d114443096264bdec1bb9f4"
+    },
+    {
+      "path": "upstream/registry/snap-cn-ui/core/timeline.ts",
+      "bytes": 2911,
+      "sha256": "344658ef648c92d18612723701cc6d8377542986bcaafd27590a1df1eca6223a"
+    },
+    {
+      "path": "upstream/registry/snap-cn-ui/core/types.ts",
+      "bytes": 100,
+      "sha256": "a1812abb87aceab7935d2eb4ff6e62ab2c6d949fefb0c6ba702824b87495bfb2"
+    },
+    {
+      "path": "upstream/registry/snap-cn-ui/input/__tests__/README.md",
+      "bytes": 5934,
+      "sha256": "97e59b16988402474e68364030c687d63dc1016613cdcec2981ef9cfb76ab28a"
+    },
+    {
+      "path": "upstream/registry/snap-cn-ui/input/__tests__/input.test.ts",
+      "bytes": 17997,
+      "sha256": "c05c4fd6c927b9685eff8ca3d005170a737e50321cd9888785742ab88da35632"
+    },
+    {
+      "path": "upstream/registry/snap-cn-ui/input/config.ts",
+      "bytes": 1854,
+      "sha256": "f2af42544900e80a19c211d3c7a30828ee6b3f04cfe7e92b18dfc5bbb781db59"
+    },
+    {
+      "path": "upstream/registry/snap-cn-ui/input/index.tsx",
+      "bytes": 6745,
+      "sha256": "8e6dfd77df9a845f583b68cb472db2fa70244815b066571671552bc831467b06"
+    },
+    {
+      "path": "upstream/registry/snap-cn-ui/input/use-input-transition.ts",
+      "bytes": 1682,
+      "sha256": "22cc1b6987a83195b0dc611bc1a4355321c7660d9e648270202ee6a3c4ac9983"
+    },
+    {
+      "path": "upstream/registry/snap-cn-ui/registry.json",
+      "bytes": 3880,
+      "sha256": "ed8ba5806649b1e483b6a82907432ed62987d6b24a6a6ac453a189e68b79ff66"
+    },
+    {
+      "path": "upstream/registry/snap-cn/SOCIAL_FOLLOW_STYLEGUIDE.md",
+      "bytes": 13539,
+      "sha256": "15bd43acb153d3292674c237b38d4a59014ee9fe5d4288494ad3f293f829026c"
+    },
+    {
+      "path": "upstream/registry/snap-cn/agent-steps/__tests__/agent-steps.test.ts",
+      "bytes": 2731,
+      "sha256": "b1603ecb59323ad1d0a493d9b67b6541e62b517b6e5f68e547fef62146cb27e0"
+    },
+    {
+      "path": "upstream/registry/snap-cn/agent-steps/config.ts",
+      "bytes": 3125,
+      "sha256": "6e296fd37968378c30836d8e8d2539a1c1716469ad569c2ddd0fcf7ce46be878"
+    },
+    {
+      "path": "upstream/registry/snap-cn/agent-steps/index.tsx",
+      "bytes": 26517,
+      "sha256": "78e85730c5f65d267b26262e964f51e68396f984cd784b20963bde2e8402a2e6"
+    },
+    {
+      "path": "upstream/registry/snap-cn/announce-title/config.ts",
+      "bytes": 3609,
+      "sha256": "b3c39d18a6a22201a8685fb7f011e51911b9688687dafb1d6823bd9371f0c9b1"
+    },
+    {
+      "path": "upstream/registry/snap-cn/announce-title/index.tsx",
+      "bytes": 43206,
+      "sha256": "3467c690d9e075b99192dea6ad7ca5cd6b41351b9e1e4158ae820710dbe286ce"
+    },
+    {
+      "path": "upstream/registry/snap-cn/answer-highlight/__tests__/answer-highlight.test.ts",
+      "bytes": 2895,
+      "sha256": "78175b3ea90ecca043fda49aab355763ca32642748bda251784957ff8dbf2739"
+    },
+    {
+      "path": "upstream/registry/snap-cn/answer-highlight/config.ts",
+      "bytes": 3007,
+      "sha256": "d8b4b347d251f6fd9821db6089974fcb342889f721665c152af3b84f476a123d"
+    },
+    {
+      "path": "upstream/registry/snap-cn/answer-highlight/index.tsx",
+      "bytes": 17749,
+      "sha256": "699cf7994e7c41c3b4c6a2c9b0448fb0e5c47e23447272b911f70146ebf47afd"
+    },
+    {
+      "path": "upstream/registry/snap-cn/answer-stream/__tests__/answer-stream.test.ts",
+      "bytes": 5533,
+      "sha256": "eacb7e10ab60997ff8ad996d11d02c0b62ff15c7ff5f094866a82e985c412403"
+    },
+    {
+      "path": "upstream/registry/snap-cn/answer-stream/config.ts",
+      "bytes": 3191,
+      "sha256": "7f6bbb75aabbe5d4b19f8a8cd97d9bf14ef9aff85dca2dac68edc836b8914518"
+    },
+    {
+      "path": "upstream/registry/snap-cn/answer-stream/index.tsx",
+      "bytes": 27680,
+      "sha256": "31e52cf1c35135171ccfe2cf24183ff20110ea55a6818d1440717f8fe9914628"
+    },
+    {
+      "path": "upstream/registry/snap-cn/block-wordmark/config.ts",
+      "bytes": 4356,
+      "sha256": "8c52120840277ac57484cd0d70d77bc87b547c72ab9d14403fb8f3859f1dd196"
+    },
+    {
+      "path": "upstream/registry/snap-cn/block-wordmark/index.tsx",
+      "bytes": 33022,
+      "sha256": "cc44dedf6b563a118667f0625d570c8242171eb32934ad0b7a036b60ac7830d0"
+    },
+    {
+      "path": "upstream/registry/snap-cn/button-press/config.ts",
+      "bytes": 800,
+      "sha256": "7d62b70beb6062c84af4706dc16c3f0630737d9a9e35c199535745cdc62bdb6b"
+    },
+    {
+      "path": "upstream/registry/snap-cn/button-press/index.tsx",
+      "bytes": 8363,
+      "sha256": "aedf6a21a45f298a9d5fcd828cdbfc21734f41376efe50b1615d95fe1a8aac09"
+    },
+    {
+      "path": "upstream/registry/snap-cn/capture-reveal/__tests__/capture-reveal.test.ts",
+      "bytes": 2059,
+      "sha256": "66df66ed27252725aab1ebca5f4fb848c9480eba81ac57b4b0b6f9fbeaf255dd"
+    },
+    {
+      "path": "upstream/registry/snap-cn/capture-reveal/config.ts",
+      "bytes": 1141,
+      "sha256": "d5cd7b00c20d1db70fc88d0b03a274203c89cae128cce200e1b537f979ef0b5b"
+    },
+    {
+      "path": "upstream/registry/snap-cn/capture-reveal/index.tsx",
+      "bytes": 28522,
+      "sha256": "0a60de6ec2a92269428db1b93eda1635af19153e2476450f5fb12476fabcb1da"
+    },
+    {
+      "path": "upstream/registry/snap-cn/card-rail/__tests__/card-rail.test.ts",
+      "bytes": 2464,
+      "sha256": "a4a424847c32fecc8907deaf27ae5aea90296db9a521cb4e75c1e9b2b906d9d3"
+    },
+    {
+      "path": "upstream/registry/snap-cn/card-rail/config.ts",
+      "bytes": 2604,
+      "sha256": "e1e52caca778ecf6c2e1ee0379709dadc015018ff2711f0946d6d2689005f5e3"
+    },
+    {
+      "path": "upstream/registry/snap-cn/card-rail/index.tsx",
+      "bytes": 19426,
+      "sha256": "dbd98365f62affcaf2aca5df51097d2a22d094461fd9e6739a512a9cf6483fd9"
+    },
+    {
+      "path": "upstream/registry/snap-cn/channel-thread/__tests__/channel-thread.test.ts",
+      "bytes": 3139,
+      "sha256": "6c4ecb4844d1cd92a0f995f22f9007c88d5f65a94b8c6edf24183ce1558db901"
+    },
+    {
+      "path": "upstream/registry/snap-cn/channel-thread/config.ts",
+      "bytes": 1814,
+      "sha256": "834e9e1c57eb1f69f867873ed099544846f4458e9ef4583bfa9c128d1e30281a"
+    },
+    {
+      "path": "upstream/registry/snap-cn/channel-thread/index.tsx",
+      "bytes": 21842,
+      "sha256": "4238a14120ef32b1e8ed763ded344ca4290a6f9f64b88a5c9c304ad34f4aa7b2"
+    },
+    {
+      "path": "upstream/registry/snap-cn/check-cycle/__tests__/check-cycle.test.ts",
+      "bytes": 1801,
+      "sha256": "393792ed6bd487468cb422e98c563af335beb8896cf47b54b821fd3ebdb5b232"
+    },
+    {
+      "path": "upstream/registry/snap-cn/check-cycle/config.ts",
+      "bytes": 839,
+      "sha256": "f298126c92e8bde15384f3408ec120e9e7c10edccfdde6c0fb307c176c0075da"
+    },
+    {
+      "path": "upstream/registry/snap-cn/check-cycle/index.tsx",
+      "bytes": 12779,
+      "sha256": "ff66108e3386125996e36676f5579cddc24c075cba5cfa4851e2615aa2310907"
+    },
+    {
+      "path": "upstream/registry/snap-cn/click-type/config.ts",
+      "bytes": 1007,
+      "sha256": "48c3d56d3674f697b27c2ee5761376914e56205ae0bca4e1748c50344e8a6e91"
+    },
+    {
+      "path": "upstream/registry/snap-cn/click-type/index.tsx",
+      "bytes": 10793,
+      "sha256": "84095b6e04b660eb0b35e1561ac532f4beb7e81379459f066656e4d356b4aaad"
+    },
+    {
+      "path": "upstream/registry/snap-cn/count-grid/__tests__/count-grid.test.ts",
+      "bytes": 6778,
+      "sha256": "82978912aa8059d3e883e1be12333ab4cbd8fa9254c0d17763ce8884fed045eb"
+    },
+    {
+      "path": "upstream/registry/snap-cn/count-grid/config.ts",
+      "bytes": 806,
+      "sha256": "5b46a494f5c7f37caf10ba543dccf1d6d2fb6cc984c21703ddbee14e0fb5f3bd"
+    },
+    {
+      "path": "upstream/registry/snap-cn/count-grid/index.tsx",
+      "bytes": 25521,
+      "sha256": "8ceccd2899fa4429bccbc243f6a04063d75fcb1ee5600e4575bf133415b06f8a"
+    },
+    {
+      "path": "upstream/registry/snap-cn/cursor-track/__tests__/cursor-track.test.ts",
+      "bytes": 9676,
+      "sha256": "9dd023557f51ac637949e07538bec8e8e39eb7ef725b2f4fb61524d396dd0e96"
+    },
+    {
+      "path": "upstream/registry/snap-cn/cursor-track/config.ts",
+      "bytes": 2630,
+      "sha256": "fedc87f4c1b220575eb3feda9808b3ad75d8c1f8949dd104395954c4be97dee5"
+    },
+    {
+      "path": "upstream/registry/snap-cn/cursor-track/index.tsx",
+      "bytes": 14567,
+      "sha256": "7ecd00b60c930ef897c77c6a11f7d9363bf36fd747d75cae6a7144c29970ccfa"
+    },
+    {
+      "path": "upstream/registry/snap-cn/dot-bloom/config.ts",
+      "bytes": 537,
+      "sha256": "b669bcf6f7bc3b9331a6043e33bb8c758303c8f8da63aefe52e20333dd7b1a8f"
+    },
+    {
+      "path": "upstream/registry/snap-cn/dot-bloom/index.tsx",
+      "bytes": 89062,
+      "sha256": "d01ae53c91160ccc8c78d887ffd73c5e7bf2218997b9b17fa89a154efa338950"
+    },
+    {
+      "path": "upstream/registry/snap-cn/follower-rush/__tests__/follower-rush.test.ts",
+      "bytes": 3756,
+      "sha256": "4546d517d4ce1fc3c9ae0015f9b67fe14586354b64368298b9c4719d8400d53b"
+    },
+    {
+      "path": "upstream/registry/snap-cn/follower-rush/config.ts",
+      "bytes": 1226,
+      "sha256": "2087ea2d58a4799703877921f13cc6b03590d505f55f7e161406f3369a197b1a"
+    },
+    {
+      "path": "upstream/registry/snap-cn/follower-rush/index.tsx",
+      "bytes": 24509,
+      "sha256": "e18005e3fd524e7809d7dcfe10706f674c64213337304737c93f95629efd6143"
+    },
+    {
+      "path": "upstream/registry/snap-cn/font-shuffle/config.ts",
+      "bytes": 751,
+      "sha256": "8a11dd3562bf414750a071e551bbd39e3fe7184a0550d96db487c40368d3a282"
+    },
+    {
+      "path": "upstream/registry/snap-cn/font-shuffle/index.tsx",
+      "bytes": 20605,
+      "sha256": "07ef5414b6b6b9a0fb6ade13d0390928155118f413689ecd4f90a0940702ed22"
+    },
+    {
+      "path": "upstream/registry/snap-cn/hero-launch/config.ts",
+      "bytes": 849,
+      "sha256": "5354e4325ae794ab84339776c2ed747b7b54524d89da5b005f8c0ca4f369ae6b"
+    },
+    {
+      "path": "upstream/registry/snap-cn/hero-launch/index.tsx",
+      "bytes": 12957,
+      "sha256": "3cb108ccbfa23f6c8a9998635b31cc3afe99a92cdb80880eacc42cd733c8a336"
+    },
+    {
+      "path": "upstream/registry/snap-cn/karaoke-captions/__tests__/karaoke-captions.test.ts",
+      "bytes": 7850,
+      "sha256": "8f6d5e5db9b4896e1cacbb86b6171ab80ae0839029004094791c82f1540f6cc5"
+    },
+    {
+      "path": "upstream/registry/snap-cn/karaoke-captions/config.ts",
+      "bytes": 1674,
+      "sha256": "31e95718ee21a6a1068e5388c2ad4df2f3342b1b799e32795f47912ec103eda9"
+    },
+    {
+      "path": "upstream/registry/snap-cn/karaoke-captions/index.tsx",
+      "bytes": 24331,
+      "sha256": "22dd7ae660760ac247f2643e52fc441a05aca37ffedae7d76723c54ff50fc14c"
+    },
+    {
+      "path": "upstream/registry/snap-cn/laptop-frame/__tests__/laptop-frame.test.ts",
+      "bytes": 6230,
+      "sha256": "6d97276448769086577e31ea935f0d0ae24d41ecced15bbd8e0ffcd7595d5f20"
+    },
+    {
+      "path": "upstream/registry/snap-cn/laptop-frame/config.ts",
+      "bytes": 2077,
+      "sha256": "9451a8dc2e09339f9d4582a37011b16a200c5e8e31b0e165fe2aec7a63210f3f"
+    },
+    {
+      "path": "upstream/registry/snap-cn/laptop-frame/index.tsx",
+      "bytes": 26333,
+      "sha256": "4d6011bc92afb86c89a07249da95ecee1eee01b77767c68ec433b5e0c3f155f7"
+    },
+    {
+      "path": "upstream/registry/snap-cn/logo-assemble/__tests__/logo-assemble.test.ts",
+      "bytes": 3197,
+      "sha256": "76034aa3ded7156d7bc69cf2ea41043d777f597a17581d850c3666f08e81a821"
+    },
+    {
+      "path": "upstream/registry/snap-cn/logo-assemble/config.ts",
+      "bytes": 1019,
+      "sha256": "9710f0ecd60592eca1eecea6c5cf7a8095f0562975bc51e5c19f451c849a01f1"
+    },
+    {
+      "path": "upstream/registry/snap-cn/logo-assemble/index.tsx",
+      "bytes": 12940,
+      "sha256": "294244940cade152d1e89b12426077541b48d12954a341a0a027141a49065e86"
+    },
+    {
+      "path": "upstream/registry/snap-cn/logo-collapse/__tests__/logo-collapse.test.ts",
+      "bytes": 1373,
+      "sha256": "04b3f6bc22b55b15db0fea67e5c10e2756ac02f13bcb78eb6e8c0ba63fa10f7b"
+    },
+    {
+      "path": "upstream/registry/snap-cn/logo-collapse/config.ts",
+      "bytes": 2176,
+      "sha256": "9cc09573fb3ce197c3535578aa919a8e999acb71d1660597868de43be2cbaf79"
+    },
+    {
+      "path": "upstream/registry/snap-cn/logo-collapse/index.tsx",
+      "bytes": 14246,
+      "sha256": "53d357752fef6b8768c13f073071f7cabbfb5a5292cca11b33662721e4705bf2"
+    },
+    {
+      "path": "upstream/registry/snap-cn/logo-drift/__tests__/logo-drift.test.ts",
+      "bytes": 7082,
+      "sha256": "edfe21bd89360e82cf21a91d0e5aebc27296b63a13f207f1f9c222a41d523f3c"
+    },
+    {
+      "path": "upstream/registry/snap-cn/logo-drift/config.ts",
+      "bytes": 3348,
+      "sha256": "f8b57040c9e6644bcb682c07eeb5140b73db0b2c9bc79808b0e31b8eeddd0fbb"
+    },
+    {
+      "path": "upstream/registry/snap-cn/logo-drift/index.tsx",
+      "bytes": 18329,
+      "sha256": "e28e5b412ed89e6f006fb4c3b155b78b3bb94c289a287c49d6ea88d8b478f9ad"
+    },
+    {
+      "path": "upstream/registry/snap-cn/logo-flicker/__tests__/logo-flicker.test.ts",
+      "bytes": 1968,
+      "sha256": "cbe3e07166d4fb85d9ce92718015159fa801f4e5f9a53370e4a6457948f14ac8"
+    },
+    {
+      "path": "upstream/registry/snap-cn/logo-flicker/config.ts",
+      "bytes": 910,
+      "sha256": "1b76e68984aa9401c23281f935ae1e090188a73a482863a1c49abd03261531bb"
+    },
+    {
+      "path": "upstream/registry/snap-cn/logo-flicker/index.tsx",
+      "bytes": 7504,
+      "sha256": "2fd88a55cb96446852d5dd194ac3d3bfeb7b086e27ae88e0a5f3ab936bef963e"
+    },
+    {
+      "path": "upstream/registry/snap-cn/moodboard-reveal/__tests__/moodboard-reveal.test.ts",
+      "bytes": 5026,
+      "sha256": "363fdfd72c2680779eb1aa68bc775d028e15f87d823bef59045cac885bcc6c3b"
+    },
+    {
+      "path": "upstream/registry/snap-cn/moodboard-reveal/config.ts",
+      "bytes": 1042,
+      "sha256": "8f98711df9ec123daf52de5ea86572730515feb3ea5ce1760000ddededd71af1"
+    },
+    {
+      "path": "upstream/registry/snap-cn/moodboard-reveal/index.tsx",
+      "bytes": 19144,
+      "sha256": "696053fd5c4fc19d68ffd44b666fd3a27e3ef03ecdfeb0e2416b20346b3b6cfe"
+    },
+    {
+      "path": "upstream/registry/snap-cn/orb-swarm/__tests__/orb-swarm.test.ts",
+      "bytes": 4211,
+      "sha256": "ce2d592eb0b8581139d776960ee11afd1872880dbeaad415b38030e73b9c2ba5"
+    },
+    {
+      "path": "upstream/registry/snap-cn/orb-swarm/config.ts",
+      "bytes": 954,
+      "sha256": "d7010ae257017c54920816b015fa40a7b2aa1e16eb4c775883c66e26ff41cfaa"
+    },
+    {
+      "path": "upstream/registry/snap-cn/orb-swarm/index.tsx",
+      "bytes": 59052,
+      "sha256": "767d9aba2cfa1b588501c267cbd8d7b1ac02e01915537fde67dc18529b0e5c9b"
+    },
+    {
+      "path": "upstream/registry/snap-cn/orbit-gallery/__tests__/orbit-gallery.test.ts",
+      "bytes": 3793,
+      "sha256": "75b7fa75fff88690c86a4ce5f04abd0b52f81b3b1642df29f46a398e285aad23"
+    },
+    {
+      "path": "upstream/registry/snap-cn/orbit-gallery/config.ts",
+      "bytes": 1932,
+      "sha256": "9861939a27bce76f41458afcbf3cb2f91a863be7723825f319e99cba74fa788e"
+    },
+    {
+      "path": "upstream/registry/snap-cn/orbit-gallery/index.tsx",
+      "bytes": 18964,
+      "sha256": "979b83024d10518ddd3e009675dfd4208bd80ebbe56ea584970f8a10d2a749d0"
+    },
+    {
+      "path": "upstream/registry/snap-cn/phone-frame/__tests__/phone-frame.test.ts",
+      "bytes": 6418,
+      "sha256": "f0701f87666067cd9155e4052eaf89d12ab1dcc259e8b092eac8aebe7efbe363"
+    },
+    {
+      "path": "upstream/registry/snap-cn/phone-frame/config.ts",
+      "bytes": 2111,
+      "sha256": "f969af110c531826ef9769333fd7bc9b3496fa9f7e79acc1dfa27ff2c37e51ac"
+    },
+    {
+      "path": "upstream/registry/snap-cn/phone-frame/index.tsx",
+      "bytes": 32418,
+      "sha256": "f1b1ec6a62d52aeb7281fe5de6617235b0125639bc1c6ba9f8c6e21bd9307f9e"
+    },
+    {
+      "path": "upstream/registry/snap-cn/phone-stack/config.ts",
+      "bytes": 876,
+      "sha256": "126286f11c6e7f9b24dcc8ae656751b695fe34e62c11e435191f54de51aab4b8"
+    },
+    {
+      "path": "upstream/registry/snap-cn/phone-stack/index.tsx",
+      "bytes": 11133,
+      "sha256": "ca0b19b84ebd06bc4960951a703222b034b37db73374efaeeee382df15bfff65"
+    },
+    {
+      "path": "upstream/registry/snap-cn/portal-intro/config.ts",
+      "bytes": 820,
+      "sha256": "e22e3a5b7875696281f129f5d8c819a844cf00610c036054a8a6d0f9d6c8258c"
+    },
+    {
+      "path": "upstream/registry/snap-cn/portal-intro/index.tsx",
+      "bytes": 31940,
+      "sha256": "75067ffeb0761f13e8aafc1348bd4e87706e8bb7ea1aecdf1900000dfd4700c2"
+    },
+    {
+      "path": "upstream/registry/snap-cn/prompt-send/__tests__/prompt-send.test.ts",
+      "bytes": 10487,
+      "sha256": "f22ae43f1ddde5ba46dce8a5986651b20cb57ff7fc369388954755bd72433ed4"
+    },
+    {
+      "path": "upstream/registry/snap-cn/prompt-send/config.ts",
+      "bytes": 4018,
+      "sha256": "8232113ffb3efa759bd3461979dbcaa743a7d4720fc89b470a0b9e0b76fc052d"
+    },
+    {
+      "path": "upstream/registry/snap-cn/prompt-send/index.tsx",
+      "bytes": 36636,
+      "sha256": "6884020104076009c7bb9b232657098e77758dfcb3e3fcdbf340414aeae03e7e"
+    },
+    {
+      "path": "upstream/registry/snap-cn/prompt-zoom/__tests__/prompt-zoom.test.ts",
+      "bytes": 3509,
+      "sha256": "b1b5544136ace32c14178aaea90a8c8ce815b4dc7d5513b44acd65e1a8ec433d"
+    },
+    {
+      "path": "upstream/registry/snap-cn/prompt-zoom/config.ts",
+      "bytes": 2285,
+      "sha256": "7cf21c1ffdfc9acd091fa46ddac89f11de2820662891d1651fc14e8a57949cdb"
+    },
+    {
+      "path": "upstream/registry/snap-cn/prompt-zoom/index.tsx",
+      "bytes": 14869,
+      "sha256": "df7f655c3284f2028013579dcca71ec9330fbea30ac91a44f60ce3468ecb5fbb"
+    },
+    {
+      "path": "upstream/registry/snap-cn/pulsing-border/config.ts",
+      "bytes": 1329,
+      "sha256": "21e7d15d4edb785b8cb73036e77575191096b14d5601c30dc7570f46804a5040"
+    },
+    {
+      "path": "upstream/registry/snap-cn/pulsing-border/index.tsx",
+      "bytes": 2613,
+      "sha256": "3f6d810161e97ccfb446fef78036a311be0559806191fc3e351f0977e9613a2f"
+    },
+    {
+      "path": "upstream/registry/snap-cn/punch-lines/__tests__/punch-lines.test.ts",
+      "bytes": 3256,
+      "sha256": "bf9ed7b94e1a72508ac17b45e7c808631857fd225f355ff957bfe11f5de861a0"
+    },
+    {
+      "path": "upstream/registry/snap-cn/punch-lines/config.ts",
+      "bytes": 5149,
+      "sha256": "4a1f9a459e36f2376ef7e5986afd4f0259167a07512210fd435f31f58b95b4de"
+    },
+    {
+      "path": "upstream/registry/snap-cn/punch-lines/index.tsx",
+      "bytes": 31415,
+      "sha256": "8b77a976e5291b59d0b61e55a020f486b692d5e1d0d982bf65a1a409b17269ab"
+    },
+    {
+      "path": "upstream/registry/snap-cn/reel-collage/config.ts",
+      "bytes": 1166,
+      "sha256": "2c37eedb5c4fb503eda6742330aaec05162d8ef63f5f69b44d5ea72b1fc64877"
+    },
+    {
+      "path": "upstream/registry/snap-cn/reel-collage/index.tsx",
+      "bytes": 17276,
+      "sha256": "0b1e0c28404aa4bf3b5ed25610dc0634a73291aae8a3aa85bf8a3575739c107e"
+    },
+    {
+      "path": "upstream/registry/snap-cn/reel-wall/config.ts",
+      "bytes": 658,
+      "sha256": "d7f26d7e8c81b332f09885c8f1655c0354bd3aa8df6990c22a8158ce2b649244"
+    },
+    {
+      "path": "upstream/registry/snap-cn/reel-wall/index.tsx",
+      "bytes": 7074,
+      "sha256": "002be02ce2c826c95e49e890be5b2835bc2590b5de6b908a61dbfcbd73f0fb81"
+    },
+    {
+      "path": "upstream/registry/snap-cn/registry.json",
+      "bytes": 59694,
+      "sha256": "bb4b73dbebb79b90ccdf7c81d265a45ae9721c26afa6cc695bcbedebf9929c35"
+    },
+    {
+      "path": "upstream/registry/snap-cn/roster-grant/__tests__/roster-grant.test.ts",
+      "bytes": 12309,
+      "sha256": "72f6b3120c20e8a0bc15de89b26a5d9ad92da4c3ebcc25cbafdefaf42403f8da"
+    },
+    {
+      "path": "upstream/registry/snap-cn/roster-grant/config.ts",
+      "bytes": 983,
+      "sha256": "6a2a9704b4626fbeb4f851a2856c298816900ef349775bb14b40da00cf044b36"
+    },
+    {
+      "path": "upstream/registry/snap-cn/roster-grant/index.tsx",
+      "bytes": 38868,
+      "sha256": "e6f1e05fffef24c7a536e68bc9579aee65e8be39bf461993f27d985a7e0906e5"
+    },
+    {
+      "path": "upstream/registry/snap-cn/screen-recording/__tests__/screen-recording.test.ts",
+      "bytes": 13197,
+      "sha256": "e967b8a1b0e1402d81a5c2af2d51eaeaa55e03be98c3c6f0e468ef0c04613fa5"
+    },
+    {
+      "path": "upstream/registry/snap-cn/screen-recording/config.ts",
+      "bytes": 3019,
+      "sha256": "80c25fc251774995381c539f209c2535556a83cc11619915dc4dfedbf41f4dbf"
+    },
+    {
+      "path": "upstream/registry/snap-cn/screen-recording/index.tsx",
+      "bytes": 21745,
+      "sha256": "ba941cd484c9cc2613fab97db47f408d7be3dba92d3166ff1b34554ce6373eea"
+    },
+    {
+      "path": "upstream/registry/snap-cn/search-typing/__tests__/search-typing.test.ts",
+      "bytes": 11720,
+      "sha256": "390c8bfa0ddd2826dad788901030d132799d791e411bf2cf18f555fce2341232"
+    },
+    {
+      "path": "upstream/registry/snap-cn/search-typing/config.ts",
+      "bytes": 4015,
+      "sha256": "855387e864e0631f122c6d6b7394b41335aa4cf29fcfa3cb417271c253ad53bd"
+    },
+    {
+      "path": "upstream/registry/snap-cn/search-typing/index.tsx",
+      "bytes": 28329,
+      "sha256": "ac31757b61f6d590d7319fc34a101a8e7ef4293b6315a6e8b0b94cdcbad3e015"
+    },
+    {
+      "path": "upstream/registry/snap-cn/status-cycle/__tests__/status-cycle.test.ts",
+      "bytes": 4671,
+      "sha256": "74c19c8bf1ee44aa8e672bbd23f995f56913a8fdbeaf50953351f8c3ec532cae"
+    },
+    {
+      "path": "upstream/registry/snap-cn/status-cycle/config.ts",
+      "bytes": 4767,
+      "sha256": "4b8917e95f4c53e4f33a3b12d0785abdb36f272bd31cb69c4086c7b3ff0f4003"
+    },
+    {
+      "path": "upstream/registry/snap-cn/status-cycle/index.tsx",
+      "bytes": 36094,
+      "sha256": "d69e68be1e2c8c5ee32c6633f7d8b0d4a2a54a8ff1eaa472d091e32300eb2d74"
+    },
+    {
+      "path": "upstream/registry/snap-cn/terminal-simulator/__tests__/terminal-simulator.test.ts",
+      "bytes": 7830,
+      "sha256": "c43ddd3972e4a4aec23d47bfac06e09d5603c0a509e26c2ab83f911e8ae06f6c"
+    },
+    {
+      "path": "upstream/registry/snap-cn/terminal-simulator/config.ts",
+      "bytes": 1214,
+      "sha256": "90a67d3c9fb7d5369ec902888293881dfe7da3c922be6ee7f022bab2ba065985"
+    },
+    {
+      "path": "upstream/registry/snap-cn/terminal-simulator/index.tsx",
+      "bytes": 28241,
+      "sha256": "a1535fe316d5e26186c459b50f4259e41d895ae2213ccc8bb27fbd94d45f484c"
+    },
+    {
+      "path": "upstream/registry/snap-cn/text-build/__tests__/text-build.test.ts",
+      "bytes": 3047,
+      "sha256": "070a8336caa2ba91d1d4bca307fd35f48ff09f193768ccdb3f6a5b0f6bea19e2"
+    },
+    {
+      "path": "upstream/registry/snap-cn/text-build/config.ts",
+      "bytes": 1983,
+      "sha256": "36bccc38e2f7ddb13d3bf01fd5bd757c26c48596ad4a14c0ca4cfbe49ccefffc"
+    },
+    {
+      "path": "upstream/registry/snap-cn/text-build/index.tsx",
+      "bytes": 10113,
+      "sha256": "0efdea0b262152d5b61bd52bd62d3596ccb630cd37784f2c305efd5d10591088"
+    },
+    {
+      "path": "upstream/registry/snap-cn/text-highlight/__tests__/text-highlight.test.ts",
+      "bytes": 6069,
+      "sha256": "6fa3591e69a20fb5dfea1c29f0a152d5770210ba181fa810fe1b04405fefaa73"
+    },
+    {
+      "path": "upstream/registry/snap-cn/text-highlight/config.ts",
+      "bytes": 5371,
+      "sha256": "6eb345d231bdf85fb8fd406e3f09c813cf4c208c2f5acc7bcc56b666a6c034cb"
+    },
+    {
+      "path": "upstream/registry/snap-cn/text-highlight/index.tsx",
+      "bytes": 36037,
+      "sha256": "b232c18e8b0342f0d549e59e4dea3a985745a88dd85231926aeabb3e1b7515cc"
+    },
+    {
+      "path": "upstream/registry/snap-cn/text-reveal/__tests__/text-reveal.test.ts",
+      "bytes": 6168,
+      "sha256": "5a4fc1c655f442c385d9b342873b073083e67a58e24392e497649a319a08a8b6"
+    },
+    {
+      "path": "upstream/registry/snap-cn/text-reveal/config.ts",
+      "bytes": 2442,
+      "sha256": "28d8d23115b058fb920eb4dd78f35a4df39dfca6c5fc8d650a845ffa961d6185"
+    },
+    {
+      "path": "upstream/registry/snap-cn/text-reveal/index.tsx",
+      "bytes": 26222,
+      "sha256": "8b4984e9a54e9b38e640414f449b0002ba8478eb2e5898479526b7449e96e0d7"
+    },
+    {
+      "path": "upstream/registry/snap-cn/text-rewrite/__tests__/text-rewrite.test.ts",
+      "bytes": 9424,
+      "sha256": "0e32c8b2cf4f835e41174731db64ce6037e6df5090b8a733a626bb828b873be2"
+    },
+    {
+      "path": "upstream/registry/snap-cn/text-rewrite/config.ts",
+      "bytes": 4700,
+      "sha256": "ce49ec4e70fb49661f07a6ebb3f0c82a15f0a0c0e7e4f3031c0ef711a923b569"
+    },
+    {
+      "path": "upstream/registry/snap-cn/text-rewrite/index.tsx",
+      "bytes": 29583,
+      "sha256": "1da9248ef95ff25e60d0d14c1b1a432cb1d131bcd5537e6aac8258ac452a9d10"
+    },
+    {
+      "path": "upstream/registry/snap-cn/text-select/__tests__/text-select.test.ts",
+      "bytes": 14640,
+      "sha256": "3d34a82ee11b62a73563ea6d3d86a081f9125a4790ef220a758a947270a768f9"
+    },
+    {
+      "path": "upstream/registry/snap-cn/text-select/config.ts",
+      "bytes": 4632,
+      "sha256": "16d23a97b1a0a6b9cd2dde608c16c5954277c4cf20c28e7e2cd40d8cc9d580b3"
+    },
+    {
+      "path": "upstream/registry/snap-cn/text-select/index.tsx",
+      "bytes": 28802,
+      "sha256": "2c448e032119b5c21c282c475321726defb5a453f7bdc0a373abc298582bbe1f"
+    },
+    {
+      "path": "upstream/registry/snap-cn/text-swap/__tests__/text-swap.test.ts",
+      "bytes": 6202,
+      "sha256": "e9d5a25e27f4ba18c74aaa3a94fba74900f63b5a692673d00d0af59b5100c096"
+    },
+    {
+      "path": "upstream/registry/snap-cn/text-swap/config.ts",
+      "bytes": 2211,
+      "sha256": "6c37b455af7ae070342f326e6a412f6c0a10c0eb2e59f7563ff22bc131465baa"
+    },
+    {
+      "path": "upstream/registry/snap-cn/text-swap/index.tsx",
+      "bytes": 16383,
+      "sha256": "955a2f705bb406f4c53352ed710599313da1df94bad8c59699472826a8a568f7"
+    },
+    {
+      "path": "upstream/registry/snap-cn/text-swell/config.ts",
+      "bytes": 3412,
+      "sha256": "ef92b00e1130a956d3d1378877e1fb4f20b52af375ae1f9b8428e08bc8b62f3d"
+    },
+    {
+      "path": "upstream/registry/snap-cn/text-swell/index.tsx",
+      "bytes": 24243,
+      "sha256": "68161d3803883fc94708c799e2ba91b617e7113f41d0cbe22e9dc6d5aabd3fb4"
+    },
+    {
+      "path": "upstream/registry/snap-cn/type-morph/config.ts",
+      "bytes": 1356,
+      "sha256": "fd2ef4c7876e14254d2054e3b9e5f40c9ec1a1b362d8739aa9c86761be8485e6"
+    },
+    {
+      "path": "upstream/registry/snap-cn/type-morph/index.tsx",
+      "bytes": 16765,
+      "sha256": "f984a78b128159d7a583697ac536bf4ca00e022a5e41bc4face11370756b769a"
+    },
+    {
+      "path": "upstream/registry/snap-cn/type-morph/type-morph-timeline.ts",
+      "bytes": 5367,
+      "sha256": "d68e4e0d571a9426b0ba29def8a252145a7b91200974e481886f41a4319e0682"
+    },
+    {
+      "path": "upstream/registry/snap-cn/word-captions/__tests__/word-captions.test.ts",
+      "bytes": 10028,
+      "sha256": "0e00a6ec35822986450cc1cd48375400223ca0e94df6293b728bd6806b321cd2"
+    },
+    {
+      "path": "upstream/registry/snap-cn/word-captions/config.ts",
+      "bytes": 2090,
+      "sha256": "5274eea5ec0dc4fbb639a755dba6d385a2dedac674253ba28804e681b63bf727"
+    },
+    {
+      "path": "upstream/registry/snap-cn/word-captions/index.tsx",
+      "bytes": 29386,
+      "sha256": "924463100e7f45ce9a8493470432eb6a4f703b889d95f5789a1c8611494445b1"
+    },
+    {
+      "path": "upstream/registry/snap-cn/word-flip/__tests__/word-flip.test.ts",
+      "bytes": 5683,
+      "sha256": "17a3ed868328abdaa2054da8f7c4992ea1c292d6b6ded389aff66dbba097dbee"
+    },
+    {
+      "path": "upstream/registry/snap-cn/word-flip/config.ts",
+      "bytes": 1949,
+      "sha256": "64836ad1f548600230b907d89eda819268b7dd2300a2059d36dc723185c4508e"
+    },
+    {
+      "path": "upstream/registry/snap-cn/word-flip/index.tsx",
+      "bytes": 18981,
+      "sha256": "f1f5aa877860e911c16e93520b7cbd3af933405f3c61a8e2c5ecf08033cc2837"
+    },
+    {
+      "path": "upstream/registry/snap-cn/word-gather/__tests__/word-gather.test.ts",
+      "bytes": 8995,
+      "sha256": "0ad7128a2b6c6a5668c3fcf6bc1d953ed5d81da3f84691d64e36925047121e69"
+    },
+    {
+      "path": "upstream/registry/snap-cn/word-gather/config.ts",
+      "bytes": 825,
+      "sha256": "fe9530cfef0d21854780e576b0683096206d2c7fc8f068fa7bc554d2f9d8665b"
+    },
+    {
+      "path": "upstream/registry/snap-cn/word-gather/index.tsx",
+      "bytes": 20327,
+      "sha256": "36c1c00af212c8674b3eb29b0bbc72c075031a557f36e8fa50f23d5125610f48"
+    },
+    {
+      "path": "upstream/registry/snap-cn/word-wheel/__tests__/word-wheel.test.ts",
+      "bytes": 2341,
+      "sha256": "e11ef30e71ce189963e6da6f5772f9be92f3d8c3950b943e5b6be4d89b9810c3"
+    },
+    {
+      "path": "upstream/registry/snap-cn/word-wheel/config.ts",
+      "bytes": 1463,
+      "sha256": "473ac9f7c8b3cbc097b7bbea0f30a192ef91129ef04cb595ee3beb676c80be3b"
+    },
+    {
+      "path": "upstream/registry/snap-cn/word-wheel/index.tsx",
+      "bytes": 14725,
+      "sha256": "e41bdb78943078541edf495d858fbccf2b2e48a6f54d5d541ded96a79ecb1d4a"
+    },
+    {
+      "path": "upstream/registry/snap-cn/wordmark-cut/__tests__/wordmark-cut.test.ts",
+      "bytes": 5620,
+      "sha256": "1aa381ccb72334217f2c792328b449eb9ae713aece339a61226aa2a6ce3896f8"
+    },
+    {
+      "path": "upstream/registry/snap-cn/wordmark-cut/config.ts",
+      "bytes": 1157,
+      "sha256": "573730ec71a53cc835dcf43189fe94c175c2e6333d9cf0e04cf659ca36541942"
+    },
+    {
+      "path": "upstream/registry/snap-cn/wordmark-cut/index.tsx",
+      "bytes": 20117,
+      "sha256": "17e533480a75a190081a805cc1264bec709d9dcbdd28a9f77b590c085cbbc106"
+    },
+    {
+      "path": "upstream/skills/snapcn/SKILL.md",
+      "bytes": 12322,
+      "sha256": "2d3f653647ccc02069031d544084d05cf09e9ed0b362adb94dffb980c4a60469"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/anatomy.md",
+      "bytes": 9733,
+      "sha256": "ad0946e91a040a5688c3aae9b72792093f4edd9f32ee0aac912494217b8c6e74"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/anti-patterns.md",
+      "bytes": 4718,
+      "sha256": "d51a13920822f4b8275a7fee43f11b988e7454aaa66b0419ddb57d2f51baa296"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/archetypes/changelog.md",
+      "bytes": 3243,
+      "sha256": "9d400c3de3c1607fbd87cbb0704fccbbe064fc454948667db43ca20d1b933223"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/archetypes/cli-tool-demo.md",
+      "bytes": 6337,
+      "sha256": "86264548f0e5c7db89138ab2b0f03c1d30a2b7a3eff0ebfa741c59f33135d91a"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/archetypes/feature-announcement.md",
+      "bytes": 4278,
+      "sha256": "7a4fbdd8b5266f918398fa66a1bcf9574efcc8f8f502c6935f90ee05889741c1"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/archetypes/index.md",
+      "bytes": 4941,
+      "sha256": "4be747c79a349e15c220092d0aca617025c07604c4fdef4c8024887540368a85"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/archetypes/logo-bumper.md",
+      "bytes": 5175,
+      "sha256": "57d2998f8a80ef4828f53d77d6aa90caacc4e08f8b9d6616a34e99a6233c0bbe"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/archetypes/oss-showcase.md",
+      "bytes": 6501,
+      "sha256": "107607cba4369a2646eeab6e1d1fa1e6ddfc749768772b0f0be61f6877da443c"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/archetypes/pricing-reveal.md",
+      "bytes": 5688,
+      "sha256": "7c2cefb573f2474402c4b90c2742609d925ade98e5786bfe9cf93161a19dde6b"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/archetypes/product-demo.md",
+      "bytes": 7898,
+      "sha256": "712bfa08dcafe8d6e828fcf493fdbdbd489cbc608c43ae05851e8c4c77805327"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/archetypes/testimonial-reel.md",
+      "bytes": 5310,
+      "sha256": "9b5d5e40294d2f4ddcca608dc39f5e51764cbc9b2715eb74c5e0616d7633857c"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/archetypes/year-in-review.md",
+      "bytes": 6200,
+      "sha256": "51de2c2bb0c547edabdc18a3747c0f8abc7fd562dc5386551f5f615099832118"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/components/agent-steps.md",
+      "bytes": 2118,
+      "sha256": "dd687d4d47bc9c3489c6bb85ffe793ce041b5936087d3aaf970d860b87e3b2e1"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/components/announce-title.md",
+      "bytes": 1855,
+      "sha256": "407fd28df7fdc2d707a4cf6f284a584f92008c5df44b223aff85f63af7b84026"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/components/answer-highlight.md",
+      "bytes": 2159,
+      "sha256": "f62cc0e23eb8db676c0cde19d56c4abbf2a5dd6e1e8020bee3fca79c3e0c44ff"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/components/answer-stream.md",
+      "bytes": 1949,
+      "sha256": "08c9e99f6775d6cf44a1b8d4b884a7df9d378bcd20f1c536766f7b7014c37255"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/components/block-wordmark.md",
+      "bytes": 1754,
+      "sha256": "5c49f9691be1a1255923b929be2310d67e90c67385117e2f1d458a1ff05f6366"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/components/caret.md",
+      "bytes": 1542,
+      "sha256": "22484aee9da10f9198f2bf3282fe28a6637e465da38ee3008c3e7ddd87588b77"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/components/cursor-track.md",
+      "bytes": 3449,
+      "sha256": "70c4697a4b20b52babb5268f04e41b1fd0c23cfdb280c809a24885689e8bbe7a"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/components/follower-rush.md",
+      "bytes": 1533,
+      "sha256": "c9b3da35fda1cbe302ffa4a2409e60d5a6128fa3612f8fda2805b9ef404ee2f5"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/components/hero-launch.md",
+      "bytes": 1321,
+      "sha256": "f56bb7774969785ce6ef55d83905f77766b5bfbfa17ca00e8b799e67956ed8e4"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/components/index.md",
+      "bytes": 16284,
+      "sha256": "8a2e0e141cc7c80fc76e59c2459ecc0bba471a6d8bb860278297cf851a9975d6"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/components/input.md",
+      "bytes": 1674,
+      "sha256": "2c7fc5dffcb4378f95087c9679de46f337a322bbcc0148f61ec1440930c636b9"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/components/karaoke-captions.md",
+      "bytes": 1858,
+      "sha256": "05eb2a596d3062f9a71c2979b4fbc4deb5d5b1e7107100dcf858cb0a458d2ab8"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/components/laptop-frame.md",
+      "bytes": 1805,
+      "sha256": "3afd78e5e91e307df7110e6288965b5d8b0f37ad0bbe99cb5321d925be940aec"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/components/logo-assemble.md",
+      "bytes": 1575,
+      "sha256": "2322ae37c8e33660bc4f79bfc03ac43d6503086a4287f7b428e86dff198145d1"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/components/logo-drift.md",
+      "bytes": 1867,
+      "sha256": "a939139123ec0fb82966f00101eae53e9c9b8f10790e5b89b38090348538da0e"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/components/logo-flicker.md",
+      "bytes": 1512,
+      "sha256": "b63e00d7ea3aed6a1dfafd870921077c436c3b416f8aae1d26ddb3f96fa3550d"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/components/moodboard-reveal.md",
+      "bytes": 1579,
+      "sha256": "cd755207d09a03a290b6c91e8953d53033c28aa26471776355c5aa831c486cce"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/components/orbit-gallery.md",
+      "bytes": 1894,
+      "sha256": "ca789e14384fc6b048e4f03cbfc7b80d533e0bc4b2ce4e17b9a09745ce6cd7b0"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/components/phone-frame.md",
+      "bytes": 1814,
+      "sha256": "450989e4faad901755bb2e0afa37107765d60a30e5ab02fd2490107a72ee5bdd"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/components/prompt-send.md",
+      "bytes": 2096,
+      "sha256": "923f3e7ddf91c9a4706015199011e43dc214c0ee6bf413d637a849b4d44b5cbf"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/components/prompt-zoom.md",
+      "bytes": 1812,
+      "sha256": "601b63b2bfa460e96185e129d6222980f8913d4f6cde357a1530b50d9bed4cf7"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/components/pulsing-border.md",
+      "bytes": 1617,
+      "sha256": "37ea0d2fa7b265682625427e512cf574be1f852f1f2eab73747d6fe4a8267a6d"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/components/screen-recording.md",
+      "bytes": 3883,
+      "sha256": "90d7fe24887f2956c9c75255691985146e5149dddcfab4bebe836a796818532c"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/components/search-typing.md",
+      "bytes": 2029,
+      "sha256": "8be3098bb3c87d89a75ab8e9a4f0ea66a8482a087357d66f7776e0f175464d54"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/components/snap-cn-ui.md",
+      "bytes": 1340,
+      "sha256": "b6e53363e6743755331ef724dda8cbb5ceac001d5e55e61d4a524b45869d2da5"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/components/status-cycle.md",
+      "bytes": 1904,
+      "sha256": "c7278aff8330261f41848357f14b38d648df05e7721d6b23afb55c25f7c9a16c"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/components/terminal-simulator.md",
+      "bytes": 1984,
+      "sha256": "01ef4ae5331b10b3676aff0683a60624ab0a3983947d43e5bba798442ea107fe"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/components/text-build.md",
+      "bytes": 1817,
+      "sha256": "384a2f77bcd6196956470435a98acbce77d1fd5bd43645d10edada19c31679f7"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/components/text-highlight.md",
+      "bytes": 2165,
+      "sha256": "1b5c4ec90efbc7b5d2318691461b3ec471ad2a9c2d0434a6d13bddc89699f61d"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/components/text-reveal.md",
+      "bytes": 2960,
+      "sha256": "9ecc14b030cf9a76b1181bffb172017f3fd16eaec17344de8dc8b064419f8978"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/components/text-rewrite.md",
+      "bytes": 1890,
+      "sha256": "8baa4ba277183fe8c2b6859512d82e74d93bbc3cb83da372c7cd775751b16210"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/components/text-select.md",
+      "bytes": 1829,
+      "sha256": "71777cceb48b07b7ff70d4fb238c9095546247e0c6c8b31148bf92316800fb9e"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/components/text-swap.md",
+      "bytes": 1963,
+      "sha256": "9759505a310b574af9611b1632e0bff390039fe613958f3e75f188da5a6a9cd1"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/components/text-swell.md",
+      "bytes": 1987,
+      "sha256": "82174d6bb7debc97fbeb60b2821ba246e23d87c803ea744edf1b5858b37b6213"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/components/type-morph.md",
+      "bytes": 1784,
+      "sha256": "0bc74ba087c5d4893b571fb16aeda7154c17f17c357cb8296dc3519f1c2a3fa4"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/components/word-captions.md",
+      "bytes": 1862,
+      "sha256": "f7edcf50edfb3d013d8bb1dd03d76f6a79cafcae8df1cd8a988db8d8a1d7e255"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/components/word-flip.md",
+      "bytes": 1949,
+      "sha256": "b9fb76f0a001ea69d4054ed33dc68a65aa77de648ac52ae3114a54cfe1d4ffce"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/design.md",
+      "bytes": 3843,
+      "sha256": "41f5f00c1aae2b720c767f89e29e3c66f2112498ed39f6566df436d5686d7653"
+    },
+    {
+      "path": "upstream/skills/snapcn/references/motion-principles.md",
+      "bytes": 6222,
+      "sha256": "8d098be03d46f0c1c358bc0a84053556a22d8e33af477898f71c642fd78865c1"
+    }
+  ]
+}

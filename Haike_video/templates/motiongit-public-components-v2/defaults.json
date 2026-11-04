@@ -1,0 +1,106 @@
+{
+  "schema": "haike.motion-public-recipe-defaults/2",
+  "status": "candidate-static-only-media-pending",
+  "input_schema": "input.schema.json",
+  "consumer": "backlot.motion_public_production_v2.prepare",
+  "engine": "observed-controls/2",
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 60
+  },
+  "source_bindings_required": [
+    "complete approved script",
+    "actual ASR with audio_sha256 and measured words",
+    "same original-speed PCM voice.wav",
+    "actual media path/sha256",
+    "continuous semantic scene/cue plan",
+    "verified local component/tool locators"
+  ],
+  "not_a_complete_production_input": true,
+  "defaults": [
+    {
+      "reference_id": "template-01-integrated",
+      "pack_key": "observed-light",
+      "brand": "我的品牌",
+      "sequence": [
+        "title.type",
+        "steps.ladder",
+        "media.tilt",
+        "gallery.stack",
+        "device.phone",
+        "quote.reveal",
+        "media.scan",
+        "quote.card",
+        "cta.button"
+      ]
+    },
+    {
+      "reference_id": "template-02-expanded",
+      "pack_key": "observed-paper",
+      "brand": "我的品牌",
+      "sequence": [
+        "title.split",
+        "steps.track",
+        "media.scan",
+        "gallery.grid",
+        "device.monitor",
+        "quote.type",
+        "media.zoom",
+        "quote.card",
+        "cta.swipe"
+      ]
+    },
+    {
+      "reference_id": "template-04-dark-console",
+      "pack_key": "observed-console",
+      "brand": "我的品牌",
+      "sequence": [
+        "title.slam",
+        "steps.cards",
+        "media.zoom",
+        "gallery.carousel",
+        "device.tablet",
+        "quote.card",
+        "media.tilt",
+        "quote.card",
+        "cta.arrow"
+      ]
+    },
+    {
+      "reference_id": "vibrant-poster",
+      "pack_key": "observed-poster",
+      "brand": "我的品牌",
+      "sequence": [
+        "kinetic.stack",
+        "steps.cards",
+        "media.scan",
+        "polaroid.film",
+        "gallery.carousel",
+        "quote.card",
+        "media.scan",
+        "quote.card",
+        "cta.arrow"
+      ],
+      "presenter": "hide"
+    }
+  ],
+  "recipe_version": "2-development",
+  "poster_quote_layout_example": {
+    "not_a_complete_production_input": true,
+    "props": {
+      "text": "AI体质检测：非医疗诊断。不看病不卖药，给您个参考。",
+      "lines": [
+        "AI体质检测：非医",
+        "疗诊断。不看病不卖",
+        "药，给您个参考。"
+      ]
+    },
+    "source": "Existing C poster-v002 encoded034.jpg at49.2s; same wording, declared line boundaries only; actual new rendered paragraph still pending"
+  },
+  "changes": [
+    "paper type quote uses linear8codepoints/s and delayed attribution, dense native window/new output pending",
+    "poster Geist Latin with public Noto CJK,78px/800/1px quote spacing;172px titles and step-state corrections from existing evidence",
+    "optional poster quote lines preserve canonical text exactly; existing fallback still uses balance"
+  ]
+}

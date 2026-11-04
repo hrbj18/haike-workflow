@@ -1,0 +1,20 @@
+{
+  "contract": "kinetic-field-request-v1",
+  "duration_seconds": 16,
+  "fps": 24,
+  "text_limits": {"topic":6,"brand":6,"upperLabel":4,"lowerLabel":4,"tape":12,"detailTitle":6,"detailLabel":9,"collageLabel":8,"venue":5,"floor":3,"address":20,"closingTitle":6,"stamp":4},
+  "files": {
+    "robot.mp4": {"kind":"video","min_seconds":3.65,"role":"开场主对象，0秒开始取样"},
+    "dog.mp4": {"kind":"video","min_seconds":3.65,"role":"开场第二对象，0秒开始取样"},
+    "children.mp4": {"kind":"video","min_seconds":6.4,"role":"互动细节，素材3秒起取；放大区须实际看帧"},
+    "store.mp4": {"kind":"video","min_seconds":6.6,"approved_tail_hold":{"sha256":"a17c20a9d5b1e6c3fcb6a8e230ce0f0e8bfe5f1f5a7b33cb069e0b99b7aba948","min_seconds":5.46,"note":"已确认样片原片5.466667秒，末约1.2秒保留场所尾帧，人物持续开口；只允许该SHA复现，其他素材须足长"},"role":"场所实拍，素材2秒起取"},
+    "host-close.mp4": {"kind":"video","min_seconds":4,"role":"本期声音8–12秒对应表演，已原速预切"},
+    "host-open.mp4": {"kind":"video","min_seconds":4,"role":"本期声音12–16秒对应表演，已原速预切"},
+    "robot.jpg": {"kind":"image","role":"开场对象的真实静帧"},
+    "dog.jpg": {"kind":"image","role":"第二对象的真实静帧"},
+    "children.jpg": {"kind":"image","role":"互动现场真实静帧"},
+    "store.jpg": {"kind":"image","role":"场所真实静帧"},
+    "font.ttf": {"kind":"font","role":"既有Haike Sans中文字体"},
+    "sample.wav": {"kind":"audio","role":"完整16秒本期人声和配乐，不拉伸或截断原句"}
+  }
+}

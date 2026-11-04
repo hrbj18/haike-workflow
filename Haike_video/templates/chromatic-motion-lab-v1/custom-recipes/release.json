@@ -1,0 +1,181 @@
+{
+  "schema": "haike.template-release/1",
+  "template_id": "field-notes-v1",
+  "version": "1.0.0",
+  "date": "2026-11-03",
+  "scope": "24秒竖屏低清静音已确认样式；受控替换与新素材另验",
+  "dependencies": {
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "remotion": "4.0.506",
+    "@remotion/player": "4.0.506",
+    "gsap": "3.13.0",
+    "esbuild": "0.28.1"
+  },
+  "sources": [
+    {
+      "path": "Haike_video/motion-components/snapcn/compat/local-font.cjs",
+      "sha256": "1d42615995025ec8057ac4c463418b98a9d27d6362f89f96a51da7822d8bb2a6"
+    },
+    {
+      "path": "Haike_video/motion-components/snapcn/compat/local-source.cjs",
+      "sha256": "e92d7234876122bcea407ec842e37c0a66b9a426853980287e49b947d2e130c9"
+    },
+    {
+      "path": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/orbit-gallery/index.tsx",
+      "sha256": "979b83024d10518ddd3e009675dfd4208bd80ebbe56ea584970f8a10d2a749d0"
+    },
+    {
+      "path": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/text-build/index.tsx",
+      "sha256": "0efdea0b262152d5b61bd52bd62d3596ccb630cd37784f2c305efd5d10591088"
+    },
+    {
+      "path": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/text-highlight/index.tsx",
+      "sha256": "b232c18e8b0342f0d549e59e4dea3a985745a88dd85231926aeabb3e1b7515cc"
+    },
+    {
+      "path": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/text-reveal/index.tsx",
+      "sha256": "8b4984e9a54e9b38e640414f449b0002ba8478eb2e5898479526b7449e96e0d7"
+    },
+    {
+      "path": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/text-swap/index.tsx",
+      "sha256": "955a2f705bb406f4c53352ed710599313da1df94bad8c59699472826a8a568f7"
+    },
+    {
+      "path": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/text-swell/index.tsx",
+      "sha256": "68161d3803883fc94708c799e2ba91b617e7113f41d0cbe22e9dc6d5aabd3fb4"
+    },
+    {
+      "path": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn-ui/core/color.ts",
+      "sha256": "60e4c6000f5e6471d901f27d3ca1896567ef8bdeefaec53dfc6c0a2286256d02"
+    },
+    {
+      "path": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn-ui/core/fonts.ts",
+      "sha256": "c9f2e5f629d56dd8f2b62d0b4c4ce4766e683607814c0229648be92b93cc501b"
+    },
+    {
+      "path": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn-ui/core/index.ts",
+      "sha256": "e950e40bd89ff9ebd5668c84e1a0870b66791baf70c7874a5b0def67a9bbb8dc"
+    },
+    {
+      "path": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn-ui/core/item.tsx",
+      "sha256": "9153fa2efaf22fd2b270ccde194048284a2b42aa61d07ec5f6812240440af7df"
+    },
+    {
+      "path": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn-ui/core/motion.ts",
+      "sha256": "1c9758812db916ff045448ca3d5252568d6a83a13a82da1c2dbdb531f16c0d85"
+    },
+    {
+      "path": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn-ui/core/theme.ts",
+      "sha256": "2a75a5c6f20fb170451d851e746f29a7c3150d115d114443096264bdec1bb9f4"
+    },
+    {
+      "path": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn-ui/core/timeline.ts",
+      "sha256": "344658ef648c92d18612723701cc6d8377542986bcaafd27590a1df1eca6223a"
+    },
+    {
+      "path": "Haike_video/remotion-composer/package-lock.json",
+      "sha256": "80be5141ee357725970da36d2117500fd3ac062902e04bc9fe1f1942d3596bee"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-motion-lab-v1/AvatarScene.tsx",
+      "sha256": "6d824f6370f0ca003fdce1cd5fc047550de9ae9179269c44f604607ab6ca3514"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-motion-lab-v1/build.cjs",
+      "sha256": "ed9a7391e0bb3d89b1e5167bd1dd197a4703cd9cb0fed114582012293d36464b"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-motion-lab-v1/custom-recipes/field-notes.json",
+      "sha256": "8547c0b71af0b5cd7660c7865d3430a5063d51e8dfeedbba8af93db65e2c7ab0"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-motion-lab-v1/custom-recipes/verify-release.cjs",
+      "sha256": "413c4af606e054e000777cdc8a93f91abf605f9a9ad8e210c814f9cf9e193a87"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-motion-lab-v1/custom.css",
+      "sha256": "6875757070a566d6d4854e18b7f8916b1fef2ed3f681e24fab92ef2aa5158604"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-motion-lab-v1/custom.html",
+      "sha256": "79b5cf6cbd539c33f86d2090d47627b53db0c20edd26220781fda24a6e3bb20d"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-motion-lab-v1/CustomPreview.tsx",
+      "sha256": "c533d48077a1a4699d0d702a84c5ef1ba02ff5a467437193a0d5bd34a0c4f6e3"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-motion-lab-v1/index.tsx",
+      "sha256": "54ebe65ced6048dfb459fb33e164e12014f968c8b2be1ad1fd88c80ffd770e69"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-motion-lab-v1/palettes.json",
+      "sha256": "d1235670824eee045cc85427f91b8b0eaa4c24c4c05bc9653ae215456cffea31"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-motion-lab-v1/prepare.py",
+      "sha256": "8f3cd6b47ab0328ca4ff44e18893c866ad12ff86939c9d2d4a9ca9ee9b1c8ece"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-motion-lab-v1/prepare_v2.py",
+      "sha256": "febedc852a0ed79474180065a80397dc1357974f0e50a270f5f2bcb8d7041fe8"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-motion-lab-v1/recipes.json",
+      "sha256": "a63b6ee705cd58d771f865bfa6e938a3c9ece869effab0a73e299f94d9d13e1a"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-motion-lab-v1/RecipeStage.tsx",
+      "sha256": "19e8294b824d371d8b2ff5a9da6f71773404679baabdaddda6e8e4687da5d19a"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-motion-lab-v1/remotion.config.cjs",
+      "sha256": "73f509118a99d2b72f8e2b26ef480d54611ef7c872ad428fc8e5a3b0dd8a3ca2"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-motion-lab-v1/runtime.ts",
+      "sha256": "743f31ab8a4aa82e50bb08f3329c9d36df6ba965f3d6e4fb88b04869fe1c3389"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-motion-lab-v1/serve.py",
+      "sha256": "41d7e861191554c644d21b7f9b21f051a28c5aa1c26a4d3b1a7b669c3fd0b692"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-motion-lab-v1/story_plan.py",
+      "sha256": "e7008d1cff542ba000421bd65ad31926e6fe9c786be75e578a18a97c82fddf80"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-motion-lab-v1/timeline.py",
+      "sha256": "8edcf8b0a56efadae0d4d7a01c417468c5cb0b1fecbe01973ac3248cbd5bda6e"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-motion-lab-v1/verify.py",
+      "sha256": "1033bc0df8407817b106aaf1475eeae6d6beb298b7b7df315354b09b1988eead"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-motion-lab-v1/webpack.cjs",
+      "sha256": "af81a774621c0f0a07acdbb8a1c7390cbf0e541e6de6a81eb62f3a154475fae2"
+    },
+    {
+      "path": "Haike_video/templates/hum-production-v1/dynamic/motion.ts",
+      "sha256": "b1e6b38a69162e6a56ffc7e7af767a1d8f3354ea52c8abe74ed50aa1f3fed1bb"
+    },
+    {
+      "path": "Haike_video/templates/hum-production-v1/dynamic/vendor/layouts.ts",
+      "sha256": "51a04ac34423eb5de3099545274c7aacb0cae1c3ca25ee0ea9bad9bd24af2da5"
+    },
+    {
+      "path": "Haike_video/templates/hum-production-v1/vendor/remocn/mondrian-split.tsx",
+      "sha256": "d8e8f76f731b2c519a27f69cd4570f16c0c3936386138be25c169075f297f661"
+    },
+    {
+      "path": "Haike_video/templates/hum-production-v1/vendor/remocn/parallax-depth.tsx",
+      "sha256": "6660bea1dfdd7be897b1ca6ef850edfe44d4f1cdc4a8b9432ac20998b1d8ecb6"
+    },
+    {
+      "path": "Haike_video/templates/warm-workbench-v1/webpack.cjs",
+      "sha256": "cfb862a18ef029ef3d8fdd980aa6d3ac49766a9d0d63cf4a1c213a357b24551e"
+    }
+  ]
+}

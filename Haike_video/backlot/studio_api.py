@@ -22,6 +22,8 @@ from backlot.studio_dark_showcase_api import router as dark_showcase_router
 router.include_router(dark_showcase_router)
 from backlot.studio_motion_templates_api import router as motion_templates_router
 router.include_router(motion_templates_router)
+from backlot.studio_motion_replay_api import router as motion_replay_router
+router.include_router(motion_replay_router)
 # Professional tools remain reachable. Customer audio uses the account-scoped
 # relay modal; the former global supplier settings are internal only.
 REMOVED_ENTRIES = {"/audio": "/settings?panel=audio", "/settings/audio-center": "/settings?panel=audio",
@@ -68,6 +70,18 @@ def templates(): return {"templates": TEMPLATES}
 def template_library():
     from backlot.studio_template_library import library
     return library()
+
+
+@router.post('/api/studio/template-library/{template_id}/prepare')
+def template_library_prepare(template_id: str, request: Request, data: dict = Body(...)):
+    mutation(request)
+    if set(data) != {'request'}:
+        raise HTTPException(422, '仅接受本期制作输入，精确生产版本由模板卡片固定')
+    from backlot.studio_motion_preferred import prepare
+    try:
+        return prepare(template_id, data['request'])
+    except ValueError as exc:
+        raise HTTPException(409, str(exc)) from exc
 
 
 @router.get("/api/studio/template-library/{template_id}/media/{kind}")
@@ -377,6 +391,8 @@ def generate(draft_id: str, request: Request, data: dict = Body(...)):
     if "development_sample" in data: raise HTTPException(422, "开发样片参数不能从普通制作入口提交")
     s = studio(request); d = call(s.draft, draft_id)
     if data.get("revision") != d["revision"]: raise HTTPException(409, "制作内容已更新，请重新确认")
+    if d['input'].get('motion_production'):
+        raise HTTPException(409, '此草稿已选择动效模板，请沿所选模板的固定生产入口准备；不会改用基础口播生成')
     template = call(s.template, d["template_id"])
     if data.get("confirmed") is not True: raise HTTPException(422, "请确认本次制作及费用上限")
     kind = template["kind"]
@@ -406,6 +422,8 @@ async def quote_avatar(draft_id: str, request: Request, data: dict = Body(...)):
     if "development_sample" in data: raise HTTPException(422, "开发样片参数不能从普通制作入口提交")
     s = studio(request); d = call(s.draft, draft_id)
     if data.get("revision") != d["revision"]: raise HTTPException(409, "制作内容已更新，请重新读取报价")
+    if d['input'].get('motion_production'):
+        raise HTTPException(409, '此草稿已选择动效模板；已有声音与素材保留，请先沿所选模板准备本期输入')
     from backlot.studio_avatar import quote
     def read():
         try: return quote(s, d)

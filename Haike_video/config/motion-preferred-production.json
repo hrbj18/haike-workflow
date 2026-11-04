@@ -1,0 +1,456 @@
+{
+  "schema": "haike.motion-preferred-production/1",
+  "scope": "18 unique styles; new work only. Keep original sample covers and historical exact contracts. Cosmetic differences do not block delivery.",
+  "templates": [
+    {
+      "template_id": "kinetic-field-v1",
+      "version": "2.0.0",
+      "gallery_id": "kinetic-field-v1",
+      "production_contract": "motion-replay-numbered-02-05-production-v1",
+      "source_kind": "public-source-production",
+      "required_inputs": [
+        {
+          "path": "request.data",
+          "label": "prepared"
+        },
+        {
+          "path": "public/master.wav",
+          "label": "voice"
+        },
+        {
+          "path": "reuse-source.json",
+          "label": "真实语音识别与句词时钟"
+        },
+        {
+          "path": "episode.media",
+          "label": "videos"
+        },
+        {
+          "path": "episode.presenters",
+          "label": "presenters"
+        }
+      ]
+    },
+    {
+      "template_id": "nana-mint-explainer-v1",
+      "version": "2.0.0",
+      "gallery_id": "nana-mint-explainer-v1",
+      "production_contract": "motion-replay-numbered-02-05-production-v1",
+      "source_kind": "public-source-production",
+      "required_inputs": [
+        {
+          "path": "request.data",
+          "label": "prepared"
+        },
+        {
+          "path": "public/master.wav",
+          "label": "voice"
+        },
+        {
+          "path": "reuse-source.json",
+          "label": "真实语音识别与句词时钟"
+        },
+        {
+          "path": "episode.media",
+          "label": "videos"
+        },
+        {
+          "path": "episode.presenters",
+          "label": "presenters"
+        }
+      ]
+    },
+    {
+      "template_id": "field-notes-v1",
+      "version": "2.0.0",
+      "gallery_id": "field-notes-v1",
+      "production_contract": "motion-replay-numbered-02-05-production-v1",
+      "source_kind": "public-source-production",
+      "required_inputs": [
+        {
+          "path": "request.data",
+          "label": "prepared"
+        },
+        {
+          "path": "public/master.wav",
+          "label": "voice"
+        },
+        {
+          "path": "reuse-source.json",
+          "label": "真实语音识别与句词时钟"
+        },
+        {
+          "path": "episode.media",
+          "label": "videos"
+        },
+        {
+          "path": "episode.presenters",
+          "label": "presenters"
+        }
+      ]
+    },
+    {
+      "template_id": "field-notes-v2",
+      "version": "2.1.0",
+      "gallery_id": "field-notes-v2",
+      "production_contract": "haike-field-notes-video-production-v1",
+      "source_kind": "public-source-production",
+      "required_inputs": [
+        {
+          "path": "request.data",
+          "label": "prepared"
+        },
+        {
+          "path": "public/master.wav",
+          "label": "voice"
+        },
+        {
+          "path": "episode.scenes[*].media",
+          "label": "videos"
+        },
+        {
+          "path": "timing.json",
+          "label": "真实语音识别与句词时钟"
+        },
+        {
+          "path": "episode.presenters",
+          "label": "presenter"
+        }
+      ]
+    },
+    {
+      "template_id": "chromatic-06",
+      "version": "1.2.0-candidate.1",
+      "gallery_id": "chromatic-06",
+      "production_contract": "motion-replay-chromatic-production-v1",
+      "source_kind": "public-source-production",
+      "required_inputs": [
+        {
+          "path": "production_request.props",
+          "label": "实际场景编排"
+        },
+        {
+          "path": "production_request.sources",
+          "label": "原速高清素材"
+        },
+        {
+          "path": "production_request.receipts",
+          "label": "真实来源与时钟证明"
+        }
+      ]
+    },
+    {
+      "template_id": "chromatic-07",
+      "version": "1.2.0-candidate.1",
+      "gallery_id": "chromatic-07",
+      "production_contract": "motion-replay-chromatic-suite-production-v1",
+      "source_kind": "public-source-production",
+      "required_inputs": [
+        {
+          "path": "production_request.props",
+          "label": "实际场景编排"
+        },
+        {
+          "path": "production_request.sources",
+          "label": "原速高清素材"
+        },
+        {
+          "path": "production_request.receipts",
+          "label": "真实来源与时钟证明"
+        }
+      ]
+    },
+    {
+      "template_id": "chromatic-08",
+      "version": "1.2.0-candidate.1",
+      "gallery_id": "chromatic-08",
+      "production_contract": "motion-replay-chromatic-suite-production-v1",
+      "source_kind": "public-source-production",
+      "required_inputs": [
+        {
+          "path": "production_request.props",
+          "label": "实际场景编排"
+        },
+        {
+          "path": "production_request.sources",
+          "label": "原速高清素材"
+        },
+        {
+          "path": "production_request.receipts",
+          "label": "真实来源与时钟证明"
+        }
+      ]
+    },
+    {
+      "template_id": "chromatic-09",
+      "version": "1.2.0-candidate.1",
+      "gallery_id": "chromatic-09",
+      "production_contract": "motion-replay-chromatic-suite-production-v1",
+      "source_kind": "public-source-production",
+      "required_inputs": [
+        {
+          "path": "production_request.props",
+          "label": "实际场景编排"
+        },
+        {
+          "path": "production_request.sources",
+          "label": "原速高清素材"
+        },
+        {
+          "path": "production_request.receipts",
+          "label": "真实来源与时钟证明"
+        }
+      ]
+    },
+    {
+      "template_id": "chromatic-six-10",
+      "version": "1.2.0-candidate.1",
+      "gallery_id": "chromatic-six-10",
+      "production_contract": "motion-replay-chromatic-suite-production-v1",
+      "source_kind": "public-source-production",
+      "required_inputs": [
+        {
+          "path": "production_request.props",
+          "label": "实际场景编排"
+        },
+        {
+          "path": "production_request.sources",
+          "label": "原速高清素材"
+        },
+        {
+          "path": "production_request.receipts",
+          "label": "真实来源与时钟证明"
+        }
+      ]
+    },
+    {
+      "template_id": "chromatic-six-11",
+      "version": "1.2.0-candidate.1",
+      "gallery_id": "chromatic-six-11",
+      "production_contract": "motion-replay-chromatic-suite-production-v1",
+      "source_kind": "public-source-production",
+      "required_inputs": [
+        {
+          "path": "production_request.props",
+          "label": "实际场景编排"
+        },
+        {
+          "path": "production_request.sources",
+          "label": "原速高清素材"
+        },
+        {
+          "path": "production_request.receipts",
+          "label": "真实来源与时钟证明"
+        }
+      ]
+    },
+    {
+      "template_id": "template-01-integrated",
+      "version": "1.0.1-public.2",
+      "gallery_id": "motion-package-mg-2150f84a4202e3ebd36a47fc",
+      "production_contract": "haike.motion-public-production/2",
+      "source_kind": "public-source-production",
+      "required_inputs": [
+        {
+          "path": "input.script",
+          "label": "完整文案来源"
+        },
+        {
+          "path": "input.asr",
+          "label": "真实语音识别与句词时钟"
+        },
+        {
+          "path": "input.assets",
+          "label": "本期音视频素材"
+        },
+        {
+          "path": "input.composition",
+          "label": "本期动作编排"
+        },
+        {
+          "path": "input.source_receipts",
+          "label": "素材与同声源证明"
+        }
+      ]
+    },
+    {
+      "template_id": "template-02-expanded",
+      "version": "1.0.1-public.2",
+      "gallery_id": "motion-package-mg-8c9df3f72e3cca9713485c4c",
+      "production_contract": "haike.motion-public-production/2",
+      "source_kind": "public-source-production",
+      "required_inputs": [
+        {
+          "path": "input.script",
+          "label": "完整文案来源"
+        },
+        {
+          "path": "input.asr",
+          "label": "真实语音识别与句词时钟"
+        },
+        {
+          "path": "input.assets",
+          "label": "本期音视频素材"
+        },
+        {
+          "path": "input.composition",
+          "label": "本期动作编排"
+        },
+        {
+          "path": "input.source_receipts",
+          "label": "素材与同声源证明"
+        }
+      ]
+    },
+    {
+      "template_id": "template-04-dark-console",
+      "version": "1.0.1-public.2",
+      "gallery_id": "motion-package-mg-54f75c890e652d190cbfc8ec",
+      "production_contract": "haike.motion-public-production/2",
+      "source_kind": "public-source-production",
+      "required_inputs": [
+        {
+          "path": "input.script",
+          "label": "完整文案来源"
+        },
+        {
+          "path": "input.asr",
+          "label": "真实语音识别与句词时钟"
+        },
+        {
+          "path": "input.assets",
+          "label": "本期音视频素材"
+        },
+        {
+          "path": "input.composition",
+          "label": "本期动作编排"
+        },
+        {
+          "path": "input.source_receipts",
+          "label": "素材与同声源证明"
+        }
+      ]
+    },
+    {
+      "template_id": "template-03-native",
+      "version": "1.0.1-public.2",
+      "gallery_id": "motion-package-mg-0073456d9aef950f7548ca3e",
+      "production_contract": "haike.motion-public-production/2",
+      "source_kind": "public-source-production",
+      "required_inputs": [
+        {
+          "path": "input.script",
+          "label": "完整文案来源"
+        },
+        {
+          "path": "input.asr",
+          "label": "真实语音识别与句词时钟"
+        },
+        {
+          "path": "input.assets",
+          "label": "本期音视频素材"
+        },
+        {
+          "path": "input.composition",
+          "label": "本期动作编排"
+        },
+        {
+          "path": "input.source_receipts",
+          "label": "素材与同声源证明"
+        }
+      ]
+    },
+    {
+      "template_id": "vibrant-poster",
+      "version": "1.0.0-public.3",
+      "gallery_id": "motion-package-mg-bcf4d5995342cdffe345d140",
+      "production_contract": "haike.motion-public-poster-production/3",
+      "source_kind": "public-source-production",
+      "required_inputs": [
+        {
+          "path": "input.script",
+          "label": "完整文案来源"
+        },
+        {
+          "path": "input.asr",
+          "label": "真实语音识别与句词时钟"
+        },
+        {
+          "path": "input.assets",
+          "label": "本期音视频素材"
+        },
+        {
+          "path": "input.composition",
+          "label": "本期动作编排"
+        },
+        {
+          "path": "input.source_receipts",
+          "label": "素材与同声源证明"
+        }
+      ]
+    },
+    {
+      "template_id": "knowledge-explainer-sketchnote",
+      "version": "5.1.1-independent.1",
+      "gallery_id": "motion-package-mg-178e6870ae932019c6bf2fe9",
+      "production_contract": "haike.knowledge-reference-public/3",
+      "source_kind": "public-source-production",
+      "required_inputs": [
+        {
+          "path": "data",
+          "label": "已准备的完整制作目录"
+        }
+      ]
+    },
+    {
+      "template_id": "knowledge-explainer-chalkboard",
+      "version": "5.1.1-independent.1",
+      "gallery_id": "motion-package-mg-5b31b7dd6e6709861dc6ac88",
+      "production_contract": "haike.knowledge-reference-public/3",
+      "source_kind": "public-source-production",
+      "required_inputs": [
+        {
+          "path": "data",
+          "label": "已准备的完整制作目录"
+        }
+      ]
+    },
+    {
+      "template_id": "motiongit-promo-user",
+      "version": "3.0.0-reference-public.3",
+      "gallery_id": "motion-package-mg-8d3e5baeef9310e4b49b41de",
+      "production_contract": "haike.promo-reference-full/3",
+      "source_kind": "public-source-production",
+      "required_inputs": [
+        {
+          "path": "input.asr",
+          "label": "真实语音识别与句词时钟"
+        },
+        {
+          "path": "input.script",
+          "label": "完整文案来源"
+        },
+        {
+          "path": "input.assets",
+          "label": "本期音视频素材"
+        },
+        {
+          "path": "input.scenes",
+          "label": "本期场景"
+        },
+        {
+          "path": "input.media",
+          "label": "实拍素材窗口"
+        },
+        {
+          "path": "input.material_review",
+          "label": "素材审核"
+        },
+        {
+          "path": "input.source_receipts",
+          "label": "素材与同声源证明"
+        }
+      ]
+    }
+  ]
+}

@@ -36,3 +36,12 @@ Haike_video/templates/motiongit-poster-v1/profile.json:generic-api-key:81
 Haike_video/templates/motiongit-poster-v1/profile.json:generic-api-key:86
 Haike_video/templates/motiongit-native-story-v1/reference/validation-summary.json:generic-api-key:224
 Haike_video/templates/motiongit-native-story-v1/reference/validation-summary.json:generic-api-key:225
+# Reviewed JSON control paths and SHA256 evidence, not authentication material.
+Haike_video/templates/motiongit-poster-v1/profile.json:generic-api-key:34
+Haike_video/templates/motiongit-poster-v1/profile.json:generic-api-key:39
+Haike_video/templates/motiongit-poster-v1/profile.json:generic-api-key:44
+Haike_video/templates/motiongit-poster-v1/profile.json:generic-api-key:76
+Haike_video/templates/motiongit-poster-v1/profile.json:generic-api-key:81
+Haike_video/templates/motiongit-poster-v1/profile.json:generic-api-key:86
+Haike_video/templates/motiongit-native-story-v1/reference/validation-summary.json:generic-api-key:224
+Haike_video/templates/motiongit-native-story-v1/reference/validation-summary.json:generic-api-key:225

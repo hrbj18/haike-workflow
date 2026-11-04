@@ -20,6 +20,8 @@
 
 新数字人任务先运行 `python scripts/runninghub-workflow.py show` 读取Agent工作流偏好。未设置时默认性价比RunningHub `2094449979141218305`；高质量 `2112180419025260546` 的可迁移独立入口见[说明](Haike_video/workflows/runninghub-high-quality/README.md)。本次显式选择只覆盖本次；用户明确要求改长期默认后才运行 `select --workflow economy|high-quality --confirm-default-change`。安装及Key导入不改此偏好，既有任务继续冻结路由。该偏好用于Agent路由，Studio普通口播仍用现有性价比生产入口。
 
+模板/人物角色默认：辅助讲解小窗（`supporting-window`，人物不是画面主体）新任务默认性价比；优先级为旧任务冻结路线、本次显式选择、登记的人物角色、通用时长条件、基础偏好。选择已登记模板时用`show --template-id <目录ID> --duration-seconds <完整视频秒数>`；无模板但已明确该角色时用`--avatar-role supporting-window`。本次明确选高质量时给show加`--workflow high-quality`，不改长期偏好。角色规则见[配置](Haike_video/config/avatar-generation-policy.json)；动效模板4目录ID为`field-notes-v1`。
+
 明确说“高质量数字人工作流”时，读取[同名规则](Haike_video/docs/高质量数字人工作流.md)，使用其分段策略和本地侯总默认绑定。
 
 `show`若返回`preference.duration_rule`，按新视频**完整时长**执行条件默认；确定时长后传`show --duration-seconds <秒数>`解析，不能拿数字人出镜累计时长代替全片时长。保存条件偏好用`select --workflow high-quality --max-video-seconds 120 --confirm-default-change`；这只改本机Agent新任务路由，费用仍按当期授权，既有任务和Studio供应商保持冻结配置。

@@ -1,0 +1,9 @@
+export type GroupId='s01'|'s02'|'s03'|'s04'|'s05'|'s06'|'s07'|'s08'|'s09'|'review';
+export type Variant='reference'|'hedgerow'|'cobalt'|'native-story';
+export type Media={id:string;src:string;thumbnail?:string;kind:'image'|'video';offset:number;label?:string;fit?:'contain';width?:number;height?:number};
+export type Caption={text:string;startMs:number;endMs:number};
+export type Scene={id:string;group:GroupId;from:number;frames:number;title?:string;subtitle?:string;mediaIds:string[];mainMediaId?:string;content:Record<string,unknown>;cueTimes?:Record<string,number>;sourceStart?:number;sourceDuration?:number;videoWindows?:{mediaId:string;from:number;frames:number;offset:number}[]};
+export type Presenter={src:string;from:number;frames:number;offset:number;modes:{from:number;frames:number;mode:'large'|'small'|'hidden'}[]};
+export type Props={width:number;height:number;fps:number;durationFrames:number;variant:Variant;brand:string;header:string;footer:string;scenes:Scene[];media:Media[];captions:Caption[];fontAssets?:{body:string;display:string};audio?:string;presenter?:Presenter;referencePortrait?:string};
+export type Palette={bg:string;paper:string;ink:string;muted:string;accent:string;accent2:string;line:string;panel:string;onAccent:string};
+export type Context={p:Props;s:Scene;frame:number;seconds:number;portrait:boolean;t:Palette};

@@ -1,0 +1,61 @@
+{
+  "schema": "haike.motion-replay-presentation/1",
+  "templates": [
+    {
+      "template_id": "template-02-expanded",
+      "version": "2.7.21-alpha.5",
+      "gallery_id": "motion-package-mg-8c9df3f72e3cca9713485c4c",
+      "name": "纸面透视 · 口播讲解",
+      "reference_preview": "https://media.openaicut.com/previews/607/draft-zh-613d68ad449f.mp4"
+    },
+    {
+      "template_id": "template-01-integrated",
+      "version": "2.7.18-alpha.4",
+      "gallery_id": "motion-package-mg-2150f84a4202e3ebd36a47fc",
+      "name": "现代图文 · 口播讲解",
+      "reference_preview": "https://media.openaicut.com/previews/605/draft-zh-99e0d21cfdd9.mp4"
+    },
+    {
+      "template_id": "knowledge-explainer-sketchnote",
+      "version": "2.7.3",
+      "gallery_id": "motion-package-mg-178e6870ae932019c6bf2fe9",
+      "name": "点阵手账知识讲解",
+      "reference_preview": null
+    },
+    {
+      "template_id": "knowledge-explainer-chalkboard",
+      "version": "2.7.2",
+      "gallery_id": "motion-package-mg-5b31b7dd6e6709861dc6ac88",
+      "name": "粉笔黑板知识讲解",
+      "reference_preview": null
+    },
+    {
+      "template_id": "template-04-dark-console",
+      "version": "2.7.20-alpha.3",
+      "gallery_id": "motion-package-mg-54f75c890e652d190cbfc8ec",
+      "name": "科技控制台 · 口播讲解",
+      "reference_preview": "https://media.openaicut.com/previews/611/draft-zh-144846fc949e.mp4"
+    },
+    {
+      "template_id": "template-03-native",
+      "version": "2.7.18-alpha.2",
+      "gallery_id": "motion-package-mg-0073456d9aef950f7548ca3e",
+      "name": "深色立体 · 多屏展陈",
+      "reference_preview": "https://media.openaicut.com/previews/609/draft-zh-a33d6dc67131.mp4"
+    },
+    {
+      "template_id": "vibrant-poster",
+      "version": "2.7.13",
+      "gallery_id": "motion-package-mg-bcf4d5995342cdffe345d140",
+      "name": "活力海报 · 口播讲解",
+      "reference_preview": "https://media.openaicut.com/previews/623/draft-zh-e8e43fce1aae.mp4"
+    },
+    {
+      "template_id": "motiongit-promo-user",
+      "version": "2.6.4",
+      "gallery_id": "motion-package-mg-8d3e5baeef9310e4b49b41de",
+      "name": "流程演示 · 产品教程",
+      "reference_preview": "https://media.openaicut.com/previews/588/draft-zh-ca08bac0650e.mp4"
+    }
+  ]
+}

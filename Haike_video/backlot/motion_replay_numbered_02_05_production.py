@@ -1,0 +1,290 @@
+"""Additive full-production execution for numbered2/3/4; no paid operations."""
+from __future__ import annotations
+import hashlib,json,math,os,subprocess,wave
+from pathlib import Path
+from backlot.motion_replay_field_notes_video import read,write,sha,tools
+from backlot.motion_replay_field_notes_render import runtime
+
+ROOT=Path(__file__).resolve().parents[2]
+TEMPLATE=ROOT/'Haike_video/templates/numbered02-04-production-v1'
+CONTRACT='motion-replay-numbered-02-05-production-v1'
+VERSION='2.0.0'
+KINETIC_NAMES=('angled-panel-settle','keyword-assemble','split-divider-morph','tape-reveal','footage-iris','short-marker','detail-loupe','hand-drawn-arrow','photo-cascade','stack-to-location','pin-pop','floor-strip','location-focus','portrait-disc','headline-assemble','photo-fan','invitation-stamp')
+NANA_NAMES=('integration','terms','brief','result','workflow','compare','question','examples','value','logic','difference','course','closing')
+FIELD_NAMES=('arrive','compare','connect','recap')
+NANA_CUES={'integration':('partner','arrow'),'terms':(),'brief':('presenter','labelStart','labelStagger'),'result':(),
+    'workflow':('prompt','steps','preview'),'compare':('arrow','after'),'question':('answer',),'examples':(),
+    'value':(),'logic':('overlayEnd',),'difference':(),'course':(),'closing':()}
+SPECS={'kinetic-field-v1':(24,1080,1920,KINETIC_NAMES),'nana-mint-explainer-v1':(30,1920,1080,NANA_NAMES),'field-notes-v1':(30,1080,1920,FIELD_NAMES)}
+NO_WINDOW=0x08000000 if os.name=='nt' else 0
+
+
+def require(ok,message):
+    if not ok:raise ValueError(message)
+
+
+def actions(identity):
+    return ['haike.'+identity+'.video.'+name for name in SPECS[identity][3]]
+
+
+def flat(value):
+    return isinstance(value,str) and value and Path(value).name==value and not any(c in value for c in '/\\:') and value not in {'.','..'}
+
+
+def source_identity():
+    paths=[Path(__file__),ROOT/'Haike_video/backlot/motion_replay_numbered_02_05_full.py',
+        ROOT/'Haike_video/backlot/motion_replay_field_notes_video.py',ROOT/'Haike_video/backlot/motion_replay_field_notes_render.py',
+        ROOT/'Haike_video/templates/warm-workbench-v1/webpack.cjs',ROOT/'Haike_video/remotion-composer/package-lock.json']
+    paths += [p for p in TEMPLATE.rglob('*') if p.is_file() and p.suffix in {'.py','.tsx','.ts','.cjs','.json'}]
+    derivation=read(TEMPLATE/'derivation.json')
+    for row in derivation['sources']:
+        require(sha(ROOT/row['path'])==row['sha256'],'原冻结参考源码变化；不能静默更新派生模板')
+        paths.append(ROOT/row['path'])
+    for relative in ['Haike_video/templates/kinetic-field-v1/layout.json','Haike_video/templates/kinetic-field-v1/content.json',
+        'Haike_video/templates/chromatic-motion-lab-v1/custom-recipes/field-notes.json','Haike_video/templates/chromatic-motion-lab-v1/recipes.json',
+        'Haike_video/templates/chromatic-motion-lab-v1/palettes.json','Haike_video/templates/chromatic-motion-lab-v1/runtime.ts',
+        'Haike_video/templates/hum-production-v1/dynamic/motion.ts','Haike_video/templates/hum-production-v1/dynamic/vendor/layouts.ts',
+        'Haike_video/templates/hum-production-v1/vendor/remocn/parallax-depth.tsx','Haike_video/templates/animation-signatures-v2/shared.tsx']:
+        paths.append(ROOT/relative)
+    for row in derivation['generated']:
+        require(sha(ROOT/row['path'])==row['sha256'],'派生实现与可审查转换记录不符')
+    return {p.relative_to(ROOT).as_posix():sha(p) for p in sorted(set(paths))}
+
+
+def probe(path):
+    return json.loads(subprocess.check_output([tools()[1],'-v','error','-show_streams','-show_format','-of','json',str(path)],timeout=30,creationflags=NO_WINDOW))
+
+
+def validate(data):
+    data=Path(data).resolve();manifest=read(data/'preparation.json');episode=read(data/'public/episode.json')
+    require(manifest.get('schema')=='haike.numbered-full-motion-preparation/1','缺少完整制作输入清单')
+    identity=episode.get('template_id');require(identity in SPECS and episode.get('version')==VERSION,'未知完整制作精确版本')
+    fps,width,height,names=SPECS[identity];total=episode['durationFrames']
+    require(episode.get('schema')=='haike.numbered-full-motion-episode/1' and episode['fps']==fps and type(total)is int and 16*fps<=total<=600*fps,'完整主时钟/帧率无效')
+    bound={}
+    for row in manifest['files']:
+        name=row['path'];require(flat(name) and name not in bound,'public只接受唯一平面本地资源')
+        path=data/'public'/name;require(path.is_file() and sha(path)==row['sha256'],'本期真实资源或输入SHA变化')
+        bound[name]=path
+    require({'episode.json','master.wav','font.ttf'}<=set(bound),'缺少主输入/声音/字体')
+    for row in manifest['evidence']:
+        require(flat(row['path']) and sha(data/row['path'])==row['sha256'],'本期复用/素材/语义证据变化')
+    require({'reuse-source.json','materials.json'}<={row['path'] for row in manifest['evidence']},'缺少复用或原素材证据绑定')
+    reuse=read(data/'reuse-source.json')
+    for key in ['narration','asr','timing','avatar_receipt','avatar_master','original_payment_ledger']:
+        require(sha(reuse[key]['path'])==reuse[key]['sha256'],'已付费同声源复用身份变化：'+key)
+    audio=read(reuse['audio_receipt']['path']);timing=read(reuse['timing']['path']);avatar=read(reuse['avatar_receipt']['path'])
+    require(sha(reuse['audio_receipt']['path'])==reuse['audio_receipt']['sha256'],'原音频回执身份变化')
+    require(audio['sha256']==reuse['narration']['sha256']==timing['source_audio_sha256'] and not audio['time_stretched'],'主音轨必须完整原速同源')
+    require(hashlib.sha256(episode['sourceText'].encode()).hexdigest()==audio['full_text_sha256']==timing['script_sha256'],'原稿未逐字完整绑定原旁白')
+    require(episode['captions']==timing['captions'] and ''.join(c['text'] for c in episode['captions'])==episode['sourceText'],'完整字幕不能遗漏或均分猜时码')
+    require(timing['asr_sha256']==reuse['asr']['sha256'] and timing['complete_canonical_text_covered'] is True,'真实ASR时钟不完整')
+    require(avatar['workflow_id']=='2112180419025260546' and avatar['sha256']==reuse['avatar_master']['sha256'],'缺少指定HQ同声源母片')
+    require(reuse['new_paid_calls']==0,'本入口只接受已有付费成果复用，不执行新付费')
+    expected=actions(identity);require(list(episode['actions'])==expected,'动作编号必须完整、唯一且保持指定顺序')
+    for name,window in episode['actions'].items():
+        require(set(window)=={'from','to'} and type(window['from'])is int and type(window['to'])is int and 0<=window['from']<window['to']<=total,'内部动作窗口无效：'+name)
+    stages=episode['stages'];require(len(stages)==(5 if identity=='kinetic-field-v1' else len(names)),'实际源组件场景数量不符')
+    cursor=0
+    for stage in stages:
+        require(type(stage['from'])is int and type(stage['to'])is int and stage['from']<=cursor<stage['to']<=total,'源组件场景存在空白或无效窗口')
+        if identity!='kinetic-field-v1':require(stage['from']==cursor,'场景须连续消费全文时钟')
+        cursor=max(cursor,stage['to'])
+    require(cursor==total and stages[0]['from']==0,'场景未覆盖完整声音')
+    if identity=='kinetic-field-v1':
+        require([s['id'] for s in stages]==['duo','hands','collage','location','invitation'],'原Kinetic五种组织关系不可替换')
+        event=lambda name:episode['actions']['haike.'+identity+'.video.'+name]
+        require(stages[1]['from']==event('footage-iris')['from'] and stages[0]['to']==event('footage-iris')['to']
+                and stages[3]['from']==event('stack-to-location')['from'] and stages[2]['to']==event('stack-to-location')['to']
+                and stages[4]['from']==stages[3]['to']==event('portrait-disc')['from'],'实际入出场未消费所选动作窗口')
+        durations=(.5,.85,.65,.45,.45,.45,.65,.45,.4,.9,.55,.55,.5,.55,.5,.55,.45)
+        for name,duration in zip(expected,durations):require(abs(episode['actions'][name]['to']-episode['actions'][name]['from']-round(duration*fps))<=1,'原动作物理历时不能整片等比拉长')
+    elif identity=='nana-mint-explainer-v1':
+        native=episode['nativeNana'];require(native['fps']==fps and round(native['duration']*fps)==total and native['voice']=='master.wav' and native['font']=='font.ttf','原生Nana未消费完整主时钟')
+        require([s['id'] for s in native['scenes']]==list(names),'原Nana十三种原生场景不可重排/替换')
+        for index,(scene,stage) in enumerate(zip(native['scenes'],stages)):
+            require(set(scene.get('cues',{}))==set(NANA_CUES[scene['id']]),'本版只接受实际原生组件消费的内部cue')
+            require(round(scene['start']*fps)==stage['from'] and round(scene['end']*fps)==stage['to']
+                    and episode['actions'][expected[index]]=={'from':stage['from'],'to':stage['to']},'Nana原组件场景与动作/全文时钟不一致')
+            if scene['id'] in {'integration','terms','brief','result','workflow','examples','logic'}:
+                require(scene.get('media',{}).get('kind')=='video' and scene['media']['file'] in bound,'Nana主素材不能回退静态截图')
+            for key in ('media','overlay'):
+                if key in scene:
+                    end=stage['from']+round(scene['cues']['overlayEnd']*fps) if scene['id']=='logic' else stage['to']
+                    require(any(c['file']==scene[key]['file'] and c['from']==stage['from'] and c['to']==end for c in episode.get('physical_media_uses',[])),'原生媒体缺少真实消费范围绑定')
+            presenter=scene.get('presenter')
+            if presenter:
+                require(presenter['file'] in episode['media'] and presenter['role'] in {'avatar','footage'},'Nana辅助槽须明确区分人物与实拍')
+                if presenter['role']=='avatar':require(scene['id'] in {'integration','closing'} and episode['media'][presenter['file']]==episode['presenters'],'人物不能借实拍槽移动口型时钟')
+            for cue,value in scene.get('cues',{}).items():require(math.isfinite(value) and 0<=value<(stage['to']-stage['from'])/fps,'原生内部事件越过本期语义场景')
+    else:
+        native=episode['content'];require(native['segments']==stages and native['stages']==stages and native['durationInFrames']==total,'Field Notes原组件未消费同一场景表')
+        require(len(native['photos'])>=5 and all(name in episode['media'] for name in native['photos']),'原照片关系未绑定连续实拍')
+        for index,stage in enumerate(stages):
+            require(stage['id']==names[index] and not(set(stage['text'])-{'label','note','tags','summary'}),'不能用内容槽替换原布局/效果/图片顺序')
+            require(set(stage['timing'])=={'mediaFrom','noteFrom'} and all(type(v)is int and v>=0 for v in stage['timing'].values()),'原布局只开放实际媒体/摘要语义锚点')
+            event=episode['actions'][expected[index]];span=stage['to']-stage['from']
+            require(event['from']==stage['from']+stage['timing']['mediaFrom'] and event['to']==event['from']+66
+                    and stage['timing']['mediaFrom']+66+36<=span and stage['timing']['noteFrom']+24+18<=span,'原动作历时/阅读预算与实际消费不符')
+    uses=[]
+    for alias,playlist in episode['media'].items():
+        require(flat(alias) and playlist,'缺少实际视频槽')
+        previous=playlist[0]['from']
+        for clip in playlist:
+            require(set(clip)<= {'file','from','to','sourceStartFrame','position'} and flat(clip['file']) and clip['file'].endswith('.mp4') and clip['file'] in bound,'实际主素材必须为绑定的真实视频')
+            contiguous=clip['from']==previous if playlist!=episode['presenters'] else clip['from']>=previous
+            require(contiguous and clip['from']<clip['to']<=total and clip['sourceStartFrame']>=0,'视频槽有空缺/重叠/越界')
+            uses.append(clip);previous=clip['to']
+    require(episode['presenters'],'缺少本期实际同声源人物窗口')
+    for clip in episode['presenters']:
+        require(flat(clip['file']) and clip['file'] in bound and 0<=clip['from']<clip['to']<=total,'人物可见域越界')
+        source=next((row for row in reuse['presenter_clips'] if row['sha256']==sha(bound[clip['file']])),None)
+        require(source is not None and clip['sourceStartFrame']==0,'人物不能换任意旧口型或移动声源')
+        require(abs(clip['from']/fps-source['source_start_seconds'])<=1/fps+.001 and (clip['to']-clip['from'])/fps<=source['duration_seconds']+.001,'人物真实生成域未覆盖可见域')
+        uses.append(clip)
+    for use in episode.get('physical_media_uses',[]):uses.append(use)
+    probes={}
+    for clip in uses:
+        file=clip['file'];require(file in bound,'消费了未冻结的实际文件')
+        if file not in probes:
+            result=probe(bound[file]);video=next((s for s in result['streams'] if s['codec_type']=='video'),None)
+            require(video is not None,'视频槽没有真实视频流')
+            probes[file]={'duration':float(video.get('duration',result['format']['duration'])),'width':video['width'],'height':video['height']}
+        require((clip['sourceStartFrame']+clip['to']-clip['from'])/fps<=probes[file]['duration']+.001,'源视频不足；禁止循环、冻结或拉伸补长')
+    for source in read(data/'materials.json'):
+        require(sha(source['path'])==source['sha256'] and sha(bound[source['prepared_file']])==source['prepared_sha256'],'真实原片及高质量派生来源变化')
+    with wave.open(str(bound['master.wav']),'rb') as stream:
+        require(stream.getframerate()==48000 and stream.getnchannels()==2 and stream.getsampwidth()==2 and stream.getnframes()==total*48000//fps,'主声音须精确对应全部成片时钟')
+    return episode,manifest,probes
+
+
+def resolve_events(episode):
+    """Derive execution evidence from consumed controls, not caller event labels."""
+    result=[];fps=episode['fps'];identity=episode['template_id'];ids=actions(identity)
+    def add(name,action,frame):result.append({'id':name,'action_id':action,'frame':int(round(frame))})
+    for name,window in episode['actions'].items():
+        add(name+'.start',name,window['from']);add(name+'.settled',name,window['to'])
+    if identity=='kinetic-field-v1':
+        keyword=episode['actions'][ids[1]]['from'];add('keyword.lower-pop',ids[1],keyword+.35*fps)
+        arrow=episode['actions'][ids[7]]['from'];add('arrow.head',ids[7],arrow+.3*fps)
+        title=episode['actions'][ids[14]]['from'];add('title.actual-mounted',ids[14],title);add('title.native2word-assembled',ids[14],title+12)
+    elif identity=='field-notes-v1':
+        for index,stage in enumerate(episode['stages']):
+            origin=stage['from'];timing=stage['timing'];act=ids[index]
+            for event,offset in [('title.start',0),('title.settled',18),('media.start',timing['mediaFrom']),('media.settled',timing['mediaFrom']+66),('note.start',timing['noteFrom']),('note.settled',timing['noteFrom']+24)]:add(stage['id']+'.'+event,act,origin+offset)
+            if index==3:
+                for i in range(3):
+                    add(f'recap.row{i}.start',act,origin+timing['mediaFrom']+i*14);add(f'recap.row{i}.settled',act,origin+timing['mediaFrom']+16+i*14)
+                add('recap.underline.start',act,origin+timing['noteFrom']+3);add('recap.underline.settled',act,origin+timing['noteFrom']+21)
+    else:
+        for index,(scene,stage) in enumerate(zip(episode['nativeNana']['scenes'],episode['stages'])):
+            origin=stage['from'];cue=scene['cues'];act=ids[index];name=scene['id']
+            for key in NANA_CUES[name]:
+                if key not in {'labelStart','labelStagger'}:add(name+'.'+key,act,origin+cue[key]*fps)
+            if name=='terms':
+                for i in range(3):add('terms.active-label'+str(i),act,origin+i*1.75*fps)
+                add('terms.camera.start',act,origin+2.5*fps);add('terms.camera.settled',act,origin+2.5*fps+13)
+            if name=='brief':
+                for i in range(len(scene['labels'])):
+                    start=origin+(cue['labelStart']+i*cue['labelStagger'])*fps;add('brief.label'+str(i)+'.start',act,start);add('brief.label'+str(i)+'.settled',act,start+12)
+            if name=='workflow':
+                for event,offset in [('typing-start',.5),('typing-end',1.6),('cursor',1.8),('click',2.1)]:add('workflow.prompt.'+event,act,origin+(cue['prompt']+offset)*fps)
+            if name=='compare':add('compare.highlight.settled',act,origin+cue['after']*fps+15)
+            if name=='value':
+                for i in range(2):add(f'value.card{i}.start',act,origin+i*6);add(f'value.card{i}.settled',act,origin+i*6+16)
+            if name=='difference':
+                for i in range(len(scene['labels'])):add('difference.row'+str(i),act,origin+(.35+i*.65)*fps)
+            if name=='course':
+                for i in range(len(scene['labels'])):add('course.step'+str(i),act,origin+(.65+i*.36)*fps)
+            if name=='closing':add('closing.address-card',act,origin+.3*fps)
+    return result
+
+
+def bundle_inputs(data):
+    return {'public':{p.name:sha(p) for p in sorted((Path(data)/'public').iterdir()) if p.is_file()},'sources':source_identity()}
+
+
+def bundle_files(data):
+    return {p.relative_to(Path(data)/'bundle').as_posix():sha(p) for p in sorted((Path(data)/'bundle').rglob('*')) if p.is_file()}
+
+
+def identity(data):
+    result={str(ROOT/name):digest for name,digest in source_identity().items()}
+    for path in [Path(data)/'preparation.json',Path(data)/'production.json',Path(data)/'bundle-binding.json',*(Path(data)/'public').iterdir()]:
+        if path.is_file():result[str(path.resolve())]=sha(path)
+    result.update({str((Path(data)/'bundle'/name).resolve()):digest for name,digest in bundle_files(data).items()})
+    result.update({str(Path(path).resolve()):sha(path) for path in runtime(data).values()})
+    return result
+
+
+def critical_frames(episode):
+    total=episode['durationFrames'];fps=episode['fps'];frames={0,min(12,total-1),total-1}
+    for stage in episode['stages']:frames.update([stage['from'],max(0,stage['from']-1),min(stage['to']-1,stage['from']+fps),stage['to']-1])
+    for window in episode['actions'].values():frames.update([window['from'],window['to']-1])
+    for row in resolve_events(episode):frames.add(row['frame'])
+    for clip in episode['presenters']:frames.update([max(0,clip['from']-1),clip['from'],clip['to']-1,min(total-1,clip['to'])])
+    return sorted(f for f in frames if 0<=f<total)
+
+
+def admit(workspace,data,*,phase='frames'):
+    require(Path(workspace).resolve()==ROOT,'使用本checkout所属统一队列')
+    data=Path(data).resolve();require(data.is_relative_to(ROOT/'.local'),'本期准备目录需在本checkout私有.local')
+    require(phase in {'frames','render'},'本入口不执行付费或未知阶段')
+    episode,_,_=validate(data)
+    from backlot.motion_replay import prepare
+    prepared=prepare(episode['template_id'],VERSION,{'data':str(data)},workspace=ROOT)
+    require(prepared['status']=='prepared','本期公共复刻准备尚未完成')
+    spec=read(data/'production.json')
+    value={'contract':CONTRACT,'template_id':episode['template_id'],'template_version':VERSION,'data':str(data),'phase':phase,
+        'project_id':spec['project_id'],'title':spec['title'],'action_ids':actions(episode['template_id']),
+        'source_identity':source_identity(),'input_identity':{n:sha(data/n) for n in ['preparation.json','production.json','public/episode.json']},
+        'runtime_identity':{str(Path(p).resolve()):sha(p) for p in runtime(data).values()},'contract_preparation':prepared}
+    value['render_id']=phase+'-'+hashlib.sha256(json.dumps(value,sort_keys=True,ensure_ascii=False).encode()).hexdigest()[:16]
+    return value
+
+
+def run(queue,job):
+    request=job['frozen_request'];require(request['contract']==CONTRACT and request['template_version']==VERSION,'未知精确生产合同')
+    require(request['template_id'] in SPECS and request['action_ids']==actions(request['template_id']),'动作选择与执行器不符')
+    data=Path(request['data'])
+    for name,digest in request['source_identity'].items():require(sha(ROOT/name)==digest,'本期执行源码变化；保留原任务')
+    for name,digest in request['input_identity'].items():require(sha(data/name)==digest,'本期冻结输入变化')
+    for name,digest in request['runtime_identity'].items():require(sha(name)==digest,'本期运行时字节变化')
+    episode,manifest,probes=validate(data);rt=runtime(data);fps,width,height,_=SPECS[episode['template_id']]
+    project=Path(queue.projects_root)/job['project_id'];out=project/'renders'/request['render_id'];out.mkdir(parents=True,exist_ok=True)
+    if not (data/'bundle/index.html').exists():
+        with (out/'bundle.log').open('w',encoding='utf-8') as stream:
+            subprocess.run([rt['node'],str(TEMPLATE/'render.cjs'),'bundle',str(data)],check=True,stdout=stream,stderr=subprocess.STDOUT,timeout=300,creationflags=NO_WINDOW)
+        write(data/'bundle-binding.json',{'inputs':bundle_inputs(data),'files':bundle_files(data)})
+    binding=read(data/'bundle-binding.json');require(binding['inputs']==bundle_inputs(data) and binding['files']==bundle_files(data),'bundle与本期源码/输入不一致')
+    current=identity(data);phase=request['phase'];frames=critical_frames(episode)
+    if phase=='render':
+        review=read(data/'design-review.json');require(review.get('status')=='pass' and review['identity']==current and review['images'],'完整导出须实际看过本期同源关键帧')
+        for image in review['images']:require(sha(image['path'])==image['sha256'],'已看帧图片变化')
+    target=out/'frames' if phase=='frames' else out/'silent.mp4'
+    with (out/'render.log').open('w',encoding='utf-8') as stream:
+        subprocess.run([rt['node'],str(TEMPLATE/'render.cjs'),phase,str(data),str(target),rt['browser'],','.join(map(str,frames))],check=True,stdout=stream,stderr=subprocess.STDOUT,timeout=10800,creationflags=NO_WINDOW)
+    receipt={'contract':CONTRACT,'template_id':episode['template_id'],'version':VERSION,'queue_job_id':job['job_id'],'phase':phase,
+        'executed_action_ids':list(episode['actions']),'resolved_actions':episode['actions'],'internal_events':resolve_events(episode),
+        'stages':episode['stages'],'render_props_sha256':sha(data/'public/episode.json'),'manifest_sha256':sha(data/'preparation.json'),
+        'registered_preparation':request['contract_preparation'],'source_identity':request['source_identity'],'duration_frames':episode['durationFrames'],
+        'fps':fps,'narration_sha256':read(data/'reuse-source.json')['narration']['sha256'],'derivation_sha256':sha(TEMPLATE/'derivation.json')}
+    write(out/'contract-consumption.json',receipt)
+    if phase=='frames':
+        images=[{'frame':f,'path':str(target/(str(f).zfill(5)+'.png')),'sha256':sha(target/(str(f).zfill(5)+'.png'))} for f in frames]
+        write(data/'latest-frame-job.json',{'job_id':job['job_id'],'identity':current,'images':images,'contract_receipt':str(out/'contract-consumption.json')})
+        return {'status':'completed','stage':'原样式语义关键帧已生成，待实际审阅','result':{'frames':len(images),'preview_dir':str(target),'contract_receipt':str(out/'contract-consumption.json')}}
+    final=out/'full-video.mp4';seconds=episode['durationFrames']/fps
+    subprocess.run([rt['ffmpeg'],'-nostdin','-v','error','-y','-i',str(target),'-i',str(data/'public/master.wav'),'-map','0:v:0','-map','1:a:0','-t',str(seconds),'-c:v','copy','-c:a','aac','-b:a','192k','-movflags','+faststart',str(final)],check=True,capture_output=True,timeout=180,creationflags=NO_WINDOW)
+    result=probe(final);video=next(s for s in result['streams'] if s['codec_type']=='video');audio=next(s for s in result['streams'] if s['codec_type']=='audio')
+    require((video['width'],video['height'])==(width,height) and int(video['nb_frames'])==episode['durationFrames'] and int(video['bit_rate'])>=20000000,'高清尺寸/完整帧数/视频流20Mbps不符')
+    subprocess.run([rt['ffmpeg'],'-nostdin','-v','error','-xerror','-i',str(final),'-f','null','-'],check=True,capture_output=True,timeout=300,creationflags=NO_WINDOW)
+    qa={'status':'technical_pass_encoded_visual_audio_pending','video':str(final),'sha256':sha(final),'probe':result,'full_decode':'pass','full_text_covered':True,
+        'continuous_device_listen':'not_performed','source_narration_sha256':receipt['narration_sha256'],'new_paid_calls':0,'contract_receipt':str(out/'contract-consumption.json')}
+    write(out/'quality.json',qa)
+    from backlot.work_catalog import WorkCatalog
+    work=WorkCatalog(queue.projects_root).register(job['project_id'],final,work_key='full-numbered-motion',mode='manual',event_id=job['job_id'],quality_passed=False,
+        title=episode['title'],actor='numbered-full-production',summary='完整新契约高清有声；编码代表帧与设备听感分项待验，未发布',ffprobe=rt['ffprobe'])
+    delivery={'output_video':str(final),'queue_job_id':job['job_id'],'project_id':job['project_id'],'work_id':work['work_id'],'qa_report':str(out/'quality.json'),'contract_receipt':str(out/'contract-consumption.json')}
+    write(data/'render-result.json',delivery)
+    return {'status':'completed','stage':'完整原样式高清有声视频已生成','result':{'output_path':str(final),'work_id':work['work_id'],'qa_report':str(out/'quality.json')}}

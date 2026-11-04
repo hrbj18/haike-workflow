@@ -1,0 +1,13 @@
+{
+  "title": "AI Chat Input",
+  "collapsible": false,
+  "pages": [
+    "index",
+    "search-typing",
+    "prompt-zoom",
+    "prompt-send",
+    "answer-stream",
+    "agent-steps",
+    "answer-highlight"
+  ]
+}

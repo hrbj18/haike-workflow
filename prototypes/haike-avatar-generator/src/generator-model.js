@@ -17,6 +17,7 @@ export function avatarInputForSave(input, aiDefaults = {enabled: false}) {
   const isN1 = input.templateId === N1_TEMPLATE_ID;
   const investment = input.templateId === INVESTMENT_TEMPLATE_ID;
   return {soundMode: input.soundMode, modelId: input.modelId, voiceId: input.voiceId, rate: input.rate,
+    ...(input.motion_production?{motion_production:input.motion_production}:{}),
     subtitles: input.subtitles, ...(typeof input.network_materials_enabled==='boolean'?{network_materials_enabled:input.network_materials_enabled}:{}), ai: isN1 ? {...aiDefaults, ...input.ai, enabled: false} : input.ai || aiDefaults,
     motion: isN1 || investment ? null : input.motion || null, ...(isN1 ? {n1: n1ForSave(input.n1)} : {}),
     ...(investment ? {investment: investmentForSave(input.investment)} : {}),

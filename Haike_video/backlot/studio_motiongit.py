@@ -415,8 +415,16 @@ def validate_parameters(package, workflow, parameters):
             for v in obj: check_refs(v)
     check_refs(schema)
     validator = jsonschema.validators.validator_for(schema)(schema)
-    errors = sorted(validator.iter_errors(parameters), key=lambda e: str(list(e.path)))
+    native_parameters = parameters
+    if workflow == 'motion-kit' and 'paperSupport' in parameters:
+        require(package.get('template_id') == 'template-02-expanded'
+                and package.get('version') == '2.7.21-alpha.5', '此精确原包尚未验证纸感证据层')
+        native_parameters = {k: v for k, v in parameters.items() if k != 'paperSupport'}
+    errors = sorted(validator.iter_errors(native_parameters), key=lambda e: str(list(e.path)))
     require(not errors, '参数不符合模板契约：' + ('/'.join(map(str, errors[0].path)) + ' ' + errors[0].message[:350] if errors else ''))
+    if 'paperSupport' in parameters:
+        from backlot.paper_evidence import validate
+        validate(parameters)
     if workflow in {'poster-kit', 'motion-kit'}:
         timeline = parameters['timeline'] if workflow == 'motion-kit' else parameters
         controls = package['workflows'][workflow]['controls']

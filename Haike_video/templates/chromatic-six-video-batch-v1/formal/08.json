@@ -1,0 +1,38 @@
+{
+  "schema": "haike.video-template-release-profile/1",
+  "template_id": "chromatic-08",
+  "template_version": "1.1.0",
+  "status": "formal-design-approved",
+  "runbook": "../FORMAL.md",
+  "release": "../release.json",
+  "extends": {
+    "spec": "../window-b/template-08.spec.json",
+    "sha256": "67ff885647c36c9d37887bd2e6600ef365e0642da31ddbc20d8fe8dc9563820f",
+    "scope": "inherit visual geometry/slots/motion only; historical low silent validation stays historical"
+  },
+  "render_profile": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "layout_width": 720,
+    "layout_height": 1280,
+    "layout_scale": 1.5,
+    "silent": false,
+    "audio_required": true,
+    "video_bitrate_min_bps": 20000000,
+    "audio_sample_rate": 48000,
+    "audio_codec": "aac",
+    "pixel_format": "yuv420p",
+    "source_policy": "HD originals, same source ranges and focus; never upscale low preview proxies as restored HD",
+    "narration": "continuous complete approved narration; actual ASR clock",
+    "material_audio": "muted unless explicitly selected in sound plan",
+    "presenter_audio": "muted when narration master is used; same voice clock",
+    "bgm": "audible under clear narration per docs/VIDEO_QUALITY.md",
+    "duration_policy": "24s baseline; new content or duration requires actual-audio re-timing"
+  },
+  "validation": {
+    "design": "user-approved",
+    "configuration": "requires verify_formal.py",
+    "hd_audio_output": "not_rendered_by_user_instruction"
+  }
+}

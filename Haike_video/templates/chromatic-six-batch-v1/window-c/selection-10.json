@@ -1,0 +1,182 @@
+{
+  "schema": "haike.motion-selection/1",
+  "templateId": "chromatic-six-10",
+  "version": "1.0.0-candidate.2",
+  "revision": "2026-11-03.window-c.2",
+  "runtime": "haike-remotion",
+  "durationInFrames": 720,
+  "fps": 30,
+  "minReadingFrames": 36,
+  "avatarRole": "supporting-window",
+  "palette": {
+    "paper": "#F5F4E8",
+    "ink": "#151512",
+    "accent": "#E3FF3B"
+  },
+  "scenes": [
+    {
+      "id": "impact",
+      "from": 0,
+      "to": 150,
+      "stableFrom": 76,
+      "purpose": "建立真实现场印象",
+      "subject": "一次冲击标题与现场照片",
+      "handoff": "标题整句同拍，角框慢停；照片34–58帧横向开幅，76帧后阅读；人物首场小窗。",
+      "selections": [
+        {
+          "id": "talkcraft:impact-open-title",
+          "mode": "adapt",
+          "source_sha256": "127581f5a1cdccfbe9e332d271beb2ccb8168c29196c7a8533b0b968929e0084",
+          "reference_sha256": "3f52db9b74b9a6b4777a53ba0a877afe725b175dc1c5f83ff70880dfbb9be05d",
+          "read_completed_at": "2026-11-03T18:12:47.952084+08:00",
+          "implementation": "Haike_video/templates/chromatic-six-batch-v1/window-c/Scene.tsx",
+          "reason": "建立真实现场印象",
+          "changes": "保留整句1.08→1、对角框同起慢停、末词延3帧补充冲击；去掉点阵避免照片旁的装饰。竖屏自有实现，未复制或导入私有源码。",
+          "verification": "标题整句同拍，角框慢停；照片34–58帧横向开幅，76帧后阅读；人物首场小窗。 阅读全片76–149帧。",
+          "source": "talkcraft://template/cards/impact-open-title.tsx",
+          "reference": "talkcraft://references/cards/impact-open-title.md"
+        }
+      ],
+      "alternatives": [
+        {
+          "id": "talkcraft:lead-word-zoom-assemble",
+          "reason": "开场需要一句完整邀请，首词补句留给体验观点。"
+        }
+      ],
+      "phases": {
+        "establish": "标题整句同拍，角框慢停；照片34–58帧横向开幅，76帧后阅读；人物首场小窗。",
+        "emphasize": "一次冲击标题与现场照片",
+        "handoff": "标题整句同拍，角框慢停；照片34–58帧横向开幅，76帧后阅读；人物首场小窗。",
+        "read": {
+          "from": 76,
+          "to": 150,
+          "frames": 74
+        }
+      },
+      "label": "建立真实现场印象"
+    },
+    {
+      "id": "relay",
+      "from": 150,
+      "to": 438,
+      "stableFrom": 375,
+      "purpose": "用四项体验逐一对照现场证据",
+      "subject": "水平胶片与原位动词",
+      "handoff": "四张照片随看见/参与/交流/发现接力；切点局部66/138/210，每次14帧横移594px，其余零位移；旧词6帧先出，新词7帧后进。",
+      "selections": [
+        {
+          "id": "talkcraft:word-relay-filmstrip",
+          "mode": "adapt",
+          "source_sha256": "07ce275988732be32ddddc9e9d6f38221201b2a369b469553bf112874f462635",
+          "reference_sha256": "b2cf856686a6a9ca528915d869959b9b499bf59b0abe90fca3f5721c13696cc3",
+          "read_completed_at": "2026-11-03T18:12:47.952084+08:00",
+          "implementation": "Haike_video/templates/chromatic-six-batch-v1/window-c/Scene.tsx",
+          "reason": "用四项体验逐一对照现场证据",
+          "changes": "横屏纵向胶片转置为竖屏横向胶片；当前照片570×430、跨度594；图在上词在下，同一画心x360。非衬线中文字体匹配本次brutal；保留深浅边框、非连续步进、先退后进与末词填色。",
+          "verification": "四张照片随看见/参与/交流/发现接力；切点局部66/138/210，每次14帧横移594px，其余零位移；旧词6帧先出，新词7帧后进。 阅读全片375–437帧。",
+          "source": "talkcraft://template/cards/word-relay-filmstrip.tsx",
+          "reference": "talkcraft://references/cards/word-relay-filmstrip.md"
+        }
+      ],
+      "alternatives": [
+        {
+          "id": "talkcraft:impact-open-title",
+          "reason": "每个证据重复砸标题会损失照片的阅读停留。"
+        }
+      ],
+      "phases": {
+        "establish": "四张照片随看见/参与/交流/发现接力；切点局部66/138/210，每次14帧横移594px，其余零位移；旧词6帧先出，新词7帧后进。",
+        "emphasize": "水平胶片与原位动词",
+        "handoff": "四张照片随看见/参与/交流/发现接力；切点局部66/138/210，每次14帧横移594px，其余零位移；旧词6帧先出，新词7帧后进。",
+        "read": {
+          "from": 375,
+          "to": 438,
+          "frames": 63
+        }
+      },
+      "label": "用四项体验逐一对照现场证据"
+    },
+    {
+      "id": "assemble",
+      "from": 438,
+      "to": 570,
+      "stableFrom": 524,
+      "purpose": "把亲自参与提炼为理解",
+      "subject": "体验首词、补句和现场近图",
+      "handoff": "首词先2.3→2.43，再同时缩回与左滑，后词错4帧推入；同窗上移与副行；照片65–73局部帧进入，524全片帧起阅读。",
+      "selections": [
+        {
+          "id": "talkcraft:lead-word-zoom-assemble",
+          "mode": "adapt",
+          "source_sha256": "fc3c59b8a4834f436da9143b7677d1223e5ee85cd1d3dfa752594170b120f84e",
+          "reference_sha256": "521c246b1e8eefa89b2c1f33237eacb39427f36a58094eaf027386c1ef40d8bb",
+          "read_completed_at": "2026-11-03T18:12:47.952084+08:00",
+          "implementation": "Haike_video/templates/chromatic-six-batch-v1/window-c/Scene.tsx",
+          "reason": "把亲自参与提炼为理解",
+          "changes": "首词为体验2字，首词中心支点54px；缩回12帧/左滑24帧共用曲线，后词2帧显现并12帧推入；不把同一标题降为页眉，照片为独立证据层。",
+          "verification": "首词先2.3→2.43，再同时缩回与左滑，后词错4帧推入；同窗上移与副行；照片65–73局部帧进入，524全片帧起阅读。 阅读全片524–569帧。",
+          "source": "talkcraft://template/cards/lead-word-zoom-assemble.tsx",
+          "reference": "talkcraft://references/cards/lead-word-zoom-assemble.md"
+        }
+      ],
+      "alternatives": [
+        {
+          "id": "talkcraft:word-relay-filmstrip",
+          "reason": "此处强调体验与发现的观点关系，继续换四图会变成机械枚举。"
+        }
+      ],
+      "phases": {
+        "establish": "首词先2.3→2.43，再同时缩回与左滑，后词错4帧推入；同窗上移与副行；照片65–73局部帧进入，524全片帧起阅读。",
+        "emphasize": "体验首词、补句和现场近图",
+        "handoff": "首词先2.3→2.43，再同时缩回与左滑，后词错4帧推入；同窗上移与副行；照片65–73局部帧进入，524全片帧起阅读。",
+        "read": {
+          "from": 524,
+          "to": 570,
+          "frames": 46
+        }
+      },
+      "label": "把亲自参与提炼为理解"
+    },
+    {
+      "id": "register",
+      "from": 570,
+      "to": 720,
+      "stableFrom": 633,
+      "purpose": "收束看见、参与、理解",
+      "subject": "三幅保留身份的证据注册表",
+      "handoff": "三图从本场首帧并列；标题再用一次轻冲击，末词落地填柠黄；三项标签依序确认，633帧后静置。人物回到同源19秒时点。",
+      "selections": [
+        {
+          "id": "talkcraft:impact-open-title",
+          "mode": "adapt",
+          "source_sha256": "127581f5a1cdccfbe9e332d271beb2ccb8168c29196c7a8533b0b968929e0084",
+          "reference_sha256": "3f52db9b74b9a6b4777a53ba0a877afe725b175dc1c5f83ff70880dfbb9be05d",
+          "read_completed_at": "2026-11-03T18:12:47.952084+08:00",
+          "implementation": "Haike_video/templates/chromatic-six-batch-v1/window-c/Scene.tsx",
+          "reason": "收束看见、参与、理解",
+          "changes": "第二次且最后一次冲击用于收束；照片三幅整场不汇聚、不推拉、不做网格选大；标题固定左基线，末词延3帧后的5帧冲击；删除原试版的缩放回看以与11拉镜分离。",
+          "verification": "三图从本场首帧并列；标题再用一次轻冲击，末词落地填柠黄；三项标签依序确认，633帧后静置。人物回到同源19秒时点。 阅读全片633–719帧。",
+          "source": "talkcraft://template/cards/impact-open-title.tsx",
+          "reference": "talkcraft://references/cards/impact-open-title.md"
+        }
+      ],
+      "alternatives": [
+        {
+          "id": "talkcraft:lead-word-zoom-assemble",
+          "reason": "片尾不是再次立一个主词；让完整收束句一次站定。"
+        }
+      ],
+      "phases": {
+        "establish": "三图从本场首帧并列；标题再用一次轻冲击，末词落地填柠黄；三项标签依序确认，633帧后静置。人物回到同源19秒时点。",
+        "emphasize": "三幅保留身份的证据注册表",
+        "handoff": "三图从本场首帧并列；标题再用一次轻冲击，末词落地填柠黄；三项标签依序确认，633帧后静置。人物回到同源19秒时点。",
+        "read": {
+          "from": 633,
+          "to": 720,
+          "frames": 87
+        }
+      },
+      "label": "收束看见、参与、理解"
+    }
+  ]
+}

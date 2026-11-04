@@ -1,0 +1,130 @@
+{
+  "schema": "haike.motion-selection/1",
+  "templateId": "chromatic-07",
+  "version": "1.1.0-candidate.1",
+  "revision": "2026-11-03.video-window-a.1",
+  "runtime": "haike-remotion",
+  "durationInFrames": 720,
+  "fps": 30,
+  "minReadingFrames": 36,
+  "avatarRole": "supporting-window",
+  "palette": {
+    "bg": "#FFF4DA",
+    "ink": "#245E37",
+    "accent": "#F4AFCB"
+  },
+  "scenes": [
+    {
+      "id": "fan-collect",
+      "from": 0,
+      "to": 240,
+      "stableFrom": 110,
+      "label": "照片扇开",
+      "purpose": "将一叠视频展开为三个可认瞬间",
+      "subject": "三张真实视频及先看/再问/试试标签",
+      "handoff": "视频微错位叠放→弧形扇开→停30帧→等宽铺平；接下一场拍照",
+      "selections": [
+        {
+          "id": "talkcraft:stack-fan-out",
+          "mode": "adapt",
+          "source_sha256": "f4eafd9935f0ad3c14713d3036967927a389c3820a8a4467063b0048d1370146",
+          "implementation": "Haike_video/templates/chromatic-six-video-batch-v1/window-a/Scene.tsx",
+          "reason": "将一叠照片展开为三个可认瞬间；三张真实照片及先看/再问/试试标签",
+          "changes": "三张竖屏照片、半径500、±18度扇角；硬阴影厚白边；铺平缩至.78并旋转归零，不导入横屏固定五卡；所有主格为原速Video，按preparation.slots源范围，不循环/定格补长；圈注按真实源165/210/255/300/329重测目标并在同一cover坐标系随内容移动",
+          "verification": "局部28–52扇开，52–82静置，82–104铺平；110–239阅读"
+        }
+      ],
+      "alternatives": [
+        {
+          "id": "talkcraft:shape-wipe-transition",
+          "reason": "整屏扫屏会破坏实体贴纸的位置接力"
+        }
+      ],
+      "readingBudgetFrames": 130
+    },
+    {
+      "id": "pop-evidence",
+      "from": 240,
+      "to": 420,
+      "stableFrom": 280,
+      "label": "拍下快乐",
+      "purpose": "一张张收下现场体验",
+      "subject": "三张压角叠放的白边视频",
+      "handoff": "4帧间隔、9帧back过冲落地；同屏保留视频，交单张细看",
+      "selections": [
+        {
+          "id": "talkcraft:media-pop-in",
+          "mode": "adapt",
+          "source_sha256": "7156764244dd7ac4840e19b12c15ccbe72f4c38e4d5d9b168882a9f577494552",
+          "implementation": "Haike_video/templates/chromatic-six-video-batch-v1/window-a/Scene.tsx",
+          "reason": "一张张收下现场体验；三张压角叠放的白边照片",
+          "changes": "用真实照片替换上游假截图；0.8→1、back(1.7)、旋转收正；厚白边和硬偏移阴影；无呼吸以保阅读；所有主格为原速Video，按preparation.slots源范围，不循环/定格补长；圈注按真实源165/210/255/300/329重测目标并在同一cover坐标系随内容移动",
+          "verification": "局部12/16/20入场，各9帧落定，后静置；40–179阅读"
+        }
+      ],
+      "alternatives": [
+        {
+          "id": "talkcraft:shape-wipe-transition",
+          "reason": "整屏扫屏会破坏实体贴纸的位置接力"
+        }
+      ],
+      "readingBudgetFrames": 140
+    },
+    {
+      "id": "mark-attention",
+      "from": 420,
+      "to": 585,
+      "stableFrom": 510,
+      "label": "圈出专注",
+      "purpose": "停在参与者的专注表情上",
+      "subject": "互动视频与被圈注的参与者区域",
+      "handoff": "视频先静置，圈后箭头串行描画；标注落定保持",
+      "selections": [
+        {
+          "id": "talkcraft:scribble-annotation",
+          "mode": "adapt",
+          "source_sha256": "373f659948a7c7997590afa935a26a635fdbf195195633ed628992f536305786",
+          "implementation": "Haike_video/templates/chromatic-six-video-batch-v1/window-a/Scene.tsx",
+          "reason": "停在参与者的专注表情上；互动照片与被圈注的参与者区域",
+          "changes": "按本窗照片cover裁切后的目标重新计算路径；笔画9px、圆头、pathLength归一；不用上游商品页死坐标，不定格抖动；所有主格为原速Video，按preparation.slots源范围，不循环/定格补长；圈注按真实源165/210/255/300/329重测目标并在同一cover坐标系随内容移动",
+          "verification": "局部20–37圈注，65–77箭杆，77–82箭头；90–164阅读"
+        }
+      ],
+      "alternatives": [
+        {
+          "id": "talkcraft:shape-wipe-transition",
+          "reason": "整屏扫屏会破坏实体贴纸的位置接力"
+        }
+      ],
+      "readingBudgetFrames": 75
+    },
+    {
+      "id": "stick-memory",
+      "from": 585,
+      "to": 720,
+      "stableFrom": 630,
+      "label": "收藏发现",
+      "purpose": "将发现作为一页收藏带回生活",
+      "subject": "两张错位压角视频和收藏标签",
+      "handoff": "两张视频错峰落地，标签再贴上，结语在动作结束后出现",
+      "selections": [
+        {
+          "id": "talkcraft:media-pop-in",
+          "mode": "adapt",
+          "source_sha256": "7156764244dd7ac4840e19b12c15ccbe72f4c38e4d5d9b168882a9f577494552",
+          "implementation": "Haike_video/templates/chromatic-six-video-batch-v1/window-a/Scene.tsx",
+          "reason": "将发现作为一页收藏带回生活；两张错位压角照片和收藏标签",
+          "changes": "两张照片叠放，厚白边硬阴影；标签是事实结语；落地后静置，无汇聚/网格主图重排；所有主格为原速Video，按preparation.slots源范围，不循环/定格补长；圈注按真实源165/210/255/300/329重测目标并在同一cover坐标系随内容移动",
+          "verification": "局部4–13/9–18照片落地，20–29标签贴上，27–41结语；45–134阅读"
+        }
+      ],
+      "alternatives": [
+        {
+          "id": "talkcraft:shape-wipe-transition",
+          "reason": "整屏扫屏会破坏实体贴纸的位置接力"
+        }
+      ],
+      "readingBudgetFrames": 90
+    }
+  ]
+}

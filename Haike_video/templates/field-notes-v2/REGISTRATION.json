@@ -1,0 +1,20 @@
+{
+  "schema": "haike.template-registration/1",
+  "template_id": "field-notes-v2",
+  "number": 5,
+  "name": "动效模板5 · 青珊瑚线索接力",
+  "version": "2.0.0",
+  "date": "2026-11-03",
+  "source": "本聊天用户明确要求",
+  "quote": "前面那个模板记录下来成正式动效模板并给个编号",
+  "approved_visual_source": {
+    "template_id": "field-notes-v2-candidate",
+    "version": "2.0.0-candidate.1",
+    "approval": "APPROVAL.json",
+    "scene_sha256": "032e216c2bb2e5ebecd331cc7787b590d1319ae94051150e42b8b5b5fee851c8"
+  },
+  "change_scope": "只调整正式身份、冻结与构建门禁；selection除templateId/version外完全一致，Scene视觉代码未改",
+  "scope": "用户认可的24秒720×1280/30fps本机低清静音样式；新输入、真实口型/有声、高清、生产、平台、异机另验",
+  "avatar_role": "supporting-window",
+  "previous_template_preserved": "field-notes-v1 / 动效模板4 v1.0.0"
+}

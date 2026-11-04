@@ -1,0 +1,17 @@
+{
+  "schema": "haike.motion-public-dark-remotion-recipe/2",
+  "engine": "dark-remotion/2",
+  "contract": "haike.motion-public-production/2",
+  "pack_key": "owned-dark-cobalt",
+  "reference_id": "template-03-native",
+  "output": {
+    "width": 1440,
+    "height": 1800,
+    "fps": 30
+  },
+  "not_a_complete_production_input": true,
+  "status": "candidate-static-only-media-pending",
+  "production_label_behavior": "Non-reference timeline counter and S08 frame prefix hidden with preserved width; reference labels unchanged",
+  "preview_scope": "full-actions/1",
+  "recipe_version": "2-development"
+}

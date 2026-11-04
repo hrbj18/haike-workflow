@@ -1,0 +1,3978 @@
+{
+  "schema": "haike.motion-replay-registry/1",
+  "templates": [
+    {
+      "template_id": "kinetic-field-v1",
+      "version": "1.0.0",
+      "gallery_id": "kinetic-field-v1",
+      "family": "numbered",
+      "number": 2,
+      "renderer": {
+        "kind": "project",
+        "entrypoint": "Haike_video/scripts/kinetic_field_preview.py",
+        "adapter": "backlot.motion_replay_numbered_02_05:prepare",
+        "execution": "supported",
+        "scope": "只准备；执行能力以queue_route和blockers为准"
+      },
+      "sources": [
+        {
+          "path": "Haike_video/templates/kinetic-field-v1/release.json",
+          "sha256": "d95938a2cd213605caa68884a26249e3a514e5f050d3e9880f88e5f9878ab3f7"
+        },
+        {
+          "path": "Haike_video/templates/kinetic-field-v1/index.tsx",
+          "sha256": "24783cf9059804f2a9c89d7d2828dfa704896cc5c81e4a175e466c280a9ae1c9"
+        },
+        {
+          "path": "Haike_video/templates/kinetic-field-v1/layout.json",
+          "sha256": "66f37fe7c3ef3f15e8625e228f8d9fe6a1031b66c9f5b0ff8058ef5959bac3db"
+        },
+        {
+          "path": "Haike_video/templates/kinetic-field-v1/content.json",
+          "sha256": "8c2b211e065e4e8d4b90722a0d761766aedc2475afd55c9b8be3bdb05549e91a"
+        },
+        {
+          "path": "Haike_video/templates/kinetic-field-v1/input-contract.json",
+          "sha256": "4cfd829da95226b2b61fa0325fd0823f72227906675b3671942933cc0ae42b90"
+        },
+        {
+          "path": "Haike_video/templates/kinetic-field-v1/prepare_inputs.py",
+          "sha256": "7d7616b193b8762b0e551f7dc20d029388526773551ad0415fea4dea908550f1"
+        },
+        {
+          "path": "Haike_video/templates/kinetic-field-v1/render.cjs",
+          "sha256": "fe302af5c2d9a83e94873a59b66cc73d13fda2493f70b4643daf4b0aae24bbb6"
+        },
+        {
+          "path": "Haike_video/backlot/motion_replay_numbered_02_05.py",
+          "sha256": "15702745b206cacfb83f20b93bb02c469dceda9a9fcb6370ad45b24d6167c5e4"
+        }
+      ],
+      "objects": [
+        {
+          "id": "paired-footage",
+          "role": "双实拍主体",
+          "authority": {
+            "path": "Haike_video/templates/kinetic-field-v1/index.tsx",
+            "scope": "Duo的分割遮罩/几何/取景"
+          }
+        },
+        {
+          "id": "detail",
+          "role": "互动与放大窗",
+          "authority": {
+            "path": "Haike_video/templates/kinetic-field-v1/index.tsx",
+            "scope": "Hands同源视频、虹膜和箭头"
+          }
+        },
+        {
+          "id": "photos",
+          "role": "现场照片",
+          "authority": {
+            "path": "Haike_video/templates/kinetic-field-v1/index.tsx",
+            "scope": "Collage与Invitation"
+          }
+        },
+        {
+          "id": "location",
+          "role": "门店和人物",
+          "authority": {
+            "path": "Haike_video/templates/kinetic-field-v1/index.tsx",
+            "scope": "Location源2秒起取与8秒同源人物窗"
+          }
+        },
+        {
+          "id": "invitation",
+          "role": "数字人邀请",
+          "authority": {
+            "path": "Haike_video/templates/kinetic-field-v1/index.tsx",
+            "scope": "Invitation原人物/标题/印章"
+          }
+        },
+        {
+          "id": "shell",
+          "role": "品牌与标签",
+          "authority": {
+            "path": "Haike_video/templates/kinetic-field-v1/index.tsx",
+            "scope": "Shell与本期content字段"
+          }
+        },
+        {
+          "id": "sound",
+          "role": "完整16秒音轨",
+          "authority": {
+            "path": "Haike_video/templates/kinetic-field-v1/index.tsx",
+            "scope": "Audio sample.wav gain=layout.audio.gain"
+          }
+        }
+      ],
+      "actions": [
+        {
+          "id": "haike.kinetic-field-v1.angled-panel-settle",
+          "version": "1.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/kinetic-field-v1/index.tsx",
+            "symbol": "Duo",
+            "dispatch": "原组件真实调用；不使用selection/data-effect作为执行器"
+          },
+          "objects": [
+            "paired-footage"
+          ],
+          "parameters": {
+            "source_locked": "index.tsx的秒级公式/曲线/几何；layout.primary_actions仅为索引",
+            "content": "episode.content；input-contract.text_limits"
+          },
+          "phases": {
+            "entry": "0s触发",
+            "active": "0–0.5s",
+            "settled": "动作保持/背景持续行为取源码，最大至3.65s",
+            "exit": "3.65s父级卸载或全片结束"
+          }
+        },
+        {
+          "id": "haike.kinetic-field-v1.keyword-assemble",
+          "version": "1.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/kinetic-field-v1/index.tsx",
+            "symbol": "Duo",
+            "dispatch": "原组件真实调用；不使用selection/data-effect作为执行器"
+          },
+          "objects": [
+            "paired-footage"
+          ],
+          "parameters": {
+            "source_locked": "index.tsx的秒级公式/曲线/几何；layout.primary_actions仅为索引",
+            "content": "episode.content；input-contract.text_limits"
+          },
+          "phases": {
+            "entry": "0.65s触发",
+            "active": "0.65–1.5s",
+            "settled": "动作保持/背景持续行为取源码，最大至3.65s",
+            "exit": "3.65s父级卸载或全片结束"
+          }
+        },
+        {
+          "id": "haike.kinetic-field-v1.split-divider-morph",
+          "version": "1.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/kinetic-field-v1/index.tsx",
+            "symbol": "Duo",
+            "dispatch": "原组件真实调用；不使用selection/data-effect作为执行器"
+          },
+          "objects": [
+            "paired-footage"
+          ],
+          "parameters": {
+            "source_locked": "index.tsx的秒级公式/曲线/几何；layout.primary_actions仅为索引",
+            "content": "episode.content；input-contract.text_limits"
+          },
+          "phases": {
+            "entry": "1.5s触发",
+            "active": "1.5–2.15s",
+            "settled": "动作保持/背景持续行为取源码，最大至3.65s",
+            "exit": "3.65s父级卸载或全片结束"
+          }
+        },
+        {
+          "id": "haike.kinetic-field-v1.tape-reveal",
+          "version": "1.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/kinetic-field-v1/index.tsx",
+            "symbol": "Tape",
+            "dispatch": "原组件真实调用；不使用selection/data-effect作为执行器"
+          },
+          "objects": [
+            "paired-footage"
+          ],
+          "parameters": {
+            "source_locked": "index.tsx的秒级公式/曲线/几何；layout.primary_actions仅为索引",
+            "content": "episode.content；input-contract.text_limits"
+          },
+          "phases": {
+            "entry": "2.4s触发",
+            "active": "2.4–2.85s",
+            "settled": "动作保持/背景持续行为取源码，最大至3.65s",
+            "exit": "3.65s父级卸载或全片结束"
+          }
+        },
+        {
+          "id": "haike.kinetic-field-v1.footage-iris",
+          "version": "1.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/kinetic-field-v1/index.tsx",
+            "symbol": "Hands",
+            "dispatch": "原组件真实调用；不使用selection/data-effect作为执行器"
+          },
+          "objects": [
+            "detail"
+          ],
+          "parameters": {
+            "source_locked": "index.tsx的秒级公式/曲线/几何；layout.primary_actions仅为索引",
+            "content": "episode.content；input-contract.text_limits"
+          },
+          "phases": {
+            "entry": "3.2s触发",
+            "active": "3.2–3.65s",
+            "settled": "动作保持/背景持续行为取源码，最大至6.6s",
+            "exit": "6.6s父级卸载或全片结束"
+          }
+        },
+        {
+          "id": "haike.kinetic-field-v1.short-marker",
+          "version": "1.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/kinetic-field-v1/index.tsx",
+            "symbol": "Hands",
+            "dispatch": "原组件真实调用；不使用selection/data-effect作为执行器"
+          },
+          "objects": [
+            "detail"
+          ],
+          "parameters": {
+            "source_locked": "index.tsx的秒级公式/曲线/几何；layout.primary_actions仅为索引",
+            "content": "episode.content；input-contract.text_limits"
+          },
+          "phases": {
+            "entry": "3.8s触发",
+            "active": "3.8–4.25s",
+            "settled": "动作保持/背景持续行为取源码，最大至6.6s",
+            "exit": "6.6s父级卸载或全片结束"
+          }
+        },
+        {
+          "id": "haike.kinetic-field-v1.detail-loupe",
+          "version": "1.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/kinetic-field-v1/index.tsx",
+            "symbol": "Hands",
+            "dispatch": "原组件真实调用；不使用selection/data-effect作为执行器"
+          },
+          "objects": [
+            "detail"
+          ],
+          "parameters": {
+            "source_locked": "index.tsx的秒级公式/曲线/几何；layout.primary_actions仅为索引",
+            "content": "episode.content；input-contract.text_limits"
+          },
+          "phases": {
+            "entry": "4.6s触发",
+            "active": "4.6–5.25s",
+            "settled": "动作保持/背景持续行为取源码，最大至6.6s",
+            "exit": "6.6s父级卸载或全片结束"
+          }
+        },
+        {
+          "id": "haike.kinetic-field-v1.hand-drawn-arrow",
+          "version": "1.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/kinetic-field-v1/index.tsx",
+            "symbol": "Hands",
+            "dispatch": "原组件真实调用；不使用selection/data-effect作为执行器"
+          },
+          "objects": [
+            "detail"
+          ],
+          "parameters": {
+            "source_locked": "index.tsx的秒级公式/曲线/几何；layout.primary_actions仅为索引",
+            "content": "episode.content；input-contract.text_limits"
+          },
+          "phases": {
+            "entry": "5.6s触发",
+            "active": "5.6–6.05s",
+            "settled": "动作保持/背景持续行为取源码，最大至6.6s",
+            "exit": "6.6s父级卸载或全片结束"
+          }
+        },
+        {
+          "id": "haike.kinetic-field-v1.photo-cascade",
+          "version": "1.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/kinetic-field-v1/index.tsx",
+            "symbol": "Collage",
+            "dispatch": "原组件真实调用；不使用selection/data-effect作为执行器"
+          },
+          "objects": [
+            "photos"
+          ],
+          "parameters": {
+            "source_locked": "index.tsx的秒级公式/曲线/几何；layout.primary_actions仅为索引",
+            "content": "episode.content；input-contract.text_limits"
+          },
+          "phases": {
+            "entry": "6.76s触发",
+            "active": "6.76–7.32s",
+            "settled": "动作保持/背景持续行为取源码，最大至8.3s",
+            "exit": "8.3s父级卸载或全片结束"
+          }
+        },
+        {
+          "id": "haike.kinetic-field-v1.stack-to-location",
+          "version": "1.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/kinetic-field-v1/index.tsx",
+            "symbol": "Location",
+            "dispatch": "原组件真实调用；不使用selection/data-effect作为执行器"
+          },
+          "objects": [
+            "location"
+          ],
+          "parameters": {
+            "source_locked": "index.tsx的秒级公式/曲线/几何；layout.primary_actions仅为索引",
+            "content": "episode.content；input-contract.text_limits"
+          },
+          "phases": {
+            "entry": "7.4s触发",
+            "active": "7.4–8.3s",
+            "settled": "动作保持/背景持续行为取源码，最大至12s",
+            "exit": "12s父级卸载或全片结束"
+          }
+        },
+        {
+          "id": "haike.kinetic-field-v1.pin-pop",
+          "version": "1.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/kinetic-field-v1/index.tsx",
+            "symbol": "Location",
+            "dispatch": "原组件真实调用；不使用selection/data-effect作为执行器"
+          },
+          "objects": [
+            "location"
+          ],
+          "parameters": {
+            "source_locked": "index.tsx的秒级公式/曲线/几何；layout.primary_actions仅为索引",
+            "content": "episode.content；input-contract.text_limits"
+          },
+          "phases": {
+            "entry": "8.5s触发",
+            "active": "8.5–9.05s",
+            "settled": "动作保持/背景持续行为取源码，最大至12s",
+            "exit": "12s父级卸载或全片结束"
+          }
+        },
+        {
+          "id": "haike.kinetic-field-v1.floor-strip",
+          "version": "1.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/kinetic-field-v1/index.tsx",
+            "symbol": "Location",
+            "dispatch": "原组件真实调用；不使用selection/data-effect作为执行器"
+          },
+          "objects": [
+            "location"
+          ],
+          "parameters": {
+            "source_locked": "index.tsx的秒级公式/曲线/几何；layout.primary_actions仅为索引",
+            "content": "episode.content；input-contract.text_limits"
+          },
+          "phases": {
+            "entry": "9.3s触发",
+            "active": "9.3–9.85s",
+            "settled": "动作保持/背景持续行为取源码，最大至12s",
+            "exit": "12s父级卸载或全片结束"
+          }
+        },
+        {
+          "id": "haike.kinetic-field-v1.location-focus",
+          "version": "1.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/kinetic-field-v1/index.tsx",
+            "symbol": "Location",
+            "dispatch": "原组件真实调用；不使用selection/data-effect作为执行器"
+          },
+          "objects": [
+            "location"
+          ],
+          "parameters": {
+            "source_locked": "index.tsx的秒级公式/曲线/几何；layout.primary_actions仅为索引",
+            "content": "episode.content；input-contract.text_limits"
+          },
+          "phases": {
+            "entry": "10.7s触发",
+            "active": "10.7–11.2s",
+            "settled": "动作保持/背景持续行为取源码，最大至12s",
+            "exit": "12s父级卸载或全片结束"
+          }
+        },
+        {
+          "id": "haike.kinetic-field-v1.portrait-disc",
+          "version": "1.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/kinetic-field-v1/index.tsx",
+            "symbol": "Invitation",
+            "dispatch": "原组件真实调用；不使用selection/data-effect作为执行器"
+          },
+          "objects": [
+            "invitation"
+          ],
+          "parameters": {
+            "source_locked": "index.tsx的秒级公式/曲线/几何；layout.primary_actions仅为索引",
+            "content": "episode.content；input-contract.text_limits"
+          },
+          "phases": {
+            "entry": "12s触发",
+            "active": "12–12.55s",
+            "settled": "动作保持/背景持续行为取源码，最大至16s",
+            "exit": "16s父级卸载或全片结束"
+          }
+        },
+        {
+          "id": "haike.kinetic-field-v1.headline-assemble",
+          "version": "1.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/kinetic-field-v1/index.tsx",
+            "symbol": "Invitation/TextReveal",
+            "dispatch": "原组件真实调用；不使用selection/data-effect作为执行器"
+          },
+          "objects": [
+            "invitation"
+          ],
+          "parameters": {
+            "source_locked": "Invitation.Sequence from=round(12.7*24)=305；TextReveal实际intro3/hold3/recede5/assemble9/wordDelay2/wordStagger3/wordDuration6/wordFade默认2帧",
+            "content": "episode.content；input-contract.text_limits"
+          },
+          "phases": {
+            "entry": "全局305帧挂载TextReveal；不把layout.primary_actions的估计13.4s当精确落定点",
+            "active": "局部intro[0,3]、recede[3,8]、assemble[3,12]；后续词pushStart=3+2+(i-1)*3，持续6帧",
+            "settled": "动作保持/背景持续行为取源码，最大至16s",
+            "exit": "16s父级卸载或全片结束"
+          }
+        },
+        {
+          "id": "haike.kinetic-field-v1.photo-fan",
+          "version": "1.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/kinetic-field-v1/index.tsx",
+            "symbol": "Invitation",
+            "dispatch": "原组件真实调用；不使用selection/data-effect作为执行器"
+          },
+          "objects": [
+            "invitation"
+          ],
+          "parameters": {
+            "source_locked": "index.tsx的秒级公式/曲线/几何；layout.primary_actions仅为索引",
+            "content": "episode.content；input-contract.text_limits"
+          },
+          "phases": {
+            "entry": "13.65s触发",
+            "active": "13.65–14.2s",
+            "settled": "动作保持/背景持续行为取源码，最大至16s",
+            "exit": "16s父级卸载或全片结束"
+          }
+        },
+        {
+          "id": "haike.kinetic-field-v1.invitation-stamp",
+          "version": "1.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/kinetic-field-v1/index.tsx",
+            "symbol": "Invitation",
+            "dispatch": "原组件真实调用；不使用selection/data-effect作为执行器"
+          },
+          "objects": [
+            "invitation"
+          ],
+          "parameters": {
+            "source_locked": "index.tsx的秒级公式/曲线/几何；layout.primary_actions仅为索引",
+            "content": "episode.content；input-contract.text_limits"
+          },
+          "phases": {
+            "entry": "14.4s触发",
+            "active": "14.4–14.85s",
+            "settled": "动作保持/背景持续行为取源码，最大至16s",
+            "exit": "16s父级卸载或全片结束"
+          }
+        }
+      ],
+      "timeline": {
+        "mode": "source_locked",
+        "clock": {
+          "fps": 24,
+          "duration_seconds": 16,
+          "design_canvas": [
+            540,
+            960
+          ],
+          "frozen_renderer_scale": 0.5,
+          "encoded_size": [
+            270,
+            480
+          ]
+        },
+        "events": [
+          {
+            "id": "angled-panel-settle",
+            "action_id": "haike.kinetic-field-v1.angled-panel-settle",
+            "anchor": {
+              "absolute_seconds": 0
+            },
+            "window": {
+              "seconds": [
+                0,
+                0.5
+              ],
+              "endpoint": "源码条件与逐帧采样"
+            },
+            "reading": {
+              "until_seconds": 3.65,
+              "note": "保持期仍含源码定义的轻量运动；不改成静帧"
+            }
+          },
+          {
+            "id": "keyword-assemble",
+            "action_id": "haike.kinetic-field-v1.keyword-assemble",
+            "anchor": {
+              "absolute_seconds": 0.65
+            },
+            "window": {
+              "seconds": [
+                0.65,
+                1.5
+              ],
+              "endpoint": "源码条件与逐帧采样"
+            },
+            "reading": {
+              "until_seconds": 3.65,
+              "note": "保持期仍含源码定义的轻量运动；不改成静帧"
+            }
+          },
+          {
+            "id": "split-divider-morph",
+            "action_id": "haike.kinetic-field-v1.split-divider-morph",
+            "anchor": {
+              "absolute_seconds": 1.5
+            },
+            "window": {
+              "seconds": [
+                1.5,
+                2.15
+              ],
+              "endpoint": "源码条件与逐帧采样"
+            },
+            "reading": {
+              "until_seconds": 3.65,
+              "note": "保持期仍含源码定义的轻量运动；不改成静帧"
+            }
+          },
+          {
+            "id": "tape-reveal",
+            "action_id": "haike.kinetic-field-v1.tape-reveal",
+            "anchor": {
+              "absolute_seconds": 2.4
+            },
+            "window": {
+              "seconds": [
+                2.4,
+                2.85
+              ],
+              "endpoint": "源码条件与逐帧采样"
+            },
+            "reading": {
+              "until_seconds": 3.65,
+              "note": "保持期仍含源码定义的轻量运动；不改成静帧"
+            }
+          },
+          {
+            "id": "footage-iris",
+            "action_id": "haike.kinetic-field-v1.footage-iris",
+            "anchor": {
+              "absolute_seconds": 3.2
+            },
+            "window": {
+              "seconds": [
+                3.2,
+                3.65
+              ],
+              "endpoint": "源码条件与逐帧采样"
+            },
+            "reading": {
+              "until_seconds": 6.6,
+              "note": "保持期仍含源码定义的轻量运动；不改成静帧"
+            }
+          },
+          {
+            "id": "short-marker",
+            "action_id": "haike.kinetic-field-v1.short-marker",
+            "anchor": {
+              "absolute_seconds": 3.8
+            },
+            "window": {
+              "seconds": [
+                3.8,
+                4.25
+              ],
+              "endpoint": "源码条件与逐帧采样"
+            },
+            "reading": {
+              "until_seconds": 6.6,
+              "note": "保持期仍含源码定义的轻量运动；不改成静帧"
+            }
+          },
+          {
+            "id": "detail-loupe",
+            "action_id": "haike.kinetic-field-v1.detail-loupe",
+            "anchor": {
+              "absolute_seconds": 4.6
+            },
+            "window": {
+              "seconds": [
+                4.6,
+                5.25
+              ],
+              "endpoint": "源码条件与逐帧采样"
+            },
+            "reading": {
+              "until_seconds": 6.6,
+              "note": "保持期仍含源码定义的轻量运动；不改成静帧"
+            }
+          },
+          {
+            "id": "hand-drawn-arrow",
+            "action_id": "haike.kinetic-field-v1.hand-drawn-arrow",
+            "anchor": {
+              "absolute_seconds": 5.6
+            },
+            "window": {
+              "seconds": [
+                5.6,
+                6.05
+              ],
+              "endpoint": "源码条件与逐帧采样"
+            },
+            "reading": {
+              "until_seconds": 6.6,
+              "note": "保持期仍含源码定义的轻量运动；不改成静帧"
+            }
+          },
+          {
+            "id": "photo-cascade",
+            "action_id": "haike.kinetic-field-v1.photo-cascade",
+            "anchor": {
+              "absolute_seconds": 6.76
+            },
+            "window": {
+              "seconds": [
+                6.76,
+                7.32
+              ],
+              "endpoint": "源码条件与逐帧采样"
+            },
+            "reading": {
+              "until_seconds": 8.3,
+              "note": "保持期仍含源码定义的轻量运动；不改成静帧"
+            }
+          },
+          {
+            "id": "stack-to-location",
+            "action_id": "haike.kinetic-field-v1.stack-to-location",
+            "anchor": {
+              "absolute_seconds": 7.4
+            },
+            "window": {
+              "seconds": [
+                7.4,
+                8.3
+              ],
+              "endpoint": "源码条件与逐帧采样"
+            },
+            "reading": {
+              "until_seconds": 12,
+              "note": "保持期仍含源码定义的轻量运动；不改成静帧"
+            }
+          },
+          {
+            "id": "pin-pop",
+            "action_id": "haike.kinetic-field-v1.pin-pop",
+            "anchor": {
+              "absolute_seconds": 8.5
+            },
+            "window": {
+              "seconds": [
+                8.5,
+                9.05
+              ],
+              "endpoint": "源码条件与逐帧采样"
+            },
+            "reading": {
+              "until_seconds": 12,
+              "note": "保持期仍含源码定义的轻量运动；不改成静帧"
+            }
+          },
+          {
+            "id": "floor-strip",
+            "action_id": "haike.kinetic-field-v1.floor-strip",
+            "anchor": {
+              "absolute_seconds": 9.3
+            },
+            "window": {
+              "seconds": [
+                9.3,
+                9.85
+              ],
+              "endpoint": "源码条件与逐帧采样"
+            },
+            "reading": {
+              "until_seconds": 12,
+              "note": "保持期仍含源码定义的轻量运动；不改成静帧"
+            }
+          },
+          {
+            "id": "location-focus",
+            "action_id": "haike.kinetic-field-v1.location-focus",
+            "anchor": {
+              "absolute_seconds": 10.7
+            },
+            "window": {
+              "seconds": [
+                10.7,
+                11.2
+              ],
+              "endpoint": "源码条件与逐帧采样"
+            },
+            "reading": {
+              "until_seconds": 12,
+              "note": "保持期仍含源码定义的轻量运动；不改成静帧"
+            }
+          },
+          {
+            "id": "portrait-disc",
+            "action_id": "haike.kinetic-field-v1.portrait-disc",
+            "anchor": {
+              "absolute_seconds": 12
+            },
+            "window": {
+              "seconds": [
+                12,
+                12.55
+              ],
+              "endpoint": "源码条件与逐帧采样"
+            },
+            "reading": {
+              "until_seconds": 16,
+              "note": "保持期仍含源码定义的轻量运动；不改成静帧"
+            }
+          },
+          {
+            "id": "headline-assemble",
+            "action_id": "haike.kinetic-field-v1.headline-assemble",
+            "anchor": {
+              "absolute_frame": 305,
+              "fps": 24
+            },
+            "window": {
+              "start_frame": 305,
+              "motion_end_frame": "305 + max(12, 5 + max(0, word_count-2)*3 + 6)；word_count=closingTitle.split(\" \").filter(Boolean).length",
+              "source_authority": "TextReveal源码",
+              "parent_end_frame": 384
+            },
+            "reading": {
+              "from_frame": "按motion_end_frame求值；原两词内容317帧起",
+              "until_frame": 384
+            }
+          },
+          {
+            "id": "photo-fan",
+            "action_id": "haike.kinetic-field-v1.photo-fan",
+            "anchor": {
+              "absolute_seconds": 13.65
+            },
+            "window": {
+              "seconds": [
+                13.65,
+                14.2
+              ],
+              "endpoint": "源码条件与逐帧采样"
+            },
+            "reading": {
+              "until_seconds": 16,
+              "note": "保持期仍含源码定义的轻量运动；不改成静帧"
+            }
+          },
+          {
+            "id": "invitation-stamp",
+            "action_id": "haike.kinetic-field-v1.invitation-stamp",
+            "anchor": {
+              "absolute_seconds": 14.4
+            },
+            "window": {
+              "seconds": [
+                14.4,
+                14.85
+              ],
+              "endpoint": "源码条件与逐帧采样"
+            },
+            "reading": {
+              "until_seconds": 16,
+              "note": "保持期仍含源码定义的轻量运动；不改成静帧"
+            }
+          }
+        ],
+        "retiming": "锁定原窗口；不接受动作子集、替换、重排或时间伸缩"
+      },
+      "slots": [
+        {
+          "id": "prepared-episode",
+          "kind": "local_prepared_directory",
+          "input_path": "request.data",
+          "required": true,
+          "missing_policy": "阻断；先运行原prepare，显式提供独立本期目录，不自动读取私有默认"
+        }
+      ],
+      "capabilities": {
+        "reference_fidelity": "原16秒低清有声确认效果；原渲染器scale=.5；本轮不提升高清/听审状态",
+        "script_replacement": "本适配器只消费原prepare的已准备输入；不自动写稿/配音/切人物",
+        "semantic_reordering": false,
+        "arbitrary_catalogue_action_replacement": false,
+        "action_selection": "仅接受完整固定顺序；变更明确拒绝",
+        "high_definition": false,
+        "audio": "完整sample.wav原速，layout.audio.gain；不重新混音"
+      },
+      "validation": {
+        "source_identity": {
+          "status": "pass",
+          "method": "原release全部源码哈希核对；运行时prepare再次核对",
+          "scope": "原16秒低清有声确认效果；原渲染器scale=.5；本轮不提升高清/听审状态",
+          "evidence": [
+            "Haike_video/templates/kinetic-field-v1/APPROVAL.json",
+            "Haike_video/templates/kinetic-field-v1/README.md"
+          ]
+        },
+        "historical_visual": {
+          "status": "pass",
+          "method": "原冻结验收记录；本轮不追溯升级旧结论",
+          "scope": "原16秒低清有声确认效果；原渲染器scale=.5；本轮不提升高清/听审状态",
+          "evidence": [
+            "Haike_video/templates/kinetic-field-v1/APPROVAL.json",
+            "Haike_video/templates/kinetic-field-v1/README.md"
+          ]
+        },
+        "sidecar_visual": {
+          "status": "not_applicable",
+          "method": "未增加模板2视觉实现；原冻结源码和输入字节核验",
+          "scope": "仅旁路参数/入口；不声称本轮看过视频或听音",
+          "evidence": [
+            ".local/motion-standard-unification/A/prepare-results.json"
+          ]
+        },
+        "continuous_audio": {
+          "status": "pending",
+          "method": "未进行本轮完整设备听审",
+          "scope": "原16秒低清有声确认效果；原渲染器scale=.5；本轮不提升高清/听审状态",
+          "evidence": [
+            "Haike_video/templates/kinetic-field-v1/APPROVAL.json",
+            "Haike_video/templates/kinetic-field-v1/README.md"
+          ]
+        },
+        "production": {
+          "status": "pending",
+          "method": "prepared不等于入队/完整输出；逐期沿原gate验收",
+          "scope": "原16秒低清有声确认效果；原渲染器scale=.5；本轮不提升高清/听审状态",
+          "evidence": [
+            "Haike_video/templates/kinetic-field-v1/APPROVAL.json",
+            "Haike_video/templates/kinetic-field-v1/README.md"
+          ]
+        },
+        "platform": {
+          "status": "pending",
+          "method": "未发布；未做目标平台/异机验收",
+          "scope": "原16秒低清有声确认效果；原渲染器scale=.5；本轮不提升高清/听审状态",
+          "evidence": [
+            "Haike_video/templates/kinetic-field-v1/APPROVAL.json",
+            "Haike_video/templates/kinetic-field-v1/README.md"
+          ]
+        }
+      },
+      "reproduction": {
+        "prepare_entrypoint": "Haike_video/templates/kinetic-field-v1/prepare_inputs.py",
+        "request_contract": "Haike_video/templates/kinetic-field-v1/input-contract.json",
+        "queue_entrypoint": "Haike_video/scripts/kinetic_field_preview.py",
+        "preview_phase": "stills",
+        "export_phase": "video",
+        "gate": "核源码/素材/bundle及本期真实design-review；不自动提交"
+      }
+    },
+    {
+      "template_id": "nana-mint-explainer-v1",
+      "version": "1.0.0",
+      "gallery_id": "nana-mint-explainer-v1",
+      "family": "numbered",
+      "number": 3,
+      "renderer": {
+        "kind": "project",
+        "entrypoint": "Haike_video/scripts/nana_mint_preview.py",
+        "adapter": "backlot.motion_replay_numbered_02_05:prepare",
+        "execution": "supported",
+        "scope": "只准备；执行能力以queue_route和blockers为准"
+      },
+      "sources": [
+        {
+          "path": "Haike_video/templates/nana-mint-explainer-v1/release.json",
+          "sha256": "95521260fc69acdc52671bf82fdc0331d75aee54562b95631d154ff48a58bbaa"
+        },
+        {
+          "path": "Haike_video/templates/nana-mint-explainer-v1/index.tsx",
+          "sha256": "acb1d4eb9f67ca611bb13e503cb497e41413411100043967164ade2077676c41"
+        },
+        {
+          "path": "Haike_video/templates/nana-mint-explainer-v1/shared.tsx",
+          "sha256": "12b852587b04c28cce0f1379d3eadf881db13cd1758cfd9187cf45f651aa8f0e"
+        },
+        {
+          "path": "Haike_video/templates/nana-mint-explainer-v1/types.ts",
+          "sha256": "f237347c9a52db160172339cd4a257ecdaad4cbdb828b502cb65eb34a884519b"
+        },
+        {
+          "path": "Haike_video/templates/nana-mint-explainer-v1/prepare.py",
+          "sha256": "8dfd88eab0fdfd7af592395c6c548a2e8b5a157c7143de2197ed4f3030eceaef"
+        },
+        {
+          "path": "Haike_video/templates/nana-mint-explainer-v1/template-profile.json",
+          "sha256": "212f443d7e35ca666f51ca9ad3136e812ece06815fe84f926c0381a8d58ba681"
+        },
+        {
+          "path": "Haike_video/templates/nana-mint-explainer-v1/input-contract.json",
+          "sha256": "7f7bb71f6713150eb074dcc8f310c5d0baf39972af75cc516de3d0b0ad87040f"
+        },
+        {
+          "path": "Haike_video/templates/nana-mint-explainer-v1/render.cjs",
+          "sha256": "cdf5fe4e8d7a0b1f11b11116b610375b99c194f6fe0046e62d1ad48835b4c4f4"
+        },
+        {
+          "path": "Haike_video/templates/nana-mint-explainer-v1/scenes/Introduction.tsx",
+          "sha256": "830af743cabff9e6f893151c221af92e11cb58596f89b0b07394f2925744c34f"
+        },
+        {
+          "path": "Haike_video/templates/nana-mint-explainer-v1/scenes/Workflow.tsx",
+          "sha256": "50aa920db409e25b81e962ae2e08cd974e3860524f7e2fc941946a4872f5df4f"
+        },
+        {
+          "path": "Haike_video/templates/nana-mint-explainer-v1/scenes/Argument.tsx",
+          "sha256": "000c5ab681b42976d8c0743ad6a0cb4be495c5daf5d88edda38791b2d8dd5a2a"
+        },
+        {
+          "path": "Haike_video/templates/nana-mint-explainer-v1/scenes/Resources.tsx",
+          "sha256": "36ca4ca4c3e018309bc1009d18760d64906717180a9ba9407889e8d074437cb3"
+        },
+        {
+          "path": "Haike_video/backlot/motion_replay_numbered_02_05.py",
+          "sha256": "15702745b206cacfb83f20b93bb02c469dceda9a9fcb6370ad45b24d6167c5e4"
+        }
+      ],
+      "objects": [
+        {
+          "id": "background",
+          "role": "薄荷纸面",
+          "authority": {
+            "path": "Haike_video/templates/nana-mint-explainer-v1/shared.tsx",
+            "scope": "Backdrop"
+          }
+        },
+        {
+          "id": "navigation",
+          "role": "五章导航",
+          "authority": {
+            "path": "Haike_video/templates/nana-mint-explainer-v1/shared.tsx",
+            "scope": "Shell"
+          }
+        },
+        {
+          "id": "media",
+          "role": "软件/素材窗",
+          "authority": {
+            "path": "Haike_video/templates/nana-mint-explainer-v1/shared.tsx",
+            "scope": "MediaWindow原速取样与显式clean UI holds"
+          }
+        },
+        {
+          "id": "presenter",
+          "role": "同声源人物窗",
+          "authority": {
+            "path": "Haike_video/templates/nana-mint-explainer-v1/shared.tsx",
+            "scope": "Presenter源取景与各scene固定外框"
+          }
+        },
+        {
+          "id": "graphics",
+          "role": "标题、对比、图解",
+          "authority": {
+            "path": "Haike_video/templates/nana-mint-explainer-v1/shared.tsx",
+            "scope": "四个scenes文件原生组件"
+          }
+        },
+        {
+          "id": "captions",
+          "role": "实测字幕",
+          "authority": {
+            "path": "Haike_video/templates/nana-mint-explainer-v1/shared.tsx",
+            "scope": "index.tsx WordCaptions毫秒转帧"
+          }
+        },
+        {
+          "id": "sound",
+          "role": "完整原声混音",
+          "authority": {
+            "path": "Haike_video/templates/nana-mint-explainer-v1/shared.tsx",
+            "scope": "index.tsx Audio(episode.voice)原速，只混入一次"
+          }
+        }
+      ],
+      "actions": [
+        {
+          "id": "haike.nana-mint-explainer-v1.integration",
+          "version": "1.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/nana-mint-explainer-v1/scenes/Introduction.tsx",
+            "symbol": "Introduction(scene.id=integration)",
+            "dispatch": "原组件真实调用；不使用selection/data-effect作为执行器"
+          },
+          "objects": [
+            "media",
+            "presenter",
+            "graphics"
+          ],
+          "parameters": {
+            "content": "public/content.json scenes[id=integration]",
+            "timing": "start/end为全局秒；cues为场景局部秒，只有实际源码消费的cue可变；其余局部时钟锁定",
+            "source_locked": "TSX几何、原生动画参数；不开放generic x/y/easing"
+          },
+          "phases": {
+            "entry": "scene.start挂载",
+            "active": "组件内部局部帧公式及明确cue",
+            "settled": "各内部动画落定后保留到scene.end；内部保持按源码",
+            "exit": "scene.end卸载；不加通用退出动画"
+          }
+        },
+        {
+          "id": "haike.nana-mint-explainer-v1.terms",
+          "version": "1.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/nana-mint-explainer-v1/scenes/Introduction.tsx",
+            "symbol": "Introduction(scene.id=terms)",
+            "dispatch": "原组件真实调用；不使用selection/data-effect作为执行器"
+          },
+          "objects": [
+            "media",
+            "presenter",
+            "graphics"
+          ],
+          "parameters": {
+            "content": "public/content.json scenes[id=terms]",
+            "timing": "start/end为全局秒；cues为场景局部秒，只有实际源码消费的cue可变；其余局部时钟锁定",
+            "source_locked": "TSX几何、原生动画参数；不开放generic x/y/easing"
+          },
+          "phases": {
+            "entry": "scene.start挂载",
+            "active": "组件内部局部帧公式及明确cue",
+            "settled": "各内部动画落定后保留到scene.end；内部保持按源码",
+            "exit": "scene.end卸载；不加通用退出动画"
+          }
+        },
+        {
+          "id": "haike.nana-mint-explainer-v1.brief",
+          "version": "1.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/nana-mint-explainer-v1/scenes/Introduction.tsx",
+            "symbol": "Introduction(scene.id=brief)",
+            "dispatch": "原组件真实调用；不使用selection/data-effect作为执行器"
+          },
+          "objects": [
+            "media",
+            "presenter",
+            "graphics"
+          ],
+          "parameters": {
+            "content": "public/content.json scenes[id=brief]",
+            "timing": "start/end为全局秒；cues为场景局部秒，只有实际源码消费的cue可变；其余局部时钟锁定",
+            "source_locked": "TSX几何、原生动画参数；不开放generic x/y/easing"
+          },
+          "phases": {
+            "entry": "scene.start挂载",
+            "active": "组件内部局部帧公式及明确cue",
+            "settled": "各内部动画落定后保留到scene.end；内部保持按源码",
+            "exit": "scene.end卸载；不加通用退出动画"
+          }
+        },
+        {
+          "id": "haike.nana-mint-explainer-v1.result",
+          "version": "1.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/nana-mint-explainer-v1/scenes/Introduction.tsx",
+            "symbol": "Introduction(scene.id=result)",
+            "dispatch": "原组件真实调用；不使用selection/data-effect作为执行器"
+          },
+          "objects": [
+            "media",
+            "presenter",
+            "graphics"
+          ],
+          "parameters": {
+            "content": "public/content.json scenes[id=result]",
+            "timing": "start/end为全局秒；cues为场景局部秒，只有实际源码消费的cue可变；其余局部时钟锁定",
+            "source_locked": "TSX几何、原生动画参数；不开放generic x/y/easing"
+          },
+          "phases": {
+            "entry": "scene.start挂载",
+            "active": "组件内部局部帧公式及明确cue",
+            "settled": "各内部动画落定后保留到scene.end；内部保持按源码",
+            "exit": "scene.end卸载；不加通用退出动画"
+          }
+        },
+        {
+          "id": "haike.nana-mint-explainer-v1.workflow",
+          "version": "1.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/nana-mint-explainer-v1/scenes/Workflow.tsx",
+            "symbol": "Workflow(scene.id=workflow)",
+            "dispatch": "原组件真实调用；不使用selection/data-effect作为执行器"
+          },
+          "objects": [
+            "media",
+            "presenter",
+            "graphics"
+          ],
+          "parameters": {
+            "content": "public/content.json scenes[id=workflow]",
+            "timing": "start/end为全局秒；cues为场景局部秒，只有实际源码消费的cue可变；其余局部时钟锁定",
+            "source_locked": "TSX几何、原生动画参数；不开放generic x/y/easing"
+          },
+          "phases": {
+            "entry": "scene.start挂载",
+            "active": "组件内部局部帧公式及明确cue",
+            "settled": "各内部动画落定后保留到scene.end；内部保持按源码",
+            "exit": "scene.end卸载；不加通用退出动画"
+          }
+        },
+        {
+          "id": "haike.nana-mint-explainer-v1.compare",
+          "version": "1.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/nana-mint-explainer-v1/scenes/Argument.tsx",
+            "symbol": "Argument(scene.id=compare)",
+            "dispatch": "原组件真实调用；不使用selection/data-effect作为执行器"
+          },
+          "objects": [
+            "media",
+            "presenter",
+            "graphics"
+          ],
+          "parameters": {
+            "content": "public/content.json scenes[id=compare]",
+            "timing": "start/end为全局秒；cues为场景局部秒，只有实际源码消费的cue可变；其余局部时钟锁定",
+            "source_locked": "TSX几何、原生动画参数；不开放generic x/y/easing"
+          },
+          "phases": {
+            "entry": "scene.start挂载",
+            "active": "组件内部局部帧公式及明确cue",
+            "settled": "各内部动画落定后保留到scene.end；内部保持按源码",
+            "exit": "scene.end卸载；不加通用退出动画"
+          }
+        },
+        {
+          "id": "haike.nana-mint-explainer-v1.question",
+          "version": "1.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/nana-mint-explainer-v1/scenes/Argument.tsx",
+            "symbol": "Argument(scene.id=question)",
+            "dispatch": "原组件真实调用；不使用selection/data-effect作为执行器"
+          },
+          "objects": [
+            "media",
+            "presenter",
+            "graphics"
+          ],
+          "parameters": {
+            "content": "public/content.json scenes[id=question]",
+            "timing": "start/end为全局秒；cues为场景局部秒，只有实际源码消费的cue可变；其余局部时钟锁定",
+            "source_locked": "TSX几何、原生动画参数；不开放generic x/y/easing"
+          },
+          "phases": {
+            "entry": "scene.start挂载",
+            "active": "组件内部局部帧公式及明确cue",
+            "settled": "各内部动画落定后保留到scene.end；内部保持按源码",
+            "exit": "scene.end卸载；不加通用退出动画"
+          }
+        },
+        {
+          "id": "haike.nana-mint-explainer-v1.value",
+          "version": "1.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/nana-mint-explainer-v1/scenes/Argument.tsx",
+            "symbol": "Argument(scene.id=value)",
+            "dispatch": "原组件真实调用；不使用selection/data-effect作为执行器"
+          },
+          "objects": [
+            "media",
+            "presenter",
+            "graphics"
+          ],
+          "parameters": {
+            "content": "public/content.json scenes[id=value]",
+            "timing": "start/end为全局秒；cues为场景局部秒，只有实际源码消费的cue可变；其余局部时钟锁定",
+            "source_locked": "TSX几何、原生动画参数；不开放generic x/y/easing"
+          },
+          "phases": {
+            "entry": "scene.start挂载",
+            "active": "组件内部局部帧公式及明确cue",
+            "settled": "各内部动画落定后保留到scene.end；内部保持按源码",
+            "exit": "scene.end卸载；不加通用退出动画"
+          }
+        },
+        {
+          "id": "haike.nana-mint-explainer-v1.difference",
+          "version": "1.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/nana-mint-explainer-v1/scenes/Argument.tsx",
+            "symbol": "Argument(scene.id=difference)",
+            "dispatch": "原组件真实调用；不使用selection/data-effect作为执行器"
+          },
+          "objects": [
+            "media",
+            "presenter",
+            "graphics"
+          ],
+          "parameters": {
+            "content": "public/content.json scenes[id=difference]",
+            "timing": "start/end为全局秒；cues为场景局部秒，只有实际源码消费的cue可变；其余局部时钟锁定",
+            "source_locked": "TSX几何、原生动画参数；不开放generic x/y/easing"
+          },
+          "phases": {
+            "entry": "scene.start挂载",
+            "active": "组件内部局部帧公式及明确cue",
+            "settled": "各内部动画落定后保留到scene.end；内部保持按源码",
+            "exit": "scene.end卸载；不加通用退出动画"
+          }
+        },
+        {
+          "id": "haike.nana-mint-explainer-v1.course",
+          "version": "1.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/nana-mint-explainer-v1/scenes/Resources.tsx",
+            "symbol": "Resources(scene.id=course)",
+            "dispatch": "原组件真实调用；不使用selection/data-effect作为执行器"
+          },
+          "objects": [
+            "media",
+            "presenter",
+            "graphics"
+          ],
+          "parameters": {
+            "content": "public/content.json scenes[id=course]",
+            "timing": "start/end为全局秒；cues为场景局部秒，只有实际源码消费的cue可变；其余局部时钟锁定",
+            "source_locked": "TSX几何、原生动画参数；不开放generic x/y/easing"
+          },
+          "phases": {
+            "entry": "scene.start挂载",
+            "active": "组件内部局部帧公式及明确cue",
+            "settled": "各内部动画落定后保留到scene.end；内部保持按源码",
+            "exit": "scene.end卸载；不加通用退出动画"
+          }
+        },
+        {
+          "id": "haike.nana-mint-explainer-v1.examples",
+          "version": "1.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/nana-mint-explainer-v1/scenes/Resources.tsx",
+            "symbol": "Resources(scene.id=examples)",
+            "dispatch": "原组件真实调用；不使用selection/data-effect作为执行器"
+          },
+          "objects": [
+            "media",
+            "presenter",
+            "graphics"
+          ],
+          "parameters": {
+            "content": "public/content.json scenes[id=examples]",
+            "timing": "start/end为全局秒；cues为场景局部秒，只有实际源码消费的cue可变；其余局部时钟锁定",
+            "source_locked": "TSX几何、原生动画参数；不开放generic x/y/easing"
+          },
+          "phases": {
+            "entry": "scene.start挂载",
+            "active": "组件内部局部帧公式及明确cue",
+            "settled": "各内部动画落定后保留到scene.end；内部保持按源码",
+            "exit": "scene.end卸载；不加通用退出动画"
+          }
+        },
+        {
+          "id": "haike.nana-mint-explainer-v1.logic",
+          "version": "1.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/nana-mint-explainer-v1/scenes/Resources.tsx",
+            "symbol": "Resources(scene.id=logic)",
+            "dispatch": "原组件真实调用；不使用selection/data-effect作为执行器"
+          },
+          "objects": [
+            "media",
+            "presenter",
+            "graphics"
+          ],
+          "parameters": {
+            "content": "public/content.json scenes[id=logic]",
+            "timing": "start/end为全局秒；cues为场景局部秒，只有实际源码消费的cue可变；其余局部时钟锁定",
+            "source_locked": "TSX几何、原生动画参数；不开放generic x/y/easing"
+          },
+          "phases": {
+            "entry": "scene.start挂载",
+            "active": "组件内部局部帧公式及明确cue",
+            "settled": "各内部动画落定后保留到scene.end；内部保持按源码",
+            "exit": "scene.end卸载；不加通用退出动画"
+          }
+        },
+        {
+          "id": "haike.nana-mint-explainer-v1.closing",
+          "version": "1.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/nana-mint-explainer-v1/scenes/Resources.tsx",
+            "symbol": "Resources(scene.id=closing)",
+            "dispatch": "原组件真实调用；不使用selection/data-effect作为执行器"
+          },
+          "objects": [
+            "media",
+            "presenter",
+            "graphics"
+          ],
+          "parameters": {
+            "content": "public/content.json scenes[id=closing]",
+            "timing": "start/end为全局秒；cues为场景局部秒，只有实际源码消费的cue可变；其余局部时钟锁定",
+            "source_locked": "TSX几何、原生动画参数；不开放generic x/y/easing"
+          },
+          "phases": {
+            "entry": "scene.start挂载",
+            "active": "组件内部局部帧公式及明确cue",
+            "settled": "各内部动画落定后保留到scene.end；内部保持按源码",
+            "exit": "scene.end卸载；不加通用退出动画"
+          }
+        }
+      ],
+      "timeline": {
+        "mode": "semantic",
+        "clock": {
+          "fps": 30,
+          "canvas": [
+            1920,
+            1080
+          ],
+          "master": "完整episode.voice实际声音；scenes/captions/cues本期实测",
+          "accepted_duration_seconds": 89.26666666666667
+        },
+        "events": [
+          {
+            "id": "integration",
+            "action_id": "haike.nana-mint-explainer-v1.integration",
+            "anchor": {
+              "scene_id": "integration",
+              "default_local_seconds": 0
+            },
+            "window": {
+              "start": "scene.start",
+              "end": "scene.end",
+              "unit": "seconds"
+            },
+            "reading": "本期真实scene时钟；内部关键事件另列"
+          },
+          {
+            "id": "terms",
+            "action_id": "haike.nana-mint-explainer-v1.terms",
+            "anchor": {
+              "scene_id": "terms",
+              "default_local_seconds": 0
+            },
+            "window": {
+              "start": "scene.start",
+              "end": "scene.end",
+              "unit": "seconds"
+            },
+            "reading": "本期真实scene时钟；内部关键事件另列"
+          },
+          {
+            "id": "brief",
+            "action_id": "haike.nana-mint-explainer-v1.brief",
+            "anchor": {
+              "scene_id": "brief",
+              "default_local_seconds": 0
+            },
+            "window": {
+              "start": "scene.start",
+              "end": "scene.end",
+              "unit": "seconds"
+            },
+            "reading": "本期真实scene时钟；内部关键事件另列"
+          },
+          {
+            "id": "result",
+            "action_id": "haike.nana-mint-explainer-v1.result",
+            "anchor": {
+              "scene_id": "result",
+              "default_local_seconds": 0
+            },
+            "window": {
+              "start": "scene.start",
+              "end": "scene.end",
+              "unit": "seconds"
+            },
+            "reading": "本期真实scene时钟；内部关键事件另列"
+          },
+          {
+            "id": "workflow",
+            "action_id": "haike.nana-mint-explainer-v1.workflow",
+            "anchor": {
+              "scene_id": "workflow",
+              "default_local_seconds": 0
+            },
+            "window": {
+              "start": "scene.start",
+              "end": "scene.end",
+              "unit": "seconds"
+            },
+            "reading": "本期真实scene时钟；内部关键事件另列"
+          },
+          {
+            "id": "compare",
+            "action_id": "haike.nana-mint-explainer-v1.compare",
+            "anchor": {
+              "scene_id": "compare",
+              "default_local_seconds": 0
+            },
+            "window": {
+              "start": "scene.start",
+              "end": "scene.end",
+              "unit": "seconds"
+            },
+            "reading": "本期真实scene时钟；内部关键事件另列"
+          },
+          {
+            "id": "question",
+            "action_id": "haike.nana-mint-explainer-v1.question",
+            "anchor": {
+              "scene_id": "question",
+              "default_local_seconds": 0
+            },
+            "window": {
+              "start": "scene.start",
+              "end": "scene.end",
+              "unit": "seconds"
+            },
+            "reading": "本期真实scene时钟；内部关键事件另列"
+          },
+          {
+            "id": "value",
+            "action_id": "haike.nana-mint-explainer-v1.value",
+            "anchor": {
+              "scene_id": "value",
+              "default_local_seconds": 0
+            },
+            "window": {
+              "start": "scene.start",
+              "end": "scene.end",
+              "unit": "seconds"
+            },
+            "reading": "本期真实scene时钟；内部关键事件另列"
+          },
+          {
+            "id": "difference",
+            "action_id": "haike.nana-mint-explainer-v1.difference",
+            "anchor": {
+              "scene_id": "difference",
+              "default_local_seconds": 0
+            },
+            "window": {
+              "start": "scene.start",
+              "end": "scene.end",
+              "unit": "seconds"
+            },
+            "reading": "本期真实scene时钟；内部关键事件另列"
+          },
+          {
+            "id": "course",
+            "action_id": "haike.nana-mint-explainer-v1.course",
+            "anchor": {
+              "scene_id": "course",
+              "default_local_seconds": 0
+            },
+            "window": {
+              "start": "scene.start",
+              "end": "scene.end",
+              "unit": "seconds"
+            },
+            "reading": "本期真实scene时钟；内部关键事件另列"
+          },
+          {
+            "id": "examples",
+            "action_id": "haike.nana-mint-explainer-v1.examples",
+            "anchor": {
+              "scene_id": "examples",
+              "default_local_seconds": 0
+            },
+            "window": {
+              "start": "scene.start",
+              "end": "scene.end",
+              "unit": "seconds"
+            },
+            "reading": "本期真实scene时钟；内部关键事件另列"
+          },
+          {
+            "id": "logic",
+            "action_id": "haike.nana-mint-explainer-v1.logic",
+            "anchor": {
+              "scene_id": "logic",
+              "default_local_seconds": 0
+            },
+            "window": {
+              "start": "scene.start",
+              "end": "scene.end",
+              "unit": "seconds"
+            },
+            "reading": "本期真实scene时钟；内部关键事件另列"
+          },
+          {
+            "id": "closing",
+            "action_id": "haike.nana-mint-explainer-v1.closing",
+            "anchor": {
+              "scene_id": "closing",
+              "default_local_seconds": 0
+            },
+            "window": {
+              "start": "scene.start",
+              "end": "scene.end",
+              "unit": "seconds"
+            },
+            "reading": "本期真实scene时钟；内部关键事件另列"
+          },
+          {
+            "id": "integration.partner",
+            "action_id": "haike.nana-mint-explainer-v1.integration",
+            "anchor": {
+              "scene_id": "integration",
+              "cue": "partner",
+              "default_local_seconds": 2.3,
+              "consumed_by": "scene.cues.partner"
+            },
+            "window": {
+              "start": "scene.start + cue",
+              "end": "源码定义的动画局部持续/下一cue/scene.end"
+            },
+            "reading": "cue来自本期实测语义时码；不从文案长度推算；examples相关cue只在overlay存在时消费"
+          },
+          {
+            "id": "integration.arrow",
+            "action_id": "haike.nana-mint-explainer-v1.integration",
+            "anchor": {
+              "scene_id": "integration",
+              "cue": "arrow",
+              "default_local_seconds": 3.4,
+              "consumed_by": "scene.cues.arrow"
+            },
+            "window": {
+              "start": "scene.start + cue",
+              "end": "源码定义的动画局部持续/下一cue/scene.end"
+            },
+            "reading": "cue来自本期实测语义时码；不从文案长度推算；examples相关cue只在overlay存在时消费"
+          },
+          {
+            "id": "workflow.prompt",
+            "action_id": "haike.nana-mint-explainer-v1.workflow",
+            "anchor": {
+              "scene_id": "workflow",
+              "cue": "prompt",
+              "default_local_seconds": 2.4,
+              "consumed_by": "scene.cues.prompt"
+            },
+            "window": {
+              "start": "scene.start + cue",
+              "end": "源码定义的动画局部持续/下一cue/scene.end"
+            },
+            "reading": "cue来自本期实测语义时码；不从文案长度推算；examples相关cue只在overlay存在时消费"
+          },
+          {
+            "id": "workflow.steps",
+            "action_id": "haike.nana-mint-explainer-v1.workflow",
+            "anchor": {
+              "scene_id": "workflow",
+              "cue": "steps",
+              "default_local_seconds": 7.7,
+              "consumed_by": "scene.cues.steps"
+            },
+            "window": {
+              "start": "scene.start + cue",
+              "end": "源码定义的动画局部持续/下一cue/scene.end"
+            },
+            "reading": "cue来自本期实测语义时码；不从文案长度推算；examples相关cue只在overlay存在时消费"
+          },
+          {
+            "id": "workflow.preview",
+            "action_id": "haike.nana-mint-explainer-v1.workflow",
+            "anchor": {
+              "scene_id": "workflow",
+              "cue": "preview",
+              "default_local_seconds": 12.6,
+              "consumed_by": "scene.cues.preview"
+            },
+            "window": {
+              "start": "scene.start + cue",
+              "end": "源码定义的动画局部持续/下一cue/scene.end"
+            },
+            "reading": "cue来自本期实测语义时码；不从文案长度推算；examples相关cue只在overlay存在时消费"
+          },
+          {
+            "id": "compare.arrow",
+            "action_id": "haike.nana-mint-explainer-v1.compare",
+            "anchor": {
+              "scene_id": "compare",
+              "cue": "arrow",
+              "default_local_seconds": 2.1,
+              "consumed_by": "scene.cues.arrow"
+            },
+            "window": {
+              "start": "scene.start + cue",
+              "end": "源码定义的动画局部持续/下一cue/scene.end"
+            },
+            "reading": "cue来自本期实测语义时码；不从文案长度推算；examples相关cue只在overlay存在时消费"
+          },
+          {
+            "id": "compare.after",
+            "action_id": "haike.nana-mint-explainer-v1.compare",
+            "anchor": {
+              "scene_id": "compare",
+              "cue": "after",
+              "default_local_seconds": 3.3,
+              "consumed_by": "scene.cues.after"
+            },
+            "window": {
+              "start": "scene.start + cue",
+              "end": "源码定义的动画局部持续/下一cue/scene.end"
+            },
+            "reading": "cue来自本期实测语义时码；不从文案长度推算；examples相关cue只在overlay存在时消费"
+          },
+          {
+            "id": "question.answer",
+            "action_id": "haike.nana-mint-explainer-v1.question",
+            "anchor": {
+              "scene_id": "question",
+              "cue": "answer",
+              "default_local_seconds": 2.5,
+              "consumed_by": "scene.cues.answer"
+            },
+            "window": {
+              "start": "scene.start + cue",
+              "end": "源码定义的动画局部持续/下一cue/scene.end"
+            },
+            "reading": "cue来自本期实测语义时码；不从文案长度推算；examples相关cue只在overlay存在时消费"
+          },
+          {
+            "id": "examples.presenterOff",
+            "action_id": "haike.nana-mint-explainer-v1.examples",
+            "anchor": {
+              "scene_id": "examples",
+              "cue": "presenterOff",
+              "default_local_seconds": 2.3,
+              "consumed_by": "scene.cues.presenterOff"
+            },
+            "window": {
+              "start": "scene.start + cue",
+              "end": "源码定义的动画局部持续/下一cue/scene.end"
+            },
+            "reading": "cue来自本期实测语义时码；不从文案长度推算；examples相关cue只在overlay存在时消费"
+          },
+          {
+            "id": "examples.overlay",
+            "action_id": "haike.nana-mint-explainer-v1.examples",
+            "anchor": {
+              "scene_id": "examples",
+              "cue": "overlay",
+              "default_local_seconds": 2.4,
+              "consumed_by": "scene.cues.overlay"
+            },
+            "window": {
+              "start": "scene.start + cue",
+              "end": "源码定义的动画局部持续/下一cue/scene.end"
+            },
+            "reading": "cue来自本期实测语义时码；不从文案长度推算；examples相关cue只在overlay存在时消费"
+          },
+          {
+            "id": "logic.overlayEnd",
+            "action_id": "haike.nana-mint-explainer-v1.logic",
+            "anchor": {
+              "scene_id": "logic",
+              "cue": "overlayEnd",
+              "default_local_seconds": 2.1,
+              "consumed_by": "scene.cues.overlayEnd"
+            },
+            "window": {
+              "start": "scene.start + cue",
+              "end": "源码定义的动画局部持续/下一cue/scene.end"
+            },
+            "reading": "cue来自本期实测语义时码；不从文案长度推算；examples相关cue只在overlay存在时消费"
+          },
+          {
+            "id": "terms.label-1",
+            "action_id": "haike.nana-mint-explainer-v1.terms",
+            "anchor": {
+              "scene_id": "terms",
+              "default_local_seconds": 1.75,
+              "source_locked": true
+            },
+            "window": {
+              "start": "scene.start + 固定局部秒",
+              "end": "源码公式/父scene.end"
+            },
+            "reading": "本事件没有独立语义输入；不宣称随任意新稿自动适配"
+          },
+          {
+            "id": "terms.label-2",
+            "action_id": "haike.nana-mint-explainer-v1.terms",
+            "anchor": {
+              "scene_id": "terms",
+              "default_local_seconds": 3.5,
+              "source_locked": true
+            },
+            "window": {
+              "start": "scene.start + 固定局部秒",
+              "end": "源码公式/父scene.end"
+            },
+            "reading": "本事件没有独立语义输入；不宣称随任意新稿自动适配"
+          },
+          {
+            "id": "terms.media-focus",
+            "action_id": "haike.nana-mint-explainer-v1.terms",
+            "anchor": {
+              "scene_id": "terms",
+              "default_local_seconds": 2.5,
+              "source_locked": true
+            },
+            "window": {
+              "start": "scene.start + 固定局部秒",
+              "end": "源码公式/父scene.end"
+            },
+            "reading": "本事件没有独立语义输入；不宣称随任意新稿自动适配"
+          },
+          {
+            "id": "brief.label-0",
+            "action_id": "haike.nana-mint-explainer-v1.brief",
+            "anchor": {
+              "scene_id": "brief",
+              "default_local_seconds": 0.25,
+              "source_locked": true
+            },
+            "window": {
+              "start": "scene.start + 固定局部秒",
+              "end": "源码公式/父scene.end"
+            },
+            "reading": "本事件没有独立语义输入；不宣称随任意新稿自动适配"
+          },
+          {
+            "id": "brief.label-1",
+            "action_id": "haike.nana-mint-explainer-v1.brief",
+            "anchor": {
+              "scene_id": "brief",
+              "default_local_seconds": 1.07,
+              "source_locked": true
+            },
+            "window": {
+              "start": "scene.start + 固定局部秒",
+              "end": "源码公式/父scene.end"
+            },
+            "reading": "本事件没有独立语义输入；不宣称随任意新稿自动适配"
+          },
+          {
+            "id": "brief.label-2",
+            "action_id": "haike.nana-mint-explainer-v1.brief",
+            "anchor": {
+              "scene_id": "brief",
+              "default_local_seconds": 1.89,
+              "source_locked": true
+            },
+            "window": {
+              "start": "scene.start + 固定局部秒",
+              "end": "源码公式/父scene.end"
+            },
+            "reading": "本事件没有独立语义输入；不宣称随任意新稿自动适配"
+          },
+          {
+            "id": "brief.presenter-on",
+            "action_id": "haike.nana-mint-explainer-v1.brief",
+            "anchor": {
+              "scene_id": "brief",
+              "default_local_seconds": 2.1,
+              "source_locked": true
+            },
+            "window": {
+              "start": "scene.start + 固定局部秒",
+              "end": "源码公式/父scene.end"
+            },
+            "reading": "本事件没有独立语义输入；不宣称随任意新稿自动适配"
+          },
+          {
+            "id": "value.right-card-on",
+            "action_id": "haike.nana-mint-explainer-v1.value",
+            "anchor": {
+              "scene_id": "value",
+              "default_local_seconds": 0.2,
+              "source_locked": true
+            },
+            "window": {
+              "start": "scene.start + 固定局部秒",
+              "end": "源码公式/父scene.end"
+            },
+            "reading": "本事件没有独立语义输入；不宣称随任意新稿自动适配"
+          },
+          {
+            "id": "value.right-card-arrow",
+            "action_id": "haike.nana-mint-explainer-v1.value",
+            "anchor": {
+              "scene_id": "value",
+              "default_local_seconds": 1.2,
+              "source_locked": true
+            },
+            "window": {
+              "start": "scene.start + 固定局部秒",
+              "end": "源码公式/父scene.end"
+            },
+            "reading": "本事件没有独立语义输入；不宣称随任意新稿自动适配"
+          },
+          {
+            "id": "difference.row-0",
+            "action_id": "haike.nana-mint-explainer-v1.difference",
+            "anchor": {
+              "scene_id": "difference",
+              "default_local_seconds": 0.35,
+              "source_locked": true
+            },
+            "window": {
+              "start": "scene.start + 固定局部秒",
+              "end": "源码公式/父scene.end"
+            },
+            "reading": "本事件没有独立语义输入；不宣称随任意新稿自动适配"
+          },
+          {
+            "id": "difference.row-1",
+            "action_id": "haike.nana-mint-explainer-v1.difference",
+            "anchor": {
+              "scene_id": "difference",
+              "default_local_seconds": 1,
+              "source_locked": true
+            },
+            "window": {
+              "start": "scene.start + 固定局部秒",
+              "end": "源码公式/父scene.end"
+            },
+            "reading": "本事件没有独立语义输入；不宣称随任意新稿自动适配"
+          },
+          {
+            "id": "difference.row-2",
+            "action_id": "haike.nana-mint-explainer-v1.difference",
+            "anchor": {
+              "scene_id": "difference",
+              "default_local_seconds": 1.65,
+              "source_locked": true
+            },
+            "window": {
+              "start": "scene.start + 固定局部秒",
+              "end": "源码公式/父scene.end"
+            },
+            "reading": "本事件没有独立语义输入；不宣称随任意新稿自动适配"
+          },
+          {
+            "id": "course.step-0",
+            "action_id": "haike.nana-mint-explainer-v1.course",
+            "anchor": {
+              "scene_id": "course",
+              "default_local_seconds": 0.65,
+              "source_locked": true
+            },
+            "window": {
+              "start": "scene.start + 固定局部秒",
+              "end": "源码公式/父scene.end"
+            },
+            "reading": "本事件没有独立语义输入；不宣称随任意新稿自动适配"
+          },
+          {
+            "id": "course.step-1",
+            "action_id": "haike.nana-mint-explainer-v1.course",
+            "anchor": {
+              "scene_id": "course",
+              "default_local_seconds": 1.01,
+              "source_locked": true
+            },
+            "window": {
+              "start": "scene.start + 固定局部秒",
+              "end": "源码公式/父scene.end"
+            },
+            "reading": "本事件没有独立语义输入；不宣称随任意新稿自动适配"
+          },
+          {
+            "id": "course.step-2",
+            "action_id": "haike.nana-mint-explainer-v1.course",
+            "anchor": {
+              "scene_id": "course",
+              "default_local_seconds": 1.37,
+              "source_locked": true
+            },
+            "window": {
+              "start": "scene.start + 固定局部秒",
+              "end": "源码公式/父scene.end"
+            },
+            "reading": "本事件没有独立语义输入；不宣称随任意新稿自动适配"
+          },
+          {
+            "id": "logic.card-0",
+            "action_id": "haike.nana-mint-explainer-v1.logic",
+            "anchor": {
+              "scene_id": "logic",
+              "default_local_seconds": 0,
+              "source_locked": true
+            },
+            "window": {
+              "start": "scene.start + 固定局部秒",
+              "end": "源码公式/父scene.end"
+            },
+            "reading": "本事件没有独立语义输入；不宣称随任意新稿自动适配"
+          },
+          {
+            "id": "logic.card-1",
+            "action_id": "haike.nana-mint-explainer-v1.logic",
+            "anchor": {
+              "scene_id": "logic",
+              "default_local_seconds": 0.4,
+              "source_locked": true
+            },
+            "window": {
+              "start": "scene.start + 固定局部秒",
+              "end": "源码公式/父scene.end"
+            },
+            "reading": "本事件没有独立语义输入；不宣称随任意新稿自动适配"
+          },
+          {
+            "id": "logic.card-2",
+            "action_id": "haike.nana-mint-explainer-v1.logic",
+            "anchor": {
+              "scene_id": "logic",
+              "default_local_seconds": 0.8,
+              "source_locked": true
+            },
+            "window": {
+              "start": "scene.start + 固定局部秒",
+              "end": "源码公式/父scene.end"
+            },
+            "reading": "本事件没有独立语义输入；不宣称随任意新稿自动适配"
+          },
+          {
+            "id": "closing.comment-card",
+            "action_id": "haike.nana-mint-explainer-v1.closing",
+            "anchor": {
+              "scene_id": "closing",
+              "default_local_seconds": 0.3,
+              "source_locked": true
+            },
+            "window": {
+              "start": "scene.start + 固定局部秒",
+              "end": "源码公式/父scene.end"
+            },
+            "reading": "本事件没有独立语义输入；不宣称随任意新稿自动适配"
+          },
+          {
+            "id": "workflow.prompt.type-start",
+            "action_id": "haike.nana-mint-explainer-v1.workflow",
+            "anchor": {
+              "scene_id": "workflow",
+              "cue": "prompt",
+              "default_local_seconds": 2.4,
+              "offset_seconds": 0.5,
+              "source_locked": "PromptSend局部typeStart/typeDuration/cursorAt/clickAt"
+            },
+            "window": {
+              "start": "scene.start + cues.prompt + 固定局部偏移",
+              "end": "组件内部公式；最大至cues.steps"
+            },
+            "reading": "随真实prompt锚点整体移动；组件内部输入/发送时距锁定，不支持独立语义覆盖"
+          },
+          {
+            "id": "workflow.prompt.type-end",
+            "action_id": "haike.nana-mint-explainer-v1.workflow",
+            "anchor": {
+              "scene_id": "workflow",
+              "cue": "prompt",
+              "default_local_seconds": 2.4,
+              "offset_seconds": 2.9,
+              "source_locked": "PromptSend局部typeStart/typeDuration/cursorAt/clickAt"
+            },
+            "window": {
+              "start": "scene.start + cues.prompt + 固定局部偏移",
+              "end": "组件内部公式；最大至cues.steps"
+            },
+            "reading": "随真实prompt锚点整体移动；组件内部输入/发送时距锁定，不支持独立语义覆盖"
+          },
+          {
+            "id": "workflow.prompt.cursor",
+            "action_id": "haike.nana-mint-explainer-v1.workflow",
+            "anchor": {
+              "scene_id": "workflow",
+              "cue": "prompt",
+              "default_local_seconds": 2.4,
+              "offset_seconds": 3.4,
+              "source_locked": "PromptSend局部typeStart/typeDuration/cursorAt/clickAt"
+            },
+            "window": {
+              "start": "scene.start + cues.prompt + 固定局部偏移",
+              "end": "组件内部公式；最大至cues.steps"
+            },
+            "reading": "随真实prompt锚点整体移动；组件内部输入/发送时距锁定，不支持独立语义覆盖"
+          },
+          {
+            "id": "workflow.prompt.send-click",
+            "action_id": "haike.nana-mint-explainer-v1.workflow",
+            "anchor": {
+              "scene_id": "workflow",
+              "cue": "prompt",
+              "default_local_seconds": 2.4,
+              "offset_seconds": 4.1,
+              "source_locked": "PromptSend局部typeStart/typeDuration/cursorAt/clickAt"
+            },
+            "window": {
+              "start": "scene.start + cues.prompt + 固定局部偏移",
+              "end": "组件内部公式；最大至cues.steps"
+            },
+            "reading": "随真实prompt锚点整体移动；组件内部输入/发送时距锁定，不支持独立语义覆盖"
+          }
+        ],
+        "retiming": "已准备content的scene.start/end和明确cues由原TSX真实消费；固定局部事件保持锁定；本旁路不接受独立events覆盖/自动ASR/任意重排"
+      },
+      "slots": [
+        {
+          "id": "prepared-episode",
+          "kind": "local_prepared_directory",
+          "input_path": "request.data",
+          "required": true,
+          "missing_policy": "阻断；先运行原prepare，显式提供独立本期目录，不自动读取私有默认"
+        }
+      ],
+      "capabilities": {
+        "reference_fidelity": "已认可89.266667秒横屏1080p有声版本；每期新输入独立验收",
+        "script_replacement": "本适配器只消费原prepare的已准备输入；不自动写稿/配音/切人物",
+        "semantic_reordering": "13景顺序固定；可消费作者依据本期ASR准备的scene/cue/caption时间，不支持任意语义重排",
+        "arbitrary_catalogue_action_replacement": false,
+        "action_selection": "仅接受完整固定顺序；变更明确拒绝",
+        "high_definition": "1920×1080/30fps原入口；确认片已导出，新期另验",
+        "audio": "复用本期完整混音；保留原v5音轨，不二次加乐；连续设备听审仍pending"
+      },
+      "validation": {
+        "source_identity": {
+          "status": "pass",
+          "method": "原release全部源码哈希核对；运行时prepare再次核对",
+          "scope": "已认可89.266667秒横屏1080p有声版本；每期新输入独立验收",
+          "evidence": [
+            "Haike_video/templates/nana-mint-explainer-v1/APPROVAL.json",
+            "Haike_video/templates/nana-mint-explainer-v1/VALIDATION.md"
+          ]
+        },
+        "historical_visual": {
+          "status": "pass",
+          "method": "原冻结验收记录；本轮不追溯升级旧结论",
+          "scope": "已认可89.266667秒横屏1080p有声版本；每期新输入独立验收",
+          "evidence": [
+            "Haike_video/templates/nana-mint-explainer-v1/APPROVAL.json",
+            "Haike_video/templates/nana-mint-explainer-v1/VALIDATION.md"
+          ]
+        },
+        "sidecar_visual": {
+          "status": "not_applicable",
+          "method": "未增加模板3视觉实现；原release及当前定稿public/content/音轨身份核验",
+          "scope": "只返回原props与真实cue；未重新渲染、连续观看或听审",
+          "evidence": [
+            ".local/motion-standard-unification/A/prepare-results.json"
+          ]
+        },
+        "continuous_audio": {
+          "status": "pending",
+          "method": "未进行本轮完整设备听审",
+          "scope": "已认可89.266667秒横屏1080p有声版本；每期新输入独立验收",
+          "evidence": [
+            "Haike_video/templates/nana-mint-explainer-v1/APPROVAL.json",
+            "Haike_video/templates/nana-mint-explainer-v1/VALIDATION.md"
+          ]
+        },
+        "production": {
+          "status": "pending",
+          "method": "prepared不等于入队/完整输出；逐期沿原gate验收",
+          "scope": "已认可89.266667秒横屏1080p有声版本；每期新输入独立验收",
+          "evidence": [
+            "Haike_video/templates/nana-mint-explainer-v1/APPROVAL.json",
+            "Haike_video/templates/nana-mint-explainer-v1/VALIDATION.md"
+          ]
+        },
+        "platform": {
+          "status": "pending",
+          "method": "未发布；未做目标平台/异机验收",
+          "scope": "已认可89.266667秒横屏1080p有声版本；每期新输入独立验收",
+          "evidence": [
+            "Haike_video/templates/nana-mint-explainer-v1/APPROVAL.json",
+            "Haike_video/templates/nana-mint-explainer-v1/VALIDATION.md"
+          ]
+        }
+      },
+      "reproduction": {
+        "prepare_entrypoint": "Haike_video/templates/nana-mint-explainer-v1/prepare.py",
+        "request_contract": "Haike_video/templates/nana-mint-explainer-v1/input-contract.json",
+        "queue_entrypoint": "Haike_video/scripts/nana_mint_preview.py",
+        "preview_mode": "frames",
+        "export_mode": "render",
+        "gate": "原队列核本期bundle/声音/媒体/真实图片review；不自动提交"
+      }
+    },
+    {
+      "template_id": "field-notes-v1",
+      "version": "1.0.0",
+      "gallery_id": "field-notes-v1",
+      "family": "numbered",
+      "number": 4,
+      "renderer": {
+        "kind": "project",
+        "entrypoint": "Haike_video/templates/motion-replay-numbered-02-05/FieldNotesV1.tsx:MotionReplayFieldNotes",
+        "adapter": "backlot.motion_replay_numbered_02_05:prepare",
+        "execution": "supported",
+        "scope": "只准备；执行能力以queue_route和blockers为准"
+      },
+      "sources": [
+        {
+          "path": "Haike_video/templates/chromatic-motion-lab-v1/custom-recipes/release.json",
+          "sha256": "577123b79f2bdc8fc8c1d86a6f3c008646e810fce290eec62338ebf3023d4cd9"
+        },
+        {
+          "path": "Haike_video/templates/chromatic-motion-lab-v1/RecipeStage.tsx",
+          "sha256": "19e8294b824d371d8b2ff5a9da6f71773404679baabdaddda6e8e4687da5d19a"
+        },
+        {
+          "path": "Haike_video/templates/chromatic-motion-lab-v1/custom-recipes/field-notes.json",
+          "sha256": "8547c0b71af0b5cd7660c7865d3430a5063d51e8dfeedbba8af93db65e2c7ab0"
+        },
+        {
+          "path": "Haike_video/templates/motion-replay-numbered-02-05/FieldNotesV1.tsx",
+          "sha256": "f31aa41388b9f9bf4fa8a5767478ce27bb149c2b93b115289bc31bbb09180205"
+        },
+        {
+          "path": "Haike_video/templates/motion-replay-numbered-02-05/action-bindings.cjs",
+          "sha256": "9b1ba73541faf364be2437854542bc9bb446f79a3c46904c489456ecb002c22f"
+        },
+        {
+          "path": "Haike_video/templates/motion-replay-numbered-02-05/Preview.tsx",
+          "sha256": "ac277bccbc6a66539f72fb0c8d424ec3bfda689d75442eda503acdf803ea1cda"
+        },
+        {
+          "path": "Haike_video/templates/motion-replay-numbered-02-05/build-preview.cjs",
+          "sha256": "5049d06208f41a6c3efb66fe15d8921dde7246afa9c569b0d6c77156d53be0b1"
+        },
+        {
+          "path": "Haike_video/backlot/motion_replay_numbered_02_05.py",
+          "sha256": "15702745b206cacfb83f20b93bb02c469dceda9a9fcb6370ad45b24d6167c5e4"
+        }
+      ],
+      "objects": [
+        {
+          "id": "headline",
+          "role": "固定短标题",
+          "authority": {
+            "path": "Haike_video/templates/chromatic-motion-lab-v1/RecipeStage.tsx",
+            "scope": "RecipeStage.Stage或Title"
+          }
+        },
+        {
+          "id": "material",
+          "role": "真实照片",
+          "authority": {
+            "path": "Haike_video/templates/chromatic-motion-lab-v1/RecipeStage.tsx",
+            "scope": "固定Img、Media或私有GridToHero导入；照片不自动换视频"
+          }
+        },
+        {
+          "id": "note",
+          "role": "场景短句",
+          "authority": {
+            "path": "Haike_video/templates/chromatic-motion-lab-v1/RecipeStage.tsx",
+            "scope": "固定note时钟"
+          }
+        },
+        {
+          "id": "presenter",
+          "role": "连续辅助人物窗",
+          "authority": {
+            "path": "Haike_video/templates/chromatic-motion-lab-v1/RecipeStage.tsx",
+            "scope": "原连续24秒视频，muted/volume0，取景不变"
+          }
+        },
+        {
+          "id": "caption",
+          "role": "示意字幕",
+          "authority": {
+            "path": "Haike_video/templates/chromatic-motion-lab-v1/RecipeStage.tsx",
+            "scope": "固定四场；不冒充真实ASR/口型"
+          }
+        },
+        {
+          "id": "chrome",
+          "role": "纸面品牌与进度",
+          "authority": {
+            "path": "Haike_video/templates/chromatic-motion-lab-v1/RecipeStage.tsx",
+            "scope": "原场景的几何/颜色/边界"
+          }
+        }
+      ],
+      "actions": [
+        {
+          "id": "haike.field-notes-v1.arrive",
+          "version": "1.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/chromatic-motion-lab-v1/RecipeStage.tsx",
+            "symbol": "Stage(hero)",
+            "dispatch": "原组件真实调用；不使用selection/data-effect作为执行器"
+          },
+          "objects": [
+            "headline",
+            "material",
+            "note"
+          ],
+          "parameters": {
+            "source_locked": "原源码几何、曲线、照片索引和部分固定文字；不开放163动作任意替换",
+            "callable": "Haike_video/templates/motion-replay-numbered-02-05/FieldNotesV1.tsx:MotionReplayFieldNotesAction",
+            "dispatch_index": 0
+          },
+          "phases": {
+            "entry": "局部0帧；标题原source入场",
+            "active": "局部帧title0–18、media24–90、note96–120；summary行24/38/52开始",
+            "settled": "局部120至179帧阅读",
+            "exit": "全局180帧场景卸载或720帧全片结束"
+          }
+        },
+        {
+          "id": "haike.field-notes-v1.compare",
+          "version": "1.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/chromatic-motion-lab-v1/RecipeStage.tsx",
+            "symbol": "Stage(duet)",
+            "dispatch": "原组件真实调用；不使用selection/data-effect作为执行器"
+          },
+          "objects": [
+            "headline",
+            "material",
+            "note"
+          ],
+          "parameters": {
+            "source_locked": "原源码几何、曲线、照片索引和部分固定文字；不开放163动作任意替换",
+            "callable": "Haike_video/templates/motion-replay-numbered-02-05/FieldNotesV1.tsx:MotionReplayFieldNotesAction",
+            "dispatch_index": 1
+          },
+          "phases": {
+            "entry": "局部0帧；标题原source入场",
+            "active": "局部帧title0–18、media24–90、note96–120；summary行24/38/52开始",
+            "settled": "局部120至179帧阅读",
+            "exit": "全局360帧场景卸载或720帧全片结束"
+          }
+        },
+        {
+          "id": "haike.field-notes-v1.connect",
+          "version": "1.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/chromatic-motion-lab-v1/RecipeStage.tsx",
+            "symbol": "Stage(cards)",
+            "dispatch": "原组件真实调用；不使用selection/data-effect作为执行器"
+          },
+          "objects": [
+            "headline",
+            "material",
+            "note"
+          ],
+          "parameters": {
+            "source_locked": "原源码几何、曲线、照片索引和部分固定文字；不开放163动作任意替换",
+            "callable": "Haike_video/templates/motion-replay-numbered-02-05/FieldNotesV1.tsx:MotionReplayFieldNotesAction",
+            "dispatch_index": 2
+          },
+          "phases": {
+            "entry": "局部0帧；标题原source入场",
+            "active": "局部帧title0–18、media24–90、note96–120；summary行24/38/52开始",
+            "settled": "局部120至179帧阅读",
+            "exit": "全局540帧场景卸载或720帧全片结束"
+          }
+        },
+        {
+          "id": "haike.field-notes-v1.recap",
+          "version": "1.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/chromatic-motion-lab-v1/RecipeStage.tsx",
+            "symbol": "Stage(summary)",
+            "dispatch": "原组件真实调用；不使用selection/data-effect作为执行器"
+          },
+          "objects": [
+            "headline",
+            "material",
+            "note"
+          ],
+          "parameters": {
+            "source_locked": "原源码几何、曲线、照片索引和部分固定文字；不开放163动作任意替换",
+            "callable": "Haike_video/templates/motion-replay-numbered-02-05/FieldNotesV1.tsx:MotionReplayFieldNotesAction",
+            "dispatch_index": 3
+          },
+          "phases": {
+            "entry": "局部0帧；标题原source入场",
+            "active": "局部帧title0–18、media24–90、note96–120；summary行24/38/52开始",
+            "settled": "局部120至179帧阅读",
+            "exit": "全局720帧场景卸载或720帧全片结束"
+          }
+        }
+      ],
+      "timeline": {
+        "mode": "source_locked",
+        "clock": {
+          "fps": 30,
+          "frames": 720,
+          "canvas": [
+            720,
+            1280
+          ],
+          "master": "固定作者时钟；静音示意，无音频重排"
+        },
+        "events": [
+          {
+            "id": "arrive",
+            "action_id": "haike.field-notes-v1.arrive",
+            "anchor": {
+              "absolute_frame": 0
+            },
+            "window": {
+              "frames": [
+                0,
+                180
+              ],
+              "fps": 30,
+              "endpoint": "[from,to)"
+            },
+            "reading": {
+              "frames": [
+                120,
+                180
+              ]
+            }
+          },
+          {
+            "id": "compare",
+            "action_id": "haike.field-notes-v1.compare",
+            "anchor": {
+              "absolute_frame": 180
+            },
+            "window": {
+              "frames": [
+                180,
+                360
+              ],
+              "fps": 30,
+              "endpoint": "[from,to)"
+            },
+            "reading": {
+              "frames": [
+                300,
+                360
+              ]
+            }
+          },
+          {
+            "id": "connect",
+            "action_id": "haike.field-notes-v1.connect",
+            "anchor": {
+              "absolute_frame": 360
+            },
+            "window": {
+              "frames": [
+                360,
+                540
+              ],
+              "fps": 30,
+              "endpoint": "[from,to)"
+            },
+            "reading": {
+              "frames": [
+                480,
+                540
+              ]
+            }
+          },
+          {
+            "id": "recap",
+            "action_id": "haike.field-notes-v1.recap",
+            "anchor": {
+              "absolute_frame": 540
+            },
+            "window": {
+              "frames": [
+                540,
+                720
+              ],
+              "fps": 30,
+              "endpoint": "[from,to)"
+            },
+            "reading": {
+              "frames": [
+                660,
+                720
+              ]
+            }
+          },
+          {
+            "id": "arrive.title",
+            "action_id": "haike.field-notes-v1.arrive",
+            "anchor": {
+              "absolute_frame": 0,
+              "source_local_frame": 0
+            },
+            "window": {
+              "frames": [
+                0,
+                18
+              ],
+              "fps": 30
+            },
+            "reading": {
+              "until_frame": 180,
+              "source_locked": true
+            }
+          },
+          {
+            "id": "arrive.parallax",
+            "action_id": "haike.field-notes-v1.arrive",
+            "anchor": {
+              "absolute_frame": 24,
+              "source_local_frame": 24
+            },
+            "window": {
+              "frames": [
+                24,
+                90
+              ],
+              "fps": 30
+            },
+            "reading": {
+              "until_frame": 180,
+              "source_locked": true
+            }
+          },
+          {
+            "id": "arrive.note",
+            "action_id": "haike.field-notes-v1.arrive",
+            "anchor": {
+              "absolute_frame": 96,
+              "source_local_frame": 96
+            },
+            "window": {
+              "frames": [
+                96,
+                120
+              ],
+              "fps": 30
+            },
+            "reading": {
+              "until_frame": 180,
+              "source_locked": true
+            }
+          },
+          {
+            "id": "compare.title",
+            "action_id": "haike.field-notes-v1.compare",
+            "anchor": {
+              "absolute_frame": 180,
+              "source_local_frame": 0
+            },
+            "window": {
+              "frames": [
+                180,
+                198
+              ],
+              "fps": 30
+            },
+            "reading": {
+              "until_frame": 360,
+              "source_locked": true
+            }
+          },
+          {
+            "id": "compare.paired-reveal",
+            "action_id": "haike.field-notes-v1.compare",
+            "anchor": {
+              "absolute_frame": 204,
+              "source_local_frame": 24
+            },
+            "window": {
+              "frames": [
+                204,
+                270
+              ],
+              "fps": 30
+            },
+            "reading": {
+              "until_frame": 360,
+              "source_locked": true
+            }
+          },
+          {
+            "id": "compare.note",
+            "action_id": "haike.field-notes-v1.compare",
+            "anchor": {
+              "absolute_frame": 276,
+              "source_local_frame": 96
+            },
+            "window": {
+              "frames": [
+                276,
+                300
+              ],
+              "fps": 30
+            },
+            "reading": {
+              "until_frame": 360,
+              "source_locked": true
+            }
+          },
+          {
+            "id": "connect.title",
+            "action_id": "haike.field-notes-v1.connect",
+            "anchor": {
+              "absolute_frame": 360,
+              "source_local_frame": 0
+            },
+            "window": {
+              "frames": [
+                360,
+                378
+              ],
+              "fps": 30
+            },
+            "reading": {
+              "until_frame": 540,
+              "source_locked": true
+            }
+          },
+          {
+            "id": "connect.reflow",
+            "action_id": "haike.field-notes-v1.connect",
+            "anchor": {
+              "absolute_frame": 384,
+              "source_local_frame": 24
+            },
+            "window": {
+              "frames": [
+                384,
+                450
+              ],
+              "fps": 30
+            },
+            "reading": {
+              "until_frame": 540,
+              "source_locked": true
+            }
+          },
+          {
+            "id": "connect.note",
+            "action_id": "haike.field-notes-v1.connect",
+            "anchor": {
+              "absolute_frame": 456,
+              "source_local_frame": 96
+            },
+            "window": {
+              "frames": [
+                456,
+                480
+              ],
+              "fps": 30
+            },
+            "reading": {
+              "until_frame": 540,
+              "source_locked": true
+            }
+          },
+          {
+            "id": "recap.summary-row0",
+            "action_id": "haike.field-notes-v1.recap",
+            "anchor": {
+              "absolute_frame": 564,
+              "source_local_frame": 24
+            },
+            "window": {
+              "frames": [
+                564,
+                580
+              ],
+              "fps": 30
+            },
+            "reading": {
+              "until_frame": 720,
+              "source_locked": true
+            }
+          },
+          {
+            "id": "recap.summary-row1",
+            "action_id": "haike.field-notes-v1.recap",
+            "anchor": {
+              "absolute_frame": 578,
+              "source_local_frame": 38
+            },
+            "window": {
+              "frames": [
+                578,
+                594
+              ],
+              "fps": 30
+            },
+            "reading": {
+              "until_frame": 720,
+              "source_locked": true
+            }
+          },
+          {
+            "id": "recap.summary-row2",
+            "action_id": "haike.field-notes-v1.recap",
+            "anchor": {
+              "absolute_frame": 592,
+              "source_local_frame": 52
+            },
+            "window": {
+              "frames": [
+                592,
+                608
+              ],
+              "fps": 30
+            },
+            "reading": {
+              "until_frame": 720,
+              "source_locked": true
+            }
+          },
+          {
+            "id": "recap.highlight-note",
+            "action_id": "haike.field-notes-v1.recap",
+            "anchor": {
+              "absolute_frame": 636,
+              "source_local_frame": 96
+            },
+            "window": {
+              "frames": [
+                636,
+                660
+              ],
+              "fps": 30
+            },
+            "reading": {
+              "until_frame": 720,
+              "source_locked": true
+            }
+          }
+        ],
+        "retiming": "锁定原窗口；不接受动作子集、替换、重排或时间伸缩"
+      },
+      "slots": [
+        {
+          "id": "prepared-episode",
+          "kind": "local_prepared_directory",
+          "input_path": "request.data",
+          "required": true,
+          "missing_policy": "阻断；先运行原prepare，显式提供独立本期目录，不自动读取私有默认"
+        }
+      ],
+      "capabilities": {
+        "reference_fidelity": "原24秒竖屏低清静音用户认可样式；照片仍是照片，人物全片辅助小窗",
+        "script_replacement": "本适配器只消费原prepare的已准备输入；不自动写稿/配音/切人物",
+        "semantic_reordering": false,
+        "arbitrary_catalogue_action_replacement": false,
+        "action_selection": "仅接受完整固定顺序；变更明确拒绝",
+        "high_definition": false,
+        "audio": "静音；人物Video muted/volume0；未开放主声音",
+        "full_production": false,
+        "private_dependency": "无需模板5私有网格组件"
+      },
+      "validation": {
+        "source_identity": {
+          "status": "pass",
+          "method": "原release全部源码哈希核对；运行时prepare再次核对",
+          "scope": "原24秒竖屏低清静音用户认可样式；照片仍是照片，人物全片辅助小窗",
+          "evidence": [
+            "Haike_video/templates/chromatic-motion-lab-v1/custom-recipes/VALIDATION.json"
+          ]
+        },
+        "historical_visual": {
+          "status": "pass",
+          "method": "原冻结验收记录；本轮不追溯升级旧结论",
+          "scope": "原24秒竖屏低清静音用户认可样式；照片仍是照片，人物全片辅助小窗",
+          "evidence": [
+            "Haike_video/templates/chromatic-motion-lab-v1/custom-recipes/VALIDATION.json"
+          ]
+        },
+        "sidecar_visual": {
+          "status": "pass",
+          "method": "Codex内置浏览器源组件/旁路Player对应帧实际查看；先核视频ready与原时钟，保存全页原图、联系表和数值差异",
+          "scope": "4个对应状态；两项动作ID调用另读回源场景/局部帧；仅本机低清静音抽查，像素非全同，未做新完整连播/音频/高清验收",
+          "evidence": [
+            ".local/motion-standard-unification/A/comparison-4.jpg",
+            ".local/motion-standard-unification/A/frame-comparison.json",
+            ".local/motion-standard-unification/A/decoded-frame-evidence.json",
+            ".local/motion-standard-unification/A/action-proof.json"
+          ]
+        },
+        "continuous_audio": {
+          "status": "pending",
+          "method": "未进行本轮完整设备听审",
+          "scope": "原24秒竖屏低清静音用户认可样式；照片仍是照片，人物全片辅助小窗",
+          "evidence": [
+            "Haike_video/templates/chromatic-motion-lab-v1/custom-recipes/VALIDATION.json"
+          ]
+        },
+        "production": {
+          "status": "pending",
+          "method": "prepared不等于入队/完整输出；逐期沿原gate验收",
+          "scope": "原24秒竖屏低清静音用户认可样式；照片仍是照片，人物全片辅助小窗",
+          "evidence": [
+            "Haike_video/templates/chromatic-motion-lab-v1/custom-recipes/VALIDATION.json"
+          ]
+        },
+        "platform": {
+          "status": "pending",
+          "method": "未发布；未做目标平台/异机验收",
+          "scope": "原24秒竖屏低清静音用户认可样式；照片仍是照片，人物全片辅助小窗",
+          "evidence": [
+            "Haike_video/templates/chromatic-motion-lab-v1/custom-recipes/VALIDATION.json"
+          ]
+        }
+      },
+      "reproduction": {
+        "prepare_entrypoint": "Haike_video/templates/chromatic-motion-lab-v1/prepare.py",
+        "existing_preview_entrypoint": "Haike_video/templates/chromatic-motion-lab-v1/CustomPreview.tsx",
+        "wrapper_entrypoint": "Haike_video/templates/motion-replay-numbered-02-05/FieldNotesV1.tsx:MotionReplayFieldNotes",
+        "wrapper_build_entrypoint": "Haike_video/templates/motion-replay-numbered-02-05/build-preview.cjs",
+        "gate": "只允许本地Player预览；完整渲染必须等待合法统一队列适配，不绕过队列"
+      }
+    },
+    {
+      "template_id": "field-notes-v2",
+      "version": "2.0.0",
+      "gallery_id": "field-notes-v2",
+      "family": "numbered",
+      "number": 5,
+      "renderer": {
+        "kind": "project",
+        "entrypoint": "Haike_video/templates/motion-replay-numbered-02-05/FieldNotes.tsx:MotionReplayFieldNotes",
+        "adapter": "backlot.motion_replay_numbered_02_05:prepare",
+        "execution": "supported",
+        "scope": "只准备；执行能力以queue_route和blockers为准"
+      },
+      "sources": [
+        {
+          "path": "Haike_video/templates/field-notes-v2/release.json",
+          "sha256": "6fc795e5703ff4991a55d20b213be75d94bc10b8d669c0d4ac8c41db463bd27a"
+        },
+        {
+          "path": "Haike_video/templates/field-notes-v2/Scene.tsx",
+          "sha256": "032e216c2bb2e5ebecd331cc7787b590d1319ae94051150e42b8b5b5fee851c8"
+        },
+        {
+          "path": "Haike_video/templates/field-notes-v2/selection.json",
+          "sha256": "2a6370b8cd66c7259e5ea2a9b28ecdf77d37996e95493768c9bbc08427da530e"
+        },
+        {
+          "path": "Haike_video/templates/motion-replay-numbered-02-05/FieldNotes.tsx",
+          "sha256": "56c603f114da7118e39f559c81d39d88741beb42d954c26819d02f1371aa7391"
+        },
+        {
+          "path": "Haike_video/templates/motion-replay-numbered-02-05/action-bindings.cjs",
+          "sha256": "9b1ba73541faf364be2437854542bc9bb446f79a3c46904c489456ecb002c22f"
+        },
+        {
+          "path": "Haike_video/templates/motion-replay-numbered-02-05/Preview.tsx",
+          "sha256": "ac277bccbc6a66539f72fb0c8d424ec3bfda689d75442eda503acdf803ea1cda"
+        },
+        {
+          "path": "Haike_video/templates/motion-replay-numbered-02-05/build-preview.cjs",
+          "sha256": "5049d06208f41a6c3efb66fe15d8921dde7246afa9c569b0d6c77156d53be0b1"
+        },
+        {
+          "path": "Haike_video/backlot/motion_replay_numbered_02_05.py",
+          "sha256": "15702745b206cacfb83f20b93bb02c469dceda9a9fcb6370ad45b24d6167c5e4"
+        }
+      ],
+      "objects": [
+        {
+          "id": "headline",
+          "role": "固定短标题",
+          "authority": {
+            "path": "Haike_video/templates/field-notes-v2/Scene.tsx",
+            "scope": "RecipeStage.Stage或Title"
+          }
+        },
+        {
+          "id": "material",
+          "role": "真实照片",
+          "authority": {
+            "path": "Haike_video/templates/field-notes-v2/Scene.tsx",
+            "scope": "固定Img、Media或私有GridToHero导入；照片不自动换视频"
+          }
+        },
+        {
+          "id": "note",
+          "role": "场景短句",
+          "authority": {
+            "path": "Haike_video/templates/field-notes-v2/Scene.tsx",
+            "scope": "固定note时钟"
+          }
+        },
+        {
+          "id": "presenter",
+          "role": "连续辅助人物窗",
+          "authority": {
+            "path": "Haike_video/templates/field-notes-v2/Scene.tsx",
+            "scope": "原连续24秒视频，muted/volume0，取景不变"
+          }
+        },
+        {
+          "id": "caption",
+          "role": "示意字幕",
+          "authority": {
+            "path": "Haike_video/templates/field-notes-v2/Scene.tsx",
+            "scope": "固定四场；不冒充真实ASR/口型"
+          }
+        },
+        {
+          "id": "chrome",
+          "role": "纸面品牌与进度",
+          "authority": {
+            "path": "Haike_video/templates/field-notes-v2/Scene.tsx",
+            "scope": "原场景的几何/颜色/边界"
+          }
+        }
+      ],
+      "actions": [
+        {
+          "id": "haike.field-notes-v2.arrive",
+          "version": "2.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/field-notes-v2/Scene.tsx",
+            "symbol": "Arrive",
+            "dispatch": "原组件真实调用；不使用selection/data-effect作为执行器"
+          },
+          "objects": [
+            "headline",
+            "material",
+            "note"
+          ],
+          "parameters": {
+            "source_locked": "原源码几何、曲线、照片索引和部分固定文字；不开放163动作任意替换",
+            "callable": "Haike_video/templates/motion-replay-numbered-02-05/FieldNotes.tsx:MotionReplayFieldNotesAction",
+            "dispatch_index": 0
+          },
+          "phases": {
+            "entry": "局部0帧；标题原source入场",
+            "active": "标题39–63让位，照片51–87进入",
+            "settled": "局部110至179帧阅读",
+            "exit": "全局180帧场景卸载或720帧全片结束"
+          }
+        },
+        {
+          "id": "haike.field-notes-v2.compare",
+          "version": "2.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/field-notes-v2/Scene.tsx",
+            "symbol": "Compare",
+            "dispatch": "原组件真实调用；不使用selection/data-effect作为执行器"
+          },
+          "objects": [
+            "headline",
+            "material",
+            "note"
+          ],
+          "parameters": {
+            "source_locked": "原源码几何、曲线、照片索引和部分固定文字；不开放163动作任意替换",
+            "callable": "Haike_video/templates/motion-replay-numbered-02-05/FieldNotes.tsx:MotionReplayFieldNotesAction",
+            "dispatch_index": 1
+          },
+          "phases": {
+            "entry": "局部0帧；标题原source入场",
+            "active": "实际GridToHero在0–202执行，之后Freeze202",
+            "settled": "局部203至239帧阅读；网格保持原Freeze202",
+            "exit": "全局420帧场景卸载或720帧全片结束"
+          }
+        },
+        {
+          "id": "haike.field-notes-v2.connect",
+          "version": "2.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/field-notes-v2/Scene.tsx",
+            "symbol": "Connect",
+            "dispatch": "原组件真实调用；不使用selection/data-effect作为执行器"
+          },
+          "objects": [
+            "headline",
+            "material",
+            "note"
+          ],
+          "parameters": {
+            "source_locked": "原源码几何、曲线、照片索引和部分固定文字；不开放163动作任意替换",
+            "callable": "Haike_video/templates/motion-replay-numbered-02-05/FieldNotes.tsx:MotionReplayFieldNotesAction",
+            "dispatch_index": 2
+          },
+          "phases": {
+            "entry": "局部0帧；标题原source入场",
+            "active": "线18–52绘制，照片53–77进入",
+            "settled": "局部96至149帧阅读",
+            "exit": "全局570帧场景卸载或720帧全片结束"
+          }
+        },
+        {
+          "id": "haike.field-notes-v2.converge",
+          "version": "2.0.0",
+          "implementation": {
+            "path": "Haike_video/templates/field-notes-v2/Scene.tsx",
+            "symbol": "Converge",
+            "dispatch": "原组件真实调用；不使用selection/data-effect作为执行器"
+          },
+          "objects": [
+            "headline",
+            "material",
+            "note"
+          ],
+          "parameters": {
+            "source_locked": "原源码几何、曲线、照片索引和部分固定文字；不开放163动作任意替换",
+            "callable": "Haike_video/templates/motion-replay-numbered-02-05/FieldNotes.tsx:MotionReplayFieldNotesAction",
+            "dispatch_index": 3
+          },
+          "phases": {
+            "entry": "局部0帧；标题原source入场",
+            "active": "来源42–82汇聚，结论83–107展开",
+            "settled": "局部113至149帧阅读",
+            "exit": "全局720帧场景卸载或720帧全片结束"
+          }
+        }
+      ],
+      "timeline": {
+        "mode": "source_locked",
+        "clock": {
+          "fps": 30,
+          "frames": 720,
+          "canvas": [
+            720,
+            1280
+          ],
+          "master": "固定作者时钟；静音示意，无音频重排"
+        },
+        "events": [
+          {
+            "id": "arrive",
+            "action_id": "haike.field-notes-v2.arrive",
+            "anchor": {
+              "absolute_frame": 0
+            },
+            "window": {
+              "frames": [
+                0,
+                180
+              ],
+              "fps": 30,
+              "endpoint": "[from,to)"
+            },
+            "reading": {
+              "frames": [
+                110,
+                180
+              ]
+            }
+          },
+          {
+            "id": "compare",
+            "action_id": "haike.field-notes-v2.compare",
+            "anchor": {
+              "absolute_frame": 180
+            },
+            "window": {
+              "frames": [
+                180,
+                420
+              ],
+              "fps": 30,
+              "endpoint": "[from,to)"
+            },
+            "reading": {
+              "frames": [
+                383,
+                420
+              ]
+            }
+          },
+          {
+            "id": "connect",
+            "action_id": "haike.field-notes-v2.connect",
+            "anchor": {
+              "absolute_frame": 420
+            },
+            "window": {
+              "frames": [
+                420,
+                570
+              ],
+              "fps": 30,
+              "endpoint": "[from,to)"
+            },
+            "reading": {
+              "frames": [
+                516,
+                570
+              ]
+            }
+          },
+          {
+            "id": "converge",
+            "action_id": "haike.field-notes-v2.converge",
+            "anchor": {
+              "absolute_frame": 570
+            },
+            "window": {
+              "frames": [
+                570,
+                720
+              ],
+              "fps": 30,
+              "endpoint": "[from,to)"
+            },
+            "reading": {
+              "frames": [
+                683,
+                720
+              ]
+            }
+          },
+          {
+            "id": "arrive.title-demote",
+            "action_id": "haike.field-notes-v2.arrive",
+            "anchor": {
+              "absolute_frame": 39,
+              "source_local_frame": 39
+            },
+            "window": {
+              "frames": [
+                39,
+                63
+              ],
+              "fps": 30
+            },
+            "reading": {
+              "until_frame": 180,
+              "source_locked": true
+            }
+          },
+          {
+            "id": "arrive.photo-enter",
+            "action_id": "haike.field-notes-v2.arrive",
+            "anchor": {
+              "absolute_frame": 51,
+              "source_local_frame": 51
+            },
+            "window": {
+              "frames": [
+                51,
+                87
+              ],
+              "fps": 30
+            },
+            "reading": {
+              "until_frame": 180,
+              "source_locked": true
+            }
+          },
+          {
+            "id": "compare.grid-focus",
+            "action_id": "haike.field-notes-v2.compare",
+            "anchor": {
+              "absolute_frame": 230,
+              "source_local_frame": 50
+            },
+            "window": {
+              "frames": [
+                230,
+                360
+              ],
+              "fps": 30
+            },
+            "reading": {
+              "until_frame": 420,
+              "source_locked": true
+            }
+          },
+          {
+            "id": "compare.grid-return",
+            "action_id": "haike.field-notes-v2.compare",
+            "anchor": {
+              "absolute_frame": 360,
+              "source_local_frame": 180
+            },
+            "window": {
+              "frames": [
+                360,
+                383
+              ],
+              "fps": 30
+            },
+            "reading": {
+              "until_frame": 420,
+              "source_locked": true
+            }
+          },
+          {
+            "id": "connect.line-draw",
+            "action_id": "haike.field-notes-v2.connect",
+            "anchor": {
+              "absolute_frame": 438,
+              "source_local_frame": 18
+            },
+            "window": {
+              "frames": [
+                438,
+                472
+              ],
+              "fps": 30
+            },
+            "reading": {
+              "until_frame": 570,
+              "source_locked": true
+            }
+          },
+          {
+            "id": "connect.photo-enter",
+            "action_id": "haike.field-notes-v2.connect",
+            "anchor": {
+              "absolute_frame": 473,
+              "source_local_frame": 53
+            },
+            "window": {
+              "frames": [
+                473,
+                497
+              ],
+              "fps": 30
+            },
+            "reading": {
+              "until_frame": 570,
+              "source_locked": true
+            }
+          },
+          {
+            "id": "converge.source-travel",
+            "action_id": "haike.field-notes-v2.converge",
+            "anchor": {
+              "absolute_frame": 612,
+              "source_local_frame": 42
+            },
+            "window": {
+              "frames": [
+                612,
+                652
+              ],
+              "fps": 30
+            },
+            "reading": {
+              "until_frame": 720,
+              "source_locked": true
+            }
+          },
+          {
+            "id": "converge.conclusion-expand",
+            "action_id": "haike.field-notes-v2.converge",
+            "anchor": {
+              "absolute_frame": 653,
+              "source_local_frame": 83
+            },
+            "window": {
+              "frames": [
+                653,
+                677
+              ],
+              "fps": 30
+            },
+            "reading": {
+              "until_frame": 720,
+              "source_locked": true
+            }
+          }
+        ],
+        "retiming": "锁定原窗口；不接受动作子集、替换、重排或时间伸缩"
+      },
+      "slots": [
+        {
+          "id": "prepared-episode",
+          "kind": "local_prepared_directory",
+          "input_path": "request.data",
+          "required": true,
+          "missing_policy": "阻断；先运行原prepare，显式提供独立本期目录，不自动读取私有默认"
+        }
+      ],
+      "capabilities": {
+        "reference_fidelity": "原24秒竖屏低清静音用户认可样式；照片仍是照片，人物全片辅助小窗",
+        "script_replacement": "本适配器只消费原prepare的已准备输入；不自动写稿/配音/切人物",
+        "semantic_reordering": false,
+        "arbitrary_catalogue_action_replacement": false,
+        "action_selection": "仅接受完整固定顺序；变更明确拒绝",
+        "high_definition": false,
+        "audio": "静音；人物Video muted/volume0；未开放主声音",
+        "full_production": false,
+        "private_dependency": "模板5真实网格组件保留本机原包；哈希不授予分发权"
+      },
+      "validation": {
+        "source_identity": {
+          "status": "pass",
+          "method": "原release全部源码哈希核对；运行时prepare再次核对",
+          "scope": "原24秒竖屏低清静音用户认可样式；照片仍是照片，人物全片辅助小窗",
+          "evidence": [
+            "Haike_video/templates/field-notes-v2/VALIDATION.json"
+          ]
+        },
+        "historical_visual": {
+          "status": "pass",
+          "method": "原冻结验收记录；本轮不追溯升级旧结论",
+          "scope": "原24秒竖屏低清静音用户认可样式；照片仍是照片，人物全片辅助小窗",
+          "evidence": [
+            "Haike_video/templates/field-notes-v2/VALIDATION.json"
+          ]
+        },
+        "sidecar_visual": {
+          "status": "pass",
+          "method": "Codex内置浏览器源组件/旁路Player对应帧实际查看；先核视频ready与原时钟，保存全页原图、联系表和数值差异",
+          "scope": "7个对应状态；两项动作ID调用另读回源场景/局部帧；仅本机低清静音抽查，像素非全同，未做新完整连播/音频/高清验收",
+          "evidence": [
+            ".local/motion-standard-unification/A/comparison-5.jpg",
+            ".local/motion-standard-unification/A/frame-comparison.json",
+            ".local/motion-standard-unification/A/decoded-frame-evidence.json",
+            ".local/motion-standard-unification/A/action-proof.json"
+          ]
+        },
+        "continuous_audio": {
+          "status": "pending",
+          "method": "未进行本轮完整设备听审",
+          "scope": "原24秒竖屏低清静音用户认可样式；照片仍是照片，人物全片辅助小窗",
+          "evidence": [
+            "Haike_video/templates/field-notes-v2/VALIDATION.json"
+          ]
+        },
+        "production": {
+          "status": "pending",
+          "method": "prepared不等于入队/完整输出；逐期沿原gate验收",
+          "scope": "原24秒竖屏低清静音用户认可样式；照片仍是照片，人物全片辅助小窗",
+          "evidence": [
+            "Haike_video/templates/field-notes-v2/VALIDATION.json"
+          ]
+        },
+        "platform": {
+          "status": "pending",
+          "method": "未发布；未做目标平台/异机验收",
+          "scope": "原24秒竖屏低清静音用户认可样式；照片仍是照片，人物全片辅助小窗",
+          "evidence": [
+            "Haike_video/templates/field-notes-v2/VALIDATION.json"
+          ]
+        }
+      },
+      "reproduction": {
+        "prepare_entrypoint": "Haike_video/templates/field-notes-v2/build.cjs",
+        "existing_preview_entrypoint": "Haike_video/templates/field-notes-v2/Preview.tsx",
+        "wrapper_entrypoint": "Haike_video/templates/motion-replay-numbered-02-05/FieldNotes.tsx:MotionReplayFieldNotes",
+        "wrapper_build_entrypoint": "Haike_video/templates/motion-replay-numbered-02-05/build-preview.cjs",
+        "gate": "只允许本地Player预览；完整渲染必须等待合法统一队列适配，不绕过队列"
+      }
+    },
+    {
+      "template_id": "field-notes-v2",
+      "version": "2.1.0",
+      "gallery_id": "field-notes-v2",
+      "number": 5,
+      "family": "numbered",
+      "renderer": {
+        "kind": "project",
+        "entrypoint": "Haike_video/scripts/motion_replay_field_notes_video.py",
+        "adapter": "backlot.motion_replay_numbered_02_05:prepare",
+        "execution": "supported"
+      },
+      "sources": [
+        {
+          "path": "Haike_video/templates/field-notes-video-v1/Scene.tsx",
+          "sha256": "2a4b18f30f9277c4254103c104759e11e98be26118e7e2a42111e8ac58b5cda7"
+        },
+        {
+          "path": "Haike_video/templates/field-notes-video-v1/index.tsx",
+          "sha256": "aa3b98bc07c4764218b736c28001271bc610cf1bdec78047bceb604045efcb79"
+        },
+        {
+          "path": "Haike_video/templates/field-notes-video-v1/render.cjs",
+          "sha256": "5e1071aecaa21eb91600c0df595ec4828e16982c217a9044b7b02a28a289546a"
+        },
+        {
+          "path": "Haike_video/templates/field-notes-video-v1/registry.py",
+          "sha256": "0eff3084cb6af0191e0649cd504dc4e5298d4eac796e5b143d5616159413e504"
+        },
+        {
+          "path": "Haike_video/templates/field-notes-video-v1/webpack.cjs",
+          "sha256": "28066b48c457a814be9378d82f9bfb7f3b8a8f290d11ccff3c7800981413fcac"
+        },
+        {
+          "path": "Haike_video/backlot/motion_replay_numbered_02_05.py",
+          "sha256": "15702745b206cacfb83f20b93bb02c469dceda9a9fcb6370ad45b24d6167c5e4"
+        },
+        {
+          "path": "Haike_video/backlot/motion_replay_field_notes_video.py",
+          "sha256": "1cf248fc432410dddc64e2c367000af107a781376ac0c85d0662e3ca1b881b8c"
+        },
+        {
+          "path": "Haike_video/backlot/motion_replay_field_notes_render.py",
+          "sha256": "66979a41a50384fd714dfccde3f3ccfae046da3cdc18836b634fb5b22cb0173a"
+        },
+        {
+          "path": "Haike_video/scripts/motion_replay_field_notes_video.py",
+          "sha256": "ef6efd7063e56ffe0bb9c469c0cbb3be5276f3d48fe7dd254dfedca474c58fae"
+        },
+        {
+          "path": "Haike_video/scripts/motion_replay_hq_guard.py",
+          "sha256": "f0ebffc95b9dd51041c7778b52ed58ac0bfe76b570e31ec86b9e40abdd16b96e"
+        },
+        {
+          "path": "Haike_video/remotion-composer/package-lock.json",
+          "sha256": "80be5141ee357725970da36d2117500fd3ac062902e04bc9fe1f1942d3596bee"
+        }
+      ],
+      "objects": [
+        {
+          "id": "scene",
+          "role": "四场主体与真实视频",
+          "authority": {
+            "path": "Haike_video/templates/field-notes-video-v1/Scene.tsx",
+            "scope": "Arrive/Compare/Connect/Converge；源代码持有几何/曲线/裁切"
+          }
+        },
+        {
+          "id": "text",
+          "role": "主标题/摘要/法律说明/地址",
+          "authority": {
+            "path": "Haike_video/templates/field-notes-video-v1/Scene.tsx",
+            "scope": "episode的短文案与固定合法说明；不可注入布局代码"
+          }
+        },
+        {
+          "id": "captions",
+          "role": "完整原稿字幕",
+          "authority": {
+            "path": "Haike_video/templates/field-notes-video-v1/Scene.tsx",
+            "scope": "episode.captions与真实ASR同源，逐字覆盖sourceText"
+          }
+        },
+        {
+          "id": "presenter",
+          "role": "本期原速人物窗",
+          "authority": {
+            "path": "Haike_video/templates/field-notes-video-v1/Scene.tsx",
+            "scope": "完整主声轨的指定窗口，独立25fps母片原速采样"
+          }
+        },
+        {
+          "id": "sound",
+          "role": "完整声音",
+          "authority": {
+            "path": "Haike_video/templates/field-notes-video-v1/Scene.tsx",
+            "scope": "master.wav；完整原速旁白与授权背景音乐，主声音始终开启"
+          }
+        }
+      ],
+      "actions": [
+        {
+          "id": "haike.field-notes-v2.video.arrive",
+          "version": "2.1.0",
+          "implementation": {
+            "path": "Haike_video/templates/field-notes-video-v1/Scene.tsx",
+            "symbol": "Arrive",
+            "dispatch": "FieldNotesVideo -> ACTIONS[scene.actionId] -> actual function"
+          },
+          "objects": [
+            "scene",
+            "text",
+            "captions",
+            "presenter",
+            "sound"
+          ],
+          "parameters": {
+            "scene": "episode.scenes[0]",
+            "events": [
+              "titleDemoteStart",
+              "titleDemoteEnd",
+              "mediaEnterStart",
+              "mediaEnterEnd",
+              "noteStart"
+            ],
+            "layout": "Scene.tsx owns geometry/easing; only validated absolute semantic event frames are inputs"
+          },
+          "phases": {
+            "entry": "scenes[0].from",
+            "active": {
+              "events": [
+                "titleDemoteStart",
+                "titleDemoteEnd",
+                "mediaEnterStart",
+                "mediaEnterEnd",
+                "noteStart"
+              ],
+              "clock": "absolute full-audio 30fps"
+            },
+            "settled": "last event + at least36 frames reading; real footage keeps playing",
+            "exit": "scenes[0].to; no timeline restart"
+          }
+        },
+        {
+          "id": "haike.field-notes-v2.video.compare",
+          "version": "2.1.0",
+          "implementation": {
+            "path": "Haike_video/templates/field-notes-video-v1/Scene.tsx",
+            "symbol": "Compare",
+            "dispatch": "FieldNotesVideo -> ACTIONS[scene.actionId] -> actual function"
+          },
+          "objects": [
+            "scene",
+            "text",
+            "captions",
+            "presenter",
+            "sound"
+          ],
+          "parameters": {
+            "scene": "episode.scenes[1]",
+            "events": [
+              "focusStart",
+              "focusEnd",
+              "returnStart",
+              "returnEnd",
+              "noteStart"
+            ],
+            "layout": "Scene.tsx owns geometry/easing; only validated absolute semantic event frames are inputs"
+          },
+          "phases": {
+            "entry": "scenes[1].from",
+            "active": {
+              "events": [
+                "focusStart",
+                "focusEnd",
+                "returnStart",
+                "returnEnd",
+                "noteStart"
+              ],
+              "clock": "absolute full-audio 30fps"
+            },
+            "settled": "last event + at least36 frames reading; real footage keeps playing",
+            "exit": "scenes[1].to; no timeline restart"
+          }
+        },
+        {
+          "id": "haike.field-notes-v2.video.connect",
+          "version": "2.1.0",
+          "implementation": {
+            "path": "Haike_video/templates/field-notes-video-v1/Scene.tsx",
+            "symbol": "Connect",
+            "dispatch": "FieldNotesVideo -> ACTIONS[scene.actionId] -> actual function"
+          },
+          "objects": [
+            "scene",
+            "text",
+            "captions",
+            "presenter",
+            "sound"
+          ],
+          "parameters": {
+            "scene": "episode.scenes[2]",
+            "events": [
+              "lineStart",
+              "lineEnd",
+              "mediaEnterStart",
+              "mediaEnterEnd",
+              "noteStart"
+            ],
+            "layout": "Scene.tsx owns geometry/easing; only validated absolute semantic event frames are inputs"
+          },
+          "phases": {
+            "entry": "scenes[2].from",
+            "active": {
+              "events": [
+                "lineStart",
+                "lineEnd",
+                "mediaEnterStart",
+                "mediaEnterEnd",
+                "noteStart"
+              ],
+              "clock": "absolute full-audio 30fps"
+            },
+            "settled": "last event + at least36 frames reading; real footage keeps playing",
+            "exit": "scenes[2].to; no timeline restart"
+          }
+        },
+        {
+          "id": "haike.field-notes-v2.video.converge",
+          "version": "2.1.0",
+          "implementation": {
+            "path": "Haike_video/templates/field-notes-video-v1/Scene.tsx",
+            "symbol": "Converge",
+            "dispatch": "FieldNotesVideo -> ACTIONS[scene.actionId] -> actual function"
+          },
+          "objects": [
+            "scene",
+            "text",
+            "captions",
+            "presenter",
+            "sound"
+          ],
+          "parameters": {
+            "scene": "episode.scenes[3]",
+            "events": [
+              "pathStart",
+              "travelStart",
+              "travelEnd",
+              "conclusionStart",
+              "conclusionEnd",
+              "noteStart"
+            ],
+            "layout": "Scene.tsx owns geometry/easing; only validated absolute semantic event frames are inputs"
+          },
+          "phases": {
+            "entry": "scenes[3].from",
+            "active": {
+              "events": [
+                "pathStart",
+                "travelStart",
+                "travelEnd",
+                "conclusionStart",
+                "conclusionEnd",
+                "noteStart"
+              ],
+              "clock": "absolute full-audio 30fps"
+            },
+            "settled": "last event + at least36 frames reading; real footage keeps playing",
+            "exit": "scenes[3].to; no timeline restart"
+          }
+        }
+      ],
+      "timeline": {
+        "mode": "semantic",
+        "clock": {
+          "fps": 30,
+          "duration": "ceil(full narration samples/rate*30)",
+          "speed": 1
+        },
+        "events": [
+          {
+            "id": "arrive.titleDemoteStart",
+            "action_id": "haike.field-notes-v2.video.arrive",
+            "anchor": {
+              "input_path": "episode.scenes[0].events.titleDemoteStart",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "within": "episode.scenes[0].from/to",
+              "causality": "validated by validate_episode"
+            },
+            "reading": {
+              "minimum_settled_frames": 36,
+              "until": "episode.scenes[0].to"
+            }
+          },
+          {
+            "id": "arrive.titleDemoteEnd",
+            "action_id": "haike.field-notes-v2.video.arrive",
+            "anchor": {
+              "input_path": "episode.scenes[0].events.titleDemoteEnd",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "within": "episode.scenes[0].from/to",
+              "causality": "validated by validate_episode"
+            },
+            "reading": {
+              "minimum_settled_frames": 36,
+              "until": "episode.scenes[0].to"
+            }
+          },
+          {
+            "id": "arrive.mediaEnterStart",
+            "action_id": "haike.field-notes-v2.video.arrive",
+            "anchor": {
+              "input_path": "episode.scenes[0].events.mediaEnterStart",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "within": "episode.scenes[0].from/to",
+              "causality": "validated by validate_episode"
+            },
+            "reading": {
+              "minimum_settled_frames": 36,
+              "until": "episode.scenes[0].to"
+            }
+          },
+          {
+            "id": "arrive.mediaEnterEnd",
+            "action_id": "haike.field-notes-v2.video.arrive",
+            "anchor": {
+              "input_path": "episode.scenes[0].events.mediaEnterEnd",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "within": "episode.scenes[0].from/to",
+              "causality": "validated by validate_episode"
+            },
+            "reading": {
+              "minimum_settled_frames": 36,
+              "until": "episode.scenes[0].to"
+            }
+          },
+          {
+            "id": "arrive.noteStart",
+            "action_id": "haike.field-notes-v2.video.arrive",
+            "anchor": {
+              "input_path": "episode.scenes[0].events.noteStart",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "within": "episode.scenes[0].from/to",
+              "causality": "validated by validate_episode"
+            },
+            "reading": {
+              "minimum_settled_frames": 36,
+              "until": "episode.scenes[0].to"
+            }
+          },
+          {
+            "id": "compare.focusStart",
+            "action_id": "haike.field-notes-v2.video.compare",
+            "anchor": {
+              "input_path": "episode.scenes[1].events.focusStart",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "within": "episode.scenes[1].from/to",
+              "causality": "validated by validate_episode"
+            },
+            "reading": {
+              "minimum_settled_frames": 36,
+              "until": "episode.scenes[1].to"
+            }
+          },
+          {
+            "id": "compare.focusEnd",
+            "action_id": "haike.field-notes-v2.video.compare",
+            "anchor": {
+              "input_path": "episode.scenes[1].events.focusEnd",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "within": "episode.scenes[1].from/to",
+              "causality": "validated by validate_episode"
+            },
+            "reading": {
+              "minimum_settled_frames": 36,
+              "until": "episode.scenes[1].to"
+            }
+          },
+          {
+            "id": "compare.returnStart",
+            "action_id": "haike.field-notes-v2.video.compare",
+            "anchor": {
+              "input_path": "episode.scenes[1].events.returnStart",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "within": "episode.scenes[1].from/to",
+              "causality": "validated by validate_episode"
+            },
+            "reading": {
+              "minimum_settled_frames": 36,
+              "until": "episode.scenes[1].to"
+            }
+          },
+          {
+            "id": "compare.returnEnd",
+            "action_id": "haike.field-notes-v2.video.compare",
+            "anchor": {
+              "input_path": "episode.scenes[1].events.returnEnd",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "within": "episode.scenes[1].from/to",
+              "causality": "validated by validate_episode"
+            },
+            "reading": {
+              "minimum_settled_frames": 36,
+              "until": "episode.scenes[1].to"
+            }
+          },
+          {
+            "id": "compare.noteStart",
+            "action_id": "haike.field-notes-v2.video.compare",
+            "anchor": {
+              "input_path": "episode.scenes[1].events.noteStart",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "within": "episode.scenes[1].from/to",
+              "causality": "validated by validate_episode"
+            },
+            "reading": {
+              "minimum_settled_frames": 36,
+              "until": "episode.scenes[1].to"
+            }
+          },
+          {
+            "id": "connect.lineStart",
+            "action_id": "haike.field-notes-v2.video.connect",
+            "anchor": {
+              "input_path": "episode.scenes[2].events.lineStart",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "within": "episode.scenes[2].from/to",
+              "causality": "validated by validate_episode"
+            },
+            "reading": {
+              "minimum_settled_frames": 36,
+              "until": "episode.scenes[2].to"
+            }
+          },
+          {
+            "id": "connect.lineEnd",
+            "action_id": "haike.field-notes-v2.video.connect",
+            "anchor": {
+              "input_path": "episode.scenes[2].events.lineEnd",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "within": "episode.scenes[2].from/to",
+              "causality": "validated by validate_episode"
+            },
+            "reading": {
+              "minimum_settled_frames": 36,
+              "until": "episode.scenes[2].to"
+            }
+          },
+          {
+            "id": "connect.mediaEnterStart",
+            "action_id": "haike.field-notes-v2.video.connect",
+            "anchor": {
+              "input_path": "episode.scenes[2].events.mediaEnterStart",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "within": "episode.scenes[2].from/to",
+              "causality": "validated by validate_episode"
+            },
+            "reading": {
+              "minimum_settled_frames": 36,
+              "until": "episode.scenes[2].to"
+            }
+          },
+          {
+            "id": "connect.mediaEnterEnd",
+            "action_id": "haike.field-notes-v2.video.connect",
+            "anchor": {
+              "input_path": "episode.scenes[2].events.mediaEnterEnd",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "within": "episode.scenes[2].from/to",
+              "causality": "validated by validate_episode"
+            },
+            "reading": {
+              "minimum_settled_frames": 36,
+              "until": "episode.scenes[2].to"
+            }
+          },
+          {
+            "id": "connect.noteStart",
+            "action_id": "haike.field-notes-v2.video.connect",
+            "anchor": {
+              "input_path": "episode.scenes[2].events.noteStart",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "within": "episode.scenes[2].from/to",
+              "causality": "validated by validate_episode"
+            },
+            "reading": {
+              "minimum_settled_frames": 36,
+              "until": "episode.scenes[2].to"
+            }
+          },
+          {
+            "id": "converge.pathStart",
+            "action_id": "haike.field-notes-v2.video.converge",
+            "anchor": {
+              "input_path": "episode.scenes[3].events.pathStart",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "within": "episode.scenes[3].from/to",
+              "causality": "validated by validate_episode"
+            },
+            "reading": {
+              "minimum_settled_frames": 36,
+              "until": "episode.scenes[3].to"
+            }
+          },
+          {
+            "id": "converge.travelStart",
+            "action_id": "haike.field-notes-v2.video.converge",
+            "anchor": {
+              "input_path": "episode.scenes[3].events.travelStart",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "within": "episode.scenes[3].from/to",
+              "causality": "validated by validate_episode"
+            },
+            "reading": {
+              "minimum_settled_frames": 36,
+              "until": "episode.scenes[3].to"
+            }
+          },
+          {
+            "id": "converge.travelEnd",
+            "action_id": "haike.field-notes-v2.video.converge",
+            "anchor": {
+              "input_path": "episode.scenes[3].events.travelEnd",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "within": "episode.scenes[3].from/to",
+              "causality": "validated by validate_episode"
+            },
+            "reading": {
+              "minimum_settled_frames": 36,
+              "until": "episode.scenes[3].to"
+            }
+          },
+          {
+            "id": "converge.conclusionStart",
+            "action_id": "haike.field-notes-v2.video.converge",
+            "anchor": {
+              "input_path": "episode.scenes[3].events.conclusionStart",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "within": "episode.scenes[3].from/to",
+              "causality": "validated by validate_episode"
+            },
+            "reading": {
+              "minimum_settled_frames": 36,
+              "until": "episode.scenes[3].to"
+            }
+          },
+          {
+            "id": "converge.conclusionEnd",
+            "action_id": "haike.field-notes-v2.video.converge",
+            "anchor": {
+              "input_path": "episode.scenes[3].events.conclusionEnd",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "within": "episode.scenes[3].from/to",
+              "causality": "validated by validate_episode"
+            },
+            "reading": {
+              "minimum_settled_frames": 36,
+              "until": "episode.scenes[3].to"
+            }
+          },
+          {
+            "id": "converge.noteStart",
+            "action_id": "haike.field-notes-v2.video.converge",
+            "anchor": {
+              "input_path": "episode.scenes[3].events.noteStart",
+              "unit": "absolute_frame"
+            },
+            "window": {
+              "within": "episode.scenes[3].from/to",
+              "causality": "validated by validate_episode"
+            },
+            "reading": {
+              "minimum_settled_frames": 36,
+              "until": "episode.scenes[3].to"
+            }
+          }
+        ],
+        "retiming": "实际ASR语义锚点驱动内部事件；保持四场关系，不支持任意动作重排或替换"
+      },
+      "slots": [
+        {
+          "id": "prepared",
+          "kind": "local_prepared_directory",
+          "input_path": "request.data",
+          "required": true,
+          "missing_policy": "阻断；不循环、静帧或省略音轨补足"
+        },
+        {
+          "id": "voice",
+          "kind": "complete_audio",
+          "input_path": "public/master.wav",
+          "required": true,
+          "missing_policy": "阻断；不循环、静帧或省略音轨补足"
+        },
+        {
+          "id": "videos",
+          "kind": "real_video_playlists",
+          "input_path": "episode.scenes[*].media",
+          "required": true,
+          "missing_policy": "阻断；不循环、静帧或省略音轨补足"
+        },
+        {
+          "id": "asr",
+          "kind": "real_speech_timing",
+          "input_path": "timing.json",
+          "required": true,
+          "missing_policy": "阻断；不循环、静帧或省略音轨补足"
+        },
+        {
+          "id": "presenter",
+          "kind": "same_source_hq_windows",
+          "input_path": "episode.presenters",
+          "required": true,
+          "missing_policy": "阻断；不循环、静帧或省略音轨补足"
+        }
+      ],
+      "capabilities": {
+        "full_production": true,
+        "candidate": true,
+        "gallery_default_changed": false,
+        "reference_fidelity": "保留纸色/青珊瑚及四阶段信息关系；独立视频改编，不宣称照片版逐像素或私有GridToHero执行",
+        "script_replacement": "已准备完整原稿、原生语音、真实ASR和合法素材后支持16至600秒",
+        "semantic_reordering": false,
+        "high_definition": "1080x1920/30fps,video>=20Mbps",
+        "audio": "完整原速主旁白+授权背景音乐；仅本期人物窗，不能改变声速补长",
+        "arbitrary_catalogue_action_replacement": false
+      },
+      "validation": {
+        "structure": {
+          "status": "pending",
+          "method": "source identity/strict data gates/real queue",
+          "scope": "registered execution; final tests recorded per delivery",
+          "evidence": [
+            "Haike_video/tests/backlot/test_motion_replay_field_notes_video.py"
+          ]
+        },
+        "visual": {
+          "status": "pending",
+          "method": "actual queued semantic event frames and encoded MP4",
+          "scope": "本期逐项验收，不继承旧照片版视觉确认",
+          "evidence": [
+            ".local/motion-production-20261103/A/design-review.json"
+          ]
+        },
+        "audio": {
+          "status": "pending",
+          "method": "full input coverage, true peak and continuous device listen",
+          "scope": "技术与听审分开",
+          "evidence": [
+            ".local/motion-production-20261103/A/mix-provenance.json"
+          ]
+        },
+        "production": {
+          "status": "pending",
+          "method": "exact-contract queue consumption and actual full MP4",
+          "scope": "not registration alone",
+          "evidence": [
+            ".local/motion-production-20261103/A/DELIVERY.json"
+          ]
+        }
+      }
+    }
+  ]
+}

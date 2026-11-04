@@ -1,0 +1,854 @@
+{
+  "chromatic-06": {
+    "version": "1.1.0",
+    "component": "Template06",
+    "actionIds": [
+      "haike.chromatic-06.cut-open",
+      "haike.chromatic-06.push-near",
+      "haike.chromatic-06.observe-colour",
+      "haike.chromatic-06.cut-close"
+    ],
+    "actions": [
+      {
+        "id": "haike.chromatic-06.cut-open",
+        "templateId": "chromatic-06",
+        "version": "1.1.0",
+        "component": "Template06",
+        "ordinal": 0,
+        "source": "Haike_video/templates/chromatic-06-video-v1/Scene.tsx",
+        "symbol": "CobaltMaterial[index=0], Wipe, Photo",
+        "from": 0,
+        "to": 180,
+        "internalEvents": [
+          {
+            "id": "aperture",
+            "from": 4,
+            "to": 28,
+            "meaning": "斜切口展开"
+          },
+          {
+            "id": "wipe",
+            "from": 32,
+            "to": 50,
+            "meaning": "三层斜切遮挡"
+          },
+          {
+            "id": "source-cut",
+            "from": 41,
+            "to": 42,
+            "meaning": "遮挡中从store切至robot"
+          }
+        ]
+      },
+      {
+        "id": "haike.chromatic-06.push-near",
+        "templateId": "chromatic-06",
+        "version": "1.1.0",
+        "component": "Template06",
+        "ordinal": 1,
+        "source": "Haike_video/templates/chromatic-06-video-v1/Scene.tsx",
+        "symbol": "CobaltMaterial[index=1], Photo",
+        "from": 180,
+        "to": 420,
+        "internalEvents": [
+          {
+            "id": "push",
+            "from": 226,
+            "to": 244,
+            "meaning": "全景推近失焦"
+          },
+          {
+            "id": "crossfade",
+            "from": 240,
+            "to": 254,
+            "meaning": "交叠给亲子互动"
+          },
+          {
+            "id": "settle",
+            "from": 240,
+            "to": 262,
+            "meaning": "近景落定"
+          }
+        ]
+      },
+      {
+        "id": "haike.chromatic-06.observe-colour",
+        "templateId": "chromatic-06",
+        "version": "1.1.0",
+        "component": "Template06",
+        "ordinal": 2,
+        "source": "Haike_video/templates/chromatic-06-video-v1/Scene.tsx",
+        "symbol": "CobaltMaterial[index=2], Photo",
+        "from": 420,
+        "to": 600,
+        "internalEvents": [
+          {
+            "id": "split-half",
+            "from": 435,
+            "to": 470,
+            "meaning": "同一视频灰阶到中线"
+          },
+          {
+            "id": "split-edge",
+            "from": 516,
+            "to": 540,
+            "meaning": "分隔到12%"
+          },
+          {
+            "id": "split-return",
+            "from": 550,
+            "to": 564,
+            "meaning": "分隔回中线"
+          }
+        ]
+      },
+      {
+        "id": "haike.chromatic-06.cut-close",
+        "templateId": "chromatic-06",
+        "version": "1.1.0",
+        "component": "Template06",
+        "ordinal": 3,
+        "source": "Haike_video/templates/chromatic-06-video-v1/Scene.tsx",
+        "symbol": "CobaltMaterial[index=3], Wipe, Photo",
+        "from": 600,
+        "to": 720,
+        "internalEvents": [
+          {
+            "id": "closing-wipe",
+            "from": 602,
+            "to": 620,
+            "meaning": "三层斜切"
+          },
+          {
+            "id": "source-cut",
+            "from": 611,
+            "to": 612,
+            "meaning": "遮挡中换素材"
+          },
+          {
+            "id": "conclusion",
+            "from": 630,
+            "to": 646,
+            "meaning": "结论显现"
+          }
+        ]
+      }
+    ]
+  },
+  "chromatic-07": {
+    "version": "1.1.0",
+    "component": "Template07",
+    "actionIds": [
+      "haike.chromatic-07.fan-collect",
+      "haike.chromatic-07.pop-evidence",
+      "haike.chromatic-07.mark-attention",
+      "haike.chromatic-07.stick-memory"
+    ],
+    "actions": [
+      {
+        "id": "haike.chromatic-07.fan-collect",
+        "templateId": "chromatic-07",
+        "version": "1.1.0",
+        "component": "Template07",
+        "ordinal": 0,
+        "source": "Haike_video/templates/chromatic-six-video-batch-v1/window-a/Scene.tsx",
+        "symbol": "StickerMaterial[index=0], StickerPhoto",
+        "from": 0,
+        "to": 240,
+        "internalEvents": [
+          {
+            "id": "fan",
+            "from": 28,
+            "to": 52,
+            "meaning": "三视频扇开"
+          },
+          {
+            "id": "flatten",
+            "from": 82,
+            "to": 104,
+            "meaning": "扇形铺平"
+          }
+        ]
+      },
+      {
+        "id": "haike.chromatic-07.pop-evidence",
+        "templateId": "chromatic-07",
+        "version": "1.1.0",
+        "component": "Template07",
+        "ordinal": 1,
+        "source": "Haike_video/templates/chromatic-six-video-batch-v1/window-a/Scene.tsx",
+        "symbol": "StickerMaterial[index=1], StickerPhoto",
+        "from": 240,
+        "to": 420,
+        "internalEvents": [
+          {
+            "id": "pop-0",
+            "from": 252,
+            "to": 261,
+            "meaning": "第一格弹入"
+          },
+          {
+            "id": "pop-1",
+            "from": 256,
+            "to": 265,
+            "meaning": "第二格弹入"
+          },
+          {
+            "id": "pop-2",
+            "from": 260,
+            "to": 269,
+            "meaning": "第三格弹入"
+          }
+        ]
+      },
+      {
+        "id": "haike.chromatic-07.mark-attention",
+        "templateId": "chromatic-07",
+        "version": "1.1.0",
+        "component": "Template07",
+        "ordinal": 2,
+        "source": "Haike_video/templates/chromatic-six-video-batch-v1/window-a/Scene.tsx",
+        "symbol": "StickerMaterial[index=2], MovingAnnotation, Mark",
+        "from": 420,
+        "to": 585,
+        "internalEvents": [
+          {
+            "id": "circle",
+            "from": 440,
+            "to": 457,
+            "meaning": "实测机器狗屏幕轨迹圈注"
+          },
+          {
+            "id": "arrow",
+            "from": 485,
+            "to": 502,
+            "meaning": "实测孩子手部轨迹箭头"
+          }
+        ]
+      },
+      {
+        "id": "haike.chromatic-07.stick-memory",
+        "templateId": "chromatic-07",
+        "version": "1.1.0",
+        "component": "Template07",
+        "ordinal": 3,
+        "source": "Haike_video/templates/chromatic-six-video-batch-v1/window-a/Scene.tsx",
+        "symbol": "StickerMaterial[index=3], StickerPhoto",
+        "from": 585,
+        "to": 720,
+        "internalEvents": [
+          {
+            "id": "card-a",
+            "from": 589,
+            "to": 598,
+            "meaning": "主贴纸弹入"
+          },
+          {
+            "id": "card-b",
+            "from": 594,
+            "to": 603,
+            "meaning": "副贴纸弹入"
+          },
+          {
+            "id": "badge",
+            "from": 605,
+            "to": 614,
+            "meaning": "标签"
+          },
+          {
+            "id": "conclusion",
+            "from": 612,
+            "to": 626,
+            "meaning": "结论淡入"
+          }
+        ]
+      }
+    ]
+  },
+  "chromatic-08": {
+    "version": "1.1.0",
+    "component": "Template08",
+    "actionIds": [
+      "haike.chromatic-08.orbit-entry",
+      "haike.chromatic-08.gallery-tour",
+      "haike.chromatic-08.tilt-record",
+      "haike.chromatic-08.orbit-recap"
+    ],
+    "actions": [
+      {
+        "id": "haike.chromatic-08.orbit-entry",
+        "templateId": "chromatic-08",
+        "version": "1.1.0",
+        "component": "Template08",
+        "ordinal": 0,
+        "source": "Haike_video/templates/chromatic-six-video-batch-v1/window-b/Scene.tsx",
+        "symbol": "Orbit, Material, Clip",
+        "from": 0,
+        "to": 150,
+        "internalEvents": [
+          {
+            "id": "orbit",
+            "from": 0,
+            "to": 62,
+            "meaning": "四视频沿圆环展开"
+          },
+          {
+            "id": "camera-stop",
+            "from": 110,
+            "to": 111,
+            "meaning": "t=min(f,110)停止装饰镜头，视频继续"
+          }
+        ]
+      },
+      {
+        "id": "haike.chromatic-08.gallery-tour",
+        "templateId": "chromatic-08",
+        "version": "1.1.0",
+        "component": "Template08",
+        "ordinal": 1,
+        "source": "Haike_video/templates/chromatic-six-video-batch-v1/window-b/Scene.tsx",
+        "symbol": "Gallery, Clip",
+        "from": 150,
+        "to": 420,
+        "internalEvents": [
+          {
+            "id": "dock-a",
+            "from": 172,
+            "to": 205,
+            "meaning": "全景到第一个展板"
+          },
+          {
+            "id": "dock-b",
+            "from": 257,
+            "to": 293,
+            "meaning": "相机移向第二展板"
+          },
+          {
+            "id": "wide",
+            "from": 348,
+            "to": 368,
+            "meaning": "回全景"
+          },
+          {
+            "id": "note",
+            "from": 370,
+            "to": 382,
+            "meaning": "解释显现"
+          }
+        ]
+      },
+      {
+        "id": "haike.chromatic-08.tilt-record",
+        "templateId": "chromatic-08",
+        "version": "1.1.0",
+        "component": "Template08",
+        "ordinal": 2,
+        "source": "Haike_video/templates/chromatic-six-video-batch-v1/window-b/Scene.tsx",
+        "symbol": "TiltRecord, Material, Clip",
+        "from": 420,
+        "to": 570,
+        "internalEvents": [
+          {
+            "id": "tilt",
+            "from": 438,
+            "to": 483,
+            "meaning": "纸页转到侧面并露厚度"
+          },
+          {
+            "id": "hold-drift",
+            "from": 483,
+            "to": 569,
+            "meaning": "源代码轻微持续倾斜，非完全静止"
+          }
+        ]
+      },
+      {
+        "id": "haike.chromatic-08.orbit-recap",
+        "templateId": "chromatic-08",
+        "version": "1.1.0",
+        "component": "Template08",
+        "ordinal": 3,
+        "source": "Haike_video/templates/chromatic-six-video-batch-v1/window-b/Scene.tsx",
+        "symbol": "Orbit[final=true], Material, Clip",
+        "from": 570,
+        "to": 720,
+        "internalEvents": [
+          {
+            "id": "recap-orbit",
+            "from": 570,
+            "to": 632,
+            "meaning": "四视频回看"
+          },
+          {
+            "id": "camera-stop",
+            "from": 680,
+            "to": 681,
+            "meaning": "装饰镜头停止，素材继续"
+          }
+        ]
+      }
+    ]
+  },
+  "chromatic-09": {
+    "version": "1.1.0",
+    "component": "Template09",
+    "actionIds": [
+      "haike.chromatic-09.fold-open",
+      "haike.chromatic-09.journal-park",
+      "haike.chromatic-09.exposure-evidence",
+      "haike.chromatic-09.desk-recap"
+    ],
+    "actions": [
+      {
+        "id": "haike.chromatic-09.fold-open",
+        "templateId": "chromatic-09",
+        "version": "1.1.0",
+        "component": "Template09",
+        "ordinal": 0,
+        "source": "Haike_video/templates/chromatic-six-video-batch-v1/window-b/Scene.tsx",
+        "symbol": "FoldCover, Material, Clip",
+        "from": 0,
+        "to": 210,
+        "internalEvents": [
+          {
+            "id": "arrive",
+            "from": 0,
+            "to": 15,
+            "meaning": "整页抬入"
+          },
+          {
+            "id": "fold",
+            "from": 35,
+            "to": 88,
+            "meaning": "右页绕左铰链翻到-178度"
+          }
+        ]
+      },
+      {
+        "id": "haike.chromatic-09.journal-park",
+        "templateId": "chromatic-09",
+        "version": "1.1.0",
+        "component": "Template09",
+        "ordinal": 1,
+        "source": "Haike_video/templates/chromatic-six-video-batch-v1/window-b/Scene.tsx",
+        "symbol": "ParkJournal, Material, Clip",
+        "from": 210,
+        "to": 450,
+        "internalEvents": [
+          {
+            "id": "park",
+            "from": 238,
+            "to": 262,
+            "meaning": "原记录缩至0.42并左驻"
+          },
+          {
+            "id": "deal-0",
+            "from": 273,
+            "to": 302,
+            "meaning": "第一观察含说明"
+          },
+          {
+            "id": "deal-1",
+            "from": 314,
+            "to": 343,
+            "meaning": "第二观察含说明"
+          },
+          {
+            "id": "deal-2",
+            "from": 355,
+            "to": 384,
+            "meaning": "第三观察含说明"
+          }
+        ]
+      },
+      {
+        "id": "haike.chromatic-09.exposure-evidence",
+        "templateId": "chromatic-09",
+        "version": "1.1.0",
+        "component": "Template09",
+        "ordinal": 2,
+        "source": "Haike_video/templates/chromatic-six-video-batch-v1/window-b/Scene.tsx",
+        "symbol": "ExposeVideo, Material, Clip",
+        "from": 450,
+        "to": 600,
+        "internalEvents": [
+          {
+            "id": "push",
+            "from": 479,
+            "to": 496,
+            "meaning": "原视频放大失焦"
+          },
+          {
+            "id": "expose-crossfade",
+            "from": 493,
+            "to": 505,
+            "meaning": "43局部帧切换并交叠"
+          },
+          {
+            "id": "settle",
+            "from": 493,
+            "to": 510,
+            "meaning": "新视频缩回清晰"
+          }
+        ]
+      },
+      {
+        "id": "haike.chromatic-09.desk-recap",
+        "templateId": "chromatic-09",
+        "version": "1.1.0",
+        "component": "Template09",
+        "ordinal": 3,
+        "source": "Haike_video/templates/chromatic-six-video-batch-v1/window-b/Scene.tsx",
+        "symbol": "Desk, Material, Clip",
+        "from": 600,
+        "to": 720,
+        "internalEvents": [
+          {
+            "id": "page-a",
+            "from": 600,
+            "to": 612,
+            "meaning": "底页抬入"
+          },
+          {
+            "id": "underline",
+            "from": 624,
+            "to": 634,
+            "meaning": "重点划线"
+          },
+          {
+            "id": "page-b",
+            "from": 639,
+            "to": 651,
+            "meaning": "副页压角"
+          }
+        ]
+      }
+    ]
+  },
+  "chromatic-six-10": {
+    "version": "1.1.0",
+    "component": "Template10",
+    "actionIds": [
+      "haike.chromatic-six-10.impact",
+      "haike.chromatic-six-10.relay",
+      "haike.chromatic-six-10.assemble",
+      "haike.chromatic-six-10.register"
+    ],
+    "actions": [
+      {
+        "id": "haike.chromatic-six-10.impact",
+        "templateId": "chromatic-six-10",
+        "version": "1.1.0",
+        "component": "Template10",
+        "ordinal": 0,
+        "source": "Haike_video/templates/chromatic-six-video-batch-v1/window-c/Scene.tsx",
+        "symbol": "Impact, Evidence, Material",
+        "from": 0,
+        "to": 150,
+        "internalEvents": [
+          {
+            "id": "impact",
+            "from": 9,
+            "to": 15,
+            "meaning": "整标题冲击"
+          },
+          {
+            "id": "last-word",
+            "from": 18,
+            "to": 23,
+            "meaning": "末词冲击与填色"
+          },
+          {
+            "id": "video-reveal",
+            "from": 34,
+            "to": 58,
+            "meaning": "视频横向开幅"
+          }
+        ]
+      },
+      {
+        "id": "haike.chromatic-six-10.relay",
+        "templateId": "chromatic-six-10",
+        "version": "1.1.0",
+        "component": "Template10",
+        "ordinal": 1,
+        "source": "Haike_video/templates/chromatic-six-video-batch-v1/window-c/Scene.tsx",
+        "symbol": "Filmstrip, Material",
+        "from": 150,
+        "to": 438,
+        "internalEvents": [
+          {
+            "id": "relay-1",
+            "from": 216,
+            "to": 230,
+            "meaning": "横移594px；旧词先退新词后入"
+          },
+          {
+            "id": "relay-2",
+            "from": 288,
+            "to": 302,
+            "meaning": "第二次横移及换词"
+          },
+          {
+            "id": "relay-3",
+            "from": 360,
+            "to": 374,
+            "meaning": "第三次横移及末词强调"
+          }
+        ]
+      },
+      {
+        "id": "haike.chromatic-six-10.assemble",
+        "templateId": "chromatic-six-10",
+        "version": "1.1.0",
+        "component": "Template10",
+        "ordinal": 2,
+        "source": "Haike_video/templates/chromatic-six-video-batch-v1/window-c/Scene.tsx",
+        "symbol": "Assemble, Evidence, Material",
+        "from": 438,
+        "to": 570,
+        "internalEvents": [
+          {
+            "id": "lead-hold",
+            "from": 438,
+            "to": 456,
+            "meaning": "首词2.3到2.43"
+          },
+          {
+            "id": "zoom-back",
+            "from": 456,
+            "to": 468,
+            "meaning": "首词缩回"
+          },
+          {
+            "id": "slide",
+            "from": 456,
+            "to": 480,
+            "meaning": "同词左滑"
+          },
+          {
+            "id": "append-a",
+            "from": 463,
+            "to": 475,
+            "meaning": "连接推入"
+          },
+          {
+            "id": "append-b",
+            "from": 467,
+            "to": 479,
+            "meaning": "新发现推入"
+          },
+          {
+            "id": "evidence",
+            "from": 503,
+            "to": 511,
+            "meaning": "独立视频证据显现"
+          }
+        ]
+      },
+      {
+        "id": "haike.chromatic-six-10.register",
+        "templateId": "chromatic-six-10",
+        "version": "1.1.0",
+        "component": "Template10",
+        "ordinal": 3,
+        "source": "Haike_video/templates/chromatic-six-video-batch-v1/window-c/Scene.tsx",
+        "symbol": "PosterRecap, Material",
+        "from": 570,
+        "to": 720,
+        "internalEvents": [
+          {
+            "id": "title",
+            "from": 570,
+            "to": 576,
+            "meaning": "完整收束句"
+          },
+          {
+            "id": "word",
+            "from": 579,
+            "to": 584,
+            "meaning": "末词柠黄冲击"
+          },
+          {
+            "id": "label-a",
+            "from": 607,
+            "to": 608,
+            "meaning": "看见填色，f>36"
+          },
+          {
+            "id": "label-b",
+            "from": 616,
+            "to": 617,
+            "meaning": "参与填色"
+          },
+          {
+            "id": "label-c",
+            "from": 625,
+            "to": 626,
+            "meaning": "理解填色"
+          }
+        ]
+      }
+    ]
+  },
+  "chromatic-six-11": {
+    "version": "1.1.0",
+    "component": "Template11",
+    "actionIds": [
+      "haike.chromatic-six-11.route-start",
+      "haike.chromatic-six-11.route-travel",
+      "haike.chromatic-six-11.step-stop",
+      "haike.chromatic-six-11.pull-overview"
+    ],
+    "actions": [
+      {
+        "id": "haike.chromatic-six-11.route-start",
+        "templateId": "chromatic-six-11",
+        "version": "1.1.0",
+        "component": "Template11",
+        "ordinal": 0,
+        "source": "Haike_video/templates/chromatic-six-video-batch-v1/window-c/Scene.tsx",
+        "symbol": "RouteWorld, Pin, Evidence, Material",
+        "from": 0,
+        "to": 180,
+        "internalEvents": [
+          {
+            "id": "pin-0",
+            "from": 8,
+            "to": 26,
+            "meaning": "第一钉下落/压扁/回弹"
+          },
+          {
+            "id": "video-0",
+            "from": 34,
+            "to": 56,
+            "meaning": "第一证据展开"
+          },
+          {
+            "id": "path-0",
+            "from": 100,
+            "to": 210,
+            "meaning": "第一路线跨场持续绘制"
+          }
+        ]
+      },
+      {
+        "id": "haike.chromatic-six-11.route-travel",
+        "templateId": "chromatic-six-11",
+        "version": "1.1.0",
+        "component": "Template11",
+        "ordinal": 1,
+        "source": "Haike_video/templates/chromatic-six-video-batch-v1/window-c/Scene.tsx",
+        "symbol": "RouteWorld, Pin, Callout",
+        "from": 180,
+        "to": 390,
+        "internalEvents": [
+          {
+            "id": "travel",
+            "from": 180,
+            "to": 224,
+            "meaning": "同一世界下移530px"
+          },
+          {
+            "id": "pin-1",
+            "from": 210,
+            "to": 228,
+            "meaning": "第二钉落地"
+          },
+          {
+            "id": "video-1",
+            "from": 232,
+            "to": 254,
+            "meaning": "第二证据展开"
+          },
+          {
+            "id": "callout-dot",
+            "from": 252,
+            "to": 258,
+            "meaning": "框边缘锚点，非特征追踪"
+          },
+          {
+            "id": "callout-line",
+            "from": 258,
+            "to": 270,
+            "meaning": "折线"
+          },
+          {
+            "id": "callout-text",
+            "from": 270,
+            "to": 279,
+            "meaning": "引线文字"
+          }
+        ]
+      },
+      {
+        "id": "haike.chromatic-six-11.step-stop",
+        "templateId": "chromatic-six-11",
+        "version": "1.1.0",
+        "component": "Template11",
+        "ordinal": 2,
+        "source": "Haike_video/templates/chromatic-six-video-batch-v1/window-c/Scene.tsx",
+        "symbol": "RouteWorld, Pin, StepLine",
+        "from": 390,
+        "to": 540,
+        "internalEvents": [
+          {
+            "id": "travel-2",
+            "from": 390,
+            "to": 432,
+            "meaning": "同一世界再下移530px"
+          },
+          {
+            "id": "pin-2",
+            "from": 426,
+            "to": 444,
+            "meaning": "第三钉落地"
+          },
+          {
+            "id": "video-2",
+            "from": 446,
+            "to": 468,
+            "meaning": "第三证据展开"
+          },
+          {
+            "id": "steps",
+            "from": 450,
+            "to": 484,
+            "meaning": "缓动反函数求节点触发；各自字滞后2帧"
+          },
+          {
+            "id": "step-ring",
+            "from": 495,
+            "to": 502,
+            "meaning": "第三点升级为空心环"
+          }
+        ]
+      },
+      {
+        "id": "haike.chromatic-six-11.pull-overview",
+        "templateId": "chromatic-six-11",
+        "version": "1.1.0",
+        "component": "Template11",
+        "ordinal": 3,
+        "source": "Haike_video/templates/chromatic-six-video-batch-v1/window-c/Scene.tsx",
+        "symbol": "RouteWorld[overview=true]",
+        "from": 540,
+        "to": 720,
+        "internalEvents": [
+          {
+            "id": "world-pull",
+            "from": 540,
+            "to": 647,
+            "meaning": "同一760x1540世界相机1到0.52，x0到100，y-1060到0"
+          },
+          {
+            "id": "recap-text",
+            "from": 650,
+            "to": 660,
+            "meaning": "右侧回看词显现"
+          }
+        ]
+      }
+    ]
+  }
+}

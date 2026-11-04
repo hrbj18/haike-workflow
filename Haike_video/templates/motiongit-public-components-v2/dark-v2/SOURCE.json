@@ -1,0 +1,76 @@
+{
+  "schema": "haike.owned-dark-source/2",
+  "implementation": "C-owned complete ten-group TSX; only two marketing frame-prefix visibility guards, original Remotion4.0.506 and original audio/media/action clocks retained",
+  "reference_id": "template-03-native",
+  "original_version": "2.7.18-alpha.2",
+  "original_package_sha256": "0073456d9aef950f7548ca3e18fd752ab2577cc9bec23258c2cfcc689ad7009f",
+  "original_package_equivalence": false,
+  "original_protected_source_read": false,
+  "project_source_license": "AGPL-3.0; inherited from Haike_video/LICENSE, not MIT",
+  "third_party_runtime": "Original Remotion runtime in REMOTION_RUNTIME.json retains original package licenses and notices. DEPENDENCIES.json describes experimental MIT React/esbuild bridge only.",
+  "files": [
+    {
+      "path": "template/index.tsx",
+      "sha256": "1661aaa836135a7a351e5555a4bdd0c41533a8611030538f9c50f8912247e972",
+      "source": "Haike_video/templates/motiongit-dark-full-v1/index.tsx",
+      "previous_sha256": "1661aaa836135a7a351e5555a4bdd0c41533a8611030538f9c50f8912247e972",
+      "change": "unchanged bytes"
+    },
+    {
+      "path": "template/shared.tsx",
+      "sha256": "72a2b9e5bf201d386bc92ed0dc91d6865dc6272678c12d52a39ccc0cc9cddb29",
+      "source": "Haike_video/templates/motiongit-dark-full-v1/shared.tsx",
+      "previous_sha256": "72a2b9e5bf201d386bc92ed0dc91d6865dc6272678c12d52a39ccc0cc9cddb29",
+      "change": "unchanged bytes"
+    },
+    {
+      "path": "template/GroupsA.tsx",
+      "sha256": "94acf08583c88dea0806cf9923d368b630b28d5ecc4e797e68be4faac1bd1c25",
+      "source": "Haike_video/templates/motiongit-dark-full-v1/GroupsA.tsx",
+      "previous_sha256": "128bb85cd4c5ecc98f61a6f1610163f1729be834ef3e9e635ab653958f807537",
+      "change": "visibility guard only"
+    },
+    {
+      "path": "template/GroupsB.tsx",
+      "sha256": "4540699cc2dc7be5e0c4c27e7ae125ed164d152434d38bc917ac3327eb2ab712",
+      "source": "Haike_video/templates/motiongit-dark-full-v1/GroupsB.tsx",
+      "previous_sha256": "6dd7663fd7540970d484caa2f7f44535433629bc35e4ad7202fee37b40ba0ff4",
+      "change": "visibility guard only"
+    },
+    {
+      "path": "template/presenter-clock.ts",
+      "sha256": "45e915237111b3e4738089ba231bd1b843955a466da40b4366b13bc8a65de70f",
+      "source": "Haike_video/templates/motiongit-dark-full-v1/presenter-clock.ts",
+      "previous_sha256": "45e915237111b3e4738089ba231bd1b843955a466da40b4366b13bc8a65de70f",
+      "change": "unchanged bytes"
+    },
+    {
+      "path": "template/types.ts",
+      "sha256": "68d865d33820abca05770701fdb087f37e754b9b9c73e7eeef41b723b6b5cc76",
+      "source": "Haike_video/templates/motiongit-dark-full-v1/types.ts",
+      "previous_sha256": "68d865d33820abca05770701fdb087f37e754b9b9c73e7eeef41b723b6b5cc76",
+      "change": "unchanged bytes"
+    },
+    {
+      "path": "template/catalog.json",
+      "sha256": "513a3dcf6c8c4d50f0bf2430ad5b22d8aa20b4dd1888fafd1daeb31176487bfa",
+      "source": "Haike_video/templates/motiongit-dark-full-v1/catalog.json",
+      "previous_sha256": "513a3dcf6c8c4d50f0bf2430ad5b22d8aa20b4dd1888fafd1daeb31176487bfa",
+      "change": "unchanged bytes"
+    }
+  ],
+  "schema_derivation": {
+    "source": "backlot/studio_dark_full.py",
+    "source_sha256": "fb1d2f489ec45fe7fc644f3c00d2288d51b3fba0a216f1e1b1ef2cc1d014c32b",
+    "functions": [
+      "required_names",
+      "action_gate",
+      "live_intervals",
+      "validate_props"
+    ],
+    "derived": "backlot/motion_public_dark_schema_v2.py",
+    "derived_sha256": "bb11d7b5e35f821f6d81e5de56d576281aa39893faa1170d8ac368305819a16a"
+  },
+  "status": "new independent candidate; static checks pending; no v2 media executed",
+  "derivation": "C/C03-visible-label-audit/REPORT.md and PROPOSAL_SNIPPETS.txt; reference mode counters retained, non-reference prefixes hidden in place"
+}

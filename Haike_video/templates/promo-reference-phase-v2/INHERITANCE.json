@@ -1,0 +1,88 @@
+{
+  "schema": "haike.promo-phase-inheritance/1",
+  "state": "frozen",
+  "c_source_freeze_sha256": "023254cc97844e7068a8907ef6fc9ce698993d5e4fb7807cd1cc2766f4feeadd",
+  "upstream_producer_sha256": "dc77a2c27f41a39ecbbbc0e345c9e9b0f6743bc045d89939d44d18c4d4b89bd3",
+  "upstream_contract": "haike.promo-reference-full/1",
+  "upstream_request_sha256": "2ef212e5676bbb6fa1447894fc5ea844973d87e5081bc15932a9f3118b793fe5",
+  "files": {
+    "Board.tsx": "334c45b3f3c3606df6e0b74ef2e41bae4a2af0a4e5a0fc754a69565b48deb14d",
+    "index.tsx": "de211707dff11c57a00c2c140c462999f04e217c18dc1930b429c56fa7341ddf",
+    "LICENSE.md": "59ffcbf78abc7f87130445c9a95b3aeef7621c83dc2bc6355048ebc99cc5174a",
+    "README.md": "ad21f14d3e3c66871c62b4075a7e1a9023c75f3bad0027fc1f64fd94e76b3e55",
+    "render.cjs": "ea340194f2381ffb82e2f037bd9f4f0c9c046705be88f1b8beb5fd62c4c9dec7",
+    "types.ts": "b22cb8a7af9c5d9715e5b7da29c803809be16e953a450819fac92f3586c28ec7",
+    "upstream-producer.py": "dc77a2c27f41a39ecbbbc0e345c9e9b0f6743bc045d89939d44d18c4d4b89bd3"
+  },
+  "renderer_byte_identity": "pass",
+  "preflight_props_identity": "pass",
+  "preflight_ast": {
+    "preflight": {
+      "upstream": "ce818a64287ce12bc5c818bccd9eda9868bc0da3d08631513b3a1ed8f85af61c",
+      "v2": "ce818a64287ce12bc5c818bccd9eda9868bc0da3d08631513b3a1ed8f85af61c"
+    },
+    "toolchain": {
+      "upstream": "8e3afcb544489774aaa31c5620b0026f0aaa9a2d8cf6c6c0123f4624d6a34a4b",
+      "v2": "8e3afcb544489774aaa31c5620b0026f0aaa9a2d8cf6c6c0123f4624d6a34a4b"
+    },
+    "bound": {
+      "upstream": "73934e1cf5e7f3e2eea5c0d57ffc12ec07bb27c181a672f54094eba96e827656",
+      "v2": "73934e1cf5e7f3e2eea5c0d57ffc12ec07bb27c181a672f54094eba96e827656"
+    }
+  },
+  "inherited_formula_ast": {
+    "assets": {
+      "upstream": [
+        "cc8694e02c9d7c5adcd4c8a21d238a438d30e3c705eda1dc7d7b9b1d9f75d8e1"
+      ],
+      "v2": [
+        "cc8694e02c9d7c5adcd4c8a21d238a438d30e3c705eda1dc7d7b9b1d9f75d8e1"
+      ]
+    },
+    "command": {
+      "upstream": [
+        "fbed07d97ce77f609d6e284a72d51d8af31c2665a48cb0df3c854eac987936fe"
+      ],
+      "v2": [
+        "fbed07d97ce77f609d6e284a72d51d8af31c2665a48cb0df3c854eac987936fe"
+      ]
+    },
+    "duration": {
+      "upstream": [
+        "615914d462cda6993a7833c17f5f4ca1343c30237d0958e9965e6e4f1a560e26"
+      ],
+      "v2": [
+        "615914d462cda6993a7833c17f5f4ca1343c30237d0958e9965e6e4f1a560e26"
+      ]
+    },
+    "export": {
+      "upstream": [
+        "ae9a381791beb3ce0553c1eafdeeea544d8a73aa92b2f34dff7386bb646f2f97"
+      ],
+      "v2": [
+        "ae9a381791beb3ce0553c1eafdeeea544d8a73aa92b2f34dff7386bb646f2f97"
+      ]
+    },
+    "mix_master_call": {
+      "upstream": [
+        "df47eb06f48023386d6bbafaed917ab589e9a7ae1cb19add7655ac1fe441412b"
+      ],
+      "v2": [
+        "df47eb06f48023386d6bbafaed917ab589e9a7ae1cb19add7655ac1fe441412b"
+      ]
+    }
+  },
+  "actual_input_sha256": "6f76a50b286c1e346ebaa0bc50bdf53ac9b84d7f3eb04edffd8cef22c5675eda",
+  "actual_preflight_equal": {
+    "props": true,
+    "audio": true,
+    "voice_clock": true,
+    "reference": true,
+    "source_receipts": true,
+    "evidence": true
+  },
+  "actual_props_sha256": "72e6a282965e444b2cde3b5db7783fd9a6ea96e6fe4575b51c5e14eafa95f479",
+  "actual_audio_plan_sha256": "451d7e53099b7fbdb927c137fb8f05cd3096e442e5bba82c64ff5861bf420e8f",
+  "new_revision_in_props": false,
+  "limits": "No v2 renderer, final media, listener or physical-device test was performed."
+}

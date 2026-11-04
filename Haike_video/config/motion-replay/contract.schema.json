@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "haike.motion-replay-registry/1",
+  "title": "精确版本动效复刻注册合同",
+  "type": "object",
+  "required": ["schema", "templates"],
+  "properties": {
+    "schema": {"const": "haike.motion-replay-registry/1"},
+    "templates": {"type": "array", "items": {"$ref": "#/$defs/template"}}
+  },
+  "$defs": {
+    "identity": {"type": "string", "minLength": 1, "maxLength": 180},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:-[A-Za-z0-9.-]+)?(?:\\+[A-Za-z0-9.-]+)?$"},
+    "fact": {"oneOf": [{"type": "string", "minLength": 1}, {"type": "object", "minProperties": 1}]},
+    "source": {
+      "type": "object", "required": ["path", "sha256"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "object": {
+      "type": "object", "required": ["id", "role", "authority"],
+      "properties": {"id": {"$ref": "#/$defs/identity"}, "role": {"type": "string", "minLength": 1}, "authority": {"$ref": "#/$defs/fact"}}
+    },
+    "action": {
+      "type": "object", "required": ["id", "version", "implementation", "objects", "parameters", "phases"],
+      "properties": {
+        "id": {"$ref": "#/$defs/identity"}, "version": {"$ref": "#/$defs/version"},
+        "implementation": {"$ref": "#/$defs/fact"},
+        "objects": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/identity"}},
+        "parameters": {"type": ["object", "array"]},
+        "phases": {"type": "object", "required": ["entry", "active", "settled", "exit"], "properties": {"entry": {"$ref": "#/$defs/fact"}, "active": {"$ref": "#/$defs/fact"}, "settled": {"$ref": "#/$defs/fact"}, "exit": {"$ref": "#/$defs/fact"}}}
+      }
+    },
+    "event": {
+      "type": "object", "required": ["id", "action_id", "anchor", "window", "reading"],
+      "properties": {"id": {"$ref": "#/$defs/identity"}, "action_id": {"$ref": "#/$defs/identity"}, "anchor": {"$ref": "#/$defs/fact"}, "window": {"$ref": "#/$defs/fact"}, "reading": {"$ref": "#/$defs/fact"}}
+    },
+    "slot": {
+      "type": "object", "required": ["id", "kind", "input_path", "required", "missing_policy"],
+      "properties": {"id": {"$ref": "#/$defs/identity"}, "kind": {"type": "string", "minLength": 1}, "input_path": {"type": "string", "minLength": 1}, "required": {"type": "boolean"}, "missing_policy": {"$ref": "#/$defs/fact"}}
+    },
+    "validation": {
+      "type": "object", "required": ["status", "method", "scope", "evidence"],
+      "properties": {"status": {"enum": ["pass", "fail", "pending", "not_applicable"]}, "method": {"type": "string", "minLength": 1}, "scope": {"type": "string", "minLength": 1}, "evidence": {"type": ["string", "array", "object"]}}
+    },
+    "template": {
+      "type": "object",
+      "required": ["template_id", "version", "family", "renderer", "sources", "objects", "actions", "timeline", "slots", "capabilities", "validation"],
+      "properties": {
+        "template_id": {"$ref": "#/$defs/identity"}, "version": {"$ref": "#/$defs/version"}, "gallery_id": {"$ref": "#/$defs/identity"},
+        "family": {"enum": ["numbered", "imported"]},
+        "renderer": {"type": "object", "required": ["kind", "entrypoint", "adapter", "execution"], "properties": {"kind": {"enum": ["project", "native_package"]}, "entrypoint": {"type": "string", "minLength": 1}, "adapter": {"$ref": "#/$defs/identity"}, "execution": {"enum": ["supported", "inspect_only", "needs_adaptation"]}}},
+        "sources": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/source"}},
+        "objects": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/object"}},
+        "actions": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/action"}},
+        "timeline": {"type": "object", "required": ["mode", "clock", "events", "retiming"], "properties": {"mode": {"enum": ["source_locked", "semantic", "native"]}, "clock": {"$ref": "#/$defs/fact"}, "events": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/event"}}, "retiming": {"$ref": "#/$defs/fact"}}},
+        "slots": {"type": "array", "items": {"$ref": "#/$defs/slot"}},
+        "capabilities": {"type": "object", "minProperties": 1},
+        "validation": {"type": "object", "minProperties": 1, "additionalProperties": {"$ref": "#/$defs/validation"}}
+      }
+    }
+  }
+}

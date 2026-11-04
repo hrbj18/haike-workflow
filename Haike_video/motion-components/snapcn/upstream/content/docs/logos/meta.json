@@ -1,0 +1,12 @@
+{
+  "title": "Logos",
+  "collapsible": false,
+  "pages": [
+    "index",
+    "logo-assemble",
+    "logo-drift",
+    "logo-flicker",
+    "block-wordmark",
+    "logo-collapse"
+  ]
+}

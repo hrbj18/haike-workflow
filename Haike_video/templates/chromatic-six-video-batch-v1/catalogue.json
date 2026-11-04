@@ -1,0 +1,10 @@
+{
+  "templates": [
+    {"id":"06","number":6,"name":"蓝橙切面","window":"a","shape":"切面开合与推穿","accent":"#FF6B1A"},
+    {"id":"07","number":7,"name":"桃粉草绿贴纸","window":"a","shape":"扇展贴入与圈注","accent":"#F4AFCB"},
+    {"id":"08","number":8,"name":"紫黄轨道","window":"b","shape":"环场与展厅镜头","accent":"#FFE033"},
+    {"id":"09","number":9,"name":"朱红冰蓝折页","window":"b","shape":"翻折与逐条落牌","accent":"#C9233A"},
+    {"id":"10","number":10,"name":"黑柠节拍画报","window":"c","shape":"冲击字与胶片换挡","accent":"#E3FF3B"},
+    {"id":"11","number":11,"name":"深蓝蜜桃路线","window":"c","shape":"节点停靠与路线回看","accent":"#FFAD8F"}
+  ]
+}

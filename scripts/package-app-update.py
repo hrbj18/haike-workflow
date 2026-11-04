@@ -108,7 +108,7 @@ def build(baseline, stage, output, package_url, notes='', published_at=None):
     # Content-hashed frontend builds remove old JS/CSS names. Keep those
     # shipped program files at the destination; this patch never deletes.
     missing_protected = sorted(name for name in set(before) - set(current)
-                               if not update.is_program_path(name))
+                               if update.is_dependency_path(name) or not update.is_program_path(name))
     if missing_protected:
         raise ValueError('第一版补丁不能移除依赖、运行环境或受保护资源：' + missing_protected[0])
     changed = []
@@ -118,7 +118,7 @@ def build(baseline, stage, output, package_url, notes='', published_at=None):
             continue
         if name in METADATA or name == inventory_name:
             continue
-        if not update.is_program_path(name):
+        if update.is_dependency_path(name) or not update.is_program_path(name):
             raise ValueError('更新含运行依赖、用户数据或未授权资源，请单独处理：' + name)
         changed.append({'path': name, 'size': entry['size'], 'sha256': entry['sha256'],
                         'before_sha256': old['sha256'] if old else None})

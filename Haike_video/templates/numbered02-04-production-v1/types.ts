@@ -1,0 +1,2 @@
+export type Clip={file:string;from:number;to:number;sourceStartFrame:number;position?:string};
+export type Episode={schema:string;template_id:string;version:string;fps:number;durationFrames:number;title:string;brand:string;address:string;sourceText:string;audio:string;font:string;captions:{text:string;startMs:number;endMs:number}[];presenters:Clip[];media:Record<string,Clip[]>;actions:Record<string,{from:number;to:number}>;stages:any[];content:any;nativeNana?:any};

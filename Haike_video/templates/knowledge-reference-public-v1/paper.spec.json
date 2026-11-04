@@ -1,0 +1,709 @@
+{
+  "schema_version": 1,
+  "standard_version": "video-template-v1",
+  "template_id": "knowledge-explainer-sketchnote",
+  "template_version": "5.0.0-independent.1",
+  "template_type": "graphic",
+  "spec_kind": "implementation",
+  "stage": "specification",
+  "authority": {
+    "runbook": "README.md",
+    "implementation_paths": [
+      "index.tsx",
+      "types.ts",
+      "drawing.ts",
+      "backgrounds.ts",
+      "paper.ts",
+      "../../backlot/motion_knowledge_public_execution_v1.py",
+      "../../backlot/motion_knowledge_public_production_v1.py"
+    ],
+    "parameter_source": "source-bound: these files own geometry/material/font/curve; episode owns text/objects/absolute events"
+  },
+  "canvas": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 60,
+    "duration_seconds": 59.96666666666667,
+    "clock": "Complete original audio, absolute60fps; development fixtures explicitly silent/previewOnly",
+    "coordinate_system": "top_left_pixels"
+  },
+  "narrative": {
+    "purpose": "Independent public reference realization, retaining original style relationships without private source or screenshot backgrounds",
+    "information_hierarchy": [
+      "title/chapter",
+      "persistent objects and relations",
+      "full ASR captions",
+      "consumer medical boundary"
+    ],
+    "structure": [
+      "sketchnote.step-sequence",
+      "sketchnote.keyword-annotation",
+      "sketchnote.sticky-revision",
+      "sketchnote.return-loop"
+    ]
+  },
+  "scenes": [
+    {
+      "id": "s1",
+      "start": 0.0,
+      "end": 14.083333333333334,
+      "purpose": "从看，到用",
+      "element_ids": [
+        "background",
+        "title",
+        "board",
+        "objects",
+        "captions",
+        "boundary"
+      ],
+      "variant": "sketchnote.step-sequence"
+    },
+    {
+      "id": "s2",
+      "start": 14.083333333333334,
+      "end": 24.933333333333334,
+      "purpose": "亲手用AI",
+      "element_ids": [
+        "background",
+        "title",
+        "board",
+        "objects",
+        "captions",
+        "boundary"
+      ],
+      "variant": "sketchnote.keyword-annotation"
+    },
+    {
+      "id": "s3",
+      "start": 24.933333333333334,
+      "end": 43.21666666666667,
+      "purpose": "从旁观到体验",
+      "element_ids": [
+        "background",
+        "title",
+        "board",
+        "objects",
+        "captions",
+        "boundary"
+      ],
+      "variant": "sketchnote.sticky-revision"
+    },
+    {
+      "id": "s4",
+      "start": 43.21666666666667,
+      "end": 59.96666666666667,
+      "purpose": "这个周末，来坐坐",
+      "element_ids": [
+        "background",
+        "title",
+        "board",
+        "objects",
+        "captions",
+        "boundary"
+      ],
+      "variant": "sketchnote.return-loop"
+    }
+  ],
+  "assets": [
+    {
+      "id": "font_0",
+      "kind": "font",
+      "path": "public/fonts/LXGWWenKai-Medium.ttf",
+      "source": "Independent pinned public upstream download; font-provenance.json",
+      "embedded_content": [
+        "Exact licensed font glyphs, no screenshot or private kernel"
+      ],
+      "rights_status": "OFL-1.1; complete upstream copyright/license included"
+    },
+    {
+      "id": "font_1",
+      "kind": "font",
+      "path": "public/fonts/LongCang.ttf",
+      "source": "Independent pinned public upstream download; font-provenance.json",
+      "embedded_content": [
+        "Exact licensed font glyphs, no screenshot or private kernel"
+      ],
+      "rights_status": "OFL-1.1; complete upstream copyright/license included"
+    },
+    {
+      "id": "font_2",
+      "kind": "font",
+      "path": "public/fonts/Fraunces.ttf",
+      "source": "Independent pinned public upstream download; font-provenance.json",
+      "embedded_content": [
+        "Exact licensed font glyphs, no screenshot or private kernel"
+      ],
+      "rights_status": "OFL-1.1; complete upstream copyright/license included"
+    },
+    {
+      "id": "font_3",
+      "kind": "font",
+      "path": "public/fonts/JetBrainsMono.ttf",
+      "source": "Independent pinned public upstream download; font-provenance.json",
+      "embedded_content": [
+        "Exact licensed font glyphs, no screenshot or private kernel"
+      ],
+      "rights_status": "OFL-1.1; complete upstream copyright/license included"
+    },
+    {
+      "id": "narration",
+      "kind": "audio",
+      "path": null,
+      "source": "Current private complete approved narration, sameSHA as real sentence evidence",
+      "embedded_content": [
+        "Entire original voice, original timing"
+      ],
+      "rights_status": "Input owner authorized; not included in public source distribution"
+    },
+    {
+      "id": "music",
+      "kind": "audio",
+      "path": null,
+      "source": "Explicit current input music or none, never author-account fallback",
+      "embedded_content": [
+        "Authorized soundtrack"
+      ],
+      "rights_status": "Input owner authorized; not included in public source distribution"
+    }
+  ],
+  "elements": [
+    {
+      "id": "background",
+      "type": "background",
+      "role": "Procedural dot paper",
+      "parent_id": null,
+      "z_index": 0,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "Procedural dot paper"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1080,
+          1920
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source_owner": "index.tsx/backgrounds.ts",
+          "font_manifest": "font-provenance.json"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 59.96666666666667
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "当前场景稳定显示"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "source geometry/material/curves"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "public_observation",
+        "independent_design"
+      ],
+      "acceptance": [
+        {
+          "check": "layout_readability",
+          "method": "实际查看稳定态和最长内容帧",
+          "pass_condition": "全部相关内容可读且符合名义框与避让关系"
+        }
+      ]
+    },
+    {
+      "id": "title",
+      "type": "text",
+      "role": "Current consumer title/chapter count",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "editable",
+        "binding": "title_slot",
+        "asset_id": null,
+        "description": "Current consumer title/chapter count"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          72,
+          74,
+          940,
+          142
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source_owner": "index.tsx/backgrounds.ts",
+          "font_manifest": "font-provenance.json",
+          "font": "LXGW WenKai Medium (bundled OFL)",
+          "font_size": 42,
+          "max_lines": 1,
+          "overflow": "reject; retain full ASR and explicitly split display text"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 59.96666666666667
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "当前场景稳定显示"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "source geometry/material/curves"
+      ],
+      "replaceable": [
+        "content",
+        "absolute event timing"
+      ],
+      "evidence_ids": [
+        "public_observation",
+        "independent_design"
+      ],
+      "acceptance": [
+        {
+          "check": "layout_readability",
+          "method": "实际查看稳定态和最长内容帧",
+          "pass_condition": "全部相关内容可读且符合名义框与避让关系"
+        }
+      ]
+    },
+    {
+      "id": "board",
+      "type": "card",
+      "role": "Persistent source-owned page/camera",
+      "parent_id": null,
+      "z_index": 20,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "Persistent source-owned page/camera"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          64,
+          245,
+          952,
+          1328
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source_owner": "paper.ts",
+          "font_manifest": "font-provenance.json"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 59.96666666666667
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "当前场景稳定显示"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "source geometry/material/curves"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "public_observation",
+        "independent_design"
+      ],
+      "acceptance": [
+        {
+          "check": "layout_readability",
+          "method": "实际查看稳定态和最长内容帧",
+          "pass_condition": "全部相关内容可读且符合名义框与避让关系"
+        }
+      ]
+    },
+    {
+      "id": "objects",
+      "type": "custom",
+      "role": "Explicit item IDs, real font, own icons/lines and independent events",
+      "parent_id": null,
+      "z_index": 30,
+      "content": {
+        "mode": "editable",
+        "binding": "objects_slot",
+        "asset_id": null,
+        "description": "Explicit item IDs, real font, own icons/lines and independent events"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          64,
+          245,
+          952,
+          1328
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source_owner": "paper.ts",
+          "font_manifest": "font-provenance.json"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 59.96666666666667
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "当前场景稳定显示"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "source geometry/material/curves"
+      ],
+      "replaceable": [
+        "content",
+        "absolute event timing"
+      ],
+      "evidence_ids": [
+        "public_observation",
+        "independent_design"
+      ],
+      "acceptance": [
+        {
+          "check": "layout_readability",
+          "method": "实际查看稳定态和最长内容帧",
+          "pass_condition": "全部相关内容可读且符合名义框与避让关系"
+        }
+      ]
+    },
+    {
+      "id": "captions",
+      "type": "text",
+      "role": "Complete measured ASR caption; absolute clock",
+      "parent_id": null,
+      "z_index": 40,
+      "content": {
+        "mode": "editable",
+        "binding": "captions_slot",
+        "asset_id": null,
+        "description": "Complete measured ASR caption; absolute clock"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          73,
+          1650,
+          930,
+          114
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source_owner": "index.tsx/backgrounds.ts",
+          "font_manifest": "font-provenance.json",
+          "font": "LXGW WenKai Medium (bundled OFL)",
+          "font_size": 39,
+          "max_lines": 2,
+          "overflow": "reject; retain full ASR and explicitly split display text"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 59.96666666666667
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "当前场景稳定显示"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "source geometry/material/curves"
+      ],
+      "replaceable": [
+        "content",
+        "absolute event timing"
+      ],
+      "evidence_ids": [
+        "public_observation",
+        "independent_design"
+      ],
+      "acceptance": [
+        {
+          "check": "layout_readability",
+          "method": "实际查看稳定态和最长内容帧",
+          "pass_condition": "全部相关内容可读且符合名义框与避让关系"
+        }
+      ]
+    },
+    {
+      "id": "boundary",
+      "type": "text",
+      "role": "Full medical boundary, addition declared separately from original source label",
+      "parent_id": null,
+      "z_index": 50,
+      "content": {
+        "mode": "editable",
+        "binding": "boundary_slot",
+        "asset_id": null,
+        "description": "Full medical boundary, addition declared separately from original source label"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          73,
+          1770,
+          920,
+          78
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "source_owner": "index.tsx/backgrounds.ts",
+          "font_manifest": "font-provenance.json",
+          "font": "LXGW WenKai Medium (bundled OFL)",
+          "font_size": 26,
+          "max_lines": 2,
+          "overflow": "reject; retain full ASR and explicitly split display text"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 59.96666666666667
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "当前场景稳定显示"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "source geometry/material/curves"
+      ],
+      "replaceable": [
+        "content",
+        "absolute event timing"
+      ],
+      "evidence_ids": [
+        "public_observation",
+        "independent_design"
+      ],
+      "acceptance": [
+        {
+          "check": "layout_readability",
+          "method": "实际查看稳定态和最长内容帧",
+          "pass_condition": "全部相关内容可读且符合名义框与避让关系"
+        }
+      ]
+    }
+  ],
+  "slots": [
+    {
+      "id": "title_slot",
+      "element_id": "title",
+      "property": "content",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "exact_input_owner": "types.ts / validate_episode",
+        "measure_with_actual_font": true,
+        "no_geometry_or_font_override": true
+      },
+      "missing": "停在输入检查并补齐本期文本",
+      "overflow": "Reject; shorten display labels or split legal text explicitly, retaining full original audio/ASR"
+    },
+    {
+      "id": "objects_slot",
+      "element_id": "objects",
+      "property": "content",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "exact_input_owner": "types.ts / validate_episode",
+        "measure_with_actual_font": true,
+        "no_geometry_or_font_override": true
+      },
+      "missing": "停在输入检查并补齐本期文本",
+      "overflow": "Reject; shorten display labels or split legal text explicitly, retaining full original audio/ASR"
+    },
+    {
+      "id": "captions_slot",
+      "element_id": "captions",
+      "property": "content",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "exact_input_owner": "types.ts / validate_episode",
+        "measure_with_actual_font": true,
+        "no_geometry_or_font_override": true
+      },
+      "missing": "停在输入检查并补齐本期文本",
+      "overflow": "Reject; shorten display labels or split legal text explicitly, retaining full original audio/ASR"
+    },
+    {
+      "id": "boundary_slot",
+      "element_id": "boundary",
+      "property": "content",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "exact_input_owner": "types.ts / validate_episode",
+        "measure_with_actual_font": true,
+        "no_geometry_or_font_override": true
+      },
+      "missing": "停在输入检查并补齐本期文本",
+      "overflow": "Reject; shorten display labels or split legal text explicitly, retaining full original audio/ASR"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "public_observation",
+      "source_kind": "observation",
+      "source": "Official publicly declared gallery imageDocument and lawful current native render",
+      "locator": "sketchnote four families12 images; chalkboard eight families24 images; first/early/explanatory plus currentB6 frames",
+      "method": "Actually viewed all36 reference images and16/20 current native frames; approximate geometry estimated from1080×1920 visuals, not source extraction",
+      "file": null,
+      "sha256": null
+    },
+    {
+      "id": "independent_design",
+      "source_kind": "design",
+      "source": "Own new source modules",
+      "locator": "This directory; source parameter ownership in authority",
+      "method": "Original procedural textures, pen, shapes, page camera and stroke reveal; no private core read, no raster reference used as picture",
+      "file": null,
+      "sha256": null
+    }
+  ],
+  "unknowns": [],
+  "validation": {
+    "structure": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "Code/input/math checks do not establish reference fidelity or real output; independent queue frames and comparisons pending"
+    },
+    "technical": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "Code/input/math checks do not establish reference fidelity or real output; independent queue frames and comparisons pending"
+    },
+    "visual": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "Code/input/math checks do not establish reference fidelity or real output; independent queue frames and comparisons pending"
+    },
+    "audio": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "Code/input/math checks do not establish reference fidelity or real output; independent queue frames and comparisons pending"
+    },
+    "platform": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "Code/input/math checks do not establish reference fidelity or real output; independent queue frames and comparisons pending"
+    },
+    "user_review": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "Code/input/math checks do not establish reference fidelity or real output; independent queue frames and comparisons pending"
+    },
+    "production": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "Code/input/math checks do not establish reference fidelity or real output; independent queue frames and comparisons pending"
+    }
+  },
+  "extensions": {
+    "graphic": {
+      "text_policy": "Full real ASR captions and fixed exact fonts; short independent display labels are measured, do not replace source narration",
+      "asset_fit": "No presenter/photos/B-roll; all graphics are editable original drawing objects, publicOFLfont resources only"
+    }
+  },
+  "operations": [
+    {
+      "id": "prepare",
+      "input": "Explicit private data + original approved audio/ASR SHA + public fonts",
+      "action": "Validate original full clock, all objects and separate internal events",
+      "output": "Frozen exact production request",
+      "completion": "prepare succeeds and source/input/runtime identity is saved; no visual acceptance claim",
+      "recovery": "Find original request/job; do not rebuy audio or edit accepted A/C source",
+      "entrypoint": "backlot.motion_knowledge_public_production_v1:prepare"
+    },
+    {
+      "id": "preview",
+      "input": "Same frozen request and current single-lane queue authorization",
+      "action": "Public submit/execute only after root fixed contract registration; inspect actual keyframes",
+      "output": "PNG/receipt and explicit review evidence",
+      "completion": "All relevant original mechanisms compared; differences recorded and affected states repaired",
+      "recovery": "Follow original parent ID, preserve old candidate; no direct native/render runner bypass",
+      "entrypoint": "Haike_video/scripts/motion_replay_production.py"
+    },
+    {
+      "id": "review",
+      "input": "Completed original same-source preview, all actual PNGs and explicit decision approve/reject/changes_requested",
+      "action": "Validate every expected PNG identity/dimensions/decode, exact original preview/receipt and actual viewing evidence",
+      "output": "Decision-specific review record bound to complete preview snapshot",
+      "completion": "Only explicit approve permits render admission; reject/changes_requested do not authorize export",
+      "recovery": "Completed preview missing artifacts reports exact integrity state and repair; restore original bytes or explicit new revision data/project; never automatic redraw",
+      "entrypoint": "backlot.motion_knowledge_public_production_v1:review"
+    },
+    {
+      "id": "render",
+      "input": "Same frozen request plus current explicit approve and all unchanged preview PNGs",
+      "action": "Before queue admission freeze exact preview/image/review binding; revalidate binding when original render parent is claimed",
+      "output": "Whole-clock HD video and binding-bearing execution receipt after actual render",
+      "completion": "Queue completion/technical decoding alone do not prove visual fidelity or listening; actual output comparisons remain separate",
+      "recovery": "Changed binding rejects before media tools; preserve original parent and create an explicit new revision when needed, not a new approval fingerprint",
+      "entrypoint": "Haike_video/scripts/motion_replay_production.py"
+    }
+  ]
+}

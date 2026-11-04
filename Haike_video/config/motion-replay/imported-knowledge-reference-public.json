@@ -1,0 +1,2170 @@
+{
+  "schema": "haike.motion-replay-registry/1",
+  "templates": [
+    {
+      "template_id": "knowledge-explainer-sketchnote",
+      "version": "5.0.0-independent.1",
+      "gallery_id": "motion-package-mg-178e6870ae932019c6bf2fe9",
+      "family": "imported",
+      "default_workflow": "knowledge-reference-public",
+      "renderer": {
+        "kind": "project",
+        "entrypoint": "backlot.motion_knowledge_public_production_v1:prepare",
+        "adapter": "backlot.motion_knowledge_public_execution_v1:prepare",
+        "execution": "supported"
+      },
+      "sources": [
+        {
+          "path": "Haike_video/backlot/motion_knowledge_public_execution_v1.py",
+          "sha256": "b18e8417ba91a6717fd533644f078f755cc418ab7ef51173191e4250007d2846"
+        },
+        {
+          "path": "Haike_video/backlot/motion_knowledge_public_production_v1.py",
+          "sha256": "358ba17778a35ea0c0561f3c83d64c2f29e191479a30f955a512c022a298ff70"
+        },
+        {
+          "path": "Haike_video/remotion-composer/package-lock.json",
+          "sha256": "80be5141ee357725970da36d2117500fd3ac062902e04bc9fe1f1942d3596bee"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-reference-public-v1/backgrounds.ts",
+          "sha256": "ba7d233607c01c41d956e381b2a85de1719bc56e06b2053d2f37cf3af4008316"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-reference-public-v1/chalk.spec.json",
+          "sha256": "72e26084554e16dadfb271ba9c9a0b07a835abebe020cfb80832e5803366e87c"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-reference-public-v1/chalk.ts",
+          "sha256": "30ed66051d8ec875c1381fa9a2d2755743a3fca9e5a0d469d21030a2c12be210"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-reference-public-v1/drawing.ts",
+          "sha256": "58e6db386a5fc6cb06e2c66db2be0775329b78f03c9eff0965b9eefd9bb376be"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-reference-public-v1/font-provenance.json",
+          "sha256": "28530fbb3ec81e487e15e12d56a7f556b9299308cd59ddd42299386e6470a58f"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-reference-public-v1/index.tsx",
+          "sha256": "731c9de91aa628a19477f15369a9e10afa95c3a189438df0a1043d78a8db13aa"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-reference-public-v1/paper.spec.json",
+          "sha256": "3dda37dcedcc7055387251e1783cf63b7ae99ab115165417f7380567fa5e5cd1"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-reference-public-v1/paper.ts",
+          "sha256": "eb633d6b120759c25175e5480cdf3f7d3fa58a8bf3626efbe582a6873527d682"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-reference-public-v1/public/fonts/Fraunces-OFL.txt",
+          "sha256": "bdf4c22802eaf804f998195871c6b8938aac2ac14b2d78a8bd66a6f1eced833b"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-reference-public-v1/public/fonts/Fraunces.ttf",
+          "sha256": "177ff6c0f14e5550a3c624247cd1189611d4eb65d000b14944c63d967958abbb"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-reference-public-v1/public/fonts/JetBrainsMono-OFL.txt",
+          "sha256": "b2fe5e8987594e9ffd1d2ca52a2f5d73eb8335243893c5d6254b5ad69269591d"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-reference-public-v1/public/fonts/JetBrainsMono.ttf",
+          "sha256": "48715a42ec242c21e9f02692891e147d022299a52e48d5e413e1a942193ffeda"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-reference-public-v1/public/fonts/LongCang-OFL.txt",
+          "sha256": "603546b7219a94bb59bf8294458194a5010119486354092b66a09a3fd61aeacc"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-reference-public-v1/public/fonts/LongCang.ttf",
+          "sha256": "e5bf2c3f24ef2327c6f136d8f73e2f9dfdf44896fdbeb35a9515f44777bb91bc"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-reference-public-v1/public/fonts/LXGWWenKai-Medium.ttf",
+          "sha256": "f4b8a34d1f838fe411540cb7c97b1c384ac9738a876c4104500bc42508b2312a"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-reference-public-v1/public/fonts/LXGWWenKai-OFL.txt",
+          "sha256": "1a25e35da1031c6c3436fde545bb9cb5aca954e9873afe510c834b8b79bd21a0"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-reference-public-v1/README.md",
+          "sha256": "6a418c0d03ee764b557a7c6cd980905ff63c9ab142f7f557758450611c5a22f1"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-reference-public-v1/render.cjs",
+          "sha256": "d7e13f428a78b288318e501e40ca7e1ae04dccce06e0c38b0ce94bfe9da1cfb4"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-reference-public-v1/types.ts",
+          "sha256": "98d200a0b53688c6515f6c907062fd1446a5f134eb0ca11ed690db364c341b80"
+        }
+      ],
+      "objects": [
+        {
+          "id": "public.knowledge.header",
+          "role": "Consumer title and scene counter",
+          "authority": {
+            "owner": "Independent public knowledge source",
+            "path": "Haike_video/templates/knowledge-reference-public-v1/index.tsx",
+            "original_protected_core_used": false
+          }
+        },
+        {
+          "id": "public.knowledge.captions",
+          "role": "Complete original measured captions; separate from short diagram labels",
+          "authority": {
+            "owner": "Independent public knowledge source",
+            "path": "Haike_video/templates/knowledge-reference-public-v1/index.tsx",
+            "original_protected_core_used": false
+          }
+        },
+        {
+          "id": "public.knowledge.boundary",
+          "role": "Independent constant full nonmedical boundary layer, declared addition",
+          "authority": {
+            "owner": "Independent public knowledge source",
+            "path": "Haike_video/templates/knowledge-reference-public-v1/index.tsx",
+            "original_protected_core_used": false
+          }
+        },
+        {
+          "id": "public.knowledge.audio",
+          "role": "Approved full original voice and optional explicit authorized music; no providers",
+          "authority": {
+            "owner": "Independent public knowledge source",
+            "path": "Haike_video/templates/knowledge-reference-public-v1/render.cjs",
+            "original_protected_core_used": false
+          }
+        },
+        {
+          "id": "public.paper.page",
+          "role": "Persistent long dot page, focused object camera and overview",
+          "authority": {
+            "owner": "Independent public knowledge source",
+            "path": "Haike_video/templates/knowledge-reference-public-v1/paper.ts",
+            "original_protected_core_used": false
+          }
+        },
+        {
+          "id": "public.paper.labels",
+          "role": "Numbered handwritten labels and actual character-range marker",
+          "authority": {
+            "owner": "Independent public knowledge source",
+            "path": "Haike_video/templates/knowledge-reference-public-v1/paper.ts",
+            "original_protected_core_used": false
+          }
+        },
+        {
+          "id": "public.paper.graphics",
+          "role": "Original icons drawn independently from public visual observations",
+          "authority": {
+            "owner": "Independent public knowledge source",
+            "path": "Haike_video/templates/knowledge-reference-public-v1/drawing.ts",
+            "original_protected_core_used": false
+          }
+        },
+        {
+          "id": "public.paper.notes",
+          "role": "Separate handwritten annotations tied to original item IDs",
+          "authority": {
+            "owner": "Independent public knowledge source",
+            "path": "Haike_video/templates/knowledge-reference-public-v1/paper.ts",
+            "original_protected_core_used": false
+          }
+        },
+        {
+          "id": "public.paper.revision",
+          "role": "Sticky revision crosses/points back to original target ID",
+          "authority": {
+            "owner": "Independent public knowledge source",
+            "path": "Haike_video/templates/knowledge-reference-public-v1/paper.ts",
+            "original_protected_core_used": false
+          }
+        },
+        {
+          "id": "public.paper.return",
+          "role": "Arrow path binds exact fromId/toId on same page",
+          "authority": {
+            "owner": "Independent public knowledge source",
+            "path": "Haike_video/templates/knowledge-reference-public-v1/paper.ts",
+            "original_protected_core_used": false
+          }
+        },
+        {
+          "id": "public.paper.conclusion",
+          "role": "Two-line measured original sticky conclusion",
+          "authority": {
+            "owner": "Independent public knowledge source",
+            "path": "Haike_video/templates/knowledge-reference-public-v1/drawing.ts",
+            "original_protected_core_used": false
+          }
+        }
+      ],
+      "actions": [
+        {
+          "id": "haike.public-knowledge.sketchnote.step-sequence",
+          "version": "5.0.0-independent.1",
+          "implementation": {
+            "owner": "Independent public reference realization",
+            "path": "Haike_video/templates/knowledge-reference-public-v1/paper.ts",
+            "function": "drawPaper",
+            "family": "sketchnote.step-sequence",
+            "original_protected_core_used": false
+          },
+          "objects": [
+            "public.knowledge.header",
+            "public.knowledge.captions",
+            "public.knowledge.boundary",
+            "public.knowledge.audio",
+            "public.paper.page",
+            "public.paper.labels",
+            "public.paper.graphics",
+            "public.paper.notes",
+            "public.paper.conclusion"
+          ],
+          "parameters": {
+            "items": "1..4 persistent IDs; labels<=8 chars, actual67px font width<=550; annotation<=3 lines; highlight exact character bounds",
+            "conclusion": "1..2 lines, actual32px font width<=470; no silent font shrink",
+            "per_item_events": [
+              "camera",
+              "write",
+              "highlight",
+              "draw",
+              "annotation"
+            ],
+            "relation_events": "connection optional; revision/return required for respective family with explicit item IDs",
+            "source_locked": "Page/camera geometry, procedural texture, drawing curves, typography and OFL resources"
+          },
+          "phases": {
+            "entry": "Source-owned page/camera or chalk heading uses its explicit absolute event; no presenter",
+            "active": "Separate actual controls: camera, write, highlight, draw, annotation, overview, conclusion, connection",
+            "settled": "Retain same item IDs and settled marks for explicit reading window; not enlarged whole-scene time scaling",
+            "exit": "Scene boundary on original full voice; paper overview/return remains same page, chalk next sparse chapter starts explicitly"
+          }
+        },
+        {
+          "id": "haike.public-knowledge.sketchnote.keyword-annotation",
+          "version": "5.0.0-independent.1",
+          "implementation": {
+            "owner": "Independent public reference realization",
+            "path": "Haike_video/templates/knowledge-reference-public-v1/paper.ts",
+            "function": "drawPaper",
+            "family": "sketchnote.keyword-annotation",
+            "original_protected_core_used": false
+          },
+          "objects": [
+            "public.knowledge.header",
+            "public.knowledge.captions",
+            "public.knowledge.boundary",
+            "public.knowledge.audio",
+            "public.paper.page",
+            "public.paper.labels",
+            "public.paper.graphics",
+            "public.paper.notes",
+            "public.paper.conclusion"
+          ],
+          "parameters": {
+            "items": "1..4 persistent IDs; labels<=8 chars, actual67px font width<=550; annotation<=3 lines; highlight exact character bounds",
+            "conclusion": "1..2 lines, actual32px font width<=470; no silent font shrink",
+            "per_item_events": [
+              "camera",
+              "write",
+              "highlight",
+              "draw",
+              "annotation"
+            ],
+            "relation_events": "connection optional; revision/return required for respective family with explicit item IDs",
+            "source_locked": "Page/camera geometry, procedural texture, drawing curves, typography and OFL resources"
+          },
+          "phases": {
+            "entry": "Source-owned page/camera or chalk heading uses its explicit absolute event; no presenter",
+            "active": "Separate actual controls: camera, write, highlight, draw, annotation, overview, conclusion, connection",
+            "settled": "Retain same item IDs and settled marks for explicit reading window; not enlarged whole-scene time scaling",
+            "exit": "Scene boundary on original full voice; paper overview/return remains same page, chalk next sparse chapter starts explicitly"
+          }
+        },
+        {
+          "id": "haike.public-knowledge.sketchnote.sticky-revision",
+          "version": "5.0.0-independent.1",
+          "implementation": {
+            "owner": "Independent public reference realization",
+            "path": "Haike_video/templates/knowledge-reference-public-v1/paper.ts",
+            "function": "drawPaper",
+            "family": "sketchnote.sticky-revision",
+            "original_protected_core_used": false
+          },
+          "objects": [
+            "public.knowledge.header",
+            "public.knowledge.captions",
+            "public.knowledge.boundary",
+            "public.knowledge.audio",
+            "public.paper.page",
+            "public.paper.labels",
+            "public.paper.graphics",
+            "public.paper.notes",
+            "public.paper.conclusion",
+            "public.paper.revision"
+          ],
+          "parameters": {
+            "items": "1..4 persistent IDs; labels<=8 chars, actual67px font width<=550; annotation<=3 lines; highlight exact character bounds",
+            "conclusion": "1..2 lines, actual32px font width<=470; no silent font shrink",
+            "per_item_events": [
+              "camera",
+              "write",
+              "highlight",
+              "draw",
+              "annotation"
+            ],
+            "relation_events": "connection optional; revision/return required for respective family with explicit item IDs",
+            "source_locked": "Page/camera geometry, procedural texture, drawing curves, typography and OFL resources"
+          },
+          "phases": {
+            "entry": "Source-owned page/camera or chalk heading uses its explicit absolute event; no presenter",
+            "active": "Separate actual controls: camera, write, highlight, draw, annotation, overview, conclusion, camera-return, revision, connection",
+            "settled": "Retain same item IDs and settled marks for explicit reading window; not enlarged whole-scene time scaling",
+            "exit": "Scene boundary on original full voice; paper overview/return remains same page, chalk next sparse chapter starts explicitly"
+          }
+        },
+        {
+          "id": "haike.public-knowledge.sketchnote.return-loop",
+          "version": "5.0.0-independent.1",
+          "implementation": {
+            "owner": "Independent public reference realization",
+            "path": "Haike_video/templates/knowledge-reference-public-v1/paper.ts",
+            "function": "drawPaper",
+            "family": "sketchnote.return-loop",
+            "original_protected_core_used": false
+          },
+          "objects": [
+            "public.knowledge.header",
+            "public.knowledge.captions",
+            "public.knowledge.boundary",
+            "public.knowledge.audio",
+            "public.paper.page",
+            "public.paper.labels",
+            "public.paper.graphics",
+            "public.paper.notes",
+            "public.paper.conclusion",
+            "public.paper.return"
+          ],
+          "parameters": {
+            "items": "1..4 persistent IDs; labels<=8 chars, actual67px font width<=550; annotation<=3 lines; highlight exact character bounds",
+            "conclusion": "1..2 lines, actual32px font width<=470; no silent font shrink",
+            "per_item_events": [
+              "camera",
+              "write",
+              "highlight",
+              "draw",
+              "annotation"
+            ],
+            "relation_events": "connection optional; revision/return required for respective family with explicit item IDs",
+            "source_locked": "Page/camera geometry, procedural texture, drawing curves, typography and OFL resources"
+          },
+          "phases": {
+            "entry": "Source-owned page/camera or chalk heading uses its explicit absolute event; no presenter",
+            "active": "Separate actual controls: camera, write, highlight, draw, annotation, overview, conclusion, return, connection",
+            "settled": "Retain same item IDs and settled marks for explicit reading window; not enlarged whole-scene time scaling",
+            "exit": "Scene boundary on original full voice; paper overview/return remains same page, chalk next sparse chapter starts explicitly"
+          }
+        }
+      ],
+      "timeline": {
+        "mode": "semantic",
+        "clock": "Complete approved original voice,60fps whole-frame ceiling; no stretch/cut; silent previewOnly scientific fixture explicitly distinct",
+        "events": [
+          {
+            "id": "haike.public-knowledge.sketchnote.step-sequence.camera",
+            "action_id": "haike.public-knowledge.sketchnote.step-sequence",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "camera",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.sketchnote.step-sequence.write",
+            "action_id": "haike.public-knowledge.sketchnote.step-sequence",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "write",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.sketchnote.step-sequence.highlight",
+            "action_id": "haike.public-knowledge.sketchnote.step-sequence",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "highlight",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.sketchnote.step-sequence.draw",
+            "action_id": "haike.public-knowledge.sketchnote.step-sequence",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "draw",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.sketchnote.step-sequence.annotation",
+            "action_id": "haike.public-knowledge.sketchnote.step-sequence",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "annotation",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.sketchnote.step-sequence.overview",
+            "action_id": "haike.public-knowledge.sketchnote.step-sequence",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "overview",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.sketchnote.step-sequence.conclusion",
+            "action_id": "haike.public-knowledge.sketchnote.step-sequence",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "conclusion",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.sketchnote.step-sequence.connection",
+            "action_id": "haike.public-knowledge.sketchnote.step-sequence",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "connection",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.sketchnote.keyword-annotation.camera",
+            "action_id": "haike.public-knowledge.sketchnote.keyword-annotation",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "camera",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.sketchnote.keyword-annotation.write",
+            "action_id": "haike.public-knowledge.sketchnote.keyword-annotation",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "write",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.sketchnote.keyword-annotation.highlight",
+            "action_id": "haike.public-knowledge.sketchnote.keyword-annotation",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "highlight",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.sketchnote.keyword-annotation.draw",
+            "action_id": "haike.public-knowledge.sketchnote.keyword-annotation",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "draw",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.sketchnote.keyword-annotation.annotation",
+            "action_id": "haike.public-knowledge.sketchnote.keyword-annotation",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "annotation",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.sketchnote.keyword-annotation.overview",
+            "action_id": "haike.public-knowledge.sketchnote.keyword-annotation",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "overview",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.sketchnote.keyword-annotation.conclusion",
+            "action_id": "haike.public-knowledge.sketchnote.keyword-annotation",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "conclusion",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.sketchnote.keyword-annotation.connection",
+            "action_id": "haike.public-knowledge.sketchnote.keyword-annotation",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "connection",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.sketchnote.sticky-revision.camera",
+            "action_id": "haike.public-knowledge.sketchnote.sticky-revision",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "camera",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.sketchnote.sticky-revision.write",
+            "action_id": "haike.public-knowledge.sketchnote.sticky-revision",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "write",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.sketchnote.sticky-revision.highlight",
+            "action_id": "haike.public-knowledge.sketchnote.sticky-revision",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "highlight",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.sketchnote.sticky-revision.draw",
+            "action_id": "haike.public-knowledge.sketchnote.sticky-revision",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "draw",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.sketchnote.sticky-revision.annotation",
+            "action_id": "haike.public-knowledge.sketchnote.sticky-revision",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "annotation",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.sketchnote.sticky-revision.overview",
+            "action_id": "haike.public-knowledge.sketchnote.sticky-revision",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "overview",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.sketchnote.sticky-revision.conclusion",
+            "action_id": "haike.public-knowledge.sketchnote.sticky-revision",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "conclusion",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.sketchnote.sticky-revision.camera-return",
+            "action_id": "haike.public-knowledge.sketchnote.sticky-revision",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "camera-return",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.sketchnote.sticky-revision.revision",
+            "action_id": "haike.public-knowledge.sketchnote.sticky-revision",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "revision",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.sketchnote.sticky-revision.connection",
+            "action_id": "haike.public-knowledge.sketchnote.sticky-revision",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "connection",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.sketchnote.return-loop.camera",
+            "action_id": "haike.public-knowledge.sketchnote.return-loop",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "camera",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.sketchnote.return-loop.write",
+            "action_id": "haike.public-knowledge.sketchnote.return-loop",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "write",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.sketchnote.return-loop.highlight",
+            "action_id": "haike.public-knowledge.sketchnote.return-loop",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "highlight",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.sketchnote.return-loop.draw",
+            "action_id": "haike.public-knowledge.sketchnote.return-loop",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "draw",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.sketchnote.return-loop.annotation",
+            "action_id": "haike.public-knowledge.sketchnote.return-loop",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "annotation",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.sketchnote.return-loop.overview",
+            "action_id": "haike.public-knowledge.sketchnote.return-loop",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "overview",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.sketchnote.return-loop.conclusion",
+            "action_id": "haike.public-knowledge.sketchnote.return-loop",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "conclusion",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.sketchnote.return-loop.return",
+            "action_id": "haike.public-knowledge.sketchnote.return-loop",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "return",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.sketchnote.return-loop.connection",
+            "action_id": "haike.public-knowledge.sketchnote.return-loop",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "connection",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          }
+        ],
+        "retiming": "Only text/items and explicit absolute internal event windows; fixed geometry/fonts/material/curves; retain reading, reject holes/unknown controls"
+      },
+      "slots": [
+        {
+          "id": "data",
+          "kind": "private-prepared-input",
+          "input_path": "data",
+          "required": true,
+          "missing_policy": "Block; require explicit approved script/cues/voice evidence, complete local public font files and production config. No original personal package/account fallback."
+        }
+      ],
+      "capabilities": {
+        "implementation": "knowledge-reference-public-v1",
+        "contract": "haike.knowledge-reference-public/1",
+        "original_personal_package_required": false,
+        "default_presenter": "none",
+        "photos_or_b_roll_slot": false,
+        "new_paid_calls": 0,
+        "production_ready": false,
+        "fixed_route_registration": "root-owned",
+        "review_gate": "Explicit approve before render admission; every PNG validated; exact preview/review binding frozen and revalidated in run",
+        "original_version_replaced": false,
+        "source_license": "Independent source under repository terms; upstream OFL fonts with complete licenses; no original protected-source redistribution claim"
+      },
+      "validation": {
+        "structure_and_queue_gates": {
+          "status": "pass",
+          "method": "Own real isolated SQLite queue lifecycle and input/font/geometry tests; external media subprocess stub only for stage tests",
+          "scope": "Code/state gates only; synthetic PNGs are not fidelity evidence",
+          "evidence": "Haike_video/tests/backlot/test_motion_knowledge_public_execution_v1.py"
+        },
+        "actual_output": {
+          "status": "pending",
+          "method": "Actual queue media and human/agent sampled comparison required",
+          "scope": "Independent actual preview/full video not yet produced",
+          "evidence": []
+        },
+        "reference_fidelity": {
+          "status": "pending",
+          "method": "Actual queue media and human/agent sampled comparison required",
+          "scope": "Public12/24 reference frames observed; actual independent comparison pending; WenKai fullTTF vs reference WOFF difference retained",
+          "evidence": []
+        },
+        "cross_machine": {
+          "status": "pending",
+          "method": "Actual queue media and human/agent sampled comparison required",
+          "scope": "Same final public source/runtime package actual isolated replay required",
+          "evidence": []
+        }
+      }
+    },
+    {
+      "template_id": "knowledge-explainer-chalkboard",
+      "version": "5.0.0-independent.1",
+      "gallery_id": "motion-package-mg-5b31b7dd6e6709861dc6ac88",
+      "family": "imported",
+      "default_workflow": "knowledge-reference-public",
+      "renderer": {
+        "kind": "project",
+        "entrypoint": "backlot.motion_knowledge_public_production_v1:prepare",
+        "adapter": "backlot.motion_knowledge_public_execution_v1:prepare",
+        "execution": "supported"
+      },
+      "sources": [
+        {
+          "path": "Haike_video/backlot/motion_knowledge_public_execution_v1.py",
+          "sha256": "b18e8417ba91a6717fd533644f078f755cc418ab7ef51173191e4250007d2846"
+        },
+        {
+          "path": "Haike_video/backlot/motion_knowledge_public_production_v1.py",
+          "sha256": "358ba17778a35ea0c0561f3c83d64c2f29e191479a30f955a512c022a298ff70"
+        },
+        {
+          "path": "Haike_video/remotion-composer/package-lock.json",
+          "sha256": "80be5141ee357725970da36d2117500fd3ac062902e04bc9fe1f1942d3596bee"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-reference-public-v1/backgrounds.ts",
+          "sha256": "ba7d233607c01c41d956e381b2a85de1719bc56e06b2053d2f37cf3af4008316"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-reference-public-v1/chalk.spec.json",
+          "sha256": "72e26084554e16dadfb271ba9c9a0b07a835abebe020cfb80832e5803366e87c"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-reference-public-v1/chalk.ts",
+          "sha256": "30ed66051d8ec875c1381fa9a2d2755743a3fca9e5a0d469d21030a2c12be210"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-reference-public-v1/drawing.ts",
+          "sha256": "58e6db386a5fc6cb06e2c66db2be0775329b78f03c9eff0965b9eefd9bb376be"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-reference-public-v1/font-provenance.json",
+          "sha256": "28530fbb3ec81e487e15e12d56a7f556b9299308cd59ddd42299386e6470a58f"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-reference-public-v1/index.tsx",
+          "sha256": "731c9de91aa628a19477f15369a9e10afa95c3a189438df0a1043d78a8db13aa"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-reference-public-v1/paper.spec.json",
+          "sha256": "3dda37dcedcc7055387251e1783cf63b7ae99ab115165417f7380567fa5e5cd1"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-reference-public-v1/paper.ts",
+          "sha256": "eb633d6b120759c25175e5480cdf3f7d3fa58a8bf3626efbe582a6873527d682"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-reference-public-v1/public/fonts/Fraunces-OFL.txt",
+          "sha256": "bdf4c22802eaf804f998195871c6b8938aac2ac14b2d78a8bd66a6f1eced833b"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-reference-public-v1/public/fonts/Fraunces.ttf",
+          "sha256": "177ff6c0f14e5550a3c624247cd1189611d4eb65d000b14944c63d967958abbb"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-reference-public-v1/public/fonts/JetBrainsMono-OFL.txt",
+          "sha256": "b2fe5e8987594e9ffd1d2ca52a2f5d73eb8335243893c5d6254b5ad69269591d"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-reference-public-v1/public/fonts/JetBrainsMono.ttf",
+          "sha256": "48715a42ec242c21e9f02692891e147d022299a52e48d5e413e1a942193ffeda"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-reference-public-v1/public/fonts/LongCang-OFL.txt",
+          "sha256": "603546b7219a94bb59bf8294458194a5010119486354092b66a09a3fd61aeacc"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-reference-public-v1/public/fonts/LongCang.ttf",
+          "sha256": "e5bf2c3f24ef2327c6f136d8f73e2f9dfdf44896fdbeb35a9515f44777bb91bc"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-reference-public-v1/public/fonts/LXGWWenKai-Medium.ttf",
+          "sha256": "f4b8a34d1f838fe411540cb7c97b1c384ac9738a876c4104500bc42508b2312a"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-reference-public-v1/public/fonts/LXGWWenKai-OFL.txt",
+          "sha256": "1a25e35da1031c6c3436fde545bb9cb5aca954e9873afe510c834b8b79bd21a0"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-reference-public-v1/README.md",
+          "sha256": "6a418c0d03ee764b557a7c6cd980905ff63c9ab142f7f557758450611c5a22f1"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-reference-public-v1/render.cjs",
+          "sha256": "d7e13f428a78b288318e501e40ca7e1ae04dccce06e0c38b0ce94bfe9da1cfb4"
+        },
+        {
+          "path": "Haike_video/templates/knowledge-reference-public-v1/types.ts",
+          "sha256": "98d200a0b53688c6515f6c907062fd1446a5f134eb0ca11ed690db364c341b80"
+        }
+      ],
+      "objects": [
+        {
+          "id": "public.knowledge.header",
+          "role": "Consumer title and scene counter",
+          "authority": {
+            "owner": "Independent public knowledge source",
+            "path": "Haike_video/templates/knowledge-reference-public-v1/index.tsx",
+            "original_protected_core_used": false
+          }
+        },
+        {
+          "id": "public.knowledge.captions",
+          "role": "Complete original measured captions; separate from short diagram labels",
+          "authority": {
+            "owner": "Independent public knowledge source",
+            "path": "Haike_video/templates/knowledge-reference-public-v1/index.tsx",
+            "original_protected_core_used": false
+          }
+        },
+        {
+          "id": "public.knowledge.boundary",
+          "role": "Independent constant full nonmedical boundary layer, declared addition",
+          "authority": {
+            "owner": "Independent public knowledge source",
+            "path": "Haike_video/templates/knowledge-reference-public-v1/index.tsx",
+            "original_protected_core_used": false
+          }
+        },
+        {
+          "id": "public.knowledge.audio",
+          "role": "Approved full original voice and optional explicit authorized music; no providers",
+          "authority": {
+            "owner": "Independent public knowledge source",
+            "path": "Haike_video/templates/knowledge-reference-public-v1/render.cjs",
+            "original_protected_core_used": false
+          }
+        },
+        {
+          "id": "public.chalk.board",
+          "role": "Original procedural wiped green board, frame and chalk tray",
+          "authority": {
+            "owner": "Independent public knowledge source",
+            "path": "Haike_video/templates/knowledge-reference-public-v1/backgrounds.ts",
+            "original_protected_core_used": false
+          }
+        },
+        {
+          "id": "public.chalk.chapter",
+          "role": "Handwritten chapter heading with line, separate event",
+          "authority": {
+            "owner": "Independent public knowledge source",
+            "path": "Haike_video/templates/knowledge-reference-public-v1/chalk.ts",
+            "original_protected_core_used": false
+          }
+        },
+        {
+          "id": "public.chalk.tabrail",
+          "role": "Independent evidence/recap/definition section labels",
+          "authority": {
+            "owner": "Independent public knowledge source",
+            "path": "Haike_video/templates/knowledge-reference-public-v1/chalk.ts",
+            "original_protected_core_used": false
+          }
+        },
+        {
+          "id": "public.chalk.items",
+          "role": "Sparse generic item text, label and process nodes",
+          "authority": {
+            "owner": "Independent public knowledge source",
+            "path": "Haike_video/templates/knowledge-reference-public-v1/chalk.ts",
+            "original_protected_core_used": false
+          }
+        },
+        {
+          "id": "public.chalk.answers",
+          "role": "Independent after-state writing in compare family",
+          "authority": {
+            "owner": "Independent public knowledge source",
+            "path": "Haike_video/templates/knowledge-reference-public-v1/chalk.ts",
+            "original_protected_core_used": false
+          }
+        },
+        {
+          "id": "public.chalk.connections",
+          "role": "Independently timed generic process relation lines",
+          "authority": {
+            "owner": "Independent public knowledge source",
+            "path": "Haike_video/templates/knowledge-reference-public-v1/chalk.ts",
+            "original_protected_core_used": false
+          }
+        },
+        {
+          "id": "public.chalk.model",
+          "role": "One geometric system with explicit phase/inclination and radii",
+          "authority": {
+            "owner": "Independent public knowledge source",
+            "path": "Haike_video/templates/knowledge-reference-public-v1/chalk.ts",
+            "original_protected_core_used": false
+          }
+        },
+        {
+          "id": "public.chalk.phase",
+          "role": "Phase disk from geometric illumination, distinct from circle occlusion",
+          "authority": {
+            "owner": "Independent public knowledge source",
+            "path": "Haike_video/templates/knowledge-reference-public-v1/chalk.ts",
+            "original_protected_core_used": false
+          }
+        },
+        {
+          "id": "public.chalk.shadow",
+          "role": "Circular intersection area with shading clipped to body disk",
+          "authority": {
+            "owner": "Independent public knowledge source",
+            "path": "Haike_video/templates/knowledge-reference-public-v1/chalk.ts",
+            "original_protected_core_used": false
+          }
+        },
+        {
+          "id": "public.chalk.rays",
+          "role": "Finite rays stop at first actual circle intersection; count derived from reachability",
+          "authority": {
+            "owner": "Independent public knowledge source",
+            "path": "Haike_video/templates/knowledge-reference-public-v1/chalk.ts",
+            "original_protected_core_used": false
+          }
+        }
+      ],
+      "actions": [
+        {
+          "id": "haike.public-knowledge.compare",
+          "version": "5.0.0-independent.1",
+          "implementation": {
+            "owner": "Independent public reference realization",
+            "path": "Haike_video/templates/knowledge-reference-public-v1/chalk.ts",
+            "function": "drawChalk",
+            "family": "compare",
+            "original_protected_core_used": false
+          },
+          "objects": [
+            "public.knowledge.header",
+            "public.knowledge.captions",
+            "public.knowledge.boundary",
+            "public.knowledge.audio",
+            "public.chalk.board",
+            "public.chalk.chapter",
+            "public.chalk.items",
+            "public.chalk.answers"
+          ],
+          "parameters": {
+            "items": "1..3 unique IDs; compare before/after; process exactly3 nodes; other generic groups label/text + optional source note",
+            "events": "Explicit separate heading/item and answer, connection, tab/note where consumed; not scene-wide interpolation",
+            "source_locked": "Sparse layout, font sizes, procedural materials and drawing curves"
+          },
+          "phases": {
+            "entry": "Source-owned page/camera or chalk heading uses its explicit absolute event; no presenter",
+            "active": "Separate actual controls: heading, item, answer",
+            "settled": "Retain same item IDs and settled marks for explicit reading window; not enlarged whole-scene time scaling",
+            "exit": "Scene boundary on original full voice; paper overview/return remains same page, chalk next sparse chapter starts explicitly"
+          }
+        },
+        {
+          "id": "haike.public-knowledge.process",
+          "version": "5.0.0-independent.1",
+          "implementation": {
+            "owner": "Independent public reference realization",
+            "path": "Haike_video/templates/knowledge-reference-public-v1/chalk.ts",
+            "function": "drawChalk",
+            "family": "process",
+            "original_protected_core_used": false
+          },
+          "objects": [
+            "public.knowledge.header",
+            "public.knowledge.captions",
+            "public.knowledge.boundary",
+            "public.knowledge.audio",
+            "public.chalk.board",
+            "public.chalk.chapter",
+            "public.chalk.items",
+            "public.chalk.connections"
+          ],
+          "parameters": {
+            "items": "1..3 unique IDs; compare before/after; process exactly3 nodes; other generic groups label/text + optional source note",
+            "events": "Explicit separate heading/item and answer, connection, tab/note where consumed; not scene-wide interpolation",
+            "source_locked": "Sparse layout, font sizes, procedural materials and drawing curves"
+          },
+          "phases": {
+            "entry": "Source-owned page/camera or chalk heading uses its explicit absolute event; no presenter",
+            "active": "Separate actual controls: heading, item, connection",
+            "settled": "Retain same item IDs and settled marks for explicit reading window; not enlarged whole-scene time scaling",
+            "exit": "Scene boundary on original full voice; paper overview/return remains same page, chalk next sparse chapter starts explicitly"
+          }
+        },
+        {
+          "id": "haike.public-knowledge.evidence",
+          "version": "5.0.0-independent.1",
+          "implementation": {
+            "owner": "Independent public reference realization",
+            "path": "Haike_video/templates/knowledge-reference-public-v1/chalk.ts",
+            "function": "drawChalk",
+            "family": "evidence",
+            "original_protected_core_used": false
+          },
+          "objects": [
+            "public.knowledge.header",
+            "public.knowledge.captions",
+            "public.knowledge.boundary",
+            "public.knowledge.audio",
+            "public.chalk.board",
+            "public.chalk.chapter",
+            "public.chalk.items",
+            "public.chalk.tabrail"
+          ],
+          "parameters": {
+            "items": "1..3 unique IDs; compare before/after; process exactly3 nodes; other generic groups label/text + optional source note",
+            "events": "Explicit separate heading/item and answer, connection, tab/note where consumed; not scene-wide interpolation",
+            "source_locked": "Sparse layout, font sizes, procedural materials and drawing curves"
+          },
+          "phases": {
+            "entry": "Source-owned page/camera or chalk heading uses its explicit absolute event; no presenter",
+            "active": "Separate actual controls: heading, item, tab, note",
+            "settled": "Retain same item IDs and settled marks for explicit reading window; not enlarged whole-scene time scaling",
+            "exit": "Scene boundary on original full voice; paper overview/return remains same page, chalk next sparse chapter starts explicitly"
+          }
+        },
+        {
+          "id": "haike.public-knowledge.recap",
+          "version": "5.0.0-independent.1",
+          "implementation": {
+            "owner": "Independent public reference realization",
+            "path": "Haike_video/templates/knowledge-reference-public-v1/chalk.ts",
+            "function": "drawChalk",
+            "family": "recap",
+            "original_protected_core_used": false
+          },
+          "objects": [
+            "public.knowledge.header",
+            "public.knowledge.captions",
+            "public.knowledge.boundary",
+            "public.knowledge.audio",
+            "public.chalk.board",
+            "public.chalk.chapter",
+            "public.chalk.items",
+            "public.chalk.tabrail"
+          ],
+          "parameters": {
+            "items": "1..3 unique IDs; compare before/after; process exactly3 nodes; other generic groups label/text + optional source note",
+            "events": "Explicit separate heading/item and answer, connection, tab/note where consumed; not scene-wide interpolation",
+            "source_locked": "Sparse layout, font sizes, procedural materials and drawing curves"
+          },
+          "phases": {
+            "entry": "Source-owned page/camera or chalk heading uses its explicit absolute event; no presenter",
+            "active": "Separate actual controls: heading, item, tab, note",
+            "settled": "Retain same item IDs and settled marks for explicit reading window; not enlarged whole-scene time scaling",
+            "exit": "Scene boundary on original full voice; paper overview/return remains same page, chalk next sparse chapter starts explicitly"
+          }
+        },
+        {
+          "id": "haike.public-knowledge.definition",
+          "version": "5.0.0-independent.1",
+          "implementation": {
+            "owner": "Independent public reference realization",
+            "path": "Haike_video/templates/knowledge-reference-public-v1/chalk.ts",
+            "function": "drawChalk",
+            "family": "definition",
+            "original_protected_core_used": false
+          },
+          "objects": [
+            "public.knowledge.header",
+            "public.knowledge.captions",
+            "public.knowledge.boundary",
+            "public.knowledge.audio",
+            "public.chalk.board",
+            "public.chalk.chapter",
+            "public.chalk.items",
+            "public.chalk.tabrail"
+          ],
+          "parameters": {
+            "items": "1..3 unique IDs; compare before/after; process exactly3 nodes; other generic groups label/text + optional source note",
+            "events": "Explicit separate heading/item and answer, connection, tab/note where consumed; not scene-wide interpolation",
+            "source_locked": "Sparse layout, font sizes, procedural materials and drawing curves"
+          },
+          "phases": {
+            "entry": "Source-owned page/camera or chalk heading uses its explicit absolute event; no presenter",
+            "active": "Separate actual controls: heading, item, tab, note",
+            "settled": "Retain same item IDs and settled marks for explicit reading window; not enlarged whole-scene time scaling",
+            "exit": "Scene boundary on original full voice; paper overview/return remains same page, chalk next sparse chapter starts explicitly"
+          }
+        },
+        {
+          "id": "haike.public-knowledge.chalkboard.orbit-phase",
+          "version": "5.0.0-independent.1",
+          "implementation": {
+            "owner": "Independent public reference realization",
+            "path": "Haike_video/templates/knowledge-reference-public-v1/chalk.ts",
+            "function": "drawChalk",
+            "family": "chalkboard.orbit-phase",
+            "original_protected_core_used": false
+          },
+          "objects": [
+            "public.knowledge.header",
+            "public.knowledge.captions",
+            "public.knowledge.boundary",
+            "public.knowledge.audio",
+            "public.chalk.board",
+            "public.chalk.chapter",
+            "public.chalk.model",
+            "public.chalk.phase"
+          ],
+          "parameters": {
+            "model": {
+              "phase": "finite degrees",
+              "inclination": "-45..45 degrees",
+              "sunRadius": ".1...6",
+              "bodyRadius": ".1...5",
+              "orbitRadius": "1.2..2",
+              "occluderRadius": ".1..1"
+            },
+            "consumed_items": "First item label in model views except ray-topology; ray-topology uses source-owned numbered blockers. No icon/text/notes replacement claimed for scientific view.",
+            "scope": "Independent geometric development; preview-only silent fixture; original scientific performance/fidelity unverified",
+            "source_locked": "Model curves, view arrangement, light rays and phase writing"
+          },
+          "phases": {
+            "entry": "Source-owned page/camera or chalk heading uses its explicit absolute event; no presenter",
+            "active": "Separate actual controls: heading, diagram",
+            "settled": "Retain same item IDs and settled marks for explicit reading window; not enlarged whole-scene time scaling",
+            "exit": "Scene boundary on original full voice; paper overview/return remains same page, chalk next sparse chapter starts explicitly"
+          }
+        },
+        {
+          "id": "haike.public-knowledge.chalkboard.surface-view",
+          "version": "5.0.0-independent.1",
+          "implementation": {
+            "owner": "Independent public reference realization",
+            "path": "Haike_video/templates/knowledge-reference-public-v1/chalk.ts",
+            "function": "drawChalk",
+            "family": "chalkboard.surface-view",
+            "original_protected_core_used": false
+          },
+          "objects": [
+            "public.knowledge.header",
+            "public.knowledge.captions",
+            "public.knowledge.boundary",
+            "public.knowledge.audio",
+            "public.chalk.board",
+            "public.chalk.chapter",
+            "public.chalk.model",
+            "public.chalk.phase"
+          ],
+          "parameters": {
+            "model": {
+              "phase": "finite degrees",
+              "inclination": "-45..45 degrees",
+              "sunRadius": ".1...6",
+              "bodyRadius": ".1...5",
+              "orbitRadius": "1.2..2",
+              "occluderRadius": ".1..1"
+            },
+            "consumed_items": "First item label in model views except ray-topology; ray-topology uses source-owned numbered blockers. No icon/text/notes replacement claimed for scientific view.",
+            "scope": "Independent geometric development; preview-only silent fixture; original scientific performance/fidelity unverified",
+            "source_locked": "Model curves, view arrangement, light rays and phase writing"
+          },
+          "phases": {
+            "entry": "Source-owned page/camera or chalk heading uses its explicit absolute event; no presenter",
+            "active": "Separate actual controls: heading, diagram",
+            "settled": "Retain same item IDs and settled marks for explicit reading window; not enlarged whole-scene time scaling",
+            "exit": "Scene boundary on original full voice; paper overview/return remains same page, chalk next sparse chapter starts explicitly"
+          }
+        },
+        {
+          "id": "haike.public-knowledge.chalkboard.shadow-overlap",
+          "version": "5.0.0-independent.1",
+          "implementation": {
+            "owner": "Independent public reference realization",
+            "path": "Haike_video/templates/knowledge-reference-public-v1/chalk.ts",
+            "function": "drawChalk",
+            "family": "chalkboard.shadow-overlap",
+            "original_protected_core_used": false
+          },
+          "objects": [
+            "public.knowledge.header",
+            "public.knowledge.captions",
+            "public.knowledge.boundary",
+            "public.knowledge.audio",
+            "public.chalk.board",
+            "public.chalk.chapter",
+            "public.chalk.model",
+            "public.chalk.phase",
+            "public.chalk.shadow"
+          ],
+          "parameters": {
+            "model": {
+              "phase": "finite degrees",
+              "inclination": "-45..45 degrees",
+              "sunRadius": ".1...6",
+              "bodyRadius": ".1...5",
+              "orbitRadius": "1.2..2",
+              "occluderRadius": ".1..1"
+            },
+            "consumed_items": "First item label in model views except ray-topology; ray-topology uses source-owned numbered blockers. No icon/text/notes replacement claimed for scientific view.",
+            "scope": "Independent geometric development; preview-only silent fixture; original scientific performance/fidelity unverified",
+            "source_locked": "Model curves, view arrangement, light rays and phase writing"
+          },
+          "phases": {
+            "entry": "Source-owned page/camera or chalk heading uses its explicit absolute event; no presenter",
+            "active": "Separate actual controls: heading, diagram",
+            "settled": "Retain same item IDs and settled marks for explicit reading window; not enlarged whole-scene time scaling",
+            "exit": "Scene boundary on original full voice; paper overview/return remains same page, chalk next sparse chapter starts explicitly"
+          }
+        },
+        {
+          "id": "haike.public-knowledge.chalkboard.inclined-orbit",
+          "version": "5.0.0-independent.1",
+          "implementation": {
+            "owner": "Independent public reference realization",
+            "path": "Haike_video/templates/knowledge-reference-public-v1/chalk.ts",
+            "function": "drawChalk",
+            "family": "chalkboard.inclined-orbit",
+            "original_protected_core_used": false
+          },
+          "objects": [
+            "public.knowledge.header",
+            "public.knowledge.captions",
+            "public.knowledge.boundary",
+            "public.knowledge.audio",
+            "public.chalk.board",
+            "public.chalk.chapter",
+            "public.chalk.model",
+            "public.chalk.phase"
+          ],
+          "parameters": {
+            "model": {
+              "phase": "finite degrees",
+              "inclination": "-45..45 degrees",
+              "sunRadius": ".1...6",
+              "bodyRadius": ".1...5",
+              "orbitRadius": "1.2..2",
+              "occluderRadius": ".1..1"
+            },
+            "consumed_items": "First item label in model views except ray-topology; ray-topology uses source-owned numbered blockers. No icon/text/notes replacement claimed for scientific view.",
+            "scope": "Independent geometric development; preview-only silent fixture; original scientific performance/fidelity unverified",
+            "source_locked": "Model curves, view arrangement, light rays and phase writing"
+          },
+          "phases": {
+            "entry": "Source-owned page/camera or chalk heading uses its explicit absolute event; no presenter",
+            "active": "Separate actual controls: heading, diagram",
+            "settled": "Retain same item IDs and settled marks for explicit reading window; not enlarged whole-scene time scaling",
+            "exit": "Scene boundary on original full voice; paper overview/return remains same page, chalk next sparse chapter starts explicitly"
+          }
+        },
+        {
+          "id": "haike.public-knowledge.chalkboard.projection-compare",
+          "version": "5.0.0-independent.1",
+          "implementation": {
+            "owner": "Independent public reference realization",
+            "path": "Haike_video/templates/knowledge-reference-public-v1/chalk.ts",
+            "function": "drawChalk",
+            "family": "chalkboard.projection-compare",
+            "original_protected_core_used": false
+          },
+          "objects": [
+            "public.knowledge.header",
+            "public.knowledge.captions",
+            "public.knowledge.boundary",
+            "public.knowledge.audio",
+            "public.chalk.board",
+            "public.chalk.chapter",
+            "public.chalk.model",
+            "public.chalk.phase"
+          ],
+          "parameters": {
+            "model": {
+              "phase": "finite degrees",
+              "inclination": "-45..45 degrees",
+              "sunRadius": ".1...6",
+              "bodyRadius": ".1...5",
+              "orbitRadius": "1.2..2",
+              "occluderRadius": ".1..1"
+            },
+            "consumed_items": "First item label in model views except ray-topology; ray-topology uses source-owned numbered blockers. No icon/text/notes replacement claimed for scientific view.",
+            "scope": "Independent geometric development; preview-only silent fixture; original scientific performance/fidelity unverified",
+            "source_locked": "Model curves, view arrangement, light rays and phase writing"
+          },
+          "phases": {
+            "entry": "Source-owned page/camera or chalk heading uses its explicit absolute event; no presenter",
+            "active": "Separate actual controls: heading, diagram",
+            "settled": "Retain same item IDs and settled marks for explicit reading window; not enlarged whole-scene time scaling",
+            "exit": "Scene boundary on original full voice; paper overview/return remains same page, chalk next sparse chapter starts explicitly"
+          }
+        },
+        {
+          "id": "haike.public-knowledge.chalkboard.causal-compare",
+          "version": "5.0.0-independent.1",
+          "implementation": {
+            "owner": "Independent public reference realization",
+            "path": "Haike_video/templates/knowledge-reference-public-v1/chalk.ts",
+            "function": "drawChalk",
+            "family": "chalkboard.causal-compare",
+            "original_protected_core_used": false
+          },
+          "objects": [
+            "public.knowledge.header",
+            "public.knowledge.captions",
+            "public.knowledge.boundary",
+            "public.knowledge.audio",
+            "public.chalk.board",
+            "public.chalk.chapter",
+            "public.chalk.model",
+            "public.chalk.phase",
+            "public.chalk.shadow"
+          ],
+          "parameters": {
+            "model": {
+              "phase": "finite degrees",
+              "inclination": "-45..45 degrees",
+              "sunRadius": ".1...6",
+              "bodyRadius": ".1...5",
+              "orbitRadius": "1.2..2",
+              "occluderRadius": ".1..1"
+            },
+            "consumed_items": "First item label in model views except ray-topology; ray-topology uses source-owned numbered blockers. No icon/text/notes replacement claimed for scientific view.",
+            "scope": "Independent geometric development; preview-only silent fixture; original scientific performance/fidelity unverified",
+            "source_locked": "Model curves, view arrangement, light rays and phase writing"
+          },
+          "phases": {
+            "entry": "Source-owned page/camera or chalk heading uses its explicit absolute event; no presenter",
+            "active": "Separate actual controls: heading, diagram",
+            "settled": "Retain same item IDs and settled marks for explicit reading window; not enlarged whole-scene time scaling",
+            "exit": "Scene boundary on original full voice; paper overview/return remains same page, chalk next sparse chapter starts explicitly"
+          }
+        },
+        {
+          "id": "haike.public-knowledge.chalkboard.ray-topology",
+          "version": "5.0.0-independent.1",
+          "implementation": {
+            "owner": "Independent public reference realization",
+            "path": "Haike_video/templates/knowledge-reference-public-v1/chalk.ts",
+            "function": "drawChalk",
+            "family": "chalkboard.ray-topology",
+            "original_protected_core_used": false
+          },
+          "objects": [
+            "public.knowledge.header",
+            "public.knowledge.captions",
+            "public.knowledge.boundary",
+            "public.knowledge.audio",
+            "public.chalk.board",
+            "public.chalk.chapter",
+            "public.chalk.model",
+            "public.chalk.phase",
+            "public.chalk.rays"
+          ],
+          "parameters": {
+            "model": {
+              "phase": "finite degrees",
+              "inclination": "-45..45 degrees",
+              "sunRadius": ".1...6",
+              "bodyRadius": ".1...5",
+              "orbitRadius": "1.2..2",
+              "occluderRadius": ".1..1"
+            },
+            "consumed_items": "First item label in model views except ray-topology; ray-topology uses source-owned numbered blockers. No icon/text/notes replacement claimed for scientific view.",
+            "scope": "Independent geometric development; preview-only silent fixture; original scientific performance/fidelity unverified",
+            "source_locked": "Model curves, view arrangement, light rays and phase writing"
+          },
+          "phases": {
+            "entry": "Source-owned page/camera or chalk heading uses its explicit absolute event; no presenter",
+            "active": "Separate actual controls: heading, diagram",
+            "settled": "Retain same item IDs and settled marks for explicit reading window; not enlarged whole-scene time scaling",
+            "exit": "Scene boundary on original full voice; paper overview/return remains same page, chalk next sparse chapter starts explicitly"
+          }
+        },
+        {
+          "id": "haike.public-knowledge.chalkboard.condition-proof",
+          "version": "5.0.0-independent.1",
+          "implementation": {
+            "owner": "Independent public reference realization",
+            "path": "Haike_video/templates/knowledge-reference-public-v1/chalk.ts",
+            "function": "drawChalk",
+            "family": "chalkboard.condition-proof",
+            "original_protected_core_used": false
+          },
+          "objects": [
+            "public.knowledge.header",
+            "public.knowledge.captions",
+            "public.knowledge.boundary",
+            "public.knowledge.audio",
+            "public.chalk.board",
+            "public.chalk.chapter",
+            "public.chalk.model",
+            "public.chalk.phase",
+            "public.chalk.shadow"
+          ],
+          "parameters": {
+            "model": {
+              "phase": "finite degrees",
+              "inclination": "-45..45 degrees",
+              "sunRadius": ".1...6",
+              "bodyRadius": ".1...5",
+              "orbitRadius": "1.2..2",
+              "occluderRadius": ".1..1"
+            },
+            "consumed_items": "First item label in model views except ray-topology; ray-topology uses source-owned numbered blockers. No icon/text/notes replacement claimed for scientific view.",
+            "scope": "Independent geometric development; preview-only silent fixture; original scientific performance/fidelity unverified",
+            "source_locked": "Model curves, view arrangement, light rays and phase writing"
+          },
+          "phases": {
+            "entry": "Source-owned page/camera or chalk heading uses its explicit absolute event; no presenter",
+            "active": "Separate actual controls: heading, diagram",
+            "settled": "Retain same item IDs and settled marks for explicit reading window; not enlarged whole-scene time scaling",
+            "exit": "Scene boundary on original full voice; paper overview/return remains same page, chalk next sparse chapter starts explicitly"
+          }
+        }
+      ],
+      "timeline": {
+        "mode": "semantic",
+        "clock": "Complete approved original voice,60fps whole-frame ceiling; no stretch/cut; silent previewOnly scientific fixture explicitly distinct",
+        "events": [
+          {
+            "id": "haike.public-knowledge.compare.heading",
+            "action_id": "haike.public-knowledge.compare",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "heading",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.compare.item",
+            "action_id": "haike.public-knowledge.compare",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "item",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.compare.answer",
+            "action_id": "haike.public-knowledge.compare",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "answer",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.process.heading",
+            "action_id": "haike.public-knowledge.process",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "heading",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.process.item",
+            "action_id": "haike.public-knowledge.process",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "item",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.process.connection",
+            "action_id": "haike.public-knowledge.process",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "connection",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.evidence.heading",
+            "action_id": "haike.public-knowledge.evidence",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "heading",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.evidence.item",
+            "action_id": "haike.public-knowledge.evidence",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "item",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.evidence.tab",
+            "action_id": "haike.public-knowledge.evidence",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "tab",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.evidence.note",
+            "action_id": "haike.public-knowledge.evidence",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "note",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.recap.heading",
+            "action_id": "haike.public-knowledge.recap",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "heading",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.recap.item",
+            "action_id": "haike.public-knowledge.recap",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "item",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.recap.tab",
+            "action_id": "haike.public-knowledge.recap",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "tab",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.recap.note",
+            "action_id": "haike.public-knowledge.recap",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "note",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.definition.heading",
+            "action_id": "haike.public-knowledge.definition",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "heading",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.definition.item",
+            "action_id": "haike.public-knowledge.definition",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "item",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.definition.tab",
+            "action_id": "haike.public-knowledge.definition",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "tab",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.definition.note",
+            "action_id": "haike.public-knowledge.definition",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "note",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.chalkboard.orbit-phase.heading",
+            "action_id": "haike.public-knowledge.chalkboard.orbit-phase",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "heading",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.chalkboard.orbit-phase.diagram",
+            "action_id": "haike.public-knowledge.chalkboard.orbit-phase",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "diagram",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.chalkboard.surface-view.heading",
+            "action_id": "haike.public-knowledge.chalkboard.surface-view",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "heading",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.chalkboard.surface-view.diagram",
+            "action_id": "haike.public-knowledge.chalkboard.surface-view",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "diagram",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.chalkboard.shadow-overlap.heading",
+            "action_id": "haike.public-knowledge.chalkboard.shadow-overlap",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "heading",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.chalkboard.shadow-overlap.diagram",
+            "action_id": "haike.public-knowledge.chalkboard.shadow-overlap",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "diagram",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.chalkboard.inclined-orbit.heading",
+            "action_id": "haike.public-knowledge.chalkboard.inclined-orbit",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "heading",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.chalkboard.inclined-orbit.diagram",
+            "action_id": "haike.public-knowledge.chalkboard.inclined-orbit",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "diagram",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.chalkboard.projection-compare.heading",
+            "action_id": "haike.public-knowledge.chalkboard.projection-compare",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "heading",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.chalkboard.projection-compare.diagram",
+            "action_id": "haike.public-knowledge.chalkboard.projection-compare",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "diagram",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.chalkboard.causal-compare.heading",
+            "action_id": "haike.public-knowledge.chalkboard.causal-compare",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "heading",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.chalkboard.causal-compare.diagram",
+            "action_id": "haike.public-knowledge.chalkboard.causal-compare",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "diagram",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.chalkboard.ray-topology.heading",
+            "action_id": "haike.public-knowledge.chalkboard.ray-topology",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "heading",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.chalkboard.ray-topology.diagram",
+            "action_id": "haike.public-knowledge.chalkboard.ray-topology",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "diagram",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.chalkboard.condition-proof.heading",
+            "action_id": "haike.public-knowledge.chalkboard.condition-proof",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "heading",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          },
+          {
+            "id": "haike.public-knowledge.chalkboard.condition-proof.diagram",
+            "action_id": "haike.public-knowledge.chalkboard.condition-proof",
+            "anchor": {
+              "path": "episode.scenes[].events[]",
+              "kind": "diagram",
+              "target": "Exact item ID for item controls; no target for chapter/shared control"
+            },
+            "window": {
+              "start": "event.at absolute60fps",
+              "duration": "event.duration bounded within scene; source-owned approximation, not original extracted timing"
+            },
+            "reading": "Explicit post-action hold until next dependent event / scene boundary; full captions stay on real audio clock"
+          }
+        ],
+        "retiming": "Only text/items and explicit absolute internal event windows; fixed geometry/fonts/material/curves; retain reading, reject holes/unknown controls"
+      },
+      "slots": [
+        {
+          "id": "data",
+          "kind": "private-prepared-input",
+          "input_path": "data",
+          "required": true,
+          "missing_policy": "Block; require explicit approved script/cues/voice evidence, complete local public font files and production config. No original personal package/account fallback."
+        }
+      ],
+      "capabilities": {
+        "implementation": "knowledge-reference-public-v1",
+        "contract": "haike.knowledge-reference-public/1",
+        "original_personal_package_required": false,
+        "default_presenter": "none",
+        "photos_or_b_roll_slot": false,
+        "new_paid_calls": 0,
+        "production_ready": false,
+        "fixed_route_registration": "root-owned",
+        "review_gate": "Explicit approve before render admission; every PNG validated; exact preview/review binding frozen and revalidated in run",
+        "original_version_replaced": false,
+        "source_license": "Independent source under repository terms; upstream OFL fonts with complete licenses; no original protected-source redistribution claim"
+      },
+      "validation": {
+        "structure_and_queue_gates": {
+          "status": "pass",
+          "method": "Own real isolated SQLite queue lifecycle and input/font/geometry tests; external media subprocess stub only for stage tests",
+          "scope": "Code/state gates only; synthetic PNGs are not fidelity evidence",
+          "evidence": "Haike_video/tests/backlot/test_motion_knowledge_public_execution_v1.py"
+        },
+        "actual_output": {
+          "status": "pending",
+          "method": "Actual queue media and human/agent sampled comparison required",
+          "scope": "Independent actual preview/full video not yet produced",
+          "evidence": []
+        },
+        "reference_fidelity": {
+          "status": "pending",
+          "method": "Actual queue media and human/agent sampled comparison required",
+          "scope": "Public12/24 reference frames observed; actual independent comparison pending; WenKai fullTTF vs reference WOFF difference retained",
+          "evidence": []
+        },
+        "cross_machine": {
+          "status": "pending",
+          "method": "Actual queue media and human/agent sampled comparison required",
+          "scope": "Same final public source/runtime package actual isolated replay required",
+          "evidence": []
+        }
+      }
+    }
+  ]
+}

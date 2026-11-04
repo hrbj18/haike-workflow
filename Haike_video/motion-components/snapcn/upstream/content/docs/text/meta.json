@@ -1,0 +1,21 @@
+{
+  "title": "Text & Titles",
+  "collapsible": false,
+  "pages": [
+    "index",
+    "text-reveal",
+    "text-swell",
+    "punch-lines",
+    "text-highlight",
+    "text-swap",
+    "text-build",
+    "text-rewrite",
+    "text-select",
+    "word-flip",
+    "type-morph",
+    "font-shuffle",
+    "word-gather",
+    "word-wheel",
+    "check-cycle"
+  ]
+}

@@ -1,0 +1,129 @@
+{
+  "schema": "haike.motion-selection/1",
+  "templateId": "chromatic-08",
+  "version": "1.1.0-candidate.1",
+  "runtime": "haike-remotion",
+  "revision": "2026-11-03.real-video-b.1",
+  "durationInFrames": 720,
+  "fps": 30,
+  "minReadingFrames": 36,
+  "avatarRole": "supporting-window",
+  "scenes": [
+    {
+      "id": "orbit-entry",
+      "from": 0,
+      "to": 150,
+      "stableFrom": 90,
+      "purpose": "建立现场入口",
+      "subject": "四张真实照片围绕留空中心展台",
+      "handoff": "展开后保持照片位置，切入深紫展厅",
+      "phases": "双轴90度相位微漂与反向投影；额外环形照片建立为本片设计，不冒充原卡轨道动作。0–62展开，90–149阅读",
+      "selections": [
+        {
+          "id": "talkcraft:orbit-drift",
+          "mode": "adapt",
+          "source_sha256": "1039d20ad1d033d195be51cac7ae8e1c7dc07870d938da22e5ea7bedf2d89c7d",
+          "implementation": "Haike_video/templates/chromatic-six-video-batch-v1/window-b/Scene.tsx",
+          "reason": "建立现场入口；四张真实照片围绕留空中心展台",
+          "changes": "照片沿椭圆建立；t被钳制110帧，结束阶段停住；近透视900，Y幅度5/X3度；视频新版所有可见主体格用原速Video，源范围和裁切见episode.materialSlots；保留原几何，Sequence映射全局到源时钟",
+          "verification": "实际视频版需重新看图/源时钟推进/内容变化，不能继承旧照片版。双轴90度相位微漂与反向投影；额外环形照片建立为本片设计，不冒充原卡轨道动作。0–62展开，90–149阅读",
+          "read_at": "2026-11-03T09:50:23.037847+00:00",
+          "video_adaptation_at": "2026-11-03T12:13:37.425132+00:00"
+        }
+      ],
+      "alternatives": [
+        {
+          "id": "talkcraft:gallery-wall-dolly",
+          "reason": "已读取，当前内容更需要建立现场入口；本场不再增加第二主动作"
+        }
+      ]
+    },
+    {
+      "id": "gallery-tour",
+      "from": 150,
+      "to": 420,
+      "stableFrom": 382,
+      "purpose": "逐一观察两个平级互动面",
+      "subject": "两张独立照片与唯一相机层",
+      "handoff": "全景→停靠一→停靠二→回全景，供后场体验记录取证",
+      "phases": "两站，反解每站目标到画心，停靠当前图1.025微推，其余压暗；局部22–55/107–143移动，55–107/143–198停靠，198–218拉回，232–269读结论",
+      "selections": [
+        {
+          "id": "talkcraft:gallery-wall-dolly",
+          "mode": "adapt",
+          "source_sha256": "2b4d214d058d26c10655763e826336e376edd200e03a70b2e427d94f99a7410f",
+          "implementation": "Haike_video/templates/chromatic-six-video-batch-v1/window-b/Scene.tsx",
+          "reason": "逐一观察两个平级互动面；两张独立照片与唯一相机层",
+          "changes": "竖屏画心360/535；两站代替三站，深紫背景替代深灰；轻微相对立面；不使用平面网格重排；视频新版所有可见主体格用原速Video，源范围和裁切见episode.materialSlots；保留原几何，Sequence映射全局到源时钟",
+          "verification": "实际视频版需重新看图/源时钟推进/内容变化，不能继承旧照片版。两站，反解每站目标到画心，停靠当前图1.025微推，其余压暗；局部22–55/107–143移动，55–107/143–198停靠，198–218拉回，232–269读结论",
+          "read_at": "2026-11-03T09:50:23.037847+00:00",
+          "video_adaptation_at": "2026-11-03T12:13:37.425132+00:00"
+        }
+      ],
+      "alternatives": [
+        {
+          "id": "talkcraft:orbit-drift",
+          "reason": "已读取，当前内容更需要逐一观察两个平级互动面；本场不再增加第二主动作"
+        }
+      ]
+    },
+    {
+      "id": "tilt-record",
+      "from": 420,
+      "to": 570,
+      "stableFrom": 510,
+      "purpose": "把一帧体验变成可展示的记录",
+      "subject": "一张含照片的体验记录板及独立影层",
+      "handoff": "先正视读18帧，再立面并保留结论，下一场回全貌",
+      "phases": "局部18–63立起0→-17度，随后缓至-19度；X4→3度；反侧影层随k同曲线，末60帧可读",
+      "selections": [
+        {
+          "id": "talkcraft:tilt-3d-page",
+          "mode": "adapt",
+          "source_sha256": "6abd2141e995365190923694201154d01adf0610482c20b1b868ef57f8343a6c",
+          "implementation": "Haike_video/templates/chromatic-six-video-batch-v1/window-b/Scene.tsx",
+          "reason": "把一帧体验变成可展示的记录；一张含照片的体验记录板及独立影层",
+          "changes": "画布720；perspective1000，缩放.94，黄色实体影层替代浅底模糊暗影；读取真实照片；视频新版所有可见主体格用原速Video，源范围和裁切见episode.materialSlots；保留原几何，Sequence映射全局到源时钟",
+          "verification": "实际视频版需重新看图/源时钟推进/内容变化，不能继承旧照片版。局部18–63立起0→-17度，随后缓至-19度；X4→3度；反侧影层随k同曲线，末60帧可读",
+          "read_at": "2026-11-03T09:50:23.037847+00:00",
+          "video_adaptation_at": "2026-11-03T12:13:37.425132+00:00"
+        }
+      ],
+      "alternatives": [
+        {
+          "id": "talkcraft:gallery-wall-dolly",
+          "reason": "已读取，当前内容更需要把一帧体验变成可展示的记录；本场不再增加第二主动作"
+        }
+      ]
+    },
+    {
+      "id": "orbit-recap",
+      "from": 570,
+      "to": 720,
+      "stableFrom": 660,
+      "purpose": "整体回看体验",
+      "subject": "保留身份的四张环场照片与中心结论",
+      "handoff": "回看全貌并停留到719，无来源汇聚或位置收敛",
+      "phases": "重复环形空间作为记忆回看；不是复用其他场的相机巡览；末60帧阅读，人物仍按全局时钟",
+      "selections": [
+        {
+          "id": "talkcraft:orbit-drift",
+          "mode": "adapt",
+          "source_sha256": "1039d20ad1d033d195be51cac7ae8e1c7dc07870d938da22e5ea7bedf2d89c7d",
+          "implementation": "Haike_video/templates/chromatic-six-video-batch-v1/window-b/Scene.tsx",
+          "reason": "整体回看体验；保留身份的四张环场照片与中心结论",
+          "changes": "同首场微漂机制，中央结论不同，照片不进入结论节点；视频新版所有可见主体格用原速Video，源范围和裁切见episode.materialSlots；保留原几何，Sequence映射全局到源时钟",
+          "verification": "实际视频版需重新看图/源时钟推进/内容变化，不能继承旧照片版。重复环形空间作为记忆回看；不是复用其他场的相机巡览；末60帧阅读，人物仍按全局时钟",
+          "read_at": "2026-11-03T09:50:23.037847+00:00",
+          "video_adaptation_at": "2026-11-03T12:13:37.425132+00:00"
+        }
+      ],
+      "alternatives": [
+        {
+          "id": "talkcraft:tilt-3d-page",
+          "reason": "已读取，当前内容更需要整体回看体验；本场不再增加第二主动作"
+        }
+      ]
+    }
+  ]
+}

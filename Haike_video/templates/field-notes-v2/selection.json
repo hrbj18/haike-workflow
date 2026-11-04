@@ -1,0 +1,143 @@
+{
+  "schema": "haike.motion-selection/1",
+  "templateId": "field-notes-v2",
+  "version": "2.0.0",
+  "revision": "2026-11-03.1",
+  "runtime": "haike-remotion",
+  "durationInFrames": 720,
+  "fps": 30,
+  "minReadingFrames": 36,
+  "avatarRole": "supporting-window",
+  "palette": {
+    "bg": "#F4F1E9",
+    "ink": "#124A49",
+    "accent": "#EC795E",
+    "paper": "#FFFFFF"
+  },
+  "scenes": [
+    {
+      "id": "title-demote-to-label",
+      "from": 0,
+      "to": 180,
+      "stableFrom": 110,
+      "noteFrom": 96,
+      "label": "标题让位",
+      "kicker": "01 / 走进现场",
+      "short": "标题从主角变为路标，照片接棒",
+      "purpose": "建立现场印象",
+      "subject": "同一标题对象与现场主图",
+      "handoff": "标题站定后缩小上移，图片在让位中后段进入；结束保留照片供下一场取景",
+      "note": "先看见\n再产生好奇",
+      "selections": [
+        {
+          "id": "talkcraft:title-demote-to-label",
+          "mode": "adapt",
+          "source_sha256": "9bdb8c8f826a274cb76bf6959302ee9eddf1bb7a9b466cefc7dbbb1a3f865d91",
+          "implementation": "Haike_video/templates/field-notes-v2/Scene.tsx",
+          "reason": "建立现场印象；标题从主角变为路标，照片接棒",
+          "changes": "独立竖屏实现；两行80→38字号及y348→136，同一曲线；保留身份/站定/重叠交接；不套横屏字号或Apple默认配色",
+          "verification": "帧12–39标题站定；39–63让位；51–87图片进入；110–179可读"
+        }
+      ],
+      "alternatives": [
+        {
+          "id": "talkcraft:grid-to-hero",
+          "reason": "四段都用相同显字不能解释注意力转移"
+        }
+      ]
+    },
+    {
+      "id": "grid-to-hero",
+      "from": 180,
+      "to": 420,
+      "stableFrom": 383,
+      "noteFrom": 50,
+      "label": "网格聚焦",
+      "kicker": "02 / 多面观察",
+      "short": "保留其他视角，再回到全景",
+      "purpose": "从四个视角中聚焦现场互动",
+      "subject": "四图网格与被选主图",
+      "handoff": "承接首场照片并列，第三格成为主图，其余三格保留；回到网格后停留",
+      "note": "主角突出\n其他视角仍在场",
+      "selections": [
+        {
+          "id": "talkcraft:grid-to-hero",
+          "mode": "adapt",
+          "source_sha256": "e9e550223301f791e46e0afc60c5d1ab171fc777c81ca130b56ef2951cf389f4",
+          "implementation": "Haike_video/templates/field-notes-v2/Scene.tsx",
+          "reason": "从四个视角中聚焦现场互动；保留其他视角，再回到全景",
+          "changes": "调用本机上游组件，限定CSS重置、纸白背景、等比.65缩放、去小字；宿主React18/Remotion.506需适配；202帧网格回位后冻结，保留至本场结束",
+          "verification": "局部50网格/120主图+侧列/202返回；四图均在场；202–239最终网格保持"
+        }
+      ],
+      "alternatives": [
+        {
+          "id": "talkcraft:stack-fan-out",
+          "reason": "并列图只展示差异，不能表达从候选中选中一个"
+        }
+      ]
+    },
+    {
+      "id": "line-carry-transition",
+      "from": 420,
+      "to": 570,
+      "stableFrom": 516,
+      "noteFrom": 82,
+      "label": "线条接力",
+      "kicker": "03 / 连成线索",
+      "short": "标题下划线延伸成素材边界",
+      "purpose": "把看到、参与与理解串联",
+      "subject": "同一条线及其闭合的照片框",
+      "handoff": "前场完整阅读后切入本场，标题下划线伸展为同场素材框；仅本场使用该签名桥接",
+      "note": "看到，也参与\n线索才连起来",
+      "selections": [
+        {
+          "id": "talkcraft:line-carry-transition",
+          "mode": "adapt",
+          "source_sha256": "9e380f85c1f72d220c1b02bf8a88d9c6795921e3c4115c2b6c52fbb806523b22",
+          "implementation": "Haike_video/templates/field-notes-v2/Scene.tsx",
+          "reason": "把看到、参与与理解串联；标题下划线延伸成素材边界",
+          "changes": "独立SVG竖屏适配，线由标题下划线延伸为边框；这是同场标题→素材交接，不声称实现跨场摄像机；闭合后照片进入",
+          "verification": "局部18–52路径绘制，53–77照片进入；96–149落定阅读；下一层不提前显现"
+        }
+      ],
+      "alternatives": [
+        {
+          "id": "talkcraft:stack-fan-out",
+          "reason": "整屏翻页会打断关系；本场以线条连接标题与证据"
+        }
+      ]
+    },
+    {
+      "id": "source-converge",
+      "from": 570,
+      "to": 720,
+      "stableFrom": 683,
+      "noteFrom": 99,
+      "label": "来源汇聚",
+      "kicker": "04 / 留下发现",
+      "short": "三条体验线索汇成一句发现",
+      "purpose": "将三项体验提炼为结论",
+      "subject": "三枚带图来源标签及结论",
+      "handoff": "来源先读，再沿可见曲线汇入结论位置；末尾停止变换",
+      "note": "把体验连起来\n留下自己的发现",
+      "selections": [
+        {
+          "id": "talkcraft:source-converge",
+          "mode": "adapt",
+          "source_sha256": "a00163db942ec12861a243ad46e6b980804e8dd245cdcf5359b9bf06c5260673",
+          "implementation": "Haike_video/templates/field-notes-v2/Scene.tsx",
+          "reason": "将三项体验提炼为结论；三条体验线索汇成一句发现",
+          "changes": "独立竖屏二次Bezier适配，标签与路径同轨，末四分之一才缩小；不复制上游源码；汇入点长成现场照片结论卡，替代上游纯文字结果，结论后显并稳定",
+          "verification": "局部0–30来源可读；42–82汇聚；83–107结论卡展开；113–149稳定阅读"
+        }
+      ],
+      "alternatives": [
+        {
+          "id": "talkcraft:stack-fan-out",
+          "reason": "stack-fan-out适合展开并列卡，此处需要汇总关系"
+        }
+      ]
+    }
+  ]
+}

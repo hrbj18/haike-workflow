@@ -1,0 +1,1924 @@
+{
+  "source_lock_sha256": "a91ed888d1ea16625f5ad8c06dded81c320902c257040a91ca0b8cbeeda1bf1e",
+  "components": [
+    {
+      "component": "acorn",
+      "version": "8.15.0",
+      "license": "MIT",
+      "url": "https://registry.npmjs.org/acorn/-/acorn-8.15.0.tgz",
+      "archive_integrity": "sha512-NZyJarBfL7nWwIq+FDL6Zp/yHEhePMNnnJ0y3qfieCrmNvYct8uvtiV41UvlSe6apAfk0fY1FbWx+NwfmpvtTg==",
+      "archive_sha256": "e46eae89bd9761f16d1d25563b837b55b4b78f3ece06ee0b9789cb2644f523b3",
+      "files": [
+        {
+          "path": "bin/acorn",
+          "sha256": "4c3eb6f1d8932790dbff043839f8ee7686bc614a59ef577e96fed618a4a4b1b8",
+          "size": 60
+        },
+        {
+          "path": "LICENSE",
+          "sha256": "76a876cf886ff9be2a8b5e2e86514fed06223c8c9f0c1e9ee9606e93841e00b7",
+          "size": 1099
+        },
+        {
+          "path": "dist/acorn.js",
+          "sha256": "fdb08546776ec6228b03e8d02b40d4ab3255bae5f401adba7ff5dad927ac5c9c",
+          "size": 241575
+        },
+        {
+          "path": "dist/bin.js",
+          "sha256": "fffd9df1d9158c4580068ad17c3176c34fe46f59021b8cd5780454994764dc30",
+          "size": 3329
+        },
+        {
+          "path": "package.json",
+          "sha256": "9e422c8225c9cc4c774e9a9392d0ecac7f766b46122ef2db99db0fc4bbedc247",
+          "size": 1061
+        },
+        {
+          "path": "CHANGELOG.md",
+          "sha256": "981f7def585a9b286740a90bc619c3355ff8e132a449c4dbbb78905d3df2198b",
+          "size": 23249
+        },
+        {
+          "path": "README.md",
+          "sha256": "dfbb7699d8b6c7fe0175c59a7e060486c0167625279c178eddac860d479c6450",
+          "size": 10799
+        },
+        {
+          "path": "dist/acorn.mjs",
+          "sha256": "b4c8c70200e72bae33cf1085e0ecb1e792c1b6924ed50cab817caf14f51bb249",
+          "size": 229792
+        },
+        {
+          "path": "dist/acorn.d.mts",
+          "sha256": "a4abbf5d5ecd7367532921a52e2a2762a6f5f38c3e4ad6c25e6e90152c403804",
+          "size": 21989
+        },
+        {
+          "path": "dist/acorn.d.ts",
+          "sha256": "a4abbf5d5ecd7367532921a52e2a2762a6f5f38c3e4ad6c25e6e90152c403804",
+          "size": 21989
+        }
+      ]
+    },
+    {
+      "component": "playwright-core",
+      "version": "1.58.2",
+      "license": "Apache-2.0",
+      "url": "https://registry.npmjs.org/playwright-core/-/playwright-core-1.58.2.tgz",
+      "archive_integrity": "sha512-yZkEtftgwS8CsfYo7nm0KE8jsvm6i/PTgVtB8DL726wNf6H2IMsDuxCpJj59KDaxCtSnrWan2AeDqM7JBaultg==",
+      "archive_sha256": "50e358de81526d5b20ce75a89c96bdc50ae653f077bbc834ada26d92046ce713",
+      "files": [
+        {
+          "path": "LICENSE",
+          "sha256": "45873d00a0dd243596deb4aa23b2493b3d1f0671921bf2538ea431d7380220eb",
+          "size": 11601
+        },
+        {
+          "path": "NOTICE",
+          "sha256": "6d602191187b35b9b01d2cffa01c8469c2c8d9de8a96f1bf868e0f264f51c81d",
+          "size": 254
+        },
+        {
+          "path": "lib/utilsBundleImpl/xdg-open",
+          "sha256": "2e79a4d5171dd384d20a75b023dfe0e9f4330cdb5d441f6c3859a11fce3db51a",
+          "size": 25778
+        },
+        {
+          "path": "lib/vite/recorder/assets/codeMirrorModule-DYBRYzYX.css",
+          "sha256": "70bf421a13e87857ca684bfa2cc55f06d7c5a50f71253a3ff1d74769b14a957e",
+          "size": 6421
+        },
+        {
+          "path": "lib/vite/traceViewer/codeMirrorModule.DYBRYzYX.css",
+          "sha256": "70bf421a13e87857ca684bfa2cc55f06d7c5a50f71253a3ff1d74769b14a957e",
+          "size": 6421
+        },
+        {
+          "path": "lib/vite/traceViewer/defaultSettingsView.7ch9cixO.css",
+          "sha256": "720aa332b48bb329475a42fe0c1f94ee69ae54cff40550bf0e3422db49db4bc9",
+          "size": 110370
+        },
+        {
+          "path": "lib/vite/recorder/assets/index-BSjZa4pk.css",
+          "sha256": "afa7d89ede13ec11ac07f8492b96fab3466d2ac71ab65682380881e6eae3d440",
+          "size": 92055
+        },
+        {
+          "path": "lib/vite/traceViewer/index.BVu7tZDe.css",
+          "sha256": "d2c1b8bd3c3a95602fbab460860b5239f6baf6d6b70bc9a2a68ea88f5ba9636a",
+          "size": 1893
+        },
+        {
+          "path": "lib/vite/traceViewer/uiMode.Btcz36p_.css",
+          "sha256": "bfe8330cc78eeb1b1c4d8983aab7068d725526e407903ee19e515996250cb221",
+          "size": 60239
+        },
+        {
+          "path": "lib/vite/traceViewer/xtermModule.DYP7pi_n.css",
+          "sha256": "7c5a01f382f76539fc9b4db6b18e18a7035741845fd14968c5cdc0a7e373d817",
+          "size": 4150
+        },
+        {
+          "path": "lib/vite/htmlReport/index.html",
+          "sha256": "fe70d3e2ebec9546a93622fb5c6020730e597412cdbfdaafce6a9fba1a2103db",
+          "size": 527464
+        },
+        {
+          "path": "lib/vite/recorder/index.html",
+          "sha256": "f66c25f8e267679b96209f8f0e1eecfdf41e662fb1892b398a55ffba8acbc549",
+          "size": 1078
+        },
+        {
+          "path": "lib/vite/traceViewer/index.html",
+          "sha256": "9b5c3f348e8b07cf57b94cb92897b0f929e9e836ed444e9e1eeef86f6329e8da",
+          "size": 2283
+        },
+        {
+          "path": "lib/vite/traceViewer/snapshot.html",
+          "sha256": "e192546675329f804bb9d4afbd96f7a1368e53cc42a05f0cc4a57949df7bc245",
+          "size": 935
+        },
+        {
+          "path": "lib/vite/traceViewer/uiMode.html",
+          "sha256": "34f183da065bf3c736ddab89752f0418989a50c5aab836445cffd6e8e217fe9b",
+          "size": 647
+        },
+        {
+          "path": "lib/server/agent/actionRunner.js",
+          "sha256": "3d5109e6c2b912938eb1b5e29450ab818c1386581cb0a2414967f1a2fd5a87c6",
+          "size": 13325
+        },
+        {
+          "path": "lib/server/agent/actions.js",
+          "sha256": "64a58a0b889b44334f92b05826e5a0304ee3ef4d31f247dc7014c8c5c341b73f",
+          "size": 4998
+        },
+        {
+          "path": "lib/client/android.js",
+          "sha256": "dee4274366dad011c01a89e8463ab6215c24efcfc7d880a4803b35ef5e4d2e92",
+          "size": 13665
+        },
+        {
+          "path": "lib/server/android/android.js",
+          "sha256": "7abf032259dbc0519befa528add221474fdc945723116e98e7f2465f8638958c",
+          "size": 18859
+        },
+        {
+          "path": "lib/server/dispatchers/androidDispatcher.js",
+          "sha256": "2c112dcbdafaff6c01e6873cca79806b2a804833996f81d50974bd405f8a2cf9",
+          "size": 9938
+        },
+        {
+          "path": "lib/androidServerImpl.js",
+          "sha256": "d00fd955f77ce3aa3deea6f12083773443fd24089e1426b51d01926c2f951441",
+          "size": 3036
+        },
+        {
+          "path": "lib/client/api.js",
+          "sha256": "5a1b7c22df9ba9c601dd562de42ab8e8aac945313d79c3e593666e463c2206b4",
+          "size": 4762
+        },
+        {
+          "path": "lib/utils/isomorphic/ariaSnapshot.js",
+          "sha256": "96cf7f8e39a5c9bd912c65f8293cd118908fa532edd29f5e263f666b36bbe4b0",
+          "size": 15015
+        },
+        {
+          "path": "lib/client/artifact.js",
+          "sha256": "b8e65f541e490d65b0f888ea96ea97c5f5091342e5ac4a39fa88cafd72e3e04f",
+          "size": 2756
+        },
+        {
+          "path": "lib/server/artifact.js",
+          "sha256": "576cd18550cd5d6b752699130885d44fc53593ee20a445bf91f0989692f47a4d",
+          "size": 4485
+        },
+        {
+          "path": "lib/server/dispatchers/artifactDispatcher.js",
+          "sha256": "2d433905daece8a356e9706ed02a7f31e3b0f51b091bc177917858f4ac057ab3",
+          "size": 4542
+        },
+        {
+          "path": "lib/server/utils/ascii.js",
+          "sha256": "0b7ad5b4adef3d0f64a5372ed2ad9cd778743474e4cef7fd9e68e825c07e1bad",
+          "size": 1751
+        },
+        {
+          "path": "lib/utils/isomorphic/assert.js",
+          "sha256": "918208119d469550f0384c8858d3b5cb4cb0d7c81b4890f50e234ed74787db0e",
+          "size": 1126
+        },
+        {
+          "path": "lib/server/android/backendAdb.js",
+          "sha256": "b08cfc57edc963933597f26c7c8559a251d7094128887358d198278db0c3899a",
+          "size": 6531
+        },
+        {
+          "path": "lib/server/bidi/bidiBrowser.js",
+          "sha256": "655a3adf5b18e179585db4bda7cce9ff5881ef682a42a3a481a8666a03925701",
+          "size": 20325
+        },
+        {
+          "path": "lib/server/bidi/bidiChromium.js",
+          "sha256": "92ac12f9e650fd8c4d67316b959a4c1c449ace3ad86bff92c4debd83cf099e08",
+          "size": 6803
+        },
+        {
+          "path": "lib/server/bidi/third_party/bidiCommands.d.js",
+          "sha256": "2c19fb6cbf950b617fa03de12bc1afca627d2edd39a20381710a05f9ae2d74ef",
+          "size": 902
+        },
+        {
+          "path": "lib/server/bidi/bidiConnection.js",
+          "sha256": "6c8a0aa3b3a970d28fa8308177b9b0f1eeecc9af53b65a6d3e0b7cacaa288e21",
+          "size": 8276
+        },
+        {
+          "path": "lib/server/bidi/bidiDeserializer.js",
+          "sha256": "1c07ac3ee4995d06cae848a13b0fde3a5f3e8208d5c2906c72b518f66a45e4e0",
+          "size": 4270
+        },
+        {
+          "path": "lib/server/bidi/bidiExecutionContext.js",
+          "sha256": "271f48e6b5ed7268db6e5261fa1af5e471382a9faa502b4ac5929067164beb5d",
+          "size": 10613
+        },
+        {
+          "path": "lib/server/bidi/bidiFirefox.js",
+          "sha256": "751b1622319bff47ced114bf77637e28540ec5fecf86ce17671e737525fe892b",
+          "size": 5553
+        },
+        {
+          "path": "lib/server/bidi/bidiInput.js",
+          "sha256": "e79b48cc5c6a9d9794398ff1ba507f454878cf9d33264c01c88fe54843edc150",
+          "size": 4987
+        },
+        {
+          "path": "lib/server/bidi/third_party/bidiKeyboard.js",
+          "sha256": "a74c4ebcdebf0345217ef8d3e7439633be22ff446c074d75872b61ae74ee9d92",
+          "size": 5606
+        },
+        {
+          "path": "lib/server/bidi/bidiNetworkManager.js",
+          "sha256": "c770e509530a722f2a2404b5576a29dd24f3ac57b870d35a82232c0cf8de6fba",
+          "size": 15009
+        },
+        {
+          "path": "lib/server/bidi/bidiOverCdp.js",
+          "sha256": "c53568fe671ac09c49bb513d1d029775c05bed301bce9706a6e1792b8d37e89a",
+          "size": 3555
+        },
+        {
+          "path": "lib/server/bidi/bidiPage.js",
+          "sha256": "d5539300c8a62368afa7910b1ec5719c9b6fcefc4acdde77b45ba02b073f62a2",
+          "size": 23095
+        },
+        {
+          "path": "lib/server/bidi/bidiPdf.js",
+          "sha256": "7e71375faf7415debddb5a0dbdb381cc1836718c2c00c2b533f4455d96175b11",
+          "size": 3537
+        },
+        {
+          "path": "lib/server/bidi/third_party/bidiProtocol.js",
+          "sha256": "c61ae2a96f5b2eab30d20996f6bf568ec23d0e2c581f3a397fd67229b7d00ec2",
+          "size": 1239
+        },
+        {
+          "path": "lib/server/bidi/third_party/bidiProtocolCore.js",
+          "sha256": "a300d9667017b3d90f90b4d3f777dd170d128ea3c8f0624b21a8ead95c96a2c7",
+          "size": 7106
+        },
+        {
+          "path": "lib/server/bidi/third_party/bidiProtocolPermissions.js",
+          "sha256": "fac350bc073d54e293f11e8fe2f31afbf8d67bd5f831f4e0f53c0ed86874bc65",
+          "size": 1585
+        },
+        {
+          "path": "lib/server/bidi/third_party/bidiSerializer.js",
+          "sha256": "47e69152456f92ff99400f1487030c812c7e85f3c231e523a28eb35c4519b830",
+          "size": 4093
+        },
+        {
+          "path": "lib/generated/bindingsControllerSource.js",
+          "sha256": "e42c78e7d5ba661ff2b10d85fe08cc6a02a550e5209df6c218c212c9c5322c78",
+          "size": 9144
+        },
+        {
+          "path": "lib/client/browser.js",
+          "sha256": "f83e3a90c706cfae4b548311be902c2dbeb2f79cf561ea7f9b785057f7c57b7f",
+          "size": 6111
+        },
+        {
+          "path": "lib/server/browser.js",
+          "sha256": "4f461d840a29f0eac9fe2a0f10f7cf97c06b2d5ee37f17988540abbb85fae19d",
+          "size": 5788
+        },
+        {
+          "path": "lib/client/browserContext.js",
+          "sha256": "6ea97975a148f6c5b8706d9525bf2a665494091558dc1497e96373c16537613b",
+          "size": 25667
+        },
+        {
+          "path": "lib/server/browserContext.js",
+          "sha256": "2e3cc0b77b6fc4c47a7abbb142f2c037baaf7c7ba003840d0aadc210a9ba81ff",
+          "size": 26900
+        },
+        {
+          "path": "lib/server/dispatchers/browserContextDispatcher.js",
+          "sha256": "44f83a2f6ae9333337ebe9d23ee27f666c94e0bc62713b466106f0f6bcb42d83",
+          "size": 19759
+        },
+        {
+          "path": "lib/server/dispatchers/browserDispatcher.js",
+          "sha256": "cdb74c1daea7c06a6c1e89ebadf26055b2a9912e5efd0a69216d78781603010c",
+          "size": 5727
+        },
+        {
+          "path": "lib/server/registry/browserFetcher.js",
+          "sha256": "86b5170d25a9c331c3d52c1107379c2e14e07ded2dfbe38b784abe99d539c622",
+          "size": 7536
+        },
+        {
+          "path": "lib/browserServerImpl.js",
+          "sha256": "fe91e82ae655a4b9f2e9f411a201684e2029684d5b13616c28e655f63bf111f6",
+          "size": 6063
+        },
+        {
+          "path": "lib/client/browserType.js",
+          "sha256": "930673dc3ee55d6fc136b43968af36e4e702323d370bd1f961267cdabc133471",
+          "size": 9014
+        },
+        {
+          "path": "lib/server/browserType.js",
+          "sha256": "08266f672f1ba9dedd77fb30008c7590e6400dcf9bf497fe3fe61ce0e74bcbf0",
+          "size": 15435
+        },
+        {
+          "path": "lib/server/dispatchers/browserTypeDispatcher.js",
+          "sha256": "e6765d006d98b873ea33ca91dac5f19db81ceb81a306d159d04c0be4cc2265cb",
+          "size": 3023
+        },
+        {
+          "path": "lib/server/callLog.js",
+          "sha256": "72b8c4d2b140ff16ac4eae3fecf34d76cae14348e42696715d58d780aa89b298",
+          "size": 2861
+        },
+        {
+          "path": "lib/client/cdpSession.js",
+          "sha256": "b69012f85807ae8ad8a5363f82868f86b9d8a51ce35c9cf6c863e1badec0ba2c",
+          "size": 1790
+        },
+        {
+          "path": "lib/server/dispatchers/cdpSessionDispatcher.js",
+          "sha256": "a8e89e19d8a40e2f838f3e794d2d548488498491a85281c07b73f30a5630abd1",
+          "size": 1904
+        },
+        {
+          "path": "lib/client/channelOwner.js",
+          "sha256": "7052cae26b3fc156572494b9cf8a6cdddc8d3845aea7dec9ef7642f44f866c7e",
+          "size": 7703
+        },
+        {
+          "path": "lib/server/recorder/chat.js",
+          "sha256": "1966533863de1077a2c31f0750c08bd60fe123ab6a953247e777dcf101ae9243",
+          "size": 4751
+        },
+        {
+          "path": "lib/server/chromium/chromium.js",
+          "sha256": "3da2c7355ea37fd89c072680cf559129943730b2a684809b1dbe43d19cabc745",
+          "size": 18246
+        },
+        {
+          "path": "lib/server/chromium/chromiumSwitches.js",
+          "sha256": "37d1a75c1c4e0cbc02b31d65f3b80d21b1bdf227a09146603e181a6ec54f293a",
+          "size": 4566
+        },
+        {
+          "path": "cli.js",
+          "sha256": "a0ef30b76aa5d64d49b74f454a15cb5fdb063149f3cc4758446941b724851f38",
+          "size": 713
+        },
+        {
+          "path": "lib/client/clientHelper.js",
+          "sha256": "350fde8c4b69208fccbc286e628eeb8d9048b4d7c6ac48ca7e9bb6f54addc2ce",
+          "size": 2318
+        },
+        {
+          "path": "lib/client/clientInstrumentation.js",
+          "sha256": "badcec6bef9fb68dcf04758fd36df6a64c551aff1d8bca5fc98f2e4d756e8d3c",
+          "size": 1986
+        },
+        {
+          "path": "lib/client/clientStackTrace.js",
+          "sha256": "8390cf4c31d627df070e174f7c6db879576deec9df07a1bf1779b6bcf65a7907",
+          "size": 2525
+        },
+        {
+          "path": "lib/client/clock.js",
+          "sha256": "b2b57e1023b837e75d73476efd4d29145950b39f3583b7967d55d19165a2e3e4",
+          "size": 2316
+        },
+        {
+          "path": "lib/server/clock.js",
+          "sha256": "cab36df101d3f651ee917842fccba9c62568a09587e18f0b0d932fb99bf6edf4",
+          "size": 6495
+        },
+        {
+          "path": "lib/generated/clockSource.js",
+          "sha256": "9925d686b9c1d582e7e9fa75de8f61ec977dd8bccbcb0b2a5fb5cbcf168ad0e8",
+          "size": 21308
+        },
+        {
+          "path": "lib/server/agent/codegen.js",
+          "sha256": "e14eaa453c9475ae40708599ac09720650ceba32788d776e8aa5726074fc4018",
+          "size": 5291
+        },
+        {
+          "path": "lib/vite/traceViewer/assets/codeMirrorModule-a5XoALAZ.js",
+          "sha256": "7fa7b36aa0539fcfbc08a2410478610ac59db22716a5093b506430baa7a9f7d4",
+          "size": 313023
+        },
+        {
+          "path": "lib/vite/recorder/assets/codeMirrorModule-DadYNm1I.js",
+          "sha256": "29576ea1ecb65a5886f6c53974b221395c520f9b4ed97adc3bceee5a6caab90a",
+          "size": 313009
+        },
+        {
+          "path": "lib/utils/isomorphic/colors.js",
+          "sha256": "455701e3f7323b4742fecca2ea67eef41b819bc05ea0dc3ee6af4a076ce58564",
+          "size": 2395
+        },
+        {
+          "path": "lib/server/utils/image_tools/colorUtils.js",
+          "sha256": "dfdddc79f4559a097b5f1bb46dcafb3c823c63c78574ebd0941b3d61668b1f9e",
+          "size": 3015
+        },
+        {
+          "path": "lib/server/utils/comparators.js",
+          "sha256": "751e40a504202e06e2e0a7298a66ca1ffe27e7026cf8c6206c9679b87a7c9639",
+          "size": 7082
+        },
+        {
+          "path": "lib/server/utils/image_tools/compare.js",
+          "sha256": "038688ba4f1a888e33f7538d325a39d8207a7ddf1e725f4b3060b7284ac537fe",
+          "size": 4607
+        },
+        {
+          "path": "lib/client/connection.js",
+          "sha256": "e063a23c7fb0ed81e7a09baa0844851c660b3cba1c39176963f17b10a1bf1526",
+          "size": 12449
+        },
+        {
+          "path": "lib/server/console.js",
+          "sha256": "413bd0bb7ae2895f2cf36637f3ef0b8ddba9b737b4d887ac03e96494038316d0",
+          "size": 1676
+        },
+        {
+          "path": "lib/client/consoleMessage.js",
+          "sha256": "a0a7d1ce5c009fecba5f0ff8b80834861afc9e2943832da803c16e61fc004444",
+          "size": 1703
+        },
+        {
+          "path": "lib/server/agent/context.js",
+          "sha256": "740ab4e66d5659561599dae59bb02bbabeb3817b63b58079133e380f542ef7d2",
+          "size": 5313
+        },
+        {
+          "path": "lib/server/cookieStore.js",
+          "sha256": "eca3a2db95aa593443bc2bdfca182e003aff837feb554dc485fc16780a1777f1",
+          "size": 5881
+        },
+        {
+          "path": "lib/client/coverage.js",
+          "sha256": "72eb9fa60baaa1336e800cc2aa24a907b415d58d9f5186edbd471434879f32ad",
+          "size": 1486
+        },
+        {
+          "path": "lib/server/chromium/crBrowser.js",
+          "sha256": "f614dfd5875ea41bcd98d1f16b789c41e24c50298d32d63aa06731cbc580736e",
+          "size": 20452
+        },
+        {
+          "path": "lib/server/chromium/crConnection.js",
+          "sha256": "0d41a058ad1f5c897329a9c821c52b952e0e709ab38c3e6e355224b167922f13",
+          "size": 7512
+        },
+        {
+          "path": "lib/server/chromium/crCoverage.js",
+          "sha256": "8bd8e0330abbaf605603315e414132d346a1bbfe33fe55f8fb69389457a0e620",
+          "size": 8886
+        },
+        {
+          "path": "lib/server/chromium/crDevTools.js",
+          "sha256": "89277af38609c541356dedb04d280a21f7877b0491e34640ca13b19c6b16494e",
+          "size": 4426
+        },
+        {
+          "path": "lib/server/chromium/crDragDrop.js",
+          "sha256": "4920b5cc049666f56dc0a9d75ad59b1e9000b62af97dec92cd3908d7a93570cc",
+          "size": 4972
+        },
+        {
+          "path": "lib/server/chromium/crExecutionContext.js",
+          "sha256": "4b4da27c16c2ec7094dcc3cc78313eb9ac8f15a9ed3b7589118a883d6d339b7f",
+          "size": 6627
+        },
+        {
+          "path": "lib/server/chromium/crInput.js",
+          "sha256": "3dcad19b8f52f3f1f9787c5fff350607e242cd0d0c6911223c9d44bed9a75432",
+          "size": 6600
+        },
+        {
+          "path": "lib/server/chromium/crNetworkManager.js",
+          "sha256": "ad55830a87387450440a4b372ae6a93a6c91c089ccc1e72ffeb298662dddb744",
+          "size": 31556
+        },
+        {
+          "path": "lib/server/chromium/crPage.js",
+          "sha256": "08f14f9abc4bde5b36a0679889de05e8c3c0ebbf7e15c3bafc3639830e01c174",
+          "size": 43750
+        },
+        {
+          "path": "lib/server/chromium/crPdf.js",
+          "sha256": "821fc8d7d58a91fbf6b1298617c3f37b4f4557a64b8ba2c07ae75f9090e9d606",
+          "size": 3954
+        },
+        {
+          "path": "lib/server/chromium/crProtocolHelper.js",
+          "sha256": "1c35341f0f086fd4a5b9b3f80508039814d59d563e1775506228d74341e111c7",
+          "size": 5456
+        },
+        {
+          "path": "lib/server/chromium/crServiceWorker.js",
+          "sha256": "31f02cbb18100ae55eca5785ae81021bf7970fd342fe2d42014245fe76ca3f95",
+          "size": 5853
+        },
+        {
+          "path": "lib/server/utils/crypto.js",
+          "sha256": "0c145da88e7300555b77c10b6b1fa1090529019e11268d298a00514894c5f44d",
+          "size": 7581
+        },
+        {
+          "path": "lib/server/codegen/csharp.js",
+          "sha256": "dd546e17850fc2a398ac5345545769722d955d9cbb38739bab32d45a7c79dc3b",
+          "size": 12857
+        },
+        {
+          "path": "lib/utils/isomorphic/cssParser.js",
+          "sha256": "a1a47a8c04ac4456f29a9bb8516eb3bb4b131828a70f41b7f8d01565229aedd1",
+          "size": 9239
+        },
+        {
+          "path": "lib/utils/isomorphic/cssTokenizer.js",
+          "sha256": "12e589bbfc994957d0f8b18efb451ad173af6a36b54772cfb6f87ae31c3aeca3",
+          "size": 26850
+        },
+        {
+          "path": "lib/server/utils/debug.js",
+          "sha256": "7df4ded3602390556958cf4a9795b06217cc5ebcd17af7a3a7dfdcb2a56f4b3f",
+          "size": 1494
+        },
+        {
+          "path": "lib/server/debugController.js",
+          "sha256": "4cc042576e97a16ed1f4df1dd063cb6c01710eda3e6ed1658daf7022fb6c9b52",
+          "size": 7975
+        },
+        {
+          "path": "lib/server/dispatchers/debugControllerDispatcher.js",
+          "sha256": "ce29b9ac6545d6174befd6f8f39eacecf2a5edb7b6331b48eca003dae259f82b",
+          "size": 3449
+        },
+        {
+          "path": "lib/server/debugger.js",
+          "sha256": "fa3d2b8d268850e9e9a39b44e86de11e5cafd054240ec788bc1b2938d4f73487",
+          "size": 4112
+        },
+        {
+          "path": "lib/server/utils/debugLogger.js",
+          "sha256": "0fb0eadc66df2ef6537bb873b7e2f278c2b2389a2bbb2cdc908c02dadd0cce79",
+          "size": 3838
+        },
+        {
+          "path": "lib/server/chromium/defaultFontFamilies.js",
+          "sha256": "61838aa599e7da94c003162976003e8cdefc029bf5896b82bce3683489f52f44",
+          "size": 4406
+        },
+        {
+          "path": "lib/vite/traceViewer/assets/defaultSettingsView-CJSZINFr.js",
+          "sha256": "212b6c02335b370bbc200c211ade1b44748db88f3232ff370b192c6aee551f18",
+          "size": 640870
+        },
+        {
+          "path": "lib/server/registry/dependencies.js",
+          "sha256": "e1da2edeb0ce13b3828501ee92b980cacbe7956521544b3bc68a350ad40df2dd",
+          "size": 15869
+        },
+        {
+          "path": "lib/server/deviceDescriptors.js",
+          "sha256": "a3b02cfbcaf3704055e9ddec3f31780b7a624116fd2b04ff296a98c437b1ab98",
+          "size": 1843
+        },
+        {
+          "path": "lib/client/dialog.js",
+          "sha256": "6fd36243bec2aaa83f0ccc6ffb922f161c2f0facbee21b713ad3f8b8fb9a540e",
+          "size": 1741
+        },
+        {
+          "path": "lib/server/dialog.js",
+          "sha256": "ab5418c584a1ab1931b553b0bf340c48be5b3cff3fdf5e226cbddac88ce35bfa",
+          "size": 3677
+        },
+        {
+          "path": "lib/server/dispatchers/dialogDispatcher.js",
+          "sha256": "8d2f52c5e795f988d663803132876271c973ddd4b4bacb199ab60ace6807bea3",
+          "size": 1795
+        },
+        {
+          "path": "lib/server/dispatchers/dispatcher.js",
+          "sha256": "628c39de7799325c589a6f62e642324cb61b8d6fdaeec6bc29b40b0f0a76dc58",
+          "size": 14828
+        },
+        {
+          "path": "lib/server/dom.js",
+          "sha256": "33f502d6319a4e2539a4020c4983045f30d3d1cbed5d7610a32d9f89cbf8823d",
+          "size": 35176
+        },
+        {
+          "path": "lib/client/download.js",
+          "sha256": "4da5bba721c27be59a3c8a66b6965568bb8739104f59595348a66d4db2ebb239",
+          "size": 1807
+        },
+        {
+          "path": "lib/server/download.js",
+          "sha256": "8c09c06cd71ff9c45572ca5eec076c180ae43ec0359c7005b7f9678d31cb9687",
+          "size": 2931
+        },
+        {
+          "path": "lib/cli/driver.js",
+          "sha256": "f86aca7cc5acc30c07e9b46fee077fc53e0f97d238124d8695c7ee82e49362ae",
+          "size": 4221
+        },
+        {
+          "path": "lib/client/electron.js",
+          "sha256": "d6e8f20cf628d0251725295dd4cb97fc817791d6146c5c0f1e3743c8a601a698",
+          "size": 6154
+        },
+        {
+          "path": "lib/server/electron/electron.js",
+          "sha256": "d230157151a460582734ae2ecac319b86f1b2b466864a083adfca71d4f80203c",
+          "size": 11952
+        },
+        {
+          "path": "lib/server/dispatchers/electronDispatcher.js",
+          "sha256": "5ef8a222206fef9a4f2b445c3c6fcb46739809f54528c4c99c4992e4a5634ded",
+          "size": 4180
+        },
+        {
+          "path": "lib/client/elementHandle.js",
+          "sha256": "36d76c1d1be976189b7b9619b19e3651fd040dd576c0d0fe22d80ad0ccb15033",
+          "size": 11782
+        },
+        {
+          "path": "lib/server/dispatchers/elementHandlerDispatcher.js",
+          "sha256": "bc342fc6972c1dad024f71936112b1d8e3e60ea7f6545946caaca464c6f76dc7",
+          "size": 7941
+        },
+        {
+          "path": "lib/utils/isomorphic/trace/entries.js",
+          "sha256": "c077f139a28b3fc903a587b42d8adfe4b99c4f2d2de94521ee2d4556a7ebe061",
+          "size": 745
+        },
+        {
+          "path": "lib/server/utils/env.js",
+          "sha256": "7606cb0eae1b89ce5e8b45399efbaf16723779a2714e74858eca9bb56f93e5ea",
+          "size": 2500
+        },
+        {
+          "path": "lib/client/errors.js",
+          "sha256": "13ec20bbf18461690043785515025bd3d3bfff8b51afcbf8c4e06dffbc014347",
+          "size": 2683
+        },
+        {
+          "path": "lib/server/errors.js",
+          "sha256": "883a5e30085bb7a39f003bca462da5191ee3e9e002298d3ad5250296896afa5b",
+          "size": 2459
+        },
+        {
+          "path": "lib/client/eventEmitter.js",
+          "sha256": "6d2f3acbfc9cfee5002086dbe676580353b97ce40b3eabf9382d832b04ae3e0b",
+          "size": 9931
+        },
+        {
+          "path": "lib/client/events.js",
+          "sha256": "2639f620223924bff226c8849c9217b23b4b191b85f15dfc2771a111784e9f57",
+          "size": 2862
+        },
+        {
+          "path": "lib/server/utils/eventsHelper.js",
+          "sha256": "adbf2d345865f2c4156086345bc780f695659359ad110f32c58506f7a95eacc8",
+          "size": 1465
+        },
+        {
+          "path": "lib/server/agent/expectTools.js",
+          "sha256": "505f1fb3cdc1d28abaa20e606815a3d651759ca62fe1ce7a2de2dd6e1da7a206",
+          "size": 6871
+        },
+        {
+          "path": "lib/server/utils/expectUtils.js",
+          "sha256": "e12b13057408c90c5bd92ce721ee2cf455c3ba0816017e16800ed49dcd7e901f",
+          "size": 5190
+        },
+        {
+          "path": "lib/client/fetch.js",
+          "sha256": "27690689a46bf22b838c39a6712ed2af1bfd3e6ac1956dbe7905bc8bb5d28fa6",
+          "size": 13552
+        },
+        {
+          "path": "lib/server/fetch.js",
+          "sha256": "4763a8d6e07088d702b667f6ed9c54eb0a92328032df6ff4d8fc806e1db53f04",
+          "size": 25100
+        },
+        {
+          "path": "lib/server/firefox/ffBrowser.js",
+          "sha256": "77c540947bfd14e4ccdbd1da7173b6d6eb120b3558299f9937f204c52965e950",
+          "size": 18333
+        },
+        {
+          "path": "lib/server/firefox/ffConnection.js",
+          "sha256": "66aa4b74f3419b85931aba9bbc43badc3d90269582656acb1ed26b97c2427416",
+          "size": 5187
+        },
+        {
+          "path": "lib/server/firefox/ffExecutionContext.js",
+          "sha256": "0f60d7ec29590aac2a7480545da2fa0397ecd0a0a14928f97d13671740dbbcfa",
+          "size": 6489
+        },
+        {
+          "path": "lib/server/firefox/ffInput.js",
+          "sha256": "039993e94c894af993c015ab2297c5c452b2770523e896cb69f0e98df6316e43",
+          "size": 4582
+        },
+        {
+          "path": "lib/server/firefox/ffNetworkManager.js",
+          "sha256": "cc4fec183d13c6a95a27fe0c0bd5a711566a04521ab3b28723559fa1985d9693",
+          "size": 9970
+        },
+        {
+          "path": "lib/server/firefox/ffPage.js",
+          "sha256": "a1ba687c2737d6b54361c850230adce62f2cb4455d4708580fbb0bec5c2ec5e9",
+          "size": 22526
+        },
+        {
+          "path": "lib/client/fileChooser.js",
+          "sha256": "e4d9ee9810fbfc558327eb154b1a9489324d7389c6cb9d813fa8b1617ca21f0c",
+          "size": 1474
+        },
+        {
+          "path": "lib/server/fileChooser.js",
+          "sha256": "64aaf685f90359c3bc123cf4a4f0bba6a0b4e6e6b42788bc3227076c4b12af70",
+          "size": 1367
+        },
+        {
+          "path": "lib/server/fileUploadUtils.js",
+          "sha256": "5b39d9bdc8e65564b1d830e02f7ce71302656df765f35c90bbc1cbf38794bf32",
+          "size": 3938
+        },
+        {
+          "path": "lib/client/fileUtils.js",
+          "sha256": "1650724633ab1e7c34ef4e27bcb83df383ad488172292de0621963ded2cd22e9",
+          "size": 1340
+        },
+        {
+          "path": "lib/server/utils/fileUtils.js",
+          "sha256": "33dcc28aa06a85e9eed175f1210a8142ea9bb495520e993403e390aba117c572",
+          "size": 6681
+        },
+        {
+          "path": "lib/server/firefox/firefox.js",
+          "sha256": "5574f0c1e07f905ae44d50483bc99ec53388c889e3bb8d10321574e749c67f53",
+          "size": 5221
+        },
+        {
+          "path": "lib/server/bidi/third_party/firefoxPrefs.js",
+          "sha256": "93af4d43b84b7eb42345d0216b72ef7d0c085e6e649d40517bde54471404c84e",
+          "size": 12079
+        },
+        {
+          "path": "lib/server/formData.js",
+          "sha256": "3a88e088f8e649d03f3eeb66695fecf73767fe5dc378454b19eb07ec1465277d",
+          "size": 3220
+        },
+        {
+          "path": "lib/client/frame.js",
+          "sha256": "f3eeec1734312b518d488763365f7b3f877284bf92c01edc267bdbb1648ef8c7",
+          "size": 19494
+        },
+        {
+          "path": "lib/server/dispatchers/frameDispatcher.js",
+          "sha256": "59c3fd3d39f0dfe8424c50810d035cf74ad44d845d143b7ca7dbcd6d5ead6096",
+          "size": 11406
+        },
+        {
+          "path": "lib/server/frames.js",
+          "sha256": "fa67e7a3755a79cf0e0ac96b6930987ec2bcc643f60735c6ec748066f7c3e16b",
+          "size": 62048
+        },
+        {
+          "path": "lib/server/frameSelectors.js",
+          "sha256": "e78a076ee10ebd6127e092229b70201603ded190322e4d76e6f0cdcbb2517723",
+          "size": 7506
+        },
+        {
+          "path": "lib/server/utils/happyEyeballs.js",
+          "sha256": "09b06ef645ea809df49f26aa5c10d703b38abac286536c27672cfb709efacc42",
+          "size": 7423
+        },
+        {
+          "path": "lib/server/harBackend.js",
+          "sha256": "f98df2109b57c23f324f3864077c1806dd8e62e778e538acfaa51eb7f3a17643",
+          "size": 5977
+        },
+        {
+          "path": "lib/server/har/harRecorder.js",
+          "sha256": "eec7d85e5566cad437488c8cf98efea014997bedd8f815abb84a7ea1f04152a1",
+          "size": 5692
+        },
+        {
+          "path": "lib/client/harRouter.js",
+          "sha256": "576628bfac6c968c08f081f224a56c9cb852faf6c2de6eddbc299a3eaa9d0689",
+          "size": 3035
+        },
+        {
+          "path": "lib/server/har/harTracer.js",
+          "sha256": "8c78682cd64c794187ab90e174b8c3b03422b01573236eb09edd20f8387c408f",
+          "size": 24339
+        },
+        {
+          "path": "lib/utils/isomorphic/headers.js",
+          "sha256": "41304e0bb0a0e9b0ee0b4a167bbfacd1592f1bc4d99b3c9c18dc93b7b5f93af9",
+          "size": 1895
+        },
+        {
+          "path": "lib/server/helper.js",
+          "sha256": "2d65592d34fb1e1a43adc6d2cd9d60ce0ff6b3c3b9b9676a61e4d2647dceaa94",
+          "size": 3886
+        },
+        {
+          "path": "lib/server/utils/hostPlatform.js",
+          "sha256": "c08f01de2ed3496e4cb6134b669562fd3b23e43da676f67cc83e2818a2654cc1",
+          "size": 6612
+        },
+        {
+          "path": "lib/server/utils/httpServer.js",
+          "sha256": "b346ea9ef21cc04a44e36615ef410c36f6c72caa86fd670380adf8277fdd7484",
+          "size": 7714
+        },
+        {
+          "path": "lib/server/utils/image_tools/imageChannel.js",
+          "sha256": "dd5f5ca4e228aece109162686d103f53bb2e0fa2c0fb0208bddf450677809c7d",
+          "size": 2903
+        },
+        {
+          "path": "lib/server/utils/imageUtils.js",
+          "sha256": "4f1422b374bbdc903bff891d34c5144456e447e90e30ebff8a2b1fc1d426c168",
+          "size": 5468
+        },
+        {
+          "path": "lib/vite/recorder/assets/index-BhTWtUlo.js",
+          "sha256": "c909272a4446c228fce4a85814aaa9ada47091df58cb5b09d545ce148937ace4",
+          "size": 363108
+        },
+        {
+          "path": "lib/vite/traceViewer/index.BDwrLSGN.js",
+          "sha256": "ea9dc27cc67a69c2f49d418da3f339c66a9e1ce3dc2eb14b201c7271995a41e4",
+          "size": 6492
+        },
+        {
+          "path": "index.js",
+          "sha256": "a4f83b5b2915b43bddd5384d963a66d1fd4d978a3db8059969fb78de65bc519a",
+          "size": 1095
+        },
+        {
+          "path": "lib/mcpBundleImpl/index.js",
+          "sha256": "341b006d9f83e103e329acc9eb855a3098aef478902099fff1051a245bffd2b8",
+          "size": 681755
+        },
+        {
+          "path": "lib/server/index.js",
+          "sha256": "0fca958ba03b99078f318c7b6e9c7940427f369137ae96baf204679fcff0ec80",
+          "size": 2501
+        },
+        {
+          "path": "lib/server/registry/index.js",
+          "sha256": "0a35b418606183a0f64b977f2b467e0f7ffd874cb2ad077ee21aa6d72fa3d625",
+          "size": 70280
+        },
+        {
+          "path": "lib/utilsBundleImpl/index.js",
+          "sha256": "9aade0b0e00de83f90863d6bd915c9fc545f722657f7d925d4d3534569c65aee",
+          "size": 470200
+        },
+        {
+          "path": "lib/generated/injectedScriptSource.js",
+          "sha256": "ea0889cc1b0efba61511dd640e658ca965aa8d5ae20eef8e608fd651b85390ca",
+          "size": 314611
+        },
+        {
+          "path": "lib/inprocess.js",
+          "sha256": "edd68f73a21a646edaf8af34714cfab01598763c446590e0070fb2efbfc3a8d9",
+          "size": 150
+        },
+        {
+          "path": "lib/inProcessFactory.js",
+          "sha256": "406a2ce0e50bf6c695a0fa018ac3dec505b60836710bbab797e11730c51917cc",
+          "size": 3146
+        },
+        {
+          "path": "lib/client/input.js",
+          "sha256": "d590372703575ba281e1e4f0652d857aec5f7b95ce2376ae98130789ff5e0353",
+          "size": 2503
+        },
+        {
+          "path": "lib/server/input.js",
+          "sha256": "9bab3cbf128c2338d3eee76996ea9cd7044d27cd9b0c6bf7b1786669354e9d1a",
+          "size": 10219
+        },
+        {
+          "path": "lib/server/instrumentation.js",
+          "sha256": "01ce66950019581d375e2ad81d95eb23ab9de8a57a2a595c3da421aee25a5d4b",
+          "size": 2690
+        },
+        {
+          "path": "lib/server/codegen/java.js",
+          "sha256": "f5602fcfcf73f66c54ab32cbb1a593b670f47da11abf6d4a26e00d3ac8a5943c",
+          "size": 12089
+        },
+        {
+          "path": "lib/server/codegen/javascript.js",
+          "sha256": "b3b9300cef3c58d3f64d7629e6cb44e73b52d6d4363ae3e9880e31aa98071e9c",
+          "size": 11168
+        },
+        {
+          "path": "lib/server/javascript.js",
+          "sha256": "134f2aae953ca802c3d8c4da2ddb0857129ae3044f8958cdb857993341aec257",
+          "size": 10769
+        },
+        {
+          "path": "lib/client/jsHandle.js",
+          "sha256": "473be495eee4daf8942798fe1007f40992411965363db9109eff7fbc7e950416",
+          "size": 3947
+        },
+        {
+          "path": "lib/server/dispatchers/jsHandleDispatcher.js",
+          "sha256": "750f3fff764f517913a90e61e04b000a7d777e4ef947fca5bc03b43b8ff70c74",
+          "size": 3784
+        },
+        {
+          "path": "lib/server/codegen/jsonl.js",
+          "sha256": "823edb38c5b9804e51c4e8df1d42cea79332b4664d5c1b7704d6f0317775d47b",
+          "size": 1751
+        },
+        {
+          "path": "lib/client/jsonPipe.js",
+          "sha256": "4cddb6608f39eb8f3e33b3db894015b1be4aed20d9cd908c6042efbd0afe9e40",
+          "size": 1350
+        },
+        {
+          "path": "lib/server/dispatchers/jsonPipeDispatcher.js",
+          "sha256": "da633da72760ed6af4bb16543fc7be5367e2fbc3a4bec403ed435011bb0df7e2",
+          "size": 1940
+        },
+        {
+          "path": "lib/server/codegen/language.js",
+          "sha256": "2b474f802c0c65ff2b30403962e3ffea6d7eac4ec46d2a899bf5bd13a20a1ca9",
+          "size": 4183
+        },
+        {
+          "path": "lib/server/codegen/languages.js",
+          "sha256": "983e97d682bbfa9f60e23a9f4865112a91cbd21d8823cf079a1290cc55e58165",
+          "size": 2210
+        },
+        {
+          "path": "lib/server/launchApp.js",
+          "sha256": "523ebb02ea8c2368c3120b82124a4db28dd9fe79a6a19da175bb5d703e13b29b",
+          "size": 5636
+        },
+        {
+          "path": "lib/server/utils/linuxUtils.js",
+          "sha256": "4f507e66ec0bc8bf63d494d5d2bf1633691c7434483912507e7a5eb9337a50bd",
+          "size": 2740
+        },
+        {
+          "path": "lib/server/electron/loader.js",
+          "sha256": "f92981c101d9d2b137f545e8aff1fbfedad7f65bbf69747ed6087c691b18898d",
+          "size": 975
+        },
+        {
+          "path": "lib/client/localUtils.js",
+          "sha256": "cd64b11c889400f8446ead1cff8d91c1ddae2c2224436aa6df56d4bc849de00c",
+          "size": 2079
+        },
+        {
+          "path": "lib/server/localUtils.js",
+          "sha256": "9c08f299a6e763b8d55ad5e58a644e9f4b08dc994d439804bb9b0ca7dd7f33a0",
+          "size": 9017
+        },
+        {
+          "path": "lib/server/dispatchers/localUtilsDispatcher.js",
+          "sha256": "7b036251d665842fb1f6af7cd975512c6d17482bf4e4bf6c28f88fd8cb5ea248",
+          "size": 6427
+        },
+        {
+          "path": "lib/client/locator.js",
+          "sha256": "9c4fa569fd160b2f5a3204615967499f925deca68fc6846af13e0cdbfde87135",
+          "size": 15282
+        },
+        {
+          "path": "lib/utils/isomorphic/locatorGenerators.js",
+          "sha256": "6821d0569a9cead7a7d356d70f4d4531182178cd7616277d68c778874aa95ca3",
+          "size": 26382
+        },
+        {
+          "path": "lib/utils/isomorphic/locatorParser.js",
+          "sha256": "19039d596a64ce77e62f0cace1ca3411946c68834a165914a610e589dad1e007",
+          "size": 9681
+        },
+        {
+          "path": "lib/utils/isomorphic/locatorUtils.js",
+          "sha256": "a82004d8937628c05bec84c61f245d7d027624b58c08abf91ed2319e63742670",
+          "size": 3503
+        },
+        {
+          "path": "lib/utils/isomorphic/lruCache.js",
+          "sha256": "6b7ca49c88c7d501884d1052d45289f2ef65ac7c2f15533deec4a3192c8b6d2f",
+          "size": 1721
+        },
+        {
+          "path": "lib/server/macEditingCommands.js",
+          "sha256": "ed19a42c03283c800f5d80bf7afd72c927a726cd25b639e6092e08ba7e2da7b1",
+          "size": 6337
+        },
+        {
+          "path": "lib/utils/isomorphic/manualPromise.js",
+          "sha256": "941649e4378c7acf507ba9fb87002715cd43bda58359edc827434c09cb48060f",
+          "size": 3402
+        },
+        {
+          "path": "lib/mcpBundle.js",
+          "sha256": "1a13a3b4c7e63878b84f5a075a1f9f437b0d60228fa38ad9440cc5a7e3664aec",
+          "size": 3561
+        },
+        {
+          "path": "lib/utils/isomorphic/mimeType.js",
+          "sha256": "9286025386f8c41bcbbeb3ffa1fdc6e2fc3737c339aa44a6b419095079714631",
+          "size": 15301
+        },
+        {
+          "path": "lib/utils/isomorphic/multimap.js",
+          "sha256": "eb2840c1182931cfb3bfb62ce4817003c52d3642e05d17fe02fc54f462cd25c0",
+          "size": 2095
+        },
+        {
+          "path": "lib/server/registry/nativeDeps.js",
+          "sha256": "9d3adab0fedfc5f6c48217582fe34624875dad22b3537925bc6f81140c94ed6a",
+          "size": 36477
+        },
+        {
+          "path": "lib/client/network.js",
+          "sha256": "385cd7a58fea3cf46d82533b7c041eee41c903cf9179a810da11f4953df4d9e3",
+          "size": 25064
+        },
+        {
+          "path": "lib/server/network.js",
+          "sha256": "679bd2f9566d39b2ac16bba525b6d40c9f250463dc00b84a71fce226a1e41cd0",
+          "size": 21960
+        },
+        {
+          "path": "lib/server/utils/network.js",
+          "sha256": "46a49a1c43e939051f2cf9fb3d19d3e2766d871878833166dca5fc70a0c855b5",
+          "size": 8787
+        },
+        {
+          "path": "lib/server/dispatchers/networkDispatchers.js",
+          "sha256": "2cfe9170ee8a1519166bc3da8138b7b711518253a0fae2ca750a8228aac643cf",
+          "size": 8420
+        },
+        {
+          "path": "lib/server/utils/nodePlatform.js",
+          "sha256": "e9f6eec0825b7c0740b0be7aad05ab61d3cb51632c6c11f5f8b79c1d1b0bdc0e",
+          "size": 5392
+        },
+        {
+          "path": "lib/server/registry/oopDownloadBrowserMain.js",
+          "sha256": "671cd299ea86b7d3463521abc09657c4e657a0201edf1594b73b596dfab69980",
+          "size": 5276
+        },
+        {
+          "path": "lib/outofprocess.js",
+          "sha256": "72af122d479e3d7f6eb6b8950825a3b2be5c7f9451c7f08754912da9723fd3e2",
+          "size": 3350
+        },
+        {
+          "path": "lib/client/page.js",
+          "sha256": "409b11561b319e8dfb4d1ec3f8b126fb32ab19e894fae529edbeae57c056ae84",
+          "size": 31020
+        },
+        {
+          "path": "lib/server/page.js",
+          "sha256": "9cdfc88c5718ddcdc4c8205dabc3cfd68378699d7bef1b5017a28e74eda6b226",
+          "size": 33146
+        },
+        {
+          "path": "lib/client/pageAgent.js",
+          "sha256": "4ad23b52595dbd985de6aa7f49281218e9a6475b7a80ee99334917a9407da00d",
+          "size": 2450
+        },
+        {
+          "path": "lib/server/agent/pageAgent.js",
+          "sha256": "6b0dc981d6a11735c041b6372ed2d9c0cae25b5a66fb68b5b1e87e7f9f145b04",
+          "size": 9120
+        },
+        {
+          "path": "lib/server/dispatchers/pageAgentDispatcher.js",
+          "sha256": "284f2e238b97196e450ec5d1cce9df2c78e90136ead6e2bb12955ef6d50c8459",
+          "size": 4381
+        },
+        {
+          "path": "lib/server/dispatchers/pageDispatcher.js",
+          "sha256": "b11d9dd2eb7b0560f95a54cff4aeab9a9b3c76d84d6ae507b396aed2914cb3f4",
+          "size": 17481
+        },
+        {
+          "path": "lib/server/agent/performTools.js",
+          "sha256": "7b9c72c145517001d1ac48450e052c078b8595a9eba7819f2fc15742eb3b79e0",
+          "size": 10142
+        },
+        {
+          "path": "lib/server/pipeTransport.js",
+          "sha256": "9ab01b72ead31eb7a07a439bc983d6e1738dd876dac7ec7a4e205d23563293c4",
+          "size": 2989
+        },
+        {
+          "path": "lib/server/utils/pipeTransport.js",
+          "sha256": "0f3d17e585ab0551a0b3f34c5cc54415b9cf52d7c81b43a3ee68039b3fe95dab",
+          "size": 2848
+        },
+        {
+          "path": "lib/third_party/pixelmatch.js",
+          "sha256": "7383ae817a69534f6e6729e654f7013c54cb863b0e2c65465213f3de83c327f6",
+          "size": 9501
+        },
+        {
+          "path": "lib/client/platform.js",
+          "sha256": "df6677444b1d374f9e464d721c3f4685845c13cc2e71ac3867fd8c20672712f1",
+          "size": 2307
+        },
+        {
+          "path": "lib/client/playwright.js",
+          "sha256": "e0674a5c72654b25d716aa7130c878b588f89e0f59b8476496e76e351618ba94",
+          "size": 2923
+        },
+        {
+          "path": "lib/server/playwright.js",
+          "sha256": "ef391cb7c445bb8174df3feecb315987d21bb9e4966fbd56c62b8658fabc9841",
+          "size": 2950
+        },
+        {
+          "path": "lib/remote/playwrightConnection.js",
+          "sha256": "a5f44b644efc49cfc9c8d308dd6be0fa039cd3c2f4cc9bb326e95482802a0987",
+          "size": 5916
+        },
+        {
+          "path": "lib/server/dispatchers/playwrightDispatcher.js",
+          "sha256": "0105dbd04d075ba0e12abae7ce7b463538a9b2f70ce3040b815488d9ed66a0b9",
+          "size": 5368
+        },
+        {
+          "path": "lib/remote/playwrightServer.js",
+          "sha256": "72ce7f7088d1b888428ef1492fdc546e8819ba5f3adf33538ccb8e4aca1d3c17",
+          "size": 13231
+        },
+        {
+          "path": "lib/generated/pollingRecorderSource.js",
+          "sha256": "4f2417800b178c212e1287ccc8333755d0ff0c3211d4d7a89f288602e4d4bdc5",
+          "size": 72840
+        },
+        {
+          "path": "lib/server/utils/processLauncher.js",
+          "sha256": "da9cb41cc1605fca1e26c6a6212f01ef0af0125a9e97eecb70671bb3a8f1fd07",
+          "size": 9325
+        },
+        {
+          "path": "lib/server/utils/profiler.js",
+          "sha256": "449487e915ff08ff60642e3e8a01067960985adc201573d8608e44ec7fc0d4e7",
+          "size": 2516
+        },
+        {
+          "path": "lib/cli/program.js",
+          "sha256": "84680447675991eb5e58c24e526ec215911974c0f3a8ac7026df1f0465eb07b9",
+          "size": 27374
+        },
+        {
+          "path": "lib/cli/programWithTestStub.js",
+          "sha256": "65b7251f44d41bcb1f742716d70a7ee1edb7fc3a2b8c9b7244f68e804184fd88",
+          "size": 3192
+        },
+        {
+          "path": "lib/server/progress.js",
+          "sha256": "beddcd9db1f3882d7c57282ce19158b4b774416fd8843e3f884488625d4c9ae5",
+          "size": 4736
+        },
+        {
+          "path": "lib/server/chromium/protocol.d.js",
+          "sha256": "6b7467f93c2627e3833867266eca9c25639231878e0544a2dd08c23e2ad07ff6",
+          "size": 751
+        },
+        {
+          "path": "lib/server/firefox/protocol.d.js",
+          "sha256": "6b7467f93c2627e3833867266eca9c25639231878e0544a2dd08c23e2ad07ff6",
+          "size": 751
+        },
+        {
+          "path": "lib/server/webkit/protocol.d.js",
+          "sha256": "6b7467f93c2627e3833867266eca9c25639231878e0544a2dd08c23e2ad07ff6",
+          "size": 751
+        },
+        {
+          "path": "lib/server/protocolError.js",
+          "sha256": "2b6d9bd97aaa6ab39b66968aaa734bc5c1520f38b3820e0d481f2a18063dea3d",
+          "size": 1842
+        },
+        {
+          "path": "lib/utils/isomorphic/protocolFormatter.js",
+          "sha256": "b7a554306caaaa94a99ea9d127c6718d44d2fb8ab61e6a2c57cf4285650e2e3e",
+          "size": 2944
+        },
+        {
+          "path": "lib/utils/isomorphic/protocolMetainfo.js",
+          "sha256": "0eadf5e883ff3999a6115ed6fce72492609d6576c57313b29e81bcd6b54f4add",
+          "size": 24476
+        },
+        {
+          "path": "lib/server/codegen/python.js",
+          "sha256": "b94d0de4b61422f86d688b65645b9593109cdeeed1d39bd1218117f75ba18393",
+          "size": 11133
+        },
+        {
+          "path": "lib/server/recorder.js",
+          "sha256": "204aae1ef479c47f13d816a2177e91608ac5227acfa9add1fb57592f547c2aa7",
+          "size": 18720
+        },
+        {
+          "path": "lib/server/recorder/recorderApp.js",
+          "sha256": "3914f1389af377c42bd17a2f473b97a1524cdb2c96d5bdc34b023f2f77e44ae1",
+          "size": 15754
+        },
+        {
+          "path": "lib/server/recorder/recorderRunner.js",
+          "sha256": "d23a6c081a874fa83f199cbc1c201fe97f6d998982e76ee68e48cd4732baacca",
+          "size": 4911
+        },
+        {
+          "path": "lib/server/recorder/recorderSignalProcessor.js",
+          "sha256": "7911eec57ca89d252f8177cfd916a79e52bb17ccd58eb71f02a6502525ef1a2a",
+          "size": 2873
+        },
+        {
+          "path": "lib/server/recorder/recorderUtils.js",
+          "sha256": "c7e93d651108cc86f0836e6dc7acd7f560505f15f9ccb8fec8c53772e3ac0715",
+          "size": 6104
+        },
+        {
+          "path": "lib/utils/isomorphic/rtti.js",
+          "sha256": "e376d934dfff437be1ffc3e8f23eed0e4ea4a27f2e2e3a0b0df288ec54bdd765",
+          "size": 1521
+        },
+        {
+          "path": "lib/server/screencast.js",
+          "sha256": "d7c173662281a322fad3a6c414af91767e05ff07e14a543fe5acbe87182e06d0",
+          "size": 6901
+        },
+        {
+          "path": "lib/server/screenshotter.js",
+          "sha256": "9aaff6c173c6a9a1c80e831dd92ccc24097243d49ad600dc87c4bc1fad9c625b",
+          "size": 14430
+        },
+        {
+          "path": "lib/utils/isomorphic/selectorParser.js",
+          "sha256": "6205503cbc67a66e548b996859758ded44f63a0ece91b2c9dff5807f66a9b4cb",
+          "size": 14046
+        },
+        {
+          "path": "lib/client/selectors.js",
+          "sha256": "ebdb098e84de852a5b64553182ce41d4de9d19f3421f554107028764d9638850",
+          "size": 2337
+        },
+        {
+          "path": "lib/server/selectors.js",
+          "sha256": "b2edcf2a1cf2a04e82de47df2e1e5807c7342f38516a4c963afff0194a54b897",
+          "size": 3851
+        },
+        {
+          "path": "lib/utils/isomorphic/semaphore.js",
+          "sha256": "39623fdc9444c0a8c9efe5d86e6c5d4d854e13b2579e884e63f390cce596e790",
+          "size": 1598
+        },
+        {
+          "path": "lib/protocol/serializers.js",
+          "sha256": "63c1855617a06cd971bf9e3eb1e6fc4d02665c4d870f348c4f2506f3a952a6fa",
+          "size": 6919
+        },
+        {
+          "path": "lib/utils/isomorphic/trace/snapshotRenderer.js",
+          "sha256": "b11546188a376a5086974f167900780c2645e8a8905a58cea056be04106bd278",
+          "size": 23006
+        },
+        {
+          "path": "lib/utils/isomorphic/trace/snapshotServer.js",
+          "sha256": "d389439b7e6bba5b800373871612839bc4f2bb10497ef7ea2c619a25b26ba5b8",
+          "size": 4691
+        },
+        {
+          "path": "lib/utils/isomorphic/trace/snapshotStorage.js",
+          "sha256": "8185874e2f40ae3ed9da8de3d345a95a5e8fba92513de38ebe5e0203f5706d9b",
+          "size": 3588
+        },
+        {
+          "path": "lib/server/trace/recorder/snapshotter.js",
+          "sha256": "3dc3f996abc0201edf6b254b0943efefcdc516ec9c6661d45cf587285e72702f",
+          "size": 5843
+        },
+        {
+          "path": "lib/server/trace/recorder/snapshotterInjected.js",
+          "sha256": "ee026cff521488ea7eb2b81822e17dfd01f33aae337dad846f379192d76be7bb",
+          "size": 22105
+        },
+        {
+          "path": "lib/server/socksClientCertificatesInterceptor.js",
+          "sha256": "efa8de1d21be81f9e27515de9abb0d507e5269341d0cc14d722fa3df0d97c2a9",
+          "size": 15409
+        },
+        {
+          "path": "lib/server/socksInterceptor.js",
+          "sha256": "3ade31d7175b24336af1be1065d2e7b8f1a44c78b9b98ee55f2fd3391c1afffc",
+          "size": 4641
+        },
+        {
+          "path": "lib/server/utils/socksProxy.js",
+          "sha256": "504def4ec741feedeccac03f08dfee735686c7f4846f110fb7563aa83d63bd99",
+          "size": 17519
+        },
+        {
+          "path": "lib/server/utils/spawnAsync.js",
+          "sha256": "217bb7d22c0b8a73ba06d8cd42bc55a443c2089db353d9fa80e284f6fd03944c",
+          "size": 1683
+        },
+        {
+          "path": "lib/utils/isomorphic/stackTrace.js",
+          "sha256": "ed6e3bd91d339584f7b3dc207c66de9e4fcf5cd3a76b7691828e489ac59397ea",
+          "size": 5326
+        },
+        {
+          "path": "lib/server/utils/image_tools/stats.js",
+          "sha256": "5f4acfe8490fd1c7a8569274e2812f4bbc1adfa800647517e5c01c11c3ac95a0",
+          "size": 4019
+        },
+        {
+          "path": "lib/generated/storageScriptSource.js",
+          "sha256": "e8a1133e3d51c03fd29d773693db051ce94dfd7ef83e53530bfb936bc871ef20",
+          "size": 15484
+        },
+        {
+          "path": "lib/client/stream.js",
+          "sha256": "04b3d600ed3ad591e46ec6b4ec71dfde90cf64d07767dd0cf9e6cf8308271ee1",
+          "size": 1364
+        },
+        {
+          "path": "lib/server/dispatchers/streamDispatcher.js",
+          "sha256": "28cc8af93733615527b421bf7aed0ead37fe6803f20866b1e087040fb8c6b764",
+          "size": 2553
+        },
+        {
+          "path": "lib/utils/isomorphic/stringUtils.js",
+          "sha256": "d31444e0e754c453d767e96f21c8cd842542d4d10e9f9911ec72dd6637108257",
+          "size": 7225
+        },
+        {
+          "path": "lib/vite/traceViewer/sw.bundle.js",
+          "sha256": "7802aa86c13b0bbee2f7bf0584686b685914c271677889864af18f1670ae2e2e",
+          "size": 95179
+        },
+        {
+          "path": "lib/server/utils/task.js",
+          "sha256": "957a25d42b68fe708b30f27f57cd0333a978591f0a1aae13378a921d929ea92a",
+          "size": 1607
+        },
+        {
+          "path": "lib/server/recorder/throttledFile.js",
+          "sha256": "75f1dc25dc7c07ffbacbe85b5bcccc56fd81d10140b2bc6efd42710b205e3e89",
+          "size": 2118
+        },
+        {
+          "path": "lib/utils/isomorphic/time.js",
+          "sha256": "0eebe61ffd113084f595545209536b7b354bff04faa0f8a7e0ab29ebc5fcc179",
+          "size": 1759
+        },
+        {
+          "path": "lib/utils/isomorphic/timeoutRunner.js",
+          "sha256": "614259ae1c7e2e0edb1e8c22176f2872de9aac4682b22be1d611dbe3bd3b9720",
+          "size": 2516
+        },
+        {
+          "path": "lib/client/timeoutSettings.js",
+          "sha256": "3049c9c53cb5c4f84d0fd00d237c2f78ddb70b8ac60908790b8ef28eb0b14ef0",
+          "size": 2654
+        },
+        {
+          "path": "lib/server/agent/tool.js",
+          "sha256": "38f4cc818a8bb54af2bbefdab6a531ff482060b433e6a3244f1618b009c9b8b5",
+          "size": 3489
+        },
+        {
+          "path": "lib/utils/isomorphic/trace/traceLoader.js",
+          "sha256": "09a27503602c6faa086792f2851958d6f8bbb808694868d8bb1b357c293c673f",
+          "size": 4902
+        },
+        {
+          "path": "lib/utils/isomorphic/trace/traceModel.js",
+          "sha256": "ac5da2665250e55b1aa6e5d56f04deeba9d4d8ceb34c2968d9b3c320a6030d9e",
+          "size": 13380
+        },
+        {
+          "path": "lib/utils/isomorphic/trace/traceModernizer.js",
+          "sha256": "b7be86aad989007300c1a31832a26e7faa93284af7c1baf4d1b5dbb43baec271",
+          "size": 13191
+        },
+        {
+          "path": "lib/server/trace/viewer/traceParser.js",
+          "sha256": "fb66c1838f6d606c6f7c00995d46a8b8d34671daad781a8edb544916083e68dc",
+          "size": 2579
+        },
+        {
+          "path": "lib/utils/isomorphic/traceUtils.js",
+          "sha256": "c291f5bd2d74a85ffe088abae4eb582a460508ed5d2ddacc1a48fb6f64f9f07b",
+          "size": 2175
+        },
+        {
+          "path": "lib/utils/isomorphic/trace/versions/traceV3.js",
+          "sha256": "a86246b64ce1d1a753cbe3919f0771f0338e19cd08bc19a4355706370baa64bb",
+          "size": 745
+        },
+        {
+          "path": "lib/utils/isomorphic/trace/versions/traceV4.js",
+          "sha256": "89ea6a6dc71ed5656aaaa82ac170b8f5b3eb9c3c0873c1955c8e07bee2a91485",
+          "size": 745
+        },
+        {
+          "path": "lib/utils/isomorphic/trace/versions/traceV5.js",
+          "sha256": "334ab274ba96d2b17668047d1cc67711c7a16663aaf58ee7216152def33b94ed",
+          "size": 745
+        },
+        {
+          "path": "lib/utils/isomorphic/trace/versions/traceV6.js",
+          "sha256": "7bdc118ec31d991c49aac851a6df5e26a69d2a5751ca764f77341e0c0ddcb17e",
+          "size": 745
+        },
+        {
+          "path": "lib/utils/isomorphic/trace/versions/traceV7.js",
+          "sha256": "c89446f860232f81b5e997f840c427034d134da8ad23520bbed7c18f0dd18201",
+          "size": 745
+        },
+        {
+          "path": "lib/utils/isomorphic/trace/versions/traceV8.js",
+          "sha256": "b9bce8183651c45a703ab6ffeb6526da0e029b62cfb73af0e7f12e6c3a382dcc",
+          "size": 745
+        },
+        {
+          "path": "lib/server/trace/viewer/traceViewer.js",
+          "sha256": "be49680c54bfdb4b6e25db552e4927dba97a1a86c9e51ce78d164f56ff10ef1b",
+          "size": 10061
+        },
+        {
+          "path": "lib/client/tracing.js",
+          "sha256": "337a43b0ef24664069724ccd28198b3f5ef5bc1da9b7c1fa05d1e0b4e517a1f5",
+          "size": 4393
+        },
+        {
+          "path": "lib/server/trace/recorder/tracing.js",
+          "sha256": "5c960b763611230f08a5bc4b008d5bd80c2b4a5832db79ed089abbe3eea74ea6",
+          "size": 22429
+        },
+        {
+          "path": "lib/server/dispatchers/tracingDispatcher.js",
+          "sha256": "d33e000446bef59df7e5f580bac29247309974dac3543da0fc562f5de85a85b5",
+          "size": 2553
+        },
+        {
+          "path": "lib/server/transport.js",
+          "sha256": "2b06df2a0ef2340852b693ef5bba3b98f8a988cbde5dfd0d6e6ad62e08e25276",
+          "size": 6697
+        },
+        {
+          "path": "lib/client/types.js",
+          "sha256": "8daa2915fbdf51c6e3a08e0e4d808d672bdb5166f719a9157c343e64d87550cc",
+          "size": 1157
+        },
+        {
+          "path": "lib/server/codegen/types.js",
+          "sha256": "4e4d8fa8a86983748bad7e158d3e58b2ba98806699a7fb66d04a644b7ae01e45",
+          "size": 741
+        },
+        {
+          "path": "lib/server/types.js",
+          "sha256": "8daa2915fbdf51c6e3a08e0e4d808d672bdb5166f719a9157c343e64d87550cc",
+          "size": 1157
+        },
+        {
+          "path": "lib/utils/isomorphic/types.js",
+          "sha256": "4e4d8fa8a86983748bad7e158d3e58b2ba98806699a7fb66d04a644b7ae01e45",
+          "size": 741
+        },
+        {
+          "path": "lib/vite/traceViewer/uiMode.CQJ9SCIQ.js",
+          "sha256": "b252aab460c320d77954e5a0fb588a30dce98ba1e95b41f855b97709ebcc7524",
+          "size": 37370
+        },
+        {
+          "path": "lib/utils/isomorphic/urlMatch.js",
+          "sha256": "d612c86ca0ead7d61797966aac91c958fa6100f83026be963aeea3da713a7e3b",
+          "size": 6179
+        },
+        {
+          "path": "lib/server/utils/userAgent.js",
+          "sha256": "99dc708b2ea62c14e7e18415a8223262becd1e77b9abcbc9a14f740f51ce9635",
+          "size": 4151
+        },
+        {
+          "path": "lib/server/usKeyboardLayout.js",
+          "sha256": "d0c424c2856f64c1abfafb1b01985e32c027c364d41af29519a891a1b5ec4ed0",
+          "size": 7907
+        },
+        {
+          "path": "lib/utils/isomorphic/utilityScriptSerializers.js",
+          "sha256": "5dcac17c30fe7d83c7b279b4293dc624d42fb9cc269bd5e4187183e32f41508b",
+          "size": 7923
+        },
+        {
+          "path": "lib/generated/utilityScriptSource.js",
+          "sha256": "6706bdf9fc43d4573e14f456fbc541858a4acf89e3e43c7dea9ff455bd276af6",
+          "size": 11527
+        },
+        {
+          "path": "lib/utils.js",
+          "sha256": "695e67505a0580f25dfbd6b263f814d8aadd4c55232a3dcdfa035388ee268fbd",
+          "size": 6392
+        },
+        {
+          "path": "lib/utilsBundle.js",
+          "sha256": "c14bb0a089f12a0ba43def0cfce6e8253148668046ec958f08dd734a6281d894",
+          "size": 3461
+        },
+        {
+          "path": "lib/protocol/validator.js",
+          "sha256": "6643ff17117b16115867af7c647bbe5de151682d9cc8d7998db343405e465c59",
+          "size": 224835
+        },
+        {
+          "path": "lib/protocol/validatorPrimitives.js",
+          "sha256": "a3abe78847253497de04ea6f329a925df66c9a2dd62a5830aacaf1461d4128b3",
+          "size": 6051
+        },
+        {
+          "path": "lib/client/video.js",
+          "sha256": "5370019ba5b7d9d0e2ec22e24c1275f44e02f063e2f7a9604a067712413287a6",
+          "size": 2124
+        },
+        {
+          "path": "lib/server/videoRecorder.js",
+          "sha256": "381de6ef36a9d0cff708840a18db9cab91d9eb2e867146dcf871be260df58832",
+          "size": 4886
+        },
+        {
+          "path": "lib/client/waiter.js",
+          "sha256": "3b060a8254cdb6fa35b09379ad0a8de906ffa682670be339207d57736bc9f562",
+          "size": 4841
+        },
+        {
+          "path": "lib/client/webError.js",
+          "sha256": "7ed3830da0b42ef8c3cf22fa1872d43449c6cb51e166feebdd0cfc323dcc04eb",
+          "size": 1215
+        },
+        {
+          "path": "lib/server/webkit/webkit.js",
+          "sha256": "b909650336cb30edf5bcc137ff9a686fa65be4f1efe5f4359058667bda37213d",
+          "size": 4954
+        },
+        {
+          "path": "lib/client/webSocket.js",
+          "sha256": "e7fb652df9909cf11304b056c151450d1630635b834d47f90682eac4a4a75cba",
+          "size": 3118
+        },
+        {
+          "path": "lib/generated/webSocketMockSource.js",
+          "sha256": "9f3f74d671223b5b312083670f686c7b23948a8cc47de14fc4f303a75d019375",
+          "size": 12109
+        },
+        {
+          "path": "lib/server/dispatchers/webSocketRouteDispatcher.js",
+          "sha256": "a12eae11b70dc583d915d498771a65d617e13a10ea90caca2f7f1b364e13d5ea",
+          "size": 8325
+        },
+        {
+          "path": "lib/server/webkit/wkBrowser.js",
+          "sha256": "34527742e629cb7c2f9157caa6431fe8f32689b22b35f818024d3b81676f8882",
+          "size": 14081
+        },
+        {
+          "path": "lib/server/webkit/wkConnection.js",
+          "sha256": "1bc8ffdff9701cda75182e8a18a90e7dce06c73eec5420f038cefb0295065dc8",
+          "size": 5206
+        },
+        {
+          "path": "lib/server/webkit/wkExecutionContext.js",
+          "sha256": "04d8f0c073d10678357c1bd50885b13a5ac0434249e8283911e4b8cfddfe53ed",
+          "size": 6316
+        },
+        {
+          "path": "lib/server/webkit/wkInput.js",
+          "sha256": "7fc2709e6a26e60d005d1458f0df3160f69a7bf7a2db55b739e69222e8ce800e",
+          "size": 5876
+        },
+        {
+          "path": "lib/server/webkit/wkInterceptableRequest.js",
+          "sha256": "9a893ab1527cc4eae0d7b17c3e2004bbd3b44124a0ad042804ac68155c2a1fae",
+          "size": 7645
+        },
+        {
+          "path": "lib/server/webkit/wkPage.js",
+          "sha256": "6bffed124c7513ff91df9a30d3f71887e57bfa4c15646ef9d8d846502bdb9749",
+          "size": 52314
+        },
+        {
+          "path": "lib/server/webkit/wkProvisionalPage.js",
+          "sha256": "3c1f7b53ac2391c291e0b2783f19f62f1b9a25d1389a6b587c70884e00df84d6",
+          "size": 3648
+        },
+        {
+          "path": "lib/server/webkit/wkWorkers.js",
+          "sha256": "68f773aa74de0565a31a4122a61df1aca13388bf026fea7f8d6131f97e1ae85f",
+          "size": 4353
+        },
+        {
+          "path": "lib/client/worker.js",
+          "sha256": "4826d37b86fef9ce75f12860717df848058614cf07e86c563919eb8185ce42a2",
+          "size": 4062
+        },
+        {
+          "path": "lib/client/writableStream.js",
+          "sha256": "62d9d8e4be5975d3a1f948a80a99a149351382abc019fc8d5696b1311a107977",
+          "size": 1418
+        },
+        {
+          "path": "lib/server/dispatchers/writableStreamDispatcher.js",
+          "sha256": "40db3a11b797690f9b5f583056ad37f2fec9e70dd1d24584cd28744ad3da20f9",
+          "size": 3463
+        },
+        {
+          "path": "lib/server/utils/wsServer.js",
+          "sha256": "1d109f356be4cda23f284ba053f16fb91087335171e0038ed45849a4aec056c1",
+          "size": 4569
+        },
+        {
+          "path": "lib/vite/traceViewer/assets/xtermModule-CsJ4vdCR.js",
+          "sha256": "4aa82b0448cef1cf951bbe0ac80bf2d2b7c5d279dd74bcc798a9e563e98e5295",
+          "size": 292244
+        },
+        {
+          "path": "lib/utils/isomorphic/yaml.js",
+          "sha256": "c789d8f3ad319f5336cc112a837661d11a6b6a54a7b949f60468f7c42a365102",
+          "size": 2520
+        },
+        {
+          "path": "lib/zipBundle.js",
+          "sha256": "90e428a7004452929e811020e788c749aa08132d618ec77759af79c1e4b53536",
+          "size": 1242
+        },
+        {
+          "path": "lib/zipBundleImpl.js",
+          "sha256": "9552c87b175ac3ce5a1eade1e3ebde4e7c2a37031253e4ecabecc51b4a24ddf6",
+          "size": 54340
+        },
+        {
+          "path": "lib/server/utils/zipFile.js",
+          "sha256": "2d7e3104842f03c3569798d34f52ad1a653debdc670302da2d38c68b11659a3e",
+          "size": 2399
+        },
+        {
+          "path": "lib/server/utils/zones.js",
+          "sha256": "493b0939e412239080b134e68c4845d625f66ed77b373cc2eb8059b7335c0669",
+          "size": 1916
+        },
+        {
+          "path": "browsers.json",
+          "sha256": "6b6e0538d6e46eef71d3e1a0dcb65f8f5ea7914033c8150529d8e207afb6030c",
+          "size": 1883
+        },
+        {
+          "path": "lib/server/deviceDescriptorsSource.json",
+          "sha256": "ceb47c6d0366b273151121ade0217f1e96a4043594c8188fcc12c0c9b30f9353",
+          "size": 54125
+        },
+        {
+          "path": "package.json",
+          "sha256": "16a25dbd7368a87af8b58a45c6216b9cec5a91a72cf704533344701997ebde22",
+          "size": 1499
+        },
+        {
+          "path": "README.md",
+          "sha256": "d16ff7f8e38fa1fc954f695ad551cdc118d9c9bdd5f3d83203901f4c317d7d7e",
+          "size": 120
+        },
+        {
+          "path": "index.mjs",
+          "sha256": "3d36e2132d3c8b62397d23f0bb4177336aaee503203ae2a2c90fbeb5bf3317dd",
+          "size": 1063
+        },
+        {
+          "path": "lib/server/chromium/appIcon.png",
+          "sha256": "6ba994f05c5cf18e22d9b6bef9898fbdec6ad4d4d77f5187d0609cb42d72d01e",
+          "size": 16565
+        },
+        {
+          "path": "bin/install_media_pack.ps1",
+          "sha256": "bc20f049badf021e3a53bdb4156603caa5ef482c9a9a251f927605e676a44171",
+          "size": 174
+        },
+        {
+          "path": "bin/install_webkit_wsl.ps1",
+          "sha256": "bc61beda37a808eef27d39ce684baa792f6d17737a25a432b1a84d3b591ab815",
+          "size": 1464
+        },
+        {
+          "path": "bin/reinstall_chrome_beta_win.ps1",
+          "sha256": "b6d9e44742feafb98d5edc56fa20042949973cf30d141a1c5b4fb384096967c5",
+          "size": 957
+        },
+        {
+          "path": "bin/reinstall_chrome_stable_win.ps1",
+          "sha256": "3d96c4e2f4ebbb3fad44cf3ba58d9cf90af1c9fb3073e3b27d45a74cf005515b",
+          "size": 923
+        },
+        {
+          "path": "bin/reinstall_msedge_beta_win.ps1",
+          "sha256": "b173c378a59f0cc38033cee702de1f44f09276c9b2270d1a650ebe66ee312433",
+          "size": 874
+        },
+        {
+          "path": "bin/reinstall_msedge_dev_win.ps1",
+          "sha256": "46f7f98c81cb0abe687d7f4a5afea9b897a38d2a6dd6f6662fbd847f7a22bd51",
+          "size": 869
+        },
+        {
+          "path": "bin/reinstall_msedge_stable_win.ps1",
+          "sha256": "40bb5fcbfcebbbe2ce43c6e736e7c5deefc5be03b6e9c6914423c06ec1f591be",
+          "size": 856
+        },
+        {
+          "path": "bin/reinstall_chrome_beta_linux.sh",
+          "sha256": "1516fd36def44bfcf87855850322a54e3b26e863a82fbdf2a44a5f5134f7eedf",
+          "size": 1214
+        },
+        {
+          "path": "bin/reinstall_chrome_beta_mac.sh",
+          "sha256": "42d0572860dcecb094d409b879e469292c58a7645085357156453a6299315770",
+          "size": 560
+        },
+        {
+          "path": "bin/reinstall_chrome_stable_linux.sh",
+          "sha256": "8b578baa16f286f17d6a29cc8998a7a16f2635b7fb018f9473d5c498e0be450f",
+          "size": 1209
+        },
+        {
+          "path": "bin/reinstall_chrome_stable_mac.sh",
+          "sha256": "8532b8ff7600f208aada15584978fa91baffb0d4bb77bd30332ec827de501d72",
+          "size": 516
+        },
+        {
+          "path": "bin/reinstall_msedge_beta_linux.sh",
+          "sha256": "50a5fb48211ce0dc524e17e18547f40e863c1732555ca288cbc69cd6cb55ae2a",
+          "size": 1491
+        },
+        {
+          "path": "bin/reinstall_msedge_beta_mac.sh",
+          "sha256": "a280a4d02c2c908a6a523b781dd953bcf438689ceb4723133255b0d11955b124",
+          "size": 374
+        },
+        {
+          "path": "bin/reinstall_msedge_dev_linux.sh",
+          "sha256": "38e74c2ac8a403c512590d11d20742773d338d8b68b02022b209a9d8a6e03d7c",
+          "size": 1486
+        },
+        {
+          "path": "bin/reinstall_msedge_dev_mac.sh",
+          "sha256": "48d96b6d58b4a1a42e116545b523f4efd25edac1f3fa323a97eb596fa3bb654a",
+          "size": 369
+        },
+        {
+          "path": "bin/reinstall_msedge_stable_linux.sh",
+          "sha256": "db2fb3492a689ee5472ec159fef6a5efb7a62f1f513339350813c9d1334ba8d2",
+          "size": 1504
+        },
+        {
+          "path": "bin/reinstall_msedge_stable_mac.sh",
+          "sha256": "e176bc37da1a3e5b5cde36b941ed6134f7d5ee784587d034140cf40c53456b27",
+          "size": 368
+        },
+        {
+          "path": "lib/vite/recorder/playwright-logo.svg",
+          "sha256": "6b0a4367bdeab10995bc239278f04c68c10e48adbec15e799e01909a0d66dcb9",
+          "size": 5033
+        },
+        {
+          "path": "lib/vite/traceViewer/playwright-logo.svg",
+          "sha256": "6b0a4367bdeab10995bc239278f04c68c10e48adbec15e799e01909a0d66dcb9",
+          "size": 5033
+        },
+        {
+          "path": "index.d.ts",
+          "sha256": "7a8ec10b0834eb7183e4bfcd929838ac77583828e343211bb73676d1e47f6f01",
+          "size": 634
+        },
+        {
+          "path": "types/protocol.d.ts",
+          "sha256": "99a323dc5a6e506c78b69913b32beba93453bcd87aae8b507520234f387a4c30",
+          "size": 787755
+        },
+        {
+          "path": "types/structs.d.ts",
+          "sha256": "32727845ab5bd8a9ef3e4844c567c09f6d418fcf0f90d381c00652a6f23e7f6e",
+          "size": 2103
+        },
+        {
+          "path": "types/types.d.ts",
+          "sha256": "af3c4dcb64b945e01285bc0494e1cfa384fac43b08713a56fc3043c8f861553a",
+          "size": 944714
+        },
+        {
+          "path": "lib/vite/recorder/assets/codicon-DCmgc-ay.ttf",
+          "sha256": "0f1d5219934e96e83b8db162d60b4d8c09b5de1e7d38031cbafe4a3c0f2889c9",
+          "size": 80340
+        },
+        {
+          "path": "lib/vite/traceViewer/codicon.DCmgc-ay.ttf",
+          "sha256": "0f1d5219934e96e83b8db162d60b4d8c09b5de1e7d38031cbafe4a3c0f2889c9",
+          "size": 80340
+        },
+        {
+          "path": "ThirdPartyNotices.txt",
+          "sha256": "36aa7e5d56f9a7d4cdb85e570500e0dcdd36799c0e937199dd6cb9813a8fdce9",
+          "size": 198280
+        },
+        {
+          "path": "lib/vite/traceViewer/manifest.webmanifest",
+          "sha256": "d8540500603a32a39fe7e5a0375dc0f9ebafd11118e06a846db7efc608223ab9",
+          "size": 429
+        }
+      ]
+    },
+    {
+      "component": "NotoSansSC.ttf",
+      "license": "SIL-OFL-1.1",
+      "url": "https://raw.githubusercontent.com/google/fonts/9710da1eacb3be272583c3224dcb70f9da6eadbb/ofl/notosanssc/NotoSansSC%5Bwght%5D.ttf",
+      "source_commit": "9710da1eacb3be272583c3224dcb70f9da6eadbb",
+      "sha256": "a3041811a78c361b1de50f953c805e0244951c21c5bd412f7232ef0d899af0da",
+      "size": 17772300
+    },
+    {
+      "component": "notosanssc-OFL.txt",
+      "license": "SIL-OFL-1.1",
+      "url": "https://raw.githubusercontent.com/google/fonts/9710da1eacb3be272583c3224dcb70f9da6eadbb/ofl/notosanssc/OFL.txt",
+      "source_commit": "9710da1eacb3be272583c3224dcb70f9da6eadbb",
+      "sha256": "1c05c68c34f9708415aada51f17e1b0092d2cea709bf4a94cd38114f9e73d7d9",
+      "size": 4388
+    },
+    {
+      "component": "NotoSansMono.ttf",
+      "license": "SIL-OFL-1.1",
+      "url": "https://raw.githubusercontent.com/google/fonts/9710da1eacb3be272583c3224dcb70f9da6eadbb/ofl/notosansmono/NotoSansMono%5Bwdth%2Cwght%5D.ttf",
+      "source_commit": "9710da1eacb3be272583c3224dcb70f9da6eadbb",
+      "sha256": "2cb2adb378a8f574213e23df697050b83c54c27df465a2015552740b2769a081",
+      "size": 1708408
+    },
+    {
+      "component": "notosansmono-OFL.txt",
+      "license": "SIL-OFL-1.1",
+      "url": "https://raw.githubusercontent.com/google/fonts/9710da1eacb3be272583c3224dcb70f9da6eadbb/ofl/notosansmono/OFL.txt",
+      "source_commit": "9710da1eacb3be272583c3224dcb70f9da6eadbb",
+      "sha256": "cee9892f9f0cc8fe882c9e9537ee6a89621d86ee7ceaf70b02e2b2b1c25c061a",
+      "size": 4396
+    }
+  ],
+  "shared_installation_changed": false,
+  "npm_or_pip_run": false
+}

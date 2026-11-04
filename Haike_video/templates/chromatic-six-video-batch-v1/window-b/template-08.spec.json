@@ -1,0 +1,3281 @@
+{
+  "schema_version": 1,
+  "standard_version": "video-template-v1",
+  "template_id": "chromatic-08",
+  "template_version": "1.1.0-candidate.1",
+  "template_type": "avatar",
+  "spec_kind": "implementation",
+  "stage": "specification",
+  "authority": {
+    "runbook": "README-08.md",
+    "implementation_paths": [
+      "Scene.tsx",
+      "Preview.tsx",
+      "build.cjs",
+      "prepare.py",
+      "serve.py",
+      "selection-08.json"
+    ],
+    "parameter_source": "Scene.tsx unique geometry/transform authority; actual episode.materialSlots unique source ranges/crop/clock; SHA bound by new implementation/preparation evidence"
+  },
+  "canvas": {
+    "width": 720,
+    "height": 1280,
+    "fps": 30,
+    "duration_seconds": 24,
+    "clock": "720-frame30fps silent video development clock; scene cuts at original frames; each Video source=sourceFrom+(globalFrame-slot.from), playbackRate1, no loop/freeze/padding",
+    "coordinate_system": "top_left_pixels"
+  },
+  "narrative": {
+    "purpose": "保留原08颜色/布局/主要动效的真实视频新版；主体内容按源原速运动",
+    "information_hierarchy": [
+      "真实照片与每拍单主动作",
+      "短标题及结论",
+      "首尾辅助人物",
+      "示意字幕"
+    ],
+    "structure": [
+      "建立现场入口",
+      "逐一观察两个平级互动面",
+      "把一帧体验变成可展示的记录",
+      "整体回看体验"
+    ]
+  },
+  "scenes": [
+    {
+      "id": "orbit-entry",
+      "start": 0.0,
+      "end": 5.0,
+      "purpose": "建立现场入口",
+      "element_ids": [
+        "background",
+        "brand",
+        "headline",
+        "note",
+        "presenter",
+        "caption",
+        "footer",
+        "orbit-camera",
+        "orbit-shadow",
+        "orbit-ring",
+        "orbit-photo-0",
+        "orbit-photo-1",
+        "orbit-photo-2",
+        "orbit-photo-3",
+        "orbit-conclusion",
+        "08-intro-0",
+        "08-intro-1",
+        "08-intro-2",
+        "08-intro-3"
+      ],
+      "variant": "orbit-entry"
+    },
+    {
+      "id": "gallery-tour",
+      "start": 5.0,
+      "end": 14.0,
+      "purpose": "逐一观察两个平级互动面",
+      "element_ids": [
+        "background",
+        "brand",
+        "headline",
+        "note",
+        "presenter",
+        "caption",
+        "footer",
+        "gallery-world",
+        "gallery-camera",
+        "gallery-card-0",
+        "gallery-card-1",
+        "gallery-floor",
+        "gallery-label",
+        "08-gallery-0",
+        "08-gallery-1"
+      ],
+      "variant": "gallery-tour"
+    },
+    {
+      "id": "tilt-record",
+      "start": 14.0,
+      "end": 19.0,
+      "purpose": "把一帧体验变成可展示的记录",
+      "element_ids": [
+        "background",
+        "brand",
+        "headline",
+        "note",
+        "presenter",
+        "caption",
+        "footer",
+        "tilt-camera",
+        "tilt-shadow",
+        "tilt-board",
+        "tilt-photo",
+        "tilt-heading",
+        "tilt-note",
+        "08-tilt"
+      ],
+      "variant": "tilt-record"
+    },
+    {
+      "id": "orbit-recap",
+      "start": 19.0,
+      "end": 24.0,
+      "purpose": "整体回看体验",
+      "element_ids": [
+        "background",
+        "brand",
+        "headline",
+        "note",
+        "presenter",
+        "caption",
+        "footer",
+        "orbit-camera",
+        "orbit-shadow",
+        "orbit-ring",
+        "orbit-photo-0",
+        "orbit-photo-1",
+        "orbit-photo-2",
+        "orbit-photo-3",
+        "orbit-conclusion",
+        "08-outro-0",
+        "08-outro-1",
+        "08-outro-2",
+        "08-outro-3"
+      ],
+      "variant": "orbit-recap"
+    }
+  ],
+  "assets": [
+    {
+      "id": "store",
+      "kind": "video",
+      "path": "../../../../.local/chromatic-six-video-window-b/preview/assets/b/store.mp4",
+      "source": "current preparation SHA256 0f800ce0b1516ad8652634006079b0516e21c5d07a91ec233455226c14afd4fd; original provenance and decode in preparation.json",
+      "embedded_content": [
+        "真实人物、机器人、品牌、场景与内嵌文字均为固化源内容；不是可替换文字图层"
+      ],
+      "rights_status": "本轮用户授权本机视频模板开发；私人素材不公开分发"
+    },
+    {
+      "id": "robot",
+      "kind": "video",
+      "path": "../../../../.local/chromatic-six-video-window-b/preview/assets/b/robot.mp4",
+      "source": "current preparation SHA256 73946693d063d848b8b15d5cd64340f902a8056da90db5254ba0622d40f381e9; original provenance and decode in preparation.json",
+      "embedded_content": [
+        "真实人物、机器人、品牌、场景与内嵌文字均为固化源内容；不是可替换文字图层"
+      ],
+      "rights_status": "本轮用户授权本机视频模板开发；私人素材不公开分发"
+    },
+    {
+      "id": "children",
+      "kind": "video",
+      "path": "../../../../.local/chromatic-six-video-window-b/preview/assets/b/children.mp4",
+      "source": "current preparation SHA256 e7cb809335cb66e385dda51192351e06c88e3755f39ac61aa7f51d1ac1834e1d; original provenance and decode in preparation.json",
+      "embedded_content": [
+        "真实人物、机器人、品牌、场景与内嵌文字均为固化源内容；不是可替换文字图层"
+      ],
+      "rights_status": "本轮用户授权本机视频模板开发；私人素材不公开分发"
+    },
+    {
+      "id": "dog",
+      "kind": "video",
+      "path": "../../../../.local/chromatic-six-video-window-b/preview/assets/b/dog.mp4",
+      "source": "current preparation SHA256 71d6058b8612650bd5ecb83999f4b1ac9db19d059cb5fc424513074f8cc10afc; original provenance and decode in preparation.json",
+      "embedded_content": [
+        "真实人物、机器人、品牌、场景与内嵌文字均为固化源内容；不是可替换文字图层"
+      ],
+      "rights_status": "本轮用户授权本机视频模板开发；私人素材不公开分发"
+    },
+    {
+      "id": "duo",
+      "kind": "video",
+      "path": "../../../../.local/chromatic-six-video-window-b/preview/assets/b/duo.mp4",
+      "source": "current preparation SHA256 a5438d9599cc5eaf9d020305d1f55ad25b686b065ec4ab37e7fc45ab1960a2e4; original provenance and decode in preparation.json",
+      "embedded_content": [
+        "真实人物、机器人、品牌、场景与内嵌文字均为固化源内容；不是可替换文字图层"
+      ],
+      "rights_status": "本轮用户授权本机视频模板开发；私人素材不公开分发"
+    },
+    {
+      "id": "children-long",
+      "kind": "video",
+      "path": "../../../../.local/chromatic-six-video-window-b/preview/assets/b/children-long.mp4",
+      "source": "current preparation SHA256 006342ac75d9a2dbb97c4be25b7b2a92fee31aa5ad49bbf40068a29b571bc0d3; original provenance and decode in preparation.json",
+      "embedded_content": [
+        "真实人物、机器人、品牌、场景与内嵌文字均为固化源内容；不是可替换文字图层"
+      ],
+      "rights_status": "本轮用户授权本机视频模板开发；私人素材不公开分发"
+    },
+    {
+      "id": "font",
+      "kind": "font",
+      "path": "../../../../.local/chromatic-six-video-window-b/preview/assets/b/font.ttf",
+      "source": "current preparation SHA256 a3041811a78c361b1de50f953c805e0244951c21c5bd412f7232ef0d899af0da; original provenance and decode in preparation.json",
+      "embedded_content": [],
+      "rights_status": "本轮用户授权本机视频模板开发；私人素材不公开分发"
+    },
+    {
+      "id": "presenter-0000",
+      "kind": "video",
+      "path": "../../../../.local/chromatic-six-video-window-b/preview/assets/b/presenter-0000.mp4",
+      "source": "current preparation SHA256 71c4e62284f28f21b8584176a61f8163d8b19eafc6b44cbbc5e211b341bb6e5c; original provenance and decode in preparation.json",
+      "embedded_content": [
+        "真实人物、机器人、品牌、场景与内嵌文字均为固化源内容；不是可替换文字图层"
+      ],
+      "rights_status": "本轮用户授权本机视频模板开发；私人素材不公开分发"
+    }
+  ],
+  "elements": [
+    {
+      "id": "background",
+      "type": "layer",
+      "role": "solid palette field, source-owned",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Frozen geometry retained from photo version; now source-owned real video or paper/text structure; exact slot bindings are listed as independent video elements and extensions.material_edit.source_ranges. solid palette field, source-owned; actual tree/paint order remains source-owned in Scene.tsx"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          720,
+          1280
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Scene.tsx bound by implementation evidence SHA; computed dynamic boxes override representative initial bounds; use source arithmetic as unique truth",
+          "units": "pixels; deg for transform; frames for source timing",
+          "overflow": "frozen preview content; all new text/crops require revalidation"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "evaluated",
+          "visible": true,
+          "description": "Visibility and transforms evaluated from global frame and scene/local frame in Scene.tsx; scene-specific presence explicitly in role; parent clipping inherited; half-open frame intervals."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "geometry",
+        "clock",
+        "color",
+        "motion"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "video-window-state",
+          "method": "actual browser source clock, complete-decoded media, screenshots and original-speed play",
+          "pass_condition": "same source geometry, no unintended overlap; material content itself moves; all actual videos speed1/no loop with source bounds"
+        }
+      ]
+    },
+    {
+      "id": "brand",
+      "type": "text",
+      "role": "stationary identity and chapter folio,18px",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Frozen geometry retained from photo version; now source-owned real video or paper/text structure; exact slot bindings are listed as independent video elements and extensions.material_edit.source_ranges. stationary identity and chapter folio,18px; actual tree/paint order remains source-owned in Scene.tsx"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          48,
+          38,
+          624,
+          54
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Scene.tsx bound by implementation evidence SHA; computed dynamic boxes override representative initial bounds; use source arithmetic as unique truth",
+          "units": "pixels; deg for transform; frames for source timing",
+          "overflow": "frozen preview content; all new text/crops require revalidation",
+          "font": "episode.fontFamily; /assets/b/font.ttf loaded before Player mounts",
+          "font_size": 18,
+          "max_lines": 1
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "evaluated",
+          "visible": true,
+          "description": "Visibility and transforms evaluated from global frame and scene/local frame in Scene.tsx; scene-specific presence explicitly in role; parent clipping inherited; half-open frame intervals."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "geometry",
+        "clock",
+        "color",
+        "motion"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "video-window-state",
+          "method": "actual browser source clock, complete-decoded media, screenshots and original-speed play",
+          "pass_condition": "same source geometry, no unintended overlap; material content itself moves; all actual videos speed1/no loop with source bounds"
+        }
+      ]
+    },
+    {
+      "id": "headline",
+      "type": "text",
+      "role": "four short two-line headings;65/66px; no title-demotion",
+      "parent_id": null,
+      "z_index": 30,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Frozen geometry retained from photo version; now source-owned real video or paper/text structure; exact slot bindings are listed as independent video elements and extensions.material_edit.source_ranges. four short two-line headings;65/66px; no title-demotion; actual tree/paint order remains source-owned in Scene.tsx"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          48,
+          120,
+          624,
+          152
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Scene.tsx bound by implementation evidence SHA; computed dynamic boxes override representative initial bounds; use source arithmetic as unique truth",
+          "units": "pixels; deg for transform; frames for source timing",
+          "overflow": "frozen preview content; all new text/crops require revalidation",
+          "font": "episode.fontFamily; /assets/b/font.ttf loaded before Player mounts",
+          "font_size": 66,
+          "max_lines": 2
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "evaluated",
+          "visible": true,
+          "description": "Visibility and transforms evaluated from global frame and scene/local frame in Scene.tsx; scene-specific presence explicitly in role; parent clipping inherited; half-open frame intervals."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "geometry",
+        "clock",
+        "color",
+        "motion"
+      ],
+      "replaceable": [
+        "episode.fontFamily"
+      ],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "video-window-state",
+          "method": "actual browser source clock, complete-decoded media, screenshots and original-speed play",
+          "pass_condition": "same source geometry, no unintended overlap; material content itself moves; all actual videos speed1/no loop with source bounds"
+        }
+      ]
+    },
+    {
+      "id": "note",
+      "type": "text",
+      "role": "source-specific note after emphasis;34/36px; parent show by scene",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Frozen geometry retained from photo version; now source-owned real video or paper/text structure; exact slot bindings are listed as independent video elements and extensions.material_edit.source_ranges. source-specific note after emphasis;34/36px; parent show by scene; actual tree/paint order remains source-owned in Scene.tsx"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          48,
+          898,
+          624,
+          155
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Scene.tsx bound by implementation evidence SHA; computed dynamic boxes override representative initial bounds; use source arithmetic as unique truth",
+          "units": "pixels; deg for transform; frames for source timing",
+          "overflow": "frozen preview content; all new text/crops require revalidation",
+          "font": "episode.fontFamily; /assets/b/font.ttf loaded before Player mounts",
+          "font_size": 36,
+          "max_lines": 2
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "evaluated",
+          "visible": true,
+          "description": "Visibility and transforms evaluated from global frame and scene/local frame in Scene.tsx; scene-specific presence explicitly in role; parent clipping inherited; half-open frame intervals."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "geometry",
+        "clock",
+        "color",
+        "motion"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "video-window-state",
+          "method": "actual browser source clock, complete-decoded media, screenshots and original-speed play",
+          "pass_condition": "same source geometry, no unintended overlap; material content itself moves; all actual videos speed1/no loop with source bounds"
+        }
+      ]
+    },
+    {
+      "id": "presenter",
+      "type": "video",
+      "role": "single global Video mounted0–720; visibility08:[0,150),[570,720);09:[0,210),[600,720); cover50%35%; original continuous speed; badge at bottom",
+      "parent_id": null,
+      "z_index": 30,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Frozen geometry retained from photo version; now source-owned real video or paper/text structure; exact slot bindings are listed as independent video elements and extensions.material_edit.source_ranges. single global Video mounted0–720; visibility08:[0,150),[570,720);09:[0,210),[600,720); cover50%35%; original continuous speed; badge at bottom; actual tree/paint order remains source-owned in Scene.tsx"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          492,
+          851,
+          180,
+          225
+        ],
+        "fit": "cover",
+        "clip": "self",
+        "style": {
+          "authority": "Scene.tsx bound by implementation evidence SHA; computed dynamic boxes override representative initial bounds; use source arithmetic as unique truth",
+          "units": "pixels; deg for transform; frames for source timing",
+          "overflow": "frozen preview content; all new text/crops require revalidation"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "evaluated",
+          "visible": true,
+          "description": "Visibility and transforms evaluated from global frame and scene/local frame in Scene.tsx; scene-specific presence explicitly in role; parent clipping inherited; half-open frame intervals."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "geometry",
+        "clock",
+        "color",
+        "motion"
+      ],
+      "replaceable": [
+        "episode.presenterClips"
+      ],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "video-window-state",
+          "method": "actual browser source clock, complete-decoded media, screenshots and original-speed play",
+          "pass_condition": "same source geometry, no unintended overlap; material content itself moves; all actual videos speed1/no loop with source bounds"
+        }
+      ]
+    },
+    {
+      "id": "caption",
+      "type": "text",
+      "role": "input captions selected by global from/to;27px; silent illustrative cues retained from episode",
+      "parent_id": null,
+      "z_index": 30,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Frozen geometry retained from photo version; now source-owned real video or paper/text structure; exact slot bindings are listed as independent video elements and extensions.material_edit.source_ranges. input captions selected by global from/to;27px; silent illustrative cues retained from episode; actual tree/paint order remains source-owned in Scene.tsx"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          48,
+          1110,
+          624,
+          88
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Scene.tsx bound by implementation evidence SHA; computed dynamic boxes override representative initial bounds; use source arithmetic as unique truth",
+          "units": "pixels; deg for transform; frames for source timing",
+          "overflow": "frozen preview content; all new text/crops require revalidation",
+          "font": "episode.fontFamily; /assets/b/font.ttf loaded before Player mounts",
+          "font_size": 27,
+          "max_lines": 2
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "evaluated",
+          "visible": true,
+          "description": "Visibility and transforms evaluated from global frame and scene/local frame in Scene.tsx; scene-specific presence explicitly in role; parent clipping inherited; half-open frame intervals."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "geometry",
+        "clock",
+        "color",
+        "motion"
+      ],
+      "replaceable": [
+        "episode.captions"
+      ],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "video-window-state",
+          "method": "actual browser source clock, complete-decoded media, screenshots and original-speed play",
+          "pass_condition": "same source geometry, no unintended overlap; material content itself moves; all actual videos speed1/no loop with source bounds"
+        }
+      ]
+    },
+    {
+      "id": "footer",
+      "type": "text",
+      "role": "stationary footer and chapter count,17px",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Frozen geometry retained from photo version; now source-owned real video or paper/text structure; exact slot bindings are listed as independent video elements and extensions.material_edit.source_ranges. stationary footer and chapter count,17px; actual tree/paint order remains source-owned in Scene.tsx"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          48,
+          1224,
+          624,
+          25
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Scene.tsx bound by implementation evidence SHA; computed dynamic boxes override representative initial bounds; use source arithmetic as unique truth",
+          "units": "pixels; deg for transform; frames for source timing",
+          "overflow": "frozen preview content; all new text/crops require revalidation",
+          "font": "episode.fontFamily; /assets/b/font.ttf loaded before Player mounts",
+          "font_size": 17,
+          "max_lines": 1
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "evaluated",
+          "visible": true,
+          "description": "Visibility and transforms evaluated from global frame and scene/local frame in Scene.tsx; scene-specific presence explicitly in role; parent clipping inherited; half-open frame intervals."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "geometry",
+        "clock",
+        "color",
+        "motion"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "video-window-state",
+          "method": "actual browser source clock, complete-decoded media, screenshots and original-speed play",
+          "pass_condition": "same source geometry, no unintended overlap; material content itself moves; all actual videos speed1/no loop with source bounds"
+        }
+      ]
+    },
+    {
+      "id": "orbit-camera",
+      "type": "layer",
+      "role": "scenes0/3; perspective900; Y=-5+5sin(t/300*2pi),X=3sin(t/300*2pi+pi/2),Z12sin(t/300*2pi+.6*2pi); t=min(local,110); preserve3d",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Frozen geometry retained from photo version; now source-owned real video or paper/text structure; exact slot bindings are listed as independent video elements and extensions.material_edit.source_ranges. scenes0/3; perspective900; Y=-5+5sin(t/300*2pi),X=3sin(t/300*2pi+pi/2),Z12sin(t/300*2pi+.6*2pi); t=min(local,110); preserve3d; actual tree/paint order remains source-owned in Scene.tsx"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          22,
+          285,
+          676,
+          555
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Scene.tsx bound by implementation evidence SHA; computed dynamic boxes override representative initial bounds; use source arithmetic as unique truth",
+          "units": "pixels; deg for transform; frames for source timing",
+          "overflow": "frozen preview content; all new text/crops require revalidation"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "evaluated",
+          "visible": true,
+          "description": "Visibility and transforms evaluated from global frame and scene/local frame in Scene.tsx; scene-specific presence explicitly in role; parent clipping inherited; half-open frame intervals."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "geometry",
+        "clock",
+        "color",
+        "motion"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "video-window-state",
+          "method": "actual browser source clock, complete-decoded media, screenshots and original-speed play",
+          "pass_condition": "same source geometry, no unintended overlap; material content itself moves; all actual videos speed1/no loop with source bounds"
+        }
+      ]
+    },
+    {
+      "id": "orbit-shadow",
+      "type": "layer",
+      "role": "camera child; thin circular lilac border;反向shift x=-9sin/y=5cos;Z-20",
+      "parent_id": "orbit-camera",
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Frozen geometry retained from photo version; now source-owned real video or paper/text structure; exact slot bindings are listed as independent video elements and extensions.material_edit.source_ranges. camera child; thin circular lilac border;反向shift x=-9sin/y=5cos;Z-20; actual tree/paint order remains source-owned in Scene.tsx"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          89,
+          28,
+          500,
+          500
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Scene.tsx bound by implementation evidence SHA; computed dynamic boxes override representative initial bounds; use source arithmetic as unique truth",
+          "units": "pixels; deg for transform; frames for source timing",
+          "overflow": "frozen preview content; all new text/crops require revalidation"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "evaluated",
+          "visible": true,
+          "description": "Visibility and transforms evaluated from global frame and scene/local frame in Scene.tsx; scene-specific presence explicitly in role; parent clipping inherited; half-open frame intervals."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "geometry",
+        "clock",
+        "color",
+        "motion"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "video-window-state",
+          "method": "actual browser source clock, complete-decoded media, screenshots and original-speed play",
+          "pass_condition": "same source geometry, no unintended overlap; material content itself moves; all actual videos speed1/no loop with source bounds"
+        }
+      ]
+    },
+    {
+      "id": "orbit-ring",
+      "type": "layer",
+      "role": "camera child; yellow44px ring; scale.66→1 over0–62cubicOut; center remains empty",
+      "parent_id": "orbit-camera",
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Frozen geometry retained from photo version; now source-owned real video or paper/text structure; exact slot bindings are listed as independent video elements and extensions.material_edit.source_ranges. camera child; yellow44px ring; scale.66→1 over0–62cubicOut; center remains empty; actual tree/paint order remains source-owned in Scene.tsx"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          89,
+          28,
+          500,
+          500
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Scene.tsx bound by implementation evidence SHA; computed dynamic boxes override representative initial bounds; use source arithmetic as unique truth",
+          "units": "pixels; deg for transform; frames for source timing",
+          "overflow": "frozen preview content; all new text/crops require revalidation"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "evaluated",
+          "visible": true,
+          "description": "Visibility and transforms evaluated from global frame and scene/local frame in Scene.tsx; scene-specific presence explicitly in role; parent clipping inherited; half-open frame intervals."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "geometry",
+        "clock",
+        "color",
+        "motion"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "video-window-state",
+          "method": "actual browser source clock, complete-decoded media, screenshots and original-speed play",
+          "pass_condition": "same source geometry, no unintended overlap; material content itself moves; all actual videos speed1/no loop with source bounds"
+        }
+      ]
+    },
+    {
+      "id": "orbit-photo-0",
+      "type": "layer",
+      "role": "camera child; real-video windows[0]; center(338+236cos(a),278+190sin(a)); angle base-137deg-38→0 offset; 5px lilac border; tilt±5deg; local0–62",
+      "parent_id": "orbit-camera",
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Frozen geometry retained from photo version; now source-owned real video or paper/text structure; exact slot bindings are listed as independent video elements and extensions.material_edit.source_ranges. camera child; videos[0]; center(338+236cos(a),278+190sin(a)); angle base-137deg-38→0 offset; 5px lilac border; tilt±5deg; local0–62; actual tree/paint order remains source-owned in Scene.tsx"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          232,
+          164
+        ],
+        "fit": "cover",
+        "clip": "self",
+        "style": {
+          "authority": "Scene.tsx bound by implementation evidence SHA; computed dynamic boxes override representative initial bounds; use source arithmetic as unique truth",
+          "units": "pixels; deg for transform; frames for source timing",
+          "overflow": "frozen preview content; all new text/crops require revalidation"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "evaluated",
+          "visible": true,
+          "description": "Visibility and transforms evaluated from global frame and scene/local frame in Scene.tsx; scene-specific presence explicitly in role; parent clipping inherited; half-open frame intervals."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "geometry",
+        "clock",
+        "color",
+        "motion"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "video-window-state",
+          "method": "actual browser source clock, complete-decoded media, screenshots and original-speed play",
+          "pass_condition": "same source geometry, no unintended overlap; material content itself moves; all actual videos speed1/no loop with source bounds"
+        }
+      ]
+    },
+    {
+      "id": "orbit-photo-1",
+      "type": "layer",
+      "role": "camera child; real-video windows[2]; center(338+236cos(a),278+190sin(a)); angle base-43deg-38→0 offset; 5px lilac border; tilt±5deg; local0–62",
+      "parent_id": "orbit-camera",
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Frozen geometry retained from photo version; now source-owned real video or paper/text structure; exact slot bindings are listed as independent video elements and extensions.material_edit.source_ranges. camera child; videos[2]; center(338+236cos(a),278+190sin(a)); angle base-43deg-38→0 offset; 5px lilac border; tilt±5deg; local0–62; actual tree/paint order remains source-owned in Scene.tsx"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          232,
+          164
+        ],
+        "fit": "cover",
+        "clip": "self",
+        "style": {
+          "authority": "Scene.tsx bound by implementation evidence SHA; computed dynamic boxes override representative initial bounds; use source arithmetic as unique truth",
+          "units": "pixels; deg for transform; frames for source timing",
+          "overflow": "frozen preview content; all new text/crops require revalidation"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "evaluated",
+          "visible": true,
+          "description": "Visibility and transforms evaluated from global frame and scene/local frame in Scene.tsx; scene-specific presence explicitly in role; parent clipping inherited; half-open frame intervals."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "geometry",
+        "clock",
+        "color",
+        "motion"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "video-window-state",
+          "method": "actual browser source clock, complete-decoded media, screenshots and original-speed play",
+          "pass_condition": "same source geometry, no unintended overlap; material content itself moves; all actual videos speed1/no loop with source bounds"
+        }
+      ]
+    },
+    {
+      "id": "orbit-photo-2",
+      "type": "layer",
+      "role": "camera child; real-video windows[4]; center(338+236cos(a),278+190sin(a)); angle base43deg-38→0 offset; 5px lilac border; tilt±5deg; local0–62",
+      "parent_id": "orbit-camera",
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Frozen geometry retained from photo version; now source-owned real video or paper/text structure; exact slot bindings are listed as independent video elements and extensions.material_edit.source_ranges. camera child; videos[4]; center(338+236cos(a),278+190sin(a)); angle base43deg-38→0 offset; 5px lilac border; tilt±5deg; local0–62; actual tree/paint order remains source-owned in Scene.tsx"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          232,
+          164
+        ],
+        "fit": "cover",
+        "clip": "self",
+        "style": {
+          "authority": "Scene.tsx bound by implementation evidence SHA; computed dynamic boxes override representative initial bounds; use source arithmetic as unique truth",
+          "units": "pixels; deg for transform; frames for source timing",
+          "overflow": "frozen preview content; all new text/crops require revalidation"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "evaluated",
+          "visible": true,
+          "description": "Visibility and transforms evaluated from global frame and scene/local frame in Scene.tsx; scene-specific presence explicitly in role; parent clipping inherited; half-open frame intervals."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "geometry",
+        "clock",
+        "color",
+        "motion"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "video-window-state",
+          "method": "actual browser source clock, complete-decoded media, screenshots and original-speed play",
+          "pass_condition": "same source geometry, no unintended overlap; material content itself moves; all actual videos speed1/no loop with source bounds"
+        }
+      ]
+    },
+    {
+      "id": "orbit-photo-3",
+      "type": "layer",
+      "role": "camera child; real-video windows[6]; center(338+236cos(a),278+190sin(a)); angle base137deg-38→0 offset; 5px lilac border; tilt±5deg; local0–62",
+      "parent_id": "orbit-camera",
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Frozen geometry retained from photo version; now source-owned real video or paper/text structure; exact slot bindings are listed as independent video elements and extensions.material_edit.source_ranges. camera child; videos[6]; center(338+236cos(a),278+190sin(a)); angle base137deg-38→0 offset; 5px lilac border; tilt±5deg; local0–62; actual tree/paint order remains source-owned in Scene.tsx"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          232,
+          164
+        ],
+        "fit": "cover",
+        "clip": "self",
+        "style": {
+          "authority": "Scene.tsx bound by implementation evidence SHA; computed dynamic boxes override representative initial bounds; use source arithmetic as unique truth",
+          "units": "pixels; deg for transform; frames for source timing",
+          "overflow": "frozen preview content; all new text/crops require revalidation"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "evaluated",
+          "visible": true,
+          "description": "Visibility and transforms evaluated from global frame and scene/local frame in Scene.tsx; scene-specific presence explicitly in role; parent clipping inherited; half-open frame intervals."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "geometry",
+        "clock",
+        "color",
+        "motion"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "video-window-state",
+          "method": "actual browser source clock, complete-decoded media, screenshots and original-speed play",
+          "pass_condition": "same source geometry, no unintended overlap; material content itself moves; all actual videos speed1/no loop with source bounds"
+        }
+      ]
+    },
+    {
+      "id": "orbit-conclusion",
+      "type": "text",
+      "role": "camera child;0好奇入场/3先体验再理解;yellow43/49px",
+      "parent_id": "orbit-camera",
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Frozen geometry retained from photo version; now source-owned real video or paper/text structure; exact slot bindings are listed as independent video elements and extensions.material_edit.source_ranges. camera child;0好奇入场/3先体验再理解;yellow43/49px; actual tree/paint order remains source-owned in Scene.tsx"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          230,
+          202,
+          216,
+          150
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Scene.tsx bound by implementation evidence SHA; computed dynamic boxes override representative initial bounds; use source arithmetic as unique truth",
+          "units": "pixels; deg for transform; frames for source timing",
+          "overflow": "frozen preview content; all new text/crops require revalidation",
+          "font": "episode.fontFamily; /assets/b/font.ttf loaded before Player mounts",
+          "font_size": 49,
+          "max_lines": 2
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "evaluated",
+          "visible": true,
+          "description": "Visibility and transforms evaluated from global frame and scene/local frame in Scene.tsx; scene-specific presence explicitly in role; parent clipping inherited; half-open frame intervals."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "geometry",
+        "clock",
+        "color",
+        "motion"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "video-window-state",
+          "method": "actual browser source clock, complete-decoded media, screenshots and original-speed play",
+          "pass_condition": "same source geometry, no unintended overlap; material content itself moves; all actual videos speed1/no loop with source bounds"
+        }
+      ]
+    },
+    {
+      "id": "gallery-world",
+      "type": "layer",
+      "role": "scene1; #311568 tile; overflow hidden, perspective1100; stage horizon+tag retained",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Frozen geometry retained from photo version; now source-owned real video or paper/text structure; exact slot bindings are listed as independent video elements and extensions.material_edit.source_ranges. scene1; #311568 tile; overflow hidden, perspective1100; stage horizon+tag retained; actual tree/paint order remains source-owned in Scene.tsx"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          282,
+          720,
+          560
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Scene.tsx bound by implementation evidence SHA; computed dynamic boxes override representative initial bounds; use source arithmetic as unique truth",
+          "units": "pixels; deg for transform; frames for source timing",
+          "overflow": "frozen preview content; all new text/crops require revalidation"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "evaluated",
+          "visible": true,
+          "description": "Visibility and transforms evaluated from global frame and scene/local frame in Scene.tsx; scene-specific presence explicitly in role; parent clipping inherited; half-open frame intervals."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "geometry",
+        "clock",
+        "color",
+        "motion"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "video-window-state",
+          "method": "actual browser source clock, complete-decoded media, screenshots and original-speed play",
+          "pass_condition": "same source geometry, no unintended overlap; material content itself moves; all actual videos speed1/no loop with source bounds"
+        }
+      ]
+    },
+    {
+      "id": "gallery-camera",
+      "type": "layer",
+      "role": "scene1; unique camera translate+scale from camTo; two stops at world centers275/875,y520; target canvas360,535; local22–55,107–143; return198–218",
+      "parent_id": "gallery-world",
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Frozen geometry retained from photo version; now source-owned real video or paper/text structure; exact slot bindings are listed as independent video elements and extensions.material_edit.source_ranges. scene1; unique camera translate+scale from camTo; two stops at world centers275/875,y520; target canvas360,535; local22–55,107–143; return198–218; actual tree/paint order remains source-owned in Scene.tsx"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          720,
+          560
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Scene.tsx bound by implementation evidence SHA; computed dynamic boxes override representative initial bounds; use source arithmetic as unique truth",
+          "units": "pixels; deg for transform; frames for source timing",
+          "overflow": "frozen preview content; all new text/crops require revalidation"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "evaluated",
+          "visible": true,
+          "description": "Visibility and transforms evaluated from global frame and scene/local frame in Scene.tsx; scene-specific presence explicitly in role; parent clipping inherited; half-open frame intervals."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "geometry",
+        "clock",
+        "color",
+        "motion"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "video-window-state",
+          "method": "actual browser source clock, complete-decoded media, screenshots and original-speed play",
+          "pass_condition": "same source geometry, no unintended overlap; material content itself moves; all actual videos speed1/no loop with source bounds"
+        }
+      ]
+    },
+    {
+      "id": "gallery-card-0",
+      "type": "layer",
+      "role": "camera child; real-video window[2]; card490x362 padding8; image inset8/8/66; label30px; perspective1600 rotateY±7; inactive brightness.56; selected internal1→1.025",
+      "parent_id": "gallery-camera",
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Frozen geometry retained from photo version; now source-owned real video or paper/text structure; exact slot bindings are listed as independent video elements and extensions.material_edit.source_ranges. camera child; video[2]; card490x362 padding8; image inset8/8/66; label30px; perspective1600 rotateY±7; inactive brightness.56; selected internal1→1.025; actual tree/paint order remains source-owned in Scene.tsx"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          30,
+          340,
+          490,
+          362
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Scene.tsx bound by implementation evidence SHA; computed dynamic boxes override representative initial bounds; use source arithmetic as unique truth",
+          "units": "pixels; deg for transform; frames for source timing",
+          "overflow": "frozen preview content; all new text/crops require revalidation"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "evaluated",
+          "visible": true,
+          "description": "Visibility and transforms evaluated from global frame and scene/local frame in Scene.tsx; scene-specific presence explicitly in role; parent clipping inherited; half-open frame intervals."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "allow_overflow",
+          "target_id": "gallery-camera",
+          "rule": "Intentional world-space cards exceed camera viewport and are clipped by gallery-world; park-inner is a tall slowly scrolling record clipped by source window."
+        }
+      ],
+      "fixed": [
+        "geometry",
+        "clock",
+        "color",
+        "motion"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "video-window-state",
+          "method": "actual browser source clock, complete-decoded media, screenshots and original-speed play",
+          "pass_condition": "same source geometry, no unintended overlap; material content itself moves; all actual videos speed1/no loop with source bounds"
+        }
+      ]
+    },
+    {
+      "id": "gallery-card-1",
+      "type": "layer",
+      "role": "camera child; real-video window[4]; card490x362 padding8; image inset8/8/66; label30px; perspective1600 rotateY±7; inactive brightness.56; selected internal1→1.025",
+      "parent_id": "gallery-camera",
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Frozen geometry retained from photo version; now source-owned real video or paper/text structure; exact slot bindings are listed as independent video elements and extensions.material_edit.source_ranges. camera child; video[4]; card490x362 padding8; image inset8/8/66; label30px; perspective1600 rotateY±7; inactive brightness.56; selected internal1→1.025; actual tree/paint order remains source-owned in Scene.tsx"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          630,
+          340,
+          490,
+          362
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Scene.tsx bound by implementation evidence SHA; computed dynamic boxes override representative initial bounds; use source arithmetic as unique truth",
+          "units": "pixels; deg for transform; frames for source timing",
+          "overflow": "frozen preview content; all new text/crops require revalidation"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "evaluated",
+          "visible": true,
+          "description": "Visibility and transforms evaluated from global frame and scene/local frame in Scene.tsx; scene-specific presence explicitly in role; parent clipping inherited; half-open frame intervals."
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "allow_overflow",
+          "target_id": "gallery-camera",
+          "rule": "Intentional world-space cards exceed camera viewport and are clipped by gallery-world; park-inner is a tall slowly scrolling record clipped by source window."
+        }
+      ],
+      "fixed": [
+        "geometry",
+        "clock",
+        "color",
+        "motion"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "video-window-state",
+          "method": "actual browser source clock, complete-decoded media, screenshots and original-speed play",
+          "pass_condition": "same source geometry, no unintended overlap; material content itself moves; all actual videos speed1/no loop with source bounds"
+        }
+      ]
+    },
+    {
+      "id": "gallery-floor",
+      "type": "layer",
+      "role": "static horizon yellow2px and deep purple floor",
+      "parent_id": "gallery-world",
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Frozen geometry retained from photo version; now source-owned real video or paper/text structure; exact slot bindings are listed as independent video elements and extensions.material_edit.source_ranges. static horizon yellow2px and deep purple floor; actual tree/paint order remains source-owned in Scene.tsx"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          470,
+          720,
+          90
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Scene.tsx bound by implementation evidence SHA; computed dynamic boxes override representative initial bounds; use source arithmetic as unique truth",
+          "units": "pixels; deg for transform; frames for source timing",
+          "overflow": "frozen preview content; all new text/crops require revalidation"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "evaluated",
+          "visible": true,
+          "description": "Visibility and transforms evaluated from global frame and scene/local frame in Scene.tsx; scene-specific presence explicitly in role; parent clipping inherited; half-open frame intervals."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "geometry",
+        "clock",
+        "color",
+        "motion"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "video-window-state",
+          "method": "actual browser source clock, complete-decoded media, screenshots and original-speed play",
+          "pass_condition": "same source geometry, no unintended overlap; material content itself moves; all actual videos speed1/no loop with source bounds"
+        }
+      ]
+    },
+    {
+      "id": "gallery-label",
+      "type": "text",
+      "role": "static gallery label and active stop at19px; world child",
+      "parent_id": "gallery-world",
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Frozen geometry retained from photo version; now source-owned real video or paper/text structure; exact slot bindings are listed as independent video elements and extensions.material_edit.source_ranges. static gallery label and active stop at19px; world child; actual tree/paint order remains source-owned in Scene.tsx"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          48,
+          510,
+          624,
+          30
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Scene.tsx bound by implementation evidence SHA; computed dynamic boxes override representative initial bounds; use source arithmetic as unique truth",
+          "units": "pixels; deg for transform; frames for source timing",
+          "overflow": "frozen preview content; all new text/crops require revalidation",
+          "font": "episode.fontFamily; /assets/b/font.ttf loaded before Player mounts",
+          "font_size": 19,
+          "max_lines": 1
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "evaluated",
+          "visible": true,
+          "description": "Visibility and transforms evaluated from global frame and scene/local frame in Scene.tsx; scene-specific presence explicitly in role; parent clipping inherited; half-open frame intervals."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "geometry",
+        "clock",
+        "color",
+        "motion"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "video-window-state",
+          "method": "actual browser source clock, complete-decoded media, screenshots and original-speed play",
+          "pass_condition": "same source geometry, no unintended overlap; material content itself moves; all actual videos speed1/no loop with source bounds"
+        }
+      ]
+    },
+    {
+      "id": "tilt-camera",
+      "type": "layer",
+      "role": "scene2; parent perspective1000; local18–63Y0→-17,X0→4,scale1→.94;cubicOut; holdY-17→-19,X4→3",
+      "parent_id": null,
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Frozen geometry retained from photo version; now source-owned real video or paper/text structure; exact slot bindings are listed as independent video elements and extensions.material_edit.source_ranges. scene2; parent perspective1000; local18–63Y0→-17,X0→4,scale1→.94;cubicOut; holdY-17→-19,X4→3; actual tree/paint order remains source-owned in Scene.tsx"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          50,
+          305,
+          620,
+          540
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Scene.tsx bound by implementation evidence SHA; computed dynamic boxes override representative initial bounds; use source arithmetic as unique truth",
+          "units": "pixels; deg for transform; frames for source timing",
+          "overflow": "frozen preview content; all new text/crops require revalidation"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "evaluated",
+          "visible": true,
+          "description": "Visibility and transforms evaluated from global frame and scene/local frame in Scene.tsx; scene-specific presence explicitly in role; parent clipping inherited; half-open frame intervals."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "geometry",
+        "clock",
+        "color",
+        "motion"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "video-window-state",
+          "method": "actual browser source clock, complete-decoded media, screenshots and original-speed play",
+          "pass_condition": "same source geometry, no unintended overlap; material content itself moves; all actual videos speed1/no loop with source bounds"
+        }
+      ]
+    },
+    {
+      "id": "tilt-shadow",
+      "type": "layer",
+      "role": "camera child; yellow opacity.4; Z-24; shift0→22/13 same tilt curve",
+      "parent_id": "tilt-camera",
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Frozen geometry retained from photo version; now source-owned real video or paper/text structure; exact slot bindings are listed as independent video elements and extensions.material_edit.source_ranges. camera child; yellow opacity.4; Z-24; shift0→22/13 same tilt curve; actual tree/paint order remains source-owned in Scene.tsx"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          620,
+          540
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Scene.tsx bound by implementation evidence SHA; computed dynamic boxes override representative initial bounds; use source arithmetic as unique truth",
+          "units": "pixels; deg for transform; frames for source timing",
+          "overflow": "frozen preview content; all new text/crops require revalidation"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "evaluated",
+          "visible": true,
+          "description": "Visibility and transforms evaluated from global frame and scene/local frame in Scene.tsx; scene-specific presence explicitly in role; parent clipping inherited; half-open frame intervals."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "geometry",
+        "clock",
+        "color",
+        "motion"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "video-window-state",
+          "method": "actual browser source clock, complete-decoded media, screenshots and original-speed play",
+          "pass_condition": "same source geometry, no unintended overlap; material content itself moves; all actual videos speed1/no loop with source bounds"
+        }
+      ]
+    },
+    {
+      "id": "tilt-board",
+      "type": "layer",
+      "role": "camera child; lilac board;2px yellow border; backface hidden",
+      "parent_id": "tilt-camera",
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Frozen geometry retained from photo version; now source-owned real video or paper/text structure; exact slot bindings are listed as independent video elements and extensions.material_edit.source_ranges. camera child; lilac board;2px yellow border; backface hidden; actual tree/paint order remains source-owned in Scene.tsx"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          620,
+          540
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Scene.tsx bound by implementation evidence SHA; computed dynamic boxes override representative initial bounds; use source arithmetic as unique truth",
+          "units": "pixels; deg for transform; frames for source timing",
+          "overflow": "frozen preview content; all new text/crops require revalidation"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "evaluated",
+          "visible": true,
+          "description": "Visibility and transforms evaluated from global frame and scene/local frame in Scene.tsx; scene-specific presence explicitly in role; parent clipping inherited; half-open frame intervals."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "geometry",
+        "clock",
+        "color",
+        "motion"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "video-window-state",
+          "method": "actual browser source clock, complete-decoded media, screenshots and original-speed play",
+          "pass_condition": "same source geometry, no unintended overlap; material content itself moves; all actual videos speed1/no loop with source bounds"
+        }
+      ]
+    },
+    {
+      "id": "tilt-photo",
+      "type": "layer",
+      "role": "board child;real-video windows[5],cover",
+      "parent_id": "tilt-board",
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Frozen geometry retained from photo version; now source-owned real video or paper/text structure; exact slot bindings are listed as independent video elements and extensions.material_edit.source_ranges. board child;videos[5],cover; actual tree/paint order remains source-owned in Scene.tsx"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          24,
+          70,
+          568,
+          360
+        ],
+        "fit": "cover",
+        "clip": "self",
+        "style": {
+          "authority": "Scene.tsx bound by implementation evidence SHA; computed dynamic boxes override representative initial bounds; use source arithmetic as unique truth",
+          "units": "pixels; deg for transform; frames for source timing",
+          "overflow": "frozen preview content; all new text/crops require revalidation"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "evaluated",
+          "visible": true,
+          "description": "Visibility and transforms evaluated from global frame and scene/local frame in Scene.tsx; scene-specific presence explicitly in role; parent clipping inherited; half-open frame intervals."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "geometry",
+        "clock",
+        "color",
+        "motion"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "video-window-state",
+          "method": "actual browser source clock, complete-decoded media, screenshots and original-speed play",
+          "pass_condition": "same source geometry, no unintended overlap; material content itself moves; all actual videos speed1/no loop with source bounds"
+        }
+      ]
+    },
+    {
+      "id": "tilt-heading",
+      "type": "text",
+      "role": "board child;22px体验记录",
+      "parent_id": "tilt-board",
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Frozen geometry retained from photo version; now source-owned real video or paper/text structure; exact slot bindings are listed as independent video elements and extensions.material_edit.source_ranges. board child;22px体验记录; actual tree/paint order remains source-owned in Scene.tsx"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          24,
+          18,
+          568,
+          34
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Scene.tsx bound by implementation evidence SHA; computed dynamic boxes override representative initial bounds; use source arithmetic as unique truth",
+          "units": "pixels; deg for transform; frames for source timing",
+          "overflow": "frozen preview content; all new text/crops require revalidation",
+          "font": "episode.fontFamily; /assets/b/font.ttf loaded before Player mounts",
+          "font_size": 22,
+          "max_lines": 1
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "evaluated",
+          "visible": true,
+          "description": "Visibility and transforms evaluated from global frame and scene/local frame in Scene.tsx; scene-specific presence explicitly in role; parent clipping inherited; half-open frame intervals."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "geometry",
+        "clock",
+        "color",
+        "motion"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "video-window-state",
+          "method": "actual browser source clock, complete-decoded media, screenshots and original-speed play",
+          "pass_condition": "same source geometry, no unintended overlap; material content itself moves; all actual videos speed1/no loop with source bounds"
+        }
+      ]
+    },
+    {
+      "id": "tilt-note",
+      "type": "text",
+      "role": "board child;30px short conclusion",
+      "parent_id": "tilt-board",
+      "z_index": 10,
+      "content": {
+        "mode": "generated",
+        "binding": null,
+        "asset_id": null,
+        "description": "Frozen geometry retained from photo version; now source-owned real video or paper/text structure; exact slot bindings are listed as independent video elements and extensions.material_edit.source_ranges. board child;30px short conclusion; actual tree/paint order remains source-owned in Scene.tsx"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          24,
+          451,
+          568,
+          68
+        ],
+        "fit": "none",
+        "clip": "none",
+        "style": {
+          "authority": "Scene.tsx bound by implementation evidence SHA; computed dynamic boxes override representative initial bounds; use source arithmetic as unique truth",
+          "units": "pixels; deg for transform; frames for source timing",
+          "overflow": "frozen preview content; all new text/crops require revalidation",
+          "font": "episode.fontFamily; /assets/b/font.ttf loaded before Player mounts",
+          "font_size": 30,
+          "max_lines": 2
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 24
+      },
+      "states": [
+        {
+          "id": "evaluated",
+          "visible": true,
+          "description": "Visibility and transforms evaluated from global frame and scene/local frame in Scene.tsx; scene-specific presence explicitly in role; parent clipping inherited; half-open frame intervals."
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "geometry",
+        "clock",
+        "color",
+        "motion"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "implementation"
+      ],
+      "acceptance": [
+        {
+          "check": "video-window-state",
+          "method": "actual browser source clock, complete-decoded media, screenshots and original-speed play",
+          "pass_condition": "same source geometry, no unintended overlap; material content itself moves; all actual videos speed1/no loop with source bounds"
+        }
+      ]
+    },
+    {
+      "id": "08-intro-0",
+      "type": "video",
+      "role": "独立真实视频槽；主素材，不是照片动画",
+      "parent_id": "orbit-photo-0",
+      "z_index": 1,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "store",
+        "description": "/assets/b/store.mp4; source frames[0,150); global frames[0,150); sourceFrame=sourceFrom+(globalFrame-from); source content text/brands embedded"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          232,
+          164
+        ],
+        "fit": "cover",
+        "clip": "parent",
+        "style": {
+          "objectPosition": "50% 35%",
+          "authority": "Scene.tsx + actual episode.materialSlots",
+          "overflow": "cover clips source edges; reviewed machine/face region; inherit every parent perspective/clip; no source stretch"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0.0,
+        "end": 5.0
+      },
+      "states": [
+        {
+          "id": "playing",
+          "visible": true,
+          "description": "Actual Video mounted inside global Sequence;playbackRate1,muted,no loop; physical book backside or scene exposure may occlude but never replace source content with a still"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "allow_overflow",
+          "target_id": "orbit-photo-0",
+          "rule": "Source-only cover pane inherits exact parent crop; hinged front extends left and is deliberately clipped by fold-front; card material frame may inherit padded image well."
+        }
+      ],
+      "fixed": [
+        "source ranges",
+        "speed",
+        "loop",
+        "canvas clock",
+        "geometry"
+      ],
+      "replaceable": [
+        "episode.materialSlots.08-intro-0"
+      ],
+      "evidence_ids": [
+        "implementation",
+        "preparation"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-source-motion",
+          "method": "browser HTMLVideo time before/after≥30frames; native source cropped content pairs; real playback",
+          "pass_condition": "currentTime delta matches sourceFrame delta; decoded content actually changes;sourceTo never exceeds counted frames"
+        }
+      ]
+    },
+    {
+      "id": "08-intro-1",
+      "type": "video",
+      "role": "独立真实视频槽；主素材，不是照片动画",
+      "parent_id": "orbit-photo-1",
+      "z_index": 1,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "robot",
+        "description": "/assets/b/robot.mp4; source frames[0,150); global frames[0,150); sourceFrame=sourceFrom+(globalFrame-from); source content text/brands embedded"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          232,
+          164
+        ],
+        "fit": "cover",
+        "clip": "parent",
+        "style": {
+          "objectPosition": "50% 62%",
+          "authority": "Scene.tsx + actual episode.materialSlots",
+          "overflow": "cover clips source edges; reviewed machine/face region; inherit every parent perspective/clip; no source stretch"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0.0,
+        "end": 5.0
+      },
+      "states": [
+        {
+          "id": "playing",
+          "visible": true,
+          "description": "Actual Video mounted inside global Sequence;playbackRate1,muted,no loop; physical book backside or scene exposure may occlude but never replace source content with a still"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "allow_overflow",
+          "target_id": "orbit-photo-1",
+          "rule": "Source-only cover pane inherits exact parent crop; hinged front extends left and is deliberately clipped by fold-front; card material frame may inherit padded image well."
+        }
+      ],
+      "fixed": [
+        "source ranges",
+        "speed",
+        "loop",
+        "canvas clock",
+        "geometry"
+      ],
+      "replaceable": [
+        "episode.materialSlots.08-intro-1"
+      ],
+      "evidence_ids": [
+        "implementation",
+        "preparation"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-source-motion",
+          "method": "browser HTMLVideo time before/after≥30frames; native source cropped content pairs; real playback",
+          "pass_condition": "currentTime delta matches sourceFrame delta; decoded content actually changes;sourceTo never exceeds counted frames"
+        }
+      ]
+    },
+    {
+      "id": "08-intro-2",
+      "type": "video",
+      "role": "独立真实视频槽；主素材，不是照片动画",
+      "parent_id": "orbit-photo-2",
+      "z_index": 1,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "children",
+        "description": "/assets/b/children.mp4; source frames[0,150); global frames[0,150); sourceFrame=sourceFrom+(globalFrame-from); source content text/brands embedded"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          232,
+          164
+        ],
+        "fit": "cover",
+        "clip": "parent",
+        "style": {
+          "objectPosition": "50% 58%",
+          "authority": "Scene.tsx + actual episode.materialSlots",
+          "overflow": "cover clips source edges; reviewed machine/face region; inherit every parent perspective/clip; no source stretch"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0.0,
+        "end": 5.0
+      },
+      "states": [
+        {
+          "id": "playing",
+          "visible": true,
+          "description": "Actual Video mounted inside global Sequence;playbackRate1,muted,no loop; physical book backside or scene exposure may occlude but never replace source content with a still"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "allow_overflow",
+          "target_id": "orbit-photo-2",
+          "rule": "Source-only cover pane inherits exact parent crop; hinged front extends left and is deliberately clipped by fold-front; card material frame may inherit padded image well."
+        }
+      ],
+      "fixed": [
+        "source ranges",
+        "speed",
+        "loop",
+        "canvas clock",
+        "geometry"
+      ],
+      "replaceable": [
+        "episode.materialSlots.08-intro-2"
+      ],
+      "evidence_ids": [
+        "implementation",
+        "preparation"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-source-motion",
+          "method": "browser HTMLVideo time before/after≥30frames; native source cropped content pairs; real playback",
+          "pass_condition": "currentTime delta matches sourceFrame delta; decoded content actually changes;sourceTo never exceeds counted frames"
+        }
+      ]
+    },
+    {
+      "id": "08-intro-3",
+      "type": "video",
+      "role": "独立真实视频槽；主素材，不是照片动画",
+      "parent_id": "orbit-photo-3",
+      "z_index": 1,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "dog",
+        "description": "/assets/b/dog.mp4; source frames[0,150); global frames[0,150); sourceFrame=sourceFrom+(globalFrame-from); source content text/brands embedded"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          232,
+          164
+        ],
+        "fit": "cover",
+        "clip": "parent",
+        "style": {
+          "objectPosition": "50% 67%",
+          "authority": "Scene.tsx + actual episode.materialSlots",
+          "overflow": "cover clips source edges; reviewed machine/face region; inherit every parent perspective/clip; no source stretch"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0.0,
+        "end": 5.0
+      },
+      "states": [
+        {
+          "id": "playing",
+          "visible": true,
+          "description": "Actual Video mounted inside global Sequence;playbackRate1,muted,no loop; physical book backside or scene exposure may occlude but never replace source content with a still"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "allow_overflow",
+          "target_id": "orbit-photo-3",
+          "rule": "Source-only cover pane inherits exact parent crop; hinged front extends left and is deliberately clipped by fold-front; card material frame may inherit padded image well."
+        }
+      ],
+      "fixed": [
+        "source ranges",
+        "speed",
+        "loop",
+        "canvas clock",
+        "geometry"
+      ],
+      "replaceable": [
+        "episode.materialSlots.08-intro-3"
+      ],
+      "evidence_ids": [
+        "implementation",
+        "preparation"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-source-motion",
+          "method": "browser HTMLVideo time before/after≥30frames; native source cropped content pairs; real playback",
+          "pass_condition": "currentTime delta matches sourceFrame delta; decoded content actually changes;sourceTo never exceeds counted frames"
+        }
+      ]
+    },
+    {
+      "id": "08-gallery-0",
+      "type": "video",
+      "role": "独立真实视频槽；主素材，不是照片动画",
+      "parent_id": "gallery-card-0",
+      "z_index": 1,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "children",
+        "description": "/assets/b/children.mp4; source frames[90,360); global frames[150,420); sourceFrame=sourceFrom+(globalFrame-from); source content text/brands embedded"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          8,
+          8,
+          474,
+          288
+        ],
+        "fit": "cover",
+        "clip": "parent",
+        "style": {
+          "objectPosition": "50% 58%",
+          "authority": "Scene.tsx + actual episode.materialSlots",
+          "overflow": "cover clips source edges; reviewed machine/face region; inherit every parent perspective/clip; no source stretch"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 5.0,
+        "end": 14.0
+      },
+      "states": [
+        {
+          "id": "playing",
+          "visible": true,
+          "description": "Actual Video mounted inside global Sequence;playbackRate1,muted,no loop; physical book backside or scene exposure may occlude but never replace source content with a still"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "allow_overflow",
+          "target_id": "gallery-card-0",
+          "rule": "Source-only cover pane inherits exact parent crop; hinged front extends left and is deliberately clipped by fold-front; card material frame may inherit padded image well."
+        }
+      ],
+      "fixed": [
+        "source ranges",
+        "speed",
+        "loop",
+        "canvas clock",
+        "geometry"
+      ],
+      "replaceable": [
+        "episode.materialSlots.08-gallery-0"
+      ],
+      "evidence_ids": [
+        "implementation",
+        "preparation"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-source-motion",
+          "method": "browser HTMLVideo time before/after≥30frames; native source cropped content pairs; real playback",
+          "pass_condition": "currentTime delta matches sourceFrame delta; decoded content actually changes;sourceTo never exceeds counted frames"
+        }
+      ]
+    },
+    {
+      "id": "08-gallery-1",
+      "type": "video",
+      "role": "独立真实视频槽；主素材，不是照片动画",
+      "parent_id": "gallery-card-1",
+      "z_index": 1,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "robot",
+        "description": "/assets/b/robot.mp4; source frames[90,360); global frames[150,420); sourceFrame=sourceFrom+(globalFrame-from); source content text/brands embedded"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          8,
+          8,
+          474,
+          288
+        ],
+        "fit": "cover",
+        "clip": "parent",
+        "style": {
+          "objectPosition": "50% 62%",
+          "authority": "Scene.tsx + actual episode.materialSlots",
+          "overflow": "cover clips source edges; reviewed machine/face region; inherit every parent perspective/clip; no source stretch"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 5.0,
+        "end": 14.0
+      },
+      "states": [
+        {
+          "id": "playing",
+          "visible": true,
+          "description": "Actual Video mounted inside global Sequence;playbackRate1,muted,no loop; physical book backside or scene exposure may occlude but never replace source content with a still"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "allow_overflow",
+          "target_id": "gallery-card-1",
+          "rule": "Source-only cover pane inherits exact parent crop; hinged front extends left and is deliberately clipped by fold-front; card material frame may inherit padded image well."
+        }
+      ],
+      "fixed": [
+        "source ranges",
+        "speed",
+        "loop",
+        "canvas clock",
+        "geometry"
+      ],
+      "replaceable": [
+        "episode.materialSlots.08-gallery-1"
+      ],
+      "evidence_ids": [
+        "implementation",
+        "preparation"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-source-motion",
+          "method": "browser HTMLVideo time before/after≥30frames; native source cropped content pairs; real playback",
+          "pass_condition": "currentTime delta matches sourceFrame delta; decoded content actually changes;sourceTo never exceeds counted frames"
+        }
+      ]
+    },
+    {
+      "id": "08-tilt",
+      "type": "video",
+      "role": "独立真实视频槽；主素材，不是照片动画",
+      "parent_id": "tilt-photo",
+      "z_index": 1,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "dog",
+        "description": "/assets/b/dog.mp4; source frames[150,300); global frames[420,570); sourceFrame=sourceFrom+(globalFrame-from); source content text/brands embedded"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          568,
+          360
+        ],
+        "fit": "cover",
+        "clip": "parent",
+        "style": {
+          "objectPosition": "50% 67%",
+          "authority": "Scene.tsx + actual episode.materialSlots",
+          "overflow": "cover clips source edges; reviewed machine/face region; inherit every parent perspective/clip; no source stretch"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 14.0,
+        "end": 19.0
+      },
+      "states": [
+        {
+          "id": "playing",
+          "visible": true,
+          "description": "Actual Video mounted inside global Sequence;playbackRate1,muted,no loop; physical book backside or scene exposure may occlude but never replace source content with a still"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "allow_overflow",
+          "target_id": "tilt-photo",
+          "rule": "Source-only cover pane inherits exact parent crop; hinged front extends left and is deliberately clipped by fold-front; card material frame may inherit padded image well."
+        }
+      ],
+      "fixed": [
+        "source ranges",
+        "speed",
+        "loop",
+        "canvas clock",
+        "geometry"
+      ],
+      "replaceable": [
+        "episode.materialSlots.08-tilt"
+      ],
+      "evidence_ids": [
+        "implementation",
+        "preparation"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-source-motion",
+          "method": "browser HTMLVideo time before/after≥30frames; native source cropped content pairs; real playback",
+          "pass_condition": "currentTime delta matches sourceFrame delta; decoded content actually changes;sourceTo never exceeds counted frames"
+        }
+      ]
+    },
+    {
+      "id": "08-outro-0",
+      "type": "video",
+      "role": "独立真实视频槽；主素材，不是照片动画",
+      "parent_id": "orbit-photo-0",
+      "z_index": 1,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "duo",
+        "description": "/assets/b/duo.mp4; source frames[0,150); global frames[570,720); sourceFrame=sourceFrom+(globalFrame-from); source content text/brands embedded"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          232,
+          164
+        ],
+        "fit": "cover",
+        "clip": "parent",
+        "style": {
+          "objectPosition": "50% 60%",
+          "authority": "Scene.tsx + actual episode.materialSlots",
+          "overflow": "cover clips source edges; reviewed machine/face region; inherit every parent perspective/clip; no source stretch"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 19.0,
+        "end": 24.0
+      },
+      "states": [
+        {
+          "id": "playing",
+          "visible": true,
+          "description": "Actual Video mounted inside global Sequence;playbackRate1,muted,no loop; physical book backside or scene exposure may occlude but never replace source content with a still"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "allow_overflow",
+          "target_id": "orbit-photo-0",
+          "rule": "Source-only cover pane inherits exact parent crop; hinged front extends left and is deliberately clipped by fold-front; card material frame may inherit padded image well."
+        }
+      ],
+      "fixed": [
+        "source ranges",
+        "speed",
+        "loop",
+        "canvas clock",
+        "geometry"
+      ],
+      "replaceable": [
+        "episode.materialSlots.08-outro-0"
+      ],
+      "evidence_ids": [
+        "implementation",
+        "preparation"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-source-motion",
+          "method": "browser HTMLVideo time before/after≥30frames; native source cropped content pairs; real playback",
+          "pass_condition": "currentTime delta matches sourceFrame delta; decoded content actually changes;sourceTo never exceeds counted frames"
+        }
+      ]
+    },
+    {
+      "id": "08-outro-1",
+      "type": "video",
+      "role": "独立真实视频槽；主素材，不是照片动画",
+      "parent_id": "orbit-photo-1",
+      "z_index": 1,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "robot",
+        "description": "/assets/b/robot.mp4; source frames[180,330); global frames[570,720); sourceFrame=sourceFrom+(globalFrame-from); source content text/brands embedded"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          232,
+          164
+        ],
+        "fit": "cover",
+        "clip": "parent",
+        "style": {
+          "objectPosition": "50% 62%",
+          "authority": "Scene.tsx + actual episode.materialSlots",
+          "overflow": "cover clips source edges; reviewed machine/face region; inherit every parent perspective/clip; no source stretch"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 19.0,
+        "end": 24.0
+      },
+      "states": [
+        {
+          "id": "playing",
+          "visible": true,
+          "description": "Actual Video mounted inside global Sequence;playbackRate1,muted,no loop; physical book backside or scene exposure may occlude but never replace source content with a still"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "allow_overflow",
+          "target_id": "orbit-photo-1",
+          "rule": "Source-only cover pane inherits exact parent crop; hinged front extends left and is deliberately clipped by fold-front; card material frame may inherit padded image well."
+        }
+      ],
+      "fixed": [
+        "source ranges",
+        "speed",
+        "loop",
+        "canvas clock",
+        "geometry"
+      ],
+      "replaceable": [
+        "episode.materialSlots.08-outro-1"
+      ],
+      "evidence_ids": [
+        "implementation",
+        "preparation"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-source-motion",
+          "method": "browser HTMLVideo time before/after≥30frames; native source cropped content pairs; real playback",
+          "pass_condition": "currentTime delta matches sourceFrame delta; decoded content actually changes;sourceTo never exceeds counted frames"
+        }
+      ]
+    },
+    {
+      "id": "08-outro-2",
+      "type": "video",
+      "role": "独立真实视频槽；主素材，不是照片动画",
+      "parent_id": "orbit-photo-2",
+      "z_index": 1,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "children",
+        "description": "/assets/b/children.mp4; source frames[180,330); global frames[570,720); sourceFrame=sourceFrom+(globalFrame-from); source content text/brands embedded"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          232,
+          164
+        ],
+        "fit": "cover",
+        "clip": "parent",
+        "style": {
+          "objectPosition": "50% 58%",
+          "authority": "Scene.tsx + actual episode.materialSlots",
+          "overflow": "cover clips source edges; reviewed machine/face region; inherit every parent perspective/clip; no source stretch"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 19.0,
+        "end": 24.0
+      },
+      "states": [
+        {
+          "id": "playing",
+          "visible": true,
+          "description": "Actual Video mounted inside global Sequence;playbackRate1,muted,no loop; physical book backside or scene exposure may occlude but never replace source content with a still"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "allow_overflow",
+          "target_id": "orbit-photo-2",
+          "rule": "Source-only cover pane inherits exact parent crop; hinged front extends left and is deliberately clipped by fold-front; card material frame may inherit padded image well."
+        }
+      ],
+      "fixed": [
+        "source ranges",
+        "speed",
+        "loop",
+        "canvas clock",
+        "geometry"
+      ],
+      "replaceable": [
+        "episode.materialSlots.08-outro-2"
+      ],
+      "evidence_ids": [
+        "implementation",
+        "preparation"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-source-motion",
+          "method": "browser HTMLVideo time before/after≥30frames; native source cropped content pairs; real playback",
+          "pass_condition": "currentTime delta matches sourceFrame delta; decoded content actually changes;sourceTo never exceeds counted frames"
+        }
+      ]
+    },
+    {
+      "id": "08-outro-3",
+      "type": "video",
+      "role": "独立真实视频槽；主素材，不是照片动画",
+      "parent_id": "orbit-photo-3",
+      "z_index": 1,
+      "content": {
+        "mode": "embedded",
+        "binding": null,
+        "asset_id": "dog",
+        "description": "/assets/b/dog.mp4; source frames[210,360); global frames[570,720); sourceFrame=sourceFrom+(globalFrame-from); source content text/brands embedded"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          232,
+          164
+        ],
+        "fit": "cover",
+        "clip": "parent",
+        "style": {
+          "objectPosition": "50% 67%",
+          "authority": "Scene.tsx + actual episode.materialSlots",
+          "overflow": "cover clips source edges; reviewed machine/face region; inherit every parent perspective/clip; no source stretch"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 19.0,
+        "end": 24.0
+      },
+      "states": [
+        {
+          "id": "playing",
+          "visible": true,
+          "description": "Actual Video mounted inside global Sequence;playbackRate1,muted,no loop; physical book backside or scene exposure may occlude but never replace source content with a still"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "allow_overflow",
+          "target_id": "orbit-photo-3",
+          "rule": "Source-only cover pane inherits exact parent crop; hinged front extends left and is deliberately clipped by fold-front; card material frame may inherit padded image well."
+        }
+      ],
+      "fixed": [
+        "source ranges",
+        "speed",
+        "loop",
+        "canvas clock",
+        "geometry"
+      ],
+      "replaceable": [
+        "episode.materialSlots.08-outro-3"
+      ],
+      "evidence_ids": [
+        "implementation",
+        "preparation"
+      ],
+      "acceptance": [
+        {
+          "check": "actual-source-motion",
+          "method": "browser HTMLVideo time before/after≥30frames; native source cropped content pairs; real playback",
+          "pass_condition": "currentTime delta matches sourceFrame delta; decoded content actually changes;sourceTo never exceeds counted frames"
+        }
+      ]
+    }
+  ],
+  "slots": [
+    {
+      "id": "08-intro-0-input",
+      "element_id": "08-intro-0",
+      "property": "episode.materialSlots.08-intro-0",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "src": "/assets/b/store.mp4",
+        "asset": "store",
+        "from": 0,
+        "to": 150,
+        "sourceFrom": 0,
+        "sourceTo": 150,
+        "objectPosition": "50% 35%",
+        "speed": 1,
+        "loop": false,
+        "freeze": false,
+        "fit": "cover",
+        "clock": "sourceFrame=sourceFrom+(globalFrame-from); half-open intervals; no scene restart beyond deliberate shot cut"
+      },
+      "missing": "stop before build; no image fallback",
+      "overflow": "reject source exhaustion or duration mismatch; author must choose a valid authorized real-video shot"
+    },
+    {
+      "id": "08-intro-1-input",
+      "element_id": "08-intro-1",
+      "property": "episode.materialSlots.08-intro-1",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "src": "/assets/b/robot.mp4",
+        "asset": "robot",
+        "from": 0,
+        "to": 150,
+        "sourceFrom": 0,
+        "sourceTo": 150,
+        "objectPosition": "50% 62%",
+        "speed": 1,
+        "loop": false,
+        "freeze": false,
+        "fit": "cover",
+        "clock": "sourceFrame=sourceFrom+(globalFrame-from); half-open intervals; no scene restart beyond deliberate shot cut"
+      },
+      "missing": "stop before build; no image fallback",
+      "overflow": "reject source exhaustion or duration mismatch; author must choose a valid authorized real-video shot"
+    },
+    {
+      "id": "08-intro-2-input",
+      "element_id": "08-intro-2",
+      "property": "episode.materialSlots.08-intro-2",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "src": "/assets/b/children.mp4",
+        "asset": "children",
+        "from": 0,
+        "to": 150,
+        "sourceFrom": 0,
+        "sourceTo": 150,
+        "objectPosition": "50% 58%",
+        "speed": 1,
+        "loop": false,
+        "freeze": false,
+        "fit": "cover",
+        "clock": "sourceFrame=sourceFrom+(globalFrame-from); half-open intervals; no scene restart beyond deliberate shot cut"
+      },
+      "missing": "stop before build; no image fallback",
+      "overflow": "reject source exhaustion or duration mismatch; author must choose a valid authorized real-video shot"
+    },
+    {
+      "id": "08-intro-3-input",
+      "element_id": "08-intro-3",
+      "property": "episode.materialSlots.08-intro-3",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "src": "/assets/b/dog.mp4",
+        "asset": "dog",
+        "from": 0,
+        "to": 150,
+        "sourceFrom": 0,
+        "sourceTo": 150,
+        "objectPosition": "50% 67%",
+        "speed": 1,
+        "loop": false,
+        "freeze": false,
+        "fit": "cover",
+        "clock": "sourceFrame=sourceFrom+(globalFrame-from); half-open intervals; no scene restart beyond deliberate shot cut"
+      },
+      "missing": "stop before build; no image fallback",
+      "overflow": "reject source exhaustion or duration mismatch; author must choose a valid authorized real-video shot"
+    },
+    {
+      "id": "08-gallery-0-input",
+      "element_id": "08-gallery-0",
+      "property": "episode.materialSlots.08-gallery-0",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "src": "/assets/b/children.mp4",
+        "asset": "children",
+        "from": 150,
+        "to": 420,
+        "sourceFrom": 90,
+        "sourceTo": 360,
+        "objectPosition": "50% 58%",
+        "speed": 1,
+        "loop": false,
+        "freeze": false,
+        "fit": "cover",
+        "clock": "sourceFrame=sourceFrom+(globalFrame-from); half-open intervals; no scene restart beyond deliberate shot cut"
+      },
+      "missing": "stop before build; no image fallback",
+      "overflow": "reject source exhaustion or duration mismatch; author must choose a valid authorized real-video shot"
+    },
+    {
+      "id": "08-gallery-1-input",
+      "element_id": "08-gallery-1",
+      "property": "episode.materialSlots.08-gallery-1",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "src": "/assets/b/robot.mp4",
+        "asset": "robot",
+        "from": 150,
+        "to": 420,
+        "sourceFrom": 90,
+        "sourceTo": 360,
+        "objectPosition": "50% 62%",
+        "speed": 1,
+        "loop": false,
+        "freeze": false,
+        "fit": "cover",
+        "clock": "sourceFrame=sourceFrom+(globalFrame-from); half-open intervals; no scene restart beyond deliberate shot cut"
+      },
+      "missing": "stop before build; no image fallback",
+      "overflow": "reject source exhaustion or duration mismatch; author must choose a valid authorized real-video shot"
+    },
+    {
+      "id": "08-tilt-input",
+      "element_id": "08-tilt",
+      "property": "episode.materialSlots.08-tilt",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "src": "/assets/b/dog.mp4",
+        "asset": "dog",
+        "from": 420,
+        "to": 570,
+        "sourceFrom": 150,
+        "sourceTo": 300,
+        "objectPosition": "50% 67%",
+        "speed": 1,
+        "loop": false,
+        "freeze": false,
+        "fit": "cover",
+        "clock": "sourceFrame=sourceFrom+(globalFrame-from); half-open intervals; no scene restart beyond deliberate shot cut"
+      },
+      "missing": "stop before build; no image fallback",
+      "overflow": "reject source exhaustion or duration mismatch; author must choose a valid authorized real-video shot"
+    },
+    {
+      "id": "08-outro-0-input",
+      "element_id": "08-outro-0",
+      "property": "episode.materialSlots.08-outro-0",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "src": "/assets/b/duo.mp4",
+        "asset": "duo",
+        "from": 570,
+        "to": 720,
+        "sourceFrom": 0,
+        "sourceTo": 150,
+        "objectPosition": "50% 60%",
+        "speed": 1,
+        "loop": false,
+        "freeze": false,
+        "fit": "cover",
+        "clock": "sourceFrame=sourceFrom+(globalFrame-from); half-open intervals; no scene restart beyond deliberate shot cut"
+      },
+      "missing": "stop before build; no image fallback",
+      "overflow": "reject source exhaustion or duration mismatch; author must choose a valid authorized real-video shot"
+    },
+    {
+      "id": "08-outro-1-input",
+      "element_id": "08-outro-1",
+      "property": "episode.materialSlots.08-outro-1",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "src": "/assets/b/robot.mp4",
+        "asset": "robot",
+        "from": 570,
+        "to": 720,
+        "sourceFrom": 180,
+        "sourceTo": 330,
+        "objectPosition": "50% 62%",
+        "speed": 1,
+        "loop": false,
+        "freeze": false,
+        "fit": "cover",
+        "clock": "sourceFrame=sourceFrom+(globalFrame-from); half-open intervals; no scene restart beyond deliberate shot cut"
+      },
+      "missing": "stop before build; no image fallback",
+      "overflow": "reject source exhaustion or duration mismatch; author must choose a valid authorized real-video shot"
+    },
+    {
+      "id": "08-outro-2-input",
+      "element_id": "08-outro-2",
+      "property": "episode.materialSlots.08-outro-2",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "src": "/assets/b/children.mp4",
+        "asset": "children",
+        "from": 570,
+        "to": 720,
+        "sourceFrom": 180,
+        "sourceTo": 330,
+        "objectPosition": "50% 58%",
+        "speed": 1,
+        "loop": false,
+        "freeze": false,
+        "fit": "cover",
+        "clock": "sourceFrame=sourceFrom+(globalFrame-from); half-open intervals; no scene restart beyond deliberate shot cut"
+      },
+      "missing": "stop before build; no image fallback",
+      "overflow": "reject source exhaustion or duration mismatch; author must choose a valid authorized real-video shot"
+    },
+    {
+      "id": "08-outro-3-input",
+      "element_id": "08-outro-3",
+      "property": "episode.materialSlots.08-outro-3",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "src": "/assets/b/dog.mp4",
+        "asset": "dog",
+        "from": 570,
+        "to": 720,
+        "sourceFrom": 210,
+        "sourceTo": 360,
+        "objectPosition": "50% 67%",
+        "speed": 1,
+        "loop": false,
+        "freeze": false,
+        "fit": "cover",
+        "clock": "sourceFrame=sourceFrom+(globalFrame-from); half-open intervals; no scene restart beyond deliberate shot cut"
+      },
+      "missing": "stop before build; no image fallback",
+      "overflow": "reject source exhaustion or duration mismatch; author must choose a valid authorized real-video shot"
+    },
+    {
+      "id": "presenter-input",
+      "element_id": "presenter",
+      "property": "episode.presenterClips",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "source": "actual episode-08.json",
+        "scope": "24s original approved avatar; local TTF; illustrative captions only"
+      },
+      "missing": "stop before build",
+      "overflow": "reject altered clock; new content/crop requires author revalidation"
+    },
+    {
+      "id": "headline-input",
+      "element_id": "headline",
+      "property": "episode.fontFamily",
+      "value_type": "string",
+      "required": true,
+      "limits": {
+        "source": "actual episode-08.json",
+        "scope": "24s original approved avatar; local TTF; illustrative captions only"
+      },
+      "missing": "stop before build",
+      "overflow": "reject altered clock; new content/crop requires author revalidation"
+    },
+    {
+      "id": "caption-input",
+      "element_id": "caption",
+      "property": "episode.captions",
+      "value_type": "array",
+      "required": true,
+      "limits": {
+        "source": "actual episode-08.json",
+        "scope": "24s original approved avatar; local TTF; illustrative captions only"
+      },
+      "missing": "stop before build",
+      "overflow": "reject altered clock; new content/crop requires author revalidation"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "implementation",
+      "source_kind": "design",
+      "source": "video version same geometry with actual Sequence/Video slots",
+      "locator": "Scene.tsx; selection-08.json",
+      "method": "new source SHA; source/frame/proxy contracts; actual motion source read identities",
+      "file": "Scene.tsx",
+      "sha256": "d81c90df29c7aaa4348325014cfa5d507ff7675e686f79f54866399247aa57fb"
+    },
+    {
+      "id": "preparation",
+      "source_kind": "measurement",
+      "source": "actual native video probe/count/full-decode and media-slot ranges",
+      "locator": "preparation.json",
+      "method": "ffprobe count_frames; complete ffmpeg null decode on5originals+all chosen proxies/presenter; actual source lengths not old nominal12s",
+      "file": "../../../../.local/chromatic-six-video-window-b/preparation.json",
+      "sha256": "b1eb90b49d3680e13ce533f9484497178b6733a56a28194811081af8db10cada"
+    },
+    {
+      "id": "new-measurement",
+      "source_kind": "measurement",
+      "source": "new actual graph/source ranges/dependencies/asset SHA",
+      "locator": "identity-check.json",
+      "method": "SHA checks,source ranges,actual installed dependency versions,HTTPRange,native full decode records",
+      "file": "../../../../.local/chromatic-six-video-window-b/identity-check.json",
+      "sha256": "ca887794e21faf7272722b7da70463aa8a0688bbe79ea3343227305d6defab48"
+    },
+    {
+      "id": "new-visual",
+      "source_kind": "observation",
+      "source": "new real-video process frames",
+      "locator": "process-08.jpg;content-motion-08.jpg;playback.json",
+      "method": "actual browser/cropped source pictures and playback;old photo user/visual pass not inherited",
+      "file": "../../../../.local/chromatic-six-video-window-b/review/process-08.jpg",
+      "sha256": "9b1971f7ecd84663562662b7a4d1066b593f46ca5f0918c8a4849e41d01d984b"
+    },
+    {
+      "id": "new-report",
+      "source_kind": "observation",
+      "source": "this video version validation",
+      "locator": "VALIDATION.json",
+      "method": "separate local technical/visual/logical playback from pending formal capabilities",
+      "file": "VALIDATION.json",
+      "sha256": "29a3ac5076ccc5b5ba07616c6e0c4ac66bfa76b58fd1b1f170efd29a5263b741"
+    }
+  ],
+  "unknowns": [],
+  "validation": {
+    "structure": {
+      "status": "pass",
+      "evidence_ids": [
+        "new-measurement",
+        "new-report"
+      ],
+      "note": "Only actual local24s low silent real-video candidate;no MP4render,user aesthetic/audio/lip sync/HD/production/platform/other machine claim;browser logical play and end-display lag explicitly recorded"
+    },
+    "technical": {
+      "status": "pass",
+      "evidence_ids": [
+        "new-measurement",
+        "new-report"
+      ],
+      "note": "Only actual local24s low silent real-video candidate;no MP4render,user aesthetic/audio/lip sync/HD/production/platform/other machine claim;browser logical play and end-display lag explicitly recorded"
+    },
+    "visual": {
+      "status": "pass",
+      "evidence_ids": [
+        "new-visual",
+        "new-report"
+      ],
+      "note": "Only actual local24s low silent real-video candidate;no MP4render,user aesthetic/audio/lip sync/HD/production/platform/other machine claim;browser logical play and end-display lag explicitly recorded"
+    },
+    "audio": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "Video version must be independently validated; no photo-version visual/user/15-pair pass inherited. Local24s low silent only; audio/lip sync,HD,production,platform,other machine independent."
+    },
+    "platform": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "Video version must be independently validated; no photo-version visual/user/15-pair pass inherited. Local24s low silent only; audio/lip sync,HD,production,platform,other machine independent."
+    },
+    "user_review": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "Video version must be independently validated; no photo-version visual/user/15-pair pass inherited. Local24s low silent only; audio/lip sync,HD,production,platform,other machine independent."
+    },
+    "production": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "Video version must be independently validated; no photo-version visual/user/15-pair pass inherited. Local24s low silent only; audio/lip sync,HD,production,platform,other machine independent."
+    }
+  },
+  "extensions": {
+    "avatar": {
+      "face_crop": "same180x225 cover50%35%; source288x360; first/last only; middle visibility hidden",
+      "synchronization": "single global0–720 source at1x,no loop,no per-scene restart; captions illustrative; no lip-sync pass"
+    },
+    "graphic": {
+      "text_policy": "same short headings,notes and27px two-line captions; no full speech heading; local TTF",
+      "asset_fit": "all main windows real Video; cover via objectPosition in materialSlots; all video embedded text fixed; source/card transforms evaluated separately"
+    },
+    "material_edit": {
+      "source_ranges": {
+        "08-intro-0": {
+          "src": "/assets/b/store.mp4",
+          "asset": "store",
+          "from": 0,
+          "to": 150,
+          "sourceFrom": 0,
+          "sourceTo": 150,
+          "objectPosition": "50% 35%",
+          "speed": 1,
+          "loop": false,
+          "freeze": false,
+          "fit": "cover",
+          "clock": "sourceFrame=sourceFrom+(globalFrame-from); half-open intervals; no scene restart beyond deliberate shot cut"
+        },
+        "08-intro-1": {
+          "src": "/assets/b/robot.mp4",
+          "asset": "robot",
+          "from": 0,
+          "to": 150,
+          "sourceFrom": 0,
+          "sourceTo": 150,
+          "objectPosition": "50% 62%",
+          "speed": 1,
+          "loop": false,
+          "freeze": false,
+          "fit": "cover",
+          "clock": "sourceFrame=sourceFrom+(globalFrame-from); half-open intervals; no scene restart beyond deliberate shot cut"
+        },
+        "08-intro-2": {
+          "src": "/assets/b/children.mp4",
+          "asset": "children",
+          "from": 0,
+          "to": 150,
+          "sourceFrom": 0,
+          "sourceTo": 150,
+          "objectPosition": "50% 58%",
+          "speed": 1,
+          "loop": false,
+          "freeze": false,
+          "fit": "cover",
+          "clock": "sourceFrame=sourceFrom+(globalFrame-from); half-open intervals; no scene restart beyond deliberate shot cut"
+        },
+        "08-intro-3": {
+          "src": "/assets/b/dog.mp4",
+          "asset": "dog",
+          "from": 0,
+          "to": 150,
+          "sourceFrom": 0,
+          "sourceTo": 150,
+          "objectPosition": "50% 67%",
+          "speed": 1,
+          "loop": false,
+          "freeze": false,
+          "fit": "cover",
+          "clock": "sourceFrame=sourceFrom+(globalFrame-from); half-open intervals; no scene restart beyond deliberate shot cut"
+        },
+        "08-gallery-0": {
+          "src": "/assets/b/children.mp4",
+          "asset": "children",
+          "from": 150,
+          "to": 420,
+          "sourceFrom": 90,
+          "sourceTo": 360,
+          "objectPosition": "50% 58%",
+          "speed": 1,
+          "loop": false,
+          "freeze": false,
+          "fit": "cover",
+          "clock": "sourceFrame=sourceFrom+(globalFrame-from); half-open intervals; no scene restart beyond deliberate shot cut"
+        },
+        "08-gallery-1": {
+          "src": "/assets/b/robot.mp4",
+          "asset": "robot",
+          "from": 150,
+          "to": 420,
+          "sourceFrom": 90,
+          "sourceTo": 360,
+          "objectPosition": "50% 62%",
+          "speed": 1,
+          "loop": false,
+          "freeze": false,
+          "fit": "cover",
+          "clock": "sourceFrame=sourceFrom+(globalFrame-from); half-open intervals; no scene restart beyond deliberate shot cut"
+        },
+        "08-tilt": {
+          "src": "/assets/b/dog.mp4",
+          "asset": "dog",
+          "from": 420,
+          "to": 570,
+          "sourceFrom": 150,
+          "sourceTo": 300,
+          "objectPosition": "50% 67%",
+          "speed": 1,
+          "loop": false,
+          "freeze": false,
+          "fit": "cover",
+          "clock": "sourceFrame=sourceFrom+(globalFrame-from); half-open intervals; no scene restart beyond deliberate shot cut"
+        },
+        "08-outro-0": {
+          "src": "/assets/b/duo.mp4",
+          "asset": "duo",
+          "from": 570,
+          "to": 720,
+          "sourceFrom": 0,
+          "sourceTo": 150,
+          "objectPosition": "50% 60%",
+          "speed": 1,
+          "loop": false,
+          "freeze": false,
+          "fit": "cover",
+          "clock": "sourceFrame=sourceFrom+(globalFrame-from); half-open intervals; no scene restart beyond deliberate shot cut"
+        },
+        "08-outro-1": {
+          "src": "/assets/b/robot.mp4",
+          "asset": "robot",
+          "from": 570,
+          "to": 720,
+          "sourceFrom": 180,
+          "sourceTo": 330,
+          "objectPosition": "50% 62%",
+          "speed": 1,
+          "loop": false,
+          "freeze": false,
+          "fit": "cover",
+          "clock": "sourceFrame=sourceFrom+(globalFrame-from); half-open intervals; no scene restart beyond deliberate shot cut"
+        },
+        "08-outro-2": {
+          "src": "/assets/b/children.mp4",
+          "asset": "children",
+          "from": 570,
+          "to": 720,
+          "sourceFrom": 180,
+          "sourceTo": 330,
+          "objectPosition": "50% 58%",
+          "speed": 1,
+          "loop": false,
+          "freeze": false,
+          "fit": "cover",
+          "clock": "sourceFrame=sourceFrom+(globalFrame-from); half-open intervals; no scene restart beyond deliberate shot cut"
+        },
+        "08-outro-3": {
+          "src": "/assets/b/dog.mp4",
+          "asset": "dog",
+          "from": 570,
+          "to": 720,
+          "sourceFrom": 210,
+          "sourceTo": 360,
+          "objectPosition": "50% 67%",
+          "speed": 1,
+          "loop": false,
+          "freeze": false,
+          "fit": "cover",
+          "clock": "sourceFrame=sourceFrom+(globalFrame-from); half-open intervals; no scene restart beyond deliberate shot cut"
+        }
+      },
+      "cut_policy": "same scene cuts as photo version; exact half-open integer frame source ranges;speed1;no loop,slow motion,last-frame hold or unregistered stills;09fold front and base same source/time;09park continues opened right shot at source210;08recap uses later excerpts as editorial revisit, not a repeating playback loop"
+    },
+    "custom": {
+      "contract": "deterministic source-owned3D paper/gallery geometry version1.1",
+      "rules": [
+        "source/video clock is independent of card transform",
+        "all active main windows remain actual Video",
+        "an input shortage blocks instead of extending a still",
+        "original frozen87source list remains read-only"
+      ]
+    }
+  },
+  "operations": [
+    {
+      "id": "local-video-preview",
+      "input": "user-authorized local native video, approved continuous avatar/font, this version source and actual episode",
+      "action": "prepare.py probes/decodes/proxies;build.cjs verifies identities and freezes actual graph;serve.py binds127.0.0.1:14955 with Range;browser fresh tab review",
+      "output": "actual two episodes,video assets,preparation,build-manifest,source content pairs,browser screenshots,time readbacks",
+      "completion": "selection/spec check,actual source-frame coverage and full decode,media graph/assetSHA,all scene crops/motion/paired content,opening/cuts/tail/random seek,full24s playback to719;user aesthetic remains pending",
+      "recovery": "read existing manifest first;keep original photo version unchanged;fix only failed slot/crop/timing,then rebuild and revalidate affected scene and new identity",
+      "entrypoint": "prepare.py;build.cjs;serve.py;README-08.md"
+    }
+  ]
+}

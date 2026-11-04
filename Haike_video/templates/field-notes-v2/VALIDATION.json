@@ -1,0 +1,225 @@
+{
+  "schema": "haike.motion-candidate-validation/1",
+  "date": "2026-11-03",
+  "templateId": "field-notes-v2",
+  "version": "2.0.0",
+  "scope": "用户认可的24秒720×1280/30fps本机低清静音样式；新输入、真实口型/有声、高清、生产、平台、异机另验",
+  "status": {
+    "structure": "pass",
+    "technical": "pass",
+    "visual": "pass",
+    "user_review": "pass",
+    "audio": "pending",
+    "production": "pending",
+    "platform": "pending"
+  },
+  "checks": {
+    "unit": {
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "...........\n----------------------------------------------------------------------\nRan 11 tests in 0.006s\n\nOK"
+    },
+    "identity": {
+      "returncode": 0,
+      "stdout": "{\"valid\": true, \"checked\": 450, \"templateId\": \"field-notes-v2\", \"version\": \"2.0.0\"}",
+      "stderr": ""
+    },
+    "original": {
+      "returncode": 0,
+      "stdout": "{\"valid\":true,\"template_id\":\"field-notes-v1\",\"version\":\"1.0.0\",\"checkedSources\":41,\"scope\":\"24秒竖屏低清静音已确认样式；受控替换与新素材另验\"}",
+      "stderr": ""
+    },
+    "selection": {
+      "returncode": 0,
+      "stdout": "{\n  \"valid\": true,\n  \"scenes\": 4,\n  \"implemented\": [\n    \"talkcraft:grid-to-hero\",\n    \"talkcraft:line-carry-transition\",\n    \"talkcraft:source-converge\",\n    \"talkcraft:title-demote-to-label\"\n  ],\n  \"references\": []\n}",
+      "stderr": ""
+    },
+    "candidate_spec_errors": [],
+    "full_standard_legacy_failures": 12
+  },
+  "sources": [
+    {
+      "path": "Haike_video/templates/field-notes-v2/Scene.tsx",
+      "sha256": "032e216c2bb2e5ebecd331cc7787b590d1319ae94051150e42b8b5b5fee851c8"
+    },
+    {
+      "path": "Haike_video/templates/field-notes-v2/selection.json",
+      "sha256": "2a6370b8cd66c7259e5ea2a9b28ecdf77d37996e95493768c9bbc08427da530e"
+    },
+    {
+      "path": "Haike_video/templates/field-notes-v2/build.cjs",
+      "sha256": "d801363ae9b759c5744d99f5aca78292671328048e7f8b75e453afcb90567365"
+    },
+    {
+      "path": "Haike_video/scripts/motion_catalogue.py",
+      "sha256": "fb3f1c43857a518012673b02e41ad7b55885a94ca0dc2c72998cda0ad1a53928"
+    },
+    {
+      "path": "Haike_video/motion-components/catalogue.json",
+      "sha256": "cdd6200fa5b1f5cc4849b2ab7669997db9f15b544148214a3287052f1b3b38d8"
+    }
+  ],
+  "runtime": {
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "remotion": "4.0.506",
+    "@remotion/player": "4.0.506",
+    "gsap": "3.13.0",
+    "esbuild": "0.28.1"
+  },
+  "build_manifest": {
+    "file": "../../../.local/field-notes-v2-preview/build-manifest.json",
+    "sha256": "9dba309d3fa46b65771aefa6a052ce2007dc30223b6ec85366e16bd18caf8929"
+  },
+  "media": [
+    {
+      "path": "assets/presenter-0000.mp4",
+      "sha256": "71c4e62284f28f21b8584176a61f8163d8b19eafc6b44cbbc5e211b341bb6e5c"
+    },
+    {
+      "path": "assets/font.ttf",
+      "sha256": "a3041811a78c361b1de50f953c805e0244951c21c5bd412f7232ef0d899af0da"
+    },
+    {
+      "path": "assets/photo-001.jpg",
+      "sha256": "fa25acd8ed71789c3d71e2d0faaf649855cf49a31576acbc6b06a48666f412b5"
+    },
+    {
+      "path": "assets/photo-002.jpg",
+      "sha256": "1096dad089ad6b7354a749c591774df1d29f2cb00c9ab06f52fbf4644b819a86"
+    },
+    {
+      "path": "assets/photo-003.jpg",
+      "sha256": "4f6b5658949d44a9d192f4de1a5801e8e17af8fd826b8067c9fc5d0a6d545efe"
+    },
+    {
+      "path": "assets/photo-004.jpg",
+      "sha256": "14b8df9e4644523e06aa1a36682cfda83d771b1c6b91adf6151a53f12d826792"
+    },
+    {
+      "path": "assets/photo-005.jpg",
+      "sha256": "3b9f8153edd35da4f71814defde7ca58a8aee7c8b53f1fcd5ad83aa130a1d710"
+    },
+    {
+      "path": "assets/photo-006.jpg",
+      "sha256": "94390156d884977856202f8babc479a8234598fe999acd572910017db8a8252c"
+    },
+    {
+      "path": "assets/photo-007.jpg",
+      "sha256": "b588f64aff3c3d82e6256f5d62d04bd357af12d169b8c3b1d84e19f83000dd73"
+    },
+    {
+      "path": "assets/photo-008.jpg",
+      "sha256": "b738fa77148026a67569a36fb9ef33795405627bea92c4ee869d94d465bba747"
+    }
+  ],
+  "actor": {
+    "codec_type": "video",
+    "width": 288,
+    "height": 360,
+    "avg_frame_rate": "30/1",
+    "duration": "24.000000",
+    "nb_frames": "720"
+  },
+  "photos": [
+    [
+      360,
+      640
+    ],
+    [
+      360,
+      640
+    ],
+    [
+      360,
+      640
+    ],
+    [
+      360,
+      640
+    ],
+    [
+      360,
+      640
+    ],
+    [
+      360,
+      640
+    ],
+    [
+      360,
+      640
+    ],
+    [
+      360,
+      640
+    ]
+  ],
+  "observations": [
+    "四种信息关系对应四个动作机制；没有全库使用配额。",
+    "网格实际导入上游组件，其余三段为独立语法适配，全部标adapt。",
+    "人物全片单实例，字幕与人脸分区；所有8个场景边界读回。",
+    "网格一主三侧仍保留全部候选，回位后保持；线框闭合后显示照片。",
+    "来源沿同一Bezier汇聚，结论卡随后展开；修正前的纯文字结果不作为最终效果。",
+    "首章70帧、网格37帧、线条54帧、收尾37帧最终阅读；选中主图另有2秒观察期。",
+    "最终版完整1×播放停719/人物23.966666s，半速播放与暂停已检查。",
+    "v1/v2切换与重复随机定位通过；390窄屏无横向溢出。",
+    "截图采集改用完整页面再按DOM边界裁取，保留完整原图，避免裁切接口导致的展示偏差。"
+  ],
+  "evidence": [
+    {
+      "file": "../../../.local/field-notes-v2-review/full-captures.json",
+      "sha256": "4c3f630a5b1d0095d2e5d16c4ae49556734ee184c8153ac2f3514ba1513c5298"
+    },
+    {
+      "file": "../../../.local/field-notes-v2-review/frames.json",
+      "sha256": "c352c66e0e72fbd743840e900a06df03c45cb0f0b29de8f1579f1e5e0f42ce4f"
+    },
+    {
+      "file": "../../../.local/field-notes-v2-review/playback.json",
+      "sha256": "530127dfb7560c5ab9327fc5c232859c957b77adfdc93b0232d8c5a4f408ca86"
+    },
+    {
+      "file": "../../../.local/field-notes-v2-review/half-speed.json",
+      "sha256": "a1ecda2e2ddee91f8bda359686d206a36a9972ce480d510bc422b512b00a81b0"
+    },
+    {
+      "file": "../../../.local/field-notes-v2-review/seek.json",
+      "sha256": "7d3c1c8faf4faeefec087723532520447acea6673b569588f204654917d81069"
+    },
+    {
+      "file": "../../../.local/field-notes-v2-review/motion-process.jpg",
+      "sha256": "28b2e33d00a979026719ade7fa3474fabb2ca515911128a5f46af229b2f6c5eb"
+    },
+    {
+      "file": "../../../.local/field-notes-v2-review/before-after.jpg",
+      "sha256": "3fc13a22739706282282172cdec59cdd7ff43b40f418686630dcdea029d51be6"
+    },
+    {
+      "file": "../../../.local/field-notes-v2-review/optimized-four-stages.jpg",
+      "sha256": "f17947c3393736238531fd5e3b5de41e3e8f4ef0386c1257cca128b848a8129e"
+    },
+    {
+      "file": "../../../.local/field-notes-v2-review/narrow-390.jpg",
+      "sha256": "615d8c21f84fa0ba3eb21d7c60e4073c3968a3603ee407ba6977999926fe3c4f"
+    },
+    {
+      "file": "../../../.local/field-notes-v2-review/preview-page.jpg",
+      "sha256": "07900dd4c3979e95b053f90853dc2c4529d23c969013affa90b2f0ae178051a2"
+    },
+    {
+      "file": "../../../.local/field-notes-v2-review/full-standard-check.txt",
+      "sha256": "35fae14e4ce39737a43fdcf3bed4d3d185b124403287bc4f1b4b73d15fbf5c49"
+    }
+  ],
+  "user_review": {
+    "file": "APPROVAL.json",
+    "sha256": "9177668bd242678318e6aa30dad3ad1268a83f5131cc87564b7c055ca33375b6",
+    "note": "用户确认本轮效果；保留候选身份及原正式模板4"
+  },
+  "registration": {
+    "file": "REGISTRATION.json",
+    "sha256": "e3d0c394be83ea56780736498f7f73464f99dcf3a5687307264eea79ae6df2e1"
+  },
+  "metadata_only_promotion": "Scene与视觉参数沿用用户认可版，历史截图/连播复用；未把正式登记当成高清/有声验收"
+}

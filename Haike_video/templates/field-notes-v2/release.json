@@ -1,0 +1,178 @@
+{
+  "schema": "haike.template-release/1",
+  "template_id": "field-notes-v2",
+  "number": 5,
+  "version": "2.0.0",
+  "date": "2026-11-03",
+  "scope": "用户认可的24秒720×1280/30fps本机低清静音样式；新输入、真实口型/有声、高清、生产、平台、异机另验",
+  "dependencies": {
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "remotion": "4.0.506",
+    "@remotion/player": "4.0.506",
+    "gsap": "3.13.0",
+    "esbuild": "0.28.1"
+  },
+  "sources": [
+    {
+      "path": "Haike_video/motion-components/catalogue.json",
+      "sha256": "cdd6200fa5b1f5cc4849b2ab7669997db9f15b544148214a3287052f1b3b38d8"
+    },
+    {
+      "path": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/orbit-gallery/index.tsx",
+      "sha256": "979b83024d10518ddd3e009675dfd4208bd80ebbe56ea584970f8a10d2a749d0"
+    },
+    {
+      "path": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/text-build/index.tsx",
+      "sha256": "0efdea0b262152d5b61bd52bd62d3596ccb630cd37784f2c305efd5d10591088"
+    },
+    {
+      "path": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/text-highlight/index.tsx",
+      "sha256": "b232c18e8b0342f0d549e59e4dea3a985745a88dd85231926aeabb3e1b7515cc"
+    },
+    {
+      "path": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/text-reveal/index.tsx",
+      "sha256": "8b4984e9a54e9b38e640414f449b0002ba8478eb2e5898479526b7449e96e0d7"
+    },
+    {
+      "path": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/text-swap/index.tsx",
+      "sha256": "955a2f705bb406f4c53352ed710599313da1df94bad8c59699472826a8a568f7"
+    },
+    {
+      "path": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn/text-swell/index.tsx",
+      "sha256": "68161d3803883fc94708c799e2ba91b617e7113f41d0cbe22e9dc6d5aabd3fb4"
+    },
+    {
+      "path": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn-ui/core/color.ts",
+      "sha256": "60e4c6000f5e6471d901f27d3ca1896567ef8bdeefaec53dfc6c0a2286256d02"
+    },
+    {
+      "path": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn-ui/core/fonts.ts",
+      "sha256": "c9f2e5f629d56dd8f2b62d0b4c4ce4766e683607814c0229648be92b93cc501b"
+    },
+    {
+      "path": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn-ui/core/index.ts",
+      "sha256": "e950e40bd89ff9ebd5668c84e1a0870b66791baf70c7874a5b0def67a9bbb8dc"
+    },
+    {
+      "path": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn-ui/core/item.tsx",
+      "sha256": "9153fa2efaf22fd2b270ccde194048284a2b42aa61d07ec5f6812240440af7df"
+    },
+    {
+      "path": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn-ui/core/motion.ts",
+      "sha256": "1c9758812db916ff045448ca3d5252568d6a83a13a82da1c2dbdb531f16c0d85"
+    },
+    {
+      "path": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn-ui/core/theme.ts",
+      "sha256": "2a75a5c6f20fb170451d851e746f29a7c3150d115d114443096264bdec1bb9f4"
+    },
+    {
+      "path": "Haike_video/motion-components/snapcn/upstream/registry/snap-cn-ui/core/timeline.ts",
+      "sha256": "344658ef648c92d18612723701cc6d8377542986bcaafd27590a1df1eca6223a"
+    },
+    {
+      "path": "Haike_video/remotion-composer/package-lock.json",
+      "sha256": "80be5141ee357725970da36d2117500fd3ac062902e04bc9fe1f1942d3596bee"
+    },
+    {
+      "path": "Haike_video/scripts/motion_catalogue.py",
+      "sha256": "fb3f1c43857a518012673b02e41ad7b55885a94ca0dc2c72998cda0ad1a53928"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-motion-lab-v1/AvatarScene.tsx",
+      "sha256": "6d824f6370f0ca003fdce1cd5fc047550de9ae9179269c44f604607ab6ca3514"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-motion-lab-v1/custom-recipes/field-notes.json",
+      "sha256": "8547c0b71af0b5cd7660c7865d3430a5063d51e8dfeedbba8af93db65e2c7ab0"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-motion-lab-v1/palettes.json",
+      "sha256": "d1235670824eee045cc85427f91b8b0eaa4c24c4c05bc9653ae215456cffea31"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-motion-lab-v1/recipes.json",
+      "sha256": "a63b6ee705cd58d771f865bfa6e938a3c9ece869effab0a73e299f94d9d13e1a"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-motion-lab-v1/RecipeStage.tsx",
+      "sha256": "19e8294b824d371d8b2ff5a9da6f71773404679baabdaddda6e8e4687da5d19a"
+    },
+    {
+      "path": "Haike_video/templates/chromatic-motion-lab-v1/runtime.ts",
+      "sha256": "743f31ab8a4aa82e50bb08f3329c9d36df6ba965f3d6e4fb88b04869fe1c3389"
+    },
+    {
+      "path": "Haike_video/templates/field-notes-v2/ACCEPTANCE.md",
+      "sha256": "fca9d3cafa5f4c6c627a3508cab4e6421c1220b5b41ccbf5db358d75272adad2"
+    },
+    {
+      "path": "Haike_video/templates/field-notes-v2/APPROVAL.json",
+      "sha256": "9177668bd242678318e6aa30dad3ad1268a83f5131cc87564b7c055ca33375b6"
+    },
+    {
+      "path": "Haike_video/templates/field-notes-v2/build.cjs",
+      "sha256": "d801363ae9b759c5744d99f5aca78292671328048e7f8b75e453afcb90567365"
+    },
+    {
+      "path": "Haike_video/templates/field-notes-v2/gallery.css",
+      "sha256": "338dff5e66349233240034717e12ac6dfb7bb32d5d4172eda9bb2799723d4148"
+    },
+    {
+      "path": "Haike_video/templates/field-notes-v2/index.html",
+      "sha256": "e0f29f71d6230cb0959ec9c50335e925b5faf7d728d98c8fc1e470afa0137b35"
+    },
+    {
+      "path": "Haike_video/templates/field-notes-v2/Preview.tsx",
+      "sha256": "dbb39d80ee3d211fad8f3ed6130bea7b299f669baaaeddb77867e284a2bc347b"
+    },
+    {
+      "path": "Haike_video/templates/field-notes-v2/README.md",
+      "sha256": "b437ae23e50370a1216639132749c198e9f7152d5a05e9012f8672fc6e02570a"
+    },
+    {
+      "path": "Haike_video/templates/field-notes-v2/REGISTRATION.json",
+      "sha256": "e3d0c394be83ea56780736498f7f73464f99dcf3a5687307264eea79ae6df2e1"
+    },
+    {
+      "path": "Haike_video/templates/field-notes-v2/Scene.tsx",
+      "sha256": "032e216c2bb2e5ebecd331cc7787b590d1319ae94051150e42b8b5b5fee851c8"
+    },
+    {
+      "path": "Haike_video/templates/field-notes-v2/selection.json",
+      "sha256": "2a6370b8cd66c7259e5ea2a9b28ecdf77d37996e95493768c9bbc08427da530e"
+    },
+    {
+      "path": "Haike_video/templates/field-notes-v2/template.spec.json",
+      "sha256": "dadf49c2bd301f91766674a73dbba413d33c5cecc3e1d510fa7ef33d21538afc"
+    },
+    {
+      "path": "Haike_video/templates/field-notes-v2/VALIDATION.json",
+      "sha256": "8600ae07367f03cb53ea519e799c511833fc74049c5d03abb48bb9197a46664f"
+    },
+    {
+      "path": "Haike_video/templates/field-notes-v2/verify-release.cjs",
+      "sha256": "163494805f80e6f82c1951c2e6d7a89309b0be1c2f837b797ffe8cc60962c168"
+    },
+    {
+      "path": "Haike_video/templates/field-notes-v2/verify.py",
+      "sha256": "43ae715063caca5774c1c029da7ad0a6e4c75f4925824f3b0c91027213641bea"
+    },
+    {
+      "path": "Haike_video/templates/hum-production-v1/dynamic/motion.ts",
+      "sha256": "b1e6b38a69162e6a56ffc7e7af767a1d8f3354ea52c8abe74ed50aa1f3fed1bb"
+    },
+    {
+      "path": "Haike_video/templates/hum-production-v1/dynamic/vendor/layouts.ts",
+      "sha256": "51a04ac34423eb5de3099545274c7aacb0cae1c3ca25ee0ea9bad9bd24af2da5"
+    },
+    {
+      "path": "Haike_video/templates/hum-production-v1/vendor/remocn/mondrian-split.tsx",
+      "sha256": "d8e8f76f731b2c519a27f69cd4570f16c0c3936386138be25c169075f297f661"
+    },
+    {
+      "path": "Haike_video/templates/hum-production-v1/vendor/remocn/parallax-depth.tsx",
+      "sha256": "6660bea1dfdd7be897b1ca6ef850edfe44d4f1cdc4a8b9432ac20998b1d8ecb6"
+    }
+  ]
+}

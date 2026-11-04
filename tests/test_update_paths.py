@@ -10,9 +10,11 @@ import unittest
 import zipfile
 
 from portable import app_update as core
-from tests import test_app_update as fixtures
 
 ROOT = Path(__file__).resolve().parents[1]
+fixture_spec = importlib.util.spec_from_file_location('haike_update_path_fixtures', ROOT / 'tests/test_app_update.py')
+fixtures = importlib.util.module_from_spec(fixture_spec)
+fixture_spec.loader.exec_module(fixtures)
 
 
 class UpdatePathTests(unittest.TestCase):

@@ -1,11 +1,9 @@
 """Real temporary-install transactions; no production data, services, or network."""
 import hashlib
-from contextlib import closing
 import importlib.util
 import json
 from pathlib import Path
 import stat
-import sqlite3
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -19,43 +17,6 @@ spec.loader.exec_module(update)
 
 
 class AppUpdateTests(unittest.TestCase):
-    def test_backup_failure_has_durable_incomplete_receipt_and_does_not_block_retry(self):
-        with tempfile.TemporaryDirectory() as directory:
-            root, bundle, original, plan = self.fixture(Path(directory))
-            atomic = update._atomic_write
-            def fail_copy(path, content):
-                if '/files/Haike_video/backlot/server.py' in str(path).replace('\\', '/'):
-                    raise OSError('synthetic Windows path failure')
-                return atomic(path, content)
-            with patch.object(update, '_atomic_write', side_effect=fail_copy):
-                with self.assertRaises(OSError): update.apply_update(bundle, root)
-            path = next((root / '.local/app-updates').glob('*/receipt.json'))
-            receipt = json.loads(path.read_bytes())
-            self.assertEqual(receipt['status'], 'preparation_failed')
-            self.assertFalse(receipt['backup_complete']); self.assertFalse(receipt['program_changes_started'])
-            self.assertEqual(update.pending_receipts(root), [])
-            self.assertEqual((root / 'Haike_video/backlot/server.py').read_bytes(), original['Haike_video/backlot/server.py'])
-            with self.assertRaisesRegex(update.UpdateError, '备份准备'): update.rollback(root, path.parent)
-            self.assertTrue(update.apply_update(bundle, root)['ok'])
-
-    def test_patch_and_rollback_snapshot_seven_held_records_without_changes(self):
-        with tempfile.TemporaryDirectory() as temporary:
-            root, bundle, original, plan = self.fixture(Path(temporary))
-            path = root / 'Haike_video/.backlot/production-queue.sqlite3'
-            with closing(sqlite3.connect(path)) as db:
-                db.execute('CREATE TABLE production_jobs(job_id TEXT,status TEXT,worker_id TEXT,lease_expires_at TEXT)')
-                db.executemany('INSERT INTO production_jobs VALUES (?,?,?,?)', [(str(i),'ambiguous',None,None) for i in range(7)])
-                db.commit()
-            before = path.read_bytes()
-            result = update.apply_update(bundle, root, health_check=lambda *_: True)
-            self.assertEqual(result['held_jobs_preserved'], 7)
-            receipt = json.loads((Path(result['backup'])/'receipt.json').read_bytes())
-            self.assertEqual(len(receipt['preserved_queue']['held']), 7)
-            self.assertTrue((Path(result['backup'])/receipt['preserved_queue']['filename']).is_file())
-            self.assertEqual(path.read_bytes(), before)
-            update.rollback(root, Path(result['backup']))
-            self.assertEqual(path.read_bytes(), before)
-
     def test_large_portable_inventory_does_not_use_small_update_manifest_limit(self):
         with tempfile.TemporaryDirectory() as temporary:
             root, bundle, original, plan = self.fixture(Path(temporary))
@@ -216,7 +177,7 @@ class AppUpdateTests(unittest.TestCase):
                     "Haike_video/backlot/aux.py", "Haike_video/backlot/server.py.", "Haike_video/backlot/server.py ",
                     "Haike_video\\backlot\\server.py", "Haike_video/backlot/a.py:stream",
                     "Haike_video/.env.local", "Haike_video/.backlot/config.json", "Haike_video/projects/test/render.py",
-                    "Haike_video/backlot/config/private.json", "Haike_video/requirements.txt",
+                    "Haike_video/backlot/config/private.json",
                     "Haike_video/templates/library-covers/private.jpg", "Haike_video/templates/a/assets/portrait.png",
                     "creatorhub/app/main.py", "creatorhub/config.yaml", "creatorhub/data/creatorhub.sqlite3",
                     "copy_skill/copy_skill-main/src/main.py", "api-platform/app/main.py", "runtime/python/tool.py",

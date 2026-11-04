@@ -1,0 +1,111 @@
+{
+  "source": "Independent upstream public downloads, full OFL retained",
+  "fonts": [
+    {
+      "family": "Long Cang",
+      "upstream": "https://github.com/google/fonts/tree/2fe1e8c6b137fb13041a7cfca6fdcd8a910ea4dc/ofl/longcang",
+      "license": "OFL-1.1",
+      "font": {
+        "path": "Haike_video/templates/knowledge-reference-public-v2/public/fonts/LongCang.ttf",
+        "sha256": "e5bf2c3f24ef2327c6f136d8f73e2f9dfdf44896fdbeb35a9515f44777bb91bc",
+        "bytes": 5162508,
+        "url": "https://raw.githubusercontent.com/google/fonts/2fe1e8c6b137fb13041a7cfca6fdcd8a910ea4dc/ofl/longcang/LongCang-Regular.ttf"
+      },
+      "license_file": {
+        "path": "Haike_video/templates/knowledge-reference-public-v2/public/fonts/LongCang-OFL.txt",
+        "sha256": "603546b7219a94bb59bf8294458194a5010119486354092b66a09a3fd61aeacc",
+        "bytes": 4390,
+        "url": "https://raw.githubusercontent.com/google/fonts/2fe1e8c6b137fb13041a7cfca6fdcd8a910ea4dc/ofl/longcang/OFL.txt"
+      },
+      "actual_metadata": {
+        "family": "Long Cang",
+        "style": "Regular",
+        "version": "Version 2.001",
+        "postscript": "LongCang-Regular",
+        "weight": 400
+      },
+      "reference_declared_sha256": "e5bf2c3f24ef2327c6f136d8f73e2f9dfdf44896fdbeb35a9515f44777bb91bc",
+      "reference_byte_identical": true
+    },
+    {
+      "family": "Fraunces",
+      "upstream": "https://github.com/google/fonts/tree/2fe1e8c6b137fb13041a7cfca6fdcd8a910ea4dc/ofl/fraunces",
+      "license": "OFL-1.1",
+      "font": {
+        "path": "Haike_video/templates/knowledge-reference-public-v2/public/fonts/Fraunces.ttf",
+        "sha256": "177ff6c0f14e5550a3c624247cd1189611d4eb65d000b14944c63d967958abbb",
+        "bytes": 360440,
+        "url": "https://raw.githubusercontent.com/google/fonts/2fe1e8c6b137fb13041a7cfca6fdcd8a910ea4dc/ofl/fraunces/Fraunces%5BSOFT%2CWONK%2Copsz%2Cwght%5D.ttf"
+      },
+      "license_file": {
+        "path": "Haike_video/templates/knowledge-reference-public-v2/public/fonts/Fraunces-OFL.txt",
+        "sha256": "bdf4c22802eaf804f998195871c6b8938aac2ac14b2d78a8bd66a6f1eced833b",
+        "bytes": 4391,
+        "url": "https://raw.githubusercontent.com/google/fonts/2fe1e8c6b137fb13041a7cfca6fdcd8a910ea4dc/ofl/fraunces/OFL.txt"
+      },
+      "actual_metadata": {
+        "family": "Fraunces",
+        "style": "Regular",
+        "version": "Version 1.000;[b76b70a41]",
+        "postscript": "Fraunces-9ptBlack",
+        "weight": 900
+      },
+      "reference_declared_sha256": "177ff6c0f14e5550a3c624247cd1189611d4eb65d000b14944c63d967958abbb",
+      "reference_byte_identical": true
+    },
+    {
+      "family": "JetBrains Mono",
+      "upstream": "https://github.com/google/fonts/tree/2fe1e8c6b137fb13041a7cfca6fdcd8a910ea4dc/ofl/jetbrainsmono",
+      "license": "OFL-1.1",
+      "font": {
+        "path": "Haike_video/templates/knowledge-reference-public-v2/public/fonts/JetBrainsMono.ttf",
+        "sha256": "48715a42ec242c21e9f02692891e147d022299a52e48d5e413e1a942193ffeda",
+        "bytes": 187208,
+        "url": "https://raw.githubusercontent.com/google/fonts/2fe1e8c6b137fb13041a7cfca6fdcd8a910ea4dc/ofl/jetbrainsmono/JetBrainsMono%5Bwght%5D.ttf"
+      },
+      "license_file": {
+        "path": "Haike_video/templates/knowledge-reference-public-v2/public/fonts/JetBrainsMono-OFL.txt",
+        "sha256": "b2fe5e8987594e9ffd1d2ca52a2f5d73eb8335243893c5d6254b5ad69269591d",
+        "bytes": 4399,
+        "url": "https://raw.githubusercontent.com/google/fonts/2fe1e8c6b137fb13041a7cfca6fdcd8a910ea4dc/ofl/jetbrainsmono/OFL.txt"
+      },
+      "actual_metadata": {
+        "family": "JetBrains Mono",
+        "style": "Regular",
+        "version": "Version 2.211",
+        "postscript": "JetBrainsMono-Regular",
+        "weight": 400
+      },
+      "reference_declared_sha256": "48715a42ec242c21e9f02692891e147d022299a52e48d5e413e1a942193ffeda",
+      "reference_byte_identical": true
+    },
+    {
+      "family": "LXGW WenKai",
+      "weight": 500,
+      "upstream": "https://github.com/lxgw/LxgwWenKai/tree/da0fdf92a0adc5d83c82ecde06d6665c97a2a45e",
+      "license": "OFL-1.1",
+      "font": {
+        "path": "Haike_video/templates/knowledge-reference-public-v2/public/fonts/LXGWWenKai-Medium.ttf",
+        "sha256": "f4b8a34d1f838fe411540cb7c97b1c384ac9738a876c4104500bc42508b2312a",
+        "bytes": 25800076,
+        "url": "https://raw.githubusercontent.com/lxgw/LxgwWenKai/da0fdf92a0adc5d83c82ecde06d6665c97a2a45e/fonts/TTF/LXGWWenKai-Medium.ttf"
+      },
+      "license_file": {
+        "path": "Haike_video/templates/knowledge-reference-public-v2/public/fonts/LXGWWenKai-OFL.txt",
+        "sha256": "1a25e35da1031c6c3436fde545bb9cb5aca954e9873afe510c834b8b79bd21a0",
+        "bytes": 5171,
+        "url": "https://raw.githubusercontent.com/lxgw/LxgwWenKai/da0fdf92a0adc5d83c82ecde06d6665c97a2a45e/OFL.txt"
+      },
+      "actual_metadata": {
+        "family": "LXGW WenKai Medium",
+        "style": "Regular",
+        "version": "Version 1.530; October 18, 2026",
+        "postscript": "LXGWWenKai-Medium",
+        "weight": 500
+      },
+      "reference_declared_sha256": "734bd187392579417ac83effe31d37b9de43c7b290bcb400800456511ed79e8f",
+      "reference_byte_identical": false
+    }
+  ],
+  "known_difference": "WenKai uses upstream full Medium TTF; reference declares smaller500WOFF without version metadata. Same family/weight, byte/metric equivalence not inferred."
+}

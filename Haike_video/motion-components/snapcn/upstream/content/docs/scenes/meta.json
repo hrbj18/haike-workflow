@@ -1,0 +1,20 @@
+{
+  "title": "Scenes",
+  "collapsible": false,
+  "pages": [
+    "index",
+    "count-grid",
+    "roster-grant",
+    "wordmark-cut",
+    "announce-title",
+    "hero-launch",
+    "orbit-gallery",
+    "moodboard-reveal",
+    "reel-collage",
+    "reel-wall",
+    "portal-intro",
+    "status-cycle",
+    "card-rail",
+    "orb-swarm"
+  ]
+}

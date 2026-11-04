@@ -1,0 +1,28 @@
+{
+  "authority": "Independently measured from lawful visible reference images; no protected source or raster copied",
+  "paper": {
+    "single": {"width": 1120, "height": 1530, "firstX": 540, "titleX": 55, "underlineStart": 30, "underlineEnd": 730, "conclusionX": 260, "conclusionY": 1190},
+    "multiple": {"widthPerItem": 1210, "widthExtra": 125, "height": 1800, "firstX": 710, "titleX": 150, "underlineStart": 150, "underlineEnd": 880, "conclusionRight": 850, "conclusionY": 1450},
+    "itemSpacing": 1210, "itemYOffset": 70, "focusScale": 1.35, "focusY": -0.5,
+    "titleY": 150, "titleFont": 130, "underlineY": 202,
+    "pageDotStep": 60, "backgroundDotStep": 40,
+    "returnY": 1060, "returnLabelY": 1270,
+    "stickyWidth": 800, "stickyHeight": 250, "stickyFont": 48,
+    "bulbOutline": [[-33,70],[-51,41],[-70,10],[-76,-24],[-70,-63],[-52,-91],[-27,-107],[0,-111],[29,-106],[54,-88],[72,-59],[77,-25],[70,10],[50,40],[32,70]],
+    "bulbRays": {"count": 7, "minAngle": -1.22, "maxAngle": 1.22},
+    "bulbCurveSubdivisions": 12, "bulbStrokeWidth": 3.6
+  },
+  "chalkMaterial": {
+    "centerColor": "#162b23", "middleColor": "#102119", "edgeColor": "#0c1913",
+    "wipeBands": 12, "wipeThreads": 36, "arcBands": 11, "arcThreads": 34,
+    "horizontalThreads": 150, "grainAmplitude": 3.2, "grainSeed": 194731
+  },
+  "science": {
+    "center": [600,660], "worldScale": 100,
+    "surface": {"center": [600,620], "radius": 120, "miniEarth": [330,810], "miniScale": 0.28},
+    "section": {"center": [540,638], "worldScale": 180, "entryScale": 0.4},
+    "phase": {"center": [540,1150], "radius": 126},
+    "causal": {"upper": [540,620], "lower": [540,1150], "radius": 126},
+    "rays": {"startX": 190, "endX": 890, "firstY": 540, "gap": 56, "count": 7, "blockers": [{"id":"near","x":435,"y":660,"radius":48},{"id":"far","x":645,"y":770,"radius":68}]}
+  }
+}

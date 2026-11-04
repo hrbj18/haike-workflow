@@ -1,0 +1,39 @@
+{
+  "version":"2026-11-02-signatures-v2",
+  "canvas":{"width":540,"height":960,"fps":15,"frames":462,"render_scale":0.5},
+  "title":"亲子科技体验",
+  "audio":{"file":"mix.wav","gain":0.7079457844,"source":"../animation-story-batch-v1/README.md","duration":30.8},
+  "directions":[
+    {
+      "id":"phone-portal","name":"橙蓝 · 掌上穿越","entry":"PhonePortal.tsx",
+      "signature":"镜头穿入手机屏幕，现场铺满画面，再退出到双机对照",
+      "structure":["giant-physical-phone","immersive-footage","two-device-comparison","phone-return"],
+      "motion_families":["camera-dive-through-screen","screen-content-swipe","paired-device-spread","camera-pullback"],
+      "actions":[[0.3,1.3,"device-turn"],[2,3.4,"camera-dive-through-screen"],[7,8.3,"camera-pullback"],[10.2,10.9,"screen-content-swipe"],[14,15.3,"camera-dive-through-screen"],[18.6,19.7,"paired-device-spread"],[22.8,24,"camera-dive-through-screen"],[28.2,29.6,"camera-pullback"]],
+      "review_seconds":[0,0.8,2,2.7,3.5,4.2,7.6,8.6,10.6,11.3,14.7,16,19.2,20,23.4,24.5,26.8,29.7,30.73],
+      "palette":["#FF642D","#163FEE","#F5FF57"],
+      "clips":[[0,4,"host-open.mp4",0],[4,10.2,"children.mp4",0],[10.2,15.5,"robot-duo.mp4",0],[15.5,18.6,"store.mp4",1],[18.6,22.8,"robot.mp4",0],[22.8,26.8,"children.mp4",6],[26.8,30.8,"host-close.mp4",0]]
+    },
+    {
+      "id":"living-book","name":"莓红 · 会动的画册","entry":"LivingBook.tsx",
+      "signature":"真实视频成为纸页，翻页露出下一现场，画册展开再进入页中细节",
+      "structure":["portrait-page-with-hinge","turning-page-over-live-page","vertical-foldout","page-detail-crop"],
+      "motion_families":["paper-hinge-turn","foldout-unfold","camera-enter-page","book-settle"],
+      "actions":[[1.3,2.6,"paper-hinge-turn"],[6.1,7.4,"paper-hinge-turn"],[8.5,9.6,"foldout-unfold"],[12.6,13.9,"paper-hinge-turn"],[15,16.2,"camera-enter-page"],[18.6,19.8,"book-settle"],[20.4,21.7,"paper-hinge-turn"],[26.8,28.1,"paper-hinge-turn"]],
+      "review_seconds":[0,1.3,1.7,2.1,2.7,4.2,6.7,7.5,9,9.8,13.1,14,15.6,17,19.2,21,22,26.8,27.4,28.2,30.73],
+      "palette":["#B51356","#A9ECCB","#FFF6DD"],
+      "pages":[[0,"host-open.mp4",0,"周末探索"],[1.3,"children.mp4",0,"亲子互动"],[6.1,"robot-duo.mp4",0,"现场发现"],[12.6,"store.mp4",0,"社区体验"],[20.4,"dog.mp4",0,"机械伙伴"],[26.8,"host-close.mp4",0,"到店看看"]]
+    },
+    {
+      "id":"image-atlas","name":"青柠 · 影像漫游","entry":"ImageAtlas.tsx",
+      "signature":"在一张连续影像地图上拉远、横移、下潜，镜头去找现场而非逐页换片",
+      "structure":["asymmetric-video-mosaic","wide-map-overview","single-tile-dive","diagonal-world-travel"],
+      "motion_families":["world-camera-pan","map-reveal-pullout","tile-dive","diagonal-camera-travel"],
+      "actions":[[0.6,1.8,"map-reveal-pullout"],[2.4,3.8,"world-camera-pan"],[7.6,9,"diagonal-camera-travel"],[12,13.3,"world-camera-pan"],[16.4,17.8,"tile-dive"],[21.2,22.6,"diagonal-camera-travel"],[25.2,26.7,"map-reveal-pullout"],[27.1,28.5,"tile-dive"]],
+      "review_seconds":[0,1.2,2,3.1,4.2,8.3,9.2,12.7,13.5,17,18,21.9,23,25.8,26.8,27.8,28.7,30.73],
+      "palette":["#CEFF36","#151D22","#39A7F4"],
+      "camera":[[0,0,0,1.05,0],[0.6,0,0,1.05,0],[1.8,150,80,0.65,-3],[2.4,150,80,0.65,-3],[3.8,520,0,1.12,0],[7.6,520,0,1.12,0],[9,520,800,1.03,3],[12,520,800,1.03,3],[13.3,0,800,1.1,0],[16.4,0,800,1.1,0],[17.8,-520,800,1.09,-2],[21.2,-520,800,1.09,-2],[22.6,-520,0,1.12,0],[25.2,-520,0,1.12,0],[26.7,0,200,0.66,0],[27.1,0,200,0.66,0],[28.5,0,0,1.15,0],[30.8,0,0,1.15,0]],
+      "tiles":[[0,0,"host","亲身体验"],[520,0,"children.mp4","亲子互动"],[520,800,"robot-duo.mp4","现场探索"],[0,800,"store.mp4","社区门店"],[-520,800,"dog.mp4","机械伙伴"],[-520,0,"robot.mp4","近距离看"]]
+    }
+  ]
+}

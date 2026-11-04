@@ -1,0 +1,27 @@
+{
+  "schema": "haike.custom-motion-recipe/1",
+  "id": "field-notes",
+  "catalogId": "field-notes-v1",
+  "templateNumber": 4,
+  "version": "1.0.0",
+  "revision": "2026-11-03.1",
+  "name": "动效模板4 · 青珊瑚现场笔记",
+  "avatarRole": "supporting-window",
+  "strategy": "authored-content",
+  "canvas": {"width":720,"height":1280,"fps":30},
+  "palette": {"bg":"#F4F1E9","ink":"#124A49","accent":"#EC795E","paper":"#FFFFFF","onAccent":"#163C3B"},
+  "baseVariant": "03",
+  "brand": "海客 / FIELD NOTES",
+  "layout": {
+    "title":[48,132,624,182],"media":[48,354,624,474],
+    "note":[48,884,410,164],"presenter":[486,850,186,232],
+    "caption":[48,1110,624,88]
+  },
+  "timing": {"titleFrames":18,"mediaFrom":24,"actionFrames":66,"noteFrom":96,"noteFrames":24,"minHoldFrames":60},
+  "stages": [
+    {"id":"arrive","purpose":"先建立现场印象","layout":"hero","effect":"parallax","label":"01 / 走进现场","note":"先看见\n再产生好奇","photoOrder":[0,2,4]},
+    {"id":"compare","purpose":"并置两种现场视角","layout":"duet","effect":"paired-reveal","label":"02 / 两种视角","note":"拉近视角\n看见人与互动","tags":["看见现场","走近互动"],"photoOrder":[4,2,0]},
+    {"id":"connect","purpose":"把多个体验关联起来","layout":"cards","effect":"reflow","label":"03 / 线索接力","note":"从一个瞬间\n连接更多发现","photoOrder":[2,0,4]},
+    {"id":"recap","purpose":"停止换景，完成收束","layout":"summary","effect":"highlight","label":"04 / 留下记忆","note":"体验 · 理解 · 分享","summary":["走进现场","亲手体验","带走发现"],"photoOrder":[0,4,2]}
+  ]
+}

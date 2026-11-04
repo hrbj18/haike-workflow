@@ -1,0 +1,425 @@
+{
+  "schema": "haike.motion-replay-registry/1",
+  "templates": [
+    {
+      "template_id": "motiongit-promo-user",
+      "version": "3.0.0-reference-public.1",
+      "gallery_id": "motion-package-mg-8d3e5baeef9310e4b49b41de",
+      "family": "imported",
+      "default_workflow": "promo-reference-full",
+      "renderer": {
+        "kind": "project",
+        "entrypoint": "backlot.studio_imported_promo_reference:prepare",
+        "adapter": "backlot.motion_replay_promo_reference:prepare",
+        "execution": "supported"
+      },
+      "sources": [
+        {
+          "path": "Haike_video/backlot/motion_replay_promo_reference.py",
+          "sha256": "136941ebbcf13203425484524a97f123379e053a3b8eff500a82b314995079f7"
+        },
+        {
+          "path": "Haike_video/backlot/studio_imported_promo_reference.py",
+          "sha256": "dc77a2c27f41a39ecbbbc0e345c9e9b0f6743bc045d89939d44d18c4d4b89bd3"
+        },
+        {
+          "path": "Haike_video/remotion-composer/package-lock.json",
+          "sha256": "80be5141ee357725970da36d2117500fd3ac062902e04bc9fe1f1942d3596bee"
+        },
+        {
+          "path": "Haike_video/templates/promo-reference-independent-v1/Board.tsx",
+          "sha256": "334c45b3f3c3606df6e0b74ef2e41bae4a2af0a4e5a0fc754a69565b48deb14d"
+        },
+        {
+          "path": "Haike_video/templates/promo-reference-independent-v1/index.tsx",
+          "sha256": "de211707dff11c57a00c2c140c462999f04e217c18dc1930b429c56fa7341ddf"
+        },
+        {
+          "path": "Haike_video/templates/promo-reference-independent-v1/LICENSE.md",
+          "sha256": "59ffcbf78abc7f87130445c9a95b3aeef7621c83dc2bc6355048ebc99cc5174a"
+        },
+        {
+          "path": "Haike_video/templates/promo-reference-independent-v1/README.md",
+          "sha256": "ad21f14d3e3c66871c62b4075a7e1a9023c75f3bad0027fc1f64fd94e76b3e55"
+        },
+        {
+          "path": "Haike_video/templates/promo-reference-independent-v1/render.cjs",
+          "sha256": "ea340194f2381ffb82e2f037bd9f4f0c9c046705be88f1b8beb5fd62c4c9dec7"
+        },
+        {
+          "path": "Haike_video/templates/promo-reference-independent-v1/types.ts",
+          "sha256": "b22cb8a7af9c5d9715e5b7da29c803809be16e953a450819fac92f3586c28ec7"
+        }
+      ],
+      "objects": [
+        {
+          "id": "promo.orange",
+          "role": "橙底大字与语义词切换",
+          "authority": "Haike_video/templates/promo-reference-independent-v1/Board.tsx independently authored; no protected source"
+        },
+        {
+          "id": "promo.wall",
+          "role": "四列作品墙与蓝色标签",
+          "authority": "Haike_video/templates/promo-reference-independent-v1/Board.tsx independently authored; no protected source"
+        },
+        {
+          "id": "promo.detail",
+          "role": "同一张选中卡展开/详情/指引按钮",
+          "authority": "Haike_video/templates/promo-reference-independent-v1/Board.tsx independently authored; no protected source"
+        },
+        {
+          "id": "promo.quote",
+          "role": "实拍与明确非采访转述卡",
+          "authority": "Haike_video/templates/promo-reference-independent-v1/Board.tsx independently authored; no protected source"
+        },
+        {
+          "id": "promo.notice",
+          "role": "完整非医疗服务边界",
+          "authority": "Haike_video/templates/promo-reference-independent-v1/Board.tsx independently authored; no protected source"
+        },
+        {
+          "id": "promo.brand",
+          "role": "黑底品牌与地址标签",
+          "authority": "Haike_video/templates/promo-reference-independent-v1/Board.tsx independently authored; no protected source"
+        }
+      ],
+      "actions": [
+        {
+          "id": "haike.motiongit-promo-user.reference-public.orange",
+          "version": "3.0.0-reference-public.1",
+          "implementation": {
+            "owner": "Haike independent promo source",
+            "path": "Haike_video/templates/promo-reference-independent-v1/Board.tsx",
+            "recipe": "orange",
+            "original_protected_core_used": false
+          },
+          "objects": [
+            "promo.orange"
+          ],
+          "parameters": {
+            "title": {
+              "maxLength": 30
+            },
+            "subtitle": {
+              "maxLength": 70
+            },
+            "labels": {
+              "minItems": 1,
+              "maxItems": 6
+            },
+            "events": "actual ASR sentence/word indices",
+            "windows": "actual source-bounded real videos, no loop/freeze"
+          },
+          "phases": {
+            "entry": "Cubic arrival from measured scene boundary; same hero DOM object preserved",
+            "active": "Actual ASR events move labels/filters/card details; real footage runs at original speed",
+            "settled": "Keep completed selected object, readable purpose and source context",
+            "exit": "Carry persistent selected card to next layout; preserve continuous voice"
+          }
+        },
+        {
+          "id": "haike.motiongit-promo-user.reference-public.wall",
+          "version": "3.0.0-reference-public.1",
+          "implementation": {
+            "owner": "Haike independent promo source",
+            "path": "Haike_video/templates/promo-reference-independent-v1/Board.tsx",
+            "recipe": "wall",
+            "original_protected_core_used": false
+          },
+          "objects": [
+            "promo.wall"
+          ],
+          "parameters": {
+            "title": {
+              "maxLength": 30
+            },
+            "subtitle": {
+              "maxLength": 70
+            },
+            "labels": {
+              "minItems": 1,
+              "maxItems": 6
+            },
+            "events": "actual ASR sentence/word indices",
+            "windows": "actual source-bounded real videos, no loop/freeze"
+          },
+          "phases": {
+            "entry": "Cubic arrival from measured scene boundary; same hero DOM object preserved",
+            "active": "Actual ASR events move labels/filters/card details; real footage runs at original speed",
+            "settled": "Keep completed selected object, readable purpose and source context",
+            "exit": "Carry persistent selected card to next layout; preserve continuous voice"
+          }
+        },
+        {
+          "id": "haike.motiongit-promo-user.reference-public.detail",
+          "version": "3.0.0-reference-public.1",
+          "implementation": {
+            "owner": "Haike independent promo source",
+            "path": "Haike_video/templates/promo-reference-independent-v1/Board.tsx",
+            "recipe": "detail",
+            "original_protected_core_used": false
+          },
+          "objects": [
+            "promo.detail"
+          ],
+          "parameters": {
+            "title": {
+              "maxLength": 30
+            },
+            "subtitle": {
+              "maxLength": 70
+            },
+            "labels": {
+              "minItems": 1,
+              "maxItems": 6
+            },
+            "events": "actual ASR sentence/word indices",
+            "windows": "actual source-bounded real videos, no loop/freeze"
+          },
+          "phases": {
+            "entry": "Cubic arrival from measured scene boundary; same hero DOM object preserved",
+            "active": "Actual ASR events move labels/filters/card details; real footage runs at original speed",
+            "settled": "Keep completed selected object, readable purpose and source context",
+            "exit": "Carry persistent selected card to next layout; preserve continuous voice"
+          }
+        },
+        {
+          "id": "haike.motiongit-promo-user.reference-public.quote",
+          "version": "3.0.0-reference-public.1",
+          "implementation": {
+            "owner": "Haike independent promo source",
+            "path": "Haike_video/templates/promo-reference-independent-v1/Board.tsx",
+            "recipe": "quote",
+            "original_protected_core_used": false
+          },
+          "objects": [
+            "promo.quote"
+          ],
+          "parameters": {
+            "title": {
+              "maxLength": 30
+            },
+            "subtitle": {
+              "maxLength": 70
+            },
+            "labels": {
+              "minItems": 1,
+              "maxItems": 6
+            },
+            "events": "actual ASR sentence/word indices",
+            "windows": "actual source-bounded real videos, no loop/freeze"
+          },
+          "phases": {
+            "entry": "Cubic arrival from measured scene boundary; same hero DOM object preserved",
+            "active": "Actual ASR events move labels/filters/card details; real footage runs at original speed",
+            "settled": "Keep completed selected object, readable purpose and source context",
+            "exit": "Carry persistent selected card to next layout; preserve continuous voice"
+          }
+        },
+        {
+          "id": "haike.motiongit-promo-user.reference-public.notice",
+          "version": "3.0.0-reference-public.1",
+          "implementation": {
+            "owner": "Haike independent promo source",
+            "path": "Haike_video/templates/promo-reference-independent-v1/Board.tsx",
+            "recipe": "notice",
+            "original_protected_core_used": false
+          },
+          "objects": [
+            "promo.notice"
+          ],
+          "parameters": {
+            "title": {
+              "maxLength": 30
+            },
+            "subtitle": {
+              "maxLength": 70
+            },
+            "labels": {
+              "minItems": 1,
+              "maxItems": 6
+            },
+            "events": "actual ASR sentence/word indices",
+            "windows": "actual source-bounded real videos, no loop/freeze"
+          },
+          "phases": {
+            "entry": "Cubic arrival from measured scene boundary; same hero DOM object preserved",
+            "active": "Actual ASR events move labels/filters/card details; real footage runs at original speed",
+            "settled": "Keep completed selected object, readable purpose and source context",
+            "exit": "Carry persistent selected card to next layout; preserve continuous voice"
+          }
+        },
+        {
+          "id": "haike.motiongit-promo-user.reference-public.brand",
+          "version": "3.0.0-reference-public.1",
+          "implementation": {
+            "owner": "Haike independent promo source",
+            "path": "Haike_video/templates/promo-reference-independent-v1/Board.tsx",
+            "recipe": "brand",
+            "original_protected_core_used": false
+          },
+          "objects": [
+            "promo.brand"
+          ],
+          "parameters": {
+            "title": {
+              "maxLength": 30
+            },
+            "subtitle": {
+              "maxLength": 70
+            },
+            "labels": {
+              "minItems": 1,
+              "maxItems": 6
+            },
+            "events": "actual ASR sentence/word indices",
+            "windows": "actual source-bounded real videos, no loop/freeze"
+          },
+          "phases": {
+            "entry": "Cubic arrival from measured scene boundary; same hero DOM object preserved",
+            "active": "Actual ASR events move labels/filters/card details; real footage runs at original speed",
+            "settled": "Keep completed selected object, readable purpose and source context",
+            "exit": "Carry persistent selected card to next layout; preserve continuous voice"
+          }
+        }
+      ],
+      "timeline": {
+        "mode": "semantic",
+        "clock": "Complete real WAV sample clock; measured ASR sentence/word events; 1920×1080/60fps",
+        "events": [
+          {
+            "id": "promo.orange.meaning",
+            "action_id": "haike.motiongit-promo-user.reference-public.orange",
+            "anchor": "本场真实ASR句词事件",
+            "window": "至少3秒，实际事件距离场尾至少0.1秒",
+            "reading": "按本期实际画面复核；技术门禁不替代视觉与连续听看"
+          },
+          {
+            "id": "promo.wall.meaning",
+            "action_id": "haike.motiongit-promo-user.reference-public.wall",
+            "anchor": "本场真实ASR句词事件",
+            "window": "至少3秒，实际事件距离场尾至少0.1秒",
+            "reading": "按本期实际画面复核；技术门禁不替代视觉与连续听看"
+          },
+          {
+            "id": "promo.detail.meaning",
+            "action_id": "haike.motiongit-promo-user.reference-public.detail",
+            "anchor": "本场真实ASR句词事件",
+            "window": "至少3秒，实际事件距离场尾至少0.1秒",
+            "reading": "按本期实际画面复核；技术门禁不替代视觉与连续听看"
+          },
+          {
+            "id": "promo.quote.meaning",
+            "action_id": "haike.motiongit-promo-user.reference-public.quote",
+            "anchor": "本场真实ASR句词事件",
+            "window": "至少3秒，实际事件距离场尾至少0.1秒",
+            "reading": "按本期实际画面复核；技术门禁不替代视觉与连续听看"
+          },
+          {
+            "id": "promo.notice.meaning",
+            "action_id": "haike.motiongit-promo-user.reference-public.notice",
+            "anchor": "本场真实ASR句词事件",
+            "window": "至少3秒，实际事件距离场尾至少0.1秒",
+            "reading": "按本期实际画面复核；技术门禁不替代视觉与连续听看"
+          },
+          {
+            "id": "promo.brand.meaning",
+            "action_id": "haike.motiongit-promo-user.reference-public.brand",
+            "anchor": "本场真实ASR句词事件",
+            "window": "至少3秒，实际事件距离场尾至少0.1秒",
+            "reading": "按本期实际画面复核；技术门禁不替代视觉与连续听看"
+          }
+        ],
+        "retiming": "No speech stretching, source video looping or frozen video; only original music may be mixed to actual full speech clock."
+      },
+      "slots": [
+        {
+          "id": "asr",
+          "kind": "asr",
+          "input_path": "input.asr",
+          "required": true,
+          "missing_policy": "缺少或SHA变化则阻断；保留原意图恢复"
+        },
+        {
+          "id": "script",
+          "kind": "script",
+          "input_path": "input.script",
+          "required": true,
+          "missing_policy": "缺少或SHA变化则阻断；保留原意图恢复"
+        },
+        {
+          "id": "assets",
+          "kind": "assets",
+          "input_path": "input.assets",
+          "required": true,
+          "missing_policy": "缺少或SHA变化则阻断；保留原意图恢复"
+        },
+        {
+          "id": "scenes",
+          "kind": "scenes",
+          "input_path": "input.scenes",
+          "required": true,
+          "missing_policy": "缺少或SHA变化则阻断；保留原意图恢复"
+        },
+        {
+          "id": "media",
+          "kind": "media",
+          "input_path": "input.media",
+          "required": true,
+          "missing_policy": "缺少或SHA变化则阻断；保留原意图恢复"
+        },
+        {
+          "id": "material_review",
+          "kind": "material_review",
+          "input_path": "input.material_review",
+          "required": true,
+          "missing_policy": "缺少或SHA变化则阻断；保留原意图恢复"
+        },
+        {
+          "id": "source_receipts",
+          "kind": "source_receipts",
+          "input_path": "input.source_receipts",
+          "required": true,
+          "missing_policy": "缺少或SHA变化则阻断；保留原意图恢复"
+        }
+      ],
+      "capabilities": {
+        "input_asr": true,
+        "complete_voice": true,
+        "main_video": true,
+        "independent_redistributable_source": true,
+        "personal_motion_required": false,
+        "license": "MIT for newly authored component only; original composition not redistributed",
+        "original_reference": {
+          "template_id": "motiongit-promo-user",
+          "version": "2.6.4",
+          "video": "https://media.openaicut.com/previews/588/draft-zh-ca08bac0650e.mp4",
+          "duration": 58.75,
+          "width": 1920,
+          "height": 1080
+        },
+        "fidelity": "Public visible-effect reconstruction; distinct implementation identity, sampled visual verification separately recorded"
+      },
+      "validation": {
+        "input": {
+          "status": "pass",
+          "method": "12 production gates plus4 read-only gates; real B6 preflight/freeze and TypeScript check",
+          "scope": "Measured complete narration and original visible action chain; no paid work",
+          "evidence": "Haike_video/tests/test_studio_imported_promo_reference.py"
+        },
+        "visual": {
+          "status": "pending",
+          "method": "Queued preview/full output with actual visual/audio review",
+          "scope": "Measured complete narration and original visible action chain; no paid work",
+          "evidence": "Per-job receipts"
+        },
+        "audio": {
+          "status": "pending",
+          "method": "Queued preview/full output with actual visual/audio review",
+          "scope": "Measured complete narration and original visible action chain; no paid work",
+          "evidence": "Per-job receipts"
+        }
+      }
+    }
+  ]
+}

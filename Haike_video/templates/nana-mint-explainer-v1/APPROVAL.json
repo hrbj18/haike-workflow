@@ -1,0 +1,98 @@
+{
+  "template_id": "nana-mint-explainer-v1",
+  "name": "动效模板3",
+  "version": "1.0.0",
+  "aliases": [
+    "动效模板3",
+    "动效模板三",
+    "Nana薄荷章节模板"
+  ],
+  "recorded_date": "2026-11-03",
+  "user_confirmation": {
+    "quote": "将这个动效模板固定下来，就就叫动效模板3",
+    "accepted_preview_quote": "这版可以，接下来导出来给我本地文件地址",
+    "scope": "Current accepted mint13-scene landscape template, Houzong local preset and current科技风 music balance; no automatic new-script, other-aspect or publication approval."
+  },
+  "accepted_video": {
+    "sha256": "1b48ed541036aa33f89dfa21d9c486f0f14fa0e9f6f6969a1bad0c026b770243",
+    "duration_seconds": 89.266667,
+    "frames": 2678,
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "video_stream_bitrate": 22024113,
+    "bytes": 247995037
+  },
+  "accepted_content_sha256": "8541f21ab73e9744fcaa9ec5988fce4eea1dafe417fcfad6c2fa472e96bfe772",
+  "accepted_episode_file_sha256": {
+    "assets/fontsource/@fontsource-variable/dm-sans@5.3.0/files/dm-sans-latin-opsz-normal.woff2": "ca72d2bcea8f4daa783dbdfa2d9b46068c3ce38168e05918fb867aa453b4f890",
+    "brief-houzong.mp4": "ea21771e4d25e3ee9e9b3e345759dc709f11325a0d11c0f99a2e9e9058aba2e8",
+    "brief-media.png": "f8050fb22def9c2429215b888f4e0c9d460ab707b5558b95d9f95a950aa152fc",
+    "closing-houzong.mp4": "65bf878778589fa4d617448a2faf4b66e84134dd6a38904dfedbc8a098cbf97c",
+    "compare-houzong.mp4": "ffdc264cde0130f619dd1c22c2c9c2d1b0d6dcdb869733740eb13930a75764b1",
+    "content.json": "dfb1e449548e1f61500b34e2be43280d41d84c2ea37e07fba41f9403f84a7fcd",
+    "course-houzong.mp4": "b8b463d14ab4cb78e0715fe09d3b62f6fc5e087779a05650714ccb68d53350ad",
+    "difference-houzong.mp4": "bb51250dbfa05306ede1dde75573995a54ff668d58d2b3877512387971987146",
+    "examples-houzong.mp4": "d983965106665c4d04a63f50af27553b24b6f8023075e8f7c83b79ff394360f1",
+    "examples-media.png": "e215b40c4afbc54af5b9afd179eaa24e7970516ae29c14fe2a3b310a55f76141",
+    "examples-overlay.mp4": "0dd675ae50f5a3eb9bf459006a9c29bd54eaba75f1db7d16430c3421ef1bf56f",
+    "font.ttf": "a3041811a78c361b1de50f953c805e0244951c21c5bd412f7232ef0d899af0da",
+    "integration-houzong.mp4": "b023f2834f12ac4443879b3b4e27b3b97e8f72ad921fadb212027613b1148972",
+    "integration-media.mp4": "4f1299fa24d6937cd994ebcf95b1806ebabb14fc14e6f02c1d6c14d394582008",
+    "logic-media.mp4": "d0d45f8a945aec70d1203b40c7e5c12da1dbe74aec40edf430f579c88759ec5f",
+    "mix.wav": "12637dd0ad352ff37ed638778733de6dbe7d85ee03923b10650cb5bfdbfdeb6f",
+    "question-houzong.mp4": "38110e76213624bd079c96c4c614719b4904b2f3e4c37d50c4280217359e41da",
+    "reference.mp4": "5945204e19bf24b65ceab153af809312189ef154ff4eca16614e27ae24528973",
+    "result-media.mp4": "32be4709b9b269884f0f114b90ad989185ed1801b303f1a619c18078b3ff697a",
+    "result-overlay.mp4": "2a340ca8e9cc7bfd381c86af5ca1efd221039f343bf3de67dd1a99d2f5860667",
+    "terms-houzong.mp4": "c6526c6f84a3fb4daeb5666b4cec69e5bbc3180d9336443a8a26c34b7289e329",
+    "terms-media.mp4": "1320f7fe80a02b163c63f5d170fa8af75d755752ef61d779989e7b5177c393e3",
+    "value-houzong.mp4": "6262f4388cb34a14152f124d5b2dd24b5343e2e67eedeb5db9772cf8b63c365f",
+    "workflow-media.mp4": "2216ad75527f629144427606c5f608826ca2f2b696614c7faa60da9de945e4b1"
+  },
+  "technical": {
+    "full_decode": "pass",
+    "final_aac_identical_to_accepted_preview": true,
+    "final_aac_true_peak_dbfs": -2.0,
+    "encoded_frames_actually_viewed": 17,
+    "all_scene_source_frames_actually_viewed": 44
+  },
+  "accepted_visual_implementation_sha256": {
+    "index.tsx": "acb1d4eb9f67ca611bb13e503cb497e41413411100043967164ade2077676c41",
+    "shared.tsx": "12b852587b04c28cce0f1379d3eadf881db13cd1758cfd9187cf45f651aa8f0e",
+    "types.ts": "f237347c9a52db160172339cd4a257ecdaad4cbdb828b502cb65eb34a884519b",
+    "scenes/Argument.tsx": "000c5ab681b42976d8c0743ad6a0cb4be495c5daf5d88edda38791b2d8dd5a2a",
+    "scenes/Introduction.tsx": "830af743cabff9e6f893151c221af92e11cb58596f89b0b07394f2925744c34f",
+    "scenes/Resources.tsx": "36ca4ca4c3e018309bc1009d18760d64906717180a9ba9407889e8d074437cb3",
+    "scenes/Workflow.tsx": "50aa920db409e25b81e962ae2e08cd974e3860524f7e2fc941946a4872f5df4f"
+  },
+  "encoded_frames_sha256": {
+    "24": "29be167d04918d095bfeb7e2a225c2e5aca79f1d4cab20d10ae3cea0c70aaff3",
+    "280": "a5138cf875520f8311a84aa51d8dd1d9c47525407fad5ff9428ae5fb3056c3f6",
+    "494": "0c48ead0b7e53f0d747de2cfcbce1a653aca5fa99c0acfda0d7eb5dcbc92f115",
+    "678": "19a6ec4107c0dcfbab439a6c3f5afd33f1af7af3337e917cc25876f522d0c511",
+    "806": "20dfae81cb05be78dbfadff3edbd3fdaaf34f18c61b4d9e14d1ca9774b458661",
+    "1498": "47d925a36fecab1c63720051a10155c2d5c6ba0adaec8913637e77edda3d3151",
+    "1699": "39281ebe431518e68303c6d23656e3d2405e7d84091cfe61fa44a983cfe05f5e",
+    "1813": "97b735d966459ef3912fc5f9d4d89dfc234267945f676e2d302deb114e4354ec",
+    "1975": "d065b1d152e7c4e07d5f4d51e96c2da124423166b220b8055a4df12e73c75c80",
+    "2146": "d0adf1382849fdbe00095bbef37a9c1fe133c08ef18e33b97a1857d01e4614ac",
+    "2199": "e9426204a01981f0a031da60a61a5587b4e3abe607af1c6ffe4fcedaa9eecade",
+    "2200": "5291a5d8de5af83729a4901b06b4bc3a34089788750177fe2a4049229574876e",
+    "2201": "f23d45ff6266dbeff88563243471256337bd0a89e2fb0966b733e20b9b8e38d5",
+    "2272": "0e91a85fd0ceb239ba95352d029c931e986c3119780d514f5e275d915fcf87d8",
+    "2447": "a65158cae0e3f69c293bf4ed09fa1ac2b1d737a28310947406778d872d3992c0",
+    "2606": "1d5c20c7b84a6f2928f77ea1abae320661bcb085076cc29ec35df8ba52604416",
+    "2677": "a1dfafddbfec6de3debe2497232329ef2fcdec2f851801b9cd9ff82e99eec104"
+  },
+  "private_evidence": ".local/nana-houzong-20261103/preview-v5-techbgmplus4/delivery.json",
+  "private_archive": ".local/animation-template-3-freeze-20261103/archive.json",
+  "private_default_preset": ".local/template-presets/animation-template-3/preset.json",
+  "pending": [
+    "New input/timing/mouth alignment and listening review",
+    "Other aspect ratios, phones/platforms and another physical machine",
+    "Ordinary avatar-form one-click production",
+    "GitHub release and distribution"
+  ],
+  "new_paid_or_publish_authorization": false
+}
