@@ -1,6 +1,7 @@
 """Read-only visual inventory with optional, portable screenshot covers."""
 from __future__ import annotations
 
+import hashlib
 import json
 from pathlib import Path
 import re
@@ -129,13 +130,47 @@ def _production_entries(preferred=None):
 
 def media(template_id, kind):
     item = entry(template_id)
+    if kind == 'original-poster':
+        return _media(item, 'poster', original=True) if item else None
     return _media(item, kind) if item else None
 
 
-def _media(item, kind):
+def _public_cover(item):
+    """Only the versioned, hash-checked style asset may override a local image."""
+    try:
+        manifest = PUBLIC_COVERS / 'manifest.json'
+        if manifest.is_symlink() or manifest.stat().st_size > 256 * 1024:
+            return None
+        document = json.loads(manifest.read_text(encoding='utf-8'))
+        if document.get('schema') != 'haike.template-public-covers/1':
+            return None
+        row = document.get('covers', {}).get(item['id'], {})
+        name = row.get('file', '')
+        from backlot.studio_motion_preferred import preferences
+        preferred = next((value for value in preferences() if value['gallery_id'] == item['id']), None)
+        version = preferred['version'] if preferred else item.get('version')
+        if (not isinstance(name, str) or Path(name).stem != item['id']
+                or not re.fullmatch(r'[a-z0-9][a-z0-9-]{0,179}\.(?:png|jpg|jpeg|webp)', name)
+                or row.get('version') != version
+                or row.get('template_id') != item.get('template_id', item['id'])):
+            return None
+        path = PUBLIC_COVERS / name
+        if (path.is_symlink() or not path.resolve().is_relative_to(PUBLIC_COVERS.resolve())
+                or not path.is_file() or path.stat().st_size != row.get('size')):
+            return None
+        with path.open('rb') as stream:
+            return path if hashlib.file_digest(stream, 'sha256').hexdigest() == row.get('sha256') else None
+    except (OSError, ValueError, TypeError, AttributeError):
+        return None
+
+
+def _media(item, kind, *, original=False):
     template_id = item['id']
     if kind not in ('poster', 'sample'):
         return None
+    public = _public_cover(item) if kind == 'poster' and not original else None
+    if public is not None and (item.get('group') == '动画模板' or item.get('source_kind') == 'imported-motion'):
+        return public
     try:
         bindings = json.loads(BINDINGS.read_text(encoding='utf-8'))
         binding = bindings.get(template_id, {}) if isinstance(bindings, dict) else {}
@@ -146,21 +181,15 @@ def _media(item, kind):
     allowed = ('.jpg', '.jpeg', '.png', '.webp') if kind == 'poster' else ('.mp4', '.webm')
     if path and path.is_file() and path.suffix.lower() in allowed:
         return path
-    # Distributed screenshots are named by catalog ID, never by an arbitrary
-    # client path. Private sample bindings remain optional and take precedence.
+    # Original local images and samples remain untouched and accessible even
+    # when the gallery uses the distributable, verified style image.
     if kind == 'poster' and '/' not in template_id and '\\' not in template_id:
         for extension in allowed:
             cover = COVERS / (template_id + extension)
             if (not cover.is_symlink() and cover.resolve().is_relative_to(COVERS.resolve())
                     and cover.is_file()):
                 return cover
-    if kind == 'poster' and re.fullmatch(r'[a-z0-9][a-z0-9-]{0,179}', template_id):
-        for extension in allowed:
-            cover = PUBLIC_COVERS / (template_id + extension)
-            if (not cover.is_symlink() and cover.resolve().is_relative_to(PUBLIC_COVERS.resolve())
-                    and cover.is_file()):
-                return cover
-    return None
+    return public
 
 
 def document(template_id):
@@ -214,8 +243,15 @@ def library():
                 item['replay']['sources_verified'] = False
             elif replay_error:
                 item['replay_notice'] = replay_error
-        for kind in ('poster', 'sample'):
-            item[kind] = f"/api/studio/template-library/{item['id']}/media/{kind}" if _media(item, kind) else None
+        poster_path = _media(item, 'poster')
+        item['poster'] = f"/api/studio/template-library/{item['id']}/media/poster" if poster_path else None
+        item['sample'] = f"/api/studio/template-library/{item['id']}/media/sample" if _media(item, 'sample') else None
+        item['poster_source'] = 'public-style' if poster_path and poster_path == _public_cover(item) else 'local' if poster_path else 'missing'
+        if item['poster_source'] == 'public-style' and item['category'] == '动效模板':
+            item['cover_note'] = '上次成片画面 · 正式制作使用本期素材'
+        item['original_poster'] = (f"/api/studio/template-library/{item['id']}/media/original-poster"
+                                   if item['poster_source'] == 'public-style' and _media(item, 'poster', original=True)
+                                   else None)
         item['guide'] = f"/api/studio/template-library/{item['id']}/guide" if _document(item) else None
         if item.get('source_kind') == 'imported-motion' and item['sample']:
             item['status'] = '本机开发样片'

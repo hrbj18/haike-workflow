@@ -49,3 +49,7 @@ Makefile    text eol=lf
 *.ttf   binary
 *.otf   binary
 *.pdf   binary
+
+# These two reference files retain the original bytes in UPSTREAM.json.
+design/hallmark/catalog.json -text -eol whitespace=cr-at-eol
+design/hallmark/LICENSE -text -eol whitespace=cr-at-eol

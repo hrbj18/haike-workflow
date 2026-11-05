@@ -1,0 +1,1084 @@
+{
+  "schema": "haike.template-public-covers/1",
+  "scope": "18 completed-film covers and 43 existing fixed-template covers; unchanged existing images for source delivery, not production acceptance",
+  "covers": {
+    "kinetic-field-v1": {
+      "template_id": "kinetic-field-v1",
+      "version": "2.0.0",
+      "file": "kinetic-field-v1.png",
+      "sha256": "11874d2979418068a9a5a7f0abe10d00e629ba00b494fdd9e14522f895ebffd1",
+      "size": 1258394,
+      "width": 1080,
+      "height": 1920,
+      "source": {
+        "kind": "completed-video-cover",
+        "template_id": "kinetic-field-v1",
+        "version": "2.0.0",
+        "video_sha256": "86461fdfeba3b093791cf2542a3f4a6f242f2dfe296324d233470fd1dbf87697",
+        "video_width": 1080,
+        "video_height": 1920,
+        "video_duration_seconds": 60.75,
+        "selection": "Existing cover selected for the completed video on 2026-11-04",
+        "frame_time_seconds": null,
+        "distribution": "User-requested completed-film cover demonstration; original media rights retained",
+        "verification_scope": "Exact existing selected-cover bytes; not a new full-film or cross-machine production acceptance"
+      }
+    },
+    "nana-mint-explainer-v1": {
+      "template_id": "nana-mint-explainer-v1",
+      "version": "2.0.0",
+      "file": "nana-mint-explainer-v1.png",
+      "sha256": "4c75a11f38ff470258bbeeccde5592ffa25f6da192dcebceb380f4b45b243a18",
+      "size": 1432767,
+      "width": 1920,
+      "height": 1080,
+      "source": {
+        "kind": "completed-video-cover",
+        "template_id": "nana-mint-explainer-v1",
+        "version": "2.0.0",
+        "video_sha256": "404654106a4365c154b8bb4aa70807ee121c45b86b337cf775ecb7d732add87d",
+        "video_width": 1920,
+        "video_height": 1080,
+        "video_duration_seconds": 60.733333,
+        "selection": "Existing cover selected for the completed video on 2026-11-04",
+        "frame_time_seconds": null,
+        "distribution": "User-requested completed-film cover demonstration; original media rights retained",
+        "verification_scope": "Exact existing selected-cover bytes; not a new full-film or cross-machine production acceptance"
+      }
+    },
+    "field-notes-v1": {
+      "template_id": "field-notes-v1",
+      "version": "2.0.0",
+      "file": "field-notes-v1.png",
+      "sha256": "c0003184518f36f0d78e98416c1fb4e9e813fcd4ed4847f682c0d82e00c35dd6",
+      "size": 755160,
+      "width": 1080,
+      "height": 1920,
+      "source": {
+        "kind": "completed-video-cover",
+        "template_id": "field-notes-v1",
+        "version": "2.0.0",
+        "video_sha256": "9097c0ba56171a1e2d905059dc68556fbb5f226a5822ac68e6e3a29449e308ca",
+        "video_width": 1080,
+        "video_height": 1920,
+        "video_duration_seconds": 60.733333,
+        "selection": "Existing cover selected for the completed video on 2026-11-04",
+        "frame_time_seconds": null,
+        "distribution": "User-requested completed-film cover demonstration; original media rights retained",
+        "verification_scope": "Exact existing selected-cover bytes; not a new full-film or cross-machine production acceptance"
+      }
+    },
+    "field-notes-v2": {
+      "template_id": "field-notes-v2",
+      "version": "2.1.0",
+      "file": "field-notes-v2.png",
+      "sha256": "505edad00f8301bae74854369c1a24d5da1bcf115dc144335383b852163bd3cd",
+      "size": 323434,
+      "width": 1080,
+      "height": 1920,
+      "source": {
+        "kind": "completed-video-cover",
+        "template_id": "field-notes-v2",
+        "version": "2.1.0",
+        "video_sha256": "b5eb8f8ada8236ab8d904047e981b8964497bc45ee8a3bed8a5791c991f30230",
+        "video_width": 1080,
+        "video_height": 1920,
+        "video_duration_seconds": 60.733333,
+        "selection": "Existing cover selected for the completed video on 2026-11-04",
+        "frame_time_seconds": null,
+        "distribution": "User-requested completed-film cover demonstration; original media rights retained",
+        "verification_scope": "Exact existing selected-cover bytes; not a new full-film or cross-machine production acceptance"
+      }
+    },
+    "chromatic-06": {
+      "template_id": "chromatic-06",
+      "version": "1.2.0-candidate.1",
+      "file": "chromatic-06.jpg",
+      "sha256": "e60dad56c7f5790387fa1636b0e9113471b6fa17d6c2f4f6efc655d82563e0c7",
+      "size": 116502,
+      "width": 1080,
+      "height": 1920,
+      "source": {
+        "kind": "completed-video-cover",
+        "template_id": "chromatic-06",
+        "version": "1.2.0-candidate.1",
+        "video_sha256": "53be97300e935ee8f3472b786c75f355313fa4f74e7000f788dd0905c4abae98",
+        "video_width": 1080,
+        "video_height": 1920,
+        "video_duration_seconds": 60.0,
+        "selection": "Existing cover selected for the completed video on 2026-11-04",
+        "frame_time_seconds": null,
+        "distribution": "User-requested completed-film cover demonstration; original media rights retained",
+        "verification_scope": "Exact existing selected-cover bytes; not a new full-film or cross-machine production acceptance"
+      }
+    },
+    "chromatic-07": {
+      "template_id": "chromatic-07",
+      "version": "1.2.0-candidate.1",
+      "file": "chromatic-07.jpg",
+      "sha256": "048178ab962b73401296d23206852009faa2c21da0e6f80e74f0e833f30fd5e7",
+      "size": 249925,
+      "width": 1080,
+      "height": 1920,
+      "source": {
+        "kind": "completed-video-cover",
+        "template_id": "chromatic-07",
+        "version": "1.2.0-candidate.1",
+        "video_sha256": "3a936787c45c27fc6f24f833331e9e5738ec3d474d9e0627a04069b3139871f3",
+        "video_width": 1080,
+        "video_height": 1920,
+        "video_duration_seconds": 60.0,
+        "selection": "Existing cover selected for the completed video on 2026-11-04",
+        "frame_time_seconds": null,
+        "distribution": "User-requested completed-film cover demonstration; original media rights retained",
+        "verification_scope": "Exact existing selected-cover bytes; not a new full-film or cross-machine production acceptance"
+      }
+    },
+    "chromatic-08": {
+      "template_id": "chromatic-08",
+      "version": "1.2.0-candidate.1",
+      "file": "chromatic-08.jpg",
+      "sha256": "5fa7692757e00fbd1e8c3d1a9ab20ddc10e7801a2b17a68f2a2b74a2b1cc01ba",
+      "size": 233984,
+      "width": 1080,
+      "height": 1920,
+      "source": {
+        "kind": "completed-video-cover",
+        "template_id": "chromatic-08",
+        "version": "1.2.0-candidate.1",
+        "video_sha256": "fd58a0249703ee8b0d78046ab43ee5c6edebe866af832616e657ea97255af7d2",
+        "video_width": 1080,
+        "video_height": 1920,
+        "video_duration_seconds": 60.0,
+        "selection": "Existing cover selected for the completed video on 2026-11-04",
+        "frame_time_seconds": null,
+        "distribution": "User-requested completed-film cover demonstration; original media rights retained",
+        "verification_scope": "Exact existing selected-cover bytes; not a new full-film or cross-machine production acceptance"
+      }
+    },
+    "chromatic-09": {
+      "template_id": "chromatic-09",
+      "version": "1.2.0-candidate.1",
+      "file": "chromatic-09.jpg",
+      "sha256": "0c0af1fba5f4b0ee9b6579c7f1ab9cda5a1a289f42967636c3d5a23153505938",
+      "size": 236569,
+      "width": 1080,
+      "height": 1920,
+      "source": {
+        "kind": "completed-video-cover",
+        "template_id": "chromatic-09",
+        "version": "1.2.0-candidate.1",
+        "video_sha256": "139d5941e2cb0827c22f76a8dece11366be10fe1d3a537cf0c68ab880d3170b4",
+        "video_width": 1080,
+        "video_height": 1920,
+        "video_duration_seconds": 60.0,
+        "selection": "Existing cover selected for the completed video on 2026-11-04",
+        "frame_time_seconds": null,
+        "distribution": "User-requested completed-film cover demonstration; original media rights retained",
+        "verification_scope": "Exact existing selected-cover bytes; not a new full-film or cross-machine production acceptance"
+      }
+    },
+    "chromatic-six-10": {
+      "template_id": "chromatic-six-10",
+      "version": "1.2.0-candidate.1",
+      "file": "chromatic-six-10.jpg",
+      "sha256": "8811197db026464052d4c82181ccf628ce713b4281cd6af803f772d11f5203ad",
+      "size": 276012,
+      "width": 1080,
+      "height": 1920,
+      "source": {
+        "kind": "completed-video-cover",
+        "template_id": "chromatic-six-10",
+        "version": "1.2.0-candidate.1",
+        "video_sha256": "264c837b3f1933d9eadcc3d2644f09617143f24c2cfca7a1873e2078696cb510",
+        "video_width": 1080,
+        "video_height": 1920,
+        "video_duration_seconds": 60.0,
+        "selection": "Previously selected encoded-video ending at 59.5 seconds",
+        "frame_time_seconds": 59.5,
+        "distribution": "User-requested completed-film cover demonstration; original media rights retained",
+        "verification_scope": "Exact existing selected-cover bytes; not a new full-film or cross-machine production acceptance"
+      }
+    },
+    "chromatic-six-11": {
+      "template_id": "chromatic-six-11",
+      "version": "1.2.0-candidate.1",
+      "file": "chromatic-six-11.jpg",
+      "sha256": "e0cfb4517b9727cc58d190216039ed138ecfa54c79b507ed45359ffae1ac86f5",
+      "size": 248414,
+      "width": 1080,
+      "height": 1920,
+      "source": {
+        "kind": "completed-video-cover",
+        "template_id": "chromatic-six-11",
+        "version": "1.2.0-candidate.1",
+        "video_sha256": "74e78b72179db70d883c9e97ae57244d4e291517ece8b2c8c5b4e6a53d69fbd1",
+        "video_width": 1080,
+        "video_height": 1920,
+        "video_duration_seconds": 60.0,
+        "selection": "Previously selected encoded-video ending at 59.5 seconds",
+        "frame_time_seconds": 59.5,
+        "distribution": "User-requested completed-film cover demonstration; original media rights retained",
+        "verification_scope": "Exact existing selected-cover bytes; not a new full-film or cross-machine production acceptance"
+      }
+    },
+    "motion-package-mg-2150f84a4202e3ebd36a47fc": {
+      "template_id": "template-01-integrated",
+      "version": "1.0.1-public.2",
+      "file": "motion-package-mg-2150f84a4202e3ebd36a47fc.jpg",
+      "sha256": "477058c3acb55e94a2ace513528593e48a841cb5d0473d9cd654f802faf18f46",
+      "size": 140369,
+      "width": 1080,
+      "height": 1920,
+      "source": {
+        "kind": "completed-video-cover",
+        "template_id": "template-01-integrated",
+        "version": "2.7.18-alpha.4",
+        "video_sha256": "4caf0c77f1c926c610bcef788d5eabbbf5ddbd61aebf17f78508c974d80df1fc",
+        "video_width": 1080,
+        "video_height": 1920,
+        "video_duration_seconds": 60.0,
+        "selection": "Existing cover selected for the completed video on 2026-11-04",
+        "frame_time_seconds": null,
+        "distribution": "User-requested completed-film cover demonstration; original media rights retained",
+        "verification_scope": "Exact existing selected-cover bytes; not a new full-film or cross-machine production acceptance"
+      }
+    },
+    "motion-package-mg-8c9df3f72e3cca9713485c4c": {
+      "template_id": "template-02-expanded",
+      "version": "1.0.1-public.2",
+      "file": "motion-package-mg-8c9df3f72e3cca9713485c4c.jpg",
+      "sha256": "1f853fb560298ccb142fcfe8f5b60ecadd63cfe24f4d6319b6b5f95a8cac2c98",
+      "size": 158919,
+      "width": 1080,
+      "height": 1920,
+      "source": {
+        "kind": "completed-video-cover",
+        "template_id": "template-02-expanded",
+        "version": "2.7.21-alpha.5",
+        "video_sha256": "e814d9674e02680cba4e65f023713342d54c92b46487fb6cbf468e41eddf5cee",
+        "video_width": 1080,
+        "video_height": 1920,
+        "video_duration_seconds": 60.0,
+        "selection": "Existing cover selected for the completed video on 2026-11-04",
+        "frame_time_seconds": null,
+        "distribution": "User-requested completed-film cover demonstration; original media rights retained",
+        "verification_scope": "Exact existing selected-cover bytes; not a new full-film or cross-machine production acceptance"
+      }
+    },
+    "motion-package-mg-54f75c890e652d190cbfc8ec": {
+      "template_id": "template-04-dark-console",
+      "version": "1.0.1-public.2",
+      "file": "motion-package-mg-54f75c890e652d190cbfc8ec.jpg",
+      "sha256": "614477c4e1a258c93c8865651fccd26e7178dca98785e3ec836db6330da206b4",
+      "size": 147732,
+      "width": 1080,
+      "height": 1920,
+      "source": {
+        "kind": "completed-video-cover",
+        "template_id": "template-04-dark-console",
+        "version": "2.7.20-alpha.3",
+        "video_sha256": "54f731a1f8bfa5107786f47294085905a3fe8c4bc2dd57d466db266046d530ae",
+        "video_width": 1080,
+        "video_height": 1920,
+        "video_duration_seconds": 60.0,
+        "selection": "Existing cover selected for the completed video on 2026-11-04",
+        "frame_time_seconds": null,
+        "distribution": "User-requested completed-film cover demonstration; original media rights retained",
+        "verification_scope": "Exact existing selected-cover bytes; not a new full-film or cross-machine production acceptance"
+      }
+    },
+    "motion-package-mg-0073456d9aef950f7548ca3e": {
+      "template_id": "template-03-native",
+      "version": "1.0.1-public.2",
+      "file": "motion-package-mg-0073456d9aef950f7548ca3e.png",
+      "sha256": "c546af7c06614222bc51a7792156caad2470d7b2d7553e666777e83ce951ec8b",
+      "size": 615303,
+      "width": 1440,
+      "height": 1800,
+      "source": {
+        "kind": "completed-video-cover",
+        "template_id": "template-03-native",
+        "version": "1.0.1-public.2",
+        "video_sha256": "8ce153f659838803983f67334d7fe81f074df9d4b53c2d5fa17d93c39b8a3f8c",
+        "video_width": 1440,
+        "video_height": 1800,
+        "video_duration_seconds": 108.966667,
+        "selection": "Existing cover selected for the completed video on 2026-11-04",
+        "frame_time_seconds": null,
+        "distribution": "User-requested completed-film cover demonstration; original media rights retained",
+        "verification_scope": "Exact existing selected-cover bytes; not a new full-film or cross-machine production acceptance"
+      }
+    },
+    "motion-package-mg-bcf4d5995342cdffe345d140": {
+      "template_id": "vibrant-poster",
+      "version": "1.0.0-public.3",
+      "file": "motion-package-mg-bcf4d5995342cdffe345d140.jpg",
+      "sha256": "ad03bea4b5fb330a2d2b4370a4b34973ad683fae86b771f31fdd82a3caa2af6a",
+      "size": 108565,
+      "width": 1080,
+      "height": 1920,
+      "source": {
+        "kind": "completed-video-cover",
+        "template_id": "vibrant-poster",
+        "version": "2.7.13",
+        "video_sha256": "5d22a4a1daa95ebc3351441149c0e98a588998bc3a04189dc577935aa5e052bd",
+        "video_width": 1080,
+        "video_height": 1920,
+        "video_duration_seconds": 60.0,
+        "selection": "Existing cover selected for the completed video on 2026-11-04",
+        "frame_time_seconds": null,
+        "distribution": "User-requested completed-film cover demonstration; original media rights retained",
+        "verification_scope": "Exact existing selected-cover bytes; not a new full-film or cross-machine production acceptance"
+      }
+    },
+    "motion-package-mg-178e6870ae932019c6bf2fe9": {
+      "template_id": "knowledge-explainer-sketchnote",
+      "version": "5.1.1-independent.1",
+      "file": "motion-package-mg-178e6870ae932019c6bf2fe9.png",
+      "sha256": "3be6b415663d28e44f40f0f7c164af374930ad1064a47de40f52ea43972f66ae",
+      "size": 371034,
+      "width": 1080,
+      "height": 1920,
+      "source": {
+        "kind": "completed-video-cover",
+        "template_id": "knowledge-explainer-sketchnote",
+        "version": "5.1.1-independent.1",
+        "video_sha256": "970c0b4d41a6972804de92ea56ad81f81151441aa5ff84b27485b5d456f44baa",
+        "video_width": 1080,
+        "video_height": 1920,
+        "video_duration_seconds": 59.966667,
+        "selection": "Existing cover selected for the completed video on 2026-11-04",
+        "frame_time_seconds": null,
+        "distribution": "User-requested completed-film cover demonstration; original media rights retained",
+        "verification_scope": "Exact existing selected-cover bytes; not a new full-film or cross-machine production acceptance"
+      }
+    },
+    "motion-package-mg-5b31b7dd6e6709861dc6ac88": {
+      "template_id": "knowledge-explainer-chalkboard",
+      "version": "5.1.1-independent.1",
+      "file": "motion-package-mg-5b31b7dd6e6709861dc6ac88.png",
+      "sha256": "0b82e58d0026383f63e2aba697fee81765b82762de22819523ee94c26caa5d51",
+      "size": 1709385,
+      "width": 1080,
+      "height": 1920,
+      "source": {
+        "kind": "completed-video-cover",
+        "template_id": "knowledge-explainer-chalkboard",
+        "version": "5.1.1-independent.1",
+        "video_sha256": "27d9dd3d6805cf5a5e7b52c674f9aa8b16c5a3dd504c274457d24086fc9b56f3",
+        "video_width": 1080,
+        "video_height": 1920,
+        "video_duration_seconds": 59.966667,
+        "selection": "Existing cover selected for the completed video on 2026-11-04",
+        "frame_time_seconds": null,
+        "distribution": "User-requested completed-film cover demonstration; original media rights retained",
+        "verification_scope": "Exact existing selected-cover bytes; not a new full-film or cross-machine production acceptance"
+      }
+    },
+    "motion-package-mg-8d3e5baeef9310e4b49b41de": {
+      "template_id": "motiongit-promo-user",
+      "version": "3.0.0-reference-public.3",
+      "file": "motion-package-mg-8d3e5baeef9310e4b49b41de.jpg",
+      "sha256": "28ca74c78401c19309ce1124aa079fd843eaae60f30bfbc7ab7b85752e6ca7bd",
+      "size": 72723,
+      "width": 1920,
+      "height": 1080,
+      "source": {
+        "kind": "completed-video-cover",
+        "template_id": "motiongit-promo-user",
+        "version": "3.0.0-reference-public.3",
+        "video_sha256": "a14181d4a3f76fa5b824df40d6e728019b20fb8316d4d271158579c090b23f3c",
+        "video_width": 1920,
+        "video_height": 1080,
+        "video_duration_seconds": 59.966667,
+        "selection": "Existing cover selected for the completed video on 2026-11-04",
+        "frame_time_seconds": null,
+        "distribution": "User-requested completed-film cover demonstration; original media rights retained",
+        "verification_scope": "Exact existing selected-cover bytes; not a new full-film or cross-machine production acceptance"
+      }
+    },
+    "haike-quest-v1": {
+      "template_id": "haike-quest-v1",
+      "version": null,
+      "file": "haike-quest-v1.png",
+      "sha256": "04d59a39090ee12dea95bf252ee2e71fc7665efc43d8f0dc2a2832589f7b8f5f",
+      "size": 562405,
+      "width": 1080,
+      "height": 1920,
+      "source": {
+        "kind": "existing-fixed-template-cover",
+        "selection": "Previously delivered existing cover; reused unchanged",
+        "distribution": "Existing template cover requested for the source-updated gallery; original rights retained"
+      }
+    },
+    "store-footage-18": {
+      "template_id": "store-footage-18",
+      "version": null,
+      "file": "store-footage-18.jpg",
+      "sha256": "d199a6059a7832daf85b58e0b4e266c2cc86bab2f5d54e0e2ba70cd0972b74d4",
+      "size": 313841,
+      "width": 1440,
+      "height": 1800,
+      "source": {
+        "kind": "existing-fixed-template-cover",
+        "selection": "Original 20261027 archive cover restored unchanged",
+        "archive": "海客工作台_完整新版_20261027.zip",
+        "member": "Haike_videoflow/Haike_video/templates/library-covers/store-footage-18.jpg",
+        "distribution": "Existing template cover requested for the source-updated gallery; original rights retained"
+      }
+    },
+    "store-footage-19": {
+      "template_id": "store-footage-19",
+      "version": null,
+      "file": "store-footage-19.jpg",
+      "sha256": "845666d4975ce9e0b190e7004703d78dee62b49518bcc313dd7e10a88398b7c8",
+      "size": 421799,
+      "width": 1440,
+      "height": 1800,
+      "source": {
+        "kind": "existing-fixed-template-cover",
+        "selection": "Original 20261027 archive cover restored unchanged",
+        "archive": "海客工作台_完整新版_20261027.zip",
+        "member": "Haike_videoflow/Haike_video/templates/library-covers/store-footage-19.jpg",
+        "distribution": "Existing template cover requested for the source-updated gallery; original rights retained"
+      }
+    },
+    "store-footage-20": {
+      "template_id": "store-footage-20",
+      "version": null,
+      "file": "store-footage-20.jpg",
+      "sha256": "bbfb7865d3d46688eeaa3c89f618875ce568faea0cf6276f65244a0b435109b0",
+      "size": 280260,
+      "width": 1440,
+      "height": 1800,
+      "source": {
+        "kind": "existing-fixed-template-cover",
+        "selection": "Original 20261027 archive cover restored unchanged",
+        "archive": "海客工作台_完整新版_20261027.zip",
+        "member": "Haike_videoflow/Haike_video/templates/library-covers/store-footage-20.jpg",
+        "distribution": "Existing template cover requested for the source-updated gallery; original rights retained"
+      }
+    },
+    "store-footage-21": {
+      "template_id": "store-footage-21",
+      "version": null,
+      "file": "store-footage-21.jpg",
+      "sha256": "ec013396ae1ffb29709b4c25f2fc23c3e17566c5d453f1dab9ab29bff866780c",
+      "size": 387985,
+      "width": 1440,
+      "height": 1800,
+      "source": {
+        "kind": "existing-fixed-template-cover",
+        "selection": "Original 20261027 archive cover restored unchanged",
+        "archive": "海客工作台_完整新版_20261027.zip",
+        "member": "Haike_videoflow/Haike_video/templates/library-covers/store-footage-21.jpg",
+        "distribution": "Existing template cover requested for the source-updated gallery; original rights retained"
+      }
+    },
+    "store-manager-11": {
+      "template_id": "store-manager-11",
+      "version": null,
+      "file": "store-manager-11.jpg",
+      "sha256": "4243aaf4610e82b547732cf5e9f4e2e215f0fa6e26529cb69906df54cd76c917",
+      "size": 30684,
+      "width": 480,
+      "height": 600,
+      "source": {
+        "kind": "existing-fixed-template-cover",
+        "selection": "Original 20261027 archive cover restored unchanged",
+        "archive": "海客工作台_完整新版_20261027.zip",
+        "member": "Haike_videoflow/Haike_video/templates/library-covers/store-manager-11.jpg",
+        "distribution": "Existing template cover requested for the source-updated gallery; original rights retained"
+      }
+    },
+    "store-manager-13": {
+      "template_id": "store-manager-13",
+      "version": null,
+      "file": "store-manager-13.jpg",
+      "sha256": "75ba32ad22dd951d13e09d8327af5fcbe91dc0d491e428a4487799662106f576",
+      "size": 40621,
+      "width": 480,
+      "height": 600,
+      "source": {
+        "kind": "existing-fixed-template-cover",
+        "selection": "Original 20261027 archive cover restored unchanged",
+        "archive": "海客工作台_完整新版_20261027.zip",
+        "member": "Haike_videoflow/Haike_video/templates/library-covers/store-manager-13.jpg",
+        "distribution": "Existing template cover requested for the source-updated gallery; original rights retained"
+      }
+    },
+    "investment-full-07-blue-beige": {
+      "template_id": "investment-full-07-blue-beige",
+      "version": null,
+      "file": "investment-full-07-blue-beige.jpg",
+      "sha256": "16675481feb4173121b5dde026aafeb63699e30c0ab7a43484b781770618e0cf",
+      "size": 542241,
+      "width": 1440,
+      "height": 1800,
+      "source": {
+        "kind": "existing-fixed-template-cover",
+        "selection": "Original 20261027 archive cover restored unchanged",
+        "archive": "海客工作台_完整新版_20261027.zip",
+        "member": "Haike_videoflow/Haike_video/templates/library-covers/investment-full-07-blue-beige.jpg",
+        "distribution": "Existing template cover requested for the source-updated gallery; original rights retained"
+      }
+    },
+    "investment-full-08-cyan-charcoal": {
+      "template_id": "investment-full-08-cyan-charcoal",
+      "version": null,
+      "file": "investment-full-08-cyan-charcoal.jpg",
+      "sha256": "250537b3ff878298c153d1a0fe2479a4952228e58dc13210c15a66a7ef6434a4",
+      "size": 27413,
+      "width": 480,
+      "height": 600,
+      "source": {
+        "kind": "existing-fixed-template-cover",
+        "selection": "Original 20261027 archive cover restored unchanged",
+        "archive": "海客工作台_完整新版_20261027.zip",
+        "member": "Haike_videoflow/Haike_video/templates/library-covers/investment-full-08-cyan-charcoal.jpg",
+        "distribution": "Existing template cover requested for the source-updated gallery; original rights retained"
+      }
+    },
+    "investment-full-09-black-pink": {
+      "template_id": "investment-full-09-black-pink",
+      "version": null,
+      "file": "investment-full-09-black-pink.jpg",
+      "sha256": "3fa64514cc1ee34a36c5aa709f67fe8deaa50cb0385584adca66db03f28b3950",
+      "size": 569693,
+      "width": 1440,
+      "height": 1800,
+      "source": {
+        "kind": "existing-fixed-template-cover",
+        "selection": "Original 20261027 archive cover restored unchanged",
+        "archive": "海客工作台_完整新版_20261027.zip",
+        "member": "Haike_videoflow/Haike_video/templates/library-covers/investment-full-09-black-pink.jpg",
+        "distribution": "Existing template cover requested for the source-updated gallery; original rights retained"
+      }
+    },
+    "graphic-three-scenes": {
+      "template_id": "graphic-three-scenes",
+      "version": null,
+      "file": "graphic-three-scenes.png",
+      "sha256": "10f48c93ffdb6c7d223a9a1e2c451ad19d7818f7854ad5c93087c612a238bd17",
+      "size": 104030,
+      "width": 1080,
+      "height": 1920,
+      "source": {
+        "kind": "existing-fixed-template-cover",
+        "selection": "Previously delivered existing cover; reused unchanged",
+        "distribution": "Existing template cover requested for the source-updated gallery; original rights retained"
+      }
+    },
+    "avatar-interview-v7": {
+      "template_id": "avatar-interview-v7",
+      "version": null,
+      "file": "avatar-interview-v7.png",
+      "sha256": "4f43d645d8e27e99c7d6f4686851e14d5c335faefc7984b569c51c6d72910937",
+      "size": 1256256,
+      "width": 1080,
+      "height": 1920,
+      "source": {
+        "kind": "existing-fixed-template-cover",
+        "selection": "Previously delivered existing cover; reused unchanged",
+        "distribution": "Existing template cover requested for the source-updated gallery; original rights retained"
+      }
+    },
+    "store-manager-14": {
+      "template_id": "store-manager-14",
+      "version": null,
+      "file": "store-manager-14.jpg",
+      "sha256": "8dc155385c01f7a4b7972e5e05aee8759abd4a731b0c89b2d113be0d03ae9570",
+      "size": 525505,
+      "width": 1440,
+      "height": 1800,
+      "source": {
+        "kind": "existing-fixed-template-cover",
+        "selection": "Original 20261027 archive cover restored unchanged",
+        "archive": "海客工作台_完整新版_20261027.zip",
+        "member": "Haike_videoflow/Haike_video/templates/library-covers/store-manager-14.jpg",
+        "distribution": "Existing template cover requested for the source-updated gallery; original rights retained"
+      }
+    },
+    "store-manager-15": {
+      "template_id": "store-manager-15",
+      "version": null,
+      "file": "store-manager-15.jpg",
+      "sha256": "a1a09bcea2f3e73602fea29a8137ff30913bfb6ca1c3446de5c4934dfb5aeb27",
+      "size": 468076,
+      "width": 1440,
+      "height": 1800,
+      "source": {
+        "kind": "existing-fixed-template-cover",
+        "selection": "Original 20261027 archive cover restored unchanged",
+        "archive": "海客工作台_完整新版_20261027.zip",
+        "member": "Haike_videoflow/Haike_video/templates/library-covers/store-manager-15.jpg",
+        "distribution": "Existing template cover requested for the source-updated gallery; original rights retained"
+      }
+    },
+    "store-manager-16": {
+      "template_id": "store-manager-16",
+      "version": null,
+      "file": "store-manager-16.jpg",
+      "sha256": "0deebab4b18fcac0de191400bc01df2a588f5d2fbcbe0bfed8cf19d544eafb06",
+      "size": 549392,
+      "width": 1440,
+      "height": 1800,
+      "source": {
+        "kind": "existing-fixed-template-cover",
+        "selection": "Original 20261027 archive cover restored unchanged",
+        "archive": "海客工作台_完整新版_20261027.zip",
+        "member": "Haike_videoflow/Haike_video/templates/library-covers/store-manager-16.jpg",
+        "distribution": "Existing template cover requested for the source-updated gallery; original rights retained"
+      }
+    },
+    "store-manager-17": {
+      "template_id": "store-manager-17",
+      "version": null,
+      "file": "store-manager-17.jpg",
+      "sha256": "24167d38f248cd6a204e599a9b0f9d026a6c89d0c49c4059a1242fa038dcc5c6",
+      "size": 412629,
+      "width": 1440,
+      "height": 1800,
+      "source": {
+        "kind": "existing-fixed-template-cover",
+        "selection": "Original 20261027 archive cover restored unchanged",
+        "archive": "海客工作台_完整新版_20261027.zip",
+        "member": "Haike_videoflow/Haike_video/templates/library-covers/store-manager-17.jpg",
+        "distribution": "Existing template cover requested for the source-updated gallery; original rights retained"
+      }
+    },
+    "investment-template-03": {
+      "template_id": "investment-template-03",
+      "version": null,
+      "file": "investment-template-03.jpg",
+      "sha256": "64b1cc0ce410faaf4151e7d064a8cbd1ec0092f995080db2f8ff0d05d85937b3",
+      "size": 277001,
+      "width": 1440,
+      "height": 1800,
+      "source": {
+        "kind": "existing-fixed-template-cover",
+        "selection": "Original 20261027 archive cover restored unchanged",
+        "archive": "海客工作台_完整新版_20261027.zip",
+        "member": "Haike_videoflow/Haike_video/templates/library-covers/investment-template-03.jpg",
+        "distribution": "Existing template cover requested for the source-updated gallery; original rights retained"
+      }
+    },
+    "investment-template-04": {
+      "template_id": "investment-template-04",
+      "version": null,
+      "file": "investment-template-04.jpg",
+      "sha256": "ff74b278433c5f0010fdf73e82c0913000519f4d79d78732b02fde3b65e71510",
+      "size": 313094,
+      "width": 1440,
+      "height": 1800,
+      "source": {
+        "kind": "existing-fixed-template-cover",
+        "selection": "Original 20261027 archive cover restored unchanged",
+        "archive": "海客工作台_完整新版_20261027.zip",
+        "member": "Haike_videoflow/Haike_video/templates/library-covers/investment-template-04.jpg",
+        "distribution": "Existing template cover requested for the source-updated gallery; original rights retained"
+      }
+    },
+    "investment-template-05": {
+      "template_id": "investment-template-05",
+      "version": null,
+      "file": "investment-template-05.jpg",
+      "sha256": "85836949f487be48df9768dbc67ea281195111fe38741cd10d76c334c61915af",
+      "size": 262342,
+      "width": 1440,
+      "height": 1800,
+      "source": {
+        "kind": "existing-fixed-template-cover",
+        "selection": "Original 20261027 archive cover restored unchanged",
+        "archive": "海客工作台_完整新版_20261027.zip",
+        "member": "Haike_videoflow/Haike_video/templates/library-covers/investment-template-05.jpg",
+        "distribution": "Existing template cover requested for the source-updated gallery; original rights retained"
+      }
+    },
+    "investment-art-v3-archive": {
+      "template_id": "investment-art-v3-archive",
+      "version": null,
+      "file": "investment-art-v3-archive.jpg",
+      "sha256": "111a18809457a2bfd11268100e16f3470ac5f2a29cb3209a736dcc5275d91da9",
+      "size": 39097,
+      "width": 480,
+      "height": 854,
+      "source": {
+        "kind": "existing-fixed-template-cover",
+        "selection": "Original 20261027 archive cover restored unchanged",
+        "archive": "海客工作台_完整新版_20261027.zip",
+        "member": "Haike_videoflow/Haike_video/templates/library-covers/investment-art-v3-archive.jpg",
+        "distribution": "Existing template cover requested for the source-updated gallery; original rights retained"
+      }
+    },
+    "investment-art-v5-optical-cinema": {
+      "template_id": "investment-art-v5-optical-cinema",
+      "version": null,
+      "file": "investment-art-v5-optical-cinema.jpg",
+      "sha256": "17d627c200c7dbc9f1d699cdfbdd0c2f1c7c0424f15fd09e69f6328038115dbf",
+      "size": 606915,
+      "width": 1080,
+      "height": 1920,
+      "source": {
+        "kind": "existing-fixed-template-cover",
+        "selection": "Original 20261027 archive cover restored unchanged",
+        "archive": "海客工作台_完整新版_20261027.zip",
+        "member": "Haike_videoflow/Haike_video/templates/library-covers/investment-art-v5-optical-cinema.jpg",
+        "distribution": "Existing template cover requested for the source-updated gallery; original rights retained"
+      }
+    },
+    "investment-art-v4-archive": {
+      "template_id": "investment-art-v4-archive",
+      "version": null,
+      "file": "investment-art-v4-archive.jpg",
+      "sha256": "8388cd32fa705b6ebc65fa80ee9fce3d72e2caac121e41b2ad7f3817b6f0122d",
+      "size": 40593,
+      "width": 480,
+      "height": 854,
+      "source": {
+        "kind": "existing-fixed-template-cover",
+        "selection": "Original 20261027 archive cover restored unchanged",
+        "archive": "海客工作台_完整新版_20261027.zip",
+        "member": "Haike_videoflow/Haike_video/templates/library-covers/investment-art-v4-archive.jpg",
+        "distribution": "Existing template cover requested for the source-updated gallery; original rights retained"
+      }
+    },
+    "investment-template-06": {
+      "template_id": "investment-template-06",
+      "version": null,
+      "file": "investment-template-06.jpg",
+      "sha256": "bd200481b49594d7d51b0950f7d0db77fd713e914cdb70d12f21c946f38a65ab",
+      "size": 275683,
+      "width": 1440,
+      "height": 1800,
+      "source": {
+        "kind": "existing-fixed-template-cover",
+        "selection": "Original 20261027 archive cover restored unchanged",
+        "archive": "海客工作台_完整新版_20261027.zip",
+        "member": "Haike_videoflow/Haike_video/templates/library-covers/investment-template-06.jpg",
+        "distribution": "Existing template cover requested for the source-updated gallery; original rights retained"
+      }
+    },
+    "investment-art-v5-community-showcase": {
+      "template_id": "investment-art-v5-community-showcase",
+      "version": null,
+      "file": "investment-art-v5-community-showcase.jpg",
+      "sha256": "f8c10e5b3bfab9b0697d80bfe59899450cb4a11ffa401758b6cd9b69a0b8dc98",
+      "size": 671542,
+      "width": 1080,
+      "height": 1920,
+      "source": {
+        "kind": "existing-fixed-template-cover",
+        "selection": "Original 20261027 archive cover restored unchanged",
+        "archive": "海客工作台_完整新版_20261027.zip",
+        "member": "Haike_videoflow/Haike_video/templates/library-covers/investment-art-v5-community-showcase.jpg",
+        "distribution": "Existing template cover requested for the source-updated gallery; original rights retained"
+      }
+    },
+    "investment-art-v5-documentary": {
+      "template_id": "investment-art-v5-documentary",
+      "version": null,
+      "file": "investment-art-v5-documentary.jpg",
+      "sha256": "e0027c45fe6acbc526c15bc58a6ce053a36e89621df9c6584c4109f6b119685a",
+      "size": 519409,
+      "width": 1080,
+      "height": 1920,
+      "source": {
+        "kind": "existing-fixed-template-cover",
+        "selection": "Original 20261027 archive cover restored unchanged",
+        "archive": "海客工作台_完整新版_20261027.zip",
+        "member": "Haike_videoflow/Haike_video/templates/library-covers/investment-art-v5-documentary.jpg",
+        "distribution": "Existing template cover requested for the source-updated gallery; original rights retained"
+      }
+    },
+    "investment-art-v5-red-manifesto": {
+      "template_id": "investment-art-v5-red-manifesto",
+      "version": null,
+      "file": "investment-art-v5-red-manifesto.jpg",
+      "sha256": "45148eec6ab6cbb06ddb700b3caf9cde9bcb2bb569630a175e33894a16c1dd1d",
+      "size": 569756,
+      "width": 1080,
+      "height": 1920,
+      "source": {
+        "kind": "existing-fixed-template-cover",
+        "selection": "Original 20261027 archive cover restored unchanged",
+        "archive": "海客工作台_完整新版_20261027.zip",
+        "member": "Haike_videoflow/Haike_video/templates/library-covers/investment-art-v5-red-manifesto.jpg",
+        "distribution": "Existing template cover requested for the source-updated gallery; original rights retained"
+      }
+    },
+    "investment-art-v5-silver-launch": {
+      "template_id": "investment-art-v5-silver-launch",
+      "version": null,
+      "file": "investment-art-v5-silver-launch.jpg",
+      "sha256": "6abf007c71df54e794e182b1c25b44ff1217f5f5162658341cd1f84a4964f7e1",
+      "size": 551387,
+      "width": 1080,
+      "height": 1920,
+      "source": {
+        "kind": "existing-fixed-template-cover",
+        "selection": "Original 20261027 archive cover restored unchanged",
+        "archive": "海客工作台_完整新版_20261027.zip",
+        "member": "Haike_videoflow/Haike_video/templates/library-covers/investment-art-v5-silver-launch.jpg",
+        "distribution": "Existing template cover requested for the source-updated gallery; original rights retained"
+      }
+    },
+    "investment-art-v5-blue-editorial": {
+      "template_id": "investment-art-v5-blue-editorial",
+      "version": null,
+      "file": "investment-art-v5-blue-editorial.jpg",
+      "sha256": "016701451ed034e5ba4628dd4a0378ab87aa3113824e022badd4240fb7526c44",
+      "size": 39295,
+      "width": 480,
+      "height": 854,
+      "source": {
+        "kind": "existing-fixed-template-cover",
+        "selection": "Original 20261027 archive cover restored unchanged",
+        "archive": "海客工作台_完整新版_20261027.zip",
+        "member": "Haike_videoflow/Haike_video/templates/library-covers/investment-art-v5-blue-editorial.jpg",
+        "distribution": "Existing template cover requested for the source-updated gallery; original rights retained"
+      }
+    },
+    "investment-template-07": {
+      "template_id": "investment-template-07",
+      "version": null,
+      "file": "investment-template-07.jpg",
+      "sha256": "fcc7fea27c6d6723993ae1432cfc442b99ecfe540f3727c771afc354d5b1a03c",
+      "size": 255823,
+      "width": 1440,
+      "height": 1800,
+      "source": {
+        "kind": "existing-fixed-template-cover",
+        "selection": "Original 20261027 archive cover restored unchanged",
+        "archive": "海客工作台_完整新版_20261027.zip",
+        "member": "Haike_videoflow/Haike_video/templates/library-covers/investment-template-07.jpg",
+        "distribution": "Existing template cover requested for the source-updated gallery; original rights retained"
+      }
+    },
+    "investment-template-07-blue-beige": {
+      "template_id": "investment-template-07-blue-beige",
+      "version": null,
+      "file": "investment-template-07-blue-beige.jpg",
+      "sha256": "e5135794a9d8f796ffe36060c3c2aab1729f12b260d074938753af51d3d23d2b",
+      "size": 413176,
+      "width": 1440,
+      "height": 1800,
+      "source": {
+        "kind": "existing-fixed-template-cover",
+        "selection": "Original 20261027 archive cover restored unchanged",
+        "archive": "海客工作台_完整新版_20261027.zip",
+        "member": "Haike_videoflow/Haike_video/templates/library-covers/investment-template-07-blue-beige.jpg",
+        "distribution": "Existing template cover requested for the source-updated gallery; original rights retained"
+      }
+    },
+    "investment-template-08": {
+      "template_id": "investment-template-08",
+      "version": null,
+      "file": "investment-template-08.jpg",
+      "sha256": "8dd6e31c9888436a8baf2e32230c4cabdf02ffce7e1b49694d165e84cccc8a29",
+      "size": 284270,
+      "width": 1440,
+      "height": 1800,
+      "source": {
+        "kind": "existing-fixed-template-cover",
+        "selection": "Original 20261027 archive cover restored unchanged",
+        "archive": "海客工作台_完整新版_20261027.zip",
+        "member": "Haike_videoflow/Haike_video/templates/library-covers/investment-template-08.jpg",
+        "distribution": "Existing template cover requested for the source-updated gallery; original rights retained"
+      }
+    },
+    "investment-template-08-cyan-charcoal": {
+      "template_id": "investment-template-08-cyan-charcoal",
+      "version": null,
+      "file": "investment-template-08-cyan-charcoal.jpg",
+      "sha256": "1ed06cd3a3c12a7d265736ca44283df8adb92c61c9eaa098fa58df81f05ec559",
+      "size": 437456,
+      "width": 1440,
+      "height": 1800,
+      "source": {
+        "kind": "existing-fixed-template-cover",
+        "selection": "Original 20261027 archive cover restored unchanged",
+        "archive": "海客工作台_完整新版_20261027.zip",
+        "member": "Haike_videoflow/Haike_video/templates/library-covers/investment-template-08-cyan-charcoal.jpg",
+        "distribution": "Existing template cover requested for the source-updated gallery; original rights retained"
+      }
+    },
+    "investment-template-09": {
+      "template_id": "investment-template-09",
+      "version": null,
+      "file": "investment-template-09.jpg",
+      "sha256": "aabd7df3747fad90c0cd0de394b7b5e72a0206ec042429c071052f7e19f1cf27",
+      "size": 270448,
+      "width": 1440,
+      "height": 1800,
+      "source": {
+        "kind": "existing-fixed-template-cover",
+        "selection": "Original 20261027 archive cover restored unchanged",
+        "archive": "海客工作台_完整新版_20261027.zip",
+        "member": "Haike_videoflow/Haike_video/templates/library-covers/investment-template-09.jpg",
+        "distribution": "Existing template cover requested for the source-updated gallery; original rights retained"
+      }
+    },
+    "investment-template-09-black-pink": {
+      "template_id": "investment-template-09-black-pink",
+      "version": null,
+      "file": "investment-template-09-black-pink.jpg",
+      "sha256": "44a98ebbeb163f39a68f139ea92d4225c5def9756fbcb27d053842dfa5764b12",
+      "size": 424172,
+      "width": 1440,
+      "height": 1800,
+      "source": {
+        "kind": "existing-fixed-template-cover",
+        "selection": "Original 20261027 archive cover restored unchanged",
+        "archive": "海客工作台_完整新版_20261027.zip",
+        "member": "Haike_videoflow/Haike_video/templates/library-covers/investment-template-09-black-pink.jpg",
+        "distribution": "Existing template cover requested for the source-updated gallery; original rights retained"
+      }
+    },
+    "investment-template-10": {
+      "template_id": "investment-template-10",
+      "version": null,
+      "file": "investment-template-10.jpg",
+      "sha256": "9d666ed8a1dfb64e46ca838425f46332d4078f31e14c20b509a9b4021246c938",
+      "size": 272674,
+      "width": 1440,
+      "height": 1800,
+      "source": {
+        "kind": "existing-fixed-template-cover",
+        "selection": "Original 20261027 archive cover restored unchanged",
+        "archive": "海客工作台_完整新版_20261027.zip",
+        "member": "Haike_videoflow/Haike_video/templates/library-covers/investment-template-10.jpg",
+        "distribution": "Existing template cover requested for the source-updated gallery; original rights retained"
+      }
+    },
+    "investment-contrast-11": {
+      "template_id": "investment-contrast-11",
+      "version": null,
+      "file": "investment-contrast-11.jpg",
+      "sha256": "f01a419f46a068bd2462c240f72a0d60be79a0a6cc01ae2b5dd1fb226d487b30",
+      "size": 34292,
+      "width": 480,
+      "height": 600,
+      "source": {
+        "kind": "existing-fixed-template-cover",
+        "selection": "Original 20261027 archive cover restored unchanged",
+        "archive": "海客工作台_完整新版_20261027.zip",
+        "member": "Haike_videoflow/Haike_video/templates/library-covers/investment-contrast-11.jpg",
+        "distribution": "Existing template cover requested for the source-updated gallery; original rights retained"
+      }
+    },
+    "investment-contrast-12": {
+      "template_id": "investment-contrast-12",
+      "version": null,
+      "file": "investment-contrast-12.jpg",
+      "sha256": "238715813f863e6e7406fb0c94717c5dba87576172244ff97595390efa240b7b",
+      "size": 35155,
+      "width": 480,
+      "height": 600,
+      "source": {
+        "kind": "existing-fixed-template-cover",
+        "selection": "Original 20261027 archive cover restored unchanged",
+        "archive": "海客工作台_完整新版_20261027.zip",
+        "member": "Haike_videoflow/Haike_video/templates/library-covers/investment-contrast-12.jpg",
+        "distribution": "Existing template cover requested for the source-updated gallery; original rights retained"
+      }
+    },
+    "investment-contrast-13": {
+      "template_id": "investment-contrast-13",
+      "version": null,
+      "file": "investment-contrast-13.jpg",
+      "sha256": "b1b272efdbd48422445fded5150b3ade2ff0d43c96755aea426f8b4a82ecf537",
+      "size": 32325,
+      "width": 480,
+      "height": 600,
+      "source": {
+        "kind": "existing-fixed-template-cover",
+        "selection": "Original 20261027 archive cover restored unchanged",
+        "archive": "海客工作台_完整新版_20261027.zip",
+        "member": "Haike_videoflow/Haike_video/templates/library-covers/investment-contrast-13.jpg",
+        "distribution": "Existing template cover requested for the source-updated gallery; original rights retained"
+      }
+    },
+    "store-opening-22": {
+      "template_id": "store-opening-22",
+      "version": null,
+      "file": "store-opening-22.jpg",
+      "sha256": "0a8ac933c9e7bc851107adcd7bd1edea12993dd66c321e57b1d495227979054d",
+      "size": 360497,
+      "width": 1440,
+      "height": 1800,
+      "source": {
+        "kind": "existing-fixed-template-cover",
+        "selection": "Original 20261027 archive cover restored unchanged",
+        "archive": "海客工作台_完整新版_20261027.zip",
+        "member": "Haike_videoflow/Haike_video/templates/library-covers/store-opening-22.jpg",
+        "distribution": "Existing template cover requested for the source-updated gallery; original rights retained"
+      }
+    },
+    "store-opening-23": {
+      "template_id": "store-opening-23",
+      "version": null,
+      "file": "store-opening-23.jpg",
+      "sha256": "a88556ac5914840a727275b764d084fe6db86b0994e83d0e656fa22d3af1def5",
+      "size": 340792,
+      "width": 1440,
+      "height": 1800,
+      "source": {
+        "kind": "existing-fixed-template-cover",
+        "selection": "Original 20261027 archive cover restored unchanged",
+        "archive": "海客工作台_完整新版_20261027.zip",
+        "member": "Haike_videoflow/Haike_video/templates/library-covers/store-opening-23.jpg",
+        "distribution": "Existing template cover requested for the source-updated gallery; original rights retained"
+      }
+    },
+    "store-opening-24": {
+      "template_id": "store-opening-24",
+      "version": null,
+      "file": "store-opening-24.jpg",
+      "sha256": "02f82c5cb6aa0d706158909d30dc8e71ffb2da954d84baa200b03cfaab3417fc",
+      "size": 451342,
+      "width": 1440,
+      "height": 1800,
+      "source": {
+        "kind": "existing-fixed-template-cover",
+        "selection": "Original 20261027 archive cover restored unchanged",
+        "archive": "海客工作台_完整新版_20261027.zip",
+        "member": "Haike_videoflow/Haike_video/templates/library-covers/store-opening-24.jpg",
+        "distribution": "Existing template cover requested for the source-updated gallery; original rights retained"
+      }
+    },
+    "store-opening-25": {
+      "template_id": "store-opening-25",
+      "version": null,
+      "file": "store-opening-25.jpg",
+      "sha256": "9f0185b3d0470c9f645363549eae3aa709e9236b2f4c685b9e11fc735cfda9f2",
+      "size": 365259,
+      "width": 1440,
+      "height": 1800,
+      "source": {
+        "kind": "existing-fixed-template-cover",
+        "selection": "Original 20261027 archive cover restored unchanged",
+        "archive": "海客工作台_完整新版_20261027.zip",
+        "member": "Haike_videoflow/Haike_video/templates/library-covers/store-opening-25.jpg",
+        "distribution": "Existing template cover requested for the source-updated gallery; original rights retained"
+      }
+    },
+    "store-opening-26": {
+      "template_id": "store-opening-26",
+      "version": null,
+      "file": "store-opening-26.jpg",
+      "sha256": "95e8b2558d840f923d288e0a13a0a30264f633138c5ad1d92ac7ce90e59b8657",
+      "size": 308558,
+      "width": 1440,
+      "height": 1800,
+      "source": {
+        "kind": "existing-fixed-template-cover",
+        "selection": "Original 20261027 archive cover restored unchanged",
+        "archive": "海客工作台_完整新版_20261027.zip",
+        "member": "Haike_videoflow/Haike_video/templates/library-covers/store-opening-26.jpg",
+        "distribution": "Existing template cover requested for the source-updated gallery; original rights retained"
+      }
+    }
+  }
+}

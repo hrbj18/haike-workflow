@@ -131,6 +131,8 @@ export HAIKE_CREATORHUB_URL='http://127.0.0.1:18001'
 
 验证 `/avatar`、固定/动效两类、18个首选、每张实际可读封面、草稿保存重载、旧作品/素材访问，以及两服务连接。浏览器打开页面不等于组件可制作。
 
+上次18条完整成片的实际封面随main的 `Haike_video/templates/public-covers/manifest.json`及图片交付，不依赖Windows运行时或Release；18个poster须分别可解码、对应来源成片并符合SHA。新版图库优先显示这些成片画面，本机原封面另有查看入口且原文件/样片不删除。替代素材演示图和“可准备本期输入”文字不能作为资源完整或制作通过的证据。
+
 **18套检查的当前限制：** `portable/motion_delivery_runtime.py`、`portable/source_candidate_recovery.py`仍使用 `runtime/python/python.exe`、Windows Node/FFmpeg/浏览器路径；例如 `backlot/motion_public_execution_v2.py` 的 `_ffmpeg/_ffprobe`仍固定 `.exe`。此外[源码教程中的冻结摘要差异](UPGRADE_FROM_MAIN.md)也需按实际提交核对。不能拿Windows运行时SHA核验Mac二进制，不能将Mac工具改名为.exe、删除校验或伪造清单来假装支持。`--runtime-bindings`只允许原身份映射，不解决这些平台差异；默认 `not-declared`也不是通过。
 
 Agent逐套记录“合同/业务源码”“该平台依赖”“实际组件调用”“媒体输出”状态。确认某条原渲染实现支持本机且身份有效后才测试；被Windows路径或冻结身份阻断的具体路线标为待适配，其他路线继续核对。18套都未验证可用时，不能任取固定模板冒充动效验收。

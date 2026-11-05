@@ -1,0 +1,12 @@
+{
+  "schema": "haike.avatar-generation-policy/1",
+  "revision": "2026-11-03.1",
+  "roles": {
+    "supporting-window": {
+      "default_workflow": "economy",
+      "description": "辅助讲解小窗，人物不承担画面主体；新任务默认使用性价比工作流"
+    }
+  },
+  "precedence": ["frozen_existing_job", "explicit_current_workflow", "declared_avatar_role", "duration_preference", "base_preference"],
+  "scope": "Agent新任务路由；不调用供应商、不修改Studio或既有任务，不按窗口像素自动推断角色"
+}

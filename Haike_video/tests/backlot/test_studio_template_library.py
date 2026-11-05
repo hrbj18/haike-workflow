@@ -101,7 +101,10 @@ def test_private_media_is_explicit_read_only_and_range_capable(tmp_path, monkeyp
     assert result.status_code == 200
     assert str(tmp_path) not in result.text
     assert 'secret.txt' not in result.text
-    assert client.get('/api/studio/template-library/store-footage-20/media/poster').status_code == 404
+    poster = client.get('/api/studio/template-library/store-footage-20/media/poster')
+    assert poster.status_code == 200  # The verified source cover is a safe fallback.
+    assert poster.headers['content-type'].startswith('image/')
+    assert secret.read_bytes() not in poster.content
     assert client.get('/api/studio/template-library/unknown/media/sample').status_code == 404
     assert client.get('/api/studio/template-library/store-footage-20/media/secret.txt').status_code == 404
     response = client.get('/api/studio/template-library/store-footage-20/media/sample', headers={'Range': 'bytes=2-5'})
