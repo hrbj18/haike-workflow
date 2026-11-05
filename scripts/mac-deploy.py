@@ -190,6 +190,7 @@ def install_python(arch, spec, offline, cache_only):
         execute([sys.executable, '-m', 'venv', str(venv)])
         folder = ROOT / 'deployment-cache/python' / arch / module.replace('/', '__')
         lock = folder / 'requirements.txt'
+        pinned = ROOT / '_distribution-tools/locks/macos' / arch / (module.replace('/', '__') + '.txt')
         req = folder / 'input.txt'
         requirements(module, req)
         index = os.environ.get('HAIKE_PIP_INDEX_URL', spec['pip_index'])
@@ -199,6 +200,8 @@ def install_python(arch, spec, offline, cache_only):
         # Enforce the current source constraints as well as the frozen cache.
         # A source upgrade cannot silently reuse an incompatible older wheelhouse.
         requested = ['-r', lock, '-r', req] if offline else ['-r', req]
+        if pinned.is_file():
+            requested.extend(['-r', pinned])
         execute([py, '-m', 'pip', 'install', '--disable-pip-version-check', '--prefer-binary', *wheel_args, *requested])
         if module == 'copy_skill/copy_skill-main':
             # Keep the source editable using an ordinary relative .pth, not a build-machine path.
@@ -210,6 +213,9 @@ def install_python(arch, spec, offline, cache_only):
             if any(' @ ' in line or line.startswith('-e ') for line in result.stdout.splitlines()):
                 raise ValueError('依赖冻结含构建机绝对路径')
             lock.write_text(result.stdout, encoding='utf8')
+            if not pinned.exists():
+                pinned.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(lock, pinned)
             execute([py, '-m', 'pip', 'wheel', '--index-url', index, '--no-deps', '-r', lock,
                      '--wheel-dir', folder / 'wheels'])
             # input.txt contains temporary build paths; it is never a deployment input.
@@ -235,6 +241,18 @@ def install_frontends(arch, spec, offline, env):
 
 def configure(arch, env):
     execute([sys.executable, ROOT / 'scripts/configure.py'], env=env)
+    crawler = ROOT / 'copy_skill/copy_skill-main/third_party/MediaCrawler'
+    if (crawler / '.venv/bin/python').is_file():
+        override_path = ROOT / 'copy_skill/copy_skill-main/config/content_intelligence.local.json'
+        override = read(override_path)
+        settings = override.setdefault('media_crawler', {})
+        settings.setdefault('root', 'third_party/MediaCrawler')
+        settings.setdefault('python', 'third_party/MediaCrawler/.venv/bin/python')
+        browsers = list((ROOT / 'runtime/macos' / arch / 'playwright').glob(
+            'chromium-*/chrome-mac-*/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing'))
+        if len(browsers) == 1:
+            settings.setdefault('chrome_path', str(browsers[0]))
+        write(override_path, override)
     from importlib.util import spec_from_file_location, module_from_spec
     spec = spec_from_file_location('haike_mac_private_profile', ROOT / 'scripts/install-private-profile.py')
     module = module_from_spec(spec)

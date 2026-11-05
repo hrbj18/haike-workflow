@@ -33,12 +33,18 @@ asyncio.run(main())
                                               env=env, text=True, timeout=60).strip()
     expected_browser = next(row['version'] for row in deploy.read(deploy.SPEC)['assets'] if row['id'] == 'browser' and row['arch'] == arch)
     assert browser_version == expected_browser
+    crawler_py = deploy.python_for('copy_skill/copy_skill-main/third_party/MediaCrawler')
+    collector_version = None
+    if crawler_py.is_file():
+        collector_version = subprocess.check_output([str(crawler_py), '-c', browser_probe.replace('patchright.async_api', 'playwright.async_api')],
+                                                   env=env, text=True, timeout=60).strip()
+        assert collector_version == expected_browser
     folder = ROOT / '.local/mac-smoke'
     folder.mkdir(parents=True, exist_ok=True)
     cli = ROOT / 'Haike_video/remotion-composer/node_modules/.bin/remotion'
     movie = folder / 'template-video.mp4'
     subprocess.run([str(cli), 'render', 'src/index.tsx', 'HeroTitle', str(movie), '--frames=0-29',
-                    '--scale=0.3333333333', '--concurrency=1', '--log=error',
+                    '--scale=0.5', '--concurrency=1', '--log=error',
                     '--browser-executable=' + env['REMOTION_BROWSER_EXECUTABLE']],
                    cwd=ROOT / 'Haike_video/remotion-composer', env=env, check=True, timeout=900)
     output = folder / 'installation-test.mp4'
@@ -72,6 +78,7 @@ asyncio.run(main())
                'http_covers': covers, 'actual_renderer': 'existing HeroTitle / Remotion',
                'video_has_motion': True, 'audio_and_video': True, 'paid_calls': 0,
                'bundled_login_browser_version': browser_version,
+               'collector_browser_version': collector_version,
                'full_18_template_execution': 'not tested by this smoke', 'physical_colleague_machine': False}
     deploy.write(ROOT / '.local/mac-smoke.json', receipt)
     print(json.dumps(receipt))

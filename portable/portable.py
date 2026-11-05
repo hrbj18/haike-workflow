@@ -364,7 +364,8 @@ def diagnose(full=False) -> dict:
     result = {"ok": True, "command": "diagnose", "root": str(ROOT), "full": full,
               "checks": checks, "file_count": integrity() if full else None,
               "optional_components": {name: components.get(name, True) for name in ("hyperframes", "whisper_small")},
-              "models": {"whisper_small": "loadable" if components.get("whisper_small", True) else "optional_not_installed" if legacy_online else "not_installed", "clean_install_default_asr": "gateway"},
+              "models": {"whisper_small": "loadable" if components.get("whisper_small", True) else "optional_not_installed" if legacy_online else "not_installed",
+                         "clean_install_default_asr": read_json("Haike_video/.backlot/studio-asr/policy.json", {}).get("default_provider", "gateway")},
               "browsers": {"system_chrome": system_chrome() is not None,
                            "bundled_interactive_browser": bundled_login_browser() is not None},
               "network_install": False, "physical_new_machine_tested": False}

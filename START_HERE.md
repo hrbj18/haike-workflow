@@ -1,5 +1,7 @@
 # Agent 接入教程
 
+Mac 新机先按 [DEPLOY_MAC.md](docs/DEPLOY_MAC.md) 原生安装；含 PACKAGE-MANIFEST.json 的 Mac ZIP 按 RELEASE.json 分派，使用 `.venv/bin/python`。Windows 继续使用 cmd/PowerShell，以下制片与发布规则共用。
+
 旧版要**直接从main源码升级、不等待Release更新包**时，Agent先识别系统，再读[Windows教程](docs/UPGRADE_FROM_MAIN.md)或[Mac教程（Apple Silicon/Intel）](docs/UPGRADE_FROM_MAIN_MAC.md)，固定提交、备份、恢复对应架构依赖、构建及启动验收；Mac继续按教程完成一条完整测试视频，不将未适配能力标为通过。不要转入读取Release的自动更新入口。
 
 适用于本单仓库和新版便携包。所有命令从包含本文件的根目录执行，路径使用本次副本的实际位置。根目录存在 `PACKAGE-MANIFEST.json` 时，先按 [PORTABLE.md](docs/PORTABLE.md) 使用包内运行时初始化，再继续本文。

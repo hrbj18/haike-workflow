@@ -1,5 +1,7 @@
 # Mac 旧版通过 main 源码升级：Agent 教程
 
+未安装过工作台的 Mac 使用 [Mac 新电脑源码部署](DEPLOY_MAC.md)，支持 Apple Silicon / Intel 与国内镜像；本文用于已有旧版的备份、源码升级和回退。
+
 直接使用官方 main 的固定提交，在 Mac 上恢复环境、构建界面、迁移数据并制作一条测试视频；不依赖海客 Release 更新包。适用于 Apple Silicon（arm64）和 Intel（x86_64）的旧源码/历史安装目录识别与试运行。名称为“1027”或存在包清单，不代表其中的 Windows 运行时可用于 Mac。
 
 **验证状态：** 本页按 `27e8e23822c1bf181a56de3aa75c2b10d0d69f6f` 的实际代码核对；本次发布只更新文档，未在 Mac 执行安装、迁移或出片。Apple Silicon、Intel 的完整升级及18套动效均为待真机验收；不要把 Windows/Linux CI 或本教程上线当作 Mac 全部能力已通过。
@@ -158,6 +160,3 @@ Agent逐套记录“合同/业务源码”“该平台依赖”“实际组件�
 回执记录系统/硬件/进程架构、原/新路径、固定提交、备份与回退入口、依赖解析、前端构建、服务身份、用户数据检查、18套能力、测试视频和未验项。共用数据原则只在[源码升级说明](UPGRADE_FROM_MAIN.md)维护，本页维护Mac差异。大批量推广前分别取得Apple Silicon和Intel真实升级+出片回执；当前发布不宣称已完成该批量验证。
 
 本页不调用读取Release的 `upgrade-haike.py apply`/`update-from-github.py`/“关于海客视频”更新或内部候选安装。文档上线不会自动部署旧Mac，也不会完成底层组件平台适配。
-# 新电脑安装入口
-
-未安装过工作台的 Mac 使用 [Mac 新电脑源码部署](DEPLOY_MAC.md)，支持 Apple Silicon / Intel 与国内镜像；本文继续用于已有旧版的备份、源码升级和回退。
