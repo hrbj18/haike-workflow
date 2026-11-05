@@ -32,6 +32,7 @@ bash 02-启动Mac.command
 
 - Python standalone、Node 和 Chrome for Testing 使用 [npmmirror 二进制镜像](https://npmmirror.com/mirrors)，npm 使用 [npmmirror registry](https://npmmirror.com/)。
 - Python 包使用[清华 PyPI 镜像](https://mirrors.tuna.tsinghua.edu.cn/help/pypi/)。
+- 素材采集器另按 `_distribution-tools/mediacrawler-source.json` 获取固定提交的公开源码归档并校验；保留已有采集器及其数据。新机及离线包补齐原生采集依赖，使用抖音仍需本机登录和原有授权检查。
 - 动效颜色转换使用 FFmpeg 9.0.2 的固定原生 ZIP，由清单中的构建发布方直连下载并核对公开摘要，不依赖 GitHub 下载代理；该地址不是国内托管镜像。
 - 本地安装只设置本次子进程的源，不改全局 pip/npm 配置；公网镜像只获取公开依赖，不接收 API Key。
 

@@ -52,6 +52,17 @@ class DeploymentBoundaryTests(unittest.TestCase):
                     module.contained(Path(directory), bad)
             self.assertEqual(module.contained(Path(directory), 'python/bin/python3'), Path(directory) / 'python/bin/python3')
 
+    def test_collector_source_preserves_existing_installation(self):
+        module = load('mac-deploy')
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory); target = root / 'copy_skill/copy_skill-main/third_party/MediaCrawler'
+            target.mkdir(parents=True); (target / 'main.py').write_text('owned source')
+            (root / '_distribution-tools').mkdir()
+            (root / '_distribution-tools/mediacrawler-source.json').write_text('{}')
+            with patch.object(module, 'ROOT', root), patch.object(module, 'obtain', return_value=Path('unused')):
+                module.collector_source(False)
+            self.assertEqual((target / 'main.py').read_text(), 'owned source')
+
 
 if __name__ == '__main__':
     unittest.main()

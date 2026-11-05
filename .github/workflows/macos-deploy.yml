@@ -9,6 +9,7 @@ on:
       - 'Haike_video/config/motion-native-v1.json'
       - 'Haike_video/tests/fixtures/native-motion/**'
       - '_distribution-tools/motion-html/**'
+      - '_distribution-tools/mediacrawler-source.json'
       - '_distribution-tools/locks/macos/**'
       - '_distribution-tools/macos-runtime.json'
       - '.github/workflows/macos-deploy.yml'

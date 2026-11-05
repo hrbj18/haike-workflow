@@ -18,6 +18,7 @@ import tarfile
 import time
 import tomllib
 import urllib.request
+import uuid
 import webbrowser
 import zipfile
 from contextlib import contextmanager
@@ -72,7 +73,6 @@ def obtain(row, offline):
         if offline:
             raise ValueError('离线运行时缺失：' + row['name'])
         path.parent.mkdir(parents=True, exist_ok=True)
-        opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
         url = row['upstream_download'] if os.environ.get('HAIKE_RUNTIME_DOWNLOAD_ORIGIN') == '1' else row['url']
         print('Download pinned runtime: ' + row['id'] + '/' + row['arch'], flush=True)
         # macOS curl carries the system TLS/client defaults expected by binary
@@ -138,6 +138,28 @@ def install_runtimes(arch, offline):
             browser_name = 'chromium_headless_shell' if kind == 'browser' else 'chromium'
             unzip(source, ROOT / 'runtime/macos' / arch / 'playwright' / (browser_name + '-' + spec['publisher_browser_revision']))
     return spec
+
+
+def collector_source(offline):
+    """Prepare the same public source revision as native CI, preserving existing copies."""
+    row = read(ROOT / '_distribution-tools/mediacrawler-source.json')
+    archive = obtain(row, offline)
+    target = contained(ROOT, 'copy_skill/copy_skill-main/third_party/MediaCrawler')
+    if (target / 'main.py').is_file():
+        return  # Existing code/config/data and Git metadata belong to this user.
+    if target.exists() and any(target.iterdir()):
+        raise ValueError('已有不完整采集器目录，保留现场；请恢复原目录后继续安装')
+    staging = ROOT / '.local' / ('mac-collector-' + uuid.uuid4().hex)
+    unzip(archive, staging)
+    source = staging / row['prefix']
+    if not (source / 'main.py').is_file():
+        raise ValueError('固定采集器源码归档结构不符')
+    target.parent.mkdir(parents=True, exist_ok=True)
+    if target.exists():
+        target.rmdir()  # Only the verified empty destination, never recursive.
+    source.rename(target)
+    staging.rmdir()
+    write(target / 'HAIKE-SOURCE.json', {'commit': row['commit'], 'archive_sha256': row['sha256'], 'source': row['url']})
 
 
 def environment(arch):
@@ -286,6 +308,7 @@ def install(args):
     arch = architecture()
     spec = install_runtimes(arch, args.offline)
     shutil.copytree(ROOT / '_distribution-tools/ffmpeg9', ROOT / 'runtime/macos' / arch / 'ffmpeg/licenses', dirs_exist_ok=True)
+    collector_source(args.offline)
     env = environment(arch)
     install_python(arch, spec, args.offline, args.cache_only)
     install_frontends(arch, spec, args.offline, env)
