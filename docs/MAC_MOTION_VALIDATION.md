@@ -12,7 +12,7 @@ Mac 运行时使用原生 Node、Chrome 和 FFmpeg 9.0.2。FFmpeg 6 无法满足
 
 ## Agent 实际制作
 
-安装后运行 `Haike_video/.venv/bin/python scripts/mac-motion-prepare.py --help`。公开组件/2、海报/3及历史纸感/引言/3按原输入合同填写，本机工具根为 `runtime/macos/<arch>`；HTML依赖根为 `_distribution-tools/motion-html`，原深色 Remotion 依赖根为 `Haike_video/remotion-composer`。`--check` 只读核验；冻结时显式指定本副本队列、项目目录和另存位置。
+安装后运行 `Haike_video/.venv/bin/python scripts/mac-motion-prepare.py --help`。公开组件/2、海报/3按原输入合同填写，本机工具根为 `runtime/macos/<arch>`；HTML依赖根为 `_distribution-tools/motion-html`，原深色 Remotion 依赖根为 `Haike_video/remotion-composer`。`--check` 只读核验；冻结时显式指定本副本队列、项目目录和另存位置。历史纸感/引言/3保留原输入接口与来源校验，本次首选18版本之外的历史修订另验完整成片。
 
 冻结后继续使用 `Haike_video/scripts/motion_replay_production.py` 的 submit/status/execute 及原审批阶段。网页、共用契约准备和父队列执行都通过同一个平台选择入口；阶段批准、实时 claim、预算和未知受理恢复规则继续生效。其他编号模板、知识模板和促销模板继续使用原有准备目录/合同。
 
@@ -26,4 +26,4 @@ Mac 运行时使用原生 Node、Chrome 和 FFmpeg 9.0.2。FFmpeg 6 无法满足
 4. 核对每条全片解码、完整帧数、原画幅/帧率、至少20Mbps视频流、48kHz立体声AAC、画面变化、编码视频SHA和接触表；实际查看接触表并记录范围。失败项保留现场，按原版本修复重验。
 5. CI结果全部通过后，制作私有 Mac ZIP，保留既有18条高清有声样片、真实样式封面、获授权本机私有配置和双架构离线缓存，校验归档。用户数据与公开源码的边界见 `DISTRIBUTION.md`。
 
-合成素材的全时长渲染证明原生执行和媒体工具兼容；真实数字人云端权限、真实ASR与口型、设备外放听看、发布和同事物理机安装分别验收。本测试不制造这些证据，不改变生产审批，也不把源文件校验称为渲染通过。源码交付记录及CI原生报告是本次实际状态的依据；任一架构不足18条通过，Mac正式包保持待交付。
+合成素材的全时长渲染证明原生执行和媒体工具兼容；真实数字人云端权限、真实ASR与口型、设备外放听看、发布和同事物理机安装分别验收。本测试不制造这些证据，不改变生产审批，也不把源文件校验称为渲染通过。通过后在源码标签发布页保存CI结果摘要与验收JSON，在私有ZIP中另存验收副本；这些记录及对应提交的CI报告是实际状态依据。任一架构不足18条通过，Mac正式包保持待交付。

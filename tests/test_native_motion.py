@@ -4,6 +4,7 @@ import importlib.util
 import json
 import subprocess
 import sys
+import tempfile
 import unittest
 from unittest.mock import patch
 
@@ -35,6 +36,16 @@ class NativeMotionTests(unittest.TestCase):
         with patch.object(motion_platform, '_sha', return_value='0' * 64):
             with self.assertRaisesRegex(ValueError, '实现改变'):
                 motion_platform.verify()
+
+    def test_manifest_cannot_select_an_import_or_source_path(self):
+        original = json.loads(motion_platform.MANIFEST.read_text('utf8'))
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / 'manifest.json'
+            original['modules'][0]['native_module'] = 'os'
+            path.write_text(json.dumps(original), encoding='utf8')
+            with patch.object(motion_platform, 'MANIFEST', path):
+                with self.assertRaisesRegex(ValueError, '不能选择执行模块'):
+                    motion_platform.verify()
 
     def test_restored_historical_paper_and_quote_sources_keep_their_exact_identity(self):
         for filename in ('imported-public-paper-v3-bound.json', 'imported-public-quote-v3-bound.json'):
