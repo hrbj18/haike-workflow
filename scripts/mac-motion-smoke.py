@@ -201,7 +201,7 @@ def verify_output(output, fixture, fps, frames, props, env):
     picture = output.parent / 'contacts.jpg'
     interval = max(fps, frames // 16)
     call([env['FFMPEG_BINARY'], '-v', 'error', '-n', '-i', output, '-vf',
-          f"select='not(mod(n,{interval}))',scale=270:-2,tile=4x4:padding=4:margin=4", '-frames:v', '1', picture], env)
+          f"select='not(mod(n,{interval}))+eq(n,{frames-1})',scale=270:-2,tile=4x5:padding=4:margin=4", '-frames:v', '1', picture], env)
     return {'template_id': fixture['template_id'], 'version': fixture['preferred_version'], 'fixture_sha256': sha(FIXTURES / (fixture['template_id'] + '.json')),
             'ok': True, 'full_duration': frames / fps, 'frames': frames, 'fps': fps, 'width': video['width'], 'height': video['height'],
             'video_bitrate': int(video['bit_rate']), 'audio': '48kHz stereo AAC', 'audio_peak_dbfs': peak, 'full_decode': 'pass', 'moving_picture': True,
