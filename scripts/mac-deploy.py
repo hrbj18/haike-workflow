@@ -167,6 +167,8 @@ def requirements(module, destination):
         lines = ['-r ' + str(ROOT / module / 'requirements.txt'),
                  'faster-whisper>=1.2,<2', 'onnxruntime>=1.20', 'scipy>=1.14,<2', 'setuptools>=68', 'wheel',
                  *tomllib.loads((ROOT / 'api-platform/pyproject.toml').read_text())['project']['dependencies']]
+    elif module == 'copy_skill/copy_skill-main/third_party/MediaCrawler':
+        lines = ['-r ' + str(ROOT / '_distribution-tools/mediacrawler-requirements.txt'), 'setuptools>=68', 'wheel']
     elif (ROOT / module / 'requirements.txt').is_file():
         lines = ['-r ' + str(ROOT / module / 'requirements.txt'), 'setuptools>=68', 'wheel']
     else:
@@ -189,13 +191,15 @@ def install_python(arch, spec, offline, cache_only):
         folder = ROOT / 'deployment-cache/python' / arch / module.replace('/', '__')
         lock = folder / 'requirements.txt'
         req = folder / 'input.txt'
-        if not offline:
-            requirements(module, req)
+        requirements(module, req)
         index = os.environ.get('HAIKE_PIP_INDEX_URL', spec['pip_index'])
         wheel_args = ['--no-index', '--find-links', folder / 'wheels'] if offline else ['--index-url', index]
         if offline and not lock.is_file():
             raise ValueError('离线 Python 依赖清单缺失：' + module)
-        execute([py, '-m', 'pip', 'install', '--disable-pip-version-check', '--prefer-binary', *wheel_args, '-r', lock if offline else req])
+        # Enforce the current source constraints as well as the frozen cache.
+        # A source upgrade cannot silently reuse an incompatible older wheelhouse.
+        requested = ['-r', lock, '-r', req] if offline else ['-r', req]
+        execute([py, '-m', 'pip', 'install', '--disable-pip-version-check', '--prefer-binary', *wheel_args, *requested])
         if module == 'copy_skill/copy_skill-main':
             # Keep the source editable using an ordinary relative .pth, not a build-machine path.
             libraries = next((venv / 'lib').glob('python*/site-packages'))
