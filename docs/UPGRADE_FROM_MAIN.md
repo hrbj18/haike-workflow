@@ -20,7 +20,7 @@ Mac用户进入[Mac专用教程（Apple Silicon/Intel）](UPGRADE_FROM_MAIN_MAC.
 
 代码核对基线为 `f48ffc6c47eaf539d2fcb1fe177a44005f352254`（2026-11-04 main，PR #14），四项 CI 已通过。本机此前已有隔离旧包升级、组件及短渲记录，**不能等同于下面这条纯 main 源码路线已在另一台物理机端到端通过**。本教程发布只完成代码对照和文档检查，不执行旧电脑升级；目标机步骤必须记录实际结果。
 
-**已知限制（本次只读核对发现）：** 该基线的 `upgrade-closure.json` 所列1624个程序文件中，有477项冻结摘要与该提交的Git blob字节不一致，严格源身份检查会阻断，不能宣称纯源码18套已全部通过。这不等于477种组件缺失，也不证明渲染效果有477处问题；说明现有冻结身份不能直接作为该Git提交的完整通过证据。本教程可先用于基础部署/启动测试，18套严格复刻标为待修/待验；保留错误明细交回维护者，用户Agent不通过改SHA或换旧业务源码伪造通过。本步仅发布教程，不修改该闭包或组件。
+**2026-11-05源码补充：** 当前源码直接携带61张既有封面、4份知识模板OFL字体及已登记的准备适配器；47份首选实现文件恢复原字节并用逐文件Git属性保持原摘要。用下述 `verify --preferred` 检查当前18套的来源与可调用入口，再验目标机运行时、本期输入和出片。历史教程报告的1624项便携闭包及477项差异包含旧编译产物与输运差异，不能等同于当前18套的实际来源结果；该旧闭包仍独立保留，不能改SHA、换回旧业务API或伪造发行清单来消除错误。来源检查通过也不证明运行时、完整视频或另一台电脑已验收。
 
 ## 1. 识别目标，固定源码
 
@@ -44,7 +44,7 @@ git -C $taskSource remote get-url origin
 git -C $taskSource rev-parse HEAD
 ```
 
-核对官方远端、完整 SHA及该提交的检查结果/相关变更；main 有更新时记录实际采用版本，不能自动把新提交当已验收。把路径、提交和原安装身份存入本机私有回执目录；后续不在构建中追随浮动 main。`core.autocrlf=false`保留Git字节，避免检出时额外转换；它不能修复上述已存在的冻结摘要差异。若采用上面的已核对基线，显式检出其完整 SHA。
+核对官方远端、完整 SHA及该提交的检查结果/相关变更；main 有更新时记录实际采用版本，不能自动把新提交当已验收。把路径、提交和原安装身份存入本机私有回执目录；后续不在构建中追随浮动 main。`core.autocrlf=false`避免额外转换，项目逐文件属性保存已冻结的原字节；仍须运行实际来源检查。若采用历史基线，显式检出其完整SHA，并保留该基线的缺项限制。
 
 **完成条件：** 唯一目标、可信来源、固定提交和私有回执目录明确，原目标尚未覆盖。
 
@@ -118,7 +118,14 @@ pwsh -NoProfile -ExecutionPolicy Bypass -File .\start-workbench.ps1 -Port 14866 
 
 端口仅为示例，以实际结果为准；启动器会检查本副本账号服务。读 `/api/health`，核对edition、workspace等实际字段属于新目录；源码可显示开发版本，不冒充已安装Release。查看 `/avatar`、两类模板和18个首选、实际封面请求、草稿保存/重载及原作品，分别留证。
 
-**源码检查须注意：** Git没有生成的 `delivery.json`/发行元数据；默认 `template_capability.py --root ...`可能返回 `not-declared`，这不是18套通过。先在源码根用已准备的Python直接检查当前组件：
+**源码检查须注意：** Git没有生成的 `delivery.json`/发行元数据；默认 `template_capability.py --root ...`可能返回 `not-declared`，这不是18套通过。先在源码根执行下面的只读检查，确认JSON的 `source_status: verified`、`template_count: 18`，并保留实际输出；它检查当前首选的470份来源和可调用准备入口，不启动队列或付费：
+
+```powershell
+& $taskPython Haike_video/scripts/motion_replay.py verify --preferred
+if ($LASTEXITCODE) { throw '当前18套来源或准备入口未通过；保留原摘要并修复具体缺项。' }
+```
+
+再核对当前组件及原便携闭包的适用范围：
 
 ```powershell
 $taskPython = Join-Path $taskSource 'Haike_video\.venv\Scripts\python.exe'
