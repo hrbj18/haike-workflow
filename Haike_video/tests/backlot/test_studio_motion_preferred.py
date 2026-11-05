@@ -11,6 +11,24 @@ from backlot.studio import Studio, TEMPLATES
 from backlot import motion_replay_production as production
 
 
+def test_preferred_sources_match_original_frozen_bytes_after_source_upgrade():
+    from backlot import motion_replay
+    registered = {(row['template_id'], row['version']): row for row in motion_replay.load_registry()}
+    for choice in preferred.preferences():
+        template = registered[(choice['template_id'], choice['version'])]
+        checked = motion_replay.verify_sources(template)
+        assert len(checked) == len(template['sources']), choice['template_id']
+
+
+def test_all_registered_preparation_adapters_are_shipped_and_importable():
+    import importlib
+    from backlot import motion_replay
+    routes = [(name, 'prepare') for name in motion_replay.REGISTRIES.values()]
+    routes += list(motion_replay.PREPARATION_OVERRIDES.values())
+    for name, function in routes:
+        assert callable(getattr(importlib.import_module(name), function)), name
+
+
 def test_eighteen_unique_preferred_routes_are_supported_and_preserve_history():
     choices = preferred.production_map()
     assert len(choices) == 18

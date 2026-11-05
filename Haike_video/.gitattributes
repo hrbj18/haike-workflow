@@ -53,3 +53,58 @@ Makefile    text eol=lf
 # These two reference files retain the original bytes in UPSTREAM.json.
 design/hallmark/catalog.json -text -eol whitespace=cr-at-eol
 design/hallmark/LICENSE -text -eol whitespace=cr-at-eol
+
+# Exact original bytes required by the 18 preferred motion contracts.
+# Keep these explicit exceptions; changing a renderer needs a new verified identity.
+templates/numbered02-04-production-v1/derivation.json -text -eol whitespace=cr-at-eol
+templates/chromatic-suite-production-v1/Derived-A.tsx -text -eol whitespace=cr-at-eol
+templates/chromatic-suite-production-v1/Derived-B.tsx -text -eol whitespace=cr-at-eol
+templates/chromatic-suite-production-v1/Derived-C.tsx -text -eol whitespace=cr-at-eol
+templates/chromatic-suite-production-v1/SOURCE_MAP.json -text -eol whitespace=cr-at-eol
+backlot/motion_public_dark_remotion_v2.py -text -eol whitespace=cr-at-eol
+backlot/motion_public_dark_schema_v2.py -text -eol whitespace=cr-at-eol
+backlot/motion_public_dark_v2.py -text -eol whitespace=cr-at-eol
+backlot/motion_public_execution_v2.py -text -eol whitespace=cr-at-eol
+backlot/motion_public_observed_v2.py -text -eol whitespace=cr-at-eol
+templates/motiongit-public-components-v1/COMPONENT.json -text -eol whitespace=cr-at-eol
+templates/motiongit-public-components-v1/DEPENDENCIES.json -text -eol whitespace=cr-at-eol
+templates/motiongit-public-components-v1/TOOLS.json -text -eol whitespace=cr-at-eol
+templates/motiongit-public-components-v1/upstream/adapters/paper-balance/licenses/OFL-anton.txt -text -eol whitespace=cr-at-eol
+templates/motiongit-public-components-v1/upstream/packs/paper-balance/1.1.1-candidate/licenses/OFL-anton.txt -text -eol whitespace=cr-at-eol
+templates/motiongit-public-components-v1/upstream/packs/paper-ball-performance/1.1.1-candidate/licenses/OFL-anton.txt -text -eol whitespace=cr-at-eol
+templates/motiongit-public-components-v2/COMPONENT.json -text -eol whitespace=cr-at-eol
+templates/motiongit-public-components-v2/dark-v2/CONTENT_FIELDS.json -text -eol whitespace=cr-at-eol
+templates/motiongit-public-components-v2/dark-v2/defaults.json -text -eol whitespace=cr-at-eol
+templates/motiongit-public-components-v2/dark-v2/input.schema.json -text -eol whitespace=cr-at-eol
+templates/motiongit-public-components-v2/dark-v2/REMOTION_RUNTIME.json -text -eol whitespace=cr-at-eol
+templates/motiongit-public-components-v2/dark-v2/SOURCE.json -text -eol whitespace=cr-at-eol
+templates/motiongit-public-components-v2/dark-v2/template/catalog.json -text -eol whitespace=cr-at-eol
+templates/motiongit-public-components-v2/dark-v2/template/GroupsA.tsx -text -eol whitespace=cr-at-eol
+templates/motiongit-public-components-v2/dark-v2/template/GroupsB.tsx -text -eol whitespace=cr-at-eol
+templates/motiongit-public-components-v2/defaults.json -text -eol whitespace=cr-at-eol
+templates/motiongit-public-components-v2/DEPENDENCIES.json -text -eol whitespace=cr-at-eol
+templates/motiongit-public-components-v2/input.schema.json -text -eol whitespace=cr-at-eol
+templates/motiongit-public-components-v2/observed-controls-v2.js -text -eol whitespace=cr-at-eol
+templates/motiongit-public-components-v2/TOOLS.json -text -eol whitespace=cr-at-eol
+templates/motiongit-public-poster-symbol-v3/DEPENDENCIES.json -text -eol whitespace=cr-at-eol
+templates/motiongit-public-poster-symbol-v3/TOOLS.json -text -eol whitespace=cr-at-eol
+backlot/motion_knowledge_public_execution_v3.py -text -eol whitespace=cr-at-eol
+backlot/motion_knowledge_public_production_v3.py -text -eol whitespace=cr-at-eol
+templates/knowledge-reference-public-v3/backgrounds.ts -text -eol whitespace=cr-at-eol
+templates/knowledge-reference-public-v3/chalk.spec.json -text -eol whitespace=cr-at-eol
+templates/knowledge-reference-public-v3/chalk.ts -text -eol whitespace=cr-at-eol
+templates/knowledge-reference-public-v3/drawing.ts -text -eol whitespace=cr-at-eol
+templates/knowledge-reference-public-v3/font-provenance.json -text -eol whitespace=cr-at-eol
+templates/knowledge-reference-public-v3/geometry.json -text -eol whitespace=cr-at-eol
+templates/knowledge-reference-public-v3/geometry.ts -text -eol whitespace=cr-at-eol
+templates/knowledge-reference-public-v3/index.tsx -text -eol whitespace=cr-at-eol
+templates/knowledge-reference-public-v3/paper.spec.json -text -eol whitespace=cr-at-eol
+templates/knowledge-reference-public-v3/paper.ts -text -eol whitespace=cr-at-eol
+templates/knowledge-reference-public-v3/render.cjs -text -eol whitespace=cr-at-eol
+templates/knowledge-reference-public-v3/types.ts -text -eol whitespace=cr-at-eol
+templates/promo-reference-phase-v3/INHERITANCE.json -text -eol whitespace=cr-at-eol
+
+# Original OFL text includes a trailing space; preserve the licensed bytes.
+templates/motiongit-public-components-v1/upstream/adapters/paper-balance/licenses/OFL-anton.txt whitespace=-blank-at-eol,cr-at-eol
+templates/motiongit-public-components-v1/upstream/packs/paper-balance/1.1.1-candidate/licenses/OFL-anton.txt whitespace=-blank-at-eol,cr-at-eol
+templates/motiongit-public-components-v1/upstream/packs/paper-ball-performance/1.1.1-candidate/licenses/OFL-anton.txt whitespace=-blank-at-eol,cr-at-eol

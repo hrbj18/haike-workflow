@@ -133,7 +133,9 @@ export HAIKE_CREATORHUB_URL='http://127.0.0.1:18001'
 
 上次18条完整成片的实际封面随main的 `Haike_video/templates/public-covers/manifest.json`及图片交付，不依赖Windows运行时或Release；18个poster须分别可解码、对应来源成片并符合SHA。新版图库优先显示这些成片画面，本机原封面另有查看入口且原文件/样片不删除。替代素材演示图和“可准备本期输入”文字不能作为资源完整或制作通过的证据。
 
-**18套检查的当前限制：** `portable/motion_delivery_runtime.py`、`portable/source_candidate_recovery.py`仍使用 `runtime/python/python.exe`、Windows Node/FFmpeg/浏览器路径；例如 `backlot/motion_public_execution_v2.py` 的 `_ffmpeg/_ffprobe`仍固定 `.exe`。此外[源码教程中的冻结摘要差异](UPGRADE_FROM_MAIN.md)也需按实际提交核对。不能拿Windows运行时SHA核验Mac二进制，不能将Mac工具改名为.exe、删除校验或伪造清单来假装支持。`--runtime-bindings`只允许原身份映射，不解决这些平台差异；默认 `not-declared`也不是通过。
+来源检查使用 `Haike_video/.venv/bin/python Haike_video/scripts/motion_replay.py verify --preferred`，核对实际退出码及JSON的 `source_status: verified`、`template_count: 18`。本期修复保存原47份文件字节、补齐4份OFL字体和已登记适配器；不能把“文件到齐”报告成Mac出片已通过。
+
+**18套检查的当前限制：** `portable/motion_delivery_runtime.py`、`portable/source_candidate_recovery.py`仍使用 `runtime/python/python.exe`、Windows Node/FFmpeg/浏览器路径；例如 `backlot/motion_public_execution_v2.py` 的 `_ffmpeg/_ffprobe`仍固定 `.exe`。[旧便携闭包与当前源码来源](UPGRADE_FROM_MAIN.md)分别核对。不能拿Windows运行时SHA核验Mac二进制，不能将Mac工具改名为.exe、删除校验或伪造清单来假装支持。`--runtime-bindings`只允许原身份映射，不解决这些平台差异；默认 `not-declared`也不是通过。
 
 Agent逐套记录“合同/业务源码”“该平台依赖”“实际组件调用”“媒体输出”状态。确认某条原渲染实现支持本机且身份有效后才测试；被Windows路径或冻结身份阻断的具体路线标为待适配，其他路线继续核对。18套都未验证可用时，不能任取固定模板冒充动效验收。
 

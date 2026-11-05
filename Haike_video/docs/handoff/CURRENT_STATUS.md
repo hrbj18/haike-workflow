@@ -23,7 +23,7 @@
 
 ## 本轮回归与交付
 
-- 61封面随main；选择/准备实测，异机待验：templates/public-covers/README.md
+- 61封面随main；18来源及准备已验，异机待验：templates/public-covers/README.md
 
 - C端开场：模板CEND.md。
 
