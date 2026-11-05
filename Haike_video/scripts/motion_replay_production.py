@@ -1,11 +1,23 @@
 """Queue-only CLI for frozen motion production; no arbitrary JSON commands."""
 import argparse
+import importlib.util
 import json
+import os
 from pathlib import Path
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
+
+
+def prepare_platform_environment():
+    """An Agent's fresh Mac shell uses the same pinned tools as the launcher."""
+    if sys.platform != 'darwin':
+        return
+    spec = importlib.util.spec_from_file_location('haike_motion_cli_mac', ROOT.parent / 'scripts/mac-deploy.py')
+    deployment = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(deployment)
+    os.environ.update(deployment.environment(deployment.architecture()))
 
 
 def main():
@@ -22,6 +34,7 @@ def main():
     status.add_argument('--job-id', required=True)
     args = parser.parse_args()
     try:
+        prepare_platform_environment()
         from backlot.motion_reference_public_queue_v1 import MotionReferencePublicProductionQueue as ProductionQueue
         from backlot.server import PROJECTS_DIR, _production_queue_db_path
         from backlot import motion_replay_production as production
