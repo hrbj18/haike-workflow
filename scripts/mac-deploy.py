@@ -74,8 +74,12 @@ def obtain(row, offline):
         path.parent.mkdir(parents=True, exist_ok=True)
         opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
         url = row['upstream_download'] if os.environ.get('HAIKE_RUNTIME_DOWNLOAD_ORIGIN') == '1' else row['url']
-        with opener.open(url, timeout=120) as response, path.with_suffix(path.suffix + '.part').open('wb') as stream:
-            shutil.copyfileobj(response, stream)
+        print('Download pinned runtime: ' + row['id'] + '/' + row['arch'], flush=True)
+        # macOS curl carries the system TLS/client defaults expected by binary
+        # publishers; still download the same pinned URL and verify every byte.
+        subprocess.run(['/usr/bin/curl', '--fail', '--location', '--retry', '2', '--connect-timeout', '20',
+                        '--proto', '=https', '--tlsv1.2', '--output', str(path.with_suffix(path.suffix + '.part')), url],
+                       check=True, timeout=600)
         path.with_suffix(path.suffix + '.part').replace(path)
     if path.is_symlink() or path.stat().st_size != row['size'] or digest(path) != row['sha256']:
         raise ValueError('运行时归档校验失败：' + row['name'])
