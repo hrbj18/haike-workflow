@@ -109,7 +109,9 @@ def worker(root):
         value = json.loads(preference.read_text(encoding='utf8'))
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_text(json.dumps(value, ensure_ascii=False, indent=2) + '\n', encoding='utf8')
+    checked = config.report(config.prepare(root, data, directory), 'check')
     return {'profile_present': True, 'voice_count': len(data.get('voices', [])), 'portrait_count': len(imported),
+            'configuration_complete': checked['configuration_complete'], 'pending_configuration': checked['missing'],
             'keys_imported': True, 'paid_calls': 0, 'provider_execution_verified': False, 'browser_sessions_imported': False}
 
 
