@@ -20,5 +20,3 @@ const hash=f=>crypto.createHash('sha256').update(fs.readFileSync(f)).digest('hex
   fs.writeFileSync(path.join(folder,'preview.json'),JSON.stringify({profile:'haike.promo-reference-full-preview/1',propsSha256:hash(path.join(folder,'props.json')),images,reviewed:false},null,2));
  }else await renderMedia({colorSpace:'bt709',serveUrl,composition,inputProps:props,codec:'h264',outputLocation:path.join(folder,'mezzanine.mp4'),crf:1,pixelFormat:'yuv444p',imageFormat:'png',concurrency:2,browserExecutable,logLevel:'error'});
 })().catch(e=>{console.error(String(e.stack||e));process.exitCode=1});
-
-

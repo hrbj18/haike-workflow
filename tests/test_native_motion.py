@@ -38,7 +38,7 @@ class NativeMotionTests(unittest.TestCase):
         for row in document['renderers']:
             original = (ROOT / row['source']).read_text('utf8')
             derived = (ROOT / row['derived']).read_text('utf8')
-            self.assertEqual(derived.split('\n', 1)[1], original.replace('renderMedia({', "renderMedia({colorSpace:'bt709',"))
+            self.assertEqual(derived.split('\n', 1)[1], original.replace('renderMedia({', "renderMedia({colorSpace:'bt709',").rstrip() + '\n')
         for name in ('motion_replay_numbered_02_05_production', 'motion_replay_field_notes_render',
                      'motion_knowledge_public_production_v3', 'studio_promo_phase_v3'):
             path = ROOT / 'Haike_video' / (motion_platform.NATIVE_MODULES['backlot.' + name].replace('.', '/') + '.py')

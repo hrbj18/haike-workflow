@@ -15,7 +15,7 @@
     "claim/approval guards",
     "full encoding and sound"
   ],
-  "generator_sha256": "8ec310605ac5cb8a7dee4dd4122927739f88697e9871997cb7d75f05bd97126a",
+  "generator_sha256": "bbe0fc2f89dcf91f34dab030ae136b153affa6f58598693c94364ecb6e90e73c",
   "runtime_sha256": "195777b14c25c65550eb98cadba425df1422800953d3ab90f01722cc8ebcd7c9",
   "modules": [
     {
@@ -242,7 +242,7 @@
       "source": "Haike_video/templates/promo-reference-phase-v3/render.cjs",
       "source_sha256": "ea340194f2381ffb82e2f037bd9f4f0c9c046705be88f1b8beb5fd62c4c9dec7",
       "derived": "Haike_video/templates/promo-reference-phase-v3/render.macos.cjs",
-      "derived_sha256": "4c8f055b9e7dd1a78a26eacbfc2aaf4c5d0662ee6e0e6439b2e59e9d6ea856a0"
+      "derived_sha256": "a0666fa3b2ed732851198055382ea430f91ac24b42cbf482cf516a61fc3749d3"
     }
   ]
 }

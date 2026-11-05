@@ -145,7 +145,7 @@ def main():
         if original.count('renderMedia({') != 1:
             raise ValueError('Expected one fixed renderMedia call: ' + name)
         result = ('// Native BT.709 binding; canonical drawing and renderer remain frozen.\n' +
-                  original.replace('renderMedia({', "renderMedia({colorSpace:'bt709',")).encode('utf8')
+                  original.replace('renderMedia({', "renderMedia({colorSpace:'bt709',").rstrip() + '\n').encode('utf8')
         if args.check:
             if not target.is_file() or target.read_bytes() != result:
                 raise ValueError('Native renderer drift: ' + name)
