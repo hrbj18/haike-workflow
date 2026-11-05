@@ -118,8 +118,12 @@ class PortablePackageTests(unittest.TestCase):
                 self.write(environment, name)
             editable = 'Lib/site-packages/__editable__.douyin_content_intelligence-0.1.0.pth'
             self.write(environment, editable, b'C:/old-install/copy_skill/src\n')
+            stock = root / 'cpython'
+            for name in ('python.exe', 'pythonw.exe'):
+                self.write(stock, 'Lib/venv/scripts/nt/' + name, b'stock-relocatable-' + name.encode())
             with patch.object(package.subprocess, 'check_output',
-                              return_value='{"python":"3.12 fixture","packages":[]}'):
+                              return_value=json.dumps({'python':'3.12 fixture','python_minor':[3,12],
+                                                       'base_prefix':str(stock),'packages':[]})):
                 result = package.copy_environment(source, destination, module)
             target = destination / module / '.venv'
             self.assertEqual((target / editable).read_text(encoding='utf-8'), '../../../src\n')
@@ -129,6 +133,9 @@ class PortablePackageTests(unittest.TestCase):
             self.assertFalse((target / 'Lib/site-packages/example.dist-info/direct_url.json').exists())
             self.assertIn('RUNTIME_PREPARE_REQUIRED', (target / 'pyvenv.cfg').read_text(encoding='utf-8'))
             self.assertEqual(result['module'], module)
+            self.assertNotIn('base_prefix', result)
+            for name in ('python.exe', 'pythonw.exe'):
+                self.assertEqual((target / 'Scripts' / name).read_bytes(), b'stock-relocatable-' + name.encode())
 
     def test_environment_rejects_unreviewed_absolute_import_path(self):
         with tempfile.TemporaryDirectory() as temporary:
