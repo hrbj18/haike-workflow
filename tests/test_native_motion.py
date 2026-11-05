@@ -15,6 +15,20 @@ from backlot import motion_replay
 
 
 class NativeMotionTests(unittest.TestCase):
+    def test_directory_admission_never_dispatches_paid_phases(self):
+        from unittest.mock import Mock
+        spec = importlib.util.spec_from_file_location('mac_motion_prepare_test', ROOT / 'scripts/mac-motion-prepare.py')
+        helper = importlib.util.module_from_spec(spec); spec.loader.exec_module(helper)
+        producer = Mock()
+        for value in ({'data': '.local/fixture', 'phase': 'avatar'},
+                      {'data': '.local/fixture', 'phase': 'audio'},
+                      {'data': '.local/fixture', 'command': 'render'}):
+            with self.assertRaises(ValueError):
+                helper.admit_directory(producer, value)
+        producer.admit.assert_not_called()
+        helper.admit_directory(producer, {'data': '.local/fixture'})
+        producer.admit.assert_called_once_with(ROOT, '.local/fixture', phase='frames')
+
     def test_generated_adapter_matches_reviewable_derivation(self):
         subprocess.run([sys.executable, str(ROOT / 'scripts/build-native-motion.py'), '--check'], check=True)
         self.assertEqual(len(motion_platform.verify()['modules']), 25)

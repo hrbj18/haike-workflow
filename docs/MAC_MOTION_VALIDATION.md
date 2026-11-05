@@ -18,6 +18,8 @@ Mac 运行时使用原生 Node、Chrome 和 FFmpeg 9.0.2。FFmpeg 6 无法满足
 
 冻结后继续使用 `Haike_video/scripts/motion_replay_production.py` 的 submit/status/execute 及原审批阶段。网页、共用契约准备和父队列执行都通过同一个平台选择入口；阶段批准、实时 claim、预算和未知受理恢复规则继续生效。其他编号模板、知识模板和促销模板继续使用原有准备目录/合同。
 
+编号2–4与Field Notes v2完成原素材准备后，也从 `scripts/mac-motion-prepare.py` 冻结：`--input` JSON为 `{"data":"本副本.local内准备目录","phase":"frames"}`，仅开放本地 `frames/render`；知识/3输入为 `{"data":"已准备目录"}`。促销/3按原preflight输入。使用对应原合同的 `--contract`，先 `--check`，再指定队列、项目根和未占用的 `--output-request`。这样新请求包含Mac派生源码与安装身份；不要用原Windows脚本的直接admit来冻结Mac请求。彩色6–11继续按原VideoCompose准备和本地执行路线。
+
 ## 本次发布门槛
 
 用户要求 Apple Silicon、Intel 都完成18个动效样式验证后才交付 Mac 正式包。
