@@ -1,0 +1,1480 @@
+{
+  "scope": "Externally supplied verified runtime, not bundled or installed by this spike",
+  "tools": {
+    "node": {
+      "path": "node/node.exe",
+      "sha256": "ba4e6d110e8c1592a1ecd390f6b05f3da124b13871a5be62b341a07a853c6c32"
+    },
+    "browser": {
+      "path": "browser/chrome-headless-shell.exe",
+      "sha256": "ec76dc3e69ffab9daddf0bbe7bf0a9e0a034b2d086741a0ae2ef6358a597537b"
+    },
+    "ffmpeg": {
+      "path": "ffmpeg/bin/ffmpeg.exe",
+      "sha256": "486fd8bfed60fdefc5f65b5aedd834282a419cfb1c01ba2cfd55c4a5ebfbadb7"
+    },
+    "ffprobe": {
+      "path": "ffmpeg/bin/ffprobe.exe",
+      "sha256": "435355785120ae1cafdf827be334da6e6b92601ecef60074591849c8dbd95b21"
+    }
+  },
+  "browser_files": [
+    {
+      "path": "browser/ABOUT",
+      "sha256": "122b32f3ee3f1e8d65c774f5257fc6cc2127b666148ced0ce2efa3ea57e1d93c",
+      "size": 257
+    },
+    {
+      "path": "browser/chrome-headless-shell.exe",
+      "sha256": "ec76dc3e69ffab9daddf0bbe7bf0a9e0a034b2d086741a0ae2ef6358a597537b",
+      "size": 202939392
+    },
+    {
+      "path": "browser/headless_command_resources.pak",
+      "sha256": "8f7fa1b24e7758875d44e5cb17c0166fc00259461a5dcfaf2af7b7d3fd91a438",
+      "size": 3033
+    },
+    {
+      "path": "browser/headless_lib_data.pak",
+      "sha256": "cb3c552f76ed18d622e0e2089f77b058e80b63df936ab19d4ecdb86712fbd053",
+      "size": 757064
+    },
+    {
+      "path": "browser/headless_lib_strings.pak",
+      "sha256": "07543ab5cc74f9c274cb0c3c08cee45c0624cecd61b04746d68255671cdbb370",
+      "size": 4544479
+    },
+    {
+      "path": "browser/icudtl.dat",
+      "sha256": "c5da2fc389d1bb0ecb13fe22a8e069b7abc491f8aa5d16eb65d4ff32c85a46b6",
+      "size": 10876464
+    },
+    {
+      "path": "browser/libEGL.dll",
+      "sha256": "bb36870fb97734d30bd49a8367e3c91d1c97907109fb1df2d3dca0a9036c5734",
+      "size": 499712
+    },
+    {
+      "path": "browser/libGLESv2.dll",
+      "sha256": "17440bd58932bcc53109b078a7b91727a2d76e68f64ba98423d85604d9cfc34a",
+      "size": 7831552
+    },
+    {
+      "path": "browser/LICENSE.headless_shell",
+      "sha256": "10cec230a0b785177435985e3d55325ef655af8265e7cacc741a5abc5658fb2c",
+      "size": 2006659
+    },
+    {
+      "path": "browser/v8_context_snapshot.bin",
+      "sha256": "512ef13cb3d8282879d2bf98b4ee2540864bf8965ed3ba9d78d7baf141e41a58",
+      "size": 740928
+    },
+    {
+      "path": "browser/vk_swiftshader.dll",
+      "sha256": "e66ae491ee2ef639916c6ad4ca38fb2577c4d6385ef385f43388f8f587d18e4f",
+      "size": 5440000
+    },
+    {
+      "path": "browser/vk_swiftshader_icd.json",
+      "sha256": "32d83ff113fef532a9f97e0d2831f8656628ab1c99e9060f0332b1532839afd9",
+      "size": 106
+    },
+    {
+      "path": "browser/vulkan-1.dll",
+      "sha256": "1eae6dcd7b053ea874738578e9c61ecc6303d0f561967306cdfa34607efcfc14",
+      "size": 946688
+    },
+    {
+      "path": "browser/hyphen-data/hyph-af.hyb",
+      "sha256": "5487ee44a4cd706d0086522e90c59c76cdf2ac68ce506fd3eae6054b9220c0cf",
+      "size": 72640
+    },
+    {
+      "path": "browser/hyphen-data/hyph-as.hyb",
+      "sha256": "c2784e33158a807135850f7125a7eaabe472b3cfc7afb82c74f02da69ea250fe",
+      "size": 703
+    },
+    {
+      "path": "browser/hyphen-data/hyph-be.hyb",
+      "sha256": "25b7cfa039f82ac92990e1789de40988d490db9b613852fb24036b38ff87893c",
+      "size": 6098
+    },
+    {
+      "path": "browser/hyphen-data/hyph-bg.hyb",
+      "sha256": "7593f0395081e3eeb2d8516d10746608afd826cffd4e7e37d53936993d200a13",
+      "size": 3467
+    },
+    {
+      "path": "browser/hyphen-data/hyph-bn.hyb",
+      "sha256": "c2784e33158a807135850f7125a7eaabe472b3cfc7afb82c74f02da69ea250fe",
+      "size": 703
+    },
+    {
+      "path": "browser/hyphen-data/hyph-cs.hyb",
+      "sha256": "97a4755fe9e653a08969f1933e3db19c712078b227bd5aa6799093abc5a0edc3",
+      "size": 64245
+    },
+    {
+      "path": "browser/hyphen-data/hyph-cu.hyb",
+      "sha256": "2baee19d5024ff87dcf3a1b9d0da1b3ac5a1e506adeead3b96a4de5395d0290e",
+      "size": 52842
+    },
+    {
+      "path": "browser/hyphen-data/hyph-cy.hyb",
+      "sha256": "4d0569fe2f4b41b3164cf610310e1d996fd2c553cc39de6062e50f4e033cc207",
+      "size": 35913
+    },
+    {
+      "path": "browser/hyphen-data/hyph-da.hyb",
+      "sha256": "86fdfc8db62cdaa11f615dad3712da1f4708294e029a4aad0fc285d4ea16c4bd",
+      "size": 6967
+    },
+    {
+      "path": "browser/hyphen-data/hyph-de-1901.hyb",
+      "sha256": "8c5fa4b29519d17593e923bc6a9a284df7a6d07fac42f897110b8fb2e0baeef5",
+      "size": 121393
+    },
+    {
+      "path": "browser/hyphen-data/hyph-de-1996.hyb",
+      "sha256": "d673805547a0228d2f57a5ad551b8760cfcc521f38c49284ed3976e3515bca49",
+      "size": 120412
+    },
+    {
+      "path": "browser/hyphen-data/hyph-de-ch-1901.hyb",
+      "sha256": "8223a912160354e05735522fdb339dc59b353ad5d1e4f4cfa94898dc348e748f",
+      "size": 120218
+    },
+    {
+      "path": "browser/hyphen-data/hyph-el.hyb",
+      "sha256": "76ae3454fb0045adb83094832578aa4749ce4dc694c4edcf85b419c1e2d9bcd3",
+      "size": 4219
+    },
+    {
+      "path": "browser/hyphen-data/hyph-en-gb.hyb",
+      "sha256": "ae4b78009d18e849d87458677151ee3aad1608ad72ec050dfd2421d22e7d031f",
+      "size": 46607
+    },
+    {
+      "path": "browser/hyphen-data/hyph-en-us.hyb",
+      "sha256": "03727cd6f4aa71b203c4c74ca6987ac7d87f13037337ac6f4b6996c2a0dc5f8c",
+      "size": 59802
+    },
+    {
+      "path": "browser/hyphen-data/hyph-es.hyb",
+      "sha256": "137461792537a2e56a6475e81e2b9ad7a2bdabf1f4738fae186dca3022357349",
+      "size": 14995
+    },
+    {
+      "path": "browser/hyphen-data/hyph-et.hyb",
+      "sha256": "10079c66014dd2e6abfef5a018e6553fd5a036afb96bd2a235440a188f88b15e",
+      "size": 21421
+    },
+    {
+      "path": "browser/hyphen-data/hyph-eu.hyb",
+      "sha256": "e2778a4fc7b8f064a32b6a44bc29f10e264d9d6214b8edb8ebd1f5f6d68e2eb2",
+      "size": 665
+    },
+    {
+      "path": "browser/hyphen-data/hyph-fr.hyb",
+      "sha256": "00bd8b2d398d77575da2bfbbc5ec641aad7f2a87d4a31186ec169e85a27de5b7",
+      "size": 8165
+    },
+    {
+      "path": "browser/hyphen-data/hyph-ga.hyb",
+      "sha256": "1e3043f395bfb2a4c43d0480ba2f168ed622881cc3482359ca6e99821e983be8",
+      "size": 35824
+    },
+    {
+      "path": "browser/hyphen-data/hyph-gl.hyb",
+      "sha256": "89d98eff14e2cf1c2314efdf392339e62d7e786f100202a7377bf7b22095a0c5",
+      "size": 9289
+    },
+    {
+      "path": "browser/hyphen-data/hyph-gu.hyb",
+      "sha256": "af0edb67c2219b803c3eb6c1dee6f2d41a3fe00468a9da8be8ef5056d701abf3",
+      "size": 655
+    },
+    {
+      "path": "browser/hyphen-data/hyph-hi.hyb",
+      "sha256": "f4df224d459fd111698dd5a13613c5bbf0ed11f04278d60230d028010eac0c42",
+      "size": 687
+    },
+    {
+      "path": "browser/hyphen-data/hyph-hr.hyb",
+      "sha256": "d5f066a5657f1d7c39d053956df204b7926f40d2fe4f69573af09d909066e26c",
+      "size": 3031
+    },
+    {
+      "path": "browser/hyphen-data/hyph-hu.hyb",
+      "sha256": "8b3a16268cc932b226c17ff405b3cfb6eb38a9511a2043d653dc03729efceac1",
+      "size": 317251
+    },
+    {
+      "path": "browser/hyphen-data/hyph-hy.hyb",
+      "sha256": "9b34dfca85cb27546829f104f137757efb274934c1e9d4991f55ad564962a76a",
+      "size": 605
+    },
+    {
+      "path": "browser/hyphen-data/hyph-it.hyb",
+      "sha256": "f9c027d7fd44b01cd5e1cdf802e20c63560673098af18bea0930ba9af334e0f7",
+      "size": 2512
+    },
+    {
+      "path": "browser/hyphen-data/hyph-ka.hyb",
+      "sha256": "2472271c7955c67e9fdb86d0cd3c5d88f5e598da4f44b6741284b2bbcb2e4d52",
+      "size": 9996
+    },
+    {
+      "path": "browser/hyphen-data/hyph-kn.hyb",
+      "sha256": "2b999d0a152f804601aa8f38ff0d3a6e5949977bf1daa76fa888acae21526287",
+      "size": 711
+    },
+    {
+      "path": "browser/hyphen-data/hyph-la.hyb",
+      "sha256": "fd4b6f36135cd3b932e350ec2017dfd89d2e36ac226f54e4c8f2e4bc6db0593d",
+      "size": 1839
+    },
+    {
+      "path": "browser/hyphen-data/hyph-lt.hyb",
+      "sha256": "6fe2da26a96834fb9aecbe586d40f728df0ef676a4f235450054e66841b9e2ca",
+      "size": 7774
+    },
+    {
+      "path": "browser/hyphen-data/hyph-lv.hyb",
+      "sha256": "65962ccb5055e4c693e5ac493d6affdc810ec168eb2942f5705b7f4e464f9993",
+      "size": 38602
+    },
+    {
+      "path": "browser/hyphen-data/hyph-ml.hyb",
+      "sha256": "90572db8f49b01ec6a102732cdf14fc3f07d363cbe0d261103e583043164e888",
+      "size": 776
+    },
+    {
+      "path": "browser/hyphen-data/hyph-mn-cyrl.hyb",
+      "sha256": "0d2731f16aa2c90faec8e63260358cbccede403faf95e3af8c66bc2db0729ca0",
+      "size": 5142
+    },
+    {
+      "path": "browser/hyphen-data/hyph-mr.hyb",
+      "sha256": "f4df224d459fd111698dd5a13613c5bbf0ed11f04278d60230d028010eac0c42",
+      "size": 687
+    },
+    {
+      "path": "browser/hyphen-data/hyph-mul-ethi.hyb",
+      "sha256": "f2fac1bd069ffe5cd1112d94cc31137ed38a1b161093ecd74c9c1688428b688b",
+      "size": 3740
+    },
+    {
+      "path": "browser/hyphen-data/hyph-nb.hyb",
+      "sha256": "c2771fbb1bfff7db5e267dc7a4505a9675c6b98cfe7a8f7ae5686d7a5a2b3dd0",
+      "size": 145263
+    },
+    {
+      "path": "browser/hyphen-data/hyph-nl.hyb",
+      "sha256": "5ebde398944b461cf940f0520c5a49c0882b6f36f9ac5cda0538c8c8b44fb7ca",
+      "size": 77080
+    },
+    {
+      "path": "browser/hyphen-data/hyph-nn.hyb",
+      "sha256": "5bcbb58eaf65f13f6d039244d942f37c127344e3a0a2e6c32d08236945132809",
+      "size": 145263
+    },
+    {
+      "path": "browser/hyphen-data/hyph-or.hyb",
+      "sha256": "4e9cd302baffc4ea3e9652327ea24072ebf37b5c4fc0719292bdac10aaad665b",
+      "size": 647
+    },
+    {
+      "path": "browser/hyphen-data/hyph-pa.hyb",
+      "sha256": "470329d28faa484f945d78ffefb176dcb6f2032c753e25bc014106ad24b2c68a",
+      "size": 607
+    },
+    {
+      "path": "browser/hyphen-data/hyph-pt.hyb",
+      "sha256": "f6fbf1bcb260cc86256fc494f388f7b27d10865fbf8f61517dee25af4d58d6e8",
+      "size": 1414
+    },
+    {
+      "path": "browser/hyphen-data/hyph-ru.hyb",
+      "sha256": "336ce2048ffd31b7bcaf435e53badfaf0579e405042d49adbc0823f6be5f9614",
+      "size": 19886
+    },
+    {
+      "path": "browser/hyphen-data/hyph-sk.hyb",
+      "sha256": "138c5990961da21993653f54a413ddacb8921d6d70b892b7ca154d6e8ad2028c",
+      "size": 64103
+    },
+    {
+      "path": "browser/hyphen-data/hyph-sl.hyb",
+      "sha256": "ad746c68562603ac3b15e89da03c76e081c08e7d9c8d4c9f64763e53d696c77c",
+      "size": 6631
+    },
+    {
+      "path": "browser/hyphen-data/hyph-sq.hyb",
+      "sha256": "bc29c9401ce952414cbaebc5c8ee1d27c1706c6f77807b5ff713e2124438b3ca",
+      "size": 2013
+    },
+    {
+      "path": "browser/hyphen-data/hyph-sv.hyb",
+      "sha256": "56642aa5a37625ff9d034761d16b034d4ba5be74090cbd825956bbce2775ecd1",
+      "size": 72119
+    },
+    {
+      "path": "browser/hyphen-data/hyph-ta.hyb",
+      "sha256": "40fda94856a86f065de8baa6184ea63dcdb011ee4ca498a7c1fee44c99314c67",
+      "size": 554
+    },
+    {
+      "path": "browser/hyphen-data/hyph-te.hyb",
+      "sha256": "516fa9654fa3aeaab480d40eaf6ad78fc039086bd8edc144be3d59525edcac29",
+      "size": 703
+    },
+    {
+      "path": "browser/hyphen-data/hyph-tk.hyb",
+      "sha256": "77fdaed29bd842aaa976ab7ef81b617a15c0a2d1ebd1161c1bf26b79a108b5cd",
+      "size": 2712
+    },
+    {
+      "path": "browser/hyphen-data/hyph-uk.hyb",
+      "sha256": "1c626abe40d43f6d56a01b5b40305d7c7d6481f616eac00a3f3aaaaca8388786",
+      "size": 19417
+    },
+    {
+      "path": "browser/hyphen-data/hyph-und-ethi.hyb",
+      "sha256": "1de83cb787dfaf53fb7e6e8db3aae5008ad24ebdd28be02031306ea9e9f3e285",
+      "size": 3484
+    },
+    {
+      "path": "browser/locales/af.pak",
+      "sha256": "655dbfcd6018449710293b34ab2f6c04310e1942ee97b00bd5b6237fe3455a7c",
+      "size": 550676
+    },
+    {
+      "path": "browser/locales/af_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/af_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/af_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/am.pak",
+      "sha256": "5817d8580018e38a98433422a1d1fbd58243f5b28c71415d25f8af881a249191",
+      "size": 889648
+    },
+    {
+      "path": "browser/locales/am_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/am_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/am_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/ar.pak",
+      "sha256": "78111b58e190ac27676bf0d768d8189a85f347bee1e0e543bb830af83194bcc6",
+      "size": 981034
+    },
+    {
+      "path": "browser/locales/ar_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/ar_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/ar_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/bg.pak",
+      "sha256": "fab1231d7cdcbeb604715b7481f63b0d194db05f610e452be2525a798b7ca34b",
+      "size": 1019583
+    },
+    {
+      "path": "browser/locales/bg_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/bg_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/bg_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/bn.pak",
+      "sha256": "7a4be0a293649c2b3098d371ce9dc8707f46cfeacb75d6e9825f5b6e758e56ed",
+      "size": 1298590
+    },
+    {
+      "path": "browser/locales/bn_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/bn_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/bn_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/ca.pak",
+      "sha256": "f9479fcb4a48d26debec58d1fde29339d6d3890fa1a579082465167eb7ddb62b",
+      "size": 626645
+    },
+    {
+      "path": "browser/locales/ca_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/ca_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/ca_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/cs.pak",
+      "sha256": "b601302b36de34ce6b1060abe711175060c4a2d537b514440643829f12e8d654",
+      "size": 639075
+    },
+    {
+      "path": "browser/locales/cs_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/cs_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/cs_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/da.pak",
+      "sha256": "77d71c995a5a9cbab7334b4a2464f6a248ad07cb9f8db6fe12a8b8ec8d35d26d",
+      "size": 581061
+    },
+    {
+      "path": "browser/locales/da_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/da_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/da_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/de.pak",
+      "sha256": "ac3b8f9b352a7074cc50cdc68e13ced94663e41a39dac738c49076688d06a493",
+      "size": 629359
+    },
+    {
+      "path": "browser/locales/de_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/de_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/de_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/el.pak",
+      "sha256": "3d509a01dfee3f0fa344f2ec49310bfe5a44d80da8e7050b28f00eb572cea761",
+      "size": 1119109
+    },
+    {
+      "path": "browser/locales/el_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/el_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/el_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/en-GB.pak",
+      "sha256": "2b3f733979f1688bad354458f2d827de7c9a2451f892e4eb16337c8d9bd3d92e",
+      "size": 501796
+    },
+    {
+      "path": "browser/locales/en-GB_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/en-GB_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/en-GB_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/en-US.pak",
+      "sha256": "5725d53c23b559ed7e439c55120f664d0e028a4cc0eaca875e95f9bd135a7a6e",
+      "size": 506644
+    },
+    {
+      "path": "browser/locales/en-US_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/en-US_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/en-US_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/es-419.pak",
+      "sha256": "73f62513728f303e8bf68fa4088ca23c376236c1bc9af401593e05b5e0aecb3a",
+      "size": 613951
+    },
+    {
+      "path": "browser/locales/es-419_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/es-419_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/es-419_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/es.pak",
+      "sha256": "6181e358e316905939d368d4bf6f5e1285791ff875221367388aa78abc95869f",
+      "size": 609868
+    },
+    {
+      "path": "browser/locales/es_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/es_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/es_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/et.pak",
+      "sha256": "df637b61399c947e4caed0d41c48e656a68c197a710f095eeaf803a1003b8c69",
+      "size": 559492
+    },
+    {
+      "path": "browser/locales/et_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/et_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/et_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/fa.pak",
+      "sha256": "a933de965a85cb2755f044d779e89c205cd4f87955fc4697cd5f6849dd8554d6",
+      "size": 917107
+    },
+    {
+      "path": "browser/locales/fa_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/fa_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/fa_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/fi.pak",
+      "sha256": "7a26b39c1dfd9232b629d9ccfa940395c0b062b91edf29a0de50c42f860216b2",
+      "size": 566531
+    },
+    {
+      "path": "browser/locales/fil.pak",
+      "sha256": "9a35365c30d16c598f22d4e4b64018f5b30f54a2133c84cd8725b91fa5fc8d76",
+      "size": 642333
+    },
+    {
+      "path": "browser/locales/fil_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/fil_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/fil_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/fi_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/fi_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/fi_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/fr.pak",
+      "sha256": "65531353d5329d6646bb4f62cb107f5759c59470a97ded97676a2ea92e19f1fa",
+      "size": 664788
+    },
+    {
+      "path": "browser/locales/fr_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/fr_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/fr_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/gu.pak",
+      "sha256": "958ec0580326c9771a13ca0a5d2013d1cc2b8e9f18893e7e968c2c4907098d2c",
+      "size": 1294226
+    },
+    {
+      "path": "browser/locales/gu_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/gu_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/gu_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/he.pak",
+      "sha256": "a125251490bcec879485e9c22bd764ae1386a668b626dcb4b0f7f6b3544574a5",
+      "size": 803590
+    },
+    {
+      "path": "browser/locales/he_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/he_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/he_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/hi.pak",
+      "sha256": "81fbd020dc5d5f1485c842f3dbc19d576dc427b53405ceb3440eaf73f439836f",
+      "size": 1374904
+    },
+    {
+      "path": "browser/locales/hi_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/hi_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/hi_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/hr.pak",
+      "sha256": "0db44e26b22f14ed50419d393fbc9d0cf24df81bfc90b6fa54e37df30ff32d26",
+      "size": 617019
+    },
+    {
+      "path": "browser/locales/hr_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/hr_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/hr_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/hu.pak",
+      "sha256": "21f3bef71420b5cc72538d83a4f4f22d0afed02669ed67d989c73ecdfa0435d6",
+      "size": 663504
+    },
+    {
+      "path": "browser/locales/hu_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/hu_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/hu_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/id.pak",
+      "sha256": "16907d06961f15edc0a2ed59fab169ea0abc60d7c0602d435cc7291c6e7bdaf2",
+      "size": 548916
+    },
+    {
+      "path": "browser/locales/id_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/id_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/id_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/it.pak",
+      "sha256": "6f1938ed70e810489b29ef59c419e209e5f3f4f85894724c77661aa5e2aef01e",
+      "size": 607893
+    },
+    {
+      "path": "browser/locales/it_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/it_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/it_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/ja.pak",
+      "sha256": "2926d4697dd4124eacbbdfd66c60ecf15f4020edf6a0051ffe3e28960c74825d",
+      "size": 735616
+    },
+    {
+      "path": "browser/locales/ja_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/ja_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/ja_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/kn.pak",
+      "sha256": "80d3950f07526ba763edf3c1b7c20c31d2973fe089da4b462068fb94a674e9d2",
+      "size": 1477112
+    },
+    {
+      "path": "browser/locales/kn_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/kn_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/kn_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/ko.pak",
+      "sha256": "291dec02150bde4839aa20cd9103af7f8d99a54bac105a816b0eed2e84412e9e",
+      "size": 624033
+    },
+    {
+      "path": "browser/locales/ko_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/ko_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/ko_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/lt.pak",
+      "sha256": "a3a3dfc70c5c11a09b0b7e247509cfb6677d56bf5afd98f566beda14cd31b918",
+      "size": 669157
+    },
+    {
+      "path": "browser/locales/lt_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/lt_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/lt_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/lv.pak",
+      "sha256": "636796294ad84c45dfaa3ed38646914926c034fdac6ef1b1abd0eacb7881319d",
+      "size": 667691
+    },
+    {
+      "path": "browser/locales/lv_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/lv_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/lv_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/ml.pak",
+      "sha256": "f6d3eb5b0296f35bf60855dcf940756e9b9247025745b9d884b02b2c77389801",
+      "size": 1524555
+    },
+    {
+      "path": "browser/locales/ml_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/ml_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/ml_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/mr.pak",
+      "sha256": "6a09e088aef8f106c747d4a08571554a74cac515f37523ba48f7f606a2c0f3e9",
+      "size": 1261825
+    },
+    {
+      "path": "browser/locales/mr_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/mr_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/mr_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/ms.pak",
+      "sha256": "e794f05b18af7d699dd0861438a48b7afea5538163800144b126748809f857b7",
+      "size": 576120
+    },
+    {
+      "path": "browser/locales/ms_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/ms_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/ms_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/nb.pak",
+      "sha256": "4af0694cc02f9aa0b44ee36f04f0db41894ff171672c581e8e10998c69b001ed",
+      "size": 553636
+    },
+    {
+      "path": "browser/locales/nb_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/nb_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/nb_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/nl.pak",
+      "sha256": "703d831123048b8f884f9f5ce320bbba6fe95886454ad692385f8568121e2037",
+      "size": 577354
+    },
+    {
+      "path": "browser/locales/nl_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/nl_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/nl_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/pl.pak",
+      "sha256": "ca7db41ddb710000120938e7b91d21a1d559714f4020994554fb123e0c8085d1",
+      "size": 642406
+    },
+    {
+      "path": "browser/locales/pl_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/pl_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/pl_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/pt-BR.pak",
+      "sha256": "e7be7f564c17923f65bc01a474e8b817427392135e48f0babf14277d539bdf37",
+      "size": 602059
+    },
+    {
+      "path": "browser/locales/pt-BR_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/pt-BR_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/pt-BR_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/pt-PT.pak",
+      "sha256": "105653d3ad7b329e10f104952ccea22b5a1633b7bc52289d57be43912e14b517",
+      "size": 607058
+    },
+    {
+      "path": "browser/locales/pt-PT_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/pt-PT_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/pt-PT_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/ro.pak",
+      "sha256": "d6cec7ce71d2625b48653339893d64bd6c9581fa358496758def9f60f1abe274",
+      "size": 628341
+    },
+    {
+      "path": "browser/locales/ro_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/ro_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/ro_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/ru.pak",
+      "sha256": "cdffa4f369290f58229f46154ac3ef147537377b220b74f00dc977a8b7b41b55",
+      "size": 1038875
+    },
+    {
+      "path": "browser/locales/ru_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/ru_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/ru_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/sk.pak",
+      "sha256": "9e9afd2b3fae85932a5c2e33ab0a00c25b97b9df71e9c08bf071945a3989b64c",
+      "size": 650122
+    },
+    {
+      "path": "browser/locales/sk_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/sk_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/sk_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/sl.pak",
+      "sha256": "0ca5efcedcfd9f2da3df1dba12438fa16033d89fdf3fb6f427f674697d49993a",
+      "size": 621458
+    },
+    {
+      "path": "browser/locales/sl_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/sl_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/sl_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/sr.pak",
+      "sha256": "d587889e529cd6aad8c377cacebb616a68228e10b16519dbe0ec474fe1c81d63",
+      "size": 956955
+    },
+    {
+      "path": "browser/locales/sr_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/sr_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/sr_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/sv.pak",
+      "sha256": "9c67dfac95d5527931feb0b249cc60a2a1973ea61f3a8326fe35c75830d4b86f",
+      "size": 559281
+    },
+    {
+      "path": "browser/locales/sv_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/sv_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/sv_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/sw.pak",
+      "sha256": "2c5e6c2de59ac4ec71c3a6c00df8ad2926e6b6d37d2f1cf4a71c1745ffe0b2a9",
+      "size": 591585
+    },
+    {
+      "path": "browser/locales/sw_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/sw_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/sw_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/ta.pak",
+      "sha256": "b0526bceded8462e806fb749b1acf5396a72b28101c0b3abc734e1c71e9741ca",
+      "size": 1521704
+    },
+    {
+      "path": "browser/locales/ta_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/ta_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/ta_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/te.pak",
+      "sha256": "abc85b9ecb41ac3939089c1ce7e3aea182348f55ab3fd4a6b8fcfed3d8f09dcb",
+      "size": 1404394
+    },
+    {
+      "path": "browser/locales/te_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/te_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/te_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/th.pak",
+      "sha256": "ef62cc665ed09d03b84908236ec662454910cdb41a449f29e3d84e63aec26a39",
+      "size": 1181218
+    },
+    {
+      "path": "browser/locales/th_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/th_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/th_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/tr.pak",
+      "sha256": "728f4b54ca9e3cef5ed56d58e49644006902e985c1732024174c02895e142e4e",
+      "size": 602212
+    },
+    {
+      "path": "browser/locales/tr_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/tr_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/tr_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/uk.pak",
+      "sha256": "b5b7fb60072a1305315e8f11204a26d68a2e852d6c31580eb4bc6655bc435118",
+      "size": 1038442
+    },
+    {
+      "path": "browser/locales/uk_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/uk_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/uk_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/ur.pak",
+      "sha256": "8aa77c57fa19c2e7f90eb6eaf72f926b17da5122d0dc2f5cd5a80584ad22cd76",
+      "size": 899706
+    },
+    {
+      "path": "browser/locales/ur_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/ur_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/ur_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/vi.pak",
+      "sha256": "c4b121904267c63ccd3edcd327199dad36f37fd14446bdb173a413f430968256",
+      "size": 718214
+    },
+    {
+      "path": "browser/locales/vi_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/vi_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/vi_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/zh-CN.pak",
+      "sha256": "e6da88080064c8310bc21bf35bcc2c90c695a36820f4c576dc3e30fdeaf7d94f",
+      "size": 513247
+    },
+    {
+      "path": "browser/locales/zh-CN_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/zh-CN_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/zh-CN_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/zh-TW.pak",
+      "sha256": "5aab4838a191ec9f48ee073fb3605bad958c97e5de075ce49716529c5b19429b",
+      "size": 507908
+    },
+    {
+      "path": "browser/locales/zh-TW_FEMININE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/zh-TW_MASCULINE.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/locales/zh-TW_NEUTER.pak",
+      "sha256": "ca73097bd968b363b7145e86b64f3c595e533808b0763dc8863a27fc363cfa51",
+      "size": 18
+    },
+    {
+      "path": "browser/PrivacySandboxAttestationsPreloaded/manifest.json",
+      "sha256": "51c311a4ba03140bcd1c827f8d93dba50cadda736925903b26e95609275dbffd",
+      "size": 122
+    },
+    {
+      "path": "browser/PrivacySandboxAttestationsPreloaded/privacy-sandbox-attestations.dat",
+      "sha256": "59e345dc13aedee9ea46b92e58300ecaca944aaea9384c7af885400ac2ae8806",
+      "size": 7624
+    },
+    {
+      "path": "browser/resources/accessibility/reading_mode_gdocs_helper_manifest.json",
+      "sha256": "af49a1f65d06306270983942475f2e00e8d1b17c92b0ab2829f71b78c96fef10",
+      "size": 2399
+    },
+    {
+      "path": "browser/resources/accessibility/reading_mode_gdocs_helper/content.js",
+      "sha256": "6c0aeaaf9a71ad68aa45764c111e70bb23aa0fbf406644a375b6b709cbbe4b6e",
+      "size": 439
+    },
+    {
+      "path": "browser/resources/accessibility/reading_mode_gdocs_helper/gdocs_script.js",
+      "sha256": "d291adabcfcb1a4a4a2ffacdd9d04fdb473ab0d6903556bef7446be9c3646d86",
+      "size": 1425
+    }
+  ],
+  "binary_redistribution": "not_performed",
+  "licenses": {
+    "node": "Node MIT plus included dependency notices",
+    "browser": "Chromium/third-party included notices",
+    "ffmpeg": "GPL-3.0; binary redistribution requires separate full obligations; no binary shipped"
+  },
+  "tool_origin": "Original1027 verified local runtime; inspect matched tool hashes before execution"
+}

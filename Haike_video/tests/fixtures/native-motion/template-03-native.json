@@ -1,0 +1,2607 @@
+{
+  "schema": "haike.native-render-fixture/1",
+  "template_id": "template-03-native",
+  "preferred_version": "1.0.1-public.2",
+  "kind": "dark",
+  "duration": 108.96666666666667,
+  "scope": "synthetic local renderer portability; no ASR/HQ/payment/creative acceptance claim",
+  "props": {
+    "width": 1440,
+    "height": 1800,
+    "fps": 30,
+    "props": {
+      "variant": "cobalt",
+      "brand": "测试效果",
+      "header": "测试效果",
+      "footer": "测试效果",
+      "fontAssets": {
+        "body": "font.ttf",
+        "display": "font.ttf"
+      },
+      "media": [
+        {
+          "id": "child-photo-0",
+          "src": "image000.png",
+          "thumbnail": "image000.png",
+          "kind": "image",
+          "offset": 0,
+          "fit": "contain",
+          "label": "测试效果"
+        },
+        {
+          "id": "child-photo-1",
+          "src": "image001.png",
+          "thumbnail": "image001.png",
+          "kind": "image",
+          "offset": 0,
+          "fit": "contain",
+          "label": "测试效果"
+        },
+        {
+          "id": "child-photo-2",
+          "src": "image002.png",
+          "thumbnail": "image002.png",
+          "kind": "image",
+          "offset": 0,
+          "fit": "contain",
+          "label": "测试效果"
+        },
+        {
+          "id": "child-photo-3",
+          "src": "image003.png",
+          "thumbnail": "image003.png",
+          "kind": "image",
+          "offset": 0,
+          "fit": "contain",
+          "label": "测试效果"
+        },
+        {
+          "id": "child-photo-4",
+          "src": "image004.png",
+          "thumbnail": "image004.png",
+          "kind": "image",
+          "offset": 0,
+          "fit": "contain",
+          "label": "测试效果"
+        },
+        {
+          "id": "child-clip",
+          "src": "children.mp4",
+          "thumbnail": "image000.png",
+          "kind": "video",
+          "offset": 0,
+          "fit": "contain",
+          "label": "测试效果"
+        },
+        {
+          "id": "store-photo-0",
+          "src": "image005.png",
+          "thumbnail": "image005.png",
+          "kind": "image",
+          "offset": 0,
+          "fit": "contain",
+          "label": "测试效果"
+        },
+        {
+          "id": "store-photo-1",
+          "src": "image006.png",
+          "thumbnail": "image006.png",
+          "kind": "image",
+          "offset": 0,
+          "fit": "contain",
+          "label": "测试效果"
+        },
+        {
+          "id": "store-photo-2",
+          "src": "image007.png",
+          "thumbnail": "image007.png",
+          "kind": "image",
+          "offset": 0,
+          "fit": "contain",
+          "label": "测试效果"
+        },
+        {
+          "id": "store-photo-3",
+          "src": "image008.png",
+          "thumbnail": "image008.png",
+          "kind": "image",
+          "offset": 0,
+          "fit": "contain",
+          "label": "测试效果"
+        },
+        {
+          "id": "store-photo-4",
+          "src": "image009.png",
+          "thumbnail": "image009.png",
+          "kind": "image",
+          "offset": 0,
+          "fit": "contain",
+          "label": "测试效果"
+        },
+        {
+          "id": "store-clip",
+          "src": "store.mp4",
+          "thumbnail": "image005.png",
+          "kind": "video",
+          "offset": 0,
+          "fit": "contain",
+          "label": "测试效果"
+        }
+      ],
+      "scenes": [
+        {
+          "id": "scene-s01",
+          "group": "s01",
+          "from": 0,
+          "frames": 286,
+          "mediaIds": [
+            "child-photo-0",
+            "child-photo-1",
+            "child-photo-2",
+            "child-photo-3",
+            "child-photo-4",
+            "store-photo-0",
+            "store-photo-1",
+            "store-photo-2",
+            "store-photo-3",
+            "store-photo-4"
+          ],
+          "mainMediaId": "child-photo-0",
+          "content": {
+            "kicker": "测试效果",
+            "headlineFirst": "测试效果",
+            "headlineConnector": "测试效果",
+            "headlineAccent": "测试效果",
+            "timelineTitle": "测试效果",
+            "wallMeta": "测试效果",
+            "statementFirst": "测试效果",
+            "statementSecond": "测试效果",
+            "payoffFirst": "测试效果",
+            "payoffAccent": "测试效果"
+          },
+          "sourceStart": 0,
+          "sourceDuration": 8.8
+        },
+        {
+          "id": "scene-s02",
+          "group": "s02",
+          "from": 286,
+          "frames": 360,
+          "mediaIds": [
+            "child-photo-0",
+            "child-photo-1",
+            "child-photo-2",
+            "child-photo-3",
+            "child-photo-4",
+            "store-photo-0",
+            "store-photo-1",
+            "store-photo-2",
+            "store-photo-3",
+            "store-photo-4"
+          ],
+          "mainMediaId": "child-photo-2",
+          "content": {
+            "heading": "测试效果",
+            "headingNote": "测试效果",
+            "labels": [
+              "测试效果",
+              "测试效果",
+              "测试效果",
+              "测试效果",
+              "测试效果",
+              "测试效果",
+              "测试效果",
+              "测试效果",
+              "测试效果"
+            ],
+            "groups": [
+              "测试效果",
+              "测试效果"
+            ],
+            "versions": [
+              "测试效果",
+              "测试效果",
+              "测试效果",
+              "测试效果"
+            ],
+            "itemNote": "测试效果",
+            "coverageLabel": "测试效果",
+            "qualityLabel": "测试效果",
+            "metricLabel": "测试效果",
+            "countValue": 9,
+            "countLabel": "测试效果"
+          },
+          "sourceStart": 8.8,
+          "sourceDuration": 17.099999999999998
+        },
+        {
+          "id": "scene-s03",
+          "group": "s03",
+          "from": 646,
+          "frames": 325,
+          "mediaIds": [
+            "child-photo-0",
+            "child-photo-1",
+            "child-photo-2",
+            "child-photo-3",
+            "child-photo-4",
+            "store-photo-0",
+            "store-photo-1",
+            "store-photo-2",
+            "store-photo-3",
+            "store-photo-4"
+          ],
+          "mainMediaId": "child-photo-2",
+          "content": {
+            "heading": "测试效果",
+            "focusFirst": "测试效果",
+            "focusAccent": "测试效果",
+            "comparisonHeading": "测试效果",
+            "comparisonLabels": [
+              "测试效果",
+              "测试效果"
+            ],
+            "reviewTitle": "测试效果",
+            "reviewTimer": "测试效果",
+            "reviewTimerNote": "测试效果",
+            "reviewLabels": [
+              "测试效果",
+              "测试效果",
+              "测试效果"
+            ],
+            "reviewComplete": "测试效果",
+            "precisionFirst": "测试效果",
+            "precisionAccent": "测试效果",
+            "previousLabel": "测试效果"
+          },
+          "sourceStart": 25.9,
+          "sourceDuration": 14.5
+        },
+        {
+          "id": "scene-s04",
+          "group": "s04",
+          "from": 971,
+          "frames": 354,
+          "mediaIds": [
+            "child-clip",
+            "child-photo-0",
+            "child-photo-1",
+            "child-photo-2",
+            "child-photo-3",
+            "child-photo-4",
+            "store-photo-0",
+            "store-photo-1",
+            "store-photo-2",
+            "store-photo-3",
+            "store-photo-4"
+          ],
+          "mainMediaId": "child-clip",
+          "content": {
+            "scopePrefix": "测试效果",
+            "scopeSubject": "测试效果",
+            "scopeAccent": "测试效果",
+            "scopeConclusion": "测试效果",
+            "categories": [
+              "测试效果",
+              "测试效果",
+              "测试效果",
+              "测试效果"
+            ],
+            "categoryNotes": [
+              "测试效果",
+              "测试效果",
+              "测试效果",
+              "测试效果"
+            ],
+            "wallFirst": "测试效果",
+            "wallSecond": "测试效果",
+            "wallAccent": "测试效果",
+            "wallMeta": "测试效果",
+            "wallBadge": "测试效果",
+            "templateLine": "测试效果",
+            "templateChip": "测试效果",
+            "cameraPrefix": "测试效果",
+            "cameraTitle": "测试效果",
+            "cameraLabels": [
+              "测试效果",
+              "测试效果",
+              "测试效果"
+            ],
+            "rhythmTitle": "测试效果",
+            "rhythmParts": [
+              "测试效果",
+              "测试效果",
+              "测试效果",
+              "测试效果"
+            ]
+          },
+          "sourceStart": 40.4,
+          "sourceDuration": 12.300000000000004,
+          "videoWindows": [
+            {
+              "mediaId": "child-clip",
+              "from": 87,
+              "frames": 60,
+              "offset": 0
+            },
+            {
+              "mediaId": "child-clip",
+              "from": 276,
+              "frames": 77,
+              "offset": 0
+            }
+          ]
+        },
+        {
+          "id": "scene-s05",
+          "group": "s05",
+          "from": 1325,
+          "frames": 339,
+          "mediaIds": [
+            "child-photo-1",
+            "store-photo-2",
+            "child-photo-0",
+            "child-photo-1",
+            "child-photo-2",
+            "child-photo-3",
+            "child-photo-4",
+            "store-photo-0",
+            "store-photo-1",
+            "store-photo-2",
+            "store-photo-3",
+            "store-photo-4"
+          ],
+          "mainMediaId": "child-photo-1",
+          "content": {
+            "reactionTop": "测试效果",
+            "reactionBottom": "测试效果",
+            "identityInitial": "测试效果",
+            "identityContext": "测试效果",
+            "identityName": "测试效果",
+            "softwareHeading": "测试效果",
+            "softwareName": "测试效果",
+            "featureLabels": [
+              "测试效果",
+              "测试效果"
+            ],
+            "featureDescriptions": [
+              "测试效果",
+              "测试效果"
+            ],
+            "playbackLabel": "测试效果",
+            "pathHeading": "测试效果",
+            "pathLabels": [
+              "测试效果",
+              "测试效果",
+              "测试效果"
+            ],
+            "pathConclusion": "测试效果"
+          },
+          "sourceStart": 52.7,
+          "sourceDuration": 16.700000000000003,
+          "cueTimes": {
+            "lane_result": 10.15
+          }
+        },
+        {
+          "id": "scene-s06",
+          "group": "s06",
+          "from": 1664,
+          "frames": 166,
+          "mediaIds": [
+            "child-photo-0",
+            "child-photo-1",
+            "child-photo-2",
+            "child-photo-3",
+            "child-photo-4",
+            "store-photo-0",
+            "store-photo-1",
+            "store-photo-2",
+            "store-photo-3",
+            "store-photo-4"
+          ],
+          "mainMediaId": "child-photo-0",
+          "content": {
+            "timelineHeading": "测试效果",
+            "timelineStart": "测试效果",
+            "timelineEnd": "测试效果",
+            "processLabels": [
+              "测试效果",
+              "测试效果",
+              "测试效果"
+            ],
+            "timelineConclusion": "测试效果",
+            "identityInitial": "测试效果",
+            "accountName": "测试效果",
+            "accountContext": "测试效果",
+            "accountDescription": "测试效果",
+            "accountLabels": [
+              "测试效果",
+              "测试效果",
+              "测试效果",
+              "测试效果"
+            ],
+            "accountValues": [
+              "测试效果",
+              "测试效果",
+              "测试效果",
+              "测试效果"
+            ]
+          },
+          "sourceStart": 69.4,
+          "sourceDuration": 8.699999999999989,
+          "cueTimes": {
+            "account_commit": 4.713333333333333
+          }
+        },
+        {
+          "id": "scene-s07",
+          "group": "s07",
+          "from": 1830,
+          "frames": 373,
+          "mediaIds": [
+            "child-clip",
+            "store-clip",
+            "child-photo-0",
+            "child-photo-1",
+            "child-photo-2",
+            "child-photo-3",
+            "child-photo-4",
+            "store-photo-0",
+            "store-photo-1",
+            "store-photo-2",
+            "store-photo-3",
+            "store-photo-4"
+          ],
+          "mainMediaId": "child-clip",
+          "content": {
+            "beforeHeading": "测试效果",
+            "preparationSteps": [
+              "测试效果",
+              "测试效果",
+              "测试效果"
+            ],
+            "preparationNote": "测试效果",
+            "blockLabel": "测试效果",
+            "compressionTitle": "测试效果",
+            "processMediaLabel": "测试效果",
+            "ringContext": "测试效果",
+            "ringTitle": "测试效果",
+            "ringConclusion": "测试效果",
+            "outputHeading": "测试效果",
+            "outputLabels": [
+              "测试效果",
+              "测试效果"
+            ],
+            "outputNotes": [
+              "测试效果",
+              "测试效果"
+            ]
+          },
+          "sourceStart": 78.1,
+          "sourceDuration": 11.600000000000009,
+          "videoWindows": [
+            {
+              "mediaId": "child-clip",
+              "from": 175,
+              "frames": 55,
+              "offset": 8
+            },
+            {
+              "mediaId": "store-clip",
+              "from": 306,
+              "frames": 66,
+              "offset": 1
+            }
+          ]
+        },
+        {
+          "id": "scene-s08",
+          "group": "s08",
+          "from": 2203,
+          "frames": 313,
+          "mediaIds": [
+            "store-clip",
+            "child-clip",
+            "child-photo-0",
+            "child-photo-1",
+            "child-photo-2",
+            "child-photo-3",
+            "child-photo-4",
+            "store-photo-0",
+            "store-photo-1",
+            "store-photo-2",
+            "store-photo-3",
+            "store-photo-4"
+          ],
+          "mainMediaId": "store-clip",
+          "content": {
+            "reflectionTop": "测试效果",
+            "reflectionBottom": "测试效果",
+            "reflectionConclusion": "测试效果",
+            "comparisonLabels": [
+              "测试效果",
+              "测试效果"
+            ],
+            "comparisonAction": "测试效果",
+            "comparisonNote": "测试效果",
+            "frameNote": "测试效果",
+            "actionText": "测试效果",
+            "brandTitle": "测试效果",
+            "brandDescription": "测试效果",
+            "invitationHeading": "测试效果",
+            "invitationNote": "测试效果",
+            "signoff": "测试效果",
+            "identityInitial": "测试效果"
+          },
+          "sourceStart": 89.7,
+          "sourceDuration": 13.219999999999999,
+          "videoWindows": [
+            {
+              "mediaId": "store-clip",
+              "from": 100,
+              "frames": 112,
+              "offset": 1
+            },
+            {
+              "mediaId": "child-clip",
+              "from": 257,
+              "frames": 55,
+              "offset": 14
+            }
+          ]
+        },
+        {
+          "id": "scene-s09",
+          "group": "s09",
+          "from": 2516,
+          "frames": 204,
+          "mediaIds": [
+            "child-photo-0",
+            "child-photo-1",
+            "child-photo-2",
+            "child-photo-3",
+            "child-photo-4",
+            "store-photo-0",
+            "store-photo-1",
+            "store-photo-2",
+            "store-photo-3",
+            "store-photo-4"
+          ],
+          "mainMediaId": "child-photo-0",
+          "content": {
+            "productionPrefix": "测试效果",
+            "productionMark": "测试效果",
+            "productionSuffix": "",
+            "toolName": "测试效果",
+            "productionNote": "测试效果",
+            "promptHeading": "测试效果",
+            "promptText": "测试效果",
+            "typingSeconds": 2.45,
+            "signatureName": "测试效果",
+            "signatureNote": "测试效果",
+            "identityInitial": "测试效果"
+          },
+          "sourceStart": 102.92,
+          "sourceDuration": 5.480000000000004
+        },
+        {
+          "id": "scene-review",
+          "group": "review",
+          "from": 2720,
+          "frames": 549,
+          "mediaIds": [
+            "child-photo-0",
+            "child-photo-1",
+            "child-photo-2",
+            "child-photo-3",
+            "child-photo-4",
+            "store-photo-0",
+            "store-photo-1",
+            "store-photo-2",
+            "store-photo-3",
+            "store-photo-4"
+          ],
+          "mainMediaId": "child-photo-0",
+          "content": {
+            "artifactTitle": "测试效果",
+            "reviewHeading": "测试效果",
+            "reviewChecks": [
+              "测试效果",
+              "测试效果",
+              "测试效果"
+            ],
+            "reviewConclusion": "测试效果"
+          },
+          "sourceStart": 110,
+          "sourceDuration": 14
+        }
+      ],
+      "captions": [
+        {
+          "text": "测试效果",
+          "startMs": 520.0,
+          "endMs": 3000.0
+        },
+        {
+          "text": "测试效果",
+          "startMs": 3000.0,
+          "endMs": 4040.0
+        },
+        {
+          "text": "测试效果",
+          "startMs": 4400.0,
+          "endMs": 7240.0
+        },
+        {
+          "text": "测试效果",
+          "startMs": 7240.0,
+          "endMs": 9080.0
+        },
+        {
+          "text": "测试效果",
+          "startMs": 9520.0,
+          "endMs": 11640.0
+        },
+        {
+          "text": "测试效果",
+          "startMs": 11640.0,
+          "endMs": 12040.0
+        },
+        {
+          "text": "测试效果",
+          "startMs": 12440.0,
+          "endMs": 14760.0
+        },
+        {
+          "text": "测试效果",
+          "startMs": 15080.0,
+          "endMs": 17440.0
+        },
+        {
+          "text": "测试效果",
+          "startMs": 17640.0,
+          "endMs": 19760.0
+        },
+        {
+          "text": "测试效果",
+          "startMs": 19760.0,
+          "endMs": 20800.0
+        },
+        {
+          "text": "测试效果",
+          "startMs": 21520.0,
+          "endMs": 24520.0
+        },
+        {
+          "text": "测试效果",
+          "startMs": 24520.0,
+          "endMs": 26680.0
+        },
+        {
+          "text": "测试效果",
+          "startMs": 26680.0,
+          "endMs": 28800.0
+        },
+        {
+          "text": "测试效果",
+          "startMs": 29080.0,
+          "endMs": 31200.0
+        },
+        {
+          "text": "测试效果",
+          "startMs": 31200.0,
+          "endMs": 31400.0
+        },
+        {
+          "text": "测试效果",
+          "startMs": 32360.0,
+          "endMs": 34560.0
+        },
+        {
+          "text": "测试效果",
+          "startMs": 34560.0,
+          "endMs": 36840.0
+        },
+        {
+          "text": "测试效果",
+          "startMs": 37160.0,
+          "endMs": 39600.0
+        },
+        {
+          "text": "测试效果",
+          "startMs": 39760.0,
+          "endMs": 42120.0
+        },
+        {
+          "text": "测试效果",
+          "startMs": 42360.0,
+          "endMs": 43720.0
+        },
+        {
+          "text": "测试效果",
+          "startMs": 44160.0,
+          "endMs": 46920.0
+        },
+        {
+          "text": "测试效果",
+          "startMs": 47120.0,
+          "endMs": 48280.0
+        },
+        {
+          "text": "测试效果",
+          "startMs": 48520.0,
+          "endMs": 52120.0
+        },
+        {
+          "text": "测试效果",
+          "startMs": 52120.0,
+          "endMs": 52920.0
+        },
+        {
+          "text": "测试效果",
+          "startMs": 53320.0,
+          "endMs": 56080.0
+        },
+        {
+          "text": "测试效果",
+          "startMs": 56560.0,
+          "endMs": 58240.0
+        },
+        {
+          "text": "测试效果",
+          "startMs": 58480.0,
+          "endMs": 61520.0
+        },
+        {
+          "text": "测试效果",
+          "startMs": 61520.0,
+          "endMs": 64400.00000000001
+        },
+        {
+          "text": "测试效果",
+          "startMs": 64400.00000000001,
+          "endMs": 65000.0
+        },
+        {
+          "text": "测试效果",
+          "startMs": 65600.0,
+          "endMs": 68040.0
+        },
+        {
+          "text": "测试效果",
+          "startMs": 68040.0,
+          "endMs": 70320.0
+        },
+        {
+          "text": "测试效果",
+          "startMs": 70600.0,
+          "endMs": 71720.0
+        },
+        {
+          "text": "测试效果",
+          "startMs": 72080.0,
+          "endMs": 74760.0
+        },
+        {
+          "text": "测试效果",
+          "startMs": 74880.0,
+          "endMs": 75680.0
+        },
+        {
+          "text": "测试效果",
+          "startMs": 75960.0,
+          "endMs": 78160.0
+        },
+        {
+          "text": "测试效果",
+          "startMs": 78480.0,
+          "endMs": 81320.0
+        },
+        {
+          "text": "测试效果",
+          "startMs": 81320.0,
+          "endMs": 83240.0
+        },
+        {
+          "text": "测试效果",
+          "startMs": 83850.0,
+          "endMs": 86170.0
+        },
+        {
+          "text": "测试效果",
+          "startMs": 86170.0,
+          "endMs": 87810.0
+        },
+        {
+          "text": "测试效果",
+          "startMs": 88170.0,
+          "endMs": 91250.0
+        },
+        {
+          "text": "测试效果",
+          "startMs": 91410.0,
+          "endMs": 92290.0
+        },
+        {
+          "text": "测试效果",
+          "startMs": 93100.0,
+          "endMs": 95300.0
+        },
+        {
+          "text": "测试效果",
+          "startMs": 95580.0,
+          "endMs": 97500.0
+        },
+        {
+          "text": "测试效果",
+          "startMs": 98180.0,
+          "endMs": 101140.0
+        },
+        {
+          "text": "测试效果",
+          "startMs": 101140.0,
+          "endMs": 102580.0
+        },
+        {
+          "text": "测试效果",
+          "startMs": 103180.0,
+          "endMs": 106300.0
+        },
+        {
+          "text": "测试效果",
+          "startMs": 106300.0,
+          "endMs": 108820.0
+        }
+      ],
+      "presenter": {
+        "src": "clip010.mp4",
+        "from": 0,
+        "frames": 3269,
+        "offset": 0,
+        "modes": [
+          {
+            "from": 0,
+            "frames": 132,
+            "mode": "small"
+          },
+          {
+            "from": 132,
+            "frames": 2952,
+            "mode": "hidden"
+          },
+          {
+            "from": 3084,
+            "frames": 185,
+            "mode": "small"
+          }
+        ]
+      },
+      "width": 1440,
+      "height": 1800,
+      "fps": 30,
+      "durationFrames": 3269,
+      "audio": "master.wav"
+    },
+    "audio": {
+      "voice": "master.wav",
+      "music": "master.wav",
+      "musicGainDb": -13,
+      "musicOffsetSeconds": 0,
+      "loopMusic": true,
+      "sfx": []
+    },
+    "display_aliases": [
+      {
+        "from": "ta",
+        "to": "测试效果",
+        "expected_count": 2
+      },
+      {
+        "from": "测试效果",
+        "to": "测试效果",
+        "expected_count": 1
+      },
+      {
+        "from": "测试效果",
+        "to": "测试效果",
+        "expected_count": 1
+      }
+    ],
+    "transcript": [
+      {
+        "start": 0.52,
+        "end": 4.04,
+        "text": "测试效果",
+        "words": [
+          {
+            "start": 0.52,
+            "end": 0.92,
+            "text": "测试效果"
+          },
+          {
+            "start": 0.92,
+            "end": 1.16,
+            "text": "测试效果"
+          },
+          {
+            "start": 1.48,
+            "end": 1.72,
+            "text": "测试效果"
+          },
+          {
+            "start": 1.72,
+            "end": 1.92,
+            "text": "测试效果"
+          },
+          {
+            "start": 1.92,
+            "end": 2.28,
+            "text": "测试效果"
+          },
+          {
+            "start": 2.48,
+            "end": 2.88,
+            "text": "测试效果"
+          },
+          {
+            "start": 2.88,
+            "end": 3.0,
+            "text": "测试效果"
+          },
+          {
+            "start": 3.0,
+            "end": 3.28,
+            "text": "测试效果"
+          },
+          {
+            "start": 3.28,
+            "end": 3.68,
+            "text": "测试效果"
+          },
+          {
+            "start": 3.68,
+            "end": 4.04,
+            "text": "测试效果"
+          }
+        ]
+      },
+      {
+        "start": 4.4,
+        "end": 9.08,
+        "text": "测试效果",
+        "words": [
+          {
+            "start": 4.4,
+            "end": 4.72,
+            "text": "测试效果"
+          },
+          {
+            "start": 4.72,
+            "end": 5.04,
+            "text": "测试效果"
+          },
+          {
+            "start": 5.04,
+            "end": 5.32,
+            "text": "测试效果"
+          },
+          {
+            "start": 5.32,
+            "end": 5.56,
+            "text": "测试效果"
+          },
+          {
+            "start": 5.84,
+            "end": 6.12,
+            "text": "测试效果"
+          },
+          {
+            "start": 6.12,
+            "end": 6.28,
+            "text": "测试效果"
+          },
+          {
+            "start": 6.28,
+            "end": 6.52,
+            "text": "测试效果"
+          },
+          {
+            "start": 6.76,
+            "end": 6.96,
+            "text": "测试效果"
+          },
+          {
+            "start": 6.96,
+            "end": 7.24,
+            "text": "测试效果"
+          },
+          {
+            "start": 7.24,
+            "end": 7.4,
+            "text": "测试效果"
+          },
+          {
+            "start": 7.4,
+            "end": 7.76,
+            "text": "测试效果"
+          },
+          {
+            "start": 7.96,
+            "end": 8.24,
+            "text": "测试效果"
+          },
+          {
+            "start": 8.24,
+            "end": 8.56,
+            "text": "测试效果"
+          },
+          {
+            "start": 8.56,
+            "end": 8.72,
+            "text": "测试效果"
+          },
+          {
+            "start": 8.72,
+            "end": 9.08,
+            "text": "测试效果"
+          }
+        ]
+      },
+      {
+        "start": 9.52,
+        "end": 12.04,
+        "text": "测试效果",
+        "words": [
+          {
+            "start": 9.52,
+            "end": 9.84,
+            "text": "测试效果"
+          },
+          {
+            "start": 9.84,
+            "end": 10.12,
+            "text": "测试效果"
+          },
+          {
+            "start": 10.12,
+            "end": 10.28,
+            "text": "测试效果"
+          },
+          {
+            "start": 10.52,
+            "end": 10.68,
+            "text": "测试效果"
+          },
+          {
+            "start": 10.68,
+            "end": 10.96,
+            "text": "测试效果"
+          },
+          {
+            "start": 10.96,
+            "end": 11.12,
+            "text": "测试效果"
+          },
+          {
+            "start": 11.12,
+            "end": 11.36,
+            "text": "测试效果"
+          },
+          {
+            "start": 11.36,
+            "end": 11.64,
+            "text": "测试效果"
+          },
+          {
+            "start": 11.64,
+            "end": 12.04,
+            "text": "测试效果"
+          }
+        ]
+      },
+      {
+        "start": 12.44,
+        "end": 14.76,
+        "text": "测试效果",
+        "words": [
+          {
+            "start": 12.44,
+            "end": 12.56,
+            "text": "测试效果"
+          },
+          {
+            "start": 12.56,
+            "end": 12.92,
+            "text": "测试效果"
+          },
+          {
+            "start": 12.92,
+            "end": 13.32,
+            "text": "测试效果"
+          },
+          {
+            "start": 13.56,
+            "end": 13.72,
+            "text": "测试效果"
+          },
+          {
+            "start": 13.72,
+            "end": 13.96,
+            "text": "测试效果"
+          },
+          {
+            "start": 13.96,
+            "end": 14.16,
+            "text": "测试效果"
+          },
+          {
+            "start": 14.16,
+            "end": 14.36,
+            "text": "测试效果"
+          },
+          {
+            "start": 14.36,
+            "end": 14.76,
+            "text": "测试效果"
+          }
+        ]
+      },
+      {
+        "start": 15.08,
+        "end": 20.8,
+        "text": "测试效果",
+        "words": [
+          {
+            "start": 15.08,
+            "end": 15.36,
+            "text": "测试效果"
+          },
+          {
+            "start": 15.36,
+            "end": 15.64,
+            "text": "测试效果"
+          },
+          {
+            "start": 15.64,
+            "end": 16.0,
+            "text": "测试效果"
+          },
+          {
+            "start": 16.28,
+            "end": 16.72,
+            "text": "测试效果"
+          },
+          {
+            "start": 16.72,
+            "end": 17.04,
+            "text": "测试效果"
+          },
+          {
+            "start": 17.04,
+            "end": 17.44,
+            "text": "测试效果"
+          },
+          {
+            "start": 17.64,
+            "end": 17.92,
+            "text": "测试效果"
+          },
+          {
+            "start": 17.92,
+            "end": 18.16,
+            "text": "测试效果"
+          },
+          {
+            "start": 18.16,
+            "end": 18.52,
+            "text": "测试效果"
+          },
+          {
+            "start": 18.52,
+            "end": 18.76,
+            "text": "测试效果"
+          },
+          {
+            "start": 18.76,
+            "end": 19.0,
+            "text": "测试效果"
+          },
+          {
+            "start": 19.2,
+            "end": 19.44,
+            "text": "测试效果"
+          },
+          {
+            "start": 19.44,
+            "end": 19.76,
+            "text": "测试效果"
+          },
+          {
+            "start": 19.76,
+            "end": 20.0,
+            "text": "测试效果"
+          },
+          {
+            "start": 20.0,
+            "end": 20.32,
+            "text": "测试效果"
+          },
+          {
+            "start": 20.32,
+            "end": 20.48,
+            "text": "测试效果"
+          },
+          {
+            "start": 20.48,
+            "end": 20.8,
+            "text": "测试效果"
+          }
+        ]
+      },
+      {
+        "start": 21.52,
+        "end": 28.8,
+        "text": "测试效果",
+        "words": [
+          {
+            "start": 21.52,
+            "end": 21.8,
+            "text": "测试效果"
+          },
+          {
+            "start": 21.8,
+            "end": 22.12,
+            "text": "测试效果"
+          },
+          {
+            "start": 22.12,
+            "end": 22.52,
+            "text": "测试效果"
+          },
+          {
+            "start": 22.72,
+            "end": 23.04,
+            "text": "测试效果"
+          },
+          {
+            "start": 23.04,
+            "end": 23.2,
+            "text": "测试效果"
+          },
+          {
+            "start": 23.2,
+            "end": 23.6,
+            "text": "测试效果"
+          },
+          {
+            "start": 23.6,
+            "end": 24.12,
+            "text": "测试效果"
+          },
+          {
+            "start": 24.12,
+            "end": 24.52,
+            "text": "测试效果"
+          },
+          {
+            "start": 24.52,
+            "end": 24.88,
+            "text": "测试效果"
+          },
+          {
+            "start": 24.88,
+            "end": 25.08,
+            "text": "测试效果"
+          },
+          {
+            "start": 25.08,
+            "end": 25.24,
+            "text": "测试效果"
+          },
+          {
+            "start": 25.24,
+            "end": 25.48,
+            "text": "测试效果"
+          },
+          {
+            "start": 25.48,
+            "end": 25.84,
+            "text": "测试效果"
+          },
+          {
+            "start": 25.84,
+            "end": 26.04,
+            "text": "测试效果"
+          },
+          {
+            "start": 26.04,
+            "end": 26.2,
+            "text": "测试效果"
+          },
+          {
+            "start": 26.36,
+            "end": 26.68,
+            "text": "测试效果"
+          },
+          {
+            "start": 26.68,
+            "end": 27.0,
+            "text": "测试效果"
+          },
+          {
+            "start": 27.0,
+            "end": 27.12,
+            "text": "测试效果"
+          },
+          {
+            "start": 27.24,
+            "end": 27.44,
+            "text": "测试效果"
+          },
+          {
+            "start": 27.44,
+            "end": 27.76,
+            "text": "测试效果"
+          },
+          {
+            "start": 27.76,
+            "end": 27.88,
+            "text": "测试效果"
+          },
+          {
+            "start": 28.0,
+            "end": 28.16,
+            "text": "测试效果"
+          },
+          {
+            "start": 28.16,
+            "end": 28.44,
+            "text": "测试效果"
+          },
+          {
+            "start": 28.44,
+            "end": 28.8,
+            "text": "测试效果"
+          }
+        ]
+      },
+      {
+        "start": 29.08,
+        "end": 31.4,
+        "text": "测试效果",
+        "words": [
+          {
+            "start": 29.08,
+            "end": 29.36,
+            "text": "测试效果"
+          },
+          {
+            "start": 29.36,
+            "end": 29.88,
+            "text": "测试效果"
+          },
+          {
+            "start": 30.04,
+            "end": 30.28,
+            "text": "测试效果"
+          },
+          {
+            "start": 30.28,
+            "end": 30.6,
+            "text": "测试效果"
+          },
+          {
+            "start": 30.6,
+            "end": 30.92,
+            "text": "测试效果"
+          },
+          {
+            "start": 30.92,
+            "end": 31.2,
+            "text": "测试效果"
+          },
+          {
+            "start": 31.2,
+            "end": 31.4,
+            "text": "测试效果"
+          }
+        ]
+      },
+      {
+        "start": 32.36,
+        "end": 36.84,
+        "text": "测试效果",
+        "words": [
+          {
+            "start": 32.36,
+            "end": 32.64,
+            "text": "测试效果"
+          },
+          {
+            "start": 32.64,
+            "end": 32.76,
+            "text": "测试效果"
+          },
+          {
+            "start": 32.76,
+            "end": 33.04,
+            "text": "测试效果"
+          },
+          {
+            "start": 33.04,
+            "end": 33.32,
+            "text": "测试效果"
+          },
+          {
+            "start": 33.32,
+            "end": 33.64,
+            "text": "测试效果"
+          },
+          {
+            "start": 33.64,
+            "end": 33.76,
+            "text": "测试效果"
+          },
+          {
+            "start": 33.76,
+            "end": 33.96,
+            "text": "测试效果"
+          },
+          {
+            "start": 33.96,
+            "end": 34.28,
+            "text": "测试效果"
+          },
+          {
+            "start": 34.28,
+            "end": 34.56,
+            "text": "测试效果"
+          },
+          {
+            "start": 34.56,
+            "end": 34.8,
+            "text": "测试效果"
+          },
+          {
+            "start": 34.8,
+            "end": 35.04,
+            "text": "测试效果"
+          },
+          {
+            "start": 35.4,
+            "end": 35.68,
+            "text": "测试效果"
+          },
+          {
+            "start": 35.68,
+            "end": 35.96,
+            "text": "测试效果"
+          },
+          {
+            "start": 35.96,
+            "end": 36.12,
+            "text": "测试效果"
+          },
+          {
+            "start": 36.12,
+            "end": 36.36,
+            "text": "测试效果"
+          },
+          {
+            "start": 36.36,
+            "end": 36.84,
+            "text": "测试效果"
+          }
+        ]
+      },
+      {
+        "start": 37.16,
+        "end": 43.72,
+        "text": "测试效果",
+        "words": [
+          {
+            "start": 37.16,
+            "end": 37.36,
+            "text": "测试效果"
+          },
+          {
+            "start": 37.36,
+            "end": 37.6,
+            "text": "测试效果"
+          },
+          {
+            "start": 37.6,
+            "end": 37.72,
+            "text": "测试效果"
+          },
+          {
+            "start": 37.72,
+            "end": 38.24,
+            "text": "测试效果"
+          },
+          {
+            "start": 38.44,
+            "end": 38.6,
+            "text": "测试效果"
+          },
+          {
+            "start": 38.6,
+            "end": 38.76,
+            "text": "测试效果"
+          },
+          {
+            "start": 38.76,
+            "end": 38.84,
+            "text": "测试效果"
+          },
+          {
+            "start": 38.84,
+            "end": 39.08,
+            "text": "测试效果"
+          },
+          {
+            "start": 39.08,
+            "end": 39.36,
+            "text": "测试效果"
+          },
+          {
+            "start": 39.36,
+            "end": 39.6,
+            "text": "测试效果"
+          },
+          {
+            "start": 39.76,
+            "end": 39.96,
+            "text": "测试效果"
+          },
+          {
+            "start": 39.96,
+            "end": 40.2,
+            "text": "测试效果"
+          },
+          {
+            "start": 40.2,
+            "end": 40.72,
+            "text": "测试效果"
+          },
+          {
+            "start": 41.04,
+            "end": 41.2,
+            "text": "测试效果"
+          },
+          {
+            "start": 41.2,
+            "end": 41.36,
+            "text": "测试效果"
+          },
+          {
+            "start": 41.36,
+            "end": 41.48,
+            "text": "测试效果"
+          },
+          {
+            "start": 41.48,
+            "end": 41.76,
+            "text": "测试效果"
+          },
+          {
+            "start": 41.76,
+            "end": 42.12,
+            "text": "测试效果"
+          },
+          {
+            "start": 42.36,
+            "end": 42.56,
+            "text": "测试效果"
+          },
+          {
+            "start": 42.56,
+            "end": 42.68,
+            "text": "测试效果"
+          },
+          {
+            "start": 42.68,
+            "end": 42.84,
+            "text": "测试效果"
+          },
+          {
+            "start": 42.84,
+            "end": 43.2,
+            "text": "测试效果"
+          },
+          {
+            "start": 43.2,
+            "end": 43.72,
+            "text": "测试效果"
+          }
+        ]
+      },
+      {
+        "start": 44.16,
+        "end": 48.28,
+        "text": "测试效果",
+        "words": [
+          {
+            "start": 44.16,
+            "end": 44.44,
+            "text": "测试效果"
+          },
+          {
+            "start": 44.44,
+            "end": 44.8,
+            "text": "测试效果"
+          },
+          {
+            "start": 44.8,
+            "end": 45.12,
+            "text": "测试效果"
+          },
+          {
+            "start": 45.12,
+            "end": 45.56,
+            "text": "测试效果"
+          },
+          {
+            "start": 46.0,
+            "end": 46.2,
+            "text": "测试效果"
+          },
+          {
+            "start": 46.2,
+            "end": 46.4,
+            "text": "测试效果"
+          },
+          {
+            "start": 46.4,
+            "end": 46.92,
+            "text": "测试效果"
+          },
+          {
+            "start": 47.12,
+            "end": 47.32,
+            "text": "测试效果"
+          },
+          {
+            "start": 47.32,
+            "end": 47.52,
+            "text": "测试效果"
+          },
+          {
+            "start": 47.52,
+            "end": 47.64,
+            "text": "测试效果"
+          },
+          {
+            "start": 47.64,
+            "end": 47.92,
+            "text": "测试效果"
+          },
+          {
+            "start": 47.92,
+            "end": 48.28,
+            "text": "测试效果"
+          }
+        ]
+      },
+      {
+        "start": 48.52,
+        "end": 52.92,
+        "text": "测试效果",
+        "words": [
+          {
+            "start": 48.52,
+            "end": 48.68,
+            "text": "测试效果"
+          },
+          {
+            "start": 48.68,
+            "end": 48.92,
+            "text": "测试效果"
+          },
+          {
+            "start": 48.92,
+            "end": 49.32,
+            "text": "测试效果"
+          },
+          {
+            "start": 49.6,
+            "end": 49.8,
+            "text": "测试效果"
+          },
+          {
+            "start": 49.8,
+            "end": 50.0,
+            "text": "测试效果"
+          },
+          {
+            "start": 50.0,
+            "end": 50.32,
+            "text": "测试效果"
+          },
+          {
+            "start": 50.68,
+            "end": 50.92,
+            "text": "测试效果"
+          },
+          {
+            "start": 50.92,
+            "end": 51.24,
+            "text": "测试效果"
+          },
+          {
+            "start": 51.24,
+            "end": 51.76,
+            "text": "测试效果"
+          },
+          {
+            "start": 51.76,
+            "end": 52.12,
+            "text": "测试效果"
+          },
+          {
+            "start": 52.12,
+            "end": 52.48,
+            "text": "测试效果"
+          },
+          {
+            "start": 52.48,
+            "end": 52.92,
+            "text": "测试效果"
+          }
+        ]
+      },
+      {
+        "start": 53.32,
+        "end": 58.24,
+        "text": "测试效果",
+        "words": [
+          {
+            "start": 53.32,
+            "end": 53.68,
+            "text": "测试效果"
+          },
+          {
+            "start": 53.68,
+            "end": 54.0,
+            "text": "测试效果"
+          },
+          {
+            "start": 54.0,
+            "end": 54.24,
+            "text": "测试效果"
+          },
+          {
+            "start": 54.24,
+            "end": 54.44,
+            "text": "测试效果"
+          },
+          {
+            "start": 54.44,
+            "end": 54.64,
+            "text": "测试效果"
+          },
+          {
+            "start": 54.64,
+            "end": 55.08,
+            "text": "测试效果"
+          },
+          {
+            "start": 55.08,
+            "end": 55.44,
+            "text": "测试效果"
+          },
+          {
+            "start": 55.44,
+            "end": 55.48,
+            "text": "测试效果"
+          },
+          {
+            "start": 55.48,
+            "end": 55.8,
+            "text": "测试效果"
+          },
+          {
+            "start": 55.8,
+            "end": 56.08,
+            "text": "测试效果"
+          },
+          {
+            "start": 56.56,
+            "end": 56.72,
+            "text": "测试效果"
+          },
+          {
+            "start": 56.72,
+            "end": 57.08,
+            "text": "测试效果"
+          },
+          {
+            "start": 57.08,
+            "end": 57.36,
+            "text": "测试效果"
+          },
+          {
+            "start": 57.36,
+            "end": 57.6,
+            "text": "测试效果"
+          },
+          {
+            "start": 57.6,
+            "end": 57.96,
+            "text": "测试效果"
+          },
+          {
+            "start": 57.96,
+            "end": 58.24,
+            "text": "测试效果"
+          }
+        ]
+      },
+      {
+        "start": 58.48,
+        "end": 65.0,
+        "text": "测试效果",
+        "words": [
+          {
+            "start": 58.48,
+            "end": 59.0,
+            "text": "测试效果"
+          },
+          {
+            "start": 59.0,
+            "end": 59.24,
+            "text": "测试效果"
+          },
+          {
+            "start": 59.24,
+            "end": 59.56,
+            "text": "测试效果"
+          },
+          {
+            "start": 59.56,
+            "end": 59.92,
+            "text": "测试效果"
+          },
+          {
+            "start": 60.36,
+            "end": 60.64,
+            "text": "测试效果"
+          },
+          {
+            "start": 60.64,
+            "end": 61.0,
+            "text": "测试效果"
+          },
+          {
+            "start": 61.0,
+            "end": 61.28,
+            "text": "测试效果"
+          },
+          {
+            "start": 61.28,
+            "end": 61.52,
+            "text": "测试效果"
+          },
+          {
+            "start": 61.52,
+            "end": 61.8,
+            "text": "测试效果"
+          },
+          {
+            "start": 62.0,
+            "end": 62.4,
+            "text": "测试效果"
+          },
+          {
+            "start": 62.4,
+            "end": 62.72,
+            "text": "测试效果"
+          },
+          {
+            "start": 62.72,
+            "end": 62.96,
+            "text": "测试效果"
+          },
+          {
+            "start": 62.96,
+            "end": 63.12,
+            "text": "测试效果"
+          },
+          {
+            "start": 63.12,
+            "end": 63.32,
+            "text": "测试效果"
+          },
+          {
+            "start": 63.32,
+            "end": 63.68,
+            "text": "测试效果"
+          },
+          {
+            "start": 63.88,
+            "end": 64.4,
+            "text": "测试效果"
+          },
+          {
+            "start": 64.4,
+            "end": 64.56,
+            "text": "测试效果"
+          },
+          {
+            "start": 64.56,
+            "end": 65.0,
+            "text": "测试效果"
+          }
+        ]
+      },
+      {
+        "start": 65.6,
+        "end": 71.72,
+        "text": "测试效果",
+        "words": [
+          {
+            "start": 65.6,
+            "end": 65.84,
+            "text": "测试效果"
+          },
+          {
+            "start": 65.84,
+            "end": 66.04,
+            "text": "测试效果"
+          },
+          {
+            "start": 66.04,
+            "end": 66.48,
+            "text": "测试效果"
+          },
+          {
+            "start": 66.48,
+            "end": 66.8,
+            "text": "测试效果"
+          },
+          {
+            "start": 66.8,
+            "end": 67.12,
+            "text": "测试效果"
+          },
+          {
+            "start": 67.12,
+            "end": 67.28,
+            "text": "测试效果"
+          },
+          {
+            "start": 67.28,
+            "end": 67.6,
+            "text": "测试效果"
+          },
+          {
+            "start": 67.68,
+            "end": 67.8,
+            "text": "测试效果"
+          },
+          {
+            "start": 67.8,
+            "end": 67.92,
+            "text": "测试效果"
+          },
+          {
+            "start": 67.92,
+            "end": 68.04,
+            "text": "测试效果"
+          },
+          {
+            "start": 68.04,
+            "end": 68.44,
+            "text": "测试效果"
+          },
+          {
+            "start": 68.56,
+            "end": 68.72,
+            "text": "测试效果"
+          },
+          {
+            "start": 68.72,
+            "end": 69.12,
+            "text": "测试效果"
+          },
+          {
+            "start": 69.12,
+            "end": 69.32,
+            "text": "测试效果"
+          },
+          {
+            "start": 69.56,
+            "end": 69.72,
+            "text": "测试效果"
+          },
+          {
+            "start": 69.72,
+            "end": 69.88,
+            "text": "测试效果"
+          },
+          {
+            "start": 69.88,
+            "end": 70.32,
+            "text": "测试效果"
+          },
+          {
+            "start": 70.6,
+            "end": 70.88,
+            "text": "测试效果"
+          },
+          {
+            "start": 70.88,
+            "end": 71.08,
+            "text": "测试效果"
+          },
+          {
+            "start": 71.08,
+            "end": 71.36,
+            "text": "测试效果"
+          },
+          {
+            "start": 71.36,
+            "end": 71.72,
+            "text": "测试效果"
+          }
+        ]
+      },
+      {
+        "start": 72.08,
+        "end": 75.68,
+        "text": "测试效果",
+        "words": [
+          {
+            "start": 72.08,
+            "end": 72.44,
+            "text": "测试效果"
+          },
+          {
+            "start": 72.44,
+            "end": 72.76,
+            "text": "测试效果"
+          },
+          {
+            "start": 72.76,
+            "end": 73.16,
+            "text": "测试效果"
+          },
+          {
+            "start": 73.44,
+            "end": 73.6,
+            "text": "测试效果"
+          },
+          {
+            "start": 73.6,
+            "end": 73.92,
+            "text": "测试效果"
+          },
+          {
+            "start": 73.92,
+            "end": 74.12,
+            "text": "测试效果"
+          },
+          {
+            "start": 74.12,
+            "end": 74.24,
+            "text": "测试效果"
+          },
+          {
+            "start": 74.4,
+            "end": 74.64,
+            "text": "测试效果"
+          },
+          {
+            "start": 74.64,
+            "end": 74.76,
+            "text": "测试效果"
+          },
+          {
+            "start": 74.88,
+            "end": 75.04,
+            "text": "测试效果"
+          },
+          {
+            "start": 75.04,
+            "end": 75.24,
+            "text": "测试效果"
+          },
+          {
+            "start": 75.24,
+            "end": 75.68,
+            "text": "测试效果"
+          }
+        ]
+      },
+      {
+        "start": 75.96,
+        "end": 83.24,
+        "text": "测试效果",
+        "words": [
+          {
+            "start": 75.96,
+            "end": 76.24,
+            "text": "测试效果"
+          },
+          {
+            "start": 76.24,
+            "end": 76.48,
+            "text": "测试效果"
+          },
+          {
+            "start": 76.48,
+            "end": 76.88,
+            "text": "测试效果"
+          },
+          {
+            "start": 77.08,
+            "end": 77.6,
+            "text": "测试效果"
+          },
+          {
+            "start": 77.6,
+            "end": 77.76,
+            "text": "测试效果"
+          },
+          {
+            "start": 77.76,
+            "end": 78.16,
+            "text": "测试效果"
+          },
+          {
+            "start": 78.48,
+            "end": 78.88,
+            "text": "测试效果"
+          },
+          {
+            "start": 78.88,
+            "end": 79.04,
+            "text": "测试效果"
+          },
+          {
+            "start": 79.04,
+            "end": 79.32,
+            "text": "测试效果"
+          },
+          {
+            "start": 79.32,
+            "end": 79.64,
+            "text": "测试效果"
+          },
+          {
+            "start": 79.92,
+            "end": 80.08,
+            "text": "测试效果"
+          },
+          {
+            "start": 80.08,
+            "end": 80.44,
+            "text": "测试效果"
+          },
+          {
+            "start": 80.44,
+            "end": 80.6,
+            "text": "测试效果"
+          },
+          {
+            "start": 80.6,
+            "end": 80.96,
+            "text": "测试效果"
+          },
+          {
+            "start": 81.12,
+            "end": 81.32,
+            "text": "测试效果"
+          },
+          {
+            "start": 81.32,
+            "end": 81.52,
+            "text": "测试效果"
+          },
+          {
+            "start": 81.52,
+            "end": 82.12,
+            "text": "测试效果"
+          },
+          {
+            "start": 82.12,
+            "end": 82.52,
+            "text": "测试效果"
+          },
+          {
+            "start": 82.52,
+            "end": 82.92,
+            "text": "测试效果"
+          },
+          {
+            "start": 82.92,
+            "end": 83.24,
+            "text": "测试效果"
+          }
+        ]
+      },
+      {
+        "start": 83.85,
+        "end": 87.81,
+        "text": "测试效果",
+        "words": [
+          {
+            "start": 83.85,
+            "end": 84.13,
+            "text": "测试效果"
+          },
+          {
+            "start": 84.13,
+            "end": 84.69,
+            "text": "测试效果"
+          },
+          {
+            "start": 84.69,
+            "end": 84.85,
+            "text": "测试效果"
+          },
+          {
+            "start": 84.85,
+            "end": 85.09,
+            "text": "测试效果"
+          },
+          {
+            "start": 85.09,
+            "end": 85.29,
+            "text": "测试效果"
+          },
+          {
+            "start": 85.29,
+            "end": 85.69,
+            "text": "测试效果"
+          },
+          {
+            "start": 85.69,
+            "end": 85.89,
+            "text": "测试效果"
+          },
+          {
+            "start": 85.89,
+            "end": 86.09,
+            "text": "测试效果"
+          },
+          {
+            "start": 86.09,
+            "end": 86.17,
+            "text": "测试效果"
+          },
+          {
+            "start": 86.17,
+            "end": 86.49,
+            "text": "测试效果"
+          },
+          {
+            "start": 86.81,
+            "end": 86.93,
+            "text": "测试效果"
+          },
+          {
+            "start": 86.93,
+            "end": 87.37,
+            "text": "测试效果"
+          },
+          {
+            "start": 87.37,
+            "end": 87.45,
+            "text": "测试效果"
+          },
+          {
+            "start": 87.45,
+            "end": 87.81,
+            "text": "测试效果"
+          }
+        ]
+      },
+      {
+        "start": 88.17,
+        "end": 92.29,
+        "text": "测试效果",
+        "words": [
+          {
+            "start": 88.17,
+            "end": 88.41,
+            "text": "测试效果"
+          },
+          {
+            "start": 88.41,
+            "end": 88.69,
+            "text": "测试效果"
+          },
+          {
+            "start": 88.89,
+            "end": 89.09,
+            "text": "测试效果"
+          },
+          {
+            "start": 89.09,
+            "end": 89.61,
+            "text": "测试效果"
+          },
+          {
+            "start": 89.61,
+            "end": 89.89,
+            "text": "测试效果"
+          },
+          {
+            "start": 89.89,
+            "end": 90.33,
+            "text": "测试效果"
+          },
+          {
+            "start": 90.65,
+            "end": 90.89,
+            "text": "测试效果"
+          },
+          {
+            "start": 90.89,
+            "end": 91.25,
+            "text": "测试效果"
+          },
+          {
+            "start": 91.41,
+            "end": 91.73,
+            "text": "测试效果"
+          },
+          {
+            "start": 91.73,
+            "end": 91.85,
+            "text": "测试效果"
+          },
+          {
+            "start": 91.85,
+            "end": 92.29,
+            "text": "测试效果"
+          }
+        ]
+      },
+      {
+        "start": 93.1,
+        "end": 97.5,
+        "text": "测试效果",
+        "words": [
+          {
+            "start": 93.1,
+            "end": 93.34,
+            "text": "测试效果"
+          },
+          {
+            "start": 93.34,
+            "end": 93.74,
+            "text": "测试效果"
+          },
+          {
+            "start": 93.74,
+            "end": 94.02,
+            "text": "测试效果"
+          },
+          {
+            "start": 94.22,
+            "end": 94.58,
+            "text": "测试效果"
+          },
+          {
+            "start": 94.58,
+            "end": 94.86,
+            "text": "测试效果"
+          },
+          {
+            "start": 94.86,
+            "end": 95.3,
+            "text": "测试效果"
+          },
+          {
+            "start": 95.58,
+            "end": 95.74,
+            "text": "测试效果"
+          },
+          {
+            "start": 95.74,
+            "end": 96.06,
+            "text": "测试效果"
+          },
+          {
+            "start": 96.06,
+            "end": 96.46,
+            "text": "测试效果"
+          },
+          {
+            "start": 96.46,
+            "end": 96.78,
+            "text": "测试效果"
+          },
+          {
+            "start": 96.78,
+            "end": 96.9,
+            "text": "测试效果"
+          },
+          {
+            "start": 96.9,
+            "end": 97.14,
+            "text": "测试效果"
+          },
+          {
+            "start": 97.14,
+            "end": 97.5,
+            "text": "测试效果"
+          }
+        ]
+      },
+      {
+        "start": 98.18,
+        "end": 102.58,
+        "text": "测试效果",
+        "words": [
+          {
+            "start": 98.18,
+            "end": 98.54,
+            "text": "测试效果"
+          },
+          {
+            "start": 98.54,
+            "end": 98.86,
+            "text": "测试效果"
+          },
+          {
+            "start": 98.86,
+            "end": 99.26,
+            "text": "测试效果"
+          },
+          {
+            "start": 99.62,
+            "end": 99.82,
+            "text": "测试效果"
+          },
+          {
+            "start": 99.82,
+            "end": 100.14,
+            "text": "测试效果"
+          },
+          {
+            "start": 100.14,
+            "end": 100.5,
+            "text": "测试效果"
+          },
+          {
+            "start": 100.62,
+            "end": 100.78,
+            "text": "测试效果"
+          },
+          {
+            "start": 100.78,
+            "end": 101.14,
+            "text": "测试效果"
+          },
+          {
+            "start": 101.14,
+            "end": 101.26,
+            "text": "测试效果"
+          },
+          {
+            "start": 101.26,
+            "end": 101.42,
+            "text": "测试效果"
+          },
+          {
+            "start": 101.42,
+            "end": 101.66,
+            "text": "测试效果"
+          },
+          {
+            "start": 101.82,
+            "end": 102.06,
+            "text": "测试效果"
+          },
+          {
+            "start": 102.06,
+            "end": 102.18,
+            "text": "测试效果"
+          },
+          {
+            "start": 102.18,
+            "end": 102.58,
+            "text": "测试效果"
+          }
+        ]
+      },
+      {
+        "start": 103.18,
+        "end": 108.82,
+        "text": "测试效果",
+        "words": [
+          {
+            "start": 103.18,
+            "end": 103.58,
+            "text": "测试效果"
+          },
+          {
+            "start": 103.58,
+            "end": 103.78,
+            "text": "测试效果"
+          },
+          {
+            "start": 103.78,
+            "end": 104.18,
+            "text": "测试效果"
+          },
+          {
+            "start": 104.18,
+            "end": 104.26,
+            "text": "测试效果"
+          },
+          {
+            "start": 104.26,
+            "end": 104.34,
+            "text": "测试效果"
+          },
+          {
+            "start": 104.34,
+            "end": 104.66,
+            "text": "测试效果"
+          },
+          {
+            "start": 104.66,
+            "end": 105.06,
+            "text": "测试效果"
+          },
+          {
+            "start": 105.06,
+            "end": 105.3,
+            "text": "测试效果"
+          },
+          {
+            "start": 105.3,
+            "end": 105.74,
+            "text": "测试效果"
+          },
+          {
+            "start": 106.06,
+            "end": 106.3,
+            "text": "测试效果"
+          },
+          {
+            "start": 106.3,
+            "end": 106.62,
+            "text": "测试效果"
+          },
+          {
+            "start": 106.62,
+            "end": 107.1,
+            "text": "测试效果"
+          },
+          {
+            "start": 107.1,
+            "end": 107.5,
+            "text": "测试效果"
+          },
+          {
+            "start": 107.5,
+            "end": 107.66,
+            "text": "测试效果"
+          },
+          {
+            "start": 107.66,
+            "end": 108.02,
+            "text": "测试效果"
+          },
+          {
+            "start": 108.02,
+            "end": 108.38,
+            "text": "测试效果"
+          },
+          {
+            "start": 108.38,
+            "end": 108.82,
+            "text": "测试效果"
+          }
+        ]
+      }
+    ],
+    "preview_scope": "full-actions/1"
+  }
+}

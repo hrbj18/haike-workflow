@@ -1,0 +1,248 @@
+{
+  "schema": "haike.motion-native-adapter/1",
+  "platform": "darwin",
+  "adapter_version": "1.1.0",
+  "changes": [
+    "fixed native imports",
+    "pinned native binaries and npm",
+    "explicit local dependency resolution",
+    "actual BT.709 color conversion at native encode"
+  ],
+  "preserved": [
+    "canonical source hashes",
+    "drawing sources",
+    "action IDs and clocks",
+    "claim/approval guards",
+    "full encoding and sound"
+  ],
+  "generator_sha256": "bbe0fc2f89dcf91f34dab030ae136b153affa6f58598693c94364ecb6e90e73c",
+  "runtime_sha256": "195777b14c25c65550eb98cadba425df1422800953d3ab90f01722cc8ebcd7c9",
+  "modules": [
+    {
+      "canonical_module": "backlot.motion_public_execution_v2",
+      "native_module": "backlot.motion_native_public_execution_v2",
+      "source": "Haike_video/backlot/motion_public_execution_v2.py",
+      "source_sha256": "bb3900fd95149b8f7da3e3d7dd44bbdd4a078dc500ec89eac5d81474c7532dce",
+      "derived": "Haike_video/backlot/motion_native_public_execution_v2.py",
+      "derived_sha256": "5bbd78d7c3c4778d63a404a0e2c045f54a9cfb4b11de13bc38bbdc98a7254a4e"
+    },
+    {
+      "canonical_module": "backlot.motion_public_observed_v2",
+      "native_module": "backlot.motion_native_public_observed_v2",
+      "source": "Haike_video/backlot/motion_public_observed_v2.py",
+      "source_sha256": "97403417dad73d717679af83ab90811674334edc5bdd854548586001e3f06b0e",
+      "derived": "Haike_video/backlot/motion_native_public_observed_v2.py",
+      "derived_sha256": "2fb85802ffd15bc88e7ff85ab776751a3380918de84349f42889103d2d7394c8"
+    },
+    {
+      "canonical_module": "backlot.motion_public_dark_v2",
+      "native_module": "backlot.motion_native_public_dark_v2",
+      "source": "Haike_video/backlot/motion_public_dark_v2.py",
+      "source_sha256": "351c063f7959ea116b994a7eb3df992b260e41620abac758411224f504c72142",
+      "derived": "Haike_video/backlot/motion_native_public_dark_v2.py",
+      "derived_sha256": "8fda9366e7a294158a5dac96047241a8c30f9e8155ddc0342818e7bed5155bd6"
+    },
+    {
+      "canonical_module": "backlot.motion_public_dark_remotion_v2",
+      "native_module": "backlot.motion_native_public_dark_remotion_v2",
+      "source": "Haike_video/backlot/motion_public_dark_remotion_v2.py",
+      "source_sha256": "5d79e6eedc5d6bacaad5418e5a8cbeb134ba44b8bb8bca65046ed19e728f5a25",
+      "derived": "Haike_video/backlot/motion_native_public_dark_remotion_v2.py",
+      "derived_sha256": "949bdfe4070c2fc3f631add7bf651dbfe408a04ffea941495fca245b988feeaa"
+    },
+    {
+      "canonical_module": "backlot.motion_public_production_v2",
+      "native_module": "backlot.motion_native_public_production_v2",
+      "source": "Haike_video/backlot/motion_public_production_v2.py",
+      "source_sha256": "ed9f232c71db68c0fceea252c3ef98632f7b4da0b659b52296de06767cc35fa2",
+      "derived": "Haike_video/backlot/motion_native_public_production_v2.py",
+      "derived_sha256": "dfaa74ec6fb96a499ca5e08ae839d8203a338b624448ed8679def2c7867902a8"
+    },
+    {
+      "canonical_module": "backlot.motion_public_poster_execution_v3",
+      "native_module": "backlot.motion_native_public_poster_execution_v3",
+      "source": "Haike_video/backlot/motion_public_poster_execution_v3.py",
+      "source_sha256": "e196dbe447b21725713e3d5a5db82ed237292746f6e012fbb53d851b8401160a",
+      "derived": "Haike_video/backlot/motion_native_public_poster_execution_v3.py",
+      "derived_sha256": "fdefff848ca5497d6dae054d7f0b7265a31bb5ffe1538dcb71eb3622cec365a6"
+    },
+    {
+      "canonical_module": "backlot.motion_public_poster_observed_v3",
+      "native_module": "backlot.motion_native_public_poster_observed_v3",
+      "source": "Haike_video/backlot/motion_public_poster_observed_v3.py",
+      "source_sha256": "0afec3b9c36b02ee1929e309d297a8ceb09435d93e87aec1ccf14c7455d3c19b",
+      "derived": "Haike_video/backlot/motion_native_public_poster_observed_v3.py",
+      "derived_sha256": "ab2c8dab68dd56303da442f65a7c11f1e94fb16c1a5ce51601ca041674574768"
+    },
+    {
+      "canonical_module": "backlot.motion_public_poster_production_v3",
+      "native_module": "backlot.motion_native_public_poster_production_v3",
+      "source": "Haike_video/backlot/motion_public_poster_production_v3.py",
+      "source_sha256": "733d8bfc01ff3afbbbf88ce94a6c0d0df89c467672f1e7c530fab8c28ee1c30e",
+      "derived": "Haike_video/backlot/motion_native_public_poster_production_v3.py",
+      "derived_sha256": "75ca0e82fdedca94daed07c3eb0524321b9e260d6448aa28f4b27a5bee88fa0d"
+    },
+    {
+      "canonical_module": "backlot.motion_replay_public_v2",
+      "native_module": "backlot.motion_native_replay_public_v2",
+      "source": "Haike_video/backlot/motion_replay_public_v2.py",
+      "source_sha256": "5c9f7f813e8bf8c49728403ece5df7998a9e3307f85e8d23f2cee10d443734ac",
+      "derived": "Haike_video/backlot/motion_native_replay_public_v2.py",
+      "derived_sha256": "7438c249b878904a294e18f75c55a13155394601d65996d990c3a92342eb3185"
+    },
+    {
+      "canonical_module": "backlot.motion_replay_public_v2_bound",
+      "native_module": "backlot.motion_native_replay_public_v2_bound",
+      "source": "Haike_video/backlot/motion_replay_public_v2_bound.py",
+      "source_sha256": "c8f120ee035896e6830e0a0de7845fab381f6c073f9b5bcae844dbe6290b8536",
+      "derived": "Haike_video/backlot/motion_native_replay_public_v2_bound.py",
+      "derived_sha256": "0f45f028216c52c85904c841827deee07cc4a87ba5b3150fda64cdd5b332a4c7"
+    },
+    {
+      "canonical_module": "backlot.motion_replay_public_poster_v3_bound",
+      "native_module": "backlot.motion_native_replay_public_poster_v3_bound",
+      "source": "Haike_video/backlot/motion_replay_public_poster_v3_bound.py",
+      "source_sha256": "57624e71a3b91a5a7270f9b522987ebeab7cf850911d57b3fa2a1bc5519a38eb",
+      "derived": "Haike_video/backlot/motion_native_replay_public_poster_v3_bound.py",
+      "derived_sha256": "96dc73a21ad70be00ae2ae1c5847cc1642399b7a33f62c04a99a6064b9fe5c1a"
+    },
+    {
+      "canonical_module": "backlot.motion_public_paper_execution_v3",
+      "native_module": "backlot.motion_native_public_paper_execution_v3",
+      "source": "Haike_video/backlot/motion_public_paper_execution_v3.py",
+      "source_sha256": "8a0dae9aa4c5a0304f7a9e38a69b8d9f621e67c189b292fccc1c9fe3fdd17ca5",
+      "derived": "Haike_video/backlot/motion_native_public_paper_execution_v3.py",
+      "derived_sha256": "35e6c590b3702f6ff7d248088961665ba8e7ec72715b01e33ae54843edd46a5b"
+    },
+    {
+      "canonical_module": "backlot.motion_public_paper_observed_v3",
+      "native_module": "backlot.motion_native_public_paper_observed_v3",
+      "source": "Haike_video/backlot/motion_public_paper_observed_v3.py",
+      "source_sha256": "7cb9a491a2dbb2cc10f4279915268b987918785d9918cbdbbe32f176223bb55e",
+      "derived": "Haike_video/backlot/motion_native_public_paper_observed_v3.py",
+      "derived_sha256": "7d9ea9cbbd9153839f0c074bbf6ecfff66239d26cf3891665afa6b4db141601d"
+    },
+    {
+      "canonical_module": "backlot.motion_public_paper_production_v3",
+      "native_module": "backlot.motion_native_public_paper_production_v3",
+      "source": "Haike_video/backlot/motion_public_paper_production_v3.py",
+      "source_sha256": "0b2b1be2d0e0451a650dd2e1d8d60a1215fd410b68e65f1439462a8698180d4e",
+      "derived": "Haike_video/backlot/motion_native_public_paper_production_v3.py",
+      "derived_sha256": "32beb67fe2b4eab5b4c3c6f4cab84effd251b806423632c6fef0dee6faa9512c"
+    },
+    {
+      "canonical_module": "backlot.motion_replay_public_paper_v3_bound",
+      "native_module": "backlot.motion_native_replay_public_paper_v3_bound",
+      "source": "Haike_video/backlot/motion_replay_public_paper_v3_bound.py",
+      "source_sha256": "e70255975cee7654e4703bdd01fe8ee9f9e515987b92f118d77b0cefaea61ff3",
+      "derived": "Haike_video/backlot/motion_native_replay_public_paper_v3_bound.py",
+      "derived_sha256": "21270637003c9655b162fde8508902c26c94671fd0d51baa61b0548a3e75aa12"
+    },
+    {
+      "canonical_module": "backlot.motion_public_quote_execution_v3",
+      "native_module": "backlot.motion_native_public_quote_execution_v3",
+      "source": "Haike_video/backlot/motion_public_quote_execution_v3.py",
+      "source_sha256": "7d57c5493972753edbba820960c8e9d9e2654bef95201be5ed9ecf07fd461ef2",
+      "derived": "Haike_video/backlot/motion_native_public_quote_execution_v3.py",
+      "derived_sha256": "6f36edd4462fa68137557c1e4fda1824f38b2891ce3f378936b29efe7106d1a7"
+    },
+    {
+      "canonical_module": "backlot.motion_public_quote_observed_v3",
+      "native_module": "backlot.motion_native_public_quote_observed_v3",
+      "source": "Haike_video/backlot/motion_public_quote_observed_v3.py",
+      "source_sha256": "bed47823ce0482740a813c5556c5cff8eace978b1f5241089bfc40766f2b4e94",
+      "derived": "Haike_video/backlot/motion_native_public_quote_observed_v3.py",
+      "derived_sha256": "742c9bbc30edd227a6253cde970e8d1e4da1add54c9d9af4386e3fd0c70031af"
+    },
+    {
+      "canonical_module": "backlot.motion_public_quote_production_v3",
+      "native_module": "backlot.motion_native_public_quote_production_v3",
+      "source": "Haike_video/backlot/motion_public_quote_production_v3.py",
+      "source_sha256": "d42607f4fbd66c99d3dcd3e555c5086edf5c775704a7ee8241215622c643cea9",
+      "derived": "Haike_video/backlot/motion_native_public_quote_production_v3.py",
+      "derived_sha256": "18c56c262f270f9d260c448963df8d126c1678f2bf465307f2ec81466c226c1c"
+    },
+    {
+      "canonical_module": "backlot.motion_replay_public_quote_v3_bound",
+      "native_module": "backlot.motion_native_replay_public_quote_v3_bound",
+      "source": "Haike_video/backlot/motion_replay_public_quote_v3_bound.py",
+      "source_sha256": "ea641d36fbcd919709736d29dfdae2c170d1c2a67c7c0b792a1d91244cba4e7c",
+      "derived": "Haike_video/backlot/motion_native_replay_public_quote_v3_bound.py",
+      "derived_sha256": "2199151868c77dd0d8a61b646d2adf0b5871abd5dab7468550ff6f4cc328f27d"
+    },
+    {
+      "canonical_module": "backlot.motion_replay_field_notes_render",
+      "native_module": "backlot.motion_native_replay_field_notes_render",
+      "source": "Haike_video/backlot/motion_replay_field_notes_render.py",
+      "source_sha256": "66979a41a50384fd714dfccde3f3ccfae046da3cdc18836b634fb5b22cb0173a",
+      "derived": "Haike_video/backlot/motion_native_replay_field_notes_render.py",
+      "derived_sha256": "5d421612040494792f5d835891c63574ccf9b2cad0aa4b845e5c665f1ff58c99"
+    },
+    {
+      "canonical_module": "backlot.motion_replay_field_notes_video",
+      "native_module": "backlot.motion_native_replay_field_notes_video",
+      "source": "Haike_video/backlot/motion_replay_field_notes_video.py",
+      "source_sha256": "1cf248fc432410dddc64e2c367000af107a781376ac0c85d0662e3ca1b881b8c",
+      "derived": "Haike_video/backlot/motion_native_replay_field_notes_video.py",
+      "derived_sha256": "ad939c55063846daceaf700e060e996cceefcb751b6808499d7c16e2c24939be"
+    },
+    {
+      "canonical_module": "backlot.motion_replay_numbered_02_05_production",
+      "native_module": "backlot.motion_native_replay_numbered_02_05_production",
+      "source": "Haike_video/backlot/motion_replay_numbered_02_05_production.py",
+      "source_sha256": "36b7927c1307f3547bdfb9faca819eb20abec75f8d69fc7a9504d0e7c477fe47",
+      "derived": "Haike_video/backlot/motion_native_replay_numbered_02_05_production.py",
+      "derived_sha256": "c1bc1de72cdeb23638d5d329145542f5fda92613f2cd75248bb3e52c88d2de46"
+    },
+    {
+      "canonical_module": "backlot.motion_replay_numbered_02_05_full",
+      "native_module": "backlot.motion_native_replay_numbered_02_05_full",
+      "source": "Haike_video/backlot/motion_replay_numbered_02_05_full.py",
+      "source_sha256": "dcd8a0be9c0188c9e24548a800ffa4f2a13764533ee579a6dfb2194d5d207de5",
+      "derived": "Haike_video/backlot/motion_native_replay_numbered_02_05_full.py",
+      "derived_sha256": "ea51f24803791888f2cc8927c131b196d91dd1810e9fc5b729d5dad4db277105"
+    },
+    {
+      "canonical_module": "backlot.motion_knowledge_public_production_v3",
+      "native_module": "backlot.motion_native_knowledge_public_production_v3",
+      "source": "Haike_video/backlot/motion_knowledge_public_production_v3.py",
+      "source_sha256": "38df71218bb8b57c5e5cf08523925b44d235d0767971dcad5944ffdaa4581d81",
+      "derived": "Haike_video/backlot/motion_native_knowledge_public_production_v3.py",
+      "derived_sha256": "62889792a414ec9e7f2c86756466392094bd65861b42502f800e21185ab46cdc"
+    },
+    {
+      "canonical_module": "backlot.studio_promo_phase_v3",
+      "native_module": "backlot.motion_native_studio_promo_phase_v3",
+      "source": "Haike_video/backlot/studio_promo_phase_v3.py",
+      "source_sha256": "0424f31aa3fee0e5b5a19e79030b92364f8a723b5b372aa26d2b9803abd10a7a",
+      "derived": "Haike_video/backlot/motion_native_studio_promo_phase_v3.py",
+      "derived_sha256": "0c7f7448b5ee6145254aad64ac24e9755de9d7c9a0e89a72bd673750df8dc112"
+    }
+  ],
+  "renderers": [
+    {
+      "source": "Haike_video/templates/numbered02-04-production-v1/render.cjs",
+      "source_sha256": "f7652d49d5f12aee9c6d01bfb061712e3ba4e841113235674bc23c53b6f29ba9",
+      "derived": "Haike_video/templates/numbered02-04-production-v1/render.macos.cjs",
+      "derived_sha256": "382af1d97e227e4af04402bc49c2aa1a0caefab03298df97ea65615ea7ce68e6"
+    },
+    {
+      "source": "Haike_video/templates/field-notes-video-v1/render.cjs",
+      "source_sha256": "5e1071aecaa21eb91600c0df595ec4828e16982c217a9044b7b02a28a289546a",
+      "derived": "Haike_video/templates/field-notes-video-v1/render.macos.cjs",
+      "derived_sha256": "3f99177c9f17a14d924c432fa30edba39c1c60391cc7e4d97a2e24142208faf0"
+    },
+    {
+      "source": "Haike_video/templates/knowledge-reference-public-v3/render.cjs",
+      "source_sha256": "9baf6dc6142972d1bd83ea5b12ed449a1d0566618f419b385b7e40b3fdf8ff0b",
+      "derived": "Haike_video/templates/knowledge-reference-public-v3/render.macos.cjs",
+      "derived_sha256": "e4ffe1e9ebbf772153e42f449c7e550c688ae284f5c56fbb6b949b701ec67afd"
+    },
+    {
+      "source": "Haike_video/templates/promo-reference-phase-v3/render.cjs",
+      "source_sha256": "ea340194f2381ffb82e2f037bd9f4f0c9c046705be88f1b8beb5fd62c4c9dec7",
+      "derived": "Haike_video/templates/promo-reference-phase-v3/render.macos.cjs",
+      "derived_sha256": "a0666fa3b2ed732851198055382ea430f91ac24b42cbf482cf516a61fc3749d3"
+    }
+  ]
+}

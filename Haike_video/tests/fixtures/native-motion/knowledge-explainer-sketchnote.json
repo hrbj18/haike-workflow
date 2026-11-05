@@ -1,0 +1,638 @@
+{
+  "schema": "haike.native-render-fixture/1",
+  "template_id": "knowledge-explainer-sketchnote",
+  "preferred_version": "5.1.1-independent.1",
+  "kind": "knowledge",
+  "duration": 59.96666666666667,
+  "scope": "synthetic local renderer portability; no ASR/HQ/payment/creative acceptance claim",
+  "props": {
+    "schema": "haike.knowledge-reference-public-episode/3",
+    "implementation": "knowledge-reference-public-v3",
+    "template_id": "knowledge-explainer-sketchnote",
+    "version": "5.1.1-independent.1",
+    "fps": 60,
+    "durationFrames": 3598,
+    "title": "测试效果",
+    "sourceText": "测试效果",
+    "captions": [
+      {
+        "text": "测试效果",
+        "startMs": 960,
+        "endMs": 3680
+      },
+      {
+        "text": "测试效果",
+        "startMs": 4080,
+        "endMs": 5640
+      },
+      {
+        "text": "测试效果",
+        "startMs": 6160,
+        "endMs": 9440
+      },
+      {
+        "text": "测试效果",
+        "startMs": 9440,
+        "endMs": 10840
+      },
+      {
+        "text": "测试效果",
+        "startMs": 11280,
+        "endMs": 13680
+      },
+      {
+        "text": "测试效果",
+        "startMs": 14080,
+        "endMs": 16640
+      },
+      {
+        "text": "测试效果",
+        "startMs": 17580,
+        "endMs": 19860
+      },
+      {
+        "text": "测试效果",
+        "startMs": 19860,
+        "endMs": 21900
+      },
+      {
+        "text": "测试效果",
+        "startMs": 22260,
+        "endMs": 25100
+      },
+      {
+        "text": "测试效果",
+        "startMs": 25100,
+        "endMs": 28020
+      },
+      {
+        "text": "测试效果",
+        "startMs": 28020,
+        "endMs": 28860
+      },
+      {
+        "text": "测试效果",
+        "startMs": 29340,
+        "endMs": 32140
+      },
+      {
+        "text": "测试效果",
+        "startMs": 32140,
+        "endMs": 32820
+      },
+      {
+        "text": "测试效果",
+        "startMs": 33220,
+        "endMs": 36500
+      },
+      {
+        "text": "测试效果",
+        "startMs": 36500,
+        "endMs": 36900
+      },
+      {
+        "text": "测试效果",
+        "startMs": 37260,
+        "endMs": 40420
+      },
+      {
+        "text": "测试效果",
+        "startMs": 40420,
+        "endMs": 41220
+      },
+      {
+        "text": "测试效果",
+        "startMs": 41860,
+        "endMs": 44340
+      },
+      {
+        "text": "测试效果",
+        "startMs": 44580,
+        "endMs": 47140
+      },
+      {
+        "text": "测试效果",
+        "startMs": 47140,
+        "endMs": 47620
+      },
+      {
+        "text": "测试效果",
+        "startMs": 48470,
+        "endMs": 49950
+      },
+      {
+        "text": "测试效果",
+        "startMs": 50430,
+        "endMs": 52990
+      },
+      {
+        "text": "测试效果",
+        "startMs": 52990,
+        "endMs": 54630
+      },
+      {
+        "text": "测试效果",
+        "startMs": 55070,
+        "endMs": 57830
+      },
+      {
+        "text": "测试效果",
+        "startMs": 57950,
+        "endMs": 59830
+      }
+    ],
+    "scenes": [
+      {
+        "id": "s1",
+        "from": 0,
+        "to": 845,
+        "family": "sketchnote.step-sequence",
+        "title": "测试效果",
+        "items": [
+          {
+            "id": "watch",
+            "label": "测试效果",
+            "highlight": [
+              0,
+              2
+            ],
+            "icon": "concept",
+            "notes": [
+              "测试效果"
+            ]
+          },
+          {
+            "id": "try",
+            "label": "测试效果",
+            "highlight": [
+              0,
+              2
+            ],
+            "icon": "explain",
+            "notes": [
+              "测试效果"
+            ]
+          }
+        ],
+        "events": [
+          {
+            "id": "s1.camera.watch",
+            "kind": "camera",
+            "at": 33,
+            "duration": 48,
+            "target": "watch"
+          },
+          {
+            "id": "s1.write.watch",
+            "kind": "write",
+            "at": 102,
+            "duration": 54,
+            "target": "watch"
+          },
+          {
+            "id": "s1.highlight.watch",
+            "kind": "highlight",
+            "at": 156,
+            "duration": 21,
+            "target": "watch"
+          },
+          {
+            "id": "s1.draw.watch",
+            "kind": "draw",
+            "at": 180,
+            "duration": 108,
+            "target": "watch"
+          },
+          {
+            "id": "s1.annotation.watch",
+            "kind": "annotation",
+            "at": 318,
+            "duration": 54,
+            "target": "watch"
+          },
+          {
+            "id": "s1.camera.try",
+            "kind": "camera",
+            "at": 378,
+            "duration": 48,
+            "target": "try"
+          },
+          {
+            "id": "s1.write.try",
+            "kind": "write",
+            "at": 414,
+            "duration": 54,
+            "target": "try"
+          },
+          {
+            "id": "s1.highlight.try",
+            "kind": "highlight",
+            "at": 468,
+            "duration": 21,
+            "target": "try"
+          },
+          {
+            "id": "s1.draw.try",
+            "kind": "draw",
+            "at": 477,
+            "duration": 66,
+            "target": "try"
+          },
+          {
+            "id": "s1.annotation.try",
+            "kind": "annotation",
+            "at": 546,
+            "duration": 54,
+            "target": "try"
+          },
+          {
+            "id": "s1.connection.try",
+            "kind": "connection",
+            "at": 654,
+            "duration": 30,
+            "target": "try"
+          },
+          {
+            "id": "s1.overview",
+            "kind": "overview",
+            "at": 684,
+            "duration": 54
+          },
+          {
+            "id": "s1.conclusion",
+            "kind": "conclusion",
+            "at": 750,
+            "duration": 30
+          }
+        ],
+        "conclusion": [
+          "测试效果"
+        ]
+      },
+      {
+        "id": "s2",
+        "from": 845,
+        "to": 1496,
+        "family": "sketchnote.keyword-annotation",
+        "title": "测试效果",
+        "items": [
+          {
+            "id": "practice",
+            "label": "测试效果",
+            "highlight": [
+              0,
+              2
+            ],
+            "icon": "concept",
+            "notes": [
+              "测试效果"
+            ]
+          }
+        ],
+        "events": [
+          {
+            "id": "s2.camera.practice",
+            "kind": "camera",
+            "at": 878,
+            "duration": 48,
+            "target": "practice"
+          },
+          {
+            "id": "s2.write.practice",
+            "kind": "write",
+            "at": 1055,
+            "duration": 54,
+            "target": "practice"
+          },
+          {
+            "id": "s2.highlight.practice",
+            "kind": "highlight",
+            "at": 1109,
+            "duration": 21,
+            "target": "practice"
+          },
+          {
+            "id": "s2.draw.practice",
+            "kind": "draw",
+            "at": 1133,
+            "duration": 108,
+            "target": "practice"
+          },
+          {
+            "id": "s2.annotation.practice",
+            "kind": "annotation",
+            "at": 1241,
+            "duration": 48,
+            "target": "practice"
+          },
+          {
+            "id": "s2.overview",
+            "kind": "overview",
+            "at": 1380,
+            "duration": 36
+          },
+          {
+            "id": "s2.conclusion",
+            "kind": "conclusion",
+            "at": 1428,
+            "duration": 30
+          }
+        ],
+        "conclusion": [
+          "测试效果"
+        ]
+      },
+      {
+        "id": "s3",
+        "from": 1496,
+        "to": 2593,
+        "family": "sketchnote.sticky-revision",
+        "title": "测试效果",
+        "items": [
+          {
+            "id": "screen",
+            "label": "测试效果",
+            "highlight": [
+              0,
+              2
+            ],
+            "icon": "concept",
+            "notes": [
+              "测试效果"
+            ]
+          },
+          {
+            "id": "hands",
+            "label": "测试效果",
+            "highlight": [
+              0,
+              2
+            ],
+            "icon": "simplify",
+            "notes": [
+              "测试效果"
+            ]
+          }
+        ],
+        "events": [
+          {
+            "id": "s3.camera.screen",
+            "kind": "camera",
+            "at": 1529,
+            "duration": 48,
+            "target": "screen"
+          },
+          {
+            "id": "s3.write.screen",
+            "kind": "write",
+            "at": 1596,
+            "duration": 54,
+            "target": "screen"
+          },
+          {
+            "id": "s3.highlight.screen",
+            "kind": "highlight",
+            "at": 1650,
+            "duration": 21,
+            "target": "screen"
+          },
+          {
+            "id": "s3.draw.screen",
+            "kind": "draw",
+            "at": 1674,
+            "duration": 108,
+            "target": "screen"
+          },
+          {
+            "id": "s3.annotation.screen",
+            "kind": "annotation",
+            "at": 1782,
+            "duration": 48,
+            "target": "screen"
+          },
+          {
+            "id": "s3.camera.hands",
+            "kind": "camera",
+            "at": 1944,
+            "duration": 48,
+            "target": "hands"
+          },
+          {
+            "id": "s3.write.hands",
+            "kind": "write",
+            "at": 1992,
+            "duration": 54,
+            "target": "hands"
+          },
+          {
+            "id": "s3.highlight.hands",
+            "kind": "highlight",
+            "at": 2046,
+            "duration": 21,
+            "target": "hands"
+          },
+          {
+            "id": "s3.draw.hands",
+            "kind": "draw",
+            "at": 2070,
+            "duration": 108,
+            "target": "hands"
+          },
+          {
+            "id": "s3.annotation.hands",
+            "kind": "annotation",
+            "at": 2178,
+            "duration": 48,
+            "target": "hands"
+          },
+          {
+            "id": "s3.connection.hands",
+            "kind": "connection",
+            "at": 2226,
+            "duration": 30,
+            "target": "hands"
+          },
+          {
+            "id": "s3.camera-return.screen",
+            "kind": "camera-return",
+            "at": 2262,
+            "duration": 42,
+            "target": "screen"
+          },
+          {
+            "id": "s3.revision",
+            "kind": "revision",
+            "at": 2304,
+            "duration": 48
+          },
+          {
+            "id": "s3.overview",
+            "kind": "overview",
+            "at": 2400,
+            "duration": 54
+          },
+          {
+            "id": "s3.conclusion",
+            "kind": "conclusion",
+            "at": 2460,
+            "duration": 48
+          }
+        ],
+        "revision": {
+          "targetId": "screen",
+          "lines": [
+            "测试效果"
+          ]
+        },
+        "conclusion": [
+          "测试效果"
+        ]
+      },
+      {
+        "id": "s4",
+        "from": 2593,
+        "to": 3598,
+        "family": "sketchnote.return-loop",
+        "title": "测试效果",
+        "items": [
+          {
+            "id": "visit",
+            "label": "测试效果",
+            "highlight": [
+              0,
+              2
+            ],
+            "icon": "concept",
+            "notes": [
+              "测试效果"
+            ]
+          },
+          {
+            "id": "reference",
+            "label": "测试效果",
+            "highlight": [
+              0,
+              2
+            ],
+            "icon": "explain",
+            "notes": [
+              "测试效果"
+            ]
+          }
+        ],
+        "events": [
+          {
+            "id": "s4.camera.visit",
+            "kind": "camera",
+            "at": 2626,
+            "duration": 48,
+            "target": "visit"
+          },
+          {
+            "id": "s4.write.visit",
+            "kind": "write",
+            "at": 2688,
+            "duration": 54,
+            "target": "visit"
+          },
+          {
+            "id": "s4.highlight.visit",
+            "kind": "highlight",
+            "at": 2742,
+            "duration": 21,
+            "target": "visit"
+          },
+          {
+            "id": "s4.draw.visit",
+            "kind": "draw",
+            "at": 2766,
+            "duration": 108,
+            "target": "visit"
+          },
+          {
+            "id": "s4.annotation.visit",
+            "kind": "annotation",
+            "at": 2874,
+            "duration": 48,
+            "target": "visit"
+          },
+          {
+            "id": "s4.camera.reference",
+            "kind": "camera",
+            "at": 2970,
+            "duration": 48,
+            "target": "reference"
+          },
+          {
+            "id": "s4.write.reference",
+            "kind": "write",
+            "at": 3018,
+            "duration": 54,
+            "target": "reference"
+          },
+          {
+            "id": "s4.highlight.reference",
+            "kind": "highlight",
+            "at": 3072,
+            "duration": 21,
+            "target": "reference"
+          },
+          {
+            "id": "s4.draw.reference",
+            "kind": "draw",
+            "at": 3096,
+            "duration": 108,
+            "target": "reference"
+          },
+          {
+            "id": "s4.annotation.reference",
+            "kind": "annotation",
+            "at": 3204,
+            "duration": 48,
+            "target": "reference"
+          },
+          {
+            "id": "s4.connection.reference",
+            "kind": "connection",
+            "at": 3276,
+            "duration": 36,
+            "target": "reference"
+          },
+          {
+            "id": "s4.overview",
+            "kind": "overview",
+            "at": 3330,
+            "duration": 54
+          },
+          {
+            "id": "s4.return",
+            "kind": "return",
+            "at": 3390,
+            "duration": 51
+          },
+          {
+            "id": "s4.conclusion",
+            "kind": "conclusion",
+            "at": 3450,
+            "duration": 36
+          }
+        ],
+        "return": {
+          "fromId": "reference",
+          "toId": "visit",
+          "label": "测试效果"
+        },
+        "conclusion": [
+          "测试效果",
+          "测试效果"
+        ]
+      }
+    ],
+    "narration": "master.wav",
+    "musicGainDb": -13,
+    "presenter": "none",
+    "requiredOverlay": "原生动效渲染测试\n合成素材，仅用于安装验收。",
+    "sourceLabel": "测试效果",
+    "music": "master.wav"
+  }
+}

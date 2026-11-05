@@ -175,7 +175,8 @@ def _media(item, kind, *, original=False):
         bindings = json.loads(BINDINGS.read_text(encoding='utf-8'))
         binding = bindings.get(template_id, {}) if isinstance(bindings, dict) else {}
         value = binding.get(kind) if isinstance(binding, dict) else None
-        path = Path(value).resolve() if value else None
+        # Private deployment samples remain usable after moving the installation.
+        path = (ROOT / value).resolve() if isinstance(value, str) and value else None
     except (OSError, ValueError, TypeError):
         path = None
     allowed = ('.jpg', '.jpeg', '.png', '.webp') if kind == 'poster' else ('.mp4', '.webm')

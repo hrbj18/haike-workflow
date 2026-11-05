@@ -89,3 +89,7 @@ backups/
 # Release-generated, hash-bound preset/runtime inventories.
 /Haike_video/templates/motion-presets/delivery.json
 /Haike_video/templates/motion-presets/runtime.json
+# Local colleague deployments may explicitly carry these; public source never does.
+/private-profile/
+/deployment-cache/
+/template-samples/

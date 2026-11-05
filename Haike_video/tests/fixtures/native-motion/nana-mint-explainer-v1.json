@@ -1,0 +1,1057 @@
+{
+  "schema": "haike.native-render-fixture/1",
+  "template_id": "nana-mint-explainer-v1",
+  "preferred_version": "2.0.0",
+  "kind": "numbered",
+  "duration": 60.733333333333334,
+  "scope": "synthetic local renderer portability; no ASR/HQ/payment/creative acceptance claim",
+  "props": {
+    "schema": "haike.numbered-full-motion-episode/1",
+    "template_id": "nana-mint-explainer-v1",
+    "version": "2.0.0",
+    "fps": 30,
+    "durationFrames": 1822,
+    "title": "测试效果",
+    "brand": "测试效果",
+    "address": "测试效果",
+    "sourceText": "测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果",
+    "audio": "master.wav",
+    "font": "font.ttf",
+    "captions": [
+      {
+        "text": "测试效果",
+        "startMs": 440,
+        "endMs": 1000
+      },
+      {
+        "text": "测试效果",
+        "startMs": 1560,
+        "endMs": 4200
+      },
+      {
+        "text": "测试效果",
+        "startMs": 4520,
+        "endMs": 5440
+      },
+      {
+        "text": "测试效果",
+        "startMs": 5680,
+        "endMs": 9320
+      },
+      {
+        "text": "测试效果",
+        "startMs": 9600,
+        "endMs": 10840
+      },
+      {
+        "text": "测试效果",
+        "startMs": 11160,
+        "endMs": 12440
+      },
+      {
+        "text": "测试效果",
+        "startMs": 12840,
+        "endMs": 14640
+      },
+      {
+        "text": "测试效果",
+        "startMs": 14840,
+        "endMs": 16440
+      },
+      {
+        "text": "测试效果",
+        "startMs": 16680,
+        "endMs": 17880
+      },
+      {
+        "text": "测试效果",
+        "startMs": 18160,
+        "endMs": 19440
+      },
+      {
+        "text": "测试效果",
+        "startMs": 19800,
+        "endMs": 20240
+      },
+      {
+        "text": "测试效果",
+        "startMs": 20720,
+        "endMs": 23120
+      },
+      {
+        "text": "测试效果",
+        "startMs": 23120,
+        "endMs": 24400
+      },
+      {
+        "text": "测试效果",
+        "startMs": 24820,
+        "endMs": 26740
+      },
+      {
+        "text": "测试效果",
+        "startMs": 27140,
+        "endMs": 27500
+      },
+      {
+        "text": "测试效果",
+        "startMs": 27780,
+        "endMs": 28900
+      },
+      {
+        "text": "测试效果",
+        "startMs": 29100,
+        "endMs": 30140
+      },
+      {
+        "text": "测试效果",
+        "startMs": 30540,
+        "endMs": 31020
+      },
+      {
+        "text": "测试效果",
+        "startMs": 31340,
+        "endMs": 32260
+      },
+      {
+        "text": "测试效果",
+        "startMs": 32460,
+        "endMs": 33820
+      },
+      {
+        "text": "测试效果",
+        "startMs": 34590,
+        "endMs": 35510
+      },
+      {
+        "text": "测试效果",
+        "startMs": 35910,
+        "endMs": 36430
+      },
+      {
+        "text": "测试效果",
+        "startMs": 36670,
+        "endMs": 38070
+      },
+      {
+        "text": "测试效果",
+        "startMs": 38470,
+        "endMs": 39950
+      },
+      {
+        "text": "测试效果",
+        "startMs": 39950,
+        "endMs": 40830
+      },
+      {
+        "text": "测试效果",
+        "startMs": 41230,
+        "endMs": 42630
+      },
+      {
+        "text": "测试效果",
+        "startMs": 43150,
+        "endMs": 44470
+      },
+      {
+        "text": "测试效果",
+        "startMs": 44670,
+        "endMs": 45790
+      },
+      {
+        "text": "测试效果",
+        "startMs": 46190,
+        "endMs": 46750
+      },
+      {
+        "text": "测试效果",
+        "startMs": 46990,
+        "endMs": 48070
+      },
+      {
+        "text": "测试效果",
+        "startMs": 48550,
+        "endMs": 50470
+      },
+      {
+        "text": "测试效果",
+        "startMs": 50790,
+        "endMs": 52150
+      },
+      {
+        "text": "测试效果",
+        "startMs": 52350,
+        "endMs": 53270
+      },
+      {
+        "text": "测试效果",
+        "startMs": 53790,
+        "endMs": 55910
+      },
+      {
+        "text": "测试效果",
+        "startMs": 56190,
+        "endMs": 57790
+      },
+      {
+        "text": "测试效果",
+        "startMs": 58190,
+        "endMs": 59270
+      },
+      {
+        "text": "测试效果",
+        "startMs": 59630,
+        "endMs": 60550
+      }
+    ],
+    "presenters": [
+      {
+        "file": "clip000.mp4",
+        "from": 0,
+        "to": 134,
+        "sourceStartFrame": 0,
+        "position": "50% 50%"
+      },
+      {
+        "file": "clip001.mp4",
+        "from": 1613,
+        "to": 1822,
+        "sourceStartFrame": 0,
+        "position": "50% 50%"
+      }
+    ],
+    "media": {
+      "aux-terms": [
+        {
+          "file": "clip002.mp4",
+          "from": 136,
+          "to": 288,
+          "sourceStartFrame": 0,
+          "position": "50% 35%"
+        }
+      ],
+      "aux-brief": [
+        {
+          "file": "clip002.mp4",
+          "from": 288,
+          "to": 385,
+          "sourceStartFrame": 0,
+          "position": "50% 35%"
+        }
+      ],
+      "aux-compare": [
+        {
+          "file": "clip003.mp4",
+          "from": 814,
+          "to": 916,
+          "sourceStartFrame": 0,
+          "position": "50% 35%"
+        }
+      ],
+      "aux-question": [
+        {
+          "file": "clip003.mp4",
+          "from": 916,
+          "to": 1038,
+          "sourceStartFrame": 0,
+          "position": "50% 35%"
+        }
+      ],
+      "clip004.mp4": [
+        {
+          "file": "clip004.mp4",
+          "from": 1038,
+          "to": 1237,
+          "sourceStartFrame": 0,
+          "position": "50% 50%"
+        }
+      ],
+      "aux-value": [
+        {
+          "file": "clip002.mp4",
+          "from": 1237,
+          "to": 1340,
+          "sourceStartFrame": 0,
+          "position": "50% 35%"
+        }
+      ],
+      "aux-difference": [
+        {
+          "file": "clip002.mp4",
+          "from": 1456,
+          "to": 1524,
+          "sourceStartFrame": 0,
+          "position": "50% 35%"
+        }
+      ],
+      "aux-course": [
+        {
+          "file": "clip002.mp4",
+          "from": 1524,
+          "to": 1614,
+          "sourceStartFrame": 0,
+          "position": "50% 35%"
+        }
+      ],
+      "avatar": [
+        {
+          "file": "clip000.mp4",
+          "from": 0,
+          "to": 134,
+          "sourceStartFrame": 0,
+          "position": "50% 50%"
+        },
+        {
+          "file": "clip001.mp4",
+          "from": 1613,
+          "to": 1822,
+          "sourceStartFrame": 0,
+          "position": "50% 50%"
+        }
+      ]
+    },
+    "actions": {
+      "haike.nana-mint-explainer-v1.video.integration": {
+        "from": 0,
+        "to": 136
+      },
+      "haike.nana-mint-explainer-v1.video.terms": {
+        "from": 136,
+        "to": 288
+      },
+      "haike.nana-mint-explainer-v1.video.brief": {
+        "from": 288,
+        "to": 385
+      },
+      "haike.nana-mint-explainer-v1.video.result": {
+        "from": 385,
+        "to": 445
+      },
+      "haike.nana-mint-explainer-v1.video.workflow": {
+        "from": 445,
+        "to": 814
+      },
+      "haike.nana-mint-explainer-v1.video.compare": {
+        "from": 814,
+        "to": 916
+      },
+      "haike.nana-mint-explainer-v1.video.question": {
+        "from": 916,
+        "to": 1038
+      },
+      "haike.nana-mint-explainer-v1.video.examples": {
+        "from": 1038,
+        "to": 1237
+      },
+      "haike.nana-mint-explainer-v1.video.value": {
+        "from": 1237,
+        "to": 1340
+      },
+      "haike.nana-mint-explainer-v1.video.logic": {
+        "from": 1340,
+        "to": 1456
+      },
+      "haike.nana-mint-explainer-v1.video.difference": {
+        "from": 1456,
+        "to": 1524
+      },
+      "haike.nana-mint-explainer-v1.video.course": {
+        "from": 1524,
+        "to": 1614
+      },
+      "haike.nana-mint-explainer-v1.video.closing": {
+        "from": 1614,
+        "to": 1822
+      }
+    },
+    "stages": [
+      {
+        "id": "integration",
+        "from": 0,
+        "to": 136
+      },
+      {
+        "id": "terms",
+        "from": 136,
+        "to": 288
+      },
+      {
+        "id": "brief",
+        "from": 288,
+        "to": 385
+      },
+      {
+        "id": "result",
+        "from": 385,
+        "to": 445
+      },
+      {
+        "id": "workflow",
+        "from": 445,
+        "to": 814
+      },
+      {
+        "id": "compare",
+        "from": 814,
+        "to": 916
+      },
+      {
+        "id": "question",
+        "from": 916,
+        "to": 1038
+      },
+      {
+        "id": "examples",
+        "from": 1038,
+        "to": 1237
+      },
+      {
+        "id": "value",
+        "from": 1237,
+        "to": 1340
+      },
+      {
+        "id": "logic",
+        "from": 1340,
+        "to": 1456
+      },
+      {
+        "id": "difference",
+        "from": 1456,
+        "to": 1524
+      },
+      {
+        "id": "course",
+        "from": 1524,
+        "to": 1614
+      },
+      {
+        "id": "closing",
+        "from": 1614,
+        "to": 1822
+      }
+    ],
+    "content": {},
+    "critical_internal_events": [
+      {
+        "id": "integration.partner",
+        "frame": 33,
+        "source": "Native render test"
+      },
+      {
+        "id": "integration.arrow",
+        "frame": 63,
+        "source": "Native render test"
+      },
+      {
+        "id": "brief.presenter",
+        "frame": 309,
+        "source": "Native render test"
+      },
+      {
+        "id": "brief.labelStart",
+        "frame": 294,
+        "source": "Native render test"
+      },
+      {
+        "id": "brief.labelStagger",
+        "frame": 302,
+        "source": "Native render test"
+      },
+      {
+        "id": "workflow.prompt",
+        "frame": 469,
+        "source": "Native render test"
+      },
+      {
+        "id": "workflow.steps",
+        "frame": 594,
+        "source": "Native render test"
+      },
+      {
+        "id": "workflow.preview",
+        "frame": 745,
+        "source": "Native render test"
+      },
+      {
+        "id": "compare.arrow",
+        "frame": 832,
+        "source": "Native render test"
+      },
+      {
+        "id": "compare.after",
+        "frame": 850,
+        "source": "Native render test"
+      },
+      {
+        "id": "question.answer",
+        "frame": 946,
+        "source": "Native render test"
+      },
+      {
+        "id": "examples.presenterOff",
+        "frame": 1038,
+        "source": "Native render test"
+      },
+      {
+        "id": "examples.overlay",
+        "frame": 1110,
+        "source": "Native render test"
+      },
+      {
+        "id": "logic.overlayEnd",
+        "frame": 1373,
+        "source": "Native render test"
+      }
+    ],
+    "physical_media_uses": [
+      {
+        "file": "clip005.mp4",
+        "from": 0,
+        "to": 136,
+        "sourceStartFrame": 0
+      },
+      {
+        "file": "clip006.mp4",
+        "from": 136,
+        "to": 288,
+        "sourceStartFrame": 0
+      },
+      {
+        "file": "clip007.mp4",
+        "from": 288,
+        "to": 385,
+        "sourceStartFrame": 0
+      },
+      {
+        "file": "clip008.mp4",
+        "from": 385,
+        "to": 445,
+        "sourceStartFrame": 0
+      },
+      {
+        "file": "clip009.mp4",
+        "from": 445,
+        "to": 814,
+        "sourceStartFrame": 0
+      },
+      {
+        "file": "clip004.mp4",
+        "from": 1038,
+        "to": 1237,
+        "sourceStartFrame": 0
+      },
+      {
+        "file": "clip010.mp4",
+        "from": 1340,
+        "to": 1373,
+        "sourceStartFrame": 0
+      }
+    ],
+    "nativeNana": {
+      "version": 1,
+      "title": "测试效果",
+      "brand": "测试效果",
+      "partner": "测试效果",
+      "duration": 60.733333333333334,
+      "fps": 30,
+      "chapters": [
+        "测试效果",
+        "测试效果",
+        "测试效果",
+        "测试效果",
+        "测试效果"
+      ],
+      "scenes": [
+        {
+          "id": "integration",
+          "start": 0.0,
+          "end": 4.533333333333333,
+          "chapter": 0,
+          "title": "测试效果",
+          "labels": [],
+          "media": {
+            "file": "clip005.mp4",
+            "width": 1920,
+            "height": 1080,
+            "kind": "video"
+          },
+          "presenter": {
+            "file": "avatar",
+            "width": 1228,
+            "height": 1536,
+            "kind": "video",
+            "role": "avatar"
+          },
+          "note": "测试效果",
+          "cues": {
+            "partner": 1.1,
+            "arrow": 2.1
+          }
+        },
+        {
+          "id": "terms",
+          "start": 4.533333333333333,
+          "end": 9.6,
+          "chapter": 0,
+          "title": "测试效果",
+          "labels": [
+            "测试效果",
+            "测试效果",
+            "测试效果"
+          ],
+          "media": {
+            "file": "clip006.mp4",
+            "width": 1920,
+            "height": 1080,
+            "kind": "video"
+          },
+          "presenter": {
+            "file": "aux-terms",
+            "width": 1228,
+            "height": 1536,
+            "kind": "video",
+            "role": "footage"
+          },
+          "note": "测试效果",
+          "cues": {}
+        },
+        {
+          "id": "brief",
+          "start": 9.6,
+          "end": 12.833333333333334,
+          "chapter": 0,
+          "title": "测试效果",
+          "labels": [
+            "测试效果",
+            "测试效果",
+            "测试效果"
+          ],
+          "media": {
+            "file": "clip007.mp4",
+            "width": 1920,
+            "height": 1080,
+            "kind": "video"
+          },
+          "presenter": {
+            "file": "aux-brief",
+            "width": 1228,
+            "height": 1536,
+            "kind": "video",
+            "role": "footage"
+          },
+          "cues": {
+            "presenter": 0.7,
+            "labelStart": 0.2,
+            "labelStagger": 0.45
+          }
+        },
+        {
+          "id": "result",
+          "start": 12.833333333333334,
+          "end": 14.833333333333334,
+          "chapter": 0,
+          "title": "测试效果",
+          "labels": [],
+          "media": {
+            "file": "clip008.mp4",
+            "width": 1920,
+            "height": 1080,
+            "kind": "video"
+          },
+          "note": "测试效果",
+          "cues": {},
+          "overlay": {
+            "file": "clip008.mp4",
+            "width": 1920,
+            "height": 1080,
+            "kind": "video"
+          }
+        },
+        {
+          "id": "workflow",
+          "start": 14.833333333333334,
+          "end": 27.133333333333333,
+          "chapter": 1,
+          "title": "测试效果",
+          "labels": [],
+          "media": {
+            "file": "clip009.mp4",
+            "width": 1920,
+            "height": 1080,
+            "kind": "video"
+          },
+          "note": "测试效果",
+          "cues": {
+            "prompt": 0.8,
+            "steps": 4.966666666666667,
+            "preview": 9.986666666666666
+          }
+        },
+        {
+          "id": "compare",
+          "start": 27.133333333333333,
+          "end": 30.533333333333335,
+          "chapter": 1,
+          "title": "测试效果",
+          "labels": [
+            "测试效果",
+            "测试效果"
+          ],
+          "presenter": {
+            "file": "aux-compare",
+            "width": 1228,
+            "height": 1536,
+            "kind": "video",
+            "role": "footage"
+          },
+          "note": "测试效果",
+          "cues": {
+            "arrow": 0.6,
+            "after": 1.2
+          }
+        },
+        {
+          "id": "question",
+          "start": 30.533333333333335,
+          "end": 34.6,
+          "chapter": 1,
+          "title": "测试效果",
+          "labels": [
+            "测试效果",
+            "测试效果",
+            "测试效果"
+          ],
+          "presenter": {
+            "file": "aux-question",
+            "width": 1228,
+            "height": 1536,
+            "kind": "video",
+            "role": "footage"
+          },
+          "cues": {
+            "answer": 1.0
+          }
+        },
+        {
+          "id": "examples",
+          "start": 34.6,
+          "end": 41.233333333333334,
+          "chapter": 2,
+          "title": "测试效果",
+          "labels": [],
+          "media": {
+            "file": "clip004.mp4",
+            "width": 1920,
+            "height": 1080,
+            "kind": "video"
+          },
+          "cues": {}
+        },
+        {
+          "id": "value",
+          "start": 41.233333333333334,
+          "end": 44.666666666666664,
+          "chapter": 2,
+          "title": "测试效果",
+          "labels": [
+            "测试效果",
+            "测试效果",
+            "测试效果",
+            "测试效果"
+          ],
+          "presenter": {
+            "file": "aux-value",
+            "width": 1228,
+            "height": 1536,
+            "kind": "video",
+            "role": "footage"
+          },
+          "cues": {}
+        },
+        {
+          "id": "logic",
+          "start": 44.666666666666664,
+          "end": 48.53333333333333,
+          "chapter": 2,
+          "title": "测试效果",
+          "labels": [
+            "测试效果",
+            "测试效果",
+            "测试效果"
+          ],
+          "media": {
+            "file": "clip010.mp4",
+            "width": 1920,
+            "height": 1080,
+            "kind": "video"
+          },
+          "cues": {
+            "overlayEnd": 1.1
+          }
+        },
+        {
+          "id": "difference",
+          "start": 48.53333333333333,
+          "end": 50.8,
+          "chapter": 3,
+          "title": "测试效果",
+          "labels": [
+            "测试效果",
+            "测试效果"
+          ],
+          "presenter": {
+            "file": "aux-difference",
+            "width": 1228,
+            "height": 1536,
+            "kind": "video",
+            "role": "footage"
+          },
+          "note": "测试效果",
+          "cues": {}
+        },
+        {
+          "id": "course",
+          "start": 50.8,
+          "end": 53.8,
+          "chapter": 3,
+          "title": "测试效果",
+          "labels": [
+            "测试效果",
+            "测试效果",
+            "测试效果"
+          ],
+          "presenter": {
+            "file": "aux-course",
+            "width": 1228,
+            "height": 1536,
+            "kind": "video",
+            "role": "footage"
+          },
+          "cues": {}
+        },
+        {
+          "id": "closing",
+          "start": 53.8,
+          "end": 60.733333333333334,
+          "chapter": 4,
+          "title": "测试效果",
+          "labels": [
+            "测试效果",
+            "测试效果"
+          ],
+          "presenter": {
+            "file": "avatar",
+            "width": 1228,
+            "height": 1536,
+            "kind": "video",
+            "role": "avatar"
+          },
+          "cues": {}
+        }
+      ],
+      "captions": [
+        {
+          "text": "测试效果",
+          "startMs": 440,
+          "endMs": 1000
+        },
+        {
+          "text": "测试效果",
+          "startMs": 1560,
+          "endMs": 4200
+        },
+        {
+          "text": "测试效果",
+          "startMs": 4520,
+          "endMs": 5440
+        },
+        {
+          "text": "测试效果",
+          "startMs": 5680,
+          "endMs": 9320
+        },
+        {
+          "text": "测试效果",
+          "startMs": 9600,
+          "endMs": 10840
+        },
+        {
+          "text": "测试效果",
+          "startMs": 11160,
+          "endMs": 12440
+        },
+        {
+          "text": "测试效果",
+          "startMs": 12840,
+          "endMs": 14640
+        },
+        {
+          "text": "测试效果",
+          "startMs": 14840,
+          "endMs": 16440
+        },
+        {
+          "text": "测试效果",
+          "startMs": 16680,
+          "endMs": 17880
+        },
+        {
+          "text": "测试效果",
+          "startMs": 18160,
+          "endMs": 19440
+        },
+        {
+          "text": "测试效果",
+          "startMs": 19800,
+          "endMs": 20240
+        },
+        {
+          "text": "测试效果",
+          "startMs": 20720,
+          "endMs": 23120
+        },
+        {
+          "text": "测试效果",
+          "startMs": 23120,
+          "endMs": 24400
+        },
+        {
+          "text": "测试效果",
+          "startMs": 24820,
+          "endMs": 26740
+        },
+        {
+          "text": "测试效果",
+          "startMs": 27140,
+          "endMs": 27500
+        },
+        {
+          "text": "测试效果",
+          "startMs": 27780,
+          "endMs": 28900
+        },
+        {
+          "text": "测试效果",
+          "startMs": 29100,
+          "endMs": 30140
+        },
+        {
+          "text": "测试效果",
+          "startMs": 30540,
+          "endMs": 31020
+        },
+        {
+          "text": "测试效果",
+          "startMs": 31340,
+          "endMs": 32260
+        },
+        {
+          "text": "测试效果",
+          "startMs": 32460,
+          "endMs": 33820
+        },
+        {
+          "text": "测试效果",
+          "startMs": 34590,
+          "endMs": 35510
+        },
+        {
+          "text": "测试效果",
+          "startMs": 35910,
+          "endMs": 36430
+        },
+        {
+          "text": "测试效果",
+          "startMs": 36670,
+          "endMs": 38070
+        },
+        {
+          "text": "测试效果",
+          "startMs": 38470,
+          "endMs": 39950
+        },
+        {
+          "text": "测试效果",
+          "startMs": 39950,
+          "endMs": 40830
+        },
+        {
+          "text": "测试效果",
+          "startMs": 41230,
+          "endMs": 42630
+        },
+        {
+          "text": "测试效果",
+          "startMs": 43150,
+          "endMs": 44470
+        },
+        {
+          "text": "测试效果",
+          "startMs": 44670,
+          "endMs": 45790
+        },
+        {
+          "text": "测试效果",
+          "startMs": 46190,
+          "endMs": 46750
+        },
+        {
+          "text": "测试效果",
+          "startMs": 46990,
+          "endMs": 48070
+        },
+        {
+          "text": "测试效果",
+          "startMs": 48550,
+          "endMs": 50470
+        },
+        {
+          "text": "测试效果",
+          "startMs": 50790,
+          "endMs": 52150
+        },
+        {
+          "text": "测试效果",
+          "startMs": 52350,
+          "endMs": 53270
+        },
+        {
+          "text": "测试效果",
+          "startMs": 53790,
+          "endMs": 55910
+        },
+        {
+          "text": "测试效果",
+          "startMs": 56190,
+          "endMs": 57790
+        },
+        {
+          "text": "测试效果",
+          "startMs": 58190,
+          "endMs": 59270
+        },
+        {
+          "text": "测试效果",
+          "startMs": 59630,
+          "endMs": 60550
+        }
+      ],
+      "voice": "master.wav",
+      "font": "font.ttf",
+      "phrase": "测试效果",
+      "cards": [
+        "测试效果",
+        "测试效果",
+        "测试效果"
+      ],
+      "palette": {
+        "paper": "#edf5ef",
+        "ink": "#16313a",
+        "accent": "#167e79",
+        "line": "#cbdad4",
+        "sheet": "#f7fffa"
+      }
+    }
+  }
+}

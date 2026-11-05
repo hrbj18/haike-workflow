@@ -1,0 +1,83 @@
+{
+  "schema": "haike.motion-public-paper-components/3",
+  "component_id": "haike-public-paper-ending-v3",
+  "component_version": "0.3.0-candidate",
+  "contract": "haike.motion-public-paper-production/3",
+  "engines": [
+    "observed-paper-controls/3"
+  ],
+  "pack_keys": [
+    "observed-paper"
+  ],
+  "reference_ids": [
+    "template-02-expanded"
+  ],
+  "retained_upstream": {
+    "path": "../motiongit-public-components-v1",
+    "component_sha256": "bf335a15f8f71c6313c2618bbbb9ded5c598350b71f0a1607b7a4d3db379968f",
+    "verifier": "scripts/build_motion_public_components.py",
+    "verifier_sha256": "131b05de79363c3e7a6916dba244515d14038591d0713b1687c8283c8bf7ff18",
+    "source_commit": "4a52ae2cff542cfb0bfcf6e93e5120c55d0110cf",
+    "reason": "unchanged public renderer/source archives and notices reused by exact SHA; no binary copies"
+  },
+  "original_package_equivalence": false,
+  "full_original_template_closure": false,
+  "status": "candidate-static-only-media-pending",
+  "files": [
+    {
+      "path": "capture_runtime.mjs",
+      "sha256": "0bf6ec171767725922099c7dd2de7582fbd3e96d24c6c6c91531f387f4701fd8",
+      "size": 2255
+    },
+    {
+      "path": "DEPENDENCIES.json",
+      "sha256": "c30cf57bb3f2192410d99685a771fd36f69583737e0464cce9c0bd0985ec5f1f",
+      "size": 73469
+    },
+    {
+      "path": "FFMPEG9.json",
+      "sha256": "1d7055cadccd60e2442c5d279083b3dd8c9a46c1bae6d317e78a344826e6aa29",
+      "size": 1659
+    },
+    {
+      "path": "input.schema.json",
+      "sha256": "cad8fae9eccf194446187f2ab128efb202ee03da93d59565c6064fe758ee3328",
+      "size": 7332
+    },
+    {
+      "path": "observed-paper-controls-v3.js",
+      "sha256": "49c3c727f20a2d0bee917a3f7e960d610e32d80fe90aac53ed6b3bb83257e40c",
+      "size": 21911
+    },
+    {
+      "path": "OBSERVED_CONSTRAINTS.json",
+      "sha256": "83518a3ced39571804c3e1778b62be5e3791c8d16f6d11706ef698230a16c269",
+      "size": 1234
+    },
+    {
+      "path": "PROVENANCE.json",
+      "sha256": "c5b2403425b2b84787ece47329a9eb819c39eb85d25c30f3436c3d03db015594",
+      "size": 2558
+    },
+    {
+      "path": "README.md",
+      "sha256": "08a7e24f722d660187579b65447983dd3f6e589d48a81350d270dbbdbba3c1ad",
+      "size": 1072
+    },
+    {
+      "path": "runbook.md",
+      "sha256": "f118d4a8a94f2ea942a41b79bd290bb45efc7c5936ac6df1217946487c17d4e9",
+      "size": 1925
+    },
+    {
+      "path": "template-spec.json",
+      "sha256": "627374c84487cc66fb8568d773a290cb11195eb73e9f80e06ca906bcc0f09e71",
+      "size": 45706
+    },
+    {
+      "path": "TOOLS.json",
+      "sha256": "5a2bd3c270d30fd841c89116c4eabe25ad6a15e957ee40d021f77d31c5ef26f1",
+      "size": 49974
+    }
+  ]
+}

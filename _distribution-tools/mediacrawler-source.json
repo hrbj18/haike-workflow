@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "id": "collector-source",
+  "arch": "universal",
+  "commit": "8f583999006d5b692272c608440e193ca282e73b",
+  "name": "MediaCrawler-8f583999006d5b692272c608440e193ca282e73b.zip",
+  "url": "https://codeload.github.com/NanmiCoder/MediaCrawler/zip/8f583999006d5b692272c608440e193ca282e73b",
+  "upstream_download": "https://codeload.github.com/NanmiCoder/MediaCrawler/zip/8f583999006d5b692272c608440e193ca282e73b",
+  "sha256": "7c6330b5649695ea667cbe8150d86aac26f63619dd3e2834ea1557171424446c",
+  "size": 18756456,
+  "prefix": "MediaCrawler-8f583999006d5b692272c608440e193ca282e73b",
+  "license": "upstream NON-COMMERCIAL LICENSE, preserved with source"
+}

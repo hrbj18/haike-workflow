@@ -1,0 +1,377 @@
+{
+  "schema": "haike.native-render-fixture/1",
+  "template_id": "vibrant-poster",
+  "preferred_version": "1.0.0-public.3",
+  "kind": "html",
+  "duration": 60,
+  "scope": "synthetic local renderer portability; no ASR/HQ/payment/creative acceptance claim",
+  "props": {
+    "all_original_controls_supported": false,
+    "brand": "测试效果",
+    "caption_position": {
+      "bottomRatio": 0.1,
+      "leftRatio": 0.06,
+      "rightRatio": 0.06
+    },
+    "captions": [
+      {
+        "e": 3.68,
+        "s": 0.96,
+        "text": "测试效果"
+      },
+      {
+        "e": 5.64,
+        "s": 4.08,
+        "text": "测试效果"
+      },
+      {
+        "e": 9.44,
+        "s": 6.16,
+        "text": "测试效果"
+      },
+      {
+        "e": 10.84,
+        "s": 9.44,
+        "text": "测试效果"
+      },
+      {
+        "e": 13.68,
+        "s": 11.28,
+        "text": "测试效果"
+      },
+      {
+        "e": 16.64,
+        "s": 14.08,
+        "text": "测试效果"
+      },
+      {
+        "e": 19.86,
+        "s": 17.58,
+        "text": "测试效果"
+      },
+      {
+        "e": 21.9,
+        "s": 19.86,
+        "text": "测试效果"
+      },
+      {
+        "e": 25.1,
+        "s": 22.26,
+        "text": "测试效果"
+      },
+      {
+        "e": 28.02,
+        "s": 25.1,
+        "text": "测试效果"
+      },
+      {
+        "e": 28.86,
+        "s": 28.02,
+        "text": "测试效果"
+      },
+      {
+        "e": 32.14,
+        "s": 29.34,
+        "text": "测试效果"
+      },
+      {
+        "e": 32.82,
+        "s": 32.14,
+        "text": "测试效果"
+      },
+      {
+        "e": 36.5,
+        "s": 33.22,
+        "text": "测试效果"
+      },
+      {
+        "e": 36.9,
+        "s": 36.5,
+        "text": "测试效果"
+      },
+      {
+        "e": 40.42,
+        "s": 37.26,
+        "text": "测试效果"
+      },
+      {
+        "e": 41.22,
+        "s": 40.42,
+        "text": "测试效果"
+      },
+      {
+        "e": 44.34,
+        "s": 41.86,
+        "text": "测试效果"
+      },
+      {
+        "e": 47.14,
+        "s": 44.58,
+        "text": "测试效果"
+      },
+      {
+        "e": 47.62,
+        "s": 47.14,
+        "text": "测试效果"
+      },
+      {
+        "e": 49.95,
+        "s": 48.47,
+        "text": "测试效果"
+      },
+      {
+        "e": 52.99,
+        "s": 50.43,
+        "text": "测试效果"
+      },
+      {
+        "e": 54.63,
+        "s": 52.99,
+        "text": "测试效果"
+      },
+      {
+        "e": 57.83,
+        "s": 55.07,
+        "text": "测试效果"
+      },
+      {
+        "e": 59.83,
+        "s": 57.95,
+        "text": "测试效果"
+      }
+    ],
+    "duration": 60,
+    "events": [],
+    "fps": 60,
+    "frames": 3600,
+    "height": 1920,
+    "implementation_identity": "haike.observed-controls/3",
+    "original_fidelity": "pending",
+    "presenter": {
+      "audio": "mute",
+      "hide": true
+    },
+    "reference_id": "vibrant-poster",
+    "schema": "haike.observed-controls-composition/3",
+    "segments": [
+      {
+        "action_id": "haike.public-observed.poster.kinetic.stack",
+        "action_version": "3-symbols-development",
+        "control": "kinetic",
+        "cues": [
+          0.0,
+          4.84
+        ],
+        "id": "poster-0",
+        "presenter": "hide",
+        "props": {
+          "kicker": "测试效果",
+          "lines": [
+            "测试效果",
+            "测试效果"
+          ]
+        },
+        "t0": 0.0,
+        "t1": 6.0,
+        "variant": "stack"
+      },
+      {
+        "action_id": "haike.public-observed.poster.steps.cards",
+        "action_version": "3-symbols-development",
+        "control": "steps",
+        "cues": [
+          6.16,
+          11.28,
+          14.08
+        ],
+        "id": "poster-1",
+        "presenter": "hide",
+        "props": {
+          "steps": [
+            "测试效果",
+            "测试效果",
+            "测试效果"
+          ],
+          "title": "测试效果"
+        },
+        "t0": 6.0,
+        "t1": 17.58,
+        "variant": "cards"
+      },
+      {
+        "action_id": "haike.public-observed.poster.media.scan",
+        "action_version": "3-symbols-development",
+        "control": "media",
+        "cues": [
+          17.58
+        ],
+        "id": "poster-2",
+        "presenter": "hide",
+        "props": {
+          "sourceStart": 0.2,
+          "src": "store.mp4",
+          "title": "测试效果"
+        },
+        "t0": 17.58,
+        "t1": 22.26,
+        "variant": "scan",
+        "mediaKey": "s2-main"
+      },
+      {
+        "action_id": "haike.public-observed.poster.polaroid.film",
+        "action_version": "3-symbols-development",
+        "control": "polaroid",
+        "cues": [
+          22.82,
+          24.14,
+          26.58
+        ],
+        "id": "poster-3",
+        "presenter": "hide",
+        "props": {
+          "items": [
+            {
+              "caption": "测试效果",
+              "src": "store.jpg"
+            },
+            {
+              "caption": "测试效果",
+              "src": "image000.png"
+            },
+            {
+              "caption": "测试效果",
+              "src": "image001.png"
+            }
+          ]
+        },
+        "t0": 22.26,
+        "t1": 29.34,
+        "variant": "film",
+        "mediaKeys": [
+          "s3-item0",
+          "s3-item1",
+          "s3-item2"
+        ]
+      },
+      {
+        "action_id": "haike.public-observed.poster.gallery.carousel",
+        "action_version": "3-symbols-development",
+        "control": "gallery",
+        "cues": [
+          29.34,
+          29.62
+        ],
+        "id": "poster-4",
+        "presenter": "hide",
+        "props": {
+          "items": [
+            {
+              "caption": "测试效果",
+              "sourceStart": 0,
+              "src": "children.mp4"
+            },
+            {
+              "caption": "测试效果",
+              "sourceStart": 4,
+              "src": "children.mp4"
+            },
+            {
+              "caption": "测试效果",
+              "sourceStart": 9.5,
+              "src": "children.mp4"
+            }
+          ],
+          "title": "测试效果"
+        },
+        "t0": 29.34,
+        "t1": 37.26,
+        "variant": "carousel",
+        "mediaKeys": [
+          "s4-item0",
+          "s4-item1",
+          "s4-item2"
+        ]
+      },
+      {
+        "action_id": "haike.public-observed.poster.quote.card",
+        "action_version": "3-symbols-development",
+        "control": "quote",
+        "cues": [
+          37.26
+        ],
+        "id": "poster-5",
+        "presenter": "hide",
+        "props": {
+          "text": "测试效果",
+          "who": "测试效果"
+        },
+        "t0": 37.26,
+        "t1": 41.86,
+        "variant": "card"
+      },
+      {
+        "action_id": "haike.public-observed.poster.media.scan",
+        "action_version": "3-symbols-development",
+        "control": "media",
+        "cues": [
+          41.86
+        ],
+        "id": "poster-6",
+        "presenter": "hide",
+        "props": {
+          "sourceStart": 8,
+          "src": "children.mp4",
+          "title": "测试效果"
+        },
+        "t0": 41.86,
+        "t1": 48.47,
+        "variant": "scan",
+        "mediaKey": "s6-main"
+      },
+      {
+        "action_id": "haike.public-observed.poster.quote.card",
+        "action_version": "3-symbols-development",
+        "control": "quote",
+        "cues": [
+          48.47
+        ],
+        "id": "poster-7",
+        "presenter": "hide",
+        "props": {
+          "lines": [
+            "测试效果",
+            "测试效果",
+            "测试效果"
+          ],
+          "text": "测试效果",
+          "who": "测试效果"
+        },
+        "t0": 48.47,
+        "t1": 55.04,
+        "variant": "card"
+      },
+      {
+        "action_id": "haike.public-observed.poster.cta.arrow",
+        "action_version": "3-symbols-development",
+        "control": "cta",
+        "cues": [
+          55.07,
+          58.43
+        ],
+        "id": "poster-8",
+        "presenter": "hide",
+        "props": {
+          "dir": "down",
+          "kicker": "测试效果",
+          "sub": "测试效果",
+          "text": "测试效果"
+        },
+        "t0": 55.04,
+        "t1": 60.0,
+        "variant": "arrow"
+      }
+    ],
+    "style": "poster",
+    "width": 1080
+  }
+}

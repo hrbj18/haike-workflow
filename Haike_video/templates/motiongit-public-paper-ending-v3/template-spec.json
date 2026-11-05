@@ -1,0 +1,1558 @@
+{
+  "schema_version": 1,
+  "standard_version": "video-template-v1",
+  "template_id": "motiongit-public-paper-ending-v3",
+  "template_version": "0.3.0-candidate",
+  "template_type": "avatar",
+  "spec_kind": "implementation",
+  "stage": "specification",
+  "authority": {
+    "runbook": "runbook.md",
+    "implementation_paths": [
+      "observed-paper-controls-v3.js",
+      "../../backlot/motion_public_paper_observed_v3.py",
+      "../../backlot/motion_public_paper_execution_v3.py",
+      "../../backlot/motion_public_paper_production_v3.py"
+    ],
+    "parameter_source": "source-owned formulas in implementation_paths; this JSON is the 60s lawful input profile, not a second formula authority"
+  },
+  "canvas": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 60,
+    "duration_seconds": 60,
+    "clock": "full measured original PCM16 WAV; actual ASR words anchor all semantic scenes; no speech stretch",
+    "coordinate_system": "top_left_pixels"
+  },
+  "narrative": {
+    "purpose": "retain paper reference effects with one scoped final-main exit repair",
+    "information_hierarchy": [
+      "main content",
+      "real supporting presenter",
+      "captions and timer"
+    ],
+    "structure": [
+      "hook",
+      "question",
+      "store",
+      "experience",
+      "learn",
+      "script-quote",
+      "family",
+      "free",
+      "address"
+    ]
+  },
+  "scenes": [
+    {
+      "id": "scene_hook",
+      "start": 0,
+      "end": 6,
+      "purpose": "title/split",
+      "element_ids": [
+        "background",
+        "main_hook",
+        "caption",
+        "timer",
+        "presenter_hook"
+      ],
+      "variant": "split"
+    },
+    {
+      "id": "scene_question",
+      "start": 6,
+      "end": 17.58,
+      "purpose": "steps/track",
+      "element_ids": [
+        "background",
+        "main_question",
+        "caption",
+        "timer"
+      ],
+      "variant": "track"
+    },
+    {
+      "id": "scene_store",
+      "start": 17.58,
+      "end": 22.26,
+      "purpose": "media/scan",
+      "element_ids": [
+        "background",
+        "main_store",
+        "caption",
+        "timer"
+      ],
+      "variant": "scan"
+    },
+    {
+      "id": "scene_experience",
+      "start": 22.26,
+      "end": 29.34,
+      "purpose": "gallery/grid",
+      "element_ids": [
+        "background",
+        "main_experience",
+        "caption",
+        "timer"
+      ],
+      "variant": "grid"
+    },
+    {
+      "id": "scene_learn",
+      "start": 29.34,
+      "end": 37.26,
+      "purpose": "device/monitor",
+      "element_ids": [
+        "background",
+        "main_learn",
+        "caption",
+        "timer"
+      ],
+      "variant": "monitor"
+    },
+    {
+      "id": "scene_script_quote",
+      "start": 37.26,
+      "end": 41.86,
+      "purpose": "quote/type",
+      "element_ids": [
+        "background",
+        "main_script_quote",
+        "caption",
+        "timer"
+      ],
+      "variant": "type"
+    },
+    {
+      "id": "scene_family",
+      "start": 41.86,
+      "end": 48.47,
+      "purpose": "media/zoom",
+      "element_ids": [
+        "background",
+        "main_family",
+        "caption",
+        "timer"
+      ],
+      "variant": "zoom"
+    },
+    {
+      "id": "scene_free",
+      "start": 48.47,
+      "end": 55.04,
+      "purpose": "quote/card",
+      "element_ids": [
+        "background",
+        "main_free",
+        "caption",
+        "timer"
+      ],
+      "variant": "card"
+    },
+    {
+      "id": "scene_address",
+      "start": 55.04,
+      "end": 60,
+      "purpose": "cta/swipe",
+      "element_ids": [
+        "background",
+        "main_address",
+        "caption",
+        "timer",
+        "presenter_address",
+        "cta_kicker",
+        "cta_title",
+        "cta_address",
+        "cta_lamp"
+      ],
+      "variant": "swipe"
+    }
+  ],
+  "assets": [
+    {
+      "id": "voice",
+      "kind": "audio",
+      "path": null,
+      "source": "SHA-bound lawful original voice.wav, required each input",
+      "embedded_content": [],
+      "rights_status": "private task input, excluded from public template"
+    },
+    {
+      "id": "real_media",
+      "kind": "video",
+      "path": null,
+      "source": "input assets and presenter.mp4 with exact original windows",
+      "embedded_content": [
+        "source video contents are not editable template text"
+      ],
+      "rights_status": "private task inputs excluded from public template"
+    },
+    {
+      "id": "fonts",
+      "kind": "font",
+      "path": "DEPENDENCIES.json",
+      "source": "exact public pinned font bytes plus original retained upstream notices",
+      "embedded_content": [],
+      "rights_status": "retained OFL/third-party notice conditions"
+    }
+  ],
+  "elements": [
+    {
+      "id": "background",
+      "type": "background",
+      "role": "paper palette background",
+      "parent_id": null,
+      "z_index": 0,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "paper palette background"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1080,
+          1920
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "parameter_authority": "observed-paper-controls-v3.js",
+          "geometry": "unchanged /2 source-owned formula; no measurement substitution"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 60
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "source-defined entry/steady/exit; main and presenter evaluated separately"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "source motion formula",
+        "audio speed and ASR clock"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "owned_source"
+      ],
+      "acceptance": [
+        {
+          "check": "preserved_motion",
+          "method": "source/DOM regression, followed by authorized actual preview",
+          "pass_condition": "unchanged baseline outside final main exit, real new output confirms selected behavior"
+        }
+      ]
+    },
+    {
+      "id": "main_hook",
+      "type": "component",
+      "role": "title/split: all internal children, content slots and layout owned by original branch",
+      "parent_id": null,
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "slot_main_hook",
+        "asset_id": null,
+        "description": "Declared main_hook props from SHA-bound input; editable fields and capacity in input.schema.json/control_props, source JS owns internal child tree"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1080,
+          1920
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "parameter_authority": "observed-paper-controls-v3.js",
+          "geometry": "unchanged /2 source-owned formula; no measurement substitution"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 6.12
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "source-defined entry/steady/exit; main and presenter evaluated separately"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "source motion formula",
+        "audio speed and ASR clock"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "owned_source"
+      ],
+      "acceptance": [
+        {
+          "check": "preserved_motion",
+          "method": "source/DOM regression, followed by authorized actual preview",
+          "pass_condition": "unchanged baseline outside final main exit, real new output confirms selected behavior"
+        }
+      ]
+    },
+    {
+      "id": "presenter_hook",
+      "type": "avatar",
+      "role": "real source at original timeline rate; original moving card geometry",
+      "parent_id": null,
+      "z_index": 8,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "real source at original timeline rate; original moving card geometry"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          240,
+          650,
+          600,
+          756
+        ],
+        "fit": "cover",
+        "clip": "self",
+        "style": {
+          "parameter_authority": "observed-paper-controls-v3.js",
+          "geometry": "unchanged /2 source-owned formula; no measurement substitution"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 6.12
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "source-defined entry/steady/exit; main and presenter evaluated separately"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "source motion formula",
+        "audio speed and ASR clock"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "owned_source"
+      ],
+      "acceptance": [
+        {
+          "check": "preserved_motion",
+          "method": "source/DOM regression, followed by authorized actual preview",
+          "pass_condition": "unchanged baseline outside final main exit, real new output confirms selected behavior"
+        }
+      ]
+    },
+    {
+      "id": "main_question",
+      "type": "component",
+      "role": "steps/track: all internal children, content slots and layout owned by original branch",
+      "parent_id": null,
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "slot_main_question",
+        "asset_id": null,
+        "description": "Declared main_question props from SHA-bound input; editable fields and capacity in input.schema.json/control_props, source JS owns internal child tree"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1080,
+          1920
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "parameter_authority": "observed-paper-controls-v3.js",
+          "geometry": "unchanged /2 source-owned formula; no measurement substitution"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 5.6,
+        "end": 17.7
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "source-defined entry/steady/exit; main and presenter evaluated separately"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "source motion formula",
+        "audio speed and ASR clock"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "owned_source"
+      ],
+      "acceptance": [
+        {
+          "check": "preserved_motion",
+          "method": "source/DOM regression, followed by authorized actual preview",
+          "pass_condition": "unchanged baseline outside final main exit, real new output confirms selected behavior"
+        }
+      ]
+    },
+    {
+      "id": "main_store",
+      "type": "component",
+      "role": "media/scan: all internal children, content slots and layout owned by original branch",
+      "parent_id": null,
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "slot_main_store",
+        "asset_id": null,
+        "description": "Declared main_store props from SHA-bound input; editable fields and capacity in input.schema.json/control_props, source JS owns internal child tree"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1080,
+          1920
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "parameter_authority": "observed-paper-controls-v3.js",
+          "geometry": "unchanged /2 source-owned formula; no measurement substitution"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 17.18,
+        "end": 22.26
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "source-defined entry/steady/exit; main and presenter evaluated separately"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "source motion formula",
+        "audio speed and ASR clock"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "owned_source"
+      ],
+      "acceptance": [
+        {
+          "check": "preserved_motion",
+          "method": "source/DOM regression, followed by authorized actual preview",
+          "pass_condition": "unchanged baseline outside final main exit, real new output confirms selected behavior"
+        }
+      ]
+    },
+    {
+      "id": "main_experience",
+      "type": "component",
+      "role": "gallery/grid: all internal children, content slots and layout owned by original branch",
+      "parent_id": null,
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "slot_main_experience",
+        "asset_id": null,
+        "description": "Declared main_experience props from SHA-bound input; editable fields and capacity in input.schema.json/control_props, source JS owns internal child tree"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1080,
+          1920
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "parameter_authority": "observed-paper-controls-v3.js",
+          "geometry": "unchanged /2 source-owned formula; no measurement substitution"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 21.860000000000003,
+        "end": 29.34
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "source-defined entry/steady/exit; main and presenter evaluated separately"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "source motion formula",
+        "audio speed and ASR clock"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "owned_source"
+      ],
+      "acceptance": [
+        {
+          "check": "preserved_motion",
+          "method": "source/DOM regression, followed by authorized actual preview",
+          "pass_condition": "unchanged baseline outside final main exit, real new output confirms selected behavior"
+        }
+      ]
+    },
+    {
+      "id": "main_learn",
+      "type": "component",
+      "role": "device/monitor: all internal children, content slots and layout owned by original branch",
+      "parent_id": null,
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "slot_main_learn",
+        "asset_id": null,
+        "description": "Declared main_learn props from SHA-bound input; editable fields and capacity in input.schema.json/control_props, source JS owns internal child tree"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1080,
+          1920
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "parameter_authority": "observed-paper-controls-v3.js",
+          "geometry": "unchanged /2 source-owned formula; no measurement substitution"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 28.94,
+        "end": 37.26
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "source-defined entry/steady/exit; main and presenter evaluated separately"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "source motion formula",
+        "audio speed and ASR clock"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "owned_source"
+      ],
+      "acceptance": [
+        {
+          "check": "preserved_motion",
+          "method": "source/DOM regression, followed by authorized actual preview",
+          "pass_condition": "unchanged baseline outside final main exit, real new output confirms selected behavior"
+        }
+      ]
+    },
+    {
+      "id": "main_script_quote",
+      "type": "component",
+      "role": "quote/type: all internal children, content slots and layout owned by original branch",
+      "parent_id": null,
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "slot_main_script_quote",
+        "asset_id": null,
+        "description": "Declared main_script_quote props from SHA-bound input; editable fields and capacity in input.schema.json/control_props, source JS owns internal child tree"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1080,
+          1920
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "parameter_authority": "observed-paper-controls-v3.js",
+          "geometry": "unchanged /2 source-owned formula; no measurement substitution"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 36.86,
+        "end": 41.98
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "source-defined entry/steady/exit; main and presenter evaluated separately"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "source motion formula",
+        "audio speed and ASR clock"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "owned_source"
+      ],
+      "acceptance": [
+        {
+          "check": "preserved_motion",
+          "method": "source/DOM regression, followed by authorized actual preview",
+          "pass_condition": "unchanged baseline outside final main exit, real new output confirms selected behavior"
+        }
+      ]
+    },
+    {
+      "id": "main_family",
+      "type": "component",
+      "role": "media/zoom: all internal children, content slots and layout owned by original branch",
+      "parent_id": null,
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "slot_main_family",
+        "asset_id": null,
+        "description": "Declared main_family props from SHA-bound input; editable fields and capacity in input.schema.json/control_props, source JS owns internal child tree"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1080,
+          1920
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "parameter_authority": "observed-paper-controls-v3.js",
+          "geometry": "unchanged /2 source-owned formula; no measurement substitution"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 41.46,
+        "end": 48.47
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "source-defined entry/steady/exit; main and presenter evaluated separately"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "source motion formula",
+        "audio speed and ASR clock"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "owned_source"
+      ],
+      "acceptance": [
+        {
+          "check": "preserved_motion",
+          "method": "source/DOM regression, followed by authorized actual preview",
+          "pass_condition": "unchanged baseline outside final main exit, real new output confirms selected behavior"
+        }
+      ]
+    },
+    {
+      "id": "main_free",
+      "type": "component",
+      "role": "quote/card: all internal children, content slots and layout owned by original branch",
+      "parent_id": null,
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "slot_main_free",
+        "asset_id": null,
+        "description": "Declared main_free props from SHA-bound input; editable fields and capacity in input.schema.json/control_props, source JS owns internal child tree"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1080,
+          1920
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "parameter_authority": "observed-paper-controls-v3.js",
+          "geometry": "unchanged /2 source-owned formula; no measurement substitution"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 48.07,
+        "end": 55.16
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "source-defined entry/steady/exit; main and presenter evaluated separately"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "source motion formula",
+        "audio speed and ASR clock"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "owned_source"
+      ],
+      "acceptance": [
+        {
+          "check": "preserved_motion",
+          "method": "source/DOM regression, followed by authorized actual preview",
+          "pass_condition": "unchanged baseline outside final main exit, real new output confirms selected behavior"
+        }
+      ]
+    },
+    {
+      "id": "main_address",
+      "type": "component",
+      "role": "cta/swipe: all internal children, content slots and layout owned by original branch",
+      "parent_id": null,
+      "z_index": 1,
+      "content": {
+        "mode": "editable",
+        "binding": "slot_main_address",
+        "asset_id": null,
+        "description": "Declared main_address props from SHA-bound input; editable fields and capacity in input.schema.json/control_props, source JS owns internal child tree"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          0,
+          0,
+          1080,
+          1920
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "parameter_authority": "observed-paper-controls-v3.js",
+          "geometry": "unchanged /2 source-owned formula; no measurement substitution"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 54.64,
+        "end": 60
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "source-defined entry/steady/exit; main and presenter evaluated separately"
+        },
+        {
+          "id": "soft_exit",
+          "visible": true,
+          "description": "last .4s main-only dim/blur, no entire-canvas filter"
+        }
+      ],
+      "transitions": [
+        {
+          "from": "shown",
+          "to": "soft_exit",
+          "trigger": "fixed relative end interval",
+          "start": 59.6,
+          "end": 60,
+          "properties": {
+            "opacity": "authoritative tail formula",
+            "filter": "blur((1-phase)*18px)"
+          },
+          "easing": "owned cubic-out approximation; not uniquely inferred original"
+        }
+      ],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "source motion formula",
+        "audio speed and ASR clock"
+      ],
+      "replaceable": [
+        "content"
+      ],
+      "evidence_ids": [
+        "owned_source",
+        "original_ending"
+      ],
+      "acceptance": [
+        {
+          "check": "preserved_motion",
+          "method": "source/DOM regression, followed by authorized actual preview",
+          "pass_condition": "unchanged baseline outside final main exit, real new output confirms selected behavior"
+        }
+      ]
+    },
+    {
+      "id": "presenter_address",
+      "type": "avatar",
+      "role": "real source at original timeline rate; original moving card geometry",
+      "parent_id": null,
+      "z_index": 8,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "real source at original timeline rate; original moving card geometry"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          240,
+          650,
+          600,
+          756
+        ],
+        "fit": "cover",
+        "clip": "self",
+        "style": {
+          "parameter_authority": "observed-paper-controls-v3.js",
+          "geometry": "unchanged /2 source-owned formula; no measurement substitution",
+          "final_cta_transform": "original source: card moves to 330,980,420,420; 50% 36% crop"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 54.64,
+        "end": 60
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "source-defined entry/steady/exit; main and presenter evaluated separately"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "source motion formula",
+        "audio speed and ASR clock"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "owned_source"
+      ],
+      "acceptance": [
+        {
+          "check": "preserved_motion",
+          "method": "source/DOM regression, followed by authorized actual preview",
+          "pass_condition": "unchanged baseline outside final main exit, real new output confirms selected behavior"
+        }
+      ]
+    },
+    {
+      "id": "timer",
+      "type": "text",
+      "role": "unchanged HUD timer outside main layers",
+      "parent_id": null,
+      "z_index": 20,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "unchanged HUD timer outside main layers"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          900,
+          96,
+          102,
+          28
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "parameter_authority": "observed-paper-controls-v3.js",
+          "geometry": "unchanged /2 source-owned formula; no measurement substitution",
+          "font": "GeistMono,NotoSource",
+          "font_size": 28,
+          "max_lines": 1,
+          "overflow": "preflight bounded string surface; actual pixel reading pending"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 60
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "source-defined entry/steady/exit; main and presenter evaluated separately"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "source motion formula",
+        "audio speed and ASR clock"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "owned_source"
+      ],
+      "acceptance": [
+        {
+          "check": "preserved_motion",
+          "method": "source/DOM regression, followed by authorized actual preview",
+          "pass_condition": "unchanged baseline outside final main exit, real new output confirms selected behavior"
+        }
+      ]
+    },
+    {
+      "id": "caption",
+      "type": "text",
+      "role": "all real ASR caption characters with original measured cue clock",
+      "parent_id": null,
+      "z_index": 20,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "all real ASR caption characters with original measured cue clock"
+      },
+      "layout": {
+        "coordinate_space": "canvas",
+        "anchor": "top_left",
+        "box": [
+          65,
+          1658,
+          950,
+          64
+        ],
+        "fit": "none",
+        "clip": "self",
+        "style": {
+          "parameter_authority": "observed-paper-controls-v3.js",
+          "geometry": "unchanged /2 source-owned formula; no measurement substitution",
+          "font": "NotoSource",
+          "font_size": 44,
+          "max_lines": 2,
+          "overflow": "preflight bounded string surface; actual pixel reading pending"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 0,
+        "end": 60
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "source-defined entry/steady/exit; main and presenter evaluated separately"
+        }
+      ],
+      "transitions": [],
+      "constraints": [],
+      "fixed": [
+        "layout",
+        "source motion formula",
+        "audio speed and ASR clock"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "owned_source"
+      ],
+      "acceptance": [
+        {
+          "check": "preserved_motion",
+          "method": "source/DOM regression, followed by authorized actual preview",
+          "pass_condition": "unchanged baseline outside final main exit, real new output confirms selected behavior"
+        }
+      ]
+    },
+    {
+      "id": "cta_kicker",
+      "type": "text",
+      "role": "kicker text",
+      "parent_id": "main_address",
+      "z_index": 1,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "kicker text"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          72,
+          550,
+          936,
+          26
+        ],
+        "fit": "none",
+        "clip": "parent",
+        "style": {
+          "parameter_authority": "observed-paper-controls-v3.js",
+          "geometry": "unchanged /2 source-owned formula; no measurement substitution",
+          "font": "NotoSource",
+          "font_size": 21,
+          "max_lines": 1,
+          "overflow": "preflight bounded string surface; actual pixel reading pending"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 55.04,
+        "end": 60
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "source-defined entry/steady/exit; main and presenter evaluated separately"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "inherits",
+          "target_id": "main_address",
+          "rule": "inherits main opacity/filter; presenter and HUD are independent siblings"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "source motion formula",
+        "audio speed and ASR clock"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "owned_source"
+      ],
+      "acceptance": [
+        {
+          "check": "preserved_motion",
+          "method": "source/DOM regression, followed by authorized actual preview",
+          "pass_condition": "unchanged baseline outside final main exit, real new output confirms selected behavior"
+        }
+      ]
+    },
+    {
+      "id": "cta_title",
+      "type": "text",
+      "role": "CTA main text",
+      "parent_id": "main_address",
+      "z_index": 1,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "CTA main text"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          72,
+          610,
+          936,
+          164
+        ],
+        "fit": "none",
+        "clip": "parent",
+        "style": {
+          "parameter_authority": "observed-paper-controls-v3.js",
+          "geometry": "unchanged /2 source-owned formula; no measurement substitution",
+          "font": "NotoSource",
+          "font_size": 136,
+          "max_lines": 1,
+          "overflow": "preflight bounded string surface; actual pixel reading pending"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 55.04,
+        "end": 60
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "source-defined entry/steady/exit; main and presenter evaluated separately"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "inherits",
+          "target_id": "main_address",
+          "rule": "inherits main opacity/filter; presenter and HUD are independent siblings"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "source motion formula",
+        "audio speed and ASR clock"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "owned_source"
+      ],
+      "acceptance": [
+        {
+          "check": "preserved_motion",
+          "method": "source/DOM regression, followed by authorized actual preview",
+          "pass_condition": "unchanged baseline outside final main exit, real new output confirms selected behavior"
+        }
+      ]
+    },
+    {
+      "id": "cta_address",
+      "type": "text",
+      "role": "address subtext",
+      "parent_id": "main_address",
+      "z_index": 1,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "address subtext"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          72,
+          790,
+          936,
+          51
+        ],
+        "fit": "none",
+        "clip": "parent",
+        "style": {
+          "parameter_authority": "observed-paper-controls-v3.js",
+          "geometry": "unchanged /2 source-owned formula; no measurement substitution",
+          "font": "NotoSource",
+          "font_size": 42,
+          "max_lines": 1,
+          "overflow": "preflight bounded string surface; actual pixel reading pending"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 55.04,
+        "end": 60
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "source-defined entry/steady/exit; main and presenter evaluated separately"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "inherits",
+          "target_id": "main_address",
+          "rule": "inherits main opacity/filter; presenter and HUD are independent siblings"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "source motion formula",
+        "audio speed and ASR clock"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "owned_source"
+      ],
+      "acceptance": [
+        {
+          "check": "preserved_motion",
+          "method": "source/DOM regression, followed by authorized actual preview",
+          "pass_condition": "unchanged baseline outside final main exit, real new output confirms selected behavior"
+        }
+      ]
+    },
+    {
+      "id": "cta_lamp",
+      "type": "component",
+      "role": "lamp with own internal orb/arrows and original sinusoidal movement",
+      "parent_id": "main_address",
+      "z_index": 1,
+      "content": {
+        "mode": "none",
+        "binding": null,
+        "asset_id": null,
+        "description": "lamp with own internal orb/arrows and original sinusoidal movement"
+      },
+      "layout": {
+        "coordinate_space": "parent",
+        "anchor": "top_left",
+        "box": [
+          485,
+          200,
+          110,
+          260
+        ],
+        "fit": "none",
+        "clip": "parent",
+        "style": {
+          "parameter_authority": "observed-paper-controls-v3.js",
+          "geometry": "unchanged /2 source-owned formula; no measurement substitution"
+        }
+      },
+      "timing": {
+        "relative_to": "global",
+        "start": 55.04,
+        "end": 60
+      },
+      "states": [
+        {
+          "id": "shown",
+          "visible": true,
+          "description": "source-defined entry/steady/exit; main and presenter evaluated separately"
+        }
+      ],
+      "transitions": [],
+      "constraints": [
+        {
+          "kind": "inherits",
+          "target_id": "main_address",
+          "rule": "inherits main opacity/filter; presenter and HUD are independent siblings"
+        }
+      ],
+      "fixed": [
+        "layout",
+        "source motion formula",
+        "audio speed and ASR clock"
+      ],
+      "replaceable": [],
+      "evidence_ids": [
+        "owned_source"
+      ],
+      "acceptance": [
+        {
+          "check": "preserved_motion",
+          "method": "source/DOM regression, followed by authorized actual preview",
+          "pass_condition": "unchanged baseline outside final main exit, real new output confirms selected behavior"
+        }
+      ]
+    }
+  ],
+  "slots": [
+    {
+      "id": "slot_main_hook",
+      "element_id": "main_hook",
+      "property": "content",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "authority": "input.schema.json plus control_props; no unimplemented props"
+      },
+      "missing": "stop preflight and supply original complete props",
+      "overflow": "reject unsupported capacity; preserve real cue clock and original layout"
+    },
+    {
+      "id": "slot_main_question",
+      "element_id": "main_question",
+      "property": "content",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "authority": "input.schema.json plus control_props; no unimplemented props"
+      },
+      "missing": "stop preflight and supply original complete props",
+      "overflow": "reject unsupported capacity; preserve real cue clock and original layout"
+    },
+    {
+      "id": "slot_main_store",
+      "element_id": "main_store",
+      "property": "content",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "authority": "input.schema.json plus control_props; no unimplemented props"
+      },
+      "missing": "stop preflight and supply original complete props",
+      "overflow": "reject unsupported capacity; preserve real cue clock and original layout"
+    },
+    {
+      "id": "slot_main_experience",
+      "element_id": "main_experience",
+      "property": "content",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "authority": "input.schema.json plus control_props; no unimplemented props"
+      },
+      "missing": "stop preflight and supply original complete props",
+      "overflow": "reject unsupported capacity; preserve real cue clock and original layout"
+    },
+    {
+      "id": "slot_main_learn",
+      "element_id": "main_learn",
+      "property": "content",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "authority": "input.schema.json plus control_props; no unimplemented props"
+      },
+      "missing": "stop preflight and supply original complete props",
+      "overflow": "reject unsupported capacity; preserve real cue clock and original layout"
+    },
+    {
+      "id": "slot_main_script_quote",
+      "element_id": "main_script_quote",
+      "property": "content",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "authority": "input.schema.json plus control_props; no unimplemented props"
+      },
+      "missing": "stop preflight and supply original complete props",
+      "overflow": "reject unsupported capacity; preserve real cue clock and original layout"
+    },
+    {
+      "id": "slot_main_family",
+      "element_id": "main_family",
+      "property": "content",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "authority": "input.schema.json plus control_props; no unimplemented props"
+      },
+      "missing": "stop preflight and supply original complete props",
+      "overflow": "reject unsupported capacity; preserve real cue clock and original layout"
+    },
+    {
+      "id": "slot_main_free",
+      "element_id": "main_free",
+      "property": "content",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "authority": "input.schema.json plus control_props; no unimplemented props"
+      },
+      "missing": "stop preflight and supply original complete props",
+      "overflow": "reject unsupported capacity; preserve real cue clock and original layout"
+    },
+    {
+      "id": "slot_main_address",
+      "element_id": "main_address",
+      "property": "content",
+      "value_type": "object",
+      "required": true,
+      "limits": {
+        "authority": "input.schema.json plus control_props; no unimplemented props"
+      },
+      "missing": "stop preflight and supply original complete props",
+      "overflow": "reject unsupported capacity; preserve real cue clock and original layout"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "owned_source",
+      "source_kind": "design",
+      "source": "project-owned /2 implementation and bounded /3 revision",
+      "locator": "observed-paper-controls-v3.js; PROVENANCE.json",
+      "method": "source ownership and AST/DOM regression, no new media",
+      "file": "observed-paper-controls-v3.js",
+      "sha256": null
+    },
+    {
+      "id": "original_ending",
+      "source_kind": "observation",
+      "source": "original C native064/native065 and encoded031",
+      "locator": "59.08 / 59.8 / 59.9 seconds; private END_STATE_CLARIFICATION.json",
+      "method": "previously actually viewed stored images; selective main blur, presenter/HUD clear",
+      "file": null,
+      "sha256": null
+    }
+  ],
+  "unknowns": [],
+  "validation": {
+    "structure": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "validate this independent specification; actual tests recorded outside immutable manifest"
+    },
+    "technical": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "no new /3 media or production in this authorized phase"
+    },
+    "visual": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "no new /3 media or production in this authorized phase"
+    },
+    "audio": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "no new /3 media or production in this authorized phase"
+    },
+    "platform": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "no new /3 media or production in this authorized phase"
+    },
+    "user_review": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "no new /3 media or production in this authorized phase"
+    },
+    "production": {
+      "status": "pending",
+      "evidence_ids": [],
+      "note": "no new /3 media or production in this authorized phase"
+    }
+  },
+  "extensions": {
+    "avatar": {
+      "synchronization": "source audio unchanged; real presenter video at original rate and original windows, media mute; independent final presenter layer",
+      "face_crop": "unchanged source formula, no new model or portrait"
+    },
+    "material_edit": {
+      "sources": "real SHA-bound media; reject insufficient coverage, no frozen last frame/loop/speed substitution",
+      "source_ranges": "SHA-bound input asset sourceStart plus actual scene/item windows; original source rate 1",
+      "cut_policy": "exact ASR semantic scene order; reject insufficient live video span"
+    },
+    "ending_scope": {
+      "observations": "OBSERVED_CONSTRAINTS.json",
+      "non_unique_easing": true,
+      "parameter_authority": "observed-paper-controls-v3.js tail/phase",
+      "geometry_scope": "all unchanged source formulas",
+      "template_slots": "input.schema.json and control_props; schema is a boundary, admission remains authority",
+      "contract": "haike.paper-ending-scope/3",
+      "rules": [
+        "last main CTA tail opt-in only",
+        "last presenter and HUD independent",
+        "all other source behavior unchanged",
+        "new actual media required for visual acceptance"
+      ]
+    }
+  },
+  "operations": [
+    {
+      "id": "preflight",
+      "input": "SHA-bound original script, ASR, WAV, assets, composition and original avatar provenance",
+      "action": "verify fixed route, component, real clock, declared windows and pinned dependencies",
+      "output": "validated plan and environment identities; no submission",
+      "completion": "input/plan/source/env checks pass; no /3 visual claim",
+      "recovery": "preserve originals; repair only reported missing input",
+      "entrypoint": "../../scripts/motion_public_paper_production_v3.py --check --input <input.json>"
+    },
+    {
+      "id": "preview_and_render",
+      "input": "new exact request and explicit later media authorization",
+      "action": "root integration delegates fixed producer preview; all-PNG explicit review then approved render",
+      "output": "new preview witness or full media receipt",
+      "completion": "real lease/cancel guards, unchanged full-preview witness, exact current approval, complete decode and actual effect review",
+      "recovery": "R2 explicit original parent/revision recovery; no silent source/approval overwrite",
+      "entrypoint": "../../backlot/motion_public_paper_production_v3.py; public routing pending root integration"
+    }
+  ]
+}

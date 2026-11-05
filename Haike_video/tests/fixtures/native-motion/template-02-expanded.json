@@ -1,0 +1,528 @@
+{
+  "schema": "haike.native-render-fixture/1",
+  "template_id": "template-02-expanded",
+  "preferred_version": "1.0.1-public.2",
+  "kind": "html",
+  "duration": 60.0,
+  "scope": "synthetic local renderer portability; no ASR/HQ/payment/creative acceptance claim",
+  "props": {
+    "all_original_controls_supported": false,
+    "brand": "测试效果",
+    "caption_position": {
+      "bottomRatio": 0.1,
+      "leftRatio": 0.06,
+      "rightRatio": 0.06
+    },
+    "captions": [
+      {
+        "e": 3.68,
+        "s": 0.96,
+        "text": "测试效果"
+      },
+      {
+        "e": 5.64,
+        "s": 4.08,
+        "text": "测试效果"
+      },
+      {
+        "e": 9.44,
+        "s": 6.16,
+        "text": "测试效果"
+      },
+      {
+        "e": 10.84,
+        "s": 9.44,
+        "text": "测试效果"
+      },
+      {
+        "e": 13.68,
+        "s": 11.28,
+        "text": "测试效果"
+      },
+      {
+        "e": 16.64,
+        "s": 14.08,
+        "text": "测试效果"
+      },
+      {
+        "e": 19.86,
+        "s": 17.58,
+        "text": "测试效果"
+      },
+      {
+        "e": 21.9,
+        "s": 19.86,
+        "text": "测试效果"
+      },
+      {
+        "e": 25.1,
+        "s": 22.26,
+        "text": "测试效果"
+      },
+      {
+        "e": 28.02,
+        "s": 25.1,
+        "text": "测试效果"
+      },
+      {
+        "e": 28.86,
+        "s": 28.02,
+        "text": "测试效果"
+      },
+      {
+        "e": 32.14,
+        "s": 29.34,
+        "text": "测试效果"
+      },
+      {
+        "e": 32.82,
+        "s": 32.14,
+        "text": "测试效果"
+      },
+      {
+        "e": 36.5,
+        "s": 33.22,
+        "text": "测试效果"
+      },
+      {
+        "e": 36.9,
+        "s": 36.5,
+        "text": "测试效果"
+      },
+      {
+        "e": 40.42,
+        "s": 37.26,
+        "text": "测试效果"
+      },
+      {
+        "e": 41.22,
+        "s": 40.42,
+        "text": "测试效果"
+      },
+      {
+        "e": 44.34,
+        "s": 41.86,
+        "text": "测试效果"
+      },
+      {
+        "e": 47.14,
+        "s": 44.58,
+        "text": "测试效果"
+      },
+      {
+        "e": 47.62,
+        "s": 47.14,
+        "text": "测试效果"
+      },
+      {
+        "e": 49.95,
+        "s": 48.47,
+        "text": "测试效果"
+      },
+      {
+        "e": 52.99,
+        "s": 50.43,
+        "text": "测试效果"
+      },
+      {
+        "e": 54.63,
+        "s": 52.99,
+        "text": "测试效果"
+      },
+      {
+        "e": 57.83,
+        "s": 55.07,
+        "text": "测试效果"
+      },
+      {
+        "e": 59.83,
+        "s": 57.95,
+        "text": "测试效果"
+      }
+    ],
+    "duration": 60.0,
+    "events": [
+      {
+        "anchor": {
+          "at": 0,
+          "kind": "authored"
+        },
+        "at": 0.0,
+        "id": "hook.authored-opening",
+        "original_action_id": "haike.template-02-expanded.motion-kit.title"
+      },
+      {
+        "anchor": {
+          "kind": "speech",
+          "sentence": 0,
+          "word": 11
+        },
+        "at": 4.84,
+        "id": "hook.hands-on",
+        "original_action_id": "haike.template-02-expanded.motion-kit.title"
+      },
+      {
+        "anchor": {
+          "kind": "speech",
+          "sentence": 1,
+          "word": null
+        },
+        "at": 6.16,
+        "id": "question.foundation",
+        "original_action_id": "haike.template-02-expanded.motion-kit.steps"
+      },
+      {
+        "anchor": {
+          "kind": "speech",
+          "sentence": 2,
+          "word": null
+        },
+        "at": 11.28,
+        "id": "question.knowledge",
+        "original_action_id": "haike.template-02-expanded.motion-kit.steps"
+      },
+      {
+        "anchor": {
+          "kind": "speech",
+          "sentence": 3,
+          "word": null
+        },
+        "at": 14.08,
+        "id": "question.experience",
+        "original_action_id": "haike.template-02-expanded.motion-kit.steps"
+      },
+      {
+        "anchor": {
+          "kind": "speech",
+          "sentence": 4,
+          "word": null
+        },
+        "at": 17.58,
+        "id": "store.store-location",
+        "original_action_id": "haike.template-02-expanded.motion-kit.media"
+      },
+      {
+        "anchor": {
+          "kind": "speech",
+          "sentence": 5,
+          "word": 3
+        },
+        "at": 22.82,
+        "id": "experience.robot",
+        "original_action_id": "haike.template-02-expanded.motion-kit.gallery"
+      },
+      {
+        "anchor": {
+          "kind": "speech",
+          "sentence": 5,
+          "word": 8
+        },
+        "at": 24.14,
+        "id": "experience.dog",
+        "original_action_id": "haike.template-02-expanded.motion-kit.gallery"
+      },
+      {
+        "anchor": {
+          "kind": "speech",
+          "sentence": 5,
+          "word": 16
+        },
+        "at": 26.58,
+        "id": "experience.interaction",
+        "original_action_id": "haike.template-02-expanded.motion-kit.gallery"
+      },
+      {
+        "anchor": {
+          "kind": "speech",
+          "sentence": 6,
+          "word": null
+        },
+        "at": 29.34,
+        "id": "learn.learning-partner",
+        "original_action_id": "haike.template-02-expanded.motion-kit.device"
+      },
+      {
+        "anchor": {
+          "kind": "speech",
+          "sentence": 6,
+          "word": 1
+        },
+        "at": 29.62,
+        "id": "learn.ai-partner-screen",
+        "original_action_id": "haike.template-02-expanded.motion-kit.device"
+      },
+      {
+        "anchor": {
+          "kind": "speech",
+          "sentence": 8,
+          "word": null
+        },
+        "at": 37.26,
+        "id": "script-quote.quoted-context",
+        "original_action_id": "haike.template-02-expanded.motion-kit.quote"
+      },
+      {
+        "anchor": {
+          "kind": "speech",
+          "sentence": 9,
+          "word": null
+        },
+        "at": 41.86,
+        "id": "family.family-experience",
+        "original_action_id": "haike.template-02-expanded.motion-kit.media"
+      },
+      {
+        "anchor": {
+          "kind": "speech",
+          "sentence": 10,
+          "word": null
+        },
+        "at": 48.47,
+        "id": "free.nonmedical-boundary",
+        "original_action_id": "haike.template-02-expanded.motion-kit.quote"
+      },
+      {
+        "anchor": {
+          "kind": "speech",
+          "sentence": 12,
+          "word": null
+        },
+        "at": 55.07,
+        "id": "address.location",
+        "original_action_id": "haike.template-02-expanded.motion-kit.cta"
+      },
+      {
+        "anchor": {
+          "kind": "speech",
+          "sentence": 12,
+          "word": 12
+        },
+        "at": 58.43,
+        "id": "address.invitation",
+        "original_action_id": "haike.template-02-expanded.motion-kit.cta"
+      }
+    ],
+    "fps": 60,
+    "frames": 3600,
+    "height": 1920,
+    "implementation_identity": "haike.observed-controls/2",
+    "original_fidelity": "pending",
+    "presenter": {
+      "audio": "mute",
+      "badge": "测试效果",
+      "src": "clip000.mp4"
+    },
+    "reference_id": "template-02-expanded",
+    "schema": "haike.observed-controls-composition/2",
+    "segments": [
+      {
+        "action_id": "haike.public-observed.paper.title.split",
+        "action_version": "2-development",
+        "control": "title",
+        "cues": [
+          0.0,
+          4.84
+        ],
+        "id": "hook",
+        "original_action_id": "haike.template-02-expanded.motion-kit.title",
+        "presenter": "card",
+        "props": {
+          "kicker": "测试效果",
+          "line1": "测试效果",
+          "line2": "测试效果"
+        },
+        "t0": 0,
+        "t1": 6.0,
+        "variant": "split",
+        "presenterMediaKey": "s0-presenter"
+      },
+      {
+        "action_id": "haike.public-observed.paper.steps.track",
+        "action_version": "2-development",
+        "control": "steps",
+        "cues": [
+          6.16,
+          11.28,
+          14.08
+        ],
+        "id": "question",
+        "original_action_id": "haike.template-02-expanded.motion-kit.steps",
+        "presenter": "hide",
+        "props": {
+          "steps": [
+            "测试效果",
+            "测试效果",
+            "测试效果"
+          ],
+          "title": "测试效果"
+        },
+        "t0": 6.0,
+        "t1": 17.58,
+        "variant": "track"
+      },
+      {
+        "action_id": "haike.public-observed.paper.media.scan",
+        "action_version": "2-development",
+        "control": "media",
+        "cues": [
+          17.58
+        ],
+        "id": "store",
+        "original_action_id": "haike.template-02-expanded.motion-kit.media",
+        "presenter": "hide",
+        "props": {
+          "sourceStart": 0.2,
+          "src": "store.mp4",
+          "title": "测试效果"
+        },
+        "t0": 17.58,
+        "t1": 22.26,
+        "variant": "scan",
+        "mediaKey": "s2-main"
+      },
+      {
+        "action_id": "haike.public-observed.paper.gallery.grid",
+        "action_version": "2-development",
+        "control": "gallery",
+        "cues": [
+          22.82,
+          24.14,
+          26.58
+        ],
+        "id": "experience",
+        "original_action_id": "haike.template-02-expanded.motion-kit.gallery",
+        "presenter": "hide",
+        "props": {
+          "items": [
+            {
+              "caption": "测试效果",
+              "sourceStart": 0,
+              "src": "children.mp4"
+            },
+            {
+              "caption": "测试效果",
+              "sourceStart": 5,
+              "src": "children.mp4"
+            },
+            {
+              "caption": "测试效果",
+              "sourceStart": 10,
+              "src": "children.mp4"
+            }
+          ],
+          "title": "测试效果"
+        },
+        "t0": 22.26,
+        "t1": 29.34,
+        "variant": "grid",
+        "mediaKeys": [
+          "s3-item0",
+          "s3-item1",
+          "s3-item2"
+        ]
+      },
+      {
+        "action_id": "haike.public-observed.paper.device.monitor",
+        "action_version": "2-development",
+        "control": "device",
+        "cues": [
+          29.34,
+          29.62
+        ],
+        "id": "learn",
+        "original_action_id": "haike.template-02-expanded.motion-kit.device",
+        "presenter": "hide",
+        "props": {
+          "sourceStart": 1,
+          "src": "children.mp4",
+          "sub": "测试效果",
+          "title": "测试效果"
+        },
+        "t0": 29.34,
+        "t1": 37.26,
+        "variant": "monitor",
+        "mediaKey": "s4-main"
+      },
+      {
+        "action_id": "haike.public-observed.paper.quote.type",
+        "action_version": "2-development",
+        "control": "quote",
+        "cues": [
+          37.26
+        ],
+        "id": "script-quote",
+        "original_action_id": "haike.template-02-expanded.motion-kit.quote",
+        "presenter": "hide",
+        "props": {
+          "text": "测试效果",
+          "who": "测试效果"
+        },
+        "t0": 37.26,
+        "t1": 41.86,
+        "variant": "type"
+      },
+      {
+        "action_id": "haike.public-observed.paper.media.zoom",
+        "action_version": "2-development",
+        "control": "media",
+        "cues": [
+          41.86
+        ],
+        "id": "family",
+        "original_action_id": "haike.template-02-expanded.motion-kit.media",
+        "presenter": "hide",
+        "props": {
+          "sourceStart": 8,
+          "src": "children.mp4",
+          "title": "测试效果"
+        },
+        "t0": 41.86,
+        "t1": 48.47,
+        "variant": "zoom",
+        "mediaKey": "s6-main"
+      },
+      {
+        "action_id": "haike.public-observed.paper.quote.card",
+        "action_version": "2-development",
+        "control": "quote",
+        "cues": [
+          48.47
+        ],
+        "id": "free",
+        "original_action_id": "haike.template-02-expanded.motion-kit.quote",
+        "presenter": "hide",
+        "props": {
+          "text": "测试效果",
+          "who": "测试效果"
+        },
+        "t0": 48.47,
+        "t1": 55.04,
+        "variant": "card"
+      },
+      {
+        "action_id": "haike.public-observed.paper.cta.swipe",
+        "action_version": "2-development",
+        "control": "cta",
+        "cues": [
+          55.07,
+          58.43
+        ],
+        "id": "address",
+        "original_action_id": "haike.template-02-expanded.motion-kit.cta",
+        "presenter": "card",
+        "props": {
+          "dir": "down",
+          "kicker": "测试效果",
+          "sub": "测试效果",
+          "text": "测试效果"
+        },
+        "t0": 55.04,
+        "t1": 60.0,
+        "variant": "swipe",
+        "presenterMediaKey": "s8-presenter"
+      }
+    ],
+    "style": "paper",
+    "width": 1080
+  }
+}

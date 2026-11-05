@@ -32,7 +32,8 @@ def _producer(request):
     if not isinstance(request, dict) or request.get('contract') not in PRODUCERS:
         raise ReplayError('此完整动效生产合同未登记，不能选择任意执行模块')
     try:
-        return import_module(PRODUCERS[request['contract']])
+        from backlot.motion_platform import owned_module
+        return owned_module(PRODUCERS[request['contract']])
     except ImportError as exc:
         raise ReplayError('此动效生产组件尚未准备齐全，请先修复对应组件再继续原任务') from exc
 

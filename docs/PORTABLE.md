@@ -1,5 +1,7 @@
 # 便携包初始化与启动
 
+**先识别平台：`RELEASE.json` 的 `platform` 为 `macos-universal` 时，转到 [Mac 新机部署](DEPLOY_MAC.md)，运行 `01-安装Mac.command`。Mac 双架构私有包也有 PACKAGE-MANIFEST.json，但不运行本文的 Windows cmd/PowerShell 入口。** 以下步骤适用于 Windows x64。经用户明确授权附带 `private-profile/` 的同事部署包会在初始化时校验并导入，已有非空配置保留；公开便携包仍按下文单独配置。
+
 根目录同时有 `PACKAGE-MANIFEST.json`、`runtime/` 和 `portable/` 的 ZIP 使用本文。包内已包含声明的 Windows x64 运行环境和前端产物；初始化使用包内 Python，不需要先执行源码的 `scripts/setup.ps1`。没有该清单的源码 checkout 使用根 [README.md](../README.md) 的安装流程。
 
 ## 首次解压

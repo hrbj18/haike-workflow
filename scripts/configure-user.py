@@ -537,7 +537,8 @@ def report(plan, command, written=0):
         if analysis_mode == 'relay' and mode == 'internal' and 'pexels' in sources: required.append('pexels_key')
         if 'douyin' in sources:
             crawler = Path(relay.get('crawler_root') or root / 'copy_skill/copy_skill-main/third_party/MediaCrawler')
-            checks['crawler_installed'] = (crawler / 'main.py').is_file() and (crawler / '.venv/Scripts/python.exe').is_file()
+            crawler_python = '.venv/Scripts/python.exe' if os.name == 'nt' else '.venv/bin/python'
+            checks['crawler_installed'] = (crawler / 'main.py').is_file() and (crawler / crawler_python).is_file()
             checks['chrome_path'] = bool(relay.get('chrome_path')) and Path(relay['chrome_path']).is_file()
             checks['crawler_permission'] = relay.get('douyin_commercial_authorized') is True
             required += ['crawler_installed', 'chrome_path', 'crawler_permission']

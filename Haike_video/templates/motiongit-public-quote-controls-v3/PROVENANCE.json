@@ -1,0 +1,40 @@
+{
+  "schema": "haike.quote-controls-provenance/3",
+  "origin_component_sha256": "a72de0dc57579ed026ec2d10c0582d7ced4817c21be12b37008043eea2042b30",
+  "origin_execution": {
+    "path": "Haike_video/backlot/motion_public_execution_v2.py",
+    "sha256": "bb3900fd95149b8f7da3e3d7dd44bbdd4a078dc500ec89eac5d81474c7532dce"
+  },
+  "origin_observed": {
+    "path": "Haike_video/backlot/motion_public_observed_v2.py",
+    "sha256": "97403417dad73d717679af83ab90811674334edc5bdd854548586001e3f06b0e"
+  },
+  "visual_scope": [
+    "light+quote.reveal independent stable-layout phrase nodes and author",
+    "console+quote.card independent author",
+    "light/console quote glyph public Geist and measured candidate anchors"
+  ],
+  "preserved": "other controls, media, events, original voice/ASR/master clock, HTML renderer, CBR20.5Mbps adaptation, palette and sound recipe",
+  "copied_descriptors": [
+    {
+      "path": "capture_runtime.mjs",
+      "sha256": "0bf6ec171767725922099c7dd2de7582fbd3e96d24c6c6c91531f387f4701fd8"
+    },
+    {
+      "path": "DEPENDENCIES.json",
+      "sha256": "c30cf57bb3f2192410d99685a771fd36f69583737e0464cce9c0bd0985ec5f1f"
+    },
+    {
+      "path": "TOOLS.json",
+      "sha256": "5a2bd3c270d30fd841c89116c4eabe25ad6a15e957ee40d021f77d31c5ef26f1"
+    },
+    {
+      "path": "FFMPEG9.json",
+      "sha256": "1d7055cadccd60e2442c5d279083b3dd8c9a46c1bae6d317e78a344826e6aa29"
+    }
+  ],
+  "native_curve_recovered": false,
+  "protected_font_or_bitmap_extracted": false,
+  "candidate_parameters_authority": "observed-quote-controls-v3.js:QUOTE_V3",
+  "acceptance": "static candidate only; new target preview and actual ink boxes pending"
+}

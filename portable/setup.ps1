@@ -18,6 +18,12 @@ if ((Test-Path -LiteralPath $releaseIdentity) -and
 }
 . (Join-Path $PSScriptRoot 'portable-env.ps1')
 Set-Location -LiteralPath $bundleRoot
+if (-not $privateDocument -and (Test-Path -LiteralPath (Join-Path $bundleRoot 'private-profile\PROFILE-MANIFEST.json'))) {
+    Invoke-Portable -Arguments @('prepare')
+    if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+    & $bundlePython -s (Join-Path $bundleRoot 'scripts\install-private-profile.py') --root $bundleRoot
+    if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+}
 if ($privateDocument) {
     Invoke-Portable -Arguments @('prepare')
     if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }

@@ -18,6 +18,17 @@ def client():
     return TestClient(app)
 
 
+def test_local_sample_binding_is_relative_to_installation_after_relocation(tmp_path, monkeypatch):
+    monkeypatch.setattr(library, 'ROOT', tmp_path)
+    monkeypatch.setattr(library, 'BINDINGS', tmp_path / 'bindings.json')
+    movie = tmp_path / 'template-samples/example.mp4'
+    movie.parent.mkdir()
+    movie.write_bytes(b'original-completed-film')
+    library.BINDINGS.write_text(json.dumps({'example': {'sample': 'template-samples/example.mp4'}}))
+    monkeypatch.chdir(tmp_path.parent)
+    assert library._media({'id': 'example'}, 'sample') == movie
+
+
 def test_clean_source_gallery_serves_eighteen_distinct_verified_style_covers(tmp_path, monkeypatch):
     monkeypatch.setattr(library, 'BINDINGS', tmp_path / 'absent.json')
     monkeypatch.setattr(library, 'COVERS', tmp_path / 'absent-private-covers')
