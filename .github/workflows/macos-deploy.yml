@@ -9,6 +9,9 @@ on:
   workflow_dispatch:
 permissions:
   contents: read
+concurrency:
+  group: native-mac-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   native-mac:
     strategy:

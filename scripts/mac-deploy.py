@@ -225,7 +225,8 @@ def install_frontends(arch, spec, offline, env):
         folder = ROOT / module
         registry = spec['npm_registry'] if offline else os.environ.get('HAIKE_NPM_REGISTRY', spec['npm_registry'])
         execute([npm, 'ci', '--no-audit', '--no-fund', '--cache', cache,
-                 '--registry', registry, *(['--offline'] if offline else [])], cwd=folder, env=env)
+                 '--registry', registry, *(['--legacy-peer-deps'] if module.endswith('/snapcn') else []),
+                 *(['--offline'] if offline else [])], cwd=folder, env=env)
     frontend = ROOT / 'prototypes/haike-avatar-generator'
     execute([npm, 'run', 'build'], cwd=frontend, env=dict(env, HAIKE_EMBED_BASE='/ui/avatar-generator/'))
     shutil.copytree(frontend / 'dist/client', ROOT / 'Haike_video/backlot/ui/avatar-generator', dirs_exist_ok=True)
