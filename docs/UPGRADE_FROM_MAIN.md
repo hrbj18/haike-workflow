@@ -121,14 +121,16 @@ pwsh -NoProfile -ExecutionPolicy Bypass -File .\start-workbench.ps1 -Port 14866 
 **源码检查须注意：** Git没有生成的 `delivery.json`/发行元数据；默认 `template_capability.py --root ...`可能返回 `not-declared`，这不是18套通过。先在源码根执行下面的只读检查，确认JSON的 `source_status: verified`、`template_count: 18`，并保留实际输出；它检查当前首选的470份来源和可调用准备入口，不启动队列或付费：
 
 ```powershell
+$taskPython = Join-Path $taskSource 'Haike_video\.venv\Scripts\python.exe'
 & $taskPython Haike_video/scripts/motion_replay.py verify --preferred
 if ($LASTEXITCODE) { throw '当前18套来源或准备入口未通过；保留原摘要并修复具体缺项。' }
 ```
 
-再核对当前组件及原便携闭包的适用范围：
+随后向每个首选卡片的 `/api/studio/template-library/<画廊ID>/prepare` 传入该合同已有的合法本期输入，检查 `status: prepared`、精确版本、制作入口和 `submitted: false`；缺输入应阻断，不能走回普通口播。实际制片继续使用所属入口、依赖和统一队列，准备成功不代表已生成视频。
+
+以下是**便携闭包专用诊断**：仅在实际使用该闭包且源码基线匹配时执行。纯main源码以当前首选合同的来源、实际准备和所需本机依赖/短渲验收；不将旧闭包中非本期实现或旧编译产物的差异当作所有18套的统一阻断。旧闭包不适用时记录理由，实际首选来源或必需依赖错误仍须处理，不靠改摘要跳过：
 
 ```powershell
-$taskPython = Join-Path $taskSource 'Haike_video\.venv\Scripts\python.exe'
 & $taskPython -B -c 'import json; from pathlib import Path; from portable.motion_delivery_runtime import report; print(json.dumps(report(Path.cwd()),ensure_ascii=False))'
 if ($LASTEXITCODE) { throw '源身份检查失败，保留日志并恢复。' }
 & $taskPython -B portable/template_capability.py --root $taskSource --component-selftest
