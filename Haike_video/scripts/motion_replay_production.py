@@ -14,7 +14,11 @@ def prepare_platform_environment():
     """An Agent's fresh Mac shell uses the same pinned tools as the launcher."""
     if sys.platform != 'darwin':
         return
-    spec = importlib.util.spec_from_file_location('haike_motion_cli_mac', ROOT.parent / 'scripts/mac-deploy.py')
+    installer = ROOT.parent / 'scripts/mac-deploy.py'
+    if not installer.is_file():
+        # Older source layouts still use their existing local tool setup.
+        return
+    spec = importlib.util.spec_from_file_location('haike_motion_cli_mac', installer)
     deployment = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(deployment)
     os.environ.update(deployment.environment(deployment.architecture()))
