@@ -1,0 +1,46 @@
+name: Native Mac deployment
+on:
+  pull_request:
+    paths:
+      - 'scripts/*mac*'
+      - 'scripts/install-private-profile.py'
+      - '_distribution-tools/macos-runtime.json'
+      - '.github/workflows/macos-deploy.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  native-mac:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: macos-15
+            arch: arm64
+          - runner: macos-15-intel
+            arch: x86_64
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Install native dependencies and prepare offline cache
+        run: bash scripts/setup-mac.sh --cache-only
+      - name: Verify offline installation, HTTP gallery and actual Remotion export
+        run: |
+          bash scripts/setup-mac.sh --offline
+          runtime/macos/${{ matrix.arch }}/python/bin/python3.12 scripts/mac-deploy-smoke.py
+      - name: Archive native dependency cache (no user configuration)
+        run: |
+          tar -czf mac-dependencies-${{ matrix.arch }}.tar.gz deployment-cache/python/${{ matrix.arch }} deployment-cache/npm/${{ matrix.arch }}
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: mac-dependencies-${{ matrix.arch }}
+          path: |
+            mac-dependencies-${{ matrix.arch }}.tar.gz
+            .local/mac-smoke.json
+            .local/mac-smoke/*.mp4
+          retention-days: 3
+          include-hidden-files: true
+          compression-level: 0

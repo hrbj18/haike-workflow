@@ -1,5 +1,7 @@
 # GitHub 与跨电脑部署
 
+Mac 新机入口：根 `docs/DEPLOY_MAC.md`、`scripts/setup-mac.sh`，支持双架构；国内镜像见 `_distribution-tools/macos-runtime.json`。11-05 用户授权的私有同事 ZIP 可附 Key/音色/形象，边界见根 `docs/DISTRIBUTION.md`；公开源码和 CI 无凭据。安装、短渲染和 18 套完整生产分别验收。
+
 私有开发迁移按根`docs/DEVELOPMENT_RECOVERY.md`恢复；有migration清单时以其必读记录核对最新.motion中断点，原冻结证据保留。
 
 更新时间：2026-10-30
@@ -41,8 +43,4 @@
 
 Agent素材分析通过Studio的`agent-materials`读写：真实音轨/ASR后提供原版本与clock；Agent按真实cue安排分镜、观看保留候选代表帧并提交SHA绑定结论，再恢复原任务。没有分析结果时可恢复暂停，不后台调用中转模型，不重做已成功的TTS/ASR。已有上传素材也须提供来源/使用权和实际观察依据，最终汇报不包含私人配置。
 
-旧版隔离回归见根`.local/portable-build/`；不代表本次异机或真实账号验收。
-
-10/17便携包`53f47b0`本机验收及范围见`.local/portable-build/verification-agent-final.json`；未验另一台物理机、真实收费或发布。
-
-Git仅保存源码、测试、公开配置模板、可分发品牌资源与设计文档。凭据、账本、主密钥、Cookie、项目素材、成片及备份被忽略，另行加密备份。新机静态测试通过不代表真实供应商、付费结算或账号发布已经验收。
+旧包隔离回归见根`.local/portable-build/verification-agent-final.json`。Git排除凭据、账本、Cookie和私有作品；安装检查与异机制作、付费及发布分别验收。

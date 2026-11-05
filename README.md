@@ -1,5 +1,7 @@
 # Haike Workflow
 
+Mac 新电脑直接从源码安装，支持 Apple Silicon / Intel，先读 [Mac 新机部署](docs/DEPLOY_MAC.md)，运行 `bash scripts/setup-mac.sh`。源码不包含依赖或私人配置，安装器提供国内镜像；用户明确授权的私有同事部署 ZIP 另附离线缓存和配置，不上传公开 GitHub。
+
 已有旧版需要**直接使用main源码、不等待更新包**时，Agent先识别系统：[Windows教程](docs/UPGRADE_FROM_MAIN.md)、[Mac教程（Apple Silicon/Intel）](docs/UPGRADE_FROM_MAIN_MAC.md)。固定提交，保留用户数据，恢复对应架构依赖、构建前端并实际启动验收；Mac按教程继续生成一条完整测试视频，平台未适配项如实报告。以下联网自动更新说明属于Release发行包路线。
 
 已有安装需要更新时，从[GitHub地址联网升级](docs/UPDATE_WITH_CODEX.md)进入：Agent识别目标副本、自动下载与校验，兼容补丁也可在“关于海客视频”检查并安装。定稿模板升级须额外核验配方、动效组件与实际运行自检；缺个人原包或本期素材分别提示待配置。不要用Git覆盖运行目录或重新执行全量setup，实际上线状态以GitHub Release及其更新清单为准。
