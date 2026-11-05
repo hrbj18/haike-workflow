@@ -1,0 +1,96 @@
+{
+  "contract": "haike.template-authoring-dependencies/1",
+  "version": "1.1",
+  "path_base": "workspace_root",
+  "runbook": "Haike-Videohub/agent-runbooks/无参考视频的新模板创建流程.md",
+  "scope": "Agent读取合同并调用项目现有能力；不提供独立安装器、渲染器或新生产路线",
+  "download_source": {
+    "repository_url": "https://github.com/hrbj18/haike-workflow",
+    "commit": "28cd26c918adc1a727d09eb35585f1c609dba340",
+    "scope": "仅固定两份skill与Hallmark参考的下载基线；目标项目运行能力按其自身版本核对",
+    "policy": "本地摘要匹配则复用；缺失时由Agent下载并校验；已有文件仅属已登记文本输运差异时备份后恢复原摘要，其余差异保留现场并核对版本"
+  },
+  "skills": [
+    {
+      "id": "hallmark-video",
+      "path": "Haike_video/skills/creative/hallmark-video.md",
+      "sha256": "bcec3ab2022c44a322ac7cc896de5e5a3bf330970b4d07c7f97fa48709f217a6",
+      "source_kind": "project_video_adaptation",
+      "source": "same_project_delivery",
+      "download_url": "https://raw.githubusercontent.com/hrbj18/haike-workflow/28cd26c918adc1a727d09eb35585f1c609dba340/Haike_video/skills/creative/hallmark-video.md",
+      "references": {
+        "root": "Haike_video/design/hallmark",
+        "catalogue": "Haike_video/design/hallmark/catalog.json",
+        "integrity_manifest": "Haike_video/design/hallmark/UPSTREAM.json",
+        "integrity_manifest_sha256": "14c61aa8e90e1baf463614357d9bf8f1e1b33197f9ef397933555cb309813b08",
+        "download_base_url": "https://raw.githubusercontent.com/hrbj18/haike-workflow/28cd26c918adc1a727d09eb35585f1c609dba340/Haike_video/design/hallmark/",
+        "text_transport_recovery": [
+          {
+            "path": "catalog.json",
+            "download_sha256": "b4b61a2a776ee88c2ae149f9b0d8dea414bf7d1290d444a2ff15f7d869227860",
+            "transform": "utf8-lf-to-crlf"
+          },
+          {
+            "path": "LICENSE",
+            "download_sha256": "b6ea71cbc54042d2051909a118d1e269f8d65530e55bb1ac934aeca140a1cf30",
+            "transform": "utf8-lf-to-crlf"
+          }
+        ],
+        "license": "Haike_video/design/hallmark/LICENSE",
+        "upstream_url": "https://github.com/Nutlope/hallmark",
+        "upstream_commit": "7ec868225c6caa040558c321ee0fefa0e73f83a8"
+      }
+    },
+    {
+      "id": "taste-direction",
+      "path": "Haike_video/skills/meta/taste-direction.md",
+      "sha256": "58401c70b54dc845936609db2f201f8017ea58b4062c5c08805fbeb0857ab966",
+      "source_kind": "project_skill",
+      "source": "same_project_delivery",
+      "download_url": "https://raw.githubusercontent.com/hrbj18/haike-workflow/28cd26c918adc1a727d09eb35585f1c609dba340/Haike_video/skills/meta/taste-direction.md",
+      "provenance": "SOURCE-PROVENANCE.json"
+    }
+  ],
+  "project": {
+    "onboarding": "START_HERE.md",
+    "agent_rules": "Haike_video/AGENTS.md",
+    "template_standard": "Haike-Videohub/agent-runbooks/视频模板编写标准.md",
+    "motion_catalogue": "Haike_video/motion-components/catalogue.json",
+    "motion_rules": "Haike-Videohub/agent-runbooks/无参考视频的新模板创建流程.md",
+    "replay_contract": "Haike_video/docs/MOTION_REPLAY_STANDARD.md",
+    "runtime_manifest": "Haike_video/remotion-composer/package.json",
+    "runtime_lock": "Haike_video/remotion-composer/package-lock.json",
+    "installation": ["README.md", "docs/PORTABLE.md"],
+    "checks": [
+      ["Haike_video/scripts/hallmark_video.py", "verify"],
+      ["Haike_video/scripts/motion_catalogue.py", "list", "--mode", "direct"],
+      ["scripts/check.py"]
+    ]
+  },
+  "motion_availability": {
+    "source_of_truth": "本机实际源码、来源SHA、运行时与适配器；目录条目不代表已安装",
+    "public_components": {
+      "root": "Haike_video/motion-components/snapcn",
+      "integrity_manifest": "Haike_video/motion-components/snapcn/UPSTREAM.json",
+      "license": "Haike_video/motion-components/snapcn/upstream/LICENSE",
+      "runbook": "Haike_video/motion-components/snapcn/README.md"
+    },
+    "private_components": {
+      "required_for_new_design": false,
+      "runbook": "Haike_video/integrations/talkcraft/README.md",
+      "missing_policy": "新设计只选已具备来源和执行能力的动作；明确需要私有动作或旧模板精确复刻时，仅阻断依赖它的步骤并恢复合法来源"
+    }
+  },
+  "platform_policy": {
+    "windows": "按当前项目源码或便携包入口准备本机依赖",
+    "macos": "使用本机Python、Node和当前锁文件准备所选渲染器依赖；不运行Windows脚本，不复制Windows二进制或node_modules",
+    "global_skill_install_required": false,
+    "paid_services_required_for_local_design": false
+  },
+  "recovery_policy": {
+    "missing_project_files": "两份skill按download_url恢复；Hallmark先下载并校验UPSTREAM.json，再按其files及download_base_url恢复参考和许可。其他项目文件从目标版本完整交付恢复；上游网页技能不能替代项目视频适配",
+    "hash_mismatch": "核对项目版本和文件差异；原版本恢复原文件，新版本经核对后更新本合同基线，不静默忽略或回填旧冻结SHA",
+    "input_assets": "使用目标机本期合法素材和可用中文字体；不依赖原机器私有路径或历史任务",
+    "handoff": "记录目标系统、实际项目/skill/动作身份、检查结果和新模板样片；文件检查与流程实跑分别报告"
+  }
+}

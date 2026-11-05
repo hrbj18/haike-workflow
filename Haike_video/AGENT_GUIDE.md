@@ -25,7 +25,7 @@ Do not update handoff files for ordinary questions, acknowledgements, or repeate
 ## 2. Request routing
 
 - 高质量数字人工作流：读 `docs/高质量数字人工作流.md`，优先于通用口播。
-- 新建、修改或审查视频模板：先读 `../Haike-Videohub/agent-runbooks/视频模板编写标准.md`，按骨架、类型扩展与验收量表记录当前范围。
+- 新建、修改或审查视频模板：读 `../Haike-Videohub/agent-runbooks/视频模板编写标准.md`；无参考按标准进入创建流程，按骨架、扩展和量表验收。
 - 视频审美/Hallmark：读 `skills/creative/hallmark-video.md`。
 - 数字人模板7：`../Haike-Videohub/agent-runbooks/数字人模板7.md`。
 - Exact call sign **「模板图文视频」** maps to `../Haike-Videohub/agent-runbooks/模板图文视频.md` before type inference; never substitute another production line.
