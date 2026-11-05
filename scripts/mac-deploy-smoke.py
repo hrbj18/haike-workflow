@@ -6,6 +6,7 @@ import os
 import subprocess
 import sys
 import urllib.request
+import asyncio
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -16,6 +17,22 @@ def main():
     spec.loader.exec_module(deploy)
     arch = deploy.architecture()
     env = deploy.environment(arch)
+    browser_probe = '''import asyncio
+from patchright.async_api import async_playwright
+async def main():
+    async with async_playwright() as p:
+        browser = await p.chromium.launch(headless=True)
+        page = await browser.new_page()
+        await page.set_content('<h1>Local deployment test</h1>')
+        assert await page.locator('h1').inner_text() == 'Local deployment test'
+        print(browser.version)
+        await browser.close()
+asyncio.run(main())
+'''
+    browser_version = subprocess.check_output([str(deploy.python_for('creatorhub')), '-c', browser_probe],
+                                              env=env, text=True, timeout=60).strip()
+    expected_browser = next(row['version'] for row in deploy.read(deploy.SPEC)['assets'] if row['id'] == 'browser' and row['arch'] == arch)
+    assert browser_version == expected_browser
     folder = ROOT / '.local/mac-smoke'
     folder.mkdir(parents=True, exist_ok=True)
     cli = ROOT / 'Haike_video/remotion-composer/node_modules/.bin/remotion'
@@ -54,6 +71,7 @@ def main():
     receipt = {'ok': True, 'arch': arch, 'version': deploy.version(), 'http_templates': len(rows),
                'http_covers': covers, 'actual_renderer': 'existing HeroTitle / Remotion',
                'video_has_motion': True, 'audio_and_video': True, 'paid_calls': 0,
+               'bundled_login_browser_version': browser_version,
                'full_18_template_execution': 'not tested by this smoke', 'physical_colleague_machine': False}
     deploy.write(ROOT / '.local/mac-smoke.json', receipt)
     print(json.dumps(receipt))

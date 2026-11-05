@@ -92,3 +92,4 @@ backups/
 # Local colleague deployments may explicitly carry these; public source never does.
 /private-profile/
 /deployment-cache/
+/template-samples/

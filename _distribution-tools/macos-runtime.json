@@ -3,6 +3,7 @@
   "minimum_macos": "14.0",
   "python_version": "3.12.8",
   "node_version": "24.21.0",
+  "publisher_browser_revision": "1228",
   "pip_index": "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple",
   "npm_registry": "https://registry.npmmirror.com",
   "assets": [
@@ -13,7 +14,8 @@
       "url": "https://registry.npmmirror.com/-/binary/python-build-standalone/20241206/cpython-3.12.8+20241206-aarch64-apple-darwin-install_only_stripped.tar.gz",
       "sha256": "d6e607f109db29f2e4a00137fde91f29f359709e1815887334305e4f560b19ac",
       "upstream": "https://github.com/astral-sh/python-build-standalone/releases/tag/20241206",
-      "size": 15485682
+      "size": 15485682,
+      "upstream_download": "https://github.com/astral-sh/python-build-standalone/releases/download/20241206/cpython-3.12.8+20241206-aarch64-apple-darwin-install_only_stripped.tar.gz"
     },
     {
       "id": "node",
@@ -22,7 +24,8 @@
       "url": "https://registry.npmmirror.com/-/binary/node/v24.21.0/node-v24.21.0-darwin-arm64.tar.gz",
       "sha256": "bed7eea5325e1108f32ce5228ddd6a5f0f08a499ee42aa7442aea583702f6057",
       "upstream": "https://nodejs.org/dist/v24.21.0/SHASUMS256.txt",
-      "size": 52909993
+      "size": 52909993,
+      "upstream_download": "https://nodejs.org/dist/v24.21.0/node-v24.21.0-darwin-arm64.tar.gz"
     },
     {
       "id": "ffmpeg",
@@ -31,7 +34,8 @@
       "url": "https://registry.npmmirror.com/-/binary/ffmpeg-static/b6.0/ffmpeg-darwin-arm64.gz",
       "upstream": "https://github.com/eugeneware/ffmpeg-static/releases/tag/b6.0",
       "sha256": "6be74d6f449889c2e87a75873894f8520cad56c08ac76f2a628d85b0519daaca",
-      "size": 19253088
+      "size": 19253088,
+      "upstream_download": "https://github.com/eugeneware/ffmpeg-static/releases/download/b6.0/ffmpeg-darwin-arm64.gz"
     },
     {
       "id": "ffprobe",
@@ -40,27 +44,30 @@
       "url": "https://registry.npmmirror.com/-/binary/ffmpeg-static/b6.0/ffprobe-darwin-arm64.gz",
       "upstream": "https://github.com/eugeneware/ffmpeg-static/releases/tag/b6.0",
       "sha256": "a4db76bafdb8529312e138fb55aaf143cad21b6d672e2634c9dd07ae83c6a310",
-      "size": 19216948
+      "size": 19216948,
+      "upstream_download": "https://github.com/eugeneware/ffmpeg-static/releases/download/b6.0/ffprobe-darwin-arm64.gz"
     },
     {
       "id": "browser",
       "arch": "arm64",
-      "name": "chrome-headless-shell-mac-arm64.zip",
-      "version": "157.0.8103.38",
-      "url": "https://registry.npmmirror.com/-/binary/chrome-for-testing/157.0.8103.38/mac-arm64/chrome-headless-shell-mac-arm64.zip",
-      "upstream": "https://storage.googleapis.com/chrome-for-testing-public/157.0.8103.38/mac-arm64/chrome-headless-shell-mac-arm64.zip",
-      "sha256": "e6a6b13551aa12f951d0891d79282606b13742837c8fa0505e1272bae116ce82",
-      "size": 104773711
+      "name": "149.0.7827.55-chrome-headless-shell-mac-arm64.zip",
+      "version": "149.0.7827.55",
+      "url": "https://registry.npmmirror.com/-/binary/chrome-for-testing/149.0.7827.55/mac-arm64/chrome-headless-shell-mac-arm64.zip",
+      "upstream": "https://storage.googleapis.com/chrome-for-testing-public/149.0.7827.55/mac-arm64/chrome-headless-shell-mac-arm64.zip",
+      "sha256": "302f82603be06683947594ecd60f849e362a8fe3dd82a89bd4408477c97e75a6",
+      "size": 98043456,
+      "upstream_download": "https://storage.googleapis.com/chrome-for-testing-public/149.0.7827.55/mac-arm64/chrome-headless-shell-mac-arm64.zip"
     },
     {
       "id": "login_browser",
       "arch": "arm64",
-      "name": "chrome-mac-arm64.zip",
-      "version": "157.0.8103.38",
-      "url": "https://registry.npmmirror.com/-/binary/chrome-for-testing/157.0.8103.38/mac-arm64/chrome-mac-arm64.zip",
-      "upstream": "https://storage.googleapis.com/chrome-for-testing-public/157.0.8103.38/mac-arm64/chrome-mac-arm64.zip",
-      "sha256": "3406b38b52b7d341d74450eb7b369be038c9fec9894c8b8a9e9e9f97333caf2f",
-      "size": 196562867
+      "name": "149.0.7827.55-chrome-mac-arm64.zip",
+      "version": "149.0.7827.55",
+      "url": "https://registry.npmmirror.com/-/binary/chrome-for-testing/149.0.7827.55/mac-arm64/chrome-mac-arm64.zip",
+      "upstream": "https://storage.googleapis.com/chrome-for-testing-public/149.0.7827.55/mac-arm64/chrome-mac-arm64.zip",
+      "sha256": "311211b54c429245e2cec0314ee1e314085e9c00350215b95e1a879350786630",
+      "size": 179277110,
+      "upstream_download": "https://storage.googleapis.com/chrome-for-testing-public/149.0.7827.55/mac-arm64/chrome-mac-arm64.zip"
     },
     {
       "id": "python",
@@ -69,7 +76,8 @@
       "url": "https://registry.npmmirror.com/-/binary/python-build-standalone/20241206/cpython-3.12.8+20241206-x86_64-apple-darwin-install_only_stripped.tar.gz",
       "sha256": "2dbebc822dea55d60db64f93f532aa72aea4b5ccb400a1cee4f8b4a489a10ce5",
       "upstream": "https://github.com/astral-sh/python-build-standalone/releases/tag/20241206",
-      "size": 15846800
+      "size": 15846800,
+      "upstream_download": "https://github.com/astral-sh/python-build-standalone/releases/download/20241206/cpython-3.12.8+20241206-x86_64-apple-darwin-install_only_stripped.tar.gz"
     },
     {
       "id": "node",
@@ -78,7 +86,8 @@
       "url": "https://registry.npmmirror.com/-/binary/node/v24.21.0/node-v24.21.0-darwin-x64.tar.gz",
       "sha256": "1462cb3b3046b815cf8ea436d3da450ec1a9f11dac7e5a46b0ada5305d7e8097",
       "upstream": "https://nodejs.org/dist/v24.21.0/SHASUMS256.txt",
-      "size": 54203979
+      "size": 54203979,
+      "upstream_download": "https://nodejs.org/dist/v24.21.0/node-v24.21.0-darwin-x64.tar.gz"
     },
     {
       "id": "ffmpeg",
@@ -87,7 +96,8 @@
       "url": "https://registry.npmmirror.com/-/binary/ffmpeg-static/b6.0/ffmpeg-darwin-x64.gz",
       "upstream": "https://github.com/eugeneware/ffmpeg-static/releases/tag/b6.0",
       "sha256": "a12354fce7eb62361473bbe10d53a1893695babd35869ec8e92e5dfea8d0440b",
-      "size": 25067704
+      "size": 25067704,
+      "upstream_download": "https://github.com/eugeneware/ffmpeg-static/releases/download/b6.0/ffmpeg-darwin-x64.gz"
     },
     {
       "id": "ffprobe",
@@ -96,27 +106,30 @@
       "url": "https://registry.npmmirror.com/-/binary/ffmpeg-static/b6.0/ffprobe-darwin-x64.gz",
       "upstream": "https://github.com/eugeneware/ffmpeg-static/releases/tag/b6.0",
       "sha256": "b75d816c5658bd417a2a05e174957963e2f9f85be3eb731b2a04467545a665dc",
-      "size": 25015394
+      "size": 25015394,
+      "upstream_download": "https://github.com/eugeneware/ffmpeg-static/releases/download/b6.0/ffprobe-darwin-x64.gz"
     },
     {
       "id": "browser",
       "arch": "x86_64",
-      "name": "chrome-headless-shell-mac-x64.zip",
-      "version": "157.0.8103.38",
-      "url": "https://registry.npmmirror.com/-/binary/chrome-for-testing/157.0.8103.38/mac-x64/chrome-headless-shell-mac-x64.zip",
-      "upstream": "https://storage.googleapis.com/chrome-for-testing-public/157.0.8103.38/mac-x64/chrome-headless-shell-mac-x64.zip",
-      "sha256": "79821745d0a72d2ba752d981284ed0a9e6fa320dad133596941a17dba6186de3",
-      "size": 110442262
+      "name": "149.0.7827.55-chrome-headless-shell-mac-x64.zip",
+      "version": "149.0.7827.55",
+      "url": "https://registry.npmmirror.com/-/binary/chrome-for-testing/149.0.7827.55/mac-x64/chrome-headless-shell-mac-x64.zip",
+      "upstream": "https://storage.googleapis.com/chrome-for-testing-public/149.0.7827.55/mac-x64/chrome-headless-shell-mac-x64.zip",
+      "sha256": "a32029e1861329a431b712d5b864e213d9cf8ef51a82ce4c24b27e25f6605434",
+      "size": 103452247,
+      "upstream_download": "https://storage.googleapis.com/chrome-for-testing-public/149.0.7827.55/mac-x64/chrome-headless-shell-mac-x64.zip"
     },
     {
       "id": "login_browser",
       "arch": "x86_64",
-      "name": "chrome-mac-x64.zip",
-      "version": "157.0.8103.38",
-      "url": "https://registry.npmmirror.com/-/binary/chrome-for-testing/157.0.8103.38/mac-x64/chrome-mac-x64.zip",
-      "upstream": "https://storage.googleapis.com/chrome-for-testing-public/157.0.8103.38/mac-x64/chrome-mac-x64.zip",
-      "sha256": "c6fcc2869b0d5a421e880d7bcdabe96e4261c4100e125fc4e4daf6346474efa6",
-      "size": 207117913
+      "name": "149.0.7827.55-chrome-mac-x64.zip",
+      "version": "149.0.7827.55",
+      "url": "https://registry.npmmirror.com/-/binary/chrome-for-testing/149.0.7827.55/mac-x64/chrome-mac-x64.zip",
+      "upstream": "https://storage.googleapis.com/chrome-for-testing-public/149.0.7827.55/mac-x64/chrome-mac-x64.zip",
+      "sha256": "4fff3b1bff4ab5acab495438d501fd56ecd326fc2e18670858930386dca864e6",
+      "size": 189658978,
+      "upstream_download": "https://storage.googleapis.com/chrome-for-testing-public/149.0.7827.55/mac-x64/chrome-mac-x64.zip"
     }
   ]
 }

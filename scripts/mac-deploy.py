@@ -20,11 +20,13 @@ import tomllib
 import urllib.request
 import webbrowser
 import zipfile
+from contextlib import contextmanager
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = ROOT / '_distribution-tools/macos-runtime.json'
 MODULES = ('Haike_video', 'creatorhub', 'copy_skill/copy_skill-main', 'api-platform')
-FRONTENDS = ('Haike_video/remotion-composer', 'prototypes/haike-avatar-generator', 'creatorhub')
+FRONTENDS = ('Haike_video/remotion-composer', 'Haike_video/motion-components/snapcn',
+             'prototypes/haike-avatar-generator', 'creatorhub')
 
 
 def read(path):
@@ -71,7 +73,8 @@ def obtain(row, offline):
             raise ValueError('离线运行时缺失：' + row['name'])
         path.parent.mkdir(parents=True, exist_ok=True)
         opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
-        with opener.open(row['url'], timeout=120) as response, path.with_suffix(path.suffix + '.part').open('wb') as stream:
+        url = row['upstream_download'] if os.environ.get('HAIKE_RUNTIME_DOWNLOAD_ORIGIN') == '1' else row['url']
+        with opener.open(url, timeout=120) as response, path.with_suffix(path.suffix + '.part').open('wb') as stream:
             shutil.copyfileobj(response, stream)
         path.with_suffix(path.suffix + '.part').replace(path)
     if path.is_symlink() or path.stat().st_size != row['size'] or digest(path) != row['sha256']:
@@ -122,14 +125,15 @@ def install_runtimes(arch, offline):
                 shutil.copyfileobj(stream, output)
             target.chmod(0o755)
         elif kind in {'browser', 'login_browser'}:
-            unzip(source, ROOT / 'runtime/macos' / arch / kind)
+            browser_name = 'chromium_headless_shell' if kind == 'browser' else 'chromium'
+            unzip(source, ROOT / 'runtime/macos' / arch / 'playwright' / (browser_name + '-' + spec['publisher_browser_revision']))
     return spec
 
 
 def environment(arch):
     runtime = ROOT / 'runtime/macos' / arch
     nodes = list((runtime / 'node').glob('node-*/bin/node'))
-    browsers = list((runtime / 'browser').glob('chrome-headless-shell-*/chrome-headless-shell'))
+    browsers = list((runtime / 'playwright').glob('chromium_headless_shell-*/chrome-headless-shell-*/chrome-headless-shell'))
     if len(nodes) != 1 or len(browsers) != 1:
         raise ValueError('原生 Node 或渲染浏览器缺失；请先运行安装入口')
     env = os.environ.copy()
@@ -142,6 +146,7 @@ def environment(arch):
                REMOTION_BROWSER_EXECUTABLE=str(browsers[0]), CHROME_PATH=str(browsers[0]),
                HYPERFRAMES_BROWSER_PATH=str(browsers[0]), PRODUCER_HEADLESS_SHELL_PATH=str(browsers[0]),
                PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD='1', BACKLOT_NO_BROWSER='1',
+               PLAYWRIGHT_BROWSERS_PATH=str(runtime / 'playwright'),
                HYPERFRAMES_NO_TELEMETRY='1', HYPERFRAMES_NO_AUTO_INSTALL='1')
     env['PATH'] = os.pathsep.join([str(nodes[0].parent), str(runtime / 'ffmpeg/bin'), env.get('PATH', '')])
     env['NO_PROXY'] = ','.join(filter(None, (env.get('NO_PROXY', ''), 'localhost,127.0.0.1,::1')))
@@ -160,7 +165,7 @@ def requirements(module, destination):
     if module == 'Haike_video':
         # Cloud audio plus the existing optional local ASR fallback; no local Qwen.
         lines = ['-r ' + str(ROOT / module / 'requirements.txt'),
-                 'faster-whisper>=1.2,<2', 'onnxruntime>=1.20', 'setuptools>=68', 'wheel',
+                 'faster-whisper>=1.2,<2', 'onnxruntime>=1.20', 'scipy>=1.14,<2', 'setuptools>=68', 'wheel',
                  *tomllib.loads((ROOT / 'api-platform/pyproject.toml').read_text())['project']['dependencies']]
     elif (ROOT / module / 'requirements.txt').is_file():
         lines = ['-r ' + str(ROOT / module / 'requirements.txt'), 'setuptools>=68', 'wheel']
@@ -184,11 +189,13 @@ def install_python(arch, spec, offline, cache_only):
         folder = ROOT / 'deployment-cache/python' / arch / module.replace('/', '__')
         lock = folder / 'requirements.txt'
         req = folder / 'input.txt'
-        requirements(module, req)
-        wheel_args = ['--no-index', '--find-links', folder / 'wheels'] if offline else ['--index-url', spec['pip_index']]
+        if not offline:
+            requirements(module, req)
+        index = os.environ.get('HAIKE_PIP_INDEX_URL', spec['pip_index'])
+        wheel_args = ['--no-index', '--find-links', folder / 'wheels'] if offline else ['--index-url', index]
         if offline and not lock.is_file():
             raise ValueError('离线 Python 依赖清单缺失：' + module)
-        execute([py, '-m', 'pip', 'install', '--disable-pip-version-check', *wheel_args, '-r', lock if offline else req])
+        execute([py, '-m', 'pip', 'install', '--disable-pip-version-check', '--prefer-binary', *wheel_args, '-r', lock if offline else req])
         if module == 'copy_skill/copy_skill-main':
             # Keep the source editable using an ordinary relative .pth, not a build-machine path.
             libraries = next((venv / 'lib').glob('python*/site-packages'))
@@ -199,9 +206,11 @@ def install_python(arch, spec, offline, cache_only):
             if any(' @ ' in line or line.startswith('-e ') for line in result.stdout.splitlines()):
                 raise ValueError('依赖冻结含构建机绝对路径')
             lock.write_text(result.stdout, encoding='utf8')
-            execute([py, '-m', 'pip', 'wheel', '--index-url', spec['pip_index'], '--no-deps', '-r', lock,
+            execute([py, '-m', 'pip', 'wheel', '--index-url', index, '--no-deps', '-r', lock,
                      '--wheel-dir', folder / 'wheels'])
             # input.txt contains temporary build paths; it is never a deployment input.
+            req.unlink(missing_ok=True)
+        if offline:
             req.unlink(missing_ok=True)
 
 
@@ -210,8 +219,9 @@ def install_frontends(arch, spec, offline, env):
     cache = ROOT / 'deployment-cache/npm' / arch
     for module in FRONTENDS:
         folder = ROOT / module
+        registry = spec['npm_registry'] if offline else os.environ.get('HAIKE_NPM_REGISTRY', spec['npm_registry'])
         execute([npm, 'ci', '--no-audit', '--no-fund', '--cache', cache,
-                 '--registry', spec['npm_registry'], *(['--offline'] if offline else [])], cwd=folder, env=env)
+                 '--registry', registry, *(['--offline'] if offline else [])], cwd=folder, env=env)
     frontend = ROOT / 'prototypes/haike-avatar-generator'
     execute([npm, 'run', 'build'], cwd=frontend, env=dict(env, HAIKE_EMBED_BASE='/ui/avatar-generator/'))
     shutil.copytree(frontend / 'dist/client', ROOT / 'Haike_video/backlot/ui/avatar-generator', dirs_exist_ok=True)
@@ -250,9 +260,16 @@ def check(args):
     arch = architecture()
     env = environment(arch)
     for module in MODULES:
-        code = 'import fastapi,uvicorn' if module != 'copy_skill/copy_skill-main' else 'import cv2,faster_whisper,onnxruntime;import douyin_intelligence'
+        code = {'Haike_video': 'import fastapi,uvicorn,cv2,numpy,onnxruntime,ctranslate2,faster_whisper,scipy;from faster_whisper.vad import get_speech_timestamps',
+                'copy_skill/copy_skill-main': 'import cv2,faster_whisper,onnxruntime;import douyin_intelligence',
+                'creatorhub': 'import fastapi,uvicorn,sqlmodel,patchright',
+                'api-platform': 'import fastapi,uvicorn,cryptography,dashscope'}[module]
         execute([python_for(module), '-c', code], env=env)
         execute([python_for(module), '-m', 'pip', 'check'])
+    crawler = 'copy_skill/copy_skill-main/third_party/MediaCrawler'
+    if python_for(crawler).is_file():
+        execute([python_for(crawler), '-c', 'import httpx,playwright'], env=env)
+        execute([python_for(crawler), '-m', 'pip', 'check'])
     sources = subprocess.run([str(python_for('Haike_video')), str(ROOT / 'Haike_video/scripts/motion_replay.py'), 'verify', '--preferred'],
                              env=env, check=True, capture_output=True, text=True)
     status = json.loads(sources.stdout)
@@ -290,7 +307,33 @@ def free_port(first, excluded=()):
     raise ValueError('没有空闲本机端口')
 
 
+@contextmanager
+def startup_lock():
+    import fcntl
+    path = ROOT / '.local/mac-start.lock'
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open('a+b') as stream:
+        deadline = time.monotonic() + 90
+        while True:
+            try:
+                fcntl.flock(stream, fcntl.LOCK_EX | fcntl.LOCK_NB)
+                break
+            except BlockingIOError:
+                if time.monotonic() >= deadline:
+                    raise ValueError('另一个启动仍在执行，请稍后重试')
+                time.sleep(.2)
+        try:
+            yield
+        finally:
+            fcntl.flock(stream, fcntl.LOCK_UN)
+
+
 def start(args):
+    with startup_lock():
+        return start_locked(args)
+
+
+def start_locked(args):
     arch = architecture()
     env = environment(arch)
     state = ROOT / '.local/mac-services.json'

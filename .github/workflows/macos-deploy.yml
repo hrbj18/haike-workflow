@@ -21,9 +21,21 @@ jobs:
             arch: x86_64
     runs-on: ${{ matrix.runner }}
     timeout-minutes: 60
+    env:
+      HAIKE_RUNTIME_DOWNLOAD_ORIGIN: '1'
+      HAIKE_PIP_INDEX_URL: https://pypi.org/simple
+      HAIKE_NPM_REGISTRY: https://registry.npmjs.org
+      MACOSX_DEPLOYMENT_TARGET: '14.0'
+      CC: /usr/bin/false
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
+          persist-credentials: false
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          repository: NanmiCoder/MediaCrawler
+          ref: 8f583999006d5b692272c608440e193ca282e73b
+          path: copy_skill/copy_skill-main/third_party/MediaCrawler
           persist-credentials: false
       - name: Install native dependencies and prepare offline cache
         run: bash scripts/setup-mac.sh --cache-only

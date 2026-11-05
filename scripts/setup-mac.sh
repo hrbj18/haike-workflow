@@ -25,8 +25,12 @@ if [ ! -x "$HAIKE_PY" ]; then
   mkdir -p "$HAIKE_ROOT/deployment-cache/runtime" "$HAIKE_PY_DIR"
   if [ ! -f "$HAIKE_ARCHIVE" ]; then
     if [ "$HAIKE_OFFLINE" = 1 ]; then echo "离线 Python 缺失，请完整解压部署包。" >&2; exit 1; fi
+    HAIKE_PY_URL="https://registry.npmmirror.com/-/binary/python-build-standalone/20241206/$HAIKE_PY_NAME"
+    if [ "${HAIKE_RUNTIME_DOWNLOAD_ORIGIN:-0}" = 1 ]; then
+      HAIKE_PY_URL="https://github.com/astral-sh/python-build-standalone/releases/download/20241206/$HAIKE_PY_NAME"
+    fi
     curl --fail --location --retry 3 --connect-timeout 20 --proto '=https' --tlsv1.2 \
-      "https://registry.npmmirror.com/-/binary/python-build-standalone/20241206/$HAIKE_PY_NAME" \
+      "$HAIKE_PY_URL" \
       -o "$HAIKE_ARCHIVE.part"
     mv "$HAIKE_ARCHIVE.part" "$HAIKE_ARCHIVE"
   fi

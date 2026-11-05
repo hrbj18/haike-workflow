@@ -81,6 +81,8 @@ def worker(root):
         old = json.loads(record_path.read_text(encoding='utf8')) if record_path.is_file() else {}
         imported = old.get('portraits', {})
         profiles = backend.catalog()
+        defaults = config.read_json(root, config.AUDIO_PATH + 'avatar-defaults.json').get('values', {})
+        default_source = plan['preset'].get('portrait_path')
         for row in assets.get('portraits', []):
             path = directory / row['path']
             if not path.resolve().is_relative_to(directory) or path.is_symlink():
@@ -88,9 +90,11 @@ def worker(root):
             content = path.read_bytes()
             checksum = hashlib.sha256(content).hexdigest()
             file_id = imported.get(checksum)
+            if not file_id and default_source and path.resolve() == Path(default_source).resolve():
+                file_id = defaults.get('portrait_file_id')
             if not file_id:
                 file_id = center.upload(content, 'image', path.name)['id']
-                imported[checksum] = file_id
+            imported[checksum] = file_id
             alias = row.get('voice_alias')
             voice = next((v for v in data.get('voices', []) if v['alias'] == alias), None) if alias else None
             if voice:
@@ -99,6 +103,12 @@ def worker(root):
                     center.preferences({'image_file_id': file_id}, matches[0]['id'])
         record_path.parent.mkdir(parents=True, exist_ok=True)
         record_path.write_text(json.dumps({'schema': 1, 'portraits': imported}) + '\n', encoding='utf8')
+    preference = directory / 'preferences/runninghub-default.json'
+    target = root / '.local/runninghub-workflow/default.json'
+    if preference.is_file() and not target.exists():
+        value = json.loads(preference.read_text(encoding='utf8'))
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(json.dumps(value, ensure_ascii=False, indent=2) + '\n', encoding='utf8')
     return {'profile_present': True, 'voice_count': len(data.get('voices', [])), 'portrait_count': len(imported),
             'keys_imported': True, 'paid_calls': 0, 'provider_execution_verified': False, 'browser_sessions_imported': False}
 
