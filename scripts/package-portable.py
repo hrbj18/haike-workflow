@@ -86,7 +86,6 @@ def copy_environment(source_root, destination, module):
     # Copy installed libraries, not activation scripts/launchers with old paths,
     # user caches, installer logs, editable direct URLs or running service data.
     files = [p for p in (source / 'Lib/site-packages').rglob('*') if p.is_file()]
-    files += [source / 'Scripts' / name for name in ('python.exe', 'pythonw.exe')]
     if (source / 'msvc').is_dir():
         files += [p for p in (source / 'msvc').rglob('*') if p.is_file()]
     count = 0
@@ -108,11 +107,24 @@ def copy_environment(source_root, destination, module):
         else:
             shutil.copyfile(file, out)
         count += 1
-    (target / 'pyvenv.cfg').write_text('home = RUNTIME_PREPARE_REQUIRED\ninclude-system-site-packages = false\nversion = 3.12.8\n', encoding='utf-8')
     probe = subprocess.check_output([str(source / 'Scripts/python.exe'), '-c',
-        'import importlib.metadata as m,json,sys; print(json.dumps({"python":sys.version,"packages":sorted([(d.metadata["Name"],d.version) for d in m.distributions()])}))'],
+        'import importlib.metadata as m,json,sys; print(json.dumps({"python":sys.version,"python_minor":list(sys.version_info[:2]),"base_prefix":sys.base_prefix,"packages":sorted([(d.metadata["Name"],d.version) for d in m.distributions()])}))'],
         text=True, encoding='utf-8', timeout=60)
-    return {'module': module, 'copied_files': count, **json.loads(probe)}
+    metadata = json.loads(probe)
+    if metadata.pop('python_minor') != [3, 12]:
+        raise ValueError('The prepared environment must use Python 3.12: ' + module)
+    launchers = Path(metadata.pop('base_prefix')) / 'Lib/venv/scripts/nt'
+    # uv launchers may embed their original base interpreter and ignore a moved
+    # pyvenv.cfg. Stock CPython launchers resolve the relocated home at runtime.
+    for name in ('python.exe', 'pythonw.exe'):
+        launcher = launchers / name
+        if not launcher.is_file() or launcher.is_symlink():
+            raise ValueError('Missing stock CPython venv launcher: ' + name)
+        (target / 'Scripts').mkdir(exist_ok=True)
+        shutil.copyfile(launcher, target / 'Scripts' / name)
+        count += 1
+    (target / 'pyvenv.cfg').write_text('home = RUNTIME_PREPARE_REQUIRED\ninclude-system-site-packages = false\nversion = 3.12.8\n', encoding='utf-8')
+    return {'module': module, 'copied_files': count, **metadata}
 
 
 def clean_runtime(name):

@@ -342,7 +342,9 @@ def diagnose(full=False) -> dict:
         raise RuntimeError("离线 Whisper-small 模型不完整")
     bootstrap = ("import ctypes,os; "
                  "ctypes.windll.kernel32.SetErrorMode(0x8003) if os.name=='nt' else None; "
-                 "import site; site.main(); import sys; assert sys.version_info[:2]==(3,12); ")
+                 "import site; site.main(); import sys; assert sys.version_info[:2]==(3,12); "
+                 "from pathlib import Path; assert Path(sys.base_prefix).resolve()==Path("
+                 + repr(str(ROOT / 'runtime/python')) + ").resolve(), 'Python still depends on a different installation'; ")
     imports = {"Haike_video": "import fastapi,uvicorn,onnxruntime,ctranslate2,faster_whisper; from faster_whisper.vad import get_speech_timestamps",
                "copy_skill/copy_skill-main": "import onnxruntime,ctranslate2,faster_whisper,douyin_intelligence",
                "creatorhub": "import fastapi,uvicorn,sqlmodel,patchright"}
