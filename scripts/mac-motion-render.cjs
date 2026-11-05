@@ -19,7 +19,7 @@ const [requestFile]=process.argv.slice(2),r=JSON.parse(fs.readFileSync(requestFi
   await renderMedia({serveUrl,composition,inputProps:r.props,outputLocation:r.output,browserExecutable:r.browser,puppeteerInstance:browser,
    timeoutInMilliseconds:120000,codec:'h264',imageFormat:r.mezzanine?'png':'jpeg',jpegQuality:100,concurrency:2,
    offthreadVideoThreads:2,offthreadVideoCacheSizeInBytes:192*1024*1024,mediaCacheSizeInBytes:64*1024*1024,
-   pixelFormat:r.mezzanine?'yuv444p':'yuv420p',x264Preset:'fast',muted:true,
+   pixelFormat:r.mezzanine?'yuv444p':'yuv420p',colorSpace:'bt709',x264Preset:'fast',muted:true,
    ...(r.mezzanine?{crf:1}:{videoBitrate:'22M',ffmpegOverride:({args})=>{const a=[...args];a.splice(a.length-1,0,'-minrate','22M','-maxrate','22M','-bufsize','44M','-x264-params','nal-hrd=cbr:force-cfr=1');return a}}),
    onProgress:({progress})=>{const n=Math.floor(progress*10);if(n!==last){last=n;console.log(r.templateId+' '+n*10+'%')}}});
  }finally{await browser.close({silent:true})}

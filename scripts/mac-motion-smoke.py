@@ -133,7 +133,14 @@ def render_remotion(folder, fixture, env, public):
                'frames': frames, 'fps': fps, 'output': str(raw), 'browser': env['REMOTION_BROWSER_EXECUTABLE'],
                'mezzanine': kind in {'dark', 'promo'}}
     write(folder / 'render-input.json', request)
-    call([env['HAIKE_NODE_EXECUTABLE'], ROOT / 'scripts/mac-motion-render.cjs', folder / 'render-input.json'], env)
+    if kind in {'numbered', 'field-notes', 'knowledge'}:
+        from backlot import motion_native_runtime as native
+        template = (ROOT / request['entry']).parent
+        renderer = native.render_script(template / 'render.cjs')
+        call([env['HAIKE_NODE_EXECUTABLE'], renderer, 'bundle', folder], env)
+        call([env['HAIKE_NODE_EXECUTABLE'], renderer, 'render', folder, raw, request['browser']], env)
+    else:
+        call([env['HAIKE_NODE_EXECUTABLE'], ROOT / 'scripts/mac-motion-render.cjs', folder / 'render-input.json'], env)
     output = folder / 'full.mp4'
     encoding = ['-c:v', 'libx264', '-preset', 'fast', '-b:v', '20500k', '-minrate', '20500k', '-maxrate', '20500k',
                 '-bufsize', '2000k', '-x264-params', 'nal-hrd=cbr:force-cfr=1:filler=1', '-pix_fmt', 'yuv420p'] if kind in {'dark', 'promo'} else ['-c:v', 'copy']
@@ -183,9 +190,14 @@ def render_html(folder, fixture, env, public):
 
 def verify_output(output, fixture, fps, frames, props, env):
     probe = json.loads(subprocess.check_output([env['FFPROBE_BINARY'], '-v', 'error', '-show_streams', '-show_format', '-of', 'json', str(output)], env=env))
+    write(output.parent / 'encoded-probe.json', probe)
     video = next(s for s in probe['streams'] if s['codec_type'] == 'video')
     audio = next(s for s in probe['streams'] if s['codec_type'] == 'audio')
-    assert video['codec_name'] == 'h264' and video['pix_fmt'] == 'yuv420p'
+    picture = output.parent / 'contacts.jpg'
+    interval = max(fps, frames // 16)
+    call([env['FFMPEG_BINARY'], '-v', 'error', '-n', '-i', output, '-vf',
+          f"select='not(mod(n,{interval}))+eq(n,{frames-1})',scale=270:-2,tile=4x5:padding=4:margin=4", '-frames:v', '1', picture], env)
+    assert video['codec_name'] == 'h264' and video['pix_fmt'] == 'yuv420p', 'Output must be H.264 limited-range 4:2:0: ' + str(video)
     assert int(video['nb_frames']) == frames and abs(float(video['duration']) - frames / fps) < .04
     expected = (1440, 1800) if fixture['kind'] == 'dark' else ((1920, 1080) if fixture['kind'] == 'promo' or fixture['template_id'] == 'nana-mint-explainer-v1' else (1080, 1920))
     assert (video['width'], video['height']) == expected
@@ -198,10 +210,6 @@ def verify_output(output, fixture, fps, frames, props, env):
     md5 = subprocess.check_output([env['FFMPEG_BINARY'], '-v', 'error', '-i', str(output), '-map', '0:v:0', '-vf', 'fps=2,scale=128:-2', '-f', 'framemd5', '-'], env=env, text=True)
     hashes = [v.rsplit(',', 1)[-1].strip() for v in md5.splitlines() if not v.startswith('#')]
     assert len(set(hashes)) > 8, 'Actual encoded picture must move through the complete template'
-    picture = output.parent / 'contacts.jpg'
-    interval = max(fps, frames // 16)
-    call([env['FFMPEG_BINARY'], '-v', 'error', '-n', '-i', output, '-vf',
-          f"select='not(mod(n,{interval}))+eq(n,{frames-1})',scale=270:-2,tile=4x5:padding=4:margin=4", '-frames:v', '1', picture], env)
     return {'template_id': fixture['template_id'], 'version': fixture['preferred_version'], 'fixture_sha256': sha(FIXTURES / (fixture['template_id'] + '.json')),
             'ok': True, 'full_duration': frames / fps, 'frames': frames, 'fps': fps, 'width': video['width'], 'height': video['height'],
             'video_bitrate': int(video['bit_rate']), 'audio': '48kHz stereo AAC', 'audio_peak_dbfs': peak, 'full_decode': 'pass', 'moving_picture': True,
@@ -220,7 +228,7 @@ def main():
     from backlot.motion_platform import verify
     verify()
     WORK.mkdir(parents=True, exist_ok=True); common = assets(env)
-    rows = read(FIXTURES / 'manifest.json')['templates']; results = []
+    rows = read(FIXTURES / 'manifest.json')['templates']; results = []; failures = []
     for index, row in enumerate(rows):
         if (args.only and row['template_id'] != args.only) or (not args.only and index % args.shards != args.shard):
             continue
@@ -233,22 +241,30 @@ def main():
             results.append(receipt); continue
         if folder.exists():
             raise ValueError('Preserve incomplete test evidence before explicitly choosing a fresh harness directory')
-        folder.mkdir(); started = time.monotonic(); public = public_inputs(folder, fixture, env, common)
-        output, fps, frames, props = render_html(folder, fixture, env, public) if fixture['kind'] == 'html' else render_remotion(folder, fixture, env, public)
-        receipt = verify_output(output, fixture, fps, frames, props, env)
+        folder.mkdir(); started = time.monotonic()
+        try:
+            public = public_inputs(folder, fixture, env, common)
+            output, fps, frames, props = render_html(folder, fixture, env, public) if fixture['kind'] == 'html' else render_remotion(folder, fixture, env, public)
+            receipt = verify_output(output, fixture, fps, frames, props, env)
+        except Exception as exc:
+            failure = {'ok': False, 'template_id': fixture['template_id'], 'error': str(exc),
+                       'elapsed_seconds': round(time.monotonic()-started)}
+            write(folder / 'failure.json', failure); failures.append(failure)
+            print(json.dumps(failure), flush=True)
+            continue
         receipt.update(arch=deploy.architecture(), elapsed_seconds=round(time.monotonic()-started), github_run=os.environ.get('GITHUB_RUN_ID'))
         write(receipt_path, receipt); results.append(receipt); print(json.dumps(receipt, ensure_ascii=False), flush=True)
         for name in ('bundle', 'public', 'project', 'runtime-source', 'synthetic-parent', 'media-cache'):
             remove_work(folder / name)
         (folder / 'raw.mp4').unlink(missing_ok=True)
         remove_work(WORK / 'media-cache')
-    summary = {'ok': True, 'arch': deploy.architecture(), 'template_count': len(results), 'shard': args.shard, 'shards': args.shards,
+    summary = {'ok': not failures, 'arch': deploy.architecture(), 'template_count': len(results), 'shard': args.shard, 'shards': args.shards,
                'all_18': len(results) == 18, 'results': results, 'paid_calls': 0, 'physical_colleague_machine': False,
                'source_commit': os.environ.get('HAIKE_SOURCE_COMMIT', os.environ.get('GITHUB_SHA')),
                'derivation_sha256': sha(ROOT / 'Haike_video/config/motion-native-v1.json'),
-               'runtime_spec_sha256': sha(ROOT / '_distribution-tools/macos-runtime.json')}
+               'runtime_spec_sha256': sha(ROOT / '_distribution-tools/macos-runtime.json'), 'failures': failures}
     write(WORK / ('summary-' + str(args.shard) + '.json'), summary)
-    return 0
+    return 1 if failures else 0
 
 
 if __name__ == '__main__':

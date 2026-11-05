@@ -44,7 +44,7 @@ asyncio.run(main())
     cli = ROOT / 'Haike_video/remotion-composer/node_modules/.bin/remotion'
     movie = folder / 'template-video.mp4'
     subprocess.run([str(cli), 'render', 'src/index.tsx', 'HeroTitle', str(movie), '--frames=0-29',
-                    '--scale=0.5', '--concurrency=1', '--log=error',
+                    '--scale=0.5', '--concurrency=1', '--log=error', '--color-space=bt709',
                     '--browser-executable=' + env['REMOTION_BROWSER_EXECUTABLE']],
                    cwd=ROOT / 'Haike_video/remotion-composer', env=env, check=True, timeout=900)
     output = folder / 'installation-test.mp4'
@@ -54,6 +54,8 @@ asyncio.run(main())
     probe = json.loads(subprocess.check_output([env['FFPROBE_BINARY'], '-v', 'error', '-show_streams',
                                                '-show_format', '-of', 'json', str(output)], env=env))
     assert {s['codec_type'] for s in probe['streams']} >= {'audio', 'video'}
+    video = next(s for s in probe['streams'] if s['codec_type'] == 'video')
+    assert video['codec_name'] == 'h264' and video['pix_fmt'] == 'yuv420p' and video['color_space'] == 'bt709'
     framehashes = subprocess.check_output([env['FFMPEG_BINARY'], '-v', 'error', '-i', str(output),
                                            '-map', '0:v:0', '-f', 'framemd5', '-'], env=env, text=True)
     hashes = [line.rsplit(',', 1)[-1].strip() for line in framehashes.splitlines() if not line.startswith('#')]

@@ -4,7 +4,9 @@
 
 ## 实现与恢复
 
-`backlot.motion_platform.owned_module()` 在 Mac 选择固定的原生适配器，Windows 继续调用原模块。`scripts/build-native-motion.py` 生成可直接审阅的派生 Python 文件；`config/motion-native-v1.json` 同时记录原文件、派生文件、生成器和运行时摘要。原冻结文件及其已登记摘要保持原样，动作 JS、TSX、语义时钟、视频原速采样、声音和编码规则继续继承。
+`backlot.motion_platform.owned_module()` 在 Mac 选择固定的原生适配器，Windows 继续调用原模块。`scripts/build-native-motion.py` 生成可直接审阅的派生 Python 文件和4份 `render.macos.cjs`；`config/motion-native-v1.json` 同时记录原文件、派生文件、生成器和运行时摘要。原冻结文件及其已登记摘要保持原样，动作 JS、TSX、语义时钟、视频原速采样、声音及码率规则继续继承。
+
+Mac编码绑定显式使用Remotion `colorSpace: 'bt709'`（原深色CLI使用 `--color-space=bt709`），由渲染器执行实际色彩转换，输出限幅H.264 4:2:0；不只是改色彩标签。此修复覆盖实际队列执行及完整合成测试，原Windows请求继续使用原执行器。新增平台源码与安装身份纳入新请求冻结，变更后须重新准备和审阅。
 
 Mac 运行时使用原生 Node、Chrome 和 FFmpeg 9.0.2。FFmpeg 6 无法满足这些公开组件的颜色转换规则；安装器保留9版的原规则。[_distribution-tools/macos-runtime.json](../_distribution-tools/macos-runtime.json) 列出发布方固定下载地址、归档及解压后二进制摘要；构建信息来自 [Mac 二进制发布方](https://ffmpeg.martin-riedl.de/)。npm 依赖遵循锁文件；HTML 控件的纯 JS 和 OFL 字体继续核对原始逐文件摘要，Mac 原生依赖另绑本副本安装清单。Windows exe、DLL、旧请求不改名复用。
 

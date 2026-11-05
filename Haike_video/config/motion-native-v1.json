@@ -1,11 +1,12 @@
 {
   "schema": "haike.motion-native-adapter/1",
   "platform": "darwin",
-  "adapter_version": "1.0.0",
+  "adapter_version": "1.1.0",
   "changes": [
     "fixed native imports",
     "pinned native binaries and npm",
-    "explicit local dependency resolution"
+    "explicit local dependency resolution",
+    "actual BT.709 color conversion at native encode"
   ],
   "preserved": [
     "canonical source hashes",
@@ -14,8 +15,8 @@
     "claim/approval guards",
     "full encoding and sound"
   ],
-  "generator_sha256": "204354253f11a7a38dc171f81cab4a30874de75affd0435f18bc1acdf58bf14e",
-  "runtime_sha256": "0062e3530d50a946d95de835f12600043e1940dba1a8adb2581b6677f05a6528",
+  "generator_sha256": "8ec310605ac5cb8a7dee4dd4122927739f88697e9871997cb7d75f05bd97126a",
+  "runtime_sha256": "195777b14c25c65550eb98cadba425df1422800953d3ab90f01722cc8ebcd7c9",
   "modules": [
     {
       "canonical_module": "backlot.motion_public_execution_v2",
@@ -47,7 +48,7 @@
       "source": "Haike_video/backlot/motion_public_dark_remotion_v2.py",
       "source_sha256": "5d79e6eedc5d6bacaad5418e5a8cbeb134ba44b8bb8bca65046ed19e728f5a25",
       "derived": "Haike_video/backlot/motion_native_public_dark_remotion_v2.py",
-      "derived_sha256": "37e7bc86aa9fa71176d58de2bc9a962039a8f676d7365168ba86d5c326c5b1e7"
+      "derived_sha256": "949bdfe4070c2fc3f631add7bf651dbfe408a04ffea941495fca245b988feeaa"
     },
     {
       "canonical_module": "backlot.motion_public_production_v2",
@@ -168,6 +169,80 @@
       "source_sha256": "ea641d36fbcd919709736d29dfdae2c170d1c2a67c7c0b792a1d91244cba4e7c",
       "derived": "Haike_video/backlot/motion_native_replay_public_quote_v3_bound.py",
       "derived_sha256": "2199151868c77dd0d8a61b646d2adf0b5871abd5dab7468550ff6f4cc328f27d"
+    },
+    {
+      "canonical_module": "backlot.motion_replay_field_notes_render",
+      "native_module": "backlot.motion_native_replay_field_notes_render",
+      "source": "Haike_video/backlot/motion_replay_field_notes_render.py",
+      "source_sha256": "66979a41a50384fd714dfccde3f3ccfae046da3cdc18836b634fb5b22cb0173a",
+      "derived": "Haike_video/backlot/motion_native_replay_field_notes_render.py",
+      "derived_sha256": "5d421612040494792f5d835891c63574ccf9b2cad0aa4b845e5c665f1ff58c99"
+    },
+    {
+      "canonical_module": "backlot.motion_replay_field_notes_video",
+      "native_module": "backlot.motion_native_replay_field_notes_video",
+      "source": "Haike_video/backlot/motion_replay_field_notes_video.py",
+      "source_sha256": "1cf248fc432410dddc64e2c367000af107a781376ac0c85d0662e3ca1b881b8c",
+      "derived": "Haike_video/backlot/motion_native_replay_field_notes_video.py",
+      "derived_sha256": "ad939c55063846daceaf700e060e996cceefcb751b6808499d7c16e2c24939be"
+    },
+    {
+      "canonical_module": "backlot.motion_replay_numbered_02_05_production",
+      "native_module": "backlot.motion_native_replay_numbered_02_05_production",
+      "source": "Haike_video/backlot/motion_replay_numbered_02_05_production.py",
+      "source_sha256": "36b7927c1307f3547bdfb9faca819eb20abec75f8d69fc7a9504d0e7c477fe47",
+      "derived": "Haike_video/backlot/motion_native_replay_numbered_02_05_production.py",
+      "derived_sha256": "c1bc1de72cdeb23638d5d329145542f5fda92613f2cd75248bb3e52c88d2de46"
+    },
+    {
+      "canonical_module": "backlot.motion_replay_numbered_02_05_full",
+      "native_module": "backlot.motion_native_replay_numbered_02_05_full",
+      "source": "Haike_video/backlot/motion_replay_numbered_02_05_full.py",
+      "source_sha256": "dcd8a0be9c0188c9e24548a800ffa4f2a13764533ee579a6dfb2194d5d207de5",
+      "derived": "Haike_video/backlot/motion_native_replay_numbered_02_05_full.py",
+      "derived_sha256": "ea51f24803791888f2cc8927c131b196d91dd1810e9fc5b729d5dad4db277105"
+    },
+    {
+      "canonical_module": "backlot.motion_knowledge_public_production_v3",
+      "native_module": "backlot.motion_native_knowledge_public_production_v3",
+      "source": "Haike_video/backlot/motion_knowledge_public_production_v3.py",
+      "source_sha256": "38df71218bb8b57c5e5cf08523925b44d235d0767971dcad5944ffdaa4581d81",
+      "derived": "Haike_video/backlot/motion_native_knowledge_public_production_v3.py",
+      "derived_sha256": "62889792a414ec9e7f2c86756466392094bd65861b42502f800e21185ab46cdc"
+    },
+    {
+      "canonical_module": "backlot.studio_promo_phase_v3",
+      "native_module": "backlot.motion_native_studio_promo_phase_v3",
+      "source": "Haike_video/backlot/studio_promo_phase_v3.py",
+      "source_sha256": "0424f31aa3fee0e5b5a19e79030b92364f8a723b5b372aa26d2b9803abd10a7a",
+      "derived": "Haike_video/backlot/motion_native_studio_promo_phase_v3.py",
+      "derived_sha256": "0c7f7448b5ee6145254aad64ac24e9755de9d7c9a0e89a72bd673750df8dc112"
+    }
+  ],
+  "renderers": [
+    {
+      "source": "Haike_video/templates/numbered02-04-production-v1/render.cjs",
+      "source_sha256": "f7652d49d5f12aee9c6d01bfb061712e3ba4e841113235674bc23c53b6f29ba9",
+      "derived": "Haike_video/templates/numbered02-04-production-v1/render.macos.cjs",
+      "derived_sha256": "382af1d97e227e4af04402bc49c2aa1a0caefab03298df97ea65615ea7ce68e6"
+    },
+    {
+      "source": "Haike_video/templates/field-notes-video-v1/render.cjs",
+      "source_sha256": "5e1071aecaa21eb91600c0df595ec4828e16982c217a9044b7b02a28a289546a",
+      "derived": "Haike_video/templates/field-notes-video-v1/render.macos.cjs",
+      "derived_sha256": "3f99177c9f17a14d924c432fa30edba39c1c60391cc7e4d97a2e24142208faf0"
+    },
+    {
+      "source": "Haike_video/templates/knowledge-reference-public-v3/render.cjs",
+      "source_sha256": "9baf6dc6142972d1bd83ea5b12ed449a1d0566618f419b385b7e40b3fdf8ff0b",
+      "derived": "Haike_video/templates/knowledge-reference-public-v3/render.macos.cjs",
+      "derived_sha256": "e4ffe1e9ebbf772153e42f449c7e550c688ae284f5c56fbb6b949b701ec67afd"
+    },
+    {
+      "source": "Haike_video/templates/promo-reference-phase-v3/render.cjs",
+      "source_sha256": "ea340194f2381ffb82e2f037bd9f4f0c9c046705be88f1b8beb5fd62c4c9dec7",
+      "derived": "Haike_video/templates/promo-reference-phase-v3/render.macos.cjs",
+      "derived_sha256": "4c8f055b9e7dd1a78a26eacbfc2aaf4c5d0662ee6e0e6439b2e59e9d6ea856a0"
     }
   ]
 }

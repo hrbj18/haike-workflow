@@ -9,6 +9,7 @@ class MotionReferencePublicProductionWorker(ProductionQueueWorker):
         if sys.platform == 'darwin' and contract in {
             'haike.motion-public-production/2', 'haike.motion-public-poster-production/3',
             'haike.motion-public-paper-production/3', 'haike.motion-public-quote-production/3',
+            'haike.knowledge-reference-public/3', 'haike.promo-reference-full/3',
         }:
             from backlot.motion_replay_production import _producer
             return _producer(job['frozen_request']).run(self.queue, job)

@@ -19,7 +19,15 @@ NATIVE_MODULES = {
         'motion_replay_public_paper_v3_bound',
         'motion_public_quote_execution_v3', 'motion_public_quote_observed_v3', 'motion_public_quote_production_v3',
         'motion_replay_public_quote_v3_bound',
+        'motion_replay_field_notes_render', 'motion_replay_field_notes_video',
+        'motion_replay_numbered_02_05_production', 'motion_replay_numbered_02_05_full',
+        'motion_knowledge_public_production_v3', 'studio_promo_phase_v3',
     )
+}
+NATIVE_RENDERERS = {
+    'Haike_video/templates/' + name + '/render.cjs': 'Haike_video/templates/' + name + '/render.macos.cjs'
+    for name in ('numbered02-04-production-v1', 'field-notes-video-v1',
+                 'knowledge-reference-public-v3', 'promo-reference-phase-v3')
 }
 
 
@@ -42,11 +50,16 @@ def verify():
                     'derived': 'Haike_video/' + native.replace('.', '/') + '.py'}
         if any(row.get(key) != value for key, value in expected.items()):
             raise ValueError('Mac动效JSON只记录来源，不能选择执行模块或路径')
+    renderers = document.get('renderers', [])
+    if len(renderers) != len(NATIVE_RENDERERS) or {r.get('source') for r in renderers} != set(NATIVE_RENDERERS):
+        raise ValueError('Mac动效固定编码适配清单不完整')
+    if any(r.get('derived') != NATIVE_RENDERERS[r['source']] for r in renderers):
+        raise ValueError('Mac动效JSON只记录来源，不能选择编码器路径')
     for field, relative in [('generator_sha256', 'scripts/build-native-motion.py'),
                             ('runtime_sha256', 'Haike_video/backlot/motion_native_runtime.py')]:
         if _sha(ROOT / relative) != document[field]:
             raise ValueError('Mac动效适配实现改变，请为新任务重新冻结身份')
-    for row in rows:
+    for row in rows + renderers:
         for key in ('source', 'derived'):
             path = ROOT / row[key]
             if not path.resolve().is_relative_to(ROOT) or path.is_symlink() or _sha(path) != row[key + '_sha256']:

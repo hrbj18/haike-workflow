@@ -110,6 +110,25 @@ def link_dependencies(generated, dependency_root):
     target.symlink_to(COMPOSER / 'node_modules', target_is_directory=True)
 
 
+def render_script(canonical):
+    from backlot.motion_platform import NATIVE_RENDERERS, verify
+    verify()
+    relative = Path(canonical).resolve().relative_to(ROOT).as_posix()
+    require(relative in NATIVE_RENDERERS, '未登记的原生Mac编码适配器')
+    return ROOT / NATIVE_RENDERERS[relative]
+
+
+def source_files():
+    """Freeze the separate native implementation and installed tool binding."""
+    from backlot.motion_platform import MANIFEST, verify
+    document = verify()
+    identity()
+    paths = [MANIFEST, Path(__file__), ROOT / 'Haike_video/backlot/motion_platform.py',
+             ROOT / 'scripts/build-native-motion.py', ROOT / '.local/mac-motion-runtime.json']
+    paths += [ROOT / row['derived'] for row in document['modules'] + document['renderers']]
+    return {p.relative_to(ROOT).as_posix(): sha(p) for p in paths}
+
+
 def bind_installation():
     """Installer calls after npm integrity checks; all subsequent runs rehash it."""
     rows = []

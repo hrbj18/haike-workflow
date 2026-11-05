@@ -17,7 +17,7 @@ from backlot import motion_replay
 class NativeMotionTests(unittest.TestCase):
     def test_generated_adapter_matches_reviewable_derivation(self):
         subprocess.run([sys.executable, str(ROOT / 'scripts/build-native-motion.py'), '--check'], check=True)
-        self.assertEqual(len(motion_platform.verify()['modules']), 19)
+        self.assertEqual(len(motion_platform.verify()['modules']), 25)
 
     def test_windows_keeps_original_modules_and_mac_selects_owned_derivation(self):
         original = 'backlot.motion_public_production_v2'
@@ -31,6 +31,18 @@ class NativeMotionTests(unittest.TestCase):
         for row in rows:
             with self.subTest(template=row['template_id']):
                 motion_replay.verify_sources(motion_replay.resolve(row['template_id'], row['version']))
+
+    def test_each_native_producer_uses_its_owned_bt709_renderer(self):
+        document = motion_platform.verify()
+        self.assertEqual(len(document['renderers']), 4)
+        for row in document['renderers']:
+            original = (ROOT / row['source']).read_text('utf8')
+            derived = (ROOT / row['derived']).read_text('utf8')
+            self.assertEqual(derived.split('\n', 1)[1], original.replace('renderMedia({', "renderMedia({colorSpace:'bt709',"))
+        for name in ('motion_replay_numbered_02_05_production', 'motion_replay_field_notes_render',
+                     'motion_knowledge_public_production_v3', 'studio_promo_phase_v3'):
+            path = ROOT / 'Haike_video' / (motion_platform.NATIVE_MODULES['backlot.' + name].replace('.', '/') + '.py')
+            self.assertIn("native.render_script(TEMPLATE / 'render.cjs')", path.read_text('utf8'))
 
     def test_missing_or_changed_native_source_is_rejected_before_import(self):
         with patch.object(motion_platform, '_sha', return_value='0' * 64):

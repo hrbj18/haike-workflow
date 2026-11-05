@@ -77,6 +77,12 @@ class ProductionQueueWorker:
         return run_motion(self._project_dir(job), job["frozen_request"])
 
     def _run_investment_recompose(self, job):
+        import sys
+        if sys.platform == 'darwin' and job.get('frozen_request', {}).get('contract') in {
+            'motion-replay-numbered-02-05-production-v1', 'haike-field-notes-video-production-v1',
+        }:
+            from backlot.motion_replay_production import _producer
+            return _producer(job['frozen_request']).run(self.queue, job)
         if job.get("frozen_request", {}).get("contract") == "motion-replay-numbered-02-05-production-v1":
             from backlot.motion_replay_numbered_02_05_production import run
             return run(self.queue, job)

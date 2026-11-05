@@ -105,7 +105,7 @@ def render_project(project, folder, request):
     common = [node,cli,'render',generated/'template/index.tsx','DarkFull',
         '--props='+str(generated/'props.json'),'--public-dir='+str(generated/'public'),
         '--browser-executable='+str(root/data['executables']['browser']),'--bundle-cache=false',
-        '--scale=1','--concurrency=2','--codec=h264','--image-format=png','--x264-preset=fast','--pixel-format=yuv444p']
+        '--scale=1','--concurrency=2','--codec=h264','--image-format=png','--x264-preset=fast','--pixel-format=yuv444p','--color-space=bt709']
     if request['phase'] == 'preview':
         preview = folder/'preview';e.require(not preview.exists(), '保留原实际预览，不覆盖现有图片')
         sequence_name = 'preview-frames'
