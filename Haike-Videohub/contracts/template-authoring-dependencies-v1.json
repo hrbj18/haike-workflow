@@ -1,6 +1,6 @@
 {
   "contract": "haike.template-authoring-dependencies/1",
-  "version": "1.1",
+  "version": "1.2",
   "path_base": "workspace_root",
   "runbook": "Haike-Videohub/agent-runbooks/无参考视频的新模板创建流程.md",
   "scope": "Agent读取合同并调用项目现有能力；不提供独立安装器、渲染器或新生产路线",
@@ -60,6 +60,7 @@
     "replay_contract": "Haike_video/docs/MOTION_REPLAY_STANDARD.md",
     "runtime_manifest": "Haike_video/remotion-composer/package.json",
     "runtime_lock": "Haike_video/remotion-composer/package-lock.json",
+    "public_style_covers": "Haike_video/templates/public-covers/manifest.json",
     "installation": ["README.md", "docs/PORTABLE.md"],
     "checks": [
       ["Haike_video/scripts/hallmark_video.py", "verify"],

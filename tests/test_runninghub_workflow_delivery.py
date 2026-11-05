@@ -79,6 +79,31 @@ class WorkflowDeliveryTests(unittest.TestCase):
                 self.assertEqual(graph['36']['inputs']['image'], 'input-image')
                 self.assertEqual(graph['14']['inputs']['colormatch'], 'disabled')
 
+    def test_supporting_window_overrides_duration_preference_but_not_explicit_choice(self):
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / 'default.json'
+            selection.select('high-quality', True, path, max_video_seconds=120)
+            before = path.read_bytes()
+            result = selection.resolve(path, 24, template_id='field-notes-v1')
+            self.assertEqual(result['workflow'], 'economy')
+            self.assertEqual(result['reason'], 'declared_avatar_role')
+            self.assertEqual(selection.selected(path, 24, avatar_role='supporting-window'), 'economy')
+            self.assertEqual(selection.selected(path, 180, template_id='field-notes-v1'), 'economy')
+            explicit = selection.resolve(path, 24, template_id='field-notes-v1', workflow='high-quality')
+            self.assertEqual(explicit['workflow'], 'high-quality')
+            self.assertEqual(explicit['reason'], 'explicit_current_workflow')
+            self.assertEqual(selection.selected(path, 24), 'high-quality')
+            self.assertEqual(path.read_bytes(), before)
+
+    def test_unknown_template_or_role_does_not_silently_change_route(self):
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / 'missing.json'
+            for context in ({'template_id':'missing-template'}, {'avatar_role':'unknown-role'},
+                            {'template_id':'field-notes-v1','avatar_role':'primary-presenter'}):
+                with self.subTest(context=context), self.assertRaises(ValueError):
+                    selection.selected(path, 24, **context)
+            self.assertFalse(path.exists())
+
     def test_missing_private_inputs_are_rejected(self):
         with self.assertRaisesRegex(RuntimeError, '--audio'):
             kit.assets(SimpleNamespace(audio=None, image=None, ratio='4x5'))
