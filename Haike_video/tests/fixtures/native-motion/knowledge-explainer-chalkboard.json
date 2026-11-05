@@ -1,0 +1,464 @@
+{
+  "schema": "haike.native-render-fixture/1",
+  "template_id": "knowledge-explainer-chalkboard",
+  "preferred_version": "5.1.1-independent.1",
+  "kind": "knowledge",
+  "duration": 59.96666666666667,
+  "scope": "synthetic local renderer portability; no ASR/HQ/payment/creative acceptance claim",
+  "props": {
+    "schema": "haike.knowledge-reference-public-episode/3",
+    "implementation": "knowledge-reference-public-v3",
+    "template_id": "knowledge-explainer-chalkboard",
+    "version": "5.1.1-independent.1",
+    "fps": 60,
+    "durationFrames": 3598,
+    "title": "测试效果",
+    "sourceText": "测试效果",
+    "captions": [
+      {
+        "text": "测试效果",
+        "startMs": 960,
+        "endMs": 3680
+      },
+      {
+        "text": "测试效果",
+        "startMs": 4080,
+        "endMs": 5640
+      },
+      {
+        "text": "测试效果",
+        "startMs": 6160,
+        "endMs": 9440
+      },
+      {
+        "text": "测试效果",
+        "startMs": 9440,
+        "endMs": 10840
+      },
+      {
+        "text": "测试效果",
+        "startMs": 11280,
+        "endMs": 13680
+      },
+      {
+        "text": "测试效果",
+        "startMs": 14080,
+        "endMs": 16640
+      },
+      {
+        "text": "测试效果",
+        "startMs": 17580,
+        "endMs": 19860
+      },
+      {
+        "text": "测试效果",
+        "startMs": 19860,
+        "endMs": 21900
+      },
+      {
+        "text": "测试效果",
+        "startMs": 22260,
+        "endMs": 25100
+      },
+      {
+        "text": "测试效果",
+        "startMs": 25100,
+        "endMs": 28020
+      },
+      {
+        "text": "测试效果",
+        "startMs": 28020,
+        "endMs": 28860
+      },
+      {
+        "text": "测试效果",
+        "startMs": 29340,
+        "endMs": 32140
+      },
+      {
+        "text": "测试效果",
+        "startMs": 32140,
+        "endMs": 32820
+      },
+      {
+        "text": "测试效果",
+        "startMs": 33220,
+        "endMs": 36500
+      },
+      {
+        "text": "测试效果",
+        "startMs": 36500,
+        "endMs": 36900
+      },
+      {
+        "text": "测试效果",
+        "startMs": 37260,
+        "endMs": 40420
+      },
+      {
+        "text": "测试效果",
+        "startMs": 40420,
+        "endMs": 41220
+      },
+      {
+        "text": "测试效果",
+        "startMs": 41860,
+        "endMs": 44340
+      },
+      {
+        "text": "测试效果",
+        "startMs": 44580,
+        "endMs": 47140
+      },
+      {
+        "text": "测试效果",
+        "startMs": 47140,
+        "endMs": 47620
+      },
+      {
+        "text": "测试效果",
+        "startMs": 48470,
+        "endMs": 49950
+      },
+      {
+        "text": "测试效果",
+        "startMs": 50430,
+        "endMs": 52990
+      },
+      {
+        "text": "测试效果",
+        "startMs": 52990,
+        "endMs": 54630
+      },
+      {
+        "text": "测试效果",
+        "startMs": 55070,
+        "endMs": 57830
+      },
+      {
+        "text": "测试效果",
+        "startMs": 57950,
+        "endMs": 59830
+      }
+    ],
+    "scenes": [
+      {
+        "id": "s1",
+        "from": 0,
+        "to": 1055,
+        "family": "compare",
+        "title": "测试效果",
+        "items": [
+          {
+            "id": "child",
+            "label": "测试效果",
+            "before": "测试效果",
+            "after": "测试效果"
+          },
+          {
+            "id": "learn",
+            "label": "测试效果",
+            "before": "测试效果",
+            "after": "测试效果"
+          }
+        ],
+        "events": [
+          {
+            "id": "s1.heading",
+            "kind": "heading",
+            "at": 6,
+            "duration": 42
+          },
+          {
+            "id": "s1.item.child",
+            "kind": "item",
+            "at": 58,
+            "duration": 42,
+            "target": "child"
+          },
+          {
+            "id": "s1.answer.child",
+            "kind": "answer",
+            "at": 245,
+            "duration": 96,
+            "target": "child"
+          },
+          {
+            "id": "s1.item.learn",
+            "kind": "item",
+            "at": 90,
+            "duration": 45,
+            "target": "learn"
+          },
+          {
+            "id": "s1.answer.learn",
+            "kind": "answer",
+            "at": 273,
+            "duration": 96,
+            "target": "learn"
+          }
+        ],
+        "note": ""
+      },
+      {
+        "id": "s2",
+        "from": 1055,
+        "to": 1760,
+        "family": "process",
+        "title": "测试效果",
+        "items": [
+          {
+            "id": "store",
+            "label": "测试效果",
+            "text": "测试效果",
+            "icon": "building"
+          },
+          {
+            "id": "robot",
+            "label": "测试效果",
+            "text": "测试效果",
+            "icon": "users"
+          },
+          {
+            "id": "practice",
+            "label": "测试效果",
+            "text": "测试效果",
+            "icon": "brain"
+          }
+        ],
+        "events": [
+          {
+            "id": "s2.heading",
+            "kind": "heading",
+            "at": 1061,
+            "duration": 42
+          },
+          {
+            "id": "s2.item.store",
+            "kind": "item",
+            "at": 1085,
+            "duration": 48,
+            "target": "store"
+          },
+          {
+            "id": "s2.item.robot",
+            "kind": "item",
+            "at": 1336,
+            "duration": 48,
+            "target": "robot"
+          },
+          {
+            "id": "s2.item.practice",
+            "kind": "item",
+            "at": 1506,
+            "duration": 48,
+            "target": "practice"
+          },
+          {
+            "id": "s2.connection",
+            "kind": "connection",
+            "at": 1314,
+            "duration": 66
+          }
+        ],
+        "note": ""
+      },
+      {
+        "id": "s3",
+        "from": 1760,
+        "to": 2512,
+        "family": "evidence",
+        "title": "测试效果",
+        "items": [
+          {
+            "id": "partner",
+            "label": "测试效果",
+            "text": "测试效果",
+            "evidenceRef": "script",
+            "kind": "source"
+          },
+          {
+            "id": "quote",
+            "label": "测试效果",
+            "text": "测试效果",
+            "evidenceRef": "script",
+            "kind": "claim"
+          }
+        ],
+        "events": [
+          {
+            "id": "s3.heading",
+            "kind": "heading",
+            "at": 1766,
+            "duration": 42
+          },
+          {
+            "id": "s3.tab.partner",
+            "kind": "tab",
+            "at": 1772,
+            "duration": 18,
+            "target": "partner"
+          },
+          {
+            "id": "s3.item.partner",
+            "kind": "item",
+            "at": 1784,
+            "duration": 84,
+            "target": "partner"
+          },
+          {
+            "id": "s3.tab.quote",
+            "kind": "tab",
+            "at": 2236,
+            "duration": 18,
+            "target": "quote"
+          },
+          {
+            "id": "s3.item.quote",
+            "kind": "item",
+            "at": 2248,
+            "duration": 84,
+            "target": "quote"
+          },
+          {
+            "id": "s3.note",
+            "kind": "note",
+            "at": 2344,
+            "duration": 39
+          }
+        ],
+        "note": "测试效果"
+      },
+      {
+        "id": "s4",
+        "from": 2512,
+        "to": 2908,
+        "family": "recap",
+        "title": "测试效果",
+        "items": [
+          {
+            "id": "child",
+            "label": "测试效果",
+            "text": "测试效果"
+          },
+          {
+            "id": "family",
+            "label": "测试效果",
+            "text": "测试效果"
+          }
+        ],
+        "events": [
+          {
+            "id": "s4.heading",
+            "kind": "heading",
+            "at": 2518,
+            "duration": 42
+          },
+          {
+            "id": "s4.tab.child",
+            "kind": "tab",
+            "at": 2524,
+            "duration": 18,
+            "target": "child"
+          },
+          {
+            "id": "s4.item.child",
+            "kind": "item",
+            "at": 2536,
+            "duration": 84,
+            "target": "child"
+          },
+          {
+            "id": "s4.tab.family",
+            "kind": "tab",
+            "at": 2675,
+            "duration": 18,
+            "target": "family"
+          },
+          {
+            "id": "s4.item.family",
+            "kind": "item",
+            "at": 2687,
+            "duration": 84,
+            "target": "family"
+          },
+          {
+            "id": "s4.note",
+            "kind": "note",
+            "at": 2740,
+            "duration": 39
+          }
+        ],
+        "note": ""
+      },
+      {
+        "id": "s5",
+        "from": 2908,
+        "to": 3598,
+        "family": "definition",
+        "title": "测试效果",
+        "items": [
+          {
+            "id": "scope",
+            "label": "测试效果",
+            "text": "测试效果"
+          },
+          {
+            "id": "boundary",
+            "label": "测试效果",
+            "text": "测试效果"
+          }
+        ],
+        "events": [
+          {
+            "id": "s5.heading",
+            "kind": "heading",
+            "at": 2914,
+            "duration": 42
+          },
+          {
+            "id": "s5.tab.scope",
+            "kind": "tab",
+            "at": 3026,
+            "duration": 18,
+            "target": "scope"
+          },
+          {
+            "id": "s5.item.scope",
+            "kind": "item",
+            "at": 3038,
+            "duration": 84,
+            "target": "scope"
+          },
+          {
+            "id": "s5.tab.boundary",
+            "kind": "tab",
+            "at": 3304,
+            "duration": 18,
+            "target": "boundary"
+          },
+          {
+            "id": "s5.item.boundary",
+            "kind": "item",
+            "at": 3316,
+            "duration": 84,
+            "target": "boundary"
+          },
+          {
+            "id": "s5.note",
+            "kind": "note",
+            "at": 3430,
+            "duration": 39
+          }
+        ],
+        "note": "测试效果"
+      }
+    ],
+    "narration": "master.wav",
+    "musicGainDb": -13,
+    "presenter": "none",
+    "requiredOverlay": "原生动效渲染测试\n合成素材，仅用于安装验收。",
+    "sourceLabel": "测试效果",
+    "music": "master.wav"
+  }
+}

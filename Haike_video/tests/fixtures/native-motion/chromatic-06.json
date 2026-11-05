@@ -1,0 +1,653 @@
+{
+  "schema": "haike.native-render-fixture/1",
+  "template_id": "chromatic-06",
+  "preferred_version": "1.2.0-candidate.1",
+  "kind": "chromatic06",
+  "duration": 60.0,
+  "scope": "synthetic local renderer portability; no ASR/HQ/payment/creative acceptance claim",
+  "props": {
+    "brand": "测试效果",
+    "captions": [
+      {
+        "from": 29,
+        "text": "测试效果",
+        "to": 63
+      },
+      {
+        "from": 73,
+        "text": "测试效果",
+        "to": 111
+      },
+      {
+        "from": 122,
+        "text": "测试效果",
+        "to": 170
+      },
+      {
+        "from": 185,
+        "text": "测试效果",
+        "to": 212
+      },
+      {
+        "from": 215,
+        "text": "测试效果",
+        "to": 240
+      },
+      {
+        "from": 256,
+        "text": "测试效果",
+        "to": 326
+      },
+      {
+        "from": 338,
+        "text": "测试效果\n完整验证",
+        "to": 440
+      },
+      {
+        "from": 440,
+        "text": "测试效果",
+        "to": 449
+      },
+      {
+        "from": 458,
+        "text": "测试效果",
+        "to": 500
+      },
+      {
+        "from": 527,
+        "text": "测试效果\n完整验证",
+        "to": 605
+      },
+      {
+        "from": 614,
+        "text": "测试效果",
+        "to": 657
+      },
+      {
+        "from": 668,
+        "text": "测试效果\n完整验证",
+        "to": 771
+      },
+      {
+        "from": 771,
+        "text": "测试效果\n完整验证",
+        "to": 866
+      },
+      {
+        "from": 880,
+        "text": "测试效果\n完整验证",
+        "to": 969
+      },
+      {
+        "from": 969,
+        "text": "测试效果",
+        "to": 974
+      },
+      {
+        "from": 974,
+        "text": "测试效果",
+        "to": 1033
+      },
+      {
+        "from": 1041,
+        "text": "测试效果",
+        "to": 1107
+      },
+      {
+        "from": 1118,
+        "text": "测试效果",
+        "to": 1164
+      },
+      {
+        "from": 1177,
+        "text": "测试效果",
+        "to": 1193
+      },
+      {
+        "from": 1193,
+        "text": "测试效果",
+        "to": 1237
+      },
+      {
+        "from": 1256,
+        "text": "测试效果",
+        "to": 1281
+      },
+      {
+        "from": 1289,
+        "text": "测试效果",
+        "to": 1331
+      },
+      {
+        "from": 1337,
+        "text": "测试效果",
+        "to": 1388
+      },
+      {
+        "from": 1395,
+        "text": "测试效果",
+        "to": 1429
+      },
+      {
+        "from": 1454,
+        "text": "测试效果",
+        "to": 1470
+      },
+      {
+        "from": 1473,
+        "text": "测试效果",
+        "to": 1499
+      },
+      {
+        "from": 1513,
+        "text": "测试效果",
+        "to": 1569
+      },
+      {
+        "from": 1585,
+        "text": "测试效果",
+        "to": 1639
+      },
+      {
+        "from": 1652,
+        "text": "测试效果",
+        "to": 1716
+      },
+      {
+        "from": 1719,
+        "text": "测试效果",
+        "to": 1735
+      },
+      {
+        "from": 1738,
+        "text": "测试效果",
+        "to": 1795
+      }
+    ],
+    "durationInFrames": 1800,
+    "font": "font.ttf",
+    "fps": 30,
+    "medicalOverlay": "原生动效渲染测试\n合成素材，仅用于安装验收。",
+    "presenters": [
+      {
+        "from": 0,
+        "sourceFrom": 0,
+        "src": "clip000.mp4",
+        "to": 180
+      },
+      {
+        "from": 1651,
+        "sourceFrom": 180,
+        "src": "clip000.mp4",
+        "to": 1800
+      }
+    ],
+    "scenes": [
+      {
+        "actionId": "haike.chromatic-06.cut-open",
+        "events": {
+          "aperture": {
+            "anchor": {
+              "boundary": "start",
+              "index": 0,
+              "kind": "word"
+            },
+            "from": 12,
+            "meaning": "测试效果",
+            "offsetFrames": -17,
+            "to": 36
+          },
+          "note": {
+            "anchor": {
+              "boundary": "start",
+              "index": 11,
+              "kind": "word"
+            },
+            "from": 157,
+            "meaning": "测试效果",
+            "offsetFrames": 12,
+            "to": 171
+          },
+          "wipe": {
+            "anchor": {
+              "boundary": "start",
+              "index": 11,
+              "kind": "word"
+            },
+            "from": 136,
+            "meaning": "测试效果",
+            "offsetFrames": -9,
+            "to": 150
+          }
+        },
+        "from": 0,
+        "id": "B6-01",
+        "label": "测试效果",
+        "note": "测试效果\n完整验证",
+        "title": "测试效果\n完整验证",
+        "to": 185
+      },
+      {
+        "actionId": "haike.chromatic-06.push-near",
+        "events": {
+          "crossfade": {
+            "anchor": {
+              "boundary": "start",
+              "index": 41,
+              "kind": "word"
+            },
+            "from": 458,
+            "meaning": "测试效果",
+            "offsetFrames": 0,
+            "to": 472
+          },
+          "note": {
+            "anchor": {
+              "boundary": "start",
+              "index": 43,
+              "kind": "word"
+            },
+            "from": 475,
+            "meaning": "测试效果",
+            "offsetFrames": 0,
+            "to": 489
+          },
+          "push": {
+            "anchor": {
+              "boundary": "start",
+              "index": 38,
+              "kind": "word"
+            },
+            "from": 422,
+            "meaning": "测试效果",
+            "offsetFrames": 0,
+            "to": 440
+          },
+          "settle": {
+            "anchor": {
+              "boundary": "start",
+              "index": 41,
+              "kind": "word"
+            },
+            "from": 458,
+            "meaning": "测试效果",
+            "offsetFrames": 0,
+            "to": 480
+          }
+        },
+        "from": 185,
+        "id": "B6-02",
+        "label": "测试效果",
+        "note": "测试效果\n完整验证",
+        "title": "测试效果\n完整验证",
+        "to": 527
+      },
+      {
+        "actionId": "haike.chromatic-06.push-near",
+        "events": {
+          "crossfade": {
+            "anchor": {
+              "boundary": "start",
+              "index": 89,
+              "kind": "word"
+            },
+            "from": 926,
+            "meaning": "测试效果",
+            "offsetFrames": 0,
+            "to": 940
+          },
+          "note": {
+            "anchor": {
+              "boundary": "start",
+              "index": 46,
+              "kind": "word"
+            },
+            "from": 551,
+            "meaning": "测试效果",
+            "offsetFrames": 24,
+            "to": 565
+          },
+          "push": {
+            "anchor": {
+              "boundary": "start",
+              "index": 85,
+              "kind": "word"
+            },
+            "from": 880,
+            "meaning": "测试效果",
+            "offsetFrames": 0,
+            "to": 898
+          },
+          "settle": {
+            "anchor": {
+              "boundary": "start",
+              "index": 89,
+              "kind": "word"
+            },
+            "from": 926,
+            "meaning": "测试效果",
+            "offsetFrames": 0,
+            "to": 948
+          }
+        },
+        "from": 527,
+        "id": "B6-03",
+        "label": "测试效果",
+        "note": "测试效果\n完整验证",
+        "title": "测试效果\n完整验证",
+        "to": 1118
+      },
+      {
+        "actionId": "haike.chromatic-06.observe-colour",
+        "disclosure": "测试效果",
+        "events": {
+          "note": {
+            "anchor": {
+              "boundary": "start",
+              "index": 107,
+              "kind": "word"
+            },
+            "from": 1136,
+            "meaning": "测试效果",
+            "offsetFrames": 18,
+            "to": 1150
+          },
+          "splitEdge": {
+            "anchor": {
+              "boundary": "start",
+              "index": 125,
+              "kind": "word"
+            },
+            "from": 1289,
+            "meaning": "测试效果",
+            "offsetFrames": 0,
+            "to": 1313
+          },
+          "splitHalf": {
+            "anchor": {
+              "boundary": "start",
+              "index": 114,
+              "kind": "word"
+            },
+            "from": 1177,
+            "meaning": "测试效果",
+            "offsetFrames": 0,
+            "to": 1201
+          },
+          "splitReturn": {
+            "anchor": {
+              "boundary": "start",
+              "index": 136,
+              "kind": "word"
+            },
+            "from": 1395,
+            "meaning": "测试效果",
+            "offsetFrames": 0,
+            "to": 1415
+          }
+        },
+        "from": 1118,
+        "id": "B6-04",
+        "label": "测试效果",
+        "note": "测试效果\n完整验证",
+        "title": "测试效果\n完整验证",
+        "to": 1454
+      },
+      {
+        "actionId": "haike.chromatic-06.push-near",
+        "events": {
+          "crossfade": {
+            "anchor": {
+              "boundary": "start",
+              "index": 152,
+              "kind": "word"
+            },
+            "from": 1603,
+            "meaning": "测试效果",
+            "offsetFrames": 6,
+            "to": 1617
+          },
+          "note": {
+            "anchor": {
+              "boundary": "start",
+              "index": 139,
+              "kind": "word"
+            },
+            "from": 1460,
+            "meaning": "测试效果",
+            "offsetFrames": 6,
+            "to": 1474
+          },
+          "push": {
+            "anchor": {
+              "boundary": "start",
+              "index": 152,
+              "kind": "word"
+            },
+            "from": 1597,
+            "meaning": "测试效果",
+            "offsetFrames": 0,
+            "to": 1615
+          },
+          "settle": {
+            "anchor": {
+              "boundary": "start",
+              "index": 152,
+              "kind": "word"
+            },
+            "from": 1603,
+            "meaning": "测试效果",
+            "offsetFrames": 6,
+            "to": 1625
+          }
+        },
+        "from": 1454,
+        "id": "B6-05",
+        "label": "测试效果",
+        "medical": true,
+        "note": "测试效果\n完整验证",
+        "title": "测试效果\n完整验证",
+        "to": 1652
+      },
+      {
+        "actionId": "haike.chromatic-06.cut-close",
+        "events": {
+          "note": {
+            "anchor": {
+              "boundary": "start",
+              "index": 166,
+              "kind": "word"
+            },
+            "from": 1719,
+            "meaning": "测试效果",
+            "offsetFrames": 0,
+            "to": 1733
+          },
+          "wipe": {
+            "anchor": {
+              "boundary": "start",
+              "index": 157,
+              "kind": "word"
+            },
+            "from": 1654,
+            "meaning": "测试效果",
+            "offsetFrames": 2,
+            "to": 1668
+          }
+        },
+        "from": 1652,
+        "id": "B6-06",
+        "label": "测试效果",
+        "note": "测试效果\n完整验证",
+        "title": "测试效果\n完整验证",
+        "to": 1800
+      }
+    ],
+    "shots": [
+      {
+        "description": "测试效果",
+        "from": 0,
+        "id": "B6-shot-00",
+        "objectPosition": "50% 58%",
+        "sourceFrom": 0,
+        "src": "clip001.mp4",
+        "to": 90
+      },
+      {
+        "description": "测试效果",
+        "from": 90,
+        "id": "B6-shot-01",
+        "objectPosition": "50% 58%",
+        "sourceFrom": 0,
+        "src": "clip002.mp4",
+        "to": 185
+      },
+      {
+        "description": "测试效果",
+        "from": 185,
+        "id": "B6-shot-02",
+        "objectPosition": "50% 58%",
+        "sourceFrom": 0,
+        "src": "clip003.mp4",
+        "to": 295
+      },
+      {
+        "description": "测试效果",
+        "from": 295,
+        "id": "B6-shot-03",
+        "objectPosition": "50% 58%",
+        "sourceFrom": 0,
+        "src": "clip004.mp4",
+        "to": 400
+      },
+      {
+        "description": "测试效果",
+        "from": 400,
+        "id": "B6-shot-04",
+        "objectPosition": "50% 58%",
+        "sourceFrom": 0,
+        "src": "clip005.mp4",
+        "to": 527
+      },
+      {
+        "description": "测试效果",
+        "from": 527,
+        "id": "B6-shot-05",
+        "objectPosition": "50% 58%",
+        "sourceFrom": 0,
+        "src": "clip006.mp4",
+        "to": 633
+      },
+      {
+        "description": "测试效果",
+        "from": 633,
+        "id": "B6-shot-06",
+        "objectPosition": "50% 58%",
+        "sourceFrom": 0,
+        "src": "clip007.mp4",
+        "to": 738
+      },
+      {
+        "description": "测试效果",
+        "from": 738,
+        "id": "B6-shot-07",
+        "objectPosition": "50% 58%",
+        "sourceFrom": 0,
+        "src": "clip008.mp4",
+        "to": 843
+      },
+      {
+        "description": "测试效果",
+        "from": 843,
+        "id": "B6-shot-08",
+        "objectPosition": "50% 58%",
+        "sourceFrom": 0,
+        "src": "clip009.mp4",
+        "to": 948
+      },
+      {
+        "description": "测试效果",
+        "from": 948,
+        "id": "B6-shot-09",
+        "objectPosition": "50% 58%",
+        "sourceFrom": 0,
+        "src": "clip010.mp4",
+        "to": 1033
+      },
+      {
+        "description": "测试效果",
+        "from": 1033,
+        "id": "B6-shot-10",
+        "objectPosition": "50% 58%",
+        "sourceFrom": 0,
+        "src": "clip011.mp4",
+        "to": 1118
+      },
+      {
+        "description": "测试效果",
+        "from": 1118,
+        "id": "B6-shot-11",
+        "objectPosition": "50% 58%",
+        "sourceFrom": 0,
+        "src": "clip012.mp4",
+        "to": 1223
+      },
+      {
+        "description": "测试效果",
+        "from": 1223,
+        "id": "B6-shot-12",
+        "objectPosition": "50% 58%",
+        "sourceFrom": 0,
+        "src": "clip013.mp4",
+        "to": 1338
+      },
+      {
+        "description": "测试效果",
+        "from": 1338,
+        "id": "B6-shot-13",
+        "objectPosition": "50% 58%",
+        "sourceFrom": 0,
+        "src": "clip014.mp4",
+        "to": 1454
+      },
+      {
+        "description": "测试效果",
+        "from": 1454,
+        "id": "B6-shot-14",
+        "objectPosition": "50% 58%",
+        "sourceFrom": 0,
+        "src": "clip015.mp4",
+        "to": 1553
+      },
+      {
+        "description": "测试效果",
+        "from": 1553,
+        "id": "B6-shot-15",
+        "objectPosition": "50% 58%",
+        "sourceFrom": 0,
+        "src": "clip016.mp4",
+        "to": 1652
+      },
+      {
+        "description": "测试效果",
+        "from": 1652,
+        "id": "B6-shot-16",
+        "objectPosition": "50% 58%",
+        "sourceFrom": 0,
+        "src": "clip017.mp4",
+        "to": 1730
+      },
+      {
+        "description": "测试效果",
+        "from": 1730,
+        "id": "B6-shot-17",
+        "objectPosition": "50% 58%",
+        "sourceFrom": 0,
+        "src": "clip018.mp4",
+        "to": 1800
+      }
+    ],
+    "templateId": "chromatic-06",
+    "version": "1.2.0-candidate.1"
+  }
+}

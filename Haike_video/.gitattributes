@@ -105,6 +105,16 @@ templates/knowledge-reference-public-v3/types.ts -text -eol whitespace=cr-at-eol
 templates/promo-reference-phase-v3/INHERITANCE.json -text -eol whitespace=cr-at-eol
 
 # Original OFL text includes a trailing space; preserve the licensed bytes.
+templates/motion-native-v1/fonts/*.txt -text -eol whitespace=-blank-at-eol,cr-at-eol
+# Historical paper/quote public revisions retain their recorded source bytes.
+backlot/motion_public_paper_execution_v3.py -text -eol whitespace=cr-at-eol
+backlot/motion_public_paper_observed_v3.py -text -eol whitespace=cr-at-eol
+backlot/motion_public_quote_execution_v3.py -text -eol whitespace=cr-at-eol
+backlot/motion_public_quote_observed_v3.py -text -eol whitespace=cr-at-eol
+scripts/motion_public_paper_production_v3.py -text -eol whitespace=cr-at-eol
+scripts/motion_public_quote_production_v3.py -text -eol whitespace=cr-at-eol
+templates/motiongit-public-paper-ending-v3/** -text -eol whitespace=cr-at-eol
+templates/motiongit-public-quote-controls-v3/** -text -eol whitespace=cr-at-eol
 templates/motiongit-public-components-v1/upstream/adapters/paper-balance/licenses/OFL-anton.txt whitespace=-blank-at-eol,cr-at-eol
 templates/motiongit-public-components-v1/upstream/packs/paper-balance/1.1.1-candidate/licenses/OFL-anton.txt whitespace=-blank-at-eol,cr-at-eol
 templates/motiongit-public-components-v1/upstream/packs/paper-ball-performance/1.1.1-candidate/licenses/OFL-anton.txt whitespace=-blank-at-eol,cr-at-eol

@@ -1,0 +1,45 @@
+{
+  "schema": "haike.paper-ending-observed-constraints/3",
+  "reference_id": "template-02-expanded",
+  "observations": [
+    {
+      "t": 59.08,
+      "source": "original C native064",
+      "main": "clear",
+      "presenter": "clear",
+      "hud": "clear"
+    },
+    {
+      "t": 59.8,
+      "source": "original C native065",
+      "main": "selectively blurred/dim",
+      "presenter": "clear",
+      "hud": "clear"
+    },
+    {
+      "t": 59.9,
+      "source": "original C encoded031",
+      "main": "selectively blurred/dim",
+      "presenter": "clear"
+    }
+  ],
+  "implementation": {
+    "parameter_authority": "observed-paper-controls-v3.js: tail/phase",
+    "tail_start": "duration - 0.4",
+    "tail_end": "duration",
+    "opacity": "1 - .9 * cubicOut(clamp((t - (duration - .4)) / .4))",
+    "blur_px": "(1 - opacity) * 18",
+    "presenter": "last tail returns 1 independently",
+    "hud": "outside layers, original timer"
+  },
+  "future_preview": {
+    "keep_all_action_samples": true,
+    "seconds_from_end": [
+      0.92,
+      0.2,
+      0.1
+    ],
+    "include_last_output_frame": true
+  },
+  "pending": "actual new v3 pixels and full listening; observations constrain states but do not identify unique original curve"
+}

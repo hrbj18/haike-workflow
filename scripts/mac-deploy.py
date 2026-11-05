@@ -26,7 +26,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SPEC = ROOT / '_distribution-tools/macos-runtime.json'
 MODULES = ('Haike_video', 'creatorhub', 'copy_skill/copy_skill-main', 'api-platform')
 FRONTENDS = ('Haike_video/remotion-composer', 'Haike_video/motion-components/snapcn',
-             'prototypes/haike-avatar-generator', 'creatorhub')
+             'prototypes/haike-avatar-generator', 'creatorhub', '_distribution-tools/motion-html')
 
 
 def read(path):
@@ -121,8 +121,14 @@ def install_runtimes(arch, offline):
         elif kind in {'ffmpeg', 'ffprobe'}:
             target = ROOT / 'runtime/macos' / arch / 'ffmpeg/bin' / kind
             target.parent.mkdir(parents=True, exist_ok=True)
-            with gzip.open(source) as stream, target.open('wb') as output:
-                shutil.copyfileobj(stream, output)
+            if row.get('archive_kind') == 'zip-binary':
+                with zipfile.ZipFile(source) as archive, target.open('wb') as output:
+                    output.write(archive.read(row['member']))
+                if digest(target) != row['binary_sha256']:
+                    raise ValueError('原生FFmpeg解压后摘要不符')
+            else:
+                with gzip.open(source) as stream, target.open('wb') as output:
+                    shutil.copyfileobj(stream, output)
             target.chmod(0o755)
         elif kind in {'browser', 'login_browser'}:
             browser_name = 'chromium_headless_shell' if kind == 'browser' else 'chromium'
@@ -237,6 +243,12 @@ def install_frontends(arch, spec, offline, env):
     execute([npm, 'run', 'build'], cwd=frontend, env=dict(env, HAIKE_EMBED_BASE='/ui/avatar-generator/'))
     shutil.copytree(frontend / 'dist/client', ROOT / 'Haike_video/backlot/ui/avatar-generator', dirs_exist_ok=True)
     execute([npm, 'run', 'build:ui'], cwd=ROOT / 'creatorhub', env=env)
+    font_root = ROOT / '_distribution-tools/motion-html/fonts'
+    font_root.mkdir(exist_ok=True)
+    shutil.copy2(ROOT / 'Haike_video/remotion-composer/a2e/public/fonts/NotoSansSC.ttf', font_root / 'NotoSansSC.ttf')
+    for path in (ROOT / 'Haike_video/templates/motion-native-v1/fonts').iterdir():
+        shutil.copy2(path, font_root / path.name)
+    execute([python_for('Haike_video'), '-c', 'from backlot.motion_native_runtime import bind_installation;print(bind_installation())'], env=env)
 
 
 def configure(arch, env):
@@ -269,6 +281,7 @@ def version():
 def install(args):
     arch = architecture()
     spec = install_runtimes(arch, args.offline)
+    shutil.copytree(ROOT / '_distribution-tools/ffmpeg9', ROOT / 'runtime/macos' / arch / 'ffmpeg/licenses', dirs_exist_ok=True)
     env = environment(arch)
     install_python(arch, spec, args.offline, args.cache_only)
     install_frontends(arch, spec, args.offline, env)
@@ -298,6 +311,7 @@ def check(args):
     status = json.loads(sources.stdout)
     if status.get('source_status') != 'verified' or status.get('template_count') != 18:
         raise ValueError('18 套动效模板来源检查未通过')
+    execute([python_for('Haike_video'), '-c', 'from backlot.motion_native_runtime import identity;print(identity())'], env=env)
     execute([env['FFMPEG_BINARY'], '-version'], env=env)
     execute([env['FFPROBE_BINARY'], '-version'], env=env)
     execute([env['HAIKE_NODE_EXECUTABLE'], '--version'], env=env)

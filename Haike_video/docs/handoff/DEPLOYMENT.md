@@ -1,6 +1,6 @@
 # GitHub 与跨电脑部署
 
-Mac 新机入口：根 `docs/DEPLOY_MAC.md`、`scripts/setup-mac.sh`，支持双架构；国内镜像见 `_distribution-tools/macos-runtime.json`。11-05 用户授权的私有同事 ZIP 可附 Key/音色/形象，边界见根 `docs/DISTRIBUTION.md`；公开源码和 CI 无凭据。安装、短渲染和 18 套完整生产分别验收。
+Mac 新机：根 `docs/DEPLOY_MAC.md`。双架构镜像/固定直连源见 `_distribution-tools/macos-runtime.json`；原生适配与18套全时长验收见 `docs/MAC_MOTION_VALIDATION.md`，正式包待两架构各18条通过。私有ZIP含Key/音色/形象，边界见 `DISTRIBUTION.md`；公开源码/CI无凭据。
 
 私有开发迁移按根`docs/DEVELOPMENT_RECOVERY.md`恢复；有migration清单时以其必读记录核对最新.motion中断点，原冻结证据保留。
 

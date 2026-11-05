@@ -1,0 +1,80 @@
+{
+  "retained_upstream": {
+    "path": "../motiongit-public-components-v1",
+    "component_sha256": "bf335a15f8f71c6313c2618bbbb9ded5c598350b71f0a1607b7a4d3db379968f",
+    "verifier": "scripts/build_motion_public_components.py",
+    "verifier_sha256": "131b05de79363c3e7a6916dba244515d14038591d0713b1687c8283c8bf7ff18",
+    "source_commit": "4a52ae2cff542cfb0bfcf6e93e5120c55d0110cf",
+    "reason": "unchanged public renderer/source archives and notices reused by exact SHA; no binary copies"
+  },
+  "original_package_equivalence": false,
+  "full_original_template_closure": false,
+  "schema": "haike.motion-public-quote-components/3",
+  "component_id": "haike-public-quote-controls-v3",
+  "component_version": "0.3.0-candidate",
+  "contract": "haike.motion-public-quote-production/3",
+  "engines": [
+    "observed-quote-controls/3"
+  ],
+  "pack_keys": [
+    "observed-light",
+    "observed-console"
+  ],
+  "reference_ids": [
+    "template-01-integrated",
+    "template-04-dark-console"
+  ],
+  "status": "candidate-static-only-media-pending",
+  "files": [
+    {
+      "path": "DEPENDENCIES.json",
+      "sha256": "c30cf57bb3f2192410d99685a771fd36f69583737e0464cce9c0bd0985ec5f1f",
+      "size": 73469
+    },
+    {
+      "path": "FFMPEG9.json",
+      "sha256": "1d7055cadccd60e2442c5d279083b3dd8c9a46c1bae6d317e78a344826e6aa29",
+      "size": 1659
+    },
+    {
+      "path": "OBSERVED_CONSTRAINTS.json",
+      "sha256": "b8c306da571ee85c25bcbc3037fd9360877c6b6c8c895659338ef2b9dffc3c0e",
+      "size": 1292
+    },
+    {
+      "path": "PROVENANCE.json",
+      "sha256": "3b0d779b500d50a624c2f2b101054dc4a6e3590c71e1e3b4b05763250087be5e",
+      "size": 1659
+    },
+    {
+      "path": "README.md",
+      "sha256": "59e6b05ece0e32f4f85f152815148da0ca4f5b4192971de9b49bb7dab3e9d932",
+      "size": 980
+    },
+    {
+      "path": "TOOLS.json",
+      "sha256": "5a2bd3c270d30fd841c89116c4eabe25ad6a15e957ee40d021f77d31c5ef26f1",
+      "size": 49974
+    },
+    {
+      "path": "capture_runtime.mjs",
+      "sha256": "0bf6ec171767725922099c7dd2de7582fbd3e96d24c6c6c91531f387f4701fd8",
+      "size": 2255
+    },
+    {
+      "path": "input.schema.json",
+      "sha256": "f74afb7c8e97f2a54c40e4e52ab5e411a32f219759dc572c16539d31d422e3ce",
+      "size": 7856
+    },
+    {
+      "path": "observed-quote-controls-v3.js",
+      "sha256": "84bfb87f0d64f64edd268c50749d9fed09e24e956f9ef7584f9fa2f813590b18",
+      "size": 24138
+    },
+    {
+      "path": "runbook.md",
+      "sha256": "81d83cb0b5e2102d10d4cb785229d9f1c7cd3f47aa170ec6bc5a6f30c2c48227",
+      "size": 1115
+    }
+  ]
+}

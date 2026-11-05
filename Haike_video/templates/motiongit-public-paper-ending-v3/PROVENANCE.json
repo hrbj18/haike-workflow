@@ -1,0 +1,54 @@
+{
+  "schema": "haike.paper-ending-source-provenance/3",
+  "source_controller": {
+    "path": "Haike_video/backlot/motion_public_production_v2.py",
+    "identity": "frozen R2 phase algorithm; copied with independent names and narrowed admission"
+  },
+  "source_component": {
+    "path": "Haike_video/templates/motiongit-public-components-v2/COMPONENT.json",
+    "sha256": "a72de0dc57579ed026ec2d10c0582d7ced4817c21be12b37008043eea2042b30"
+  },
+  "source_observed": {
+    "path": "Haike_video/backlot/motion_public_observed_v2.py",
+    "sha256": "97403417dad73d717679af83ab90811674334edc5bdd854548586001e3f06b0e"
+  },
+  "source_js": {
+    "path": "Haike_video/templates/motiongit-public-components-v2/observed-controls-v2.js",
+    "sha256": "e81cb2c2d3f1bc4e4c78e99f6c3495bb32d13ecfee72532943422926fb59320e"
+  },
+  "observed_evidence": "../../../.local/motion-full-delivery-20261104/A/paper-public-v2-handoff/END_STATE_CLARIFICATION.json",
+  "visual_change": "only final main-layer tail opt-in; avatar final tail bypass retained; HUD remains outside main layers",
+  "preserved": "palette, geometry, media frames, portrait crop/windows, cues, text typing and delayed author, audio source/rate/mix and all other actions",
+  "easing_scope": "owned non-unique cubic-out approximation; not a claim of protected original source or exact curve",
+  "actual_visual_acceptance": "pending new authorized v3 media; no old preview reused as new v3",
+  "retained_upstream": {
+    "path": "../motiongit-public-components-v1",
+    "component_sha256": "bf335a15f8f71c6313c2618bbbb9ded5c598350b71f0a1607b7a4d3db379968f",
+    "verifier": "scripts/build_motion_public_components.py",
+    "verifier_sha256": "131b05de79363c3e7a6916dba244515d14038591d0713b1687c8283c8bf7ff18",
+    "source_commit": "4a52ae2cff542cfb0bfcf6e93e5120c55d0110cf",
+    "reason": "unchanged public renderer/source archives and notices reused by exact SHA; no binary copies"
+  },
+  "copied_descriptors": [
+    {
+      "path": "capture_runtime.mjs",
+      "sha256": "0bf6ec171767725922099c7dd2de7582fbd3e96d24c6c6c91531f387f4701fd8",
+      "size": 2255
+    },
+    {
+      "path": "DEPENDENCIES.json",
+      "sha256": "c30cf57bb3f2192410d99685a771fd36f69583737e0464cce9c0bd0985ec5f1f",
+      "size": 73469
+    },
+    {
+      "path": "FFMPEG9.json",
+      "sha256": "1d7055cadccd60e2442c5d279083b3dd8c9a46c1bae6d317e78a344826e6aa29",
+      "size": 1659
+    },
+    {
+      "path": "TOOLS.json",
+      "sha256": "5a2bd3c270d30fd841c89116c4eabe25ad6a15e957ee40d021f77d31c5ef26f1",
+      "size": 49974
+    }
+  ]
+}

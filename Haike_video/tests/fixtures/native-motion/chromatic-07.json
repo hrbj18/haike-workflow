@@ -1,0 +1,889 @@
+{
+  "schema": "haike.native-render-fixture/1",
+  "template_id": "chromatic-07",
+  "preferred_version": "1.2.0-candidate.1",
+  "kind": "chromatic-suite",
+  "duration": 60.0,
+  "scope": "synthetic local renderer portability; no ASR/HQ/payment/creative acceptance claim",
+  "props": {
+    "captions": [
+      {
+        "from": 29,
+        "text": "测试效果",
+        "to": 63
+      },
+      {
+        "from": 73,
+        "text": "测试效果",
+        "to": 111
+      },
+      {
+        "from": 122,
+        "text": "测试效果",
+        "to": 170
+      },
+      {
+        "from": 185,
+        "text": "测试效果",
+        "to": 212
+      },
+      {
+        "from": 215,
+        "text": "测试效果",
+        "to": 240
+      },
+      {
+        "from": 256,
+        "text": "测试效果",
+        "to": 326
+      },
+      {
+        "from": 338,
+        "text": "测试效果\n完整验证",
+        "to": 440
+      },
+      {
+        "from": 440,
+        "text": "测试效果",
+        "to": 449
+      },
+      {
+        "from": 458,
+        "text": "测试效果",
+        "to": 500
+      },
+      {
+        "from": 527,
+        "text": "测试效果\n完整验证",
+        "to": 605
+      },
+      {
+        "from": 614,
+        "text": "测试效果",
+        "to": 657
+      },
+      {
+        "from": 668,
+        "text": "测试效果\n完整验证",
+        "to": 771
+      },
+      {
+        "from": 771,
+        "text": "测试效果\n完整验证",
+        "to": 866
+      },
+      {
+        "from": 880,
+        "text": "测试效果\n完整验证",
+        "to": 969
+      },
+      {
+        "from": 969,
+        "text": "测试效果",
+        "to": 974
+      },
+      {
+        "from": 974,
+        "text": "测试效果",
+        "to": 1033
+      },
+      {
+        "from": 1041,
+        "text": "测试效果",
+        "to": 1107
+      },
+      {
+        "from": 1118,
+        "text": "测试效果",
+        "to": 1164
+      },
+      {
+        "from": 1177,
+        "text": "测试效果",
+        "to": 1193
+      },
+      {
+        "from": 1193,
+        "text": "测试效果",
+        "to": 1237
+      },
+      {
+        "from": 1256,
+        "text": "测试效果",
+        "to": 1281
+      },
+      {
+        "from": 1289,
+        "text": "测试效果",
+        "to": 1331
+      },
+      {
+        "from": 1337,
+        "text": "测试效果",
+        "to": 1388
+      },
+      {
+        "from": 1395,
+        "text": "测试效果",
+        "to": 1429
+      },
+      {
+        "from": 1454,
+        "text": "测试效果",
+        "to": 1470
+      },
+      {
+        "from": 1473,
+        "text": "测试效果",
+        "to": 1499
+      },
+      {
+        "from": 1513,
+        "text": "测试效果",
+        "to": 1569
+      },
+      {
+        "from": 1585,
+        "text": "测试效果",
+        "to": 1639
+      },
+      {
+        "from": 1652,
+        "text": "测试效果",
+        "to": 1716
+      },
+      {
+        "from": 1719,
+        "text": "测试效果",
+        "to": 1735
+      },
+      {
+        "from": 1738,
+        "text": "测试效果",
+        "to": 1795
+      }
+    ],
+    "durationInFrames": 1800,
+    "font": "font.ttf",
+    "fps": 30,
+    "medicalFrom": 1500,
+    "medicalOverlay": "原生动效渲染测试\n合成素材，仅用于安装验收。",
+    "medicalTo": 1652,
+    "presenters": [
+      {
+        "from": 0,
+        "objectPosition": "50% 35%",
+        "sourceFrom": 0,
+        "src": "clip000.mp4",
+        "to": 185
+      },
+      {
+        "from": 1652,
+        "objectPosition": "50% 35%",
+        "sourceFrom": 253,
+        "src": "clip000.mp4",
+        "to": 1800
+      }
+    ],
+    "scenes": [
+      {
+        "actionId": "haike.chromatic-07.fan-collect",
+        "from": 0,
+        "id": "s0",
+        "knots": [
+          {
+            "event": "scene-start",
+            "source": 0,
+            "target": 0
+          },
+          {
+            "anchor": {
+              "boundary": "start",
+              "index": 0,
+              "kind": "word"
+            },
+            "event": "测试效果",
+            "offsetFrames": -19,
+            "source": 4,
+            "target": 10
+          },
+          {
+            "anchor": {
+              "boundary": "start",
+              "index": 0,
+              "kind": "word"
+            },
+            "event": "测试效果",
+            "offsetFrames": 0,
+            "source": 16,
+            "target": 29
+          },
+          {
+            "anchor": {
+              "boundary": "start",
+              "index": 1,
+              "kind": "word"
+            },
+            "event": "测试效果",
+            "offsetFrames": 0,
+            "source": 22,
+            "target": 41
+          },
+          {
+            "anchor": {
+              "boundary": "start",
+              "index": 3,
+              "kind": "word"
+            },
+            "event": "测试效果",
+            "offsetFrames": 0,
+            "source": 28,
+            "target": 73
+          },
+          {
+            "anchor": {
+              "boundary": "start",
+              "index": 7,
+              "kind": "word"
+            },
+            "event": "测试效果",
+            "offsetFrames": 0,
+            "source": 52,
+            "target": 103
+          },
+          {
+            "anchor": {
+              "boundary": "start",
+              "index": 11,
+              "kind": "word"
+            },
+            "event": "测试效果",
+            "offsetFrames": 0,
+            "source": 82,
+            "target": 145
+          },
+          {
+            "anchor": {
+              "boundary": "start",
+              "index": 13,
+              "kind": "word"
+            },
+            "event": "测试效果",
+            "offsetFrames": 9,
+            "source": 104,
+            "target": 167
+          },
+          {
+            "event": "scene-end",
+            "source": 240,
+            "target": 185
+          }
+        ],
+        "note": "测试效果\n完整验证",
+        "sourceFrom": 0,
+        "sourceTo": 240,
+        "title": "测试效果\n完整验证",
+        "to": 185
+      },
+      {
+        "actionId": "haike.chromatic-07.pop-evidence",
+        "from": 185,
+        "id": "s1",
+        "knots": [
+          {
+            "event": "scene-start",
+            "source": 240,
+            "target": 185
+          },
+          {
+            "anchor": {
+              "boundary": "start",
+              "index": 14,
+              "kind": "word"
+            },
+            "event": "测试效果",
+            "offsetFrames": 1,
+            "source": 252,
+            "target": 186
+          },
+          {
+            "anchor": {
+              "boundary": "start",
+              "index": 15,
+              "kind": "word"
+            },
+            "event": "测试效果",
+            "offsetFrames": -2,
+            "source": 256,
+            "target": 190
+          },
+          {
+            "anchor": {
+              "boundary": "start",
+              "index": 15,
+              "kind": "word"
+            },
+            "event": "测试效果",
+            "offsetFrames": 2,
+            "source": 260,
+            "target": 194
+          },
+          {
+            "anchor": {
+              "boundary": "start",
+              "index": 16,
+              "kind": "word"
+            },
+            "event": "测试效果",
+            "offsetFrames": -3,
+            "source": 261,
+            "target": 197
+          },
+          {
+            "anchor": {
+              "boundary": "start",
+              "index": 16,
+              "kind": "word"
+            },
+            "event": "测试效果",
+            "offsetFrames": 1,
+            "source": 265,
+            "target": 201
+          },
+          {
+            "anchor": {
+              "boundary": "start",
+              "index": 16,
+              "kind": "word"
+            },
+            "event": "测试效果",
+            "offsetFrames": 5,
+            "source": 269,
+            "target": 205
+          },
+          {
+            "event": "scene-end",
+            "source": 420,
+            "target": 1118
+          }
+        ],
+        "note": "测试效果\n完整验证",
+        "sourceFrom": 240,
+        "sourceTo": 420,
+        "title": "测试效果\n完整验证",
+        "to": 1118
+      },
+      {
+        "actionId": "haike.chromatic-07.mark-attention",
+        "from": 1118,
+        "id": "s2",
+        "knots": [
+          {
+            "event": "scene-start",
+            "source": 420,
+            "target": 1118
+          },
+          {
+            "anchor": {
+              "boundary": "start",
+              "index": 110,
+              "kind": "word"
+            },
+            "event": "测试效果",
+            "offsetFrames": 0,
+            "source": 440,
+            "target": 1141
+          },
+          {
+            "anchor": {
+              "boundary": "start",
+              "index": 114,
+              "kind": "word"
+            },
+            "event": "测试效果",
+            "offsetFrames": 0,
+            "source": 457,
+            "target": 1177
+          },
+          {
+            "anchor": {
+              "boundary": "start",
+              "index": 122,
+              "kind": "word"
+            },
+            "event": "测试效果",
+            "offsetFrames": -11,
+            "source": 485,
+            "target": 1245
+          },
+          {
+            "anchor": {
+              "boundary": "start",
+              "index": 122,
+              "kind": "word"
+            },
+            "event": "测试效果",
+            "offsetFrames": 3,
+            "source": 497,
+            "target": 1259
+          },
+          {
+            "anchor": {
+              "boundary": "start",
+              "index": 124,
+              "kind": "word"
+            },
+            "event": "测试效果",
+            "offsetFrames": 4,
+            "source": 502,
+            "target": 1275
+          },
+          {
+            "event": "scene-end",
+            "source": 585,
+            "target": 1652
+          }
+        ],
+        "note": "测试效果\n完整验证",
+        "sourceFrom": 420,
+        "sourceTo": 585,
+        "title": "测试效果\n完整验证",
+        "to": 1652
+      },
+      {
+        "actionId": "haike.chromatic-07.stick-memory",
+        "from": 1652,
+        "id": "s3",
+        "knots": [
+          {
+            "event": "scene-start",
+            "source": 585,
+            "target": 1652
+          },
+          {
+            "anchor": {
+              "boundary": "start",
+              "index": 158,
+              "kind": "word"
+            },
+            "event": "测试效果",
+            "offsetFrames": -3,
+            "source": 589,
+            "target": 1660
+          },
+          {
+            "anchor": {
+              "boundary": "start",
+              "index": 159,
+              "kind": "word"
+            },
+            "event": "测试效果",
+            "offsetFrames": 5,
+            "source": 594,
+            "target": 1673
+          },
+          {
+            "anchor": {
+              "boundary": "start",
+              "index": 162,
+              "kind": "word"
+            },
+            "event": "测试效果",
+            "offsetFrames": 2,
+            "source": 598,
+            "target": 1685
+          },
+          {
+            "anchor": {
+              "boundary": "start",
+              "index": 163,
+              "kind": "word"
+            },
+            "event": "测试效果",
+            "offsetFrames": 3,
+            "source": 603,
+            "target": 1695
+          },
+          {
+            "anchor": {
+              "boundary": "start",
+              "index": 165,
+              "kind": "word"
+            },
+            "event": "测试效果",
+            "offsetFrames": 0,
+            "source": 605,
+            "target": 1705
+          },
+          {
+            "anchor": {
+              "boundary": "start",
+              "index": 166,
+              "kind": "word"
+            },
+            "event": "测试效果",
+            "offsetFrames": 0,
+            "source": 612,
+            "target": 1719
+          },
+          {
+            "anchor": {
+              "boundary": "start",
+              "index": 167,
+              "kind": "word"
+            },
+            "event": "测试效果",
+            "offsetFrames": 0,
+            "source": 614,
+            "target": 1725
+          },
+          {
+            "anchor": {
+              "boundary": "start",
+              "index": 169,
+              "kind": "word"
+            },
+            "event": "测试效果",
+            "offsetFrames": 0,
+            "source": 626,
+            "target": 1753
+          },
+          {
+            "event": "scene-end",
+            "source": 720,
+            "target": 1800
+          }
+        ],
+        "note": "测试效果\n完整验证",
+        "sourceFrom": 585,
+        "sourceTo": 720,
+        "title": "测试效果\n完整验证",
+        "to": 1800
+      }
+    ],
+    "slots": {
+      "s0": {
+        "0": [
+          {
+            "from": 0,
+            "objectPosition": "50% 58%",
+            "sourceFrom": 0,
+            "src": "clip001.mp4",
+            "to": 90
+          },
+          {
+            "from": 90,
+            "objectPosition": "50% 58%",
+            "sourceFrom": 0,
+            "src": "clip002.mp4",
+            "to": 185
+          }
+        ],
+        "2": [
+          {
+            "from": 0,
+            "objectPosition": "50% 58%",
+            "sourceFrom": 0,
+            "src": "clip002.mp4",
+            "to": 90
+          },
+          {
+            "from": 90,
+            "objectPosition": "50% 58%",
+            "sourceFrom": 0,
+            "src": "clip003.mp4",
+            "to": 185
+          }
+        ],
+        "4": [
+          {
+            "from": 0,
+            "objectPosition": "50% 58%",
+            "sourceFrom": 0,
+            "src": "clip004.mp4",
+            "to": 90
+          },
+          {
+            "from": 90,
+            "objectPosition": "50% 58%",
+            "sourceFrom": 0,
+            "src": "clip005.mp4",
+            "to": 185
+          }
+        ]
+      },
+      "s1": {
+        "1": [
+          {
+            "from": 185,
+            "objectPosition": "50% 58%",
+            "sourceFrom": 0,
+            "src": "clip004.mp4",
+            "to": 295
+          },
+          {
+            "from": 295,
+            "objectPosition": "50% 58%",
+            "sourceFrom": 0,
+            "src": "clip003.mp4",
+            "to": 400
+          },
+          {
+            "from": 400,
+            "objectPosition": "50% 58%",
+            "sourceFrom": 0,
+            "src": "clip005.mp4",
+            "to": 527
+          },
+          {
+            "from": 527,
+            "objectPosition": "50% 58%",
+            "sourceFrom": 0,
+            "src": "clip006.mp4",
+            "to": 633
+          },
+          {
+            "from": 633,
+            "objectPosition": "50% 58%",
+            "sourceFrom": 0,
+            "src": "clip007.mp4",
+            "to": 738
+          },
+          {
+            "from": 738,
+            "objectPosition": "50% 58%",
+            "sourceFrom": 0,
+            "src": "clip008.mp4",
+            "to": 843
+          },
+          {
+            "from": 843,
+            "objectPosition": "50% 58%",
+            "sourceFrom": 0,
+            "src": "clip009.mp4",
+            "to": 948
+          },
+          {
+            "from": 948,
+            "objectPosition": "50% 58%",
+            "sourceFrom": 0,
+            "src": "clip010.mp4",
+            "to": 1033
+          },
+          {
+            "from": 1033,
+            "objectPosition": "50% 58%",
+            "sourceFrom": 0,
+            "src": "clip011.mp4",
+            "to": 1118
+          }
+        ],
+        "3": [
+          {
+            "from": 185,
+            "objectPosition": "50% 58%",
+            "sourceFrom": 0,
+            "src": "clip012.mp4",
+            "to": 295
+          },
+          {
+            "from": 295,
+            "objectPosition": "50% 58%",
+            "sourceFrom": 0,
+            "src": "clip007.mp4",
+            "to": 400
+          },
+          {
+            "from": 400,
+            "objectPosition": "50% 58%",
+            "sourceFrom": 0,
+            "src": "clip005.mp4",
+            "to": 527
+          },
+          {
+            "from": 527,
+            "objectPosition": "50% 58%",
+            "sourceFrom": 0,
+            "src": "clip005.mp4",
+            "to": 633
+          },
+          {
+            "from": 633,
+            "objectPosition": "50% 58%",
+            "sourceFrom": 0,
+            "src": "clip013.mp4",
+            "to": 738
+          },
+          {
+            "from": 738,
+            "objectPosition": "50% 58%",
+            "sourceFrom": 0,
+            "src": "clip014.mp4",
+            "to": 843
+          },
+          {
+            "from": 843,
+            "objectPosition": "50% 58%",
+            "sourceFrom": 0,
+            "src": "clip012.mp4",
+            "to": 948
+          },
+          {
+            "from": 948,
+            "objectPosition": "50% 58%",
+            "sourceFrom": 0,
+            "src": "clip011.mp4",
+            "to": 1033
+          },
+          {
+            "from": 1033,
+            "objectPosition": "50% 58%",
+            "sourceFrom": 0,
+            "src": "clip013.mp4",
+            "to": 1118
+          }
+        ],
+        "5": [
+          {
+            "from": 185,
+            "objectPosition": "50% 58%",
+            "sourceFrom": 0,
+            "src": "clip004.mp4",
+            "to": 295
+          },
+          {
+            "from": 295,
+            "objectPosition": "50% 58%",
+            "sourceFrom": 0,
+            "src": "clip008.mp4",
+            "to": 400
+          },
+          {
+            "from": 400,
+            "objectPosition": "50% 58%",
+            "sourceFrom": 0,
+            "src": "clip005.mp4",
+            "to": 527
+          },
+          {
+            "from": 527,
+            "objectPosition": "50% 58%",
+            "sourceFrom": 0,
+            "src": "clip006.mp4",
+            "to": 633
+          },
+          {
+            "from": 633,
+            "objectPosition": "50% 58%",
+            "sourceFrom": 0,
+            "src": "clip014.mp4",
+            "to": 738
+          },
+          {
+            "from": 738,
+            "objectPosition": "50% 58%",
+            "sourceFrom": 0,
+            "src": "clip012.mp4",
+            "to": 843
+          },
+          {
+            "from": 843,
+            "objectPosition": "50% 58%",
+            "sourceFrom": 0,
+            "src": "clip004.mp4",
+            "to": 948
+          },
+          {
+            "from": 948,
+            "objectPosition": "50% 58%",
+            "sourceFrom": 0,
+            "src": "clip013.mp4",
+            "to": 1033
+          },
+          {
+            "from": 1033,
+            "objectPosition": "50% 58%",
+            "sourceFrom": 0,
+            "src": "clip014.mp4",
+            "to": 1118
+          }
+        ]
+      },
+      "s2": {
+        "2": [
+          {
+            "from": 1118,
+            "objectPosition": "50% 58%",
+            "sourceFrom": 0,
+            "src": "clip015.mp4",
+            "to": 1283
+          },
+          {
+            "from": 1283,
+            "objectPosition": "50% 58%",
+            "sourceFrom": 60,
+            "src": "clip014.mp4",
+            "to": 1338
+          },
+          {
+            "from": 1338,
+            "objectPosition": "50% 58%",
+            "sourceFrom": 0,
+            "src": "clip012.mp4",
+            "to": 1454
+          },
+          {
+            "from": 1454,
+            "objectPosition": "50% 58%",
+            "sourceFrom": 0,
+            "src": "clip016.mp4",
+            "to": 1553
+          },
+          {
+            "from": 1553,
+            "objectPosition": "50% 58%",
+            "sourceFrom": 0,
+            "src": "clip017.mp4",
+            "to": 1652
+          }
+        ]
+      },
+      "s3": {
+        "0": [
+          {
+            "from": 1652,
+            "objectPosition": "50% 58%",
+            "sourceFrom": 0,
+            "src": "clip018.mp4",
+            "to": 1730
+          },
+          {
+            "from": 1730,
+            "objectPosition": "50% 58%",
+            "sourceFrom": 0,
+            "src": "clip019.mp4",
+            "to": 1800
+          }
+        ],
+        "7": [
+          {
+            "from": 1652,
+            "objectPosition": "50% 58%",
+            "sourceFrom": 0,
+            "src": "clip001.mp4",
+            "to": 1730
+          },
+          {
+            "from": 1730,
+            "objectPosition": "50% 58%",
+            "sourceFrom": 0,
+            "src": "clip001.mp4",
+            "to": 1800
+          }
+        ]
+      }
+    },
+    "templateId": "chromatic-07",
+    "version": "1.2.0-candidate.1"
+  }
+}

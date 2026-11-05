@@ -4,11 +4,18 @@ on:
     paths:
       - 'scripts/*mac*'
       - 'scripts/install-private-profile.py'
+      - 'Haike_video/backlot/motion_native_*.py'
+      - 'Haike_video/backlot/motion_platform.py'
+      - 'Haike_video/config/motion-native-v1.json'
+      - 'Haike_video/tests/fixtures/native-motion/**'
+      - '_distribution-tools/motion-html/**'
+      - '_distribution-tools/locks/macos/**'
       - '_distribution-tools/macos-runtime.json'
       - '.github/workflows/macos-deploy.yml'
   workflow_dispatch:
 permissions:
   contents: read
+  actions: read
 concurrency:
   group: native-mac-${{ github.ref }}
   cancel-in-progress: true
@@ -30,6 +37,7 @@ jobs:
       HAIKE_NPM_REGISTRY: https://registry.npmjs.org
       MACOSX_DEPLOYMENT_TARGET: '14.0'
       CC: /usr/bin/false
+      HAIKE_SOURCE_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
@@ -48,7 +56,7 @@ jobs:
           runtime/macos/${{ matrix.arch }}/python/bin/python3.12 scripts/mac-deploy-smoke.py
       - name: Archive native dependency cache (no user configuration)
         run: |
-          tar -czf mac-dependencies-${{ matrix.arch }}.tar.gz deployment-cache/python/${{ matrix.arch }} deployment-cache/npm/${{ matrix.arch }}
+          tar -czf mac-dependencies-${{ matrix.arch }}.tar.gz deployment-cache/python/${{ matrix.arch }} deployment-cache/npm/${{ matrix.arch }} deployment-cache/runtime
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: mac-dependencies-${{ matrix.arch }}
@@ -59,3 +67,73 @@ jobs:
           retention-days: 3
           include-hidden-files: true
           compression-level: 0
+  native-motion:
+    needs: native-mac
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [macos-15, macos-15-intel]
+        shard: [0, 1, 2]
+        include:
+          - runner: macos-15
+            arch: arm64
+          - runner: macos-15-intel
+            arch: x86_64
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 150
+    env:
+      HAIKE_RUNTIME_DOWNLOAD_ORIGIN: '1'
+      HAIKE_PIP_INDEX_URL: https://pypi.org/simple
+      HAIKE_NPM_REGISTRY: https://registry.npmjs.org
+      MACOSX_DEPLOYMENT_TARGET: '14.0'
+      CC: /usr/bin/false
+      HAIKE_SOURCE_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Restore the checked native offline cache
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh run download "$GITHUB_RUN_ID" --repo "$GITHUB_REPOSITORY" --name mac-dependencies-${{ matrix.arch }} --dir "$RUNNER_TEMP/native-cache"
+          tar -xzf "$RUNNER_TEMP/native-cache/mac-dependencies-${{ matrix.arch }}.tar.gz"
+          bash scripts/setup-mac.sh --offline
+      - name: Export every frame of six preferred motion styles
+        run: Haike_video/.venv/bin/python scripts/mac-motion-smoke.py --shard ${{ matrix.shard }} --shards 3
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: mac-motion-evidence-${{ matrix.arch }}-${{ matrix.shard }}
+          path: |
+            .local/mac-motion-tests/**/*.json
+            .local/mac-motion-tests/**/*.jpg
+            .local/mac-motion-tests/**/*.log
+          include-hidden-files: true
+          retention-days: 7
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: success()
+        with:
+          name: mac-motion-videos-${{ matrix.arch }}-${{ matrix.shard }}
+          path: .local/mac-motion-tests/**/full.mp4
+          include-hidden-files: true
+          compression-level: 0
+          retention-days: 3
+  motion-release-gate:
+    needs: native-motion
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Require both architectures to complete all 18 exact styles
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh run download "$GITHUB_RUN_ID" --repo "$GITHUB_REPOSITORY" --pattern 'mac-motion-evidence-*' --dir "$RUNNER_TEMP/evidence"
+          python3 scripts/check-mac-motion-results.py --root "$RUNNER_TEMP/evidence" --output mac-motion-release-gate.json
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: mac-motion-release-gate
+          path: mac-motion-release-gate.json
+          retention-days: 7

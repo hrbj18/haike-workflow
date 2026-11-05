@@ -1,0 +1,334 @@
+{
+  "schema": "haike.native-render-fixture/1",
+  "template_id": "motiongit-promo-user",
+  "preferred_version": "3.0.0-reference-public.3",
+  "kind": "promo",
+  "duration": 59.96666666666667,
+  "scope": "synthetic local renderer portability; no ASR/HQ/payment/creative acceptance claim",
+  "props": {
+    "audio": "master.wav",
+    "brand": "测试效果",
+    "captions": [
+      {
+        "e": 4.84,
+        "s": 0.96,
+        "text": "测试效果"
+      },
+      {
+        "e": 5.64,
+        "s": 4.84,
+        "text": "测试效果"
+      },
+      {
+        "e": 10.04,
+        "s": 6.16,
+        "text": "测试效果"
+      },
+      {
+        "e": 10.84,
+        "s": 10.04,
+        "text": "测试效果"
+      },
+      {
+        "e": 13.68,
+        "s": 11.28,
+        "text": "测试效果"
+      },
+      {
+        "e": 16.64,
+        "s": 14.08,
+        "text": "测试效果"
+      },
+      {
+        "e": 21.02,
+        "s": 17.58,
+        "text": "测试效果"
+      },
+      {
+        "e": 21.9,
+        "s": 21.02,
+        "text": "测试效果"
+      },
+      {
+        "e": 25.86,
+        "s": 22.26,
+        "text": "测试效果"
+      },
+      {
+        "e": 28.86,
+        "s": 26.18,
+        "text": "测试效果"
+      },
+      {
+        "e": 32.82,
+        "s": 29.34,
+        "text": "测试效果"
+      },
+      {
+        "e": 36.9,
+        "s": 33.22,
+        "text": "测试效果"
+      },
+      {
+        "e": 41.22,
+        "s": 37.26,
+        "text": "测试效果"
+      },
+      {
+        "e": 45.66,
+        "s": 41.86,
+        "text": "测试效果"
+      },
+      {
+        "e": 47.62,
+        "s": 45.66,
+        "text": "测试效果"
+      },
+      {
+        "e": 49.95,
+        "s": 48.47,
+        "text": "测试效果"
+      },
+      {
+        "e": 54.11,
+        "s": 50.43,
+        "text": "测试效果"
+      },
+      {
+        "e": 54.63,
+        "s": 54.11,
+        "text": "测试效果"
+      },
+      {
+        "e": 58.91,
+        "s": 55.07,
+        "text": "测试效果"
+      },
+      {
+        "e": 59.83,
+        "s": 58.91,
+        "text": "测试效果"
+      }
+    ],
+    "durationFrames": 3598,
+    "font": "font.ttf",
+    "fps": 60,
+    "height": 1080,
+    "media": [
+      {
+        "id": "child-photo-0",
+        "kind": "image",
+        "label": "测试效果",
+        "src": "image000.png",
+        "thumbnail": "image000.png"
+      },
+      {
+        "id": "child-photo-1",
+        "kind": "image",
+        "label": "测试效果",
+        "src": "image001.png",
+        "thumbnail": "image001.png"
+      },
+      {
+        "id": "child-photo-2",
+        "kind": "image",
+        "label": "测试效果",
+        "src": "image002.png",
+        "thumbnail": "image002.png"
+      },
+      {
+        "id": "child-photo-3",
+        "kind": "image",
+        "label": "测试效果",
+        "src": "image003.png",
+        "thumbnail": "image003.png"
+      },
+      {
+        "id": "child-photo-4",
+        "kind": "image",
+        "label": "测试效果",
+        "src": "image004.png",
+        "thumbnail": "image004.png"
+      },
+      {
+        "id": "store-photo-0",
+        "kind": "image",
+        "label": "测试效果",
+        "src": "image005.png",
+        "thumbnail": "image005.png"
+      },
+      {
+        "id": "store-photo-1",
+        "kind": "image",
+        "label": "测试效果",
+        "src": "image006.png",
+        "thumbnail": "image006.png"
+      },
+      {
+        "id": "store-photo-2",
+        "kind": "image",
+        "label": "测试效果",
+        "src": "image007.png",
+        "thumbnail": "image007.png"
+      },
+      {
+        "id": "store-photo-3",
+        "kind": "image",
+        "label": "测试效果",
+        "src": "image008.png",
+        "thumbnail": "image008.png"
+      },
+      {
+        "id": "store-photo-4",
+        "kind": "image",
+        "label": "测试效果",
+        "src": "image009.png",
+        "thumbnail": "image009.png"
+      },
+      {
+        "id": "store",
+        "kind": "video",
+        "label": "测试效果",
+        "sourceDuration": 10.069167,
+        "src": "store.mp4",
+        "thumbnail": "image005.png"
+      },
+      {
+        "id": "children",
+        "kind": "video",
+        "label": "测试效果",
+        "sourceDuration": 17.480356,
+        "src": "children.mp4",
+        "thumbnail": "image000.png"
+      }
+    ],
+    "scenes": [
+      {
+        "cues": [
+          0.96,
+          4.84
+        ],
+        "end": 6.16,
+        "id": "hook",
+        "labels": [
+          "测试效果",
+          "测试效果"
+        ],
+        "recipe": "orange",
+        "start": 0,
+        "subtitle": "测试效果",
+        "title": "测试效果"
+      },
+      {
+        "cues": [
+          6.16,
+          11.28,
+          14.08
+        ],
+        "end": 17.58,
+        "id": "wall",
+        "labels": [
+          "测试效果",
+          "测试效果",
+          "测试效果",
+          "测试效果"
+        ],
+        "recipe": "wall",
+        "start": 6.16,
+        "subtitle": "测试效果",
+        "title": "测试效果"
+      },
+      {
+        "cues": [
+          17.58,
+          22.26,
+          29.34,
+          33.22
+        ],
+        "end": 37.26,
+        "id": "detail",
+        "labels": [
+          "测试效果",
+          "测试效果",
+          "测试效果",
+          "测试效果"
+        ],
+        "recipe": "detail",
+        "start": 17.58,
+        "subtitle": "测试效果",
+        "title": "测试效果",
+        "windows": [
+          {
+            "end": 22.26,
+            "mediaId": "store",
+            "offset": 0.5,
+            "start": 17.58
+          },
+          {
+            "end": 37.26,
+            "mediaId": "children",
+            "offset": 1,
+            "start": 22.26
+          }
+        ]
+      },
+      {
+        "cues": [
+          37.26,
+          41.86
+        ],
+        "end": 48.47,
+        "id": "quote",
+        "labels": [
+          "测试效果",
+          "测试效果"
+        ],
+        "recipe": "quote",
+        "start": 37.26,
+        "subtitle": "测试效果",
+        "title": "测试效果",
+        "windows": [
+          {
+            "end": 48.47,
+            "mediaId": "children",
+            "offset": 8,
+            "start": 41.86
+          }
+        ]
+      },
+      {
+        "cues": [
+          48.47,
+          50.43
+        ],
+        "end": 55.07,
+        "id": "notice",
+        "labels": [
+          "测试效果",
+          "测试效果"
+        ],
+        "recipe": "notice",
+        "start": 48.47,
+        "subtitle": "测试效果",
+        "title": "测试效果"
+      },
+      {
+        "cues": [
+          55.07
+        ],
+        "end": 59.96666666666667,
+        "id": "brand",
+        "labels": [
+          "测试效果",
+          "测试效果"
+        ],
+        "recipe": "brand",
+        "start": 55.07,
+        "subtitle": "测试效果",
+        "title": "测试效果"
+      }
+    ],
+    "title": "测试效果",
+    "width": 1920
+  }
+}

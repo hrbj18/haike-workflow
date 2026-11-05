@@ -32,6 +32,7 @@ bash 02-启动Mac.command
 
 - Python standalone、Node 和 Chrome for Testing 使用 [npmmirror 二进制镜像](https://npmmirror.com/mirrors)，npm 使用 [npmmirror registry](https://npmmirror.com/)。
 - Python 包使用[清华 PyPI 镜像](https://mirrors.tuna.tsinghua.edu.cn/help/pypi/)。
+- 动效颜色转换使用 FFmpeg 9.0.2 的固定原生 ZIP，由清单中的构建发布方直连下载并核对公开摘要，不依赖 GitHub 下载代理；该地址不是国内托管镜像。
 - 本地安装只设置本次子进程的源，不改全局 pip/npm 配置；公网镜像只获取公开依赖，不接收 API Key。
 
 源码版本不附带依赖二进制；国内镜像是下载入口，当前网络可达性不能保证所有地区、所有时间均可达。镜像下载或摘要校验失败时停止，保留现场，不跳过校验或偷偷换包。
@@ -51,7 +52,8 @@ CI 可显式从上游获取相同摘要的公开运行时以避免跨洲镜像�
 1. 安装进程退出码为 0；`03-检查Mac.command` 检查原生 Python 导入、依赖一致性、媒体工具和 18 套首选模板源码摘要。
 2. 打开启动器返回的 `/avatar`，确认页面和两类模板封面可见；调用 `/api/health` 核对 workspace 属于本目录。看见模板不等于该模板已在 Mac 完整渲染验收。
 3. Agent 运行包内 Python 执行 `scripts/mac-deploy-smoke.py`：实际导出已有 HeroTitle 动效，检查画面运动、音视频流及 HTTP 封面，输出 `.local/mac-smoke/installation-test.mp4` 和验收 JSON。它使用合成测试音，零付费，不是真实数字人制作。
-4. 如要制作真实口播，再按 START_HERE.md 的原有预算、真实素材、统一队列和视听验收执行。源文件校验通过不能替代 18 套动效逐套在 Mac 上的完整成片验收；仍绑定 Windows 专用工具的历史执行器应停止并报告具体依赖，不能用静态图片、改名 exe 或取消校验替代。
+4. 全部18套动效的双架构完整时长渲染门槛、原生制作入口及恢复见 [MAC_MOTION_VALIDATION.md](MAC_MOTION_VALIDATION.md)。源文件校验不能替代实际渲染；发布验收记录需明确两种架构各18条的结果。
+5. 制作真实口播时按 START_HERE.md 的原有预算、真实素材、统一队列和视听验收执行。本地合成测试不代替真实数字人/ASR、平台账号和同事物理机验收。
 
 失败时保留日志、源码提交和配置；安装器不删除已有用户数据。下载失败可修复网络后重跑同一提交；离线包先核对 ZIP SHA256 和缓存完整性。依赖损坏时在保留原 `.venv` 后重建本项目环境；不清理系统 Python、全局 npm 或其他项目。新部署尚未接管生产时，回退只需重新使用原工作台目录；已产生的新数据另行保留，代码回退不回退账户余额。
 

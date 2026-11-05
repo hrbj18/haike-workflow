@@ -1,0 +1,1067 @@
+{
+  "schema": "haike.native-render-fixture/1",
+  "template_id": "field-notes-v1",
+  "preferred_version": "2.0.0",
+  "kind": "numbered",
+  "duration": 60.733333333333334,
+  "scope": "synthetic local renderer portability; no ASR/HQ/payment/creative acceptance claim",
+  "props": {
+    "schema": "haike.numbered-full-motion-episode/1",
+    "template_id": "field-notes-v1",
+    "version": "2.0.0",
+    "fps": 30,
+    "durationFrames": 1822,
+    "title": "测试效果",
+    "brand": "测试效果",
+    "address": "测试效果",
+    "sourceText": "测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果测试效果",
+    "audio": "master.wav",
+    "font": "font.ttf",
+    "captions": [
+      {
+        "text": "测试效果",
+        "startMs": 440,
+        "endMs": 1000
+      },
+      {
+        "text": "测试效果",
+        "startMs": 1560,
+        "endMs": 4200
+      },
+      {
+        "text": "测试效果",
+        "startMs": 4520,
+        "endMs": 5440
+      },
+      {
+        "text": "测试效果",
+        "startMs": 5680,
+        "endMs": 9320
+      },
+      {
+        "text": "测试效果",
+        "startMs": 9600,
+        "endMs": 10840
+      },
+      {
+        "text": "测试效果",
+        "startMs": 11160,
+        "endMs": 12440
+      },
+      {
+        "text": "测试效果",
+        "startMs": 12840,
+        "endMs": 14640
+      },
+      {
+        "text": "测试效果",
+        "startMs": 14840,
+        "endMs": 16440
+      },
+      {
+        "text": "测试效果",
+        "startMs": 16680,
+        "endMs": 17880
+      },
+      {
+        "text": "测试效果",
+        "startMs": 18160,
+        "endMs": 19440
+      },
+      {
+        "text": "测试效果",
+        "startMs": 19800,
+        "endMs": 20240
+      },
+      {
+        "text": "测试效果",
+        "startMs": 20720,
+        "endMs": 23120
+      },
+      {
+        "text": "测试效果",
+        "startMs": 23120,
+        "endMs": 24400
+      },
+      {
+        "text": "测试效果",
+        "startMs": 24820,
+        "endMs": 26740
+      },
+      {
+        "text": "测试效果",
+        "startMs": 27140,
+        "endMs": 27500
+      },
+      {
+        "text": "测试效果",
+        "startMs": 27780,
+        "endMs": 28900
+      },
+      {
+        "text": "测试效果",
+        "startMs": 29100,
+        "endMs": 30140
+      },
+      {
+        "text": "测试效果",
+        "startMs": 30540,
+        "endMs": 31020
+      },
+      {
+        "text": "测试效果",
+        "startMs": 31340,
+        "endMs": 32260
+      },
+      {
+        "text": "测试效果",
+        "startMs": 32460,
+        "endMs": 33820
+      },
+      {
+        "text": "测试效果",
+        "startMs": 34590,
+        "endMs": 35510
+      },
+      {
+        "text": "测试效果",
+        "startMs": 35910,
+        "endMs": 36430
+      },
+      {
+        "text": "测试效果",
+        "startMs": 36670,
+        "endMs": 38070
+      },
+      {
+        "text": "测试效果",
+        "startMs": 38470,
+        "endMs": 39950
+      },
+      {
+        "text": "测试效果",
+        "startMs": 39950,
+        "endMs": 40830
+      },
+      {
+        "text": "测试效果",
+        "startMs": 41230,
+        "endMs": 42630
+      },
+      {
+        "text": "测试效果",
+        "startMs": 43150,
+        "endMs": 44470
+      },
+      {
+        "text": "测试效果",
+        "startMs": 44670,
+        "endMs": 45790
+      },
+      {
+        "text": "测试效果",
+        "startMs": 46190,
+        "endMs": 46750
+      },
+      {
+        "text": "测试效果",
+        "startMs": 46990,
+        "endMs": 48070
+      },
+      {
+        "text": "测试效果",
+        "startMs": 48550,
+        "endMs": 50470
+      },
+      {
+        "text": "测试效果",
+        "startMs": 50790,
+        "endMs": 52150
+      },
+      {
+        "text": "测试效果",
+        "startMs": 52350,
+        "endMs": 53270
+      },
+      {
+        "text": "测试效果",
+        "startMs": 53790,
+        "endMs": 55910
+      },
+      {
+        "text": "测试效果",
+        "startMs": 56190,
+        "endMs": 57790
+      },
+      {
+        "text": "测试效果",
+        "startMs": 58190,
+        "endMs": 59270
+      },
+      {
+        "text": "测试效果",
+        "startMs": 59630,
+        "endMs": 60550
+      }
+    ],
+    "presenters": [
+      {
+        "file": "clip000.mp4",
+        "from": 0,
+        "to": 134,
+        "sourceStartFrame": 0,
+        "position": "50% 50%"
+      },
+      {
+        "file": "clip001.mp4",
+        "from": 1613,
+        "to": 1822,
+        "sourceStartFrame": 0,
+        "position": "50% 50%"
+      }
+    ],
+    "media": {
+      "entrance": [
+        {
+          "file": "clip002.mp4",
+          "from": 0,
+          "to": 158,
+          "sourceStartFrame": 0,
+          "position": "50% 35%"
+        },
+        {
+          "file": "clip003.mp4",
+          "from": 158,
+          "to": 416,
+          "sourceStartFrame": 0,
+          "position": "50% 35%"
+        },
+        {
+          "file": "clip004.mp4",
+          "from": 416,
+          "to": 666,
+          "sourceStartFrame": 0,
+          "position": "50% 35%"
+        },
+        {
+          "file": "clip005.mp4",
+          "from": 666,
+          "to": 1058,
+          "sourceStartFrame": 0,
+          "position": "50% 35%"
+        },
+        {
+          "file": "clip006.mp4",
+          "from": 1058,
+          "to": 1822,
+          "sourceStartFrame": 0,
+          "position": "50% 35%"
+        }
+      ],
+      "counter": [
+        {
+          "file": "clip007.mp4",
+          "from": 0,
+          "to": 199,
+          "sourceStartFrame": 0,
+          "position": "50% 35%"
+        },
+        {
+          "file": "clip008.mp4",
+          "from": 199,
+          "to": 372,
+          "sourceStartFrame": 0,
+          "position": "50% 35%"
+        },
+        {
+          "file": "clip005.mp4",
+          "from": 372,
+          "to": 764,
+          "sourceStartFrame": 0,
+          "position": "50% 35%"
+        },
+        {
+          "file": "clip009.mp4",
+          "from": 764,
+          "to": 938,
+          "sourceStartFrame": 0,
+          "position": "50% 35%"
+        },
+        {
+          "file": "clip004.mp4",
+          "from": 938,
+          "to": 1188,
+          "sourceStartFrame": 0,
+          "position": "50% 35%"
+        },
+        {
+          "file": "clip003.mp4",
+          "from": 1188,
+          "to": 1446,
+          "sourceStartFrame": 0,
+          "position": "50% 35%"
+        },
+        {
+          "file": "clip006.mp4",
+          "from": 1446,
+          "to": 1822,
+          "sourceStartFrame": 0,
+          "position": "50% 35%"
+        }
+      ],
+      "terminal": [
+        {
+          "file": "clip006.mp4",
+          "from": 0,
+          "to": 846,
+          "sourceStartFrame": 0,
+          "position": "50% 35%"
+        },
+        {
+          "file": "clip005.mp4",
+          "from": 846,
+          "to": 1238,
+          "sourceStartFrame": 0,
+          "position": "50% 35%"
+        },
+        {
+          "file": "clip003.mp4",
+          "from": 1238,
+          "to": 1496,
+          "sourceStartFrame": 0,
+          "position": "50% 35%"
+        },
+        {
+          "file": "clip004.mp4",
+          "from": 1496,
+          "to": 1746,
+          "sourceStartFrame": 0,
+          "position": "50% 35%"
+        },
+        {
+          "file": "clip002.mp4",
+          "from": 1746,
+          "to": 1822,
+          "sourceStartFrame": 0,
+          "position": "50% 35%"
+        }
+      ],
+      "goods": [
+        {
+          "file": "clip008.mp4",
+          "from": 0,
+          "to": 173,
+          "sourceStartFrame": 0,
+          "position": "50% 35%"
+        },
+        {
+          "file": "clip007.mp4",
+          "from": 173,
+          "to": 372,
+          "sourceStartFrame": 0,
+          "position": "50% 35%"
+        },
+        {
+          "file": "clip009.mp4",
+          "from": 372,
+          "to": 546,
+          "sourceStartFrame": 0,
+          "position": "50% 35%"
+        },
+        {
+          "file": "clip005.mp4",
+          "from": 546,
+          "to": 938,
+          "sourceStartFrame": 0,
+          "position": "50% 35%"
+        },
+        {
+          "file": "clip003.mp4",
+          "from": 938,
+          "to": 1196,
+          "sourceStartFrame": 0,
+          "position": "50% 35%"
+        },
+        {
+          "file": "clip004.mp4",
+          "from": 1196,
+          "to": 1446,
+          "sourceStartFrame": 0,
+          "position": "50% 35%"
+        },
+        {
+          "file": "clip006.mp4",
+          "from": 1446,
+          "to": 1822,
+          "sourceStartFrame": 0,
+          "position": "50% 35%"
+        }
+      ],
+      "store": [
+        {
+          "file": "clip005.mp4",
+          "from": 0,
+          "to": 392,
+          "sourceStartFrame": 0,
+          "position": "50% 35%"
+        },
+        {
+          "file": "clip004.mp4",
+          "from": 392,
+          "to": 642,
+          "sourceStartFrame": 0,
+          "position": "50% 35%"
+        },
+        {
+          "file": "clip003.mp4",
+          "from": 642,
+          "to": 900,
+          "sourceStartFrame": 0,
+          "position": "50% 35%"
+        },
+        {
+          "file": "clip009.mp4",
+          "from": 900,
+          "to": 1074,
+          "sourceStartFrame": 0,
+          "position": "50% 35%"
+        },
+        {
+          "file": "clip006.mp4",
+          "from": 1074,
+          "to": 1822,
+          "sourceStartFrame": 0,
+          "position": "50% 35%"
+        }
+      ],
+      "contact": [
+        {
+          "file": "clip003.mp4",
+          "from": 0,
+          "to": 258,
+          "sourceStartFrame": 0,
+          "position": "50% 35%"
+        },
+        {
+          "file": "clip004.mp4",
+          "from": 258,
+          "to": 508,
+          "sourceStartFrame": 0,
+          "position": "50% 35%"
+        },
+        {
+          "file": "clip002.mp4",
+          "from": 508,
+          "to": 666,
+          "sourceStartFrame": 0,
+          "position": "50% 35%"
+        },
+        {
+          "file": "clip005.mp4",
+          "from": 666,
+          "to": 1058,
+          "sourceStartFrame": 0,
+          "position": "50% 35%"
+        },
+        {
+          "file": "clip006.mp4",
+          "from": 1058,
+          "to": 1822,
+          "sourceStartFrame": 0,
+          "position": "50% 35%"
+        }
+      ],
+      "choice": [
+        {
+          "file": "clip009.mp4",
+          "from": 0,
+          "to": 174,
+          "sourceStartFrame": 0,
+          "position": "50% 35%"
+        },
+        {
+          "file": "clip002.mp4",
+          "from": 174,
+          "to": 332,
+          "sourceStartFrame": 0,
+          "position": "50% 35%"
+        },
+        {
+          "file": "clip004.mp4",
+          "from": 332,
+          "to": 582,
+          "sourceStartFrame": 0,
+          "position": "50% 35%"
+        },
+        {
+          "file": "clip003.mp4",
+          "from": 582,
+          "to": 840,
+          "sourceStartFrame": 0,
+          "position": "50% 35%"
+        },
+        {
+          "file": "clip005.mp4",
+          "from": 840,
+          "to": 1232,
+          "sourceStartFrame": 0,
+          "position": "50% 35%"
+        },
+        {
+          "file": "clip006.mp4",
+          "from": 1232,
+          "to": 1822,
+          "sourceStartFrame": 0,
+          "position": "50% 35%"
+        }
+      ]
+    },
+    "actions": {
+      "haike.field-notes-v1.video.arrive": {
+        "from": 136,
+        "to": 202
+      },
+      "haike.field-notes-v1.video.compare": {
+        "from": 469,
+        "to": 535
+      },
+      "haike.field-notes-v1.video.connect": {
+        "from": 1062,
+        "to": 1128
+      },
+      "haike.field-notes-v1.video.recap": {
+        "from": 1480,
+        "to": 1546
+      }
+    },
+    "stages": [
+      {
+        "id": "arrive",
+        "from": 0,
+        "to": 445,
+        "headline": "测试效果\n完整验证",
+        "text": {
+          "label": "测试效果",
+          "note": "测试效果\n完整验证"
+        },
+        "timing": {
+          "mediaFrom": 136,
+          "noteFrom": 335
+        }
+      },
+      {
+        "id": "compare",
+        "from": 445,
+        "to": 1038,
+        "headline": "测试效果\n完整验证",
+        "text": {
+          "label": "测试效果",
+          "note": "测试效果\n完整验证",
+          "tags": [
+            "测试效果",
+            "测试效果"
+          ]
+        },
+        "timing": {
+          "mediaFrom": 24,
+          "noteFrom": 471
+        }
+      },
+      {
+        "id": "connect",
+        "from": 1038,
+        "to": 1456,
+        "headline": "测试效果\n完整验证",
+        "text": {
+          "label": "测试效果",
+          "note": "测试效果\n完整验证"
+        },
+        "timing": {
+          "mediaFrom": 24,
+          "noteFrom": 348
+        }
+      },
+      {
+        "id": "recap",
+        "from": 1456,
+        "to": 1822,
+        "headline": "测试效果\n完整验证",
+        "text": {
+          "label": "测试效果",
+          "note": "测试效果",
+          "summary": [
+            "测试效果",
+            "测试效果",
+            "测试效果"
+          ]
+        },
+        "timing": {
+          "mediaFrom": 24,
+          "noteFrom": 158
+        }
+      }
+    ],
+    "content": {
+      "schema": "haike.chromatic-avatar-episode/2",
+      "mode": "narrated-preview",
+      "fontFamily": "Haike Sans",
+      "presenterName": "测试效果",
+      "brand": "测试效果",
+      "address": "测试效果",
+      "photos": [
+        "entrance",
+        "counter",
+        "terminal",
+        "goods",
+        "store",
+        "contact",
+        "choice"
+      ],
+      "segments": [
+        {
+          "id": "arrive",
+          "from": 0,
+          "to": 445,
+          "headline": "测试效果\n完整验证",
+          "text": {
+            "label": "测试效果",
+            "note": "测试效果\n完整验证"
+          },
+          "timing": {
+            "mediaFrom": 136,
+            "noteFrom": 335
+          }
+        },
+        {
+          "id": "compare",
+          "from": 445,
+          "to": 1038,
+          "headline": "测试效果\n完整验证",
+          "text": {
+            "label": "测试效果",
+            "note": "测试效果\n完整验证",
+            "tags": [
+              "测试效果",
+              "测试效果"
+            ]
+          },
+          "timing": {
+            "mediaFrom": 24,
+            "noteFrom": 471
+          }
+        },
+        {
+          "id": "connect",
+          "from": 1038,
+          "to": 1456,
+          "headline": "测试效果\n完整验证",
+          "text": {
+            "label": "测试效果",
+            "note": "测试效果\n完整验证"
+          },
+          "timing": {
+            "mediaFrom": 24,
+            "noteFrom": 348
+          }
+        },
+        {
+          "id": "recap",
+          "from": 1456,
+          "to": 1822,
+          "headline": "测试效果\n完整验证",
+          "text": {
+            "label": "测试效果",
+            "note": "测试效果",
+            "summary": [
+              "测试效果",
+              "测试效果",
+              "测试效果"
+            ]
+          },
+          "timing": {
+            "mediaFrom": 24,
+            "noteFrom": 158
+          }
+        }
+      ],
+      "stages": [
+        {
+          "id": "arrive",
+          "from": 0,
+          "to": 445,
+          "headline": "测试效果\n完整验证",
+          "text": {
+            "label": "测试效果",
+            "note": "测试效果\n完整验证"
+          },
+          "timing": {
+            "mediaFrom": 136,
+            "noteFrom": 335
+          }
+        },
+        {
+          "id": "compare",
+          "from": 445,
+          "to": 1038,
+          "headline": "测试效果\n完整验证",
+          "text": {
+            "label": "测试效果",
+            "note": "测试效果\n完整验证",
+            "tags": [
+              "测试效果",
+              "测试效果"
+            ]
+          },
+          "timing": {
+            "mediaFrom": 24,
+            "noteFrom": 471
+          }
+        },
+        {
+          "id": "connect",
+          "from": 1038,
+          "to": 1456,
+          "headline": "测试效果\n完整验证",
+          "text": {
+            "label": "测试效果",
+            "note": "测试效果\n完整验证"
+          },
+          "timing": {
+            "mediaFrom": 24,
+            "noteFrom": 348
+          }
+        },
+        {
+          "id": "recap",
+          "from": 1456,
+          "to": 1822,
+          "headline": "测试效果\n完整验证",
+          "text": {
+            "label": "测试效果",
+            "note": "测试效果",
+            "summary": [
+              "测试效果",
+              "测试效果",
+              "测试效果"
+            ]
+          },
+          "timing": {
+            "mediaFrom": 24,
+            "noteFrom": 158
+          }
+        }
+      ],
+      "durationInFrames": 1822,
+      "captions": [
+        {
+          "from": 13,
+          "to": 30,
+          "text": "测试效果"
+        },
+        {
+          "from": 47,
+          "to": 126,
+          "text": "测试效果"
+        },
+        {
+          "from": 136,
+          "to": 163,
+          "text": "测试效果"
+        },
+        {
+          "from": 170,
+          "to": 280,
+          "text": "测试效果"
+        },
+        {
+          "from": 288,
+          "to": 325,
+          "text": "测试效果"
+        },
+        {
+          "from": 335,
+          "to": 373,
+          "text": "测试效果"
+        },
+        {
+          "from": 385,
+          "to": 439,
+          "text": "测试效果"
+        },
+        {
+          "from": 445,
+          "to": 493,
+          "text": "测试效果"
+        },
+        {
+          "from": 500,
+          "to": 536,
+          "text": "测试效果"
+        },
+        {
+          "from": 545,
+          "to": 583,
+          "text": "测试效果"
+        },
+        {
+          "from": 594,
+          "to": 607,
+          "text": "测试效果"
+        },
+        {
+          "from": 622,
+          "to": 694,
+          "text": "测试效果"
+        },
+        {
+          "from": 694,
+          "to": 732,
+          "text": "测试效果"
+        },
+        {
+          "from": 745,
+          "to": 802,
+          "text": "测试效果"
+        },
+        {
+          "from": 814,
+          "to": 825,
+          "text": "测试效果"
+        },
+        {
+          "from": 833,
+          "to": 867,
+          "text": "测试效果"
+        },
+        {
+          "from": 873,
+          "to": 904,
+          "text": "测试效果"
+        },
+        {
+          "from": 916,
+          "to": 931,
+          "text": "测试效果"
+        },
+        {
+          "from": 940,
+          "to": 968,
+          "text": "测试效果"
+        },
+        {
+          "from": 974,
+          "to": 1015,
+          "text": "测试效果"
+        },
+        {
+          "from": 1038,
+          "to": 1065,
+          "text": "测试效果"
+        },
+        {
+          "from": 1077,
+          "to": 1093,
+          "text": "测试效果"
+        },
+        {
+          "from": 1100,
+          "to": 1142,
+          "text": "测试效果"
+        },
+        {
+          "from": 1154,
+          "to": 1198,
+          "text": "测试效果"
+        },
+        {
+          "from": 1198,
+          "to": 1225,
+          "text": "测试效果"
+        },
+        {
+          "from": 1237,
+          "to": 1279,
+          "text": "测试效果"
+        },
+        {
+          "from": 1294,
+          "to": 1334,
+          "text": "测试效果"
+        },
+        {
+          "from": 1340,
+          "to": 1374,
+          "text": "测试效果"
+        },
+        {
+          "from": 1386,
+          "to": 1402,
+          "text": "测试效果"
+        },
+        {
+          "from": 1410,
+          "to": 1442,
+          "text": "测试效果"
+        },
+        {
+          "from": 1456,
+          "to": 1514,
+          "text": "测试效果"
+        },
+        {
+          "from": 1524,
+          "to": 1564,
+          "text": "测试效果"
+        },
+        {
+          "from": 1570,
+          "to": 1598,
+          "text": "测试效果"
+        },
+        {
+          "from": 1614,
+          "to": 1677,
+          "text": "测试效果"
+        },
+        {
+          "from": 1686,
+          "to": 1734,
+          "text": "测试效果"
+        },
+        {
+          "from": 1746,
+          "to": 1778,
+          "text": "测试效果"
+        },
+        {
+          "from": 1789,
+          "to": 1816,
+          "text": "测试效果"
+        }
+      ]
+    },
+    "critical_internal_events": [
+      {
+        "id": "arrive.title.start",
+        "frame": 0,
+        "source": "Native render test"
+      },
+      {
+        "id": "arrive.title.settled",
+        "frame": 18,
+        "source": "Native render test"
+      },
+      {
+        "id": "arrive.media.start",
+        "frame": 136,
+        "source": "Native render test"
+      },
+      {
+        "id": "arrive.media.settled",
+        "frame": 202,
+        "source": "Native render test"
+      },
+      {
+        "id": "arrive.note.start",
+        "frame": 335,
+        "source": "Native render test"
+      },
+      {
+        "id": "arrive.note.settled",
+        "frame": 359,
+        "source": "Native render test"
+      },
+      {
+        "id": "compare.title.start",
+        "frame": 445,
+        "source": "Native render test"
+      },
+      {
+        "id": "compare.title.settled",
+        "frame": 463,
+        "source": "Native render test"
+      },
+      {
+        "id": "compare.media.start",
+        "frame": 469,
+        "source": "Native render test"
+      },
+      {
+        "id": "compare.media.settled",
+        "frame": 535,
+        "source": "Native render test"
+      },
+      {
+        "id": "compare.note.start",
+        "frame": 916,
+        "source": "Native render test"
+      },
+      {
+        "id": "compare.note.settled",
+        "frame": 940,
+        "source": "Native render test"
+      },
+      {
+        "id": "connect.title.start",
+        "frame": 1038,
+        "source": "Native render test"
+      },
+      {
+        "id": "connect.title.settled",
+        "frame": 1056,
+        "source": "Native render test"
+      },
+      {
+        "id": "connect.media.start",
+        "frame": 1062,
+        "source": "Native render test"
+      },
+      {
+        "id": "connect.media.settled",
+        "frame": 1128,
+        "source": "Native render test"
+      },
+      {
+        "id": "connect.note.start",
+        "frame": 1386,
+        "source": "Native render test"
+      },
+      {
+        "id": "connect.note.settled",
+        "frame": 1410,
+        "source": "Native render test"
+      },
+      {
+        "id": "recap.title.start",
+        "frame": 1456,
+        "source": "Native render test"
+      },
+      {
+        "id": "recap.title.settled",
+        "frame": 1474,
+        "source": "Native render test"
+      },
+      {
+        "id": "recap.media.start",
+        "frame": 1480,
+        "source": "Native render test"
+      },
+      {
+        "id": "recap.media.settled",
+        "frame": 1546,
+        "source": "Native render test"
+      },
+      {
+        "id": "recap.note.start",
+        "frame": 1614,
+        "source": "Native render test"
+      },
+      {
+        "id": "recap.note.settled",
+        "frame": 1638,
+        "source": "Native render test"
+      }
+    ],
+    "physical_media_uses": []
+  }
+}

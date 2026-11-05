@@ -1,0 +1,150 @@
+{
+  "schema": "haike.native-render-fixtures/1",
+  "scope": "synthetic fixtures, all preferred styles; no user media, keys, voice IDs or original scripts",
+  "templates": [
+    {
+      "template_id": "kinetic-field-v1",
+      "version": "2.0.0",
+      "kind": "numbered",
+      "duration": 60.75,
+      "file": "kinetic-field-v1.json",
+      "sha256": "cb86c837dc257f1b42aaab4a00652d9cf66ecc8e045f3845d93961d3771a03d2"
+    },
+    {
+      "template_id": "nana-mint-explainer-v1",
+      "version": "2.0.0",
+      "kind": "numbered",
+      "duration": 60.733333333333334,
+      "file": "nana-mint-explainer-v1.json",
+      "sha256": "d21a6abcbe84773747da0d7ca83fc8f13c2c7f7390cdc31bb30a1d76d26caeed"
+    },
+    {
+      "template_id": "field-notes-v1",
+      "version": "2.0.0",
+      "kind": "numbered",
+      "duration": 60.733333333333334,
+      "file": "field-notes-v1.json",
+      "sha256": "17220da8904a4a42892e7b3adfbe7ce164983643ae38d002c19fe6c31419e065"
+    },
+    {
+      "template_id": "field-notes-v2",
+      "version": "2.1.0",
+      "kind": "field-notes",
+      "duration": 60.733333333333334,
+      "file": "field-notes-v2.json",
+      "sha256": "b2fdb0bac7fd3a2be17d57cde85f3ef63ae828560b2acbce1c9a4087e298f047"
+    },
+    {
+      "template_id": "chromatic-06",
+      "version": "1.2.0-candidate.1",
+      "kind": "chromatic06",
+      "duration": 60.0,
+      "file": "chromatic-06.json",
+      "sha256": "1d937c8199b60bc866c47393260850045aeb719a885fa41a4585ad98983851ab"
+    },
+    {
+      "template_id": "chromatic-07",
+      "version": "1.2.0-candidate.1",
+      "kind": "chromatic-suite",
+      "duration": 60.0,
+      "file": "chromatic-07.json",
+      "sha256": "bd46b8cbcc0a5fc61c19af2b8f547ceb8a3b8917b9cdd4e22114c2a821812ba2"
+    },
+    {
+      "template_id": "chromatic-08",
+      "version": "1.2.0-candidate.1",
+      "kind": "chromatic-suite",
+      "duration": 60.0,
+      "file": "chromatic-08.json",
+      "sha256": "08642ef1a43336c7f7d3ce433a040a12f7fe2e851b6d4cf678e332b45429db47"
+    },
+    {
+      "template_id": "chromatic-09",
+      "version": "1.2.0-candidate.1",
+      "kind": "chromatic-suite",
+      "duration": 60.0,
+      "file": "chromatic-09.json",
+      "sha256": "1820b03dc451c8929552ef74283daac799f9c2ecd73e2d38c564cc3a288f6b35"
+    },
+    {
+      "template_id": "chromatic-six-10",
+      "version": "1.2.0-candidate.1",
+      "kind": "chromatic-suite",
+      "duration": 60.0,
+      "file": "chromatic-six-10.json",
+      "sha256": "9a1f21235acb474755503911ebc7070ee45df4de1aa744a575f6baeec0a535a9"
+    },
+    {
+      "template_id": "chromatic-six-11",
+      "version": "1.2.0-candidate.1",
+      "kind": "chromatic-suite",
+      "duration": 60.0,
+      "file": "chromatic-six-11.json",
+      "sha256": "b6d980e9a20311df4077fca201a7d3a5c2aaa6290635c9033d93b2adc2c81871"
+    },
+    {
+      "template_id": "template-01-integrated",
+      "version": "1.0.1-public.2",
+      "kind": "html",
+      "duration": 60.0,
+      "file": "template-01-integrated.json",
+      "sha256": "cba60075a294ff50240543b83745887a01032d7dc2883c8c3d40d5cf2ea7e263"
+    },
+    {
+      "template_id": "template-02-expanded",
+      "version": "1.0.1-public.2",
+      "kind": "html",
+      "duration": 60.0,
+      "file": "template-02-expanded.json",
+      "sha256": "c1f1206b3be577b8fed65acd3dad1263e4849d4a2954ff5b01572c847dbefb7d"
+    },
+    {
+      "template_id": "template-04-dark-console",
+      "version": "1.0.1-public.2",
+      "kind": "html",
+      "duration": 60.0,
+      "file": "template-04-dark-console.json",
+      "sha256": "5d9d7e2e91fb42f8336d97c3de266348a7fb1c2e0fab94bf6fc6d606bfa7a5a7"
+    },
+    {
+      "template_id": "template-03-native",
+      "version": "1.0.1-public.2",
+      "kind": "dark",
+      "duration": 108.96666666666667,
+      "file": "template-03-native.json",
+      "sha256": "cae43fec3f78078ab5718bb5ca9964379c4525fd6aae78b9d052c0fb59ab459f"
+    },
+    {
+      "template_id": "vibrant-poster",
+      "version": "1.0.0-public.3",
+      "kind": "html",
+      "duration": 60,
+      "file": "vibrant-poster.json",
+      "sha256": "33c9b9068a1daec32acb70095343df35ff2fd15629e3331a39386e06a29a34d7"
+    },
+    {
+      "template_id": "knowledge-explainer-sketchnote",
+      "version": "5.1.1-independent.1",
+      "kind": "knowledge",
+      "duration": 59.96666666666667,
+      "file": "knowledge-explainer-sketchnote.json",
+      "sha256": "67f1b415e70e76f95418af510929e1a044b9821ce406ff0d8f4e3b7b29388e27"
+    },
+    {
+      "template_id": "knowledge-explainer-chalkboard",
+      "version": "5.1.1-independent.1",
+      "kind": "knowledge",
+      "duration": 59.96666666666667,
+      "file": "knowledge-explainer-chalkboard.json",
+      "sha256": "a2e411fd485b2a7f0ee6c7885af91df94c0776be15cbf740c310f6b8e7efa43c"
+    },
+    {
+      "template_id": "motiongit-promo-user",
+      "version": "3.0.0-reference-public.3",
+      "kind": "promo",
+      "duration": 59.96666666666667,
+      "file": "motiongit-promo-user.json",
+      "sha256": "2abc1b9854a22fdb09991deeedfa1d69a9804570356dc61d13139648733bd46d"
+    }
+  ]
+}

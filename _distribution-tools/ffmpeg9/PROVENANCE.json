@@ -1,0 +1,12 @@
+[
+  {
+    "file": "COPYING.GPLv3",
+    "source": "https://raw.githubusercontent.com/FFmpeg/FFmpeg/946fcce07b6dcd0331c8cc609192aeff5e1924f8/COPYING.GPLv3",
+    "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903"
+  },
+  {
+    "file": "LICENSE.md",
+    "source": "https://raw.githubusercontent.com/FFmpeg/FFmpeg/946fcce07b6dcd0331c8cc609192aeff5e1924f8/LICENSE.md",
+    "sha256": "2e1d16c72fd74e12063776371da757322f8b77589386532f4fd8634bde7de1af"
+  }
+]

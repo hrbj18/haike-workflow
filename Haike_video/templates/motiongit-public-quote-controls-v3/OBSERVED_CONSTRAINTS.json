@@ -1,0 +1,35 @@
+{
+  "schema": "haike.quote-controls-observed-constraints/3",
+  "light_reveal": [
+    {
+      "relative_seconds": 0.1,
+      "state": "only first phrase blurred"
+    },
+    {
+      "relative_seconds": [
+        0.65,
+        0.74
+      ],
+      "state": "first phrase clear, later phrases blurred, author hidden"
+    },
+    {
+      "relative_seconds": 1.58,
+      "state": "whole quote and author readable"
+    }
+  ],
+  "console_card": [
+    {
+      "relative_seconds": 0.64,
+      "state": "author hidden"
+    },
+    {
+      "relative_seconds": 1.58,
+      "state": "author readable"
+    }
+  ],
+  "curve_uniqueness": "not established by sparse observed frames; QUOTE_V3 is independently authored",
+  "grouping_authority": "motion_public_quote_observed_v3.default_reveal_groups; punctuation clauses, 3-codepoint prefixes while remainder>6; fallback 3-codepoint groups if>20 groups",
+  "explicit_group_gate": "light+reveal only;1..20 nonempty strings,1..6codepoints each, concatenation equals full1..50-codepoint text, no CR/LF/tab",
+  "ink_targets": "existing fixed-ROI native boxes constrain position; actual candidate Geist ink not statically proven",
+  "color_domain": "retain palette/encoding; final BT709-transfer pixels require transfer-aware sRGB comparison; no new color correction"
+}

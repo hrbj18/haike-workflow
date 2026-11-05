@@ -202,7 +202,8 @@ def prepare(template_id, version, request=None, *, workspace=WORKSPACE,
     module_name, function_name = PREPARATION_OVERRIDES.get(
         (template['_registry'], template_id, version),
         (REGISTRIES[template['_registry']], 'prepare'))
-    adapter = importlib.import_module(module_name)
+    from backlot.motion_platform import owned_module
+    adapter = owned_module(module_name)
     value = getattr(adapter, function_name)(deepcopy(template), payload, workspace=Path(workspace))
     _require(isinstance(value, dict), '动效适配器返回格式无效')
     _require(value.get('status') in {'prepared', 'blocked', 'inspect_only'},
