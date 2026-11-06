@@ -88,6 +88,23 @@ def test_readiness_requires_helper_token_and_all_tasks_idle(tmp_path, monkeypatc
     assert not web.get("/api/studio/app-update/readiness", headers=headers).json()["ready"]
 
 
+def test_update_waits_for_one_stop_before_it_enters_production_queue(tmp_path, monkeypatch):
+    from concurrent.futures import Future
+    web, app = client(tmp_path)
+    identity = 'c' * 24
+    updates.set_operation(tmp_path, 'waiting', '等待', id=identity)
+    updates.write_json(updates.private_path(tmp_path, identity+'/operation.json'), {'token':'test-token'})
+    app.state.production_queue = SimpleNamespace(list=lambda **kw: {})
+    monkeypatch.setattr(api, 'publisher_busy', lambda root: '')
+    worker = Future()
+    app.state.one_stop_workers = {('synthetic-scope', 'synthetic-job'): worker}
+    headers = {'X-Haike-Update-Token':'test-token'}
+    result = web.get('/api/studio/app-update/readiness', headers=headers).json()
+    assert not result['ready'] and '后台制作' in result['message']
+    worker.set_result(None)
+    assert web.get('/api/studio/app-update/readiness', headers=headers).json()['ready']
+
+
 def test_update_waits_for_native_template_preparation(tmp_path, monkeypatch):
     from backlot import studio_motion_templates_api as motion
     web, app = client(tmp_path)

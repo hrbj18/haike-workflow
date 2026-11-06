@@ -63,7 +63,9 @@ asyncio.run(main())
     base = result['url'].removesuffix('/avatar')
     with opener.open(base + '/avatar', timeout=10) as response:
         assert response.status == 200
-    with opener.open(base + '/api/studio/template-library', timeout=10) as response:
+    # A cold catalog verifies the installed native dependency files and source
+    # hashes. Intel CI hosts can exceed 10 seconds on this first read.
+    with opener.open(base + '/api/studio/template-library', timeout=120) as response:
         catalog = json.load(response)
     rows = catalog['templates']
     covers = 0

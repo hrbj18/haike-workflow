@@ -190,7 +190,7 @@ async def readiness(request: Request):
     from backlot import studio_motion_templates_api
     if studio_motion_templates_api._ACTIVE_PREPARATIONS:
         blockers.append('正在等待动效模板的素材检查、准备或预览结束。')
-    for name in ("recovery_tasks", "media_index_tasks", "media_index_batch_tasks", "interaction_candidate_tasks", "interaction_second_pass_tasks"):
+    for name in ("one_stop_workers", "recovery_tasks", "media_index_tasks", "media_index_batch_tasks", "interaction_candidate_tasks", "interaction_second_pass_tasks"):
         tasks = getattr(request.app.state, name, {})
         if isinstance(tasks, dict):
             tasks = tasks.values()
