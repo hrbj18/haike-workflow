@@ -8,22 +8,26 @@ import os
 import socket
 import sqlite3
 import sys
+import time
 from contextlib import closing
+from urllib.parse import urlsplit
 from pathlib import Path
 from unittest.mock import patch, Mock
 
 from portable import (app_update as core, update_service as service,
                       source_app_update as source, source_update_worker as source_worker, update_worker as worker)
 
-SERVER = '''import http.server,json,os,sys,uuid,subprocess
+SERVER = '''import http.server,json,os,sys,uuid,subprocess,socketserver
 from pathlib import Path
 root=Path.cwd().parent.resolve(); instance=uuid.uuid4().hex
-print('[UPDATE-BOOT-DIAG] cwd='+str(root),flush=True)
 if (root/'fail-start').exists(): raise SystemExit(3)
+class LoopbackServer(http.server.HTTPServer):
+ def server_bind(self):
+  socketserver.TCPServer.server_bind(self)
+  self.server_name='localhost';self.server_port=self.server_address[1]
 class Handler(http.server.BaseHTTPRequestHandler):
  def log_message(self,*args): pass
  def do_GET(self):
-  print('[UPDATE-BOOT-DIAG] GET '+self.path,flush=True)
   release=json.loads((root/'VERSION.json').read_text())
   if self.path=='/api/health': value={'ok':True,'edition':'haike-workflow-2','workspace':str(root),'pid':os.getpid(),'instance_id':instance,'version':release['version'],'source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True).strip()}
   elif self.path=='/api/studio/app-update/readiness': value={'ready':True}
@@ -31,23 +35,24 @@ class Handler(http.server.BaseHTTPRequestHandler):
   else:
    self.send_response(200);self.end_headers();self.wfile.write(b'<html>synthetic UI</html>');return
   self.send_response(200);self.end_headers();self.wfile.write(json.dumps(value).encode())
-print('[UPDATE-BOOT-DIAG] binding',flush=True)
-server=http.server.HTTPServer(('127.0.0.1',int(sys.argv[-1])),Handler)
-print('[UPDATE-BOOT-DIAG] listening',flush=True)
-server.serve_forever()
+LoopbackServer(('127.0.0.1',int(sys.argv[-1])),Handler).serve_forever()
 '''
 
-PUBLISHER = '''import hashlib,http.server,json,os,sys,uuid
+PUBLISHER = '''import hashlib,http.server,json,os,sys,uuid,socketserver
 from pathlib import Path
 module=Path.cwd().resolve(); instance=uuid.uuid4().hex
 build=(module/'version.txt').read_text()
 fingerprint=hashlib.sha256(str(module).replace(chr(92),'/').casefold().encode()).hexdigest()
+class LoopbackServer(http.server.HTTPServer):
+ def server_bind(self):
+  socketserver.TCPServer.server_bind(self)
+  self.server_name='localhost';self.server_port=self.server_address[1]
 class Handler(http.server.BaseHTTPRequestHandler):
  def log_message(self,*args): pass
  def do_GET(self):
   value={'status':'ok','pid':os.getpid(),'instance_id':instance,'service_fingerprint':fingerprint,'update_inflight':0,'build':build}
   self.send_response(200);self.end_headers();self.wfile.write(json.dumps(value).encode())
-http.server.HTTPServer(('127.0.0.1',int(sys.argv[-1])),Handler).serve_forever()
+LoopbackServer(('127.0.0.1',int(sys.argv[-1])),Handler).serve_forever()
 '''
 
 
@@ -169,6 +174,9 @@ class SourceTransactionTests(unittest.TestCase):
             child = worker.start_server(root, port)
             try:
                 health = worker.wait_server(base, root, child, '1.2.3', timeout=15, source_commit=old)
+                if publisher and sys.platform == 'darwin':
+                    service.write_json(root / '.local/mac-services.json', dict(root=str(root.resolve()),
+                        studio_port=port, publisher_port=urlsplit(publisher_base).port, pids=[original_publisher['pid'], health['pid']]))
                 identity = self.command(root, candidate, base, health)
                 original_git = source.git
                 fetches = []
@@ -208,6 +216,9 @@ class SourceTransactionTests(unittest.TestCase):
                     health = source_worker.publisher_identity(root, publisher_base)
                     self.assertEqual(health['build'], 'old' if failure else 'new')
                     self.assertNotEqual(health['instance_id'], original_publisher['instance_id'])
+                    if sys.platform == 'darwin':
+                        actual = service.read_json(root / '.local/mac-services.json')
+                        self.assertEqual(actual['pids'], [health['pid'], worker.local_get(base, '/api/health')['pid']])
             finally:
                 try:
                     health = worker.local_get(base, '/api/health')
@@ -259,6 +270,11 @@ class SourceTransactionTests(unittest.TestCase):
                     log = service.private_path(root, 'restart.log').read_text(encoding='utf-8', errors='replace')[-2000:]
                     self.fail(f'{error}; root={root.resolve()}; python={sys.executable}; child={child.poll()}; direct={direct}; health={health}; log={log}')
             finally:
+                try:
+                    health = worker.local_get(base, '/api/health')
+                    worker.stop_verified(base, root, health['instance_id'], health['pid'])
+                except (OSError, ValueError):
+                    pass
                 if child.poll() is None:
                     child.terminate()
                     child.wait(timeout=10)
@@ -297,6 +313,34 @@ class SourceTransactionTests(unittest.TestCase):
                  self.assertRaises(core.UpdateError):
                 worker.wait_server('http://127.0.0.1:1234', folder, child, '1.2.3',
                                    source_commit='a'*40, previous_instance='old')
+
+    def test_cleanup_can_stop_the_owned_venv_launcher_tree_without_health(self):
+        with tempfile.TemporaryDirectory() as folder:
+            self.fixture(folder)
+            with socket.socket() as sock:
+                sock.bind(('127.0.0.1', 0))
+                port = sock.getsockname()[1]
+            base = 'http://127.0.0.1:' + str(port)
+            child = worker.start_server(Path(folder), port)
+            try:
+                health = worker.wait_server(base, folder, child, '1.2.3', timeout=10)
+                with patch.object(worker, 'local_get', side_effect=OSError('unresponsive')):
+                    worker.terminate_started(child)
+                self.assertFalse(service.process_alive(health['pid']))
+            finally:
+                worker.terminate_started(child)
+                # Windows tree termination may finish the launcher before the
+                # child's pending file handles close. Do not race temp cleanup.
+                if os.name == 'nt':
+                    log = service.private_path(folder, 'restart.log')
+                    deadline = time.monotonic() + 3
+                    while log.exists():
+                        try:
+                            log.unlink()
+                        except PermissionError:
+                            if time.monotonic() >= deadline:
+                                raise
+                            time.sleep(.05)
 
     def test_dirty_index_is_preserved_and_blocks_install(self):
         with tempfile.TemporaryDirectory() as folder:
@@ -339,6 +383,20 @@ class SourceTransactionTests(unittest.TestCase):
             old, new, media, candidate = self.fixture(folder)
             (Path(folder) / 'RELEASE.json').write_text('{"version":"1.0.0"}')
             self.assertEqual(service.current_release(folder)['version'], '1.2.3')
+
+    def test_external_git_switch_cannot_report_new_code_as_running(self):
+        with tempfile.TemporaryDirectory() as folder:
+            old, new, media, candidate = self.fixture(folder)
+            updater = service.UpdateService(folder, running_release=dict(version='1.2.3', source_commit=old))
+            source.switch(folder, new)
+            with patch.object(service, 'remote_open') as remote:
+                snapshot = updater.check()
+            remote.assert_not_called()
+            self.assertEqual(snapshot['update']['status'], 'restart-required')
+            self.assertFalse(snapshot['capability']['can_install'])
+            self.assertEqual(snapshot['current']['source_commit'], old)
+            self.assertEqual(snapshot['current']['installed_source_commit'], new)
+            self.assertEqual((Path(folder) / 'program.txt').read_text(), 'new')
 
     def test_other_publisher_identity_cannot_be_stopped(self):
         with tempfile.TemporaryDirectory() as folder, \

@@ -31,12 +31,14 @@ export function aboutHref(locationLike = {}, open = true) {
 export function updateCompleted(snapshot) {
   const operation = snapshot?.operation;
   return operation?.status === 'complete' && Boolean(operation.target_version) &&
+    !snapshot?.current?.restart_required &&
     snapshot?.current?.version === operation.target_version &&
     (!operation.target_commit || snapshot?.current?.source_commit === operation.target_commit);
 }
 
 export function updateActive(snapshot) {
   const status = snapshot?.operation?.status;
+  if (snapshot?.current?.restart_required && !RUNNING.has(status)) return false;
   return RUNNING.has(status) || (status === 'complete' && !updateCompleted(snapshot));
 }
 
@@ -53,6 +55,7 @@ export function canCancelUpdate(snapshot) {
 export function updateStatus(snapshot, {checking = false, disconnected = false, reconnectStopped = false, checkError = '', versionError = ''} = {}) {
   const operation = snapshot?.operation || {};
   const update = snapshot?.update || {};
+  if (snapshot?.current?.restart_required && !updateActive(snapshot)) return {kind: 'warning', title: '源码已变化，请重启工作台', message: '请让 Agent 核对并重启本副本，当前进程尚未加载磁盘上的新提交。'};
   if (updateCompleted(snapshot)) return {kind: 'success', title: '更新完成', message: '新版本已启动并通过检查，刷新页面即可使用。'};
   if (updateActive(snapshot)) {
     if (reconnectStopped) return {kind: 'warning', title: '暂时无法连接工作台', message: '尚未确认更新结果。请重新连接查看原更新记录，不要重复安装。'};

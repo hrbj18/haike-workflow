@@ -25,7 +25,7 @@ router = APIRouter(prefix="/api/studio/app-update")
 def service(app):
     value = getattr(app.state, "app_update_service", None)
     if value is None:
-        value = updates.UpdateService(ROOT)
+        value = updates.UpdateService(ROOT, running_release=getattr(app.state, 'running_release', None))
         app.state.app_update_service = value
     return value
 

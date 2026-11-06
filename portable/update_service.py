@@ -184,6 +184,8 @@ def process_alive(pid):
 
 
 def capability(root, current):
+    if current.get('restart_required'):
+        return {'can_install': False, 'reason': '源码已被外部操作改变，请让 Agent 核对并重启本副本；当前进程仍运行旧提交。'}
     if current.get('package_type') == 'source':
         return source_updates.inspect(root)
     if current.get("package_type") != "portable" or current.get("development"):
@@ -197,12 +199,22 @@ def capability(root, current):
 
 
 class UpdateService:
-    def __init__(self, root, feed_url=None):
+    def __init__(self, root, feed_url=None, *, running_release=None):
         self.root = Path(root).resolve()
         self.feed_url = feed_url or os.environ.get("HAIKE_UPDATE_FEED_URL", DEFAULT_FEED)
+        self.running_release = dict(running_release or {})
+
+    def current(self):
+        value = current_release(self.root)
+        running = self.running_release.get('source_commit')
+        if (value.get('package_type') == 'source' and running and value.get('source_commit')
+                and value['source_commit'] != running):
+            value.update(installed_source_commit=value['source_commit'], installed_version=value.get('version'),
+                         source_commit=running, version=self.running_release.get('version'), restart_required=True)
+        return value
 
     def snapshot(self):
-        current = current_release(self.root)
+        current = self.current()
         state = read_json(private_path(self.root))
         update = {k: v for k, v in state.get("update", {"status": "unchecked", "message": "尚未检查更新"}).items()
                   if k not in {"candidate", "feed_url", "local_archive"}}
@@ -242,7 +254,7 @@ class UpdateService:
             state = read_json(private_path(self.root))
             if state.get("operation", {}).get("status") in ACTIVE:
                 return self.snapshot()
-        current = current_release(self.root)
+        current = self.current()
         if current.get('package_type') == 'source':
             return self.check_source(current)
         try:
@@ -306,7 +318,12 @@ class UpdateService:
 
     def check_source(self, current):
         try:
-            update = source_updates.discover(current, remote_open)
+            if current.get('restart_required'):
+                update = dict(status='restart-required', source='main', channel='main',
+                              version=current['installed_version'], source_commit=current['installed_source_commit'],
+                              message='源码文件已变化，当前服务仍运行旧提交；请让 Agent 核对并重启本副本。')
+            else:
+                update = source_updates.discover(current, remote_open)
             update['checked_at'] = utcnow()
         except (OSError, ValueError, KeyError, TypeError):
             update = {'status': 'unavailable', 'channel': 'main',
@@ -398,7 +415,7 @@ class UpdateService:
             state = read_json(private_path(self.root))
             if state.get("operation", {}).get("status") in ACTIVE:
                 return self.snapshot()
-            current = current_release(self.root)
+            current = self.current()
             if core.pending_receipts(self.root):
                 raise core.UpdateError("发现尚未恢复的更新，请先按更新文档恢复备份")
             if not capability(self.root, current)["can_install"]:

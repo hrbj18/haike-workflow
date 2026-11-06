@@ -7,6 +7,7 @@ from pathlib import Path
 import shutil
 import signal
 import subprocess
+import sys
 import time
 from urllib.parse import urlsplit
 
@@ -80,9 +81,26 @@ def start_publisher(root, base, previous_instance=None):
             if child.poll() is not None:
                 break
             time.sleep(.5)
-    if child.poll() is None:
-        child.terminate()
+    worker.terminate_started(child)
     raise core.UpdateError('账号服务重启检查未通过。')
+
+
+def record_mac_services(root, base, health, publisher_base):
+    path = Path(root) / '.local/mac-services.json'
+    if sys.platform != 'darwin' or not path.is_file():
+        return
+    state = read_json(path)
+    if Path(state.get('root', '')).resolve() != Path(root).resolve():
+        return
+    try:
+        publisher = publisher_identity(root, publisher_base) if publisher_base else None
+    except (OSError, ValueError):
+        publisher = None
+    state.update(studio_port=urlsplit(base).port or 80, studio_pid=health['pid'],
+                 pids=([publisher['pid']] if publisher else []) + [health['pid']])
+    if publisher:
+        state.update(publisher_port=urlsplit(publisher_base).port or 80, publisher_pid=publisher['pid'])
+    write_json(path, state)
 
 
 def restore_program(root, receipt, folder):
@@ -123,7 +141,8 @@ def manual_rollback(root, folder, port):
     if receipt.get('kind') != 'source' or receipt.get('installation') != str(root):
         raise core.UpdateError('源码回退回执身份不匹配。')
     publisher = receipt.get('publisher_base')
-    if publisher:
+    restart_publisher = receipt.get('publisher_restarted', bool(publisher))
+    if publisher and restart_publisher:
         try:
             worker.local_get(publisher, '/health')
         except (OSError, ValueError):
@@ -134,11 +153,12 @@ def manual_rollback(root, folder, port):
         restore_program(root, receipt, folder)
         receipt['status'] = 'rolled_back'
         write_json(folder / 'receipt.json', receipt)
-        if publisher:
+        if publisher and restart_publisher:
             start_publisher(root, publisher)
-        child = worker.start_server(root, port)
-        worker.wait_server('http://127.0.0.1:' + str(port), root, child, receipt['base_version'],
-                           source_commit=receipt['base_commit'])
+        child = worker.start_server(root, port, publisher_base=publisher)
+        base = 'http://127.0.0.1:' + str(port)
+        health = worker.wait_server(base, root, child, receipt['base_version'], source_commit=receipt['base_commit'])
+        record_mac_services(root, base, health, publisher)
         set_operation(root, 'rolled_back', '已人工恢复并启动原源码，原数据和素材保留。')
     return {'ok': True, 'status': 'rolled_back', 'source_commit': receipt['base_commit'], 'media_copied': False}
 
@@ -202,7 +222,7 @@ def run_source_update(root, identity):
                            source_commit=candidate['source_commit'], base_commit=candidate['base_commit'],
                            base_branch=previous['branch'], metadata=metadata, media_copied=False,
                            python_inventory=python_inventory,
-                           publisher_base=publisher_base if publisher_changed else None)
+                           publisher_base=publisher_base, publisher_restarted=publisher_changed)
             write_json(folder / 'receipt.json', receipt)
             source.switch(root, candidate['source_commit'])
             receipt.update(status='applying', dependencies_started=True)
@@ -211,9 +231,10 @@ def run_source_update(root, identity):
             update('restarting', '正在启动新版并核对提交、模板和页面。')
             if publisher_stopped:
                 publisher_child, publisher_new_identity = start_publisher(root, publisher_base, publisher_old_identity['instance_id'])
-            child = worker.start_server(root, port)
-            worker.wait_server(base, root, child, candidate['version'], source_commit=candidate['source_commit'],
-                               previous_instance=command['instance_id'])
+            child = worker.start_server(root, port, publisher_base=publisher_base)
+            health = worker.wait_server(base, root, child, candidate['version'], source_commit=candidate['source_commit'],
+                                        previous_instance=command['instance_id'])
+            record_mac_services(root, base, health, publisher_base)
             receipt['status'] = 'complete'
             write_json(folder / 'receipt.json', receipt)
             update('complete', '源码更新完成，原配置、账号、草稿、任务和作品已保留。', progress=100)
@@ -228,9 +249,7 @@ def run_source_update(root, identity):
                         worker.stop_verified(base, root, health['instance_id'], health['pid'])
                 except (OSError, ValueError):
                     pass
-                if child.poll() is None:
-                    child.terminate()
-                    child.wait(timeout=15)
+                worker.terminate_started(child)
             if publisher_new_identity:
                 stop_publisher(root, publisher_base, publisher_new_identity)
             try:
@@ -241,8 +260,9 @@ def run_source_update(root, identity):
                 if publisher_stopped:
                     start_publisher(root, publisher_base)
                 if stopped:
-                    child = worker.start_server(root, port)
-                    worker.wait_server(base, root, child, previous_version, source_commit=candidate['base_commit'])
+                    child = worker.start_server(root, port, publisher_base=publisher_base)
+                    health = worker.wait_server(base, root, child, previous_version, source_commit=candidate['base_commit'])
+                    record_mac_services(root, base, health, publisher_base)
                     update('rolled_back', '更新未完成，已恢复并启动原源码；原数据和素材保留。')
                     return
                 update('failed', str(exc) if isinstance(exc, core.UpdateError) else '源码取得或检查失败，原程序未修改，请检查网络后重试。')
