@@ -81,3 +81,12 @@ test('只允许下载和等待阶段暂缓，暂缓成功后可重新检查和�
   assert.equal(updateStatus(cancelled).title, '已暂缓更新');
   assert.equal(updateStatus(cancelled, {checking: true}).title, '正在检查更新');
 });
+test('source completion requires the installed commit even when versions match', () => {
+  const snapshot = {
+    current: { version: '1.2.3', source_commit: 'a'.repeat(40) },
+    operation: { status: 'complete', target_version: '1.2.3', target_commit: 'b'.repeat(40) },
+  };
+  assert.equal(updateCompleted(snapshot), false);
+  snapshot.current.source_commit = snapshot.operation.target_commit;
+  assert.equal(updateCompleted(snapshot), true);
+});

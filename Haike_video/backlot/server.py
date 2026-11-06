@@ -1360,6 +1360,8 @@ def create_app() -> FastAPI:
     from backlot.studio_update_api import attach as attach_app_updater
     attach_app_updater(app)
     portable_root=Path(__file__).resolve().parents[2]
+    from portable.update_service import current_release
+    app.state.running_release = current_release(portable_root)
     if (portable_root/'PACKAGE-MANIFEST.json').is_file():
         from portable.template_assets import materialize
         materialize(portable_root)
@@ -1387,10 +1389,10 @@ def create_app() -> FastAPI:
 
     @app.get("/api/health")
     async def health() -> dict:
-        from portable.update_service import current_release
-        release = current_release(Path(__file__).resolve().parents[2])
+        release = app.state.running_release
         return {"ok": True, "app": "backlot", "workspace": str(Path(__file__).resolve().parents[2]), "edition": "haike-workflow-2",
-                "version": release.get("version"), "pid": os.getpid(), "instance_id": app.state.update_instance_id}
+                "version": release.get("version"), "source_commit": release.get('source_commit'),
+                "pid": os.getpid(), "instance_id": app.state.update_instance_id}
 
     # ---- Unified cross-project production queue -----------------------
 

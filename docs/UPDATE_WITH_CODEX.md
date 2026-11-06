@@ -1,6 +1,6 @@
 # 给 Codex 一个 GitHub 地址完成更新
 
-**直接使用main源码、不等待Release更新包：Agent识别系统，进入[Windows教程](UPGRADE_FROM_MAIN.md)或[Mac教程（Apple Silicon/Intel）](UPGRADE_FROM_MAIN_MAC.md)。** 固定Git提交，完成对应架构依赖、数据恢复、前端构建与验收；Mac按教程继续出一条完整测试视频，未适配项明确列出。下文属于发行包路线；`upgrade-haike.py apply`仍读取Release清单，从main取得CLI不改变这一点。
+**旧电脑接入 main / 之后从页面更新：进入[Windows教程](UPGRADE_FROM_MAIN.md)或[Mac教程](UPGRADE_FROM_MAIN_MAC.md)。** Agent完成一次固定提交的源码部署、元数据恢复、原媒体绑定与验收；1.2.4 起干净 Git 安装从[关于页](APP_UPDATES.md)直接检查/安装 main。下文仅为便携发行包路线；`upgrade-haike.py apply`仍读取Release清单，从main下载CLI不改变这一点。
 
 适用于可识别的海客旧便携安装、历史目录布局和 Git 源码 checkout。Agent统一使用 scripts/upgrade-haike.py 的 plan/apply，由它选择原更新事务或隔离源码路线；首次安装仍按[README](../README.md)和[PORTABLE](PORTABLE.md)。
 

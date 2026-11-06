@@ -22,8 +22,10 @@ from urllib import error, parse, request
 
 try:
     from . import app_update as core
+    from . import source_app_update as source_updates
 except ImportError:  # The detached helper uses a frozen copy of these files.
     import app_update as core
+    import source_app_update as source_updates
 
 DEFAULT_FEED = "https://github.com/hrbj18/haike-workflow/releases/latest/download/haike-update.json"
 ACTIVE = {"downloading", "waiting", "installing", "restarting"}
@@ -137,6 +139,10 @@ def current_release(root):
     root = Path(root)
     value = core.read_release(root)
     source = (root / ".git").exists()
+    if source or not (root / 'PACKAGE-MANIFEST.json').is_file():
+        # Old portable metadata can remain after a source migration. VERSION
+        # and the actual Git HEAD identify the running source build.
+        value.update(read_json(root / 'VERSION.json'))
     value.update(package_type="source" if source or not (root / "PACKAGE-MANIFEST.json").is_file() else "portable",
                  development=source, dirty=False)
     if source:
@@ -178,6 +184,8 @@ def process_alive(pid):
 
 
 def capability(root, current):
+    if current.get('package_type') == 'source':
+        return source_updates.inspect(root)
     if current.get("package_type") != "portable" or current.get("development"):
         return {"can_install": False, "reason": "当前为源码开发副本，可检查版本；请通过版本管理更新，避免覆盖本地修改。"}
     if os.name != "nt" or platform.machine().lower() not in {"amd64", "x86_64"}:
@@ -209,10 +217,12 @@ class UpdateService:
                 stale = (datetime.now(timezone.utc) - updated).total_seconds() > 120
                 if stale and not process_alive(command.get("worker_pid")):
                     committed = False
-                    if not pending and current.get("version") == operation_record.get("target_version"):
+                    if (not pending and current.get("version") == operation_record.get("target_version")
+                            and (not operation_record.get('target_commit') or current.get('source_commit') == operation_record['target_commit'])):
                         for receipt in private_path(self.root).parent.glob("*/receipt.json"):
                             record = read_json(receipt)
-                            if record.get("status") == "complete" and record.get("version") == current.get("version"):
+                            if (record.get("status") == "complete" and record.get("version") == current.get("version")
+                                    and (not operation_record.get('target_commit') or record.get('source_commit') == operation_record['target_commit'])):
                                 committed = True
                                 break
                     if committed:
@@ -224,7 +234,7 @@ class UpdateService:
             cap = {"can_install": False, "reason": "发现尚未恢复的更新，请先按更新文档恢复备份。"}
         update["can_install"] = bool(cap["can_install"] and update.get("status") == "available")
         operation = {k: v for k, v in state.get("operation", {"status": "idle", "message": ""}).items()
-                     if k in {"status", "message", "id", "target_version", "progress", "updated_at"}}
+                     if k in {"status", "message", "id", "target_version", "target_commit", "progress", "updated_at"}}
         return {"current": current, "update": update, "operation": operation, "capability": cap}
 
     def check(self):
@@ -233,6 +243,8 @@ class UpdateService:
             if state.get("operation", {}).get("status") in ACTIVE:
                 return self.snapshot()
         current = current_release(self.root)
+        if current.get('package_type') == 'source':
+            return self.check_source(current)
         try:
             with remote_open(self.feed_url) as response:
                 raw = response.read(1024 * 1024 + 1)
@@ -292,6 +304,22 @@ class UpdateService:
                 write_json(private_path(self.root), state)
         return self.snapshot()
 
+    def check_source(self, current):
+        try:
+            update = source_updates.discover(current, remote_open)
+            update['checked_at'] = utcnow()
+        except (OSError, ValueError, KeyError, TypeError):
+            update = {'status': 'unavailable', 'channel': 'main',
+                      'message': '暂时无法读取官方 main 源码，请检查 GitHub 网络连接后重试；尚未确认是否为最新。'}
+        with state_guard(self.root):
+            state = read_json(private_path(self.root))
+            if state.get('operation', {}).get('status') not in ACTIVE:
+                state['update'] = update
+                if update.get('status') == 'available':
+                    state['operation'] = {'status': 'idle', 'message': ''}
+                write_json(private_path(self.root), state)
+        return self.snapshot()
+
     @staticmethod
     def validate_candidate(value, current, *, local=False):
         if (not isinstance(value, dict) or type(value.get("schema")) is not int or value.get("schema") != 1
@@ -335,6 +363,8 @@ class UpdateService:
             if state.get('operation', {}).get('status') in ACTIVE or core.pending_receipts(self.root):
                 raise core.UpdateError('已有更新正在处理，请先完成或恢复原更新')
             current = current_release(self.root)
+            if current.get('package_type') == 'source':
+                raise core.UpdateError('源码安装请使用 main 源码更新，不接收便携补丁 ZIP。')
             cap = capability(self.root, current)
             if not cap['can_install']:
                 raise core.UpdateError(cap['reason'])
@@ -363,7 +393,7 @@ class UpdateService:
             write_json(private_path(self.root), state)
             return self.snapshot()
 
-    def install(self, version, base_url, instance_id, server_pid, confirmed=False, launch=True):
+    def install(self, version, base_url, instance_id, server_pid, confirmed=False, launch=True, source_commit=None):
         with _LOCK:
             state = read_json(private_path(self.root))
             if state.get("operation", {}).get("status") in ACTIVE:
@@ -374,18 +404,27 @@ class UpdateService:
             if not capability(self.root, current)["can_install"]:
                 raise core.UpdateError(capability(self.root, current)["reason"])
             update = state.get("update", {})
+            source = update.get('source') == 'main'
             local = update.get('source') == 'local'
-            if confirmed is not True or update.get("status") != "available" or update.get("version") != version or (not local and update.get("feed_url") != self.feed_url):
+            if confirmed is not True or update.get("status") != "available" or update.get("version") != version or (not local and not source and update.get("feed_url") != self.feed_url):
                 raise core.UpdateError("请先重新检查版本，再确认本次更新")
-            candidate = self.validate_candidate(update["candidate"], current, local=local)
-            if candidate["package"].get("kind", "patch") != "patch":
+            if source:
+                if source_commit != update.get('source_commit') or current.get('package_type') != 'source':
+                    raise core.UpdateError('目标源码提交已变化，请重新检查更新后确认。')
+                candidate = source_updates.validate(update['candidate'], current)
+            else:
+                candidate = self.validate_candidate(update["candidate"], current, local=local)
+            if not source and candidate["package"].get("kind", "patch") != "patch":
                 raise core.UpdateError("完整安装包请按发行说明迁移，不可作为程序补丁安装")
-            if candidate["base_version"] != current["version"]:
+            if not source and candidate["base_version"] != current["version"]:
                 raise core.UpdateError("当前版本已变化，请重新检查更新")
             operation_id = secrets.token_hex(12)
             folder = private_path(self.root, operation_id + "/operation.json").parent
             operation = {"id": operation_id, "status": "downloading", "message": "正在下载更新包", "progress": 0,
                          "target_version": version, "updated_at": utcnow()}
+            if source:
+                operation.update(target_commit=candidate['source_commit'], message='正在核对并取得已确认的 main 源码')
+                operation.pop('progress', None)
             command = {"id": operation_id, "candidate": candidate, "base_url": base_url,
                        "instance_id": instance_id, "server_pid": server_pid,
                        "token": secrets.token_urlsafe(32)}
@@ -403,7 +442,8 @@ class UpdateService:
                 helper = folder / "helper"
                 helper.mkdir()
                 try:
-                    for name in ("app_update.py", "update_service.py", "update_worker.py", "template_capability.py"):
+                    for name in ("app_update.py", "update_service.py", "update_worker.py", "template_capability.py",
+                                 'source_app_update.py', 'source_update_worker.py', 'dependency_sources.py'):
                         shutil.copyfile(Path(__file__).parent / name, helper / name)
                     flags = (getattr(subprocess, "CREATE_NEW_PROCESS_GROUP", 0) | getattr(subprocess, "DETACHED_PROCESS", 0)) if os.name == "nt" else 0
                     with (folder / "helper.log").open("ab") as log:

@@ -6,6 +6,7 @@
 
 - 首次用 Agent 接入、单条做片、夜间批次或交接恢复：先读根 START_HERE.md，按任务进入现有接口和模块规则；Agent 负责总控，项目工具负责执行，接入条件见教程。
 - 安装、升级、打包：先读 README.md、docs/DISTRIBUTION.md；便携包按 docs/PORTABLE.md 运行诊断，源码改动完成后运行 scripts/check.py。版本由根 Git 提交统一管理。
+- main源码升级/旧电脑接入：读 docs/UPGRADE_FROM_MAIN.md，Mac转专用教程；保留dirty/index，只备份配置和一致性元数据，原媒体按原路径复用。后续页面更新见 docs/APP_UPDATES.md；旧便携发行CLI仍依赖Release。
 - 一次导入 Keys/服务地址/音色/预设、三平台扫码或判断新账户能力：读 docs/API_KEY_SETUP.md；实际私有配置文档独立留在本机，配置检查与制作发布验收分别记录。
 - 生产端开发、视频生产或理解：先读 Haike_video/AGENTS.md，再按其路由。
 - 新建、修改或审查视频模板：先读 Haike-Videohub/agent-runbooks/视频模板编写标准.md；「数字人口播模板6-招商A」按同名 runbook 执行。
