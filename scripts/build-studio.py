@@ -3,6 +3,10 @@ import os
 from pathlib import Path
 import shutil
 import subprocess
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from portable.dependency_sources import environment as dependency_environment
 
 ROOT = Path(__file__).resolve().parents[1]
 PRIVATE_PREVIEWS = (
@@ -27,7 +31,7 @@ def remove_private_previews(destination):
             target.unlink()
 
 
-def main():
+def main(skip_install=False):
     frontend = ROOT / 'prototypes/haike-avatar-generator'
     for name in PRIVATE_PREVIEWS:
         if (frontend / 'public/assets' / name).exists():
@@ -35,8 +39,9 @@ def main():
     npm = shutil.which('npm.cmd' if os.name == 'nt' else 'npm')
     if not npm:
         raise SystemExit('Install Node.js 22+ and npm, then rerun this command.')
-    environment = dict(os.environ, HAIKE_EMBED_BASE='/ui/avatar-generator/')
-    subprocess.run([npm, 'ci', '--no-audit', '--no-fund'], cwd=frontend, env=environment, check=True)
+    environment = dict(dependency_environment(), HAIKE_EMBED_BASE='/ui/avatar-generator/')
+    if not skip_install:
+        subprocess.run([npm, 'ci', '--no-audit', '--no-fund'], cwd=frontend, env=environment, check=True)
     subprocess.run([npm, 'run', 'build'], cwd=frontend, env=environment, check=True)
     source = frontend / 'dist/client'
     if not (source / 'index.html').is_file():
@@ -48,4 +53,7 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    import argparse
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--skip-install', action='store_true', help='Dependencies already checked by the source updater.')
+    main(parser.parse_args().skip_install)

@@ -65,10 +65,26 @@ def stop_verified(base, root, instance, pid):
     raise core.UpdateError("工作台尚未完全停止，原程序未修改")
 
 
-def start_server(root, port):
+def terminate_started(child):
+    """End only this owned Popen tree, including Windows venv launcher children."""
+    if child is None or child.poll() is not None:
+        return
+    if os.name == 'nt':
+        taskkill = Path(os.environ['SystemRoot']) / 'System32/taskkill.exe'
+        subprocess.run([str(taskkill), '/PID', str(child.pid), '/T', '/F'],
+                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=15,
+                       creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
+    else:
+        child.terminate()
+    child.wait(timeout=15)
+
+
+def start_server(root, port, publisher_base=None):
     root = Path(root)
     env = os.environ.copy()
     env.update(BACKLOT_PORT=str(port), BACKLOT_DETACHED="1")
+    if publisher_base:
+        env['HAIKE_CREATORHUB_URL'] = local_url(publisher_base)
     log_path = private_path(root, "restart.log")
     flags = (getattr(subprocess, "CREATE_NEW_PROCESS_GROUP", 0) | getattr(subprocess, "DETACHED_PROCESS", 0)) if os.name == "nt" else 0
     with log_path.open("ab") as log:
@@ -78,7 +94,7 @@ def start_server(root, port):
                                 start_new_session=os.name != "nt")
 
 
-def wait_server(base, root, child, version, timeout=90):
+def wait_server(base, root, child, version, timeout=90, source_commit=None, previous_instance=None):
     template_delivery = verify_templates(root)
     deadline = time.monotonic() + timeout
     while time.monotonic() < deadline:
@@ -86,7 +102,9 @@ def wait_server(base, root, child, version, timeout=90):
             health = local_get(base, "/api/health")
             # Windows venv launchers can have a different parent PID; ownership
             # is established by the workspace + new server's instance ID.
-            if matches(health, root) and health.get("version") == version:
+            if (matches(health, root) and health.get("version") == version
+                    and (source_commit is None or health.get('source_commit') == source_commit)
+                    and (previous_instance is None or health.get('instance_id') != previous_instance)):
                 local_get(base, "/api/studio/templates")
                 with request.build_opener(request.ProxyHandler({})).open(base + "/avatar", timeout=5) as page:
                     if page.status != 200 or b"<html" not in page.read(1024 * 1024).lower():
@@ -107,6 +125,12 @@ def run_update(root, identity):
     command = read_json(folder / "operation.json")
     if command.get("id") != identity:
         raise core.UpdateError("更新任务记录无效")
+    if command.get('candidate', {}).get('kind') == 'source':
+        try:
+            from .source_update_worker import run_source_update
+        except ImportError:
+            from source_update_worker import run_source_update
+        return run_source_update(root, identity)
     base = local_url(command["base_url"])
     port = parse.urlsplit(base).port or 80
     stopped, child = False, None
@@ -164,9 +188,7 @@ def run_update(root, identity):
                         stop_verified(base, root, h["instance_id"], h["pid"])
                 except (OSError, ValueError):
                     pass
-                if child.poll() is None:
-                    child.terminate()
-                    child.wait(timeout=15)
+                terminate_started(child)
                 raise
 
         result = core.apply_update(bundle, root, health_check=healthy)
@@ -200,6 +222,12 @@ def manual_rollback(root, backup, port):
         health = None
     if health is not None:
         raise core.UpdateError("请先关闭此副本工作台后再执行人工回退；未停止任何进程")
+    if read_json(Path(backup) / 'receipt.json').get('kind') == 'source':
+        try:
+            from .source_update_worker import manual_rollback as rollback_source
+        except ImportError:
+            from source_update_worker import manual_rollback as rollback_source
+        return rollback_source(root, backup, port)
     result = core.rollback(root, backup)
     set_operation(root, "rolled_back", "已人工恢复原版本，正在重新启动工作台。")
     child = start_server(root, port)

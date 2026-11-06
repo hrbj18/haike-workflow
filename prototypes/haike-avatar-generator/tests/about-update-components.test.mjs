@@ -33,8 +33,20 @@ test('关于页清晰展示当前版本、更新说明、实际大小、补丁�
 test('源码开发副本显示本地修改与原因，不提供自动覆盖按钮', () => {
   const snapshot = {...available, current: {...available.current, package_type: 'source', development: true, dirty: true}, capability: {can_install: false, reason: '源码开发副本有本地修改，请通过版本管理升级。'}};
   const html = render(AboutUpdateContent, {snapshot});
-  for (const phrase of ['开发版', '源码开发副本', '有本地修改', '通过版本管理升级']) assert.ok(html.includes(phrase), phrase);
+  for (const phrase of ['源码版', '源码开发副本', '有本地修改', '通过版本管理升级']) assert.ok(html.includes(phrase), phrase);
   assert.ok(!render(AboutUpdateActions, {snapshot}).includes('下载并更新'));
+});
+
+test('main 源码同版本更新展示目标提交并提供安装，完成必须匹配提交', () => {
+  const source = {...available, current: {...available.current, package_type: 'source', version: '1.2.3', source_commit: 'a'.repeat(40)},
+    update: {...available.update, channel: 'main', source: 'main', version: '1.2.3', source_commit: 'b'.repeat(40)}};
+  const html = render(AboutUpdateContent, {snapshot: source});
+  for (const phrase of ['发现源码更新', 'bbbbbbbbbbbb', '国内镜像', '原位置']) assert.ok(html.includes(phrase), phrase);
+  assert.match(render(AboutUpdateActions, {snapshot: source}), /下载并更新/);
+  const completed = {...source, operation: {status: 'complete', target_version: '1.2.3', target_commit: source.update.source_commit}};
+  assert.ok(!render(AboutUpdateActions, {snapshot: completed}).includes('刷新页面使用新版'));
+  completed.current = {...completed.current, source_commit: completed.operation.target_commit};
+  assert.match(render(AboutUpdateActions, {snapshot: completed}), /刷新页面使用新版/);
 });
 
 test('检查异常不会留下已是最新的绿灯文案，发行说明按纯文本显示', () => {

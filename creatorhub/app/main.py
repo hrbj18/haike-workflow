@@ -592,6 +592,8 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(title="CreatorHub", lifespan=lifespan)
+from .update_guard import SourceUpdateMiddleware
+app.add_middleware(SourceUpdateMiddleware, root=Path(__file__).resolve().parents[2])
 app.add_middleware(LocalAccessMiddleware)
 from .download_session_api import router as download_session_router
 app.include_router(download_session_router)
@@ -10503,6 +10505,13 @@ async def index():
 app.mount("/static", StaticFiles(directory=str(WEB_DIR)), name="static")
 
 
+_update_instance_id = secrets.token_hex(16)
+
+
 @app.get("/health")
 async def health():
-    return {"status": "ok"}
+    root = Path(__file__).resolve().parents[1]
+    fingerprint = hashlib.sha256(str(root).replace('\\', '/').casefold().encode()).hexdigest()
+    return {"status": "ok", 'pid': os.getpid(), 'instance_id': _update_instance_id,
+            'update_inflight': getattr(app.state, 'haike_update_inflight', 0),
+            'service_fingerprint': fingerprint}

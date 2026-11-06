@@ -8,7 +8,7 @@ Mac 新机：根 `docs/DEPLOY_MAC.md`。双架构镜像/固定直连源见 `_dis
 
 10/30三模板：科技控制台、深色立体、活力海报。方框首片已看，空场节奏后续处理。1027原包=1.1；SHA匹配、77982文件逐项验证。1.2源码244c454独立交付：程序1.65MB/模板191.49MB，合计<200MB。真实旧包隔离升级/重复/回退/故障恢复/配置保留通过；最终84123发行文件全验、42目录/40封面/三原包验签/正常启动通过。入口根portable/legacy_upgrade.py；包与验收D:/codex_work/haike-delivery-20261030/V1.2/；证据根.local/release-1.2。首次需绑定自有素材；私有素材不分发。内部1.1.x不是1027基线；无新增云费/公网发布/物理异机验收。
 
-应用更新首版：根docs/APP_UPDATES.md，VERSION.json引入1.0.0产品编号，源码显示开发态。studio_update_api.py与根portable/{app_update,update_service,update_worker}.py负责HTTPS清单、兼容程序补丁、任务维护闸门、独立重启/回退；AboutDialog.jsx为入口。根test_*update*.py及test_studio_update_api.py覆盖数据保留和启动失败恢复。线上清单/包仍需正式发布，其他安装/云服务未同步。
+1.2.4：页面区分main源码/便携通道，见根docs/APP_UPDATES.md。干净官方Git按提交更新、补镜像依赖、独立重启/回退；dirty/index保留并阻断覆盖。旧电脑按UPGRADE_FROM_MAIN一次接入；原媒体不复制。Git/重启/回退隔离测试与目标物理机验收分开；云服务不随代码自动部署。
 
 10/27：用户授权将已验收交付快照21d1ff2发布为main稳定版，旧main保留legacy-main-before-20261027，合入后固定stable-20261027；见根[稳定版说明](../../../docs/releases/20261027-stable.md)。模板[交付说明](../../../docs/TEMPLATE_DELIVERY.md)含40张本地ZIP截图/42目录及备份回退。发布不混入其他窗口新改动；未声称异机/付费/发布验收。
 

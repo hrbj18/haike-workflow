@@ -8,6 +8,16 @@ $workflowFfmpeg = Join-Path $PSScriptRoot 'runtime\ffmpeg'
 if (Test-Path -LiteralPath $workflowFfmpeg) { $env:PATH = "$workflowFfmpeg;$env:PATH" }
 $portableEnvironment = Join-Path $PSScriptRoot 'portable\portable-env.ps1'
 if (Test-Path -LiteralPath $portableEnvironment) { . $portableEnvironment }
+$sourceMediaReceipt = Join-Path $PSScriptRoot '.local\windows-media-runtime.json'
+if ((Test-Path -LiteralPath $sourceMediaReceipt -PathType Leaf) -and -not (Test-Path -LiteralPath (Join-Path $PSScriptRoot 'PACKAGE-MANIFEST.json'))) {
+    $sourceMedia = Get-Content -LiteralPath $sourceMediaReceipt -Raw | ConvertFrom-Json
+    $env:FFMPEG_BINARY = Join-Path $PSScriptRoot $sourceMedia.tools.ffmpeg.path
+    $env:FFPROBE_BINARY = Join-Path $PSScriptRoot $sourceMedia.tools.ffprobe.path
+    $env:REMOTION_BROWSER_EXECUTABLE = Join-Path $PSScriptRoot $sourceMedia.tools.browser.path
+    $env:HYPERFRAMES_BROWSER_PATH = $env:REMOTION_BROWSER_EXECUTABLE
+    $env:PRODUCER_HEADLESS_SHELL_PATH = $env:REMOTION_BROWSER_EXECUTABLE
+    $env:PATH = "$(Split-Path $env:FFMPEG_BINARY -Parent);$env:PATH"
+}
 $starter = Join-Path $PSScriptRoot 'Haike_video\scripts\start_backlot.ps1'
 if (-not (Test-Path -LiteralPath $starter)) {
     Write-Host 'Cannot find Haike_video\scripts\start_backlot.ps1. Keep this launcher in the workspace root.' -ForegroundColor Red

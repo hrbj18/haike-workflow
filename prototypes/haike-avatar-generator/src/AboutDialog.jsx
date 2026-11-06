@@ -23,7 +23,7 @@ export function AboutUpdateContent({snapshot, checking = false, checkError = '',
   const notes = Array.isArray(update.notes) ? update.notes.join('\n') : typeof update.notes === 'string' ? update.notes : '';
   return <div className="about-update-content">
     <div className="about-product"><div className="about-product-icon"><Info size={26} aria-hidden="true"/></div><div><strong>海客视频</strong><p>选模板、做视频、按计划发布</p></div></div>
-    <div className="about-version"><span>当前版本</span><strong>{current.version ? `v${current.version}` : checking ? '正在读取版本' : versionError || checkError ? '版本读取失败' : '版本信息未记录'}</strong>{current.version && <small>{current.development || current.package_type === 'source' ? '开发版' : current.channel === 'stable' ? '稳定版' : '预览版'}</small>}</div>
+    <div className="about-version"><span>当前版本</span><strong>{current.version ? `v${current.version}` : checking ? '正在读取版本' : versionError || checkError ? '版本读取失败' : '版本信息未记录'}</strong>{current.version && <small>{current.package_type === 'source' ? '源码版' : current.channel === 'stable' ? '稳定版' : '预览版'}</small>}</div>
     <section className={`about-update-status ${status.kind}`} aria-live="polite" role={status.kind === 'error' ? 'alert' : 'status'}>
       <div className="about-status-heading">{status.kind === 'success' ? <CheckCircle2 size={19} aria-hidden="true"/> : <RefreshCw size={18} className={status.kind === 'working' ? 'spinner' : ''} aria-hidden="true"/>}<strong>{status.title}{update.status === 'available' && !active && !checking && !checkError && !updateCompleted(snapshot) ? ` v${update.version}` : ''}</strong></div>
       {status.message && <p>{status.message}</p>}
@@ -31,8 +31,9 @@ export function AboutUpdateContent({snapshot, checking = false, checkError = '',
     </section>
     {update.version && update.status !== 'current' && <section className="about-release-notes" aria-label="版本更新说明"><h3>版本更新说明 <span>v{update.version}</span></h3>{(date || update.size > 0) && <p className="helper">{date ? `发布时间：${date}` : ''}{date && update.size > 0 ? ' · ' : ''}{update.size > 0 ? `更新包：${formatUpdateSize(update.size)}` : ''}</p>}<p>{notes || '本次更新暂未提供详细说明。'}</p></section>}
     <p className="about-preservation"><ShieldCheck size={18} aria-hidden="true"/>更新保留配置、平台账号、素材和作品；安装失败时自动恢复旧版本。</p>
+    {current.package_type === 'source' && <p className="helper">从官方 main 获取源码，依赖默认使用国内镜像；已有视频、音频和图片留在原位置。</p>}
     {snapshot?.capability?.reason && !snapshot.capability.can_install && <p className="about-update-hint">{snapshot.capability.reason}</p>}
-    {current.version && <details className="about-build-details"><summary>版本详情</summary><dl><div><dt>安装类型</dt><dd>{current.package_type === 'portable' ? '便携安装' : '源码开发副本'}</dd></div>{current.source_commit && <div><dt>构建编号</dt><dd>{String(current.source_commit).slice(0, 12)}</dd></div>}{(current.dirty || current.local_changes) && <div><dt>本地状态</dt><dd>有本地修改</dd></div>}{template && <div><dt>模板补丁</dt><dd>{template}</dd></div>}</dl></details>}
+    {current.version && <details className="about-build-details"><summary>版本详情</summary><dl><div><dt>安装类型</dt><dd>{current.package_type === 'portable' ? '便携安装' : 'main 源码安装'}</dd></div>{current.source_commit && <div><dt>构建编号</dt><dd>{String(current.source_commit).slice(0, 12)}</dd></div>}{update.source_commit && update.source_commit !== current.source_commit && <div><dt>待更新编号</dt><dd>{update.source_commit.slice(0, 12)}</dd></div>}{(current.dirty || current.local_changes) && <div><dt>本地状态</dt><dd>有本地修改</dd></div>}{template && <div><dt>模板补丁</dt><dd>{template}</dd></div>}</dl></details>}
   </div>;
 }
 
@@ -122,9 +123,9 @@ export function AboutDialog({onClose}) {
     setSubmitting(true); setConfirmation(false); setCheckError(''); setDisconnected(false); setReconnectStopped(false);
     // A lost submission response is uncertain. Poll the durable operation;
     // never repeat the POST automatically after the service disconnects.
-    setSnapshot({...snapshot, operation: {status: 'restarting', target_version: snapshot.update.version, message: '正在提交并核对更新请求。'}});
+    setSnapshot({...snapshot, operation: {status: 'restarting', target_version: snapshot.update.version, target_commit: snapshot.update.source_commit, message: '正在提交并核对更新请求。'}});
     try {
-      const result = await api(`${endpoint}/install`, {version: previous.update.version, confirmed: true});
+      const result = await api(`${endpoint}/install`, {version: previous.update.version, source_commit: previous.update.source_commit, confirmed: true});
       if (alive.current) setSnapshot(result);
     } catch (error) {
       if (!alive.current) return;
@@ -154,7 +155,7 @@ export function AboutDialog({onClose}) {
 
   return <Dialog title="关于海客视频" description="版本信息与程序更新" onClose={onClose} busy={submitting} footer={<AboutUpdateActions snapshot={snapshot} checking={checking} submitting={submitting} canceling={canceling} cancelPending={cancelPending} checkError={checkError || versionError} confirmation={confirmation} savedConfirmed={savedConfirmed} reconnectStopped={reconnectStopped} onClose={onClose} onCheck={check} onRequestInstall={() => {setSavedConfirmed(false); setConfirmation(true);}} onConfirmInstall={install} onCancelInstall={() => setConfirmation(false)} onCancelUpdate={cancelUpdate} onReconnect={() => {setReconnectStopped(false); setPollEpoch(value => value + 1);}} onReload={() => window.location.reload()}/> }>
     <AboutUpdateContent snapshot={snapshot} checking={checking} checkError={checkError} versionError={versionError} disconnected={disconnected} reconnectStopped={reconnectStopped}/>
-    {snapshot?.capability?.can_install && !active && !confirmation && <label className="about-local-import">导入已下载的更新包（ZIP，300 MB以内）<input aria-label="选择本地程序更新包" type="file" accept=".zip,application/zip" disabled={checking || submitting} onChange={importPackage}/><span className="helper">检查通过后再确认安装，无需重新下载运行依赖。</span></label>}
+    {snapshot?.capability?.can_install && snapshot.current?.package_type !== 'source' && !active && !confirmation && <label className="about-local-import">导入已下载的更新包（ZIP，300 MB以内）<input aria-label="选择本地程序更新包" type="file" accept=".zip,application/zip" disabled={checking || submitting} onChange={importPackage}/><span className="helper">检查通过后再确认安装，无需重新下载运行依赖。</span></label>}
     {confirmation && <section className="about-install-confirmation" aria-label="确认程序更新"><h3>准备更新到 v{snapshot.update.version}</h3><p>请先保存当前正在编辑的草稿。更新会等待制作、下载和发布任务结束，再备份程序、安装并重启工作台。</p><p>配置、账号和作品会保留；安装或启动检查失败时恢复旧版本。</p><label className="checkbox-row"><input type="checkbox" checked={savedConfirmed} onChange={event => setSavedConfirmed(event.target.checked)}/>我已保存当前工作，可以更新并重启</label></section>}
   </Dialog>;
 }

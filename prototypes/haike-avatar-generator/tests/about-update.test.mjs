@@ -81,3 +81,22 @@ test('只允许下载和等待阶段暂缓，暂缓成功后可重新检查和�
   assert.equal(updateStatus(cancelled).title, '已暂缓更新');
   assert.equal(updateStatus(cancelled, {checking: true}).title, '正在检查更新');
 });
+test('source completion requires the installed commit even when versions match', () => {
+  const snapshot = {
+    current: { version: '1.2.3', source_commit: 'a'.repeat(40) },
+    operation: { status: 'complete', target_version: '1.2.3', target_commit: 'b'.repeat(40) },
+  };
+  assert.equal(updateCompleted(snapshot), false);
+  snapshot.current.source_commit = snapshot.operation.target_commit;
+  assert.equal(updateCompleted(snapshot), true);
+});
+
+test('manual source changes require a real restart and cannot show stale completion', () => {
+  const snapshot = {current: {version: '1.2.4', source_commit: 'a'.repeat(40), restart_required: true},
+    operation: {status: 'complete', target_version: '1.2.4', target_commit: 'a'.repeat(40)},
+    update: {status: 'restart-required'}, capability: {can_install: false}};
+  assert.equal(updateCompleted(snapshot), false);
+  assert.equal(updateActive(snapshot), false);
+  assert.equal(canInstallUpdate(snapshot), false);
+  assert.match(updateStatus(snapshot).title, /重启工作台/);
+});

@@ -31,11 +31,14 @@ export function aboutHref(locationLike = {}, open = true) {
 export function updateCompleted(snapshot) {
   const operation = snapshot?.operation;
   return operation?.status === 'complete' && Boolean(operation.target_version) &&
-    snapshot?.current?.version === operation.target_version;
+    !snapshot?.current?.restart_required &&
+    snapshot?.current?.version === operation.target_version &&
+    (!operation.target_commit || snapshot?.current?.source_commit === operation.target_commit);
 }
 
 export function updateActive(snapshot) {
   const status = snapshot?.operation?.status;
+  if (snapshot?.current?.restart_required && !RUNNING.has(status)) return false;
   return RUNNING.has(status) || (status === 'complete' && !updateCompleted(snapshot));
 }
 
@@ -52,6 +55,7 @@ export function canCancelUpdate(snapshot) {
 export function updateStatus(snapshot, {checking = false, disconnected = false, reconnectStopped = false, checkError = '', versionError = ''} = {}) {
   const operation = snapshot?.operation || {};
   const update = snapshot?.update || {};
+  if (snapshot?.current?.restart_required && !updateActive(snapshot)) return {kind: 'warning', title: '源码已变化，请重启工作台', message: '请让 Agent 核对并重启本副本，当前进程尚未加载磁盘上的新提交。'};
   if (updateCompleted(snapshot)) return {kind: 'success', title: '更新完成', message: '新版本已启动并通过检查，刷新页面即可使用。'};
   if (updateActive(snapshot)) {
     if (reconnectStopped) return {kind: 'warning', title: '暂时无法连接工作台', message: '尚未确认更新结果。请重新连接查看原更新记录，不要重复安装。'};
@@ -65,7 +69,7 @@ export function updateStatus(snapshot, {checking = false, disconnected = false, 
   if (versionError) return {kind: 'error', title: '暂时无法读取当前版本', message: versionError};
   if (checkError) return {kind: 'error', title: '暂时无法检查更新', message: checkError};
   if (['cancelled', 'canceled'].includes(operation.status)) return {kind: 'warning', title: '已暂缓更新', message: operation.message || '已暂缓本次更新，原程序与现有任务保持原样。'};
-  const title = {available: '发现新版本', current: snapshot?.current?.development ? '未发现更新的稳定版本' : '当前已是最新稳定版', unavailable: '暂时无法检查更新', incompatible: '需要完整升级', unchecked: '尚未检查更新'}[update.status] || '尚未检查更新';
+  const title = {available: update.channel === 'main' ? '发现源码更新' : '发现新版本', current: update.channel === 'main' ? '当前已是最新 main 源码' : snapshot?.current?.development ? '未发现更新的稳定版本' : '当前已是最新稳定版', unavailable: '暂时无法检查更新', incompatible: '需要完整升级', unchecked: '尚未检查更新'}[update.status] || '尚未检查更新';
   return {kind: update.status === 'current' ? 'success' : update.status === 'available' ? 'available' : 'warning', title, message: update.message || ''};
 }
 

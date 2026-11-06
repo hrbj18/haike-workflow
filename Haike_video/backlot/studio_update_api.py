@@ -25,7 +25,7 @@ router = APIRouter(prefix="/api/studio/app-update")
 def service(app):
     value = getattr(app.state, "app_update_service", None)
     if value is None:
-        value = updates.UpdateService(ROOT)
+        value = updates.UpdateService(ROOT, running_release=getattr(app.state, 'running_release', None))
         app.state.app_update_service = value
     return value
 
@@ -67,7 +67,8 @@ async def install(request: Request, data: dict = Body(...)):
     try:
         return await asyncio.to_thread(service(request.app).install, data.get("version"),
                                        str(request.base_url).rstrip("/"), request.app.state.update_instance_id,
-                                       os.getpid(), data.get("confirmed") is True)
+                                       os.getpid(), data.get("confirmed") is True,
+                                       source_commit=data.get('source_commit'))
     except updates.core.UpdateError as exc:
         raise HTTPException(409, str(exc)) from exc
 

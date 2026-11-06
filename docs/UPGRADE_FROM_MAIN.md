@@ -4,9 +4,11 @@ Mac用户进入[Mac专用教程（Apple Silicon/Intel）](UPGRADE_FROM_MAIN_MAC.
 
 本教程直接使用官方 **main 的固定提交**，由 Agent 完成备份、部署、依赖恢复、前端构建和目标机验收，**不等待、不下载海客 Release 更新包**。适用于 Windows x64 的1027便携版、后续便携版及源码副本。这是 Agent 操作流程；当前没有脱离 Release、自动完成所有历史版本原地迁移的单条 CLI。
 
+**1.2.4 起：一次接入后可在页面更新。** 本次交付目标应为官方干净 Git checkout（main 或固定提交），运行 Git/Node/npm 可用；本机配置写入忽略的覆写文件，不能把私人配置当源码提交。验证“关于海客视频”实际读取 main 提交并显示正确状态；后续从页面检查、确认并重启，详见 [APP_UPDATES](APP_UPDATES.md)。已有 dirty/index 不强制清理，按下文独立部署保留现场。
+
 ## 给旧电脑 Agent 的一句话
 
-> 请按 https://github.com/hrbj18/haike-workflow/blob/main/docs/UPGRADE_FROM_MAIN.md 将我正在使用的海客工作台升级到官方 main 源码，直接获取并固定完整提交，不走 Release 更新入口；先识别实际安装和服务，备份并保留配置、账号、草稿、任务、素材、作品、封面及 Git 工作树和 index，按教程选择原地或独立部署，补齐依赖并构建前端，实际启动验收并逐套报告18套动效的合同、组件与短渲状态，失败保留现场并提供回退；不新增付费调用或发布视频。
+> 把本机海客工作台升级到 hrbj18/haike-workflow 的 main 最新已通过检查的源码，按仓库 docs/UPGRADE_FROM_MAIN.md 识别 Windows/Mac 和实际安装目录，接通“关于海客视频→检查更新”，不走 Release 更新包。保留 Key、音色形象、账号、草稿任务及 Git 修改；只备份配置、数据库等元数据，不复制视频音频图片，原路径复用。依赖走国内镜像并复用已有环境；完成启动和模板验收后，复用已有素材及数字人成果导出一条完整高清有声测试视频，不新增付费或发布；失败按回执回退。
 
 ## 1027与本期源码的区别
 
@@ -32,7 +34,7 @@ Mac用户进入[Mac专用教程（Apple Silicon/Intel）](UPGRADE_FROM_MAIN_MAC.
 $taskRepo = 'https://github.com/hrbj18/haike-workflow.git'
 $taskSource = 'D:\Haike-main-待填写的新目录'
 if (Test-Path -LiteralPath $taskSource) { throw '保留已有现场，请选择未占用目录。' }
-git clone --no-checkout --origin origin $taskRepo $taskSource
+git clone --depth 1 --single-branch --branch main --no-checkout --origin origin $taskRepo $taskSource
 if ($LASTEXITCODE) { throw '取得源码失败。' }
 git -C $taskSource fetch origin main
 if ($LASTEXITCODE) { throw '取得 main 失败。' }
@@ -62,7 +64,7 @@ git -C $taskSource rev-parse HEAD
 在目标之外备份，并验证可读性和 SHA：
 
 - 实际配置、环境文件、Key、账号/Cookie、音色绑定、模板封面绑定、启动入口及版本清单。凭据仅留本机私有备份。
-- `Haike_video/projects`、`Haike_video/.backlot`、`creatorhub/data`、`creatorhub/browser_data`，以及配置和数据库实际引用的外部素材/成片/封面目录；此列表不能代替外部路径检查。
+- 上述目录中的草稿/任务元数据及 SQLite 一致性快照；媒体文件不复制。逐一核对数据库引用的原素材、成片和封面路径仍可读，保留原目录与绑定。不要复制整个 projects、browser_data、旧安装或外部媒体目录作为备份。
 - Git原HEAD、分支、工作树差异、暂存差异、未跟踪文件及 index 原文件摘要。dirty/index 路线保持原目录不变。
 
 数据库在所属写入者停止后备份，或使用 SQLite 一致性备份；只复制活跃数据库主文件可能遗漏WAL。抽查数据库能打开、媒体可读，记录程序新增/覆盖文件及恢复位置。数据格式有变化时先确定恢复方案，资金账本单独管理。
@@ -83,7 +85,7 @@ if ($LASTEXITCODE) { throw '安装未完成，读取失败日志后恢复。' }
 
 脚本同步Python模块锁、检查原生依赖、获取FFmpeg/Remotion浏览器并构建界面，默认跳过本地Qwen TTS。已有环境可由 Agent 按脚本局部补齐，避免无关全量安装。基础Python锁为 `_distribution-tools/locks/Haike_video.txt`、`creatorhub.txt`，采集使用其 `uv.lock`，npm使用各组件 `package-lock.json`；记录来源、版本及下载校验结果。
 
-**基础 setup 不是18套全部组件恢复器。** 另查 `Haike_video/templates/motion-presets/upgrade-closure.json` 的 `files/resources/runtime_bindings`、首选合同及组件说明。setup未执行Snapcn安装；需要时核对 `Haike_video/motion-components/snapcn` 的package/lock，在该目录执行 `npm ci --no-audit --no-fund`并检查退出码。其余字体、HTML/图形运行时、浏览器等按合同逐项恢复。优先从原安装复用 SHA匹配的合法文件；缺件按锁文件/组件声明从上游取得并校验。不能从合法来源还原固定字节时，明确受影响模板，不改摘要来消除错误。
+当前 setup 默认使用[国内依赖镜像](WINDOWS_DEPENDENCY_MIRRORS.md)，补齐 Snapcn 和 HTML npm 组件，并复用可用 FFmpeg；浏览器按固定镜像及摘要安装。它仍不等于18套全部制作已验收：按首选合同核对字体、组件及运行绑定，优先复用 SHA匹配的合法资源。缺件按声明来源取得并校验；不能还原固定字节时明确影响模板，不改摘要消除错误。
 
 setup成功已包含界面构建；局部依赖恢复时在源码根单独执行：
 
@@ -102,7 +104,7 @@ if ($LASTEXITCODE) { throw '源码检查失败。' }
 
 ## 4. 恢复配置和用户数据
 
-独立部署先保留源码默认配置，再逐项合并旧本地设置，保留新版字段。把一致性备份恢复到新副本需要的位置，核对旧绝对路径、SQLite资产路径、作品和草稿引用。路径修改限于已理解的展示/定位字段，保留原任务请求、预算、云端编号和证明，不重提交已完成任务。未知表或格式保留现场并列出迁移缺项。
+独立部署先保留源码默认配置，再逐项合并旧本地设置，保留新版字段。只恢复配置及一致性数据库/元数据，原素材、音频、图片和作品继续绑定旧绝对路径，不复制媒体；原路径不可读即报告并停止相关测试，不悄悄全量搬移。路径修改限于已理解的展示/定位字段，保留原任务请求、预算、云端编号和证明，不重提交已完成任务。未知表或格式保留现场并列出迁移缺项。
 
 `portable/source_candidate_recovery.py`包含已支持的Studio草稿/资产、WorkCatalog绑定实现可供核对，但其正式自动调用需要同一期feed/资源身份；本教程不伪造Release/feed来调用它，也不承诺迁移任意旧表。账号/Cookie文件保留不代表新副本已登录，发布器绑定另作只读验证。
 
@@ -153,6 +155,6 @@ if ($LASTEXITCODE) { throw '诊断计划未就绪。' }
 
 ## 与发行包更新入口的边界
 
-本教程为“官方Git → 固定提交 → 本机依赖/构建/数据恢复 → 验收”。[UPDATE_WITH_CODEX](UPDATE_WITH_CODEX.md)、[APP_UPDATES](APP_UPDATES.md)的 `scripts/upgrade-haike.py apply`、`update-from-github.py`及“关于海客视频”仍读取Release清单，即使CLI来自main也不自动变成源码升级；本教程不使用这些入口或内部 `apply-candidate`。
+本教程为“官方Git → 固定提交 → 本机依赖/构建/数据绑定 → 验收 → 页面 main 更新”。旧 `scripts/upgrade-haike.py apply`、`update-from-github.py`仍读取Release清单，不用于这次接入，也不使用内部 `apply-candidate`。新版“关于海客视频”已按 Git 源码/便携安装分通道，源码不再依赖Release。
 
 代码依据：[安装](../scripts/setup.ps1)、[前端构建](../scripts/build-studio.py)、[组件检查](../portable/motion_delivery_runtime.py)、[能力CLI](../portable/template_capability.py)、[发行源码恢复](../portable/source_upgrade.py)、[数据恢复范围](../portable/source_candidate_recovery.py)。
