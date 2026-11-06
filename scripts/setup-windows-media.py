@@ -2,11 +2,15 @@
 from __future__ import annotations
 
 import json
+import http.client
 import os
 from pathlib import Path
+import re
 import shutil
 import subprocess
 import sys
+import time
+from concurrent.futures import ThreadPoolExecutor
 import urllib.request
 import zipfile
 
@@ -15,6 +19,74 @@ sys.path.insert(0, str(ROOT))
 from portable import app_update as core
 from portable.update_service import https_url, SecureRedirect
 from portable.system_browser import resolve as resolve_browser, identity as browser_identity
+
+MAX_ARCHIVE = 512 * 1024 * 1024
+RANGE_SIZE = 4 * 1024 * 1024
+
+
+def open_range(url, first, last):
+    https_url(url)
+    req = urllib.request.Request(url, headers={'User-Agent': 'Haike-Source-Setup/1',
+        'Range': f'bytes={first}-{last}', 'Accept-Encoding': 'identity'})
+    return urllib.request.build_opener(SecureRedirect()).open(req, timeout=15)
+
+
+def read_bounded(response, out, limit, deadline):
+    size = 0
+    while True:
+        if time.monotonic() > deadline:
+            raise TimeoutError('依赖下载进度超时。')
+        chunk = response.read1(min(65536, limit - size + 1))
+        if not chunk:
+            return size
+        size += len(chunk)
+        if size > limit:
+            raise ValueError('依赖归档超过大小限制。')
+        out.write(chunk)
+
+
+def checked_range(url, first, last, total):
+    from io import BytesIO
+    for attempt in range(3):
+        try:
+            with open_range(url, first, last) as response:
+                expected = f'bytes {first}-{last}/{total}'
+                if response.status != 206 or response.headers.get('Content-Range') != expected:
+                    raise ValueError('依赖镜像分段响应无效。')
+                output = BytesIO()
+                size = read_bounded(response, output, last - first + 1, time.monotonic() + 60)
+                if size != last - first + 1:
+                    raise ValueError('依赖镜像分段不完整。')
+                return output.getvalue()
+        except (OSError, ValueError, http.client.HTTPException):
+            if attempt == 2:
+                raise
+
+
+def download(url, partial):
+    with open_range(url, 0, RANGE_SIZE - 1) as response, partial.open('wb') as out:
+        if response.status == 200:
+            # Servers without range support retain the ordinary bounded download.
+            read_bounded(response, out, MAX_ARCHIVE, time.monotonic() + 600)
+            return
+        header = response.headers.get('Content-Range', '')
+        match = re.fullmatch(r'bytes 0-(\d+)/(\d+)', header)
+        if response.status != 206 or not match:
+            raise ValueError('依赖镜像分段响应无效。')
+        last, total = map(int, match.groups())
+        if not 0 < total <= MAX_ARCHIVE or last != min(RANGE_SIZE, total) - 1:
+            raise ValueError('依赖镜像归档大小无效。')
+        if read_bounded(response, out, last + 1, time.monotonic() + 60) != last + 1:
+            raise ValueError('依赖镜像分段不完整。')
+        # Bound both concurrency and memory: at most four 4 MiB segments per batch.
+        with ThreadPoolExecutor(max_workers=4) as pool:
+            positions = range(last + 1, total, RANGE_SIZE)
+            iterator = iter(positions)
+            while batch := [start for _, start in zip(range(4), iterator)]:
+                futures = [pool.submit(checked_range, url, start, min(start + RANGE_SIZE, total) - 1, total)
+                           for start in batch]
+                for future in futures:
+                    out.write(future.result())
 
 
 def version(path):
@@ -40,19 +112,12 @@ def obtain(row, root=ROOT):
         print('Downloading pinned media dependency: ' + url, flush=True)
         partial = archive.with_suffix('.part')
         try:
-            req = urllib.request.Request(url, headers={'User-Agent': 'Haike-Source-Setup/1'})
-            with urllib.request.build_opener(SecureRedirect()).open(req, timeout=60) as response, partial.open('wb') as out:
-                size = 0
-                while chunk := response.read(1024 * 1024):
-                    size += len(chunk)
-                    if size > 512 * 1024 * 1024:
-                        raise ValueError('依赖归档超过大小限制。')
-                    out.write(chunk)
+            download(url, partial)
             if core.digest(partial) != row['sha256']:
                 raise ValueError('依赖镜像内容摘要不匹配。')
             os.replace(partial, archive)
             return archive
-        except (OSError, ValueError):
+        except (OSError, ValueError, http.client.HTTPException):
             partial.unlink(missing_ok=True)
     raise ValueError('固定依赖的镜像/上游均未下载成功；保留已有环境，稍后重试。')
 
