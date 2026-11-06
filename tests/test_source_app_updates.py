@@ -88,7 +88,8 @@ class SourceTransactionTests(unittest.TestCase):
         source.git(root, 'config', 'user.email', 'fixture@example.test')
         source.git(root, 'config', 'user.name', 'Fixture')
         source.git(root, 'remote', 'add', 'origin', source.REPOSITORY)
-        (root / '.gitignore').write_text('.local/\n.backlot/\nprojects/\n*.env\n__pycache__/\n.venv/\n', encoding='utf-8')
+        ignore = (Path(__file__).resolve().parents[1] / '.gitignore').read_text(encoding='utf-8')
+        (root / '.gitignore').write_text(ignore + '\n*.env\n', encoding='utf-8')
         (root / 'VERSION.json').write_text(json.dumps(dict(version='1.2.3', edition=core.EDITION, data_schema=1)))
         backlot = root / 'Haike_video/backlot'
         backlot.mkdir(parents=True)
@@ -223,6 +224,41 @@ class SourceTransactionTests(unittest.TestCase):
 
     def test_real_git_switch_restart_and_metadata_preservation(self):
         self.run_case()
+
+    def test_boot_health_identity_reports_same_version_and_commit(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            old, new, media, candidate = self.fixture(root)
+            with socket.socket() as sock:
+                sock.bind(('127.0.0.1', 0))
+                port = sock.getsockname()[1]
+            base = 'http://127.0.0.1:' + str(port)
+            child = worker.start_server(root, port)
+            try:
+                try:
+                    worker.wait_server(base, root, child, '1.2.3', timeout=5, source_commit=old)
+                except Exception as error:
+                    try:
+                        health = worker.local_get(base, '/api/health')
+                    except Exception as detail:
+                        health = repr(detail)
+                    log = service.private_path(root, 'restart.log').read_text(encoding='utf-8', errors='replace')[-2000:]
+                    self.fail(f'{error}; root={root.resolve()}; python={sys.executable}; child={child.poll()}; health={health}; log={log}')
+            finally:
+                if child.poll() is None:
+                    child.terminate()
+                    child.wait(timeout=10)
+
+    def test_derived_mac_fonts_keep_install_clean_without_hiding_custom_source(self):
+        with tempfile.TemporaryDirectory() as folder:
+            self.fixture(folder)
+            fonts = Path(folder) / '_distribution-tools/motion-html/fonts'
+            fonts.mkdir(parents=True)
+            for name in ('NotoSansSC.ttf', 'NotoSansMono.ttf', 'notosansmono-OFL.txt', 'notosanssc-OFL.txt'):
+                (fonts / name).write_text('synthetic generated font')
+            self.assertTrue(source.inspect(folder)['can_install'])
+            (fonts / 'user-custom-font.ttf').write_text('user-owned addition')
+            self.assertFalse(source.inspect(folder)['can_install'])
 
     def test_failed_new_server_rolls_back_and_restarts_old_commit(self):
         self.run_case('start')
