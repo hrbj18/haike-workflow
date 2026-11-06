@@ -31,6 +31,7 @@ TTS_MODEL = "haike/internal-tts"
 CLONE_MODEL = "haike/voice-clone"
 PUBLIC_TARGET = "cosyvoice-v3-flash"
 PRIVATE_TARGET = "cosyvoice-v3.5-flash"
+DEFAULT_CLONE_TARGET = records.DEFAULT_CLONE_MODEL
 ID = re.compile(r"[A-Za-z0-9_.:-]{1,160}")
 OPERATION = re.compile(r"call_[a-f0-9]{32}")
 FILE = re.compile(r"if_[a-f0-9]{32}")
@@ -363,7 +364,8 @@ class LegacyAudioBackend:
         if request["kind"] == "clone":
             return self._clone(request, folder, checkpoint, state, initial)
         if request["profile"]["provider_id"] == "bailian":
-            if request["profile"].get("model_id") not in {PUBLIC_TARGET, PRIVATE_TARGET}:
+            if (request["profile"].get("model_id") not in {PUBLIC_TARGET, PRIVATE_TARGET}
+                    or "synthesis_seed" in request["profile"]):
                 return self._legacy_bailian(request, folder, initial)
             return self._bailian(request, folder, checkpoint, state, initial)
         if request["profile"]["provider_id"] == "doubao":
@@ -419,6 +421,8 @@ class InternalAudioCenter:
         self.backend = backend or LegacyAudioBackend(self.directory)
         self.pricing = {f"tts:bailian:{PUBLIC_TARGET}": {"per_character_micros": 100},
                         f"tts:bailian:{PRIVATE_TARGET}": {"per_character_micros": 80},
+                        f"clone:bailian:{DEFAULT_CLONE_TARGET}": {"fixed_micros": 0, "free_confirmed": True},
+                        f"tts:bailian:{DEFAULT_CLONE_TARGET}": {"per_character_micros": 140},
                         **(pricing or {})}
 
     def _verify_account(self):
@@ -622,13 +626,13 @@ class InternalAudioCenter:
             if not name or len(name) > 48 or any(ord(char) < 32 for char in name):
                 raise WorkError("请填写1至48字音色名称")
             source = self._file(inputs.get("audio_file"))
-            model = inputs.get("target_model", PRIVATE_TARGET)
-            if source["kind"] != "audio" or model not in {PRIVATE_TARGET, records.TTS_MODEL}:
+            model = inputs.get("target_model", DEFAULT_CLONE_TARGET)
+            if source["kind"] != "audio" or model not in records.TTS_MODELS:
                 raise WorkError("克隆录音或目标模型无效")
             request = {"kind": "clone", "name": name, "model_id": model,
                        "audio_path": str(source["path"]), "audio_sha256": source["sha256"]}
         elif data["model"] in {TTS_MODEL, "haike/cosyvoice", "haike/cosyvoice-public"}:
-            if set(inputs) - {"voice_id", "text", "speech_rate", "purpose"}:
+            if set(inputs) - {"voice_id", "text", "speech_rate", "purpose", "synthesis_seed"}:
                 raise WorkError("配音请求含不支持的字段")
             purpose = inputs.get("purpose", "preview")
             text = str(inputs.get("text") or "").strip()
@@ -642,6 +646,12 @@ class InternalAudioCenter:
                 raise WorkError("CosyVoice v3.5仅使用绑定该模型的复刻音色；公共音色请选择v3，不能替换模型")
             request = {"kind": "tts", "text": text, "purpose": purpose,
                        "profile": self.runtime_profile(profile["id"], inputs.get("speech_rate"))}
+            if "synthesis_seed" in inputs:
+                seed = inputs["synthesis_seed"]
+                if (profile.get("provider_id") != "bailian" or type(seed) is not int
+                        or not 0 <= seed <= 65535):
+                    raise WorkError("百炼合成种子需为0至65535的整数")
+                request["profile"]["synthesis_seed"] = seed
         else:
             raise WorkError("请选择本机配音或克隆服务")
         provider, model, maximum, characters = self._estimate(request)

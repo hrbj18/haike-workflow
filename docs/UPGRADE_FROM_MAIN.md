@@ -4,11 +4,13 @@ Mac用户进入[Mac专用教程（Apple Silicon/Intel）](UPGRADE_FROM_MAIN_MAC.
 
 本教程直接使用官方 **main 的固定提交**，由 Agent 完成备份、部署、依赖恢复、前端构建和目标机验收，**不等待、不下载海客 Release 更新包**。适用于 Windows x64 的1027便携版、后续便携版及源码副本。这是 Agent 操作流程；当前没有脱离 Release、自动完成所有历史版本原地迁移的单条 CLI。
 
+本次稳定交付固定为官方 `v1.2.5` 标签所指提交。下文首次接入命令采用这个标签；今后主动选择新版本时另行核对目标提交及检查结果。
+
 **1.2.4 起：一次接入后可在页面更新。** 本次交付目标应为官方干净 Git checkout（main 或固定提交），运行 Git/Node/npm 可用；本机配置写入忽略的覆写文件，不能把私人配置当源码提交。验证“关于海客视频”实际读取 main 提交并显示正确状态；后续从页面检查、确认并重启，详见 [APP_UPDATES](APP_UPDATES.md)。已有 dirty/index 不强制清理，按下文独立部署保留现场。
 
 ## 给旧电脑 Agent 的一句话
 
-> 把本机海客工作台升级到 hrbj18/haike-workflow 的 main 最新已通过检查的源码，按仓库 docs/UPGRADE_FROM_MAIN.md 识别 Windows/Mac 和实际安装目录，接通“关于海客视频→检查更新”，不走 Release 更新包。保留 Key、音色形象、账号、草稿任务及 Git 修改；只备份配置、数据库等元数据，不复制视频音频图片，原路径复用。依赖走国内镜像并复用已有环境；完成启动和模板验收后，复用已有素材及数字人成果导出一条完整高清有声测试视频，不新增付费或发布；失败按回执回退。
+> 把本机海客工作台升级到 hrbj18/haike-workflow 的官方 v1.2.5 固定源码，按仓库 docs/UPGRADE_FROM_MAIN.md 识别 Windows/Mac 和实际安装目录，接通“关于海客视频→检查更新”，不走 Release 更新包。保留 Key、音色形象、账号、草稿任务及 Git 修改；只备份配置、数据库等元数据，不复制视频音频图片，原路径复用。依赖走国内镜像并复用已有环境和本机Chrome/Edge，不下载浏览器或Whisper；完成启动和模板验收后，复用已有素材及数字人成果导出一条完整高清有声测试视频，不新增付费或发布；失败按回执回退。
 
 ## 1027与本期源码的区别
 
@@ -36,9 +38,9 @@ $taskSource = 'D:\Haike-main-待填写的新目录'
 if (Test-Path -LiteralPath $taskSource) { throw '保留已有现场，请选择未占用目录。' }
 git clone --depth 1 --single-branch --branch main --no-checkout --origin origin $taskRepo $taskSource
 if ($LASTEXITCODE) { throw '取得源码失败。' }
-git -C $taskSource fetch origin main
-if ($LASTEXITCODE) { throw '取得 main 失败。' }
-$taskCommit = (git -C $taskSource rev-parse origin/main).Trim()
+git -C $taskSource fetch --depth 1 origin tag v1.2.5
+if ($LASTEXITCODE) { throw '取得官方 v1.2.5 失败。' }
+$taskCommit = (git -C $taskSource rev-parse 'refs/tags/v1.2.5^{commit}').Trim()
 if ($LASTEXITCODE -or $taskCommit -notmatch '^[0-9a-f]{40}$') { throw '提交身份无效。' }
 git -C $taskSource -c core.autocrlf=false checkout --detach $taskCommit
 if ($LASTEXITCODE) { throw '固定源码失败。' }
@@ -46,7 +48,7 @@ git -C $taskSource remote get-url origin
 git -C $taskSource rev-parse HEAD
 ```
 
-核对官方远端、完整 SHA及该提交的检查结果/相关变更；main 有更新时记录实际采用版本，不能自动把新提交当已验收。把路径、提交和原安装身份存入本机私有回执目录；后续不在构建中追随浮动 main。`core.autocrlf=false`避免额外转换，项目逐文件属性保存已冻结的原字节；仍须运行实际来源检查。若采用历史基线，显式检出其完整SHA，并保留该基线的缺项限制。
+核对官方远端、`v1.2.5`所指完整 SHA及该提交的检查结果/相关变更；标签不可核对或检查失败时保留原版本。把路径、提交和原安装身份存入本机私有回执目录；后续不在构建中追随浮动 main。`core.autocrlf=false`避免额外转换，项目逐文件属性保存已冻结的原字节；仍须运行实际来源检查。若另行选择其他版本，显式检出其完整SHA，并保留该版本的缺项限制。
 
 **完成条件：** 唯一目标、可信来源、固定提交和私有回执目录明确，原目标尚未覆盖。
 
@@ -83,9 +85,9 @@ pwsh -NoProfile -ExecutionPolicy Bypass -File scripts/setup.ps1
 if ($LASTEXITCODE) { throw '安装未完成，读取失败日志后恢复。' }
 ```
 
-脚本同步Python模块锁、检查原生依赖、获取FFmpeg/Remotion浏览器并构建界面，默认跳过本地Qwen TTS。已有环境可由 Agent 按脚本局部补齐，避免无关全量安装。基础Python锁为 `_distribution-tools/locks/Haike_video.txt`、`creatorhub.txt`，采集使用其 `uv.lock`，npm使用各组件 `package-lock.json`；记录来源、版本及下载校验结果。
+1.2.5脚本同步Python模块锁、检查原生依赖、获取缺少的FFmpeg并构建界面；复用本机Chrome/Edge，默认跳过浏览器下载、Whisper和本地Qwen TTS。已有环境可由Agent按脚本局部补齐，避免无关全量安装。基础Python锁为`_distribution-tools/locks/Haike_video.txt`、`creatorhub.txt`，采集使用其`uv.lock`且不启用local-asr extra，npm使用各组件`package-lock.json`；记录来源、版本及下载校验结果。
 
-当前 setup 默认使用[国内依赖镜像](WINDOWS_DEPENDENCY_MIRRORS.md)，补齐 Snapcn 和 HTML npm 组件，并复用可用 FFmpeg；浏览器按固定镜像及摘要安装。它仍不等于18套全部制作已验收：按首选合同核对字体、组件及运行绑定，优先复用 SHA匹配的合法资源。缺件按声明来源取得并校验；不能还原固定字节时明确影响模板，不改摘要消除错误。
+当前setup默认使用[国内依赖镜像](WINDOWS_DEPENDENCY_MIRRORS.md)，补齐Snapcn和HTML npm组件，复用可用FFmpeg和本机浏览器，并为新任务登记独立原生运行绑定。按首选合同核对字体、组件及运行绑定；来源SHA匹配和短渲分别验收。缺件按声明来源取得并校验，不能还原固定字节时明确影响模板。
 
 setup成功已包含界面构建；局部依赖恢复时在源码根单独执行：
 

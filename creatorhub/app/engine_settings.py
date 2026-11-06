@@ -54,6 +54,7 @@ class EngineSettingsPatch(BaseModel):
     # browser executable selection and other restart-only fields intentionally
     # remain outside this allowlist.
     scan_interval_seconds: int | None = Field(None, ge=1, le=86400)
+    background_account_checks_enabled: bool | None = None
     idle_keepalive_hours: float | None = Field(None, ge=0, le=168)
     danmaku_probe_step_seconds: float | None = Field(None, ge=0.1, le=60)
     danmaku_max_probe_points: int | None = Field(None, ge=1, le=1000)

@@ -1,0 +1,16 @@
+.one-stop-panel{margin:0 0 20px;padding:20px 24px;border:1px solid #f1d7bc;border-radius:14px;background:#fffaf4;min-width:0}
+.one-stop-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+.one-stop-heading h2{display:flex;align-items:center;gap:8px;font-size:16px;margin:0 0 8px;color:#9d4917}
+.one-stop-heading p{font-size:13px;line-height:1.7;margin:0 0 10px;color:#695d53}
+.one-stop-status{flex-shrink:0;padding:5px 10px;border-radius:20px;font-size:12px;background:#fff0df;color:#9d4917}
+.one-stop-status.complete{background:#e7f5ec;color:#247244}
+.one-stop-title{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0 16px;font-size:14px}
+.one-stop-title span{color:#746b63;font-size:12px}
+.one-stop-stages{list-style:none;display:flex;gap:12px 18px;flex-wrap:wrap;padding:0;margin:0 0 12px}
+.one-stop-stages li{display:flex;align-items:center;gap:6px;color:#887e75;font-size:12px}
+.one-stop-stages li.succeeded{color:#247244}.one-stop-stages li[aria-current=step]{color:#b25417;font-weight:600}
+.one-stop-select{display:flex;gap:12px;align-items:center;font-size:13px;margin:10px 0}.one-stop-select select{min-width:0;max-width:70%;padding:6px;border:1px solid #e1d7cd;border-radius:6px;background:white}
+.one-stop-record{font-size:12px;margin-top:14px;color:#695d53}.one-stop-record summary{cursor:pointer}
+.one-stop-output{display:flex;align-items:flex-start;gap:16px;margin-top:16px}.one-stop-output video{width:230px;max-width:100%;max-height:410px;border-radius:8px;background:#15243c}.one-stop-output>div{display:flex;gap:10px;flex-wrap:wrap}
+.one-stop-inputs{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;margin-top:14px}.one-stop-inputs figure{margin:0;text-align:center}.one-stop-inputs img{height:150px;width:120px;object-fit:contain;background:#eee7df;border-radius:6px}.one-stop-inputs figcaption{margin-top:6px}.one-stop-audios{display:grid;gap:10px;max-width:100%;min-width:0}.one-stop-audios label{display:grid;gap:5px}.one-stop-audios audio{max-width:100%;width:270px;height:34px}
+@media(max-width:640px){.one-stop-panel{padding:16px}.one-stop-heading{gap:8px}.one-stop-heading p{font-size:12px}.one-stop-output{flex-direction:column}.one-stop-stages{gap:10px 14px}.one-stop-select{align-items:flex-start;flex-direction:column}.one-stop-select select{max-width:100%}}

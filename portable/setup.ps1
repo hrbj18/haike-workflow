@@ -8,6 +8,21 @@ $ErrorActionPreference = 'Stop'
 if ($ReplaceConfig -and -not $ConfigDocument) {
     throw 'ReplaceConfig requires ConfigDocument.'
 }
+$sourceRoot = Split-Path -Parent $PSScriptRoot
+if (-not (Test-Path -LiteralPath (Join-Path $sourceRoot 'PACKAGE-MANIFEST.json'))) {
+    & (Join-Path $sourceRoot 'scripts\setup.ps1')
+    if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+    if ($ConfigDocument) {
+        $sourcePython = Join-Path $sourceRoot 'Haike_video\.venv\Scripts\python.exe'
+        $sourceConfigArgs = @('--file', (Resolve-Path -LiteralPath $ConfigDocument).Path, '--root', $sourceRoot)
+        if ($ReplaceConfig) { $sourceConfigArgs += '--replace' }
+        foreach ($sourceConfigStep in @('plan', 'apply', 'check')) {
+            & $sourcePython (Join-Path $sourceRoot 'scripts\configure-user.py') $sourceConfigStep @sourceConfigArgs
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+        }
+    }
+    exit 0
+}
 $privateDocument = if ($ConfigDocument) {
     (Resolve-Path -LiteralPath $ConfigDocument -ErrorAction Stop).Path
 }

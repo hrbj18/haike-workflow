@@ -18,6 +18,7 @@ import {INVESTMENT_TEMPLATE_ID, investmentForSave} from './investment-model.js';
 import {InvestmentSettings} from './InvestmentSettings.jsx';
 import {TemplatePreview, TemplateSampleDialog} from './TemplatePreview.jsx';
 import {PortraitRefinement} from './PortraitRefinement.jsx';
+import {OneStopPanel} from './OneStopPanel.jsx';
 import {asrPolicy} from './asr-policy.js';
 import {AvatarDefaultsDialog,AvatarDefaultsSummary} from './AvatarDefaults.jsx';
 import {requestAvatarDefaults,avatarPresetInput,presetBudget,shouldApplyAvatarPreset} from './avatar-defaults-model.js';
@@ -338,6 +339,7 @@ function BasicAvatar() {
   const inProgress = ['queued','running'].includes(job?.status);
   return <main className="workspace creation-workspace">
     <Heading title="数字人口播" helper="选择模板，放入文案、声音和人物图片。"><Button href="/task-center">查看任务进度与结果</Button></Heading>
+    <OneStopPanel/>
     <AvatarDefaultsSummary data={preset} loading={presetLoading} error={presetError} sessions={sessions} onEdit={()=>setPresetOpen(true)} busy={saving||importing||draftLoading||inProgress} hasDraft={!!serverDraft||restoredDraft.current} onApply={()=>{presetHandled.current=true;void applyPreset(preset,{newTask:!!serverDraft||restoredDraft.current});}}/>
     <p className="helper">本次使用：{productionCard.card?.name||(input.motion_production?'已选动效模板':template.name)} · {input.soundMode==='audio'?'已选音频（不重复配音）':`${selectedVoice?.name||'待选音色'} · ${input.rate}倍速`}。{restoredDraft.current?'当前草稿沿用原参数。':'本次明确修改的参数优先。'}</p>
     <div className="editor-shell avatar-editor"><section className="editor-content" aria-label="填写制作内容" aria-busy={draftLoading}>

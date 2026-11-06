@@ -77,8 +77,11 @@ class ProductionQueueWorker:
         return run_motion(self._project_dir(job), job["frozen_request"])
 
     def _run_investment_recompose(self, job):
+        if job.get('frozen_request', {}).get('contract') == 'haike.avatar-one-stop-finish/1':
+            from backlot.avatar_one_stop_finish import run
+            return run(self.queue, job)
         import sys
-        if sys.platform == 'darwin' and job.get('frozen_request', {}).get('contract') in {
+        if (sys.platform == 'darwin' or (Path(__file__).resolve().parents[2] / '.local/system-motion-runtime.json').is_file()) and job.get('frozen_request', {}).get('contract') in {
             'motion-replay-numbered-02-05-production-v1', 'haike-field-notes-video-production-v1',
         }:
             from backlot.motion_replay_production import _producer

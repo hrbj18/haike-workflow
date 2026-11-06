@@ -93,7 +93,8 @@ def generate_voice_audio(
         if not profile.get("model_id"):
             return ToolResult(success=False, error="百炼音色缺少冻结的模型 ID，请重新添加音色")
         result = BailianTTS().execute({"text": text, "voice_id": profile.get("provider_voice_id"),
-            "model": profile["model_id"], "rate": _profile_playback_rate(profile), "output_path": str(target)})
+            "model": profile["model_id"], "rate": _profile_playback_rate(profile), "output_path": str(target),
+            **({"seed": profile["synthesis_seed"]} if "synthesis_seed" in profile else {})})
         result.data.update({"profile_id": profile["id"], "profile_name": profile.get("name"),
             "provider_id": BAILIAN_PROVIDER_ID, "playback_rate": _profile_playback_rate(profile),
             "normalised_format": "wav_pcm_s16le_mono_24000"})

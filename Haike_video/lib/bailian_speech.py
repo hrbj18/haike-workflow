@@ -13,21 +13,23 @@ from urllib.parse import urlsplit, urlunsplit
 import requests
 
 TTS_MODEL = "qwen-audio-3.1-tts-flash"
+TTS_PLUS_MODEL = "qwen-audio-3.1-tts-plus"
+DEFAULT_CLONE_MODEL = TTS_PLUS_MODEL
 COSYVOICE_TTS_MODEL = "cosyvoice-v3.5-flash"
 ASR_MODEL = "qwen-audio-3.1-asr-flash-filetrans"
 TEST_VOICE = "longanyuanfei_v3.1"
-TTS_MODELS = (TTS_MODEL, COSYVOICE_TTS_MODEL)
+TTS_MODELS = (TTS_MODEL, COSYVOICE_TTS_MODEL, TTS_PLUS_MODEL)
 
 
 def validate_tts_voice(model: str, voice: str) -> None:
     if model not in TTS_MODELS:
         raise BailianSpeechError("当前尚未接入该百炼配音模型，请选择已支持的模型")
-    if voice.startswith("cosyvoice-") and not voice.startswith(model + "-"):
+    if voice.startswith(("cosyvoice-", "qwen-audio-")) and not voice.startswith(model + "-"):
         raise BailianSpeechError("复刻音色与配音模型不一致，请选择创建该音色时使用的模型")
 
 
 def tts_billing_unit(model: str) -> str:
-    return "characters" if model == COSYVOICE_TTS_MODEL else "tokens"
+    return "characters" if model in {COSYVOICE_TTS_MODEL, TTS_PLUS_MODEL} else "tokens"
 
 
 class BailianSpeechError(RuntimeError):
@@ -206,4 +208,6 @@ def tts_cost(usage: dict, model: str) -> float:
     """CNY list-price estimate from provider usage, not the account's bill."""
     if model == COSYVOICE_TTS_MODEL:
         return round(float(usage.get("characters") or 0) * 0.8 / 10_000, 8)
+    if model == TTS_PLUS_MODEL:
+        return round(float(usage.get("characters") or 0) * 1.4 / 10_000, 8)
     return token_cost(usage, tts=True)

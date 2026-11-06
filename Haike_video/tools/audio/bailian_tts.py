@@ -43,6 +43,7 @@ class BailianTTS(BaseTool):
         "text": {"type": "string"}, "voice_id": {"type": "string"},
         "model": {"type": "string", "enum": list(api.TTS_MODELS)},
         "rate": {"type": "number", "minimum": 0.5, "maximum": 2},
+        "seed": {"type": "integer", "minimum": 0, "maximum": 65535},
         "output_path": {"type": "string"},
     }}
 
@@ -60,6 +61,9 @@ class BailianTTS(BaseTool):
         voice = str(inputs.get("voice_id") or "").strip()
         model = str(inputs.get("model") or api.TTS_MODEL)
         rate = float(inputs.get("rate", 1))
+        seed = inputs.get('seed')
+        if seed is not None and (type(seed) is not int or not 0 <= seed <= 65535):
+            raise api.BailianSpeechError('百炼合成种子需为0至65535的整数')
         if not text or len(text) > 20000:
             raise api.BailianSpeechError("百炼配音文本应为 1–20000 个字符")
         if not re.fullmatch(r"[A-Za-z0-9_.:-]{1,256}", voice):
@@ -75,6 +79,8 @@ class BailianTTS(BaseTool):
             raise api.BailianSpeechError("百炼配音输出须使用 .wav 格式")
         identity = {"text": text, "voice": voice, "model": model, "rate": rate, "sample_rate": 24000,
                     "endpoint": api.api_base(), "format": "wav", "adapter": 1}
+        options = {'seed': seed} if seed is not None else {}
+        identity.update(options)
         directory = target.parent / ("." + target.name + ".bailian") / api.fingerprint(identity)[:24]
         with api.operation_lock(directory):
             paths, records = [], []
@@ -91,7 +97,7 @@ class BailianTTS(BaseTool):
                     try:
                         response = requests.post(api.api_base() + "/services/audio/tts/SpeechSynthesizer",
                             headers=request_headers, json={"model": model, "input": {
-                                "text": chunk, "voice": voice, "rate": rate, "format": "wav", "sample_rate": 24000}},
+                                "text": chunk, "voice": voice, "rate": rate, "format": "wav", "sample_rate": 24000, **options}},
                             timeout=(15, 180), allow_redirects=False)
                     except requests.RequestException as exc:
                         raise api.BailianAmbiguous("百炼配音提交连接中断，受理状态不明；已保留记录，禁止自动重复提交") from exc

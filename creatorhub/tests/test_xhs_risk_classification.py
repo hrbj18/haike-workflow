@@ -144,6 +144,7 @@ class XhsRiskClassificationTests(unittest.TestCase):
             captured["data"]["image_formats"], ["jpg", "webp", "avif"])
 
     def test_account_health_risk_does_not_mark_account_invalid(self):
+        self.cfg.engine.background_account_checks_enabled = True
         self.cfg.engine.xhs_read_mode = "api"  # explicit direct-client fixture
         with db.get_session() as session:
             account = DouyinAccount(

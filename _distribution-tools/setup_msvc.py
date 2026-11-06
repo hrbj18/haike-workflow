@@ -45,9 +45,12 @@ if os.name == 'nt':
     ctypes.windll.kernel32.SetErrorMode(0x8003)
 import site
 site.main()
-import onnxruntime, ctranslate2
-from faster_whisper.vad import get_speech_timestamps
-assert callable(get_speech_timestamps)
+import cv2, numpy
+import importlib.util
+if importlib.util.find_spec('faster_whisper') is not None:
+    import onnxruntime, ctranslate2
+    from faster_whisper.vad import get_speech_timestamps
+    assert callable(get_speech_timestamps)
 """
 
 

@@ -75,6 +75,7 @@ test('旧AI草稿缺省保留原策略，显式开关与AI参数独立持久化'
 test('设置卡明确提供真实检查入口，保留状态灯和上次检查时间说明',()=>{
   const html=render(PlatformAccountsSettings,{});
   assert.match(html,/检查登录状态/);assert.ok(!html.includes('>刷新状态<'));assert.match(html,/最近8小时内检查正常/);assert.match(html,/搜索前自动验证登录；发布前逐个自动验证目标账号/);
+  assert.match(html,/后台自动检查平台登录/);assert.match(html,/默认关闭/);
 });
 
 test('重启后即时状态待验证仍显示持久历史检查，不借历史状态放行动作',()=>{
@@ -100,6 +101,53 @@ function sessionHookHarness(fetchImpl) {
   return {read,notify:()=>globalThis.window.dispatchEvent(new Event('haike:sessions-changed')),close(){cleanup();globalThis.fetch=previousFetch;if(previousWindow===undefined)delete globalThis.window;else globalThis.window=previousWindow;}};
 }
 const turn=()=>new Promise(resolve=>setImmediate(resolve));
+
+function backgroundChecksHarness(fetchImpl) {
+  const slots=[],effects=[];let index=0;
+  const cell=initial=>{const current=index++;if(!(current in slots))slots[current]=typeof initial==='function'?initial():initial;return current;};
+  const hooks={...React,useState(initial){const current=cell(initial);return [slots[current],value=>{slots[current]=typeof value==='function'?value(slots[current]):value;}];},useRef(initial){return slots[cell(()=>({current:initial}))];},useCallback:fn=>fn,useEffect:effect=>effects.push(effect)};
+  const module={exports:{}};new Function('require','module','exports',result.outputFiles[0].text)(name=>name==='react'?hooks:require(name),module,module.exports);
+  const previousFetch=globalThis.fetch,previousWindow=globalThis.window;
+  globalThis.fetch=fetchImpl;globalThis.window={dispatchEvent:()=>{}};
+  const read=()=>{index=0;return module.exports.BackgroundAccountChecks();};
+  const find=(node,predicate)=>{if(!node||typeof node!=='object')return null;if(predicate(node))return node;for(const child of React.Children.toArray(node.props?.children)){const match=find(child,predicate);if(match)return match;}return null;};
+  const control=()=>find(read(),node=>node.type==='input');
+  read();const cleanup=effects[0]();
+  return {read,control,reload:()=>find(read(),node=>node.props?.children==='重新读取设置').props.onClick(),close(){cleanup();globalThis.fetch=previousFetch;if(previousWindow===undefined)delete globalThis.window;else globalThis.window=previousWindow;}};
+}
+
+test('后台检查开关只在用户操作时保存，防重复提交并按保存结果恢复',async()=>{
+  let enabled=false;const requests=[];
+  const harness=backgroundChecksHarness(async(url,options={})=>{
+    requests.push({url,method:options.method||'GET',body:options.body});
+    if(options.method==='POST')enabled=JSON.parse(options.body).enabled;
+    return {ok:true,json:async()=>({enabled})};
+  });
+  try {
+    assert.equal(harness.control().props.disabled,true);await turn();
+    assert.equal(harness.control().props.checked,false);assert.equal(harness.control().props.disabled,false);
+    assert.deepEqual(requests.map(request=>request.method),['GET']);
+    harness.control().props.onChange({target:{checked:true}});harness.control().props.onChange({target:{checked:true}});
+    assert.equal(harness.control().props.disabled,true);await turn();
+    assert.equal(harness.control().props.checked,true);assert.equal(requests.length,2);
+    harness.control().props.onChange({target:{checked:false}});await turn();
+    assert.equal(enabled,false);assert.equal(harness.control().props.checked,false);
+    assert.deepEqual(requests.filter(request=>request.method==='POST').map(request=>JSON.parse(request.body)),[{enabled:true},{enabled:false}]);
+  }finally{harness.close();}
+});
+
+test('开关保存响应丢失时显示未知，重新读取真实状态后才允许继续操作',async()=>{
+  let enabled=false;
+  const harness=backgroundChecksHarness(async(_url,options={})=>{
+    if(options.method==='POST'){enabled=JSON.parse(options.body).enabled;throw new Error('fixture response lost');}
+    return {ok:true,json:async()=>({enabled})};
+  });
+  try {
+    await turn();harness.control().props.onChange({target:{checked:true}});await turn();
+    assert.equal(enabled,true);assert.equal(harness.control().props.disabled,true);
+    await harness.reload();assert.equal(harness.control().props.checked,true);assert.equal(harness.control().props.disabled,false);
+  }finally{harness.close();}
+});
 
 test('真实hook自动与事件读取只GET，用户检查逐账号POST；部分失败继续且不抹掉成功状态',async()=>{
   const requests=[],fresh=new Date().toISOString(),initial=[{id:8,platform:'douyin',nickname:'素材号',selected:true,search_supported:true,search_status:'unconfirmed',publish_status:'unconfirmed'},

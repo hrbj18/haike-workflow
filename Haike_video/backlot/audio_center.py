@@ -553,7 +553,7 @@ def _bailian_profiles(persisted: dict[str, Any]) -> list[dict[str, Any]]:
                     "model_id": record["model_id"], "speech_rate": rate, "sample_rate": 24000}
         profiles.append({**identity, "id": record["id"], "name": record["name"], "language": "zh",
             "description": "手动添加的百炼音色；模型与语速随音色保存，生成试听可确认实际可用性。",
-            "voice_type": "cloud_clone" if record["voice_id"].startswith("cosyvoice-") else "cloud",
+            "voice_type": "cloud_clone" if record["voice_id"].startswith(("cosyvoice-", "qwen-audio-")) else "cloud",
             "default_engine": record["model_id"], "provider_name": "阿里云百炼配音",
             "voice_signature": "bailian:" + sha256(json.dumps(identity, sort_keys=True).encode()).hexdigest(),
             "provider_speech_rate": rate, "is_custom_cloud_voice": True,

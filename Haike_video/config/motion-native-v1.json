@@ -1,7 +1,11 @@
 {
   "schema": "haike.motion-native-adapter/1",
-  "platform": "darwin",
-  "adapter_version": "1.1.0",
+  "platform": "native",
+  "supported_platforms": [
+    "darwin",
+    "win32"
+  ],
+  "adapter_version": "1.2.0",
   "changes": [
     "fixed native imports",
     "pinned native binaries and npm",
@@ -15,8 +19,8 @@
     "claim/approval guards",
     "full encoding and sound"
   ],
-  "generator_sha256": "bbe0fc2f89dcf91f34dab030ae136b153affa6f58598693c94364ecb6e90e73c",
-  "runtime_sha256": "195777b14c25c65550eb98cadba425df1422800953d3ab90f01722cc8ebcd7c9",
+  "generator_sha256": "311cd955b270b3de277564b1deec6528ffd848e4f90564658e6321db61fd7554",
+  "runtime_sha256": "81972600a13dba0b4e543c38e833eb80efa8cfc544cf7d3134049a0cc3aa16e8",
   "modules": [
     {
       "canonical_module": "backlot.motion_public_execution_v2",

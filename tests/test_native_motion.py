@@ -35,10 +35,23 @@ class NativeMotionTests(unittest.TestCase):
 
     def test_windows_keeps_original_modules_and_mac_selects_owned_derivation(self):
         original = 'backlot.motion_public_production_v2'
-        with patch.object(motion_platform.sys, 'platform', 'win32'):
-            self.assertEqual(motion_platform.owned_module(original).__name__, original)
+        with tempfile.TemporaryDirectory() as directory:
+            with patch.object(motion_platform.sys, 'platform', 'win32'), patch.object(motion_platform, 'ROOT', Path(directory)):
+                self.assertEqual(motion_platform.owned_module(original).__name__, original)
         with patch.object(motion_platform.sys, 'platform', 'darwin'):
             self.assertEqual(motion_platform.owned_module(original).__name__, 'backlot.motion_native_public_production_v2')
+
+    def test_windows_old_frozen_request_keeps_original_module_after_system_browser_setup(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / '.local').mkdir()
+            (root / '.local/system-motion-runtime.json').write_text('{}')
+            with patch.object(motion_platform.sys, 'platform', 'win32'), patch.object(motion_platform, 'ROOT', root), \
+                 patch.object(motion_platform, 'verify', return_value={}):
+                original = 'backlot.motion_public_production_v2'
+                self.assertEqual(motion_platform.owned_module(original, request={'runtime': {'legacy': 'sha'}}).__name__, original)
+                request = {'runtime': {'platform_adapter': {'id': 'haike.motion-native-adapter/1'}}}
+                self.assertEqual(motion_platform.owned_module(original, request=request).__name__, 'backlot.motion_native_public_production_v2')
 
     def test_native_derivation_does_not_change_any_preferred_source(self):
         rows = json.loads((ROOT / 'Haike_video/config/motion-preferred-production.json').read_text('utf8'))['templates']

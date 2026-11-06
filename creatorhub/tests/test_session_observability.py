@@ -28,6 +28,7 @@ def account_fixture(tmp_path, monkeypatch):
         session.refresh(account)
         account_id = account.id
     config = Config(db_path=str(tmp_path / "fixture.db"))
+    config.engine.background_account_checks_enabled = True
     config.engine.account_check_interval_seconds = 1800
     config.engine.idle_keepalive_hours = 6
     config.engine.scan_jitter = .15
@@ -264,7 +265,7 @@ def test_displayed_earliest_window_matches_real_idle_due_boundary_and_stays_stab
     assert first["schedule_status"] == "waiting"
 
 
-@pytest.mark.parametrize("mode", ["stopped", "disabled", "missing", "invalid"])
+@pytest.mark.parametrize("mode", ["stopped", "disabled", "switch_off", "missing", "invalid"])
 def test_no_guaranteed_schedule_when_unavailable_or_different_recheck_mode(account_fixture, mode):
     fixture = account_fixture
     row = account(fixture)
@@ -272,6 +273,8 @@ def test_no_guaranteed_schedule_when_unavailable_or_different_recheck_mode(accou
         fixture.engine._running = False
     elif mode == "disabled":
         fixture.config.engine.account_check_interval_seconds = 0
+    elif mode == "switch_off":
+        fixture.config.engine.background_account_checks_enabled = False
     elif mode == "missing":
         row.storage_state = row.creator_storage_state = ""
     else:
@@ -281,4 +284,4 @@ def test_no_guaranteed_schedule_when_unavailable_or_different_recheck_mode(accou
         assert result["mode"] == "auth_recheck" and result["check_interval_seconds"] == 3600
     else:
         assert result["next_eligible_at"] is None
-        assert result["schedule_status"] == {"stopped":"engine_stopped", "disabled":"disabled", "missing":"no_saved_session"}[mode]
+        assert result["schedule_status"] == {"stopped":"engine_stopped", "disabled":"disabled", "switch_off":"disabled", "missing":"no_saved_session"}[mode]

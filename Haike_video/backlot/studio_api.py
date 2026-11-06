@@ -503,5 +503,7 @@ from backlot.studio_audio_api import router as audio_router
 router.include_router(audio_router)
 from backlot.studio_refinement_api import router as refinement_router
 router.include_router(refinement_router)
+from backlot.avatar_one_stop_api import router as one_stop_router
+router.include_router(one_stop_router)
 from backlot.automation_task_center_api import router as task_center_router
 router.include_router(task_center_router)

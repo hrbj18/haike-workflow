@@ -8,6 +8,8 @@
 
 ## 任务入口
 
+- [一条龙](../一条龙视频生成流程.md)。
+
 - 无参考新模板：按Guide进入创建流程及依赖JSON；下载已验，异机制作待验。
 
 - 六款招商：[入口](../../templates/investment-six-v1/README.md)；恢复根`.local/codex-runs/investment-six-20261026/`。

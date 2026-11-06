@@ -1,6 +1,7 @@
 import {useCallback,useEffect,useRef,useState} from 'react';
 import {RefreshCw,UserRound} from 'lucide-react';
 import {Button,Notice} from './ui.jsx';
+import {api} from './studio-api.js';
 import {DOWNLOAD_SESSIONS_API,accountScopeView,normalizeDownloadSessions} from './network-materials-model.js';
 export {accountScopeView} from './network-materials-model.js';
 import {openPlatformAccounts} from './studio-routes.js';
@@ -73,9 +74,33 @@ export function PlatformAccountRows({items=[],loading=false,error=''}) {
     </article>;
   })}</div>;
 }
+export function BackgroundAccountChecks() {
+  const [enabled,setEnabled]=useState(null),[busy,setBusy]=useState(false),[error,setError]=useState(''),[notice,setNotice]=useState('');
+  const mounted=useRef(true),saving=useRef(false);
+  const load=useCallback(async()=>{
+    setBusy(true);setError('');
+    try{const value=await api('/api/studio/platform-login-checks');if(typeof value.enabled!=='boolean')throw new Error('自动检查设置暂时无法读取。');if(mounted.current)setEnabled(value.enabled);}
+    catch(e){if(mounted.current){setEnabled(null);setError(e.message);}}
+    finally{if(mounted.current)setBusy(false);}
+  },[]);
+  useEffect(()=>{mounted.current=true;void load();return()=>{mounted.current=false;};},[load]);
+  async function save(next) {
+    if(saving.current)return;saving.current=true;setBusy(true);setError('');setNotice('');
+    try{const value=await api('/api/studio/platform-login-checks',{enabled:next});if(typeof value.enabled!=='boolean')throw new Error('设置保存结果待确认，请重新读取。');if(mounted.current){setEnabled(value.enabled);setNotice(value.enabled?'已开启后台自动检查。':'已关闭后台自动检查。');window.dispatchEvent(new Event('haike:sessions-changed'));}}
+    catch(e){if(mounted.current){setEnabled(null);setError(`${e.message} 请重新读取确认设置。`);}}
+    finally{saving.current=false;if(mounted.current)setBusy(false);}
+  }
+  return <div className="platform-background-checks">
+    <label className="checkbox-row"><input type="checkbox" role="switch" checked={enabled===true} disabled={busy||enabled===null} onChange={event=>void save(event.target.checked)} aria-describedby="background-login-checks-help"/><strong>后台自动检查平台登录</strong></label>
+    <p id="background-login-checks-help" className="helper">默认关闭。开启后会定期访问平台，可能启动后台浏览器。关闭后，仅在手动检查、搜索、下载或发布时验证登录。</p>
+    <p className="helper" role="status">{busy?'正在处理设置…':enabled===null?'当前设置待确认':enabled?'当前已开启':'当前已关闭'}</p>
+    <Notice message={error} error/>{error&&<Button disabled={busy} onClick={load}>重新读取设置</Button>}<Notice message={notice}/>
+  </div>;
+}
 export function PlatformAccountsSettings() {
   const sessions=usePlatformSessions();
   return <section className="surface platform-accounts-settings" aria-label="平台账号登录状态"><header className="section-title"><div><h2><UserRound size={20}/> 平台账号</h2><p className="helper">素材搜索与视频发布分别检查；登录记录保存在本机。</p></div><Button loading={sessions.checking} disabled={sessions.loading||sessions.checking} onClick={sessions.check}><RefreshCw size={15}/>{sessions.checking?'正在检查登录':'检查登录状态'}</Button></header>
+    <BackgroundAccountChecks/>
     <Notice message={sessions.error} error/><PlatformAccountRows {...sessions}/>
     {sessions.checkErrors.map(message=><Notice key={message} message={message} error/>)}<Notice message={sessions.checkNotice}/>
     <div className="platform-status-legend helper" aria-label="登录状态颜色说明"><span><StatusDot tone="ready"/>最近检查正常</span><span><StatusDot tone="neutral"/>待确认</span><span><StatusDot tone="danger"/>需登录</span></div>

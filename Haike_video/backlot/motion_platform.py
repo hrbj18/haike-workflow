@@ -38,7 +38,8 @@ def _sha(path):
 
 def verify():
     document = json.loads(MANIFEST.read_text('utf8'))
-    if document.get('schema') != 'haike.motion-native-adapter/1' or document.get('platform') != 'darwin':
+    if (document.get('schema') != 'haike.motion-native-adapter/1' or document.get('platform') != 'native'
+            or document.get('supported_platforms') != ['darwin', 'win32']):
         raise ValueError('Mac动效适配清单身份无效')
     rows = document.get('modules', [])
     if len(rows) != len(NATIVE_MODULES) or {r.get('canonical_module') for r in rows} != set(NATIVE_MODULES):
@@ -67,9 +68,20 @@ def verify():
     return document
 
 
-def owned_module(name):
+def _native_request(value):
+    if isinstance(value, dict):
+        return any(_native_request(key) or _native_request(item) for key, item in value.items())
+    if isinstance(value, (list, tuple)):
+        return any(_native_request(item) for item in value)
+    return isinstance(value, str) and ('motion_native_' in value or 'haike.motion-native-adapter/1' in value
+                                      or 'system-motion-runtime.json' in value)
+
+
+def owned_module(name, *, request=None):
     """The name is selected by existing code registries, never caller JSON."""
-    if sys.platform == 'darwin':
+    system_windows = (sys.platform == 'win32' and (ROOT / '.local/system-motion-runtime.json').is_file()
+                      and (request is None or _native_request(request)))
+    if sys.platform == 'darwin' or system_windows:
         if name in NATIVE_MODULES:
             verify()
             return import_module(NATIVE_MODULES[name])

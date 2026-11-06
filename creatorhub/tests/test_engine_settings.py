@@ -113,7 +113,7 @@ def test_all_supported_values_and_live_downloader(local_project, monkeypatch):
         "xhs_comment_review_before_publish": False, "work_health_enabled": True,
         "work_health_interval_seconds": 7200, "work_health_zero_play_hours": 12.5,
         "work_health_recent_days": 14, "work_health_stat_snapshots": False,
-        "scan_interval_seconds": 600, "idle_keepalive_hours": 12.5,
+        "scan_interval_seconds": 600, "background_account_checks_enabled": True, "idle_keepalive_hours": 12.5,
         "danmaku_probe_step_seconds": 2.5, "danmaku_max_probe_points": 240,
         "danmaku_max_records_per_scan": 2000, "danmaku_max_records_total": 10000,
         "xhs_dm_monitor_enabled": True, "xhs_dm_poll_interval_seconds": 300,
@@ -137,9 +137,12 @@ def test_all_supported_values_and_live_downloader(local_project, monkeypatch):
     assert reset.status_code == 200
     assert cfg.engine.xhs_read_mode == "browser" and cfg.engine.xhs_comment_review_before_publish
     assert not cfg.engine.work_health_enabled
+    assert not cfg.engine.background_account_checks_enabled
 
 
 INVALID = [
+    {"background_account_checks_enabled": 1}, {"background_account_checks_enabled": "false"},
+    {"background_account_checks_enabled": None},
     {"host": "0.0.0.0"}, {"profiles_dir": "arbitrary-directory"}, {"ai_api_key": "do-not-echo-fixture"},
     {"xhs_read_mode": "unknown"}, {"douyin_read_mode": "invalid"}, {"douyin_write_mode": "invalid"},
     {"douyin_profile_mode": "invalid"}, {"douyin_followers_mode": "invalid"},

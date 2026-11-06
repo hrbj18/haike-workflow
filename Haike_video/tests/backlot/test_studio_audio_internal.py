@@ -8,7 +8,7 @@ from types import SimpleNamespace
 import pytest
 
 from backlot.studio_audio_internal import (
-    InternalAudioCenter, LegacyAudioBackend, PRIVATE_TARGET, PUBLIC, PUBLIC_TARGET, TTS_MODEL,
+    InternalAudioCenter, LegacyAudioBackend, DEFAULT_CLONE_TARGET, PRIVATE_TARGET, PUBLIC, PUBLIC_TARGET, TTS_MODEL,
 )
 from backlot.work_catalog import WorkError
 from lib import bailian_speech as records
@@ -83,6 +83,20 @@ def body(quote):
 
 def quoted(center, **inputs):
     return center.quote({"model": TTS_MODEL, "input": {"voice_id": "pub_longanyang", "text": "你好a。", **inputs}})
+
+
+def test_explicit_synthesis_seed_is_frozen_and_has_independent_recoverable_intent(local):
+    center, backend = local
+    ordinary = quoted(center)
+    first = quoted(center, synthesis_seed=1)
+    assert first['operation_id'] != ordinary['operation_id']
+    assert quoted(center, synthesis_seed=1)['operation_id'] == first['operation_id']
+    assert quoted(center, synthesis_seed=2)['operation_id'] != first['operation_id']
+    center.submit(body(first))
+    assert center.operation(first['operation_id'])['request']['profile']['synthesis_seed'] == 1
+    for invalid in (True, -1, 65536, 1.5, '1'):
+        with pytest.raises(WorkError):
+            quoted(center, synthesis_seed=invalid)
 
 
 def test_quote_explicit_direct_estimate_han_double_count_and_real_public_model(local):
@@ -162,7 +176,8 @@ def test_local_preferences_image_and_upload_do_not_touch_relay_account(local, tm
 def test_clone_requires_confirmed_price_and_id_is_durable_before_provider(local):
     center, backend = local
     upload = center.upload(b"fake audio decoded by fake backend", "audio", "sample.wav")
-    request = {"model": "haike/voice-clone", "input": {"name": "我的声音", "audio_file": upload["id"], "consent": True}}
+    request = {"model": "haike/voice-clone", "input": {"name": "我的声音", "audio_file": upload["id"],
+               "consent": True, "target_model": PRIVATE_TARGET}}
     with pytest.raises(WorkError, match="费用估算"):
         center.quote(request)
     center.pricing["clone:bailian:" + PRIVATE_TARGET] = {"fixed_micros": 0}
@@ -174,6 +189,26 @@ def test_clone_requires_confirmed_price_and_id_is_durable_before_provider(local)
     backend.ready = True
     assert center.job(quote["operation_id"])["result"]["voice"]["name"] == "我的声音"
     assert backend.initials == 1
+
+
+def test_new_clone_defaults_to_plus_and_its_audition_quotes_the_same_model(local):
+    center, backend = local
+    upload = center.upload(b"fake audio decoded by fake backend", "audio", "sample.wav")
+    quote = center.quote({"model": "haike/voice-clone", "input": {
+        "name": "Plus默认声音", "audio_file": upload["id"], "consent": True}})
+    assert quote["provider_model"] == DEFAULT_CLONE_TARGET == records.TTS_PLUS_MODEL
+    assert quote["max_charge_micros"] == "0"
+    backend.profiles.append({"id": "plus_clone", "name": "Plus默认声音", "provider_id": "bailian",
+        "model_id": DEFAULT_CLONE_TARGET, "provider_voice_id": DEFAULT_CLONE_TARGET + "-haike-test",
+        "speech_rate": 1., "available": True, "is_custom_cloud_voice": True})
+    audition = center.quote({"model": TTS_MODEL, "input": {"voice_id": "plus_clone", "text": "你好a。"}})
+    assert audition["provider_model"] == DEFAULT_CLONE_TARGET
+    assert audition["max_charge_micros"] == str(6 * 140)
+    backend.ready = True
+    center.submit(body(audition))
+    frozen = center.operation(audition["operation_id"])["request"]["profile"]
+    assert frozen["model_id"] == DEFAULT_CLONE_TARGET
+    assert frozen["provider_voice_id"].startswith(DEFAULT_CLONE_TARGET + "-")
 
 
 def test_frozen_rate_is_unchanged_by_later_preference_mutation(local):
