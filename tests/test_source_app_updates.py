@@ -18,10 +18,12 @@ from portable import (app_update as core, update_service as service,
 SERVER = '''import http.server,json,os,sys,uuid,subprocess
 from pathlib import Path
 root=Path.cwd().parent.resolve(); instance=uuid.uuid4().hex
+print('[UPDATE-BOOT-DIAG] cwd='+str(root),flush=True)
 if (root/'fail-start').exists(): raise SystemExit(3)
 class Handler(http.server.BaseHTTPRequestHandler):
  def log_message(self,*args): pass
  def do_GET(self):
+  print('[UPDATE-BOOT-DIAG] GET '+self.path,flush=True)
   release=json.loads((root/'VERSION.json').read_text())
   if self.path=='/api/health': value={'ok':True,'edition':'haike-workflow-2','workspace':str(root),'pid':os.getpid(),'instance_id':instance,'version':release['version'],'source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True).strip()}
   elif self.path=='/api/studio/app-update/readiness': value={'ready':True}
@@ -29,7 +31,10 @@ class Handler(http.server.BaseHTTPRequestHandler):
   else:
    self.send_response(200);self.end_headers();self.wfile.write(b'<html>synthetic UI</html>');return
   self.send_response(200);self.end_headers();self.wfile.write(json.dumps(value).encode())
-http.server.HTTPServer(('127.0.0.1',int(sys.argv[-1])),Handler).serve_forever()
+print('[UPDATE-BOOT-DIAG] binding',flush=True)
+server=http.server.HTTPServer(('127.0.0.1',int(sys.argv[-1])),Handler)
+print('[UPDATE-BOOT-DIAG] listening',flush=True)
+server.serve_forever()
 '''
 
 PUBLISHER = '''import hashlib,http.server,json,os,sys,uuid
@@ -238,12 +243,21 @@ class SourceTransactionTests(unittest.TestCase):
                 try:
                     worker.wait_server(base, root, child, '1.2.3', timeout=5, source_commit=old)
                 except Exception as error:
+                    import http.client
+                    connection = http.client.HTTPConnection('127.0.0.1', port, timeout=2)
+                    try:
+                        connection.request('GET', '/api/health')
+                        direct = connection.getresponse().read().decode()
+                    except Exception as detail:
+                        direct = repr(detail)
+                    finally:
+                        connection.close()
                     try:
                         health = worker.local_get(base, '/api/health')
                     except Exception as detail:
                         health = repr(detail)
                     log = service.private_path(root, 'restart.log').read_text(encoding='utf-8', errors='replace')[-2000:]
-                    self.fail(f'{error}; root={root.resolve()}; python={sys.executable}; child={child.poll()}; health={health}; log={log}')
+                    self.fail(f'{error}; root={root.resolve()}; python={sys.executable}; child={child.poll()}; direct={direct}; health={health}; log={log}')
             finally:
                 if child.poll() is None:
                     child.terminate()
