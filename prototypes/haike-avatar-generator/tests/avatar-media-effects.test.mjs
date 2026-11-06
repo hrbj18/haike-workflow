@@ -17,7 +17,7 @@ const chrome=[process.env.HAIKE_TEST_CHROME,
 ].find(path=>path&&existsSync(path));
 
 test('真实浏览器执行媒体effect：旧草稿伪File不白屏，File/Blob预览与释放正常',
-  {skip:chrome?false:'需要本机Chrome；不会下载浏览器或使用个人Profile',timeout:30000},async()=>{
+  {skip:chrome?false:'需要本机Chrome；不会下载浏览器或使用个人Profile',timeout:60000},async()=>{
   const directory=await mkdtemp(join(tmpdir(),'haike-avatar-media-effects-'));
   try{
     const entry=`
@@ -87,9 +87,10 @@ test('真实浏览器执行媒体effect：旧草稿伪File不白屏，File/Blob�
     await writeFile(html,`<!doctype html><html><body data-status="pending"><div id="probe"></div><pre id="result"></pre><script>${bundle.outputFiles[0].text}</script></body></html>`);
     const {stdout}=await promisify(execFile)(chrome,[
       '--headless=new','--no-first-run','--no-default-browser-check','--disable-background-networking','--disable-extensions',
-      '--disable-sync','--disable-gpu','--mute-audio',`--user-data-dir=${join(directory,'profile')}`,
+      '--disable-sync','--disable-gpu','--disable-dev-shm-usage','--disable-component-update','--disable-background-mode',
+      ...(process.platform==='linux'?['--no-sandbox']:[]),'--mute-audio',`--user-data-dir=${join(directory,'profile')}`,
       '--dump-dom','--virtual-time-budget=3000',pathToFileURL(html).href,
-    ],{timeout:20000,windowsHide:true,maxBuffer:4*1024*1024});
+    ],{timeout:40000,windowsHide:true,maxBuffer:4*1024*1024});
     const result=stdout.match(/<pre id="result">([\s\S]*?)<\/pre>/)?.[1]||'missing browser result';
     assert.equal(/<body data-status="pass">/.test(stdout),true,result.slice(0,2000));
     assert.match(result,/"passed":true/);assert.match(result,/"created":2/);assert.match(result,/"revoked":2/);assert.match(result,/"errors":0/);

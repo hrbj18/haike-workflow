@@ -18,6 +18,15 @@ def _project(root: Path, project_id: str, title: str | None = None) -> None:
     )
 
 
+def test_public_paths_are_redacted_on_each_supported_os_without_hiding_media_routes():
+    from backlot.production_queue import _safe_public, _sanitize
+    for path in ('C:/Users/example/video.mp4', '/Users/example/video.mp4', '/home/example/video.mp4',
+                 '/tmp/job/video.mp4', '/private/var/job/video.mp4'):
+        assert _safe_public({'output_path': path}) == {'output_path': '[LOCAL_PATH]'}
+        assert _sanitize({'output_path': path}, redact_local_paths=False) == {'output_path': path}
+    assert _safe_public({'url': '/api/studio/one-stop/jobs/id/files/video'})['url'].startswith('/api/')
+
+
 def _queue(tmp_path: Path) -> tuple[ProductionQueue, Path]:
     projects = tmp_path / "projects"
     _project(projects, "alpha", "甲项目")

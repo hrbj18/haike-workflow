@@ -27,6 +27,7 @@ WAITING_STATUSES = {"awaiting_human", "ambiguous"}
 TERMINAL_STATUSES = {"completed", "failed", "cancelled"}
 PUBLIC_SECRET_PARTS = ("api_key", "apikey", "secret", "token", "authorization", "cookie")
 _WINDOWS_ABSOLUTE_PATH = re.compile(r"(?<![A-Za-z0-9])(?:[A-Za-z]:[\\/])[^\s\"']+")
+_POSIX_ABSOLUTE_PATH = re.compile(r"(?<![A-Za-z0-9:])/(?:Users|home|tmp|private|var|Volumes|mnt|opt|root|workspace|workspaces|srv)/[^\s\"']+")
 _AUTH_VALUE = re.compile(
     r"(?i)\b(bearer\s+|(?:x-)?api[-_ ]?key\s*[:=]\s*|authorization\s*[:=]\s*)[^\s,;]+"
 )
@@ -99,7 +100,10 @@ def _sanitize(value: Any, *, redact_local_paths: bool) -> Any:
         return [_sanitize(child, redact_local_paths=redact_local_paths) for child in value]
     if isinstance(value, str):
         value = _AUTH_VALUE.sub(lambda match: match.group(1) + "[REDACTED]", value)
-        return _WINDOWS_ABSOLUTE_PATH.sub("[LOCAL_PATH]", value) if redact_local_paths else value
+        if redact_local_paths:
+            value = _WINDOWS_ABSOLUTE_PATH.sub('[LOCAL_PATH]', value)
+            value = _POSIX_ABSOLUTE_PATH.sub('[LOCAL_PATH]', value)
+        return value
     return value
 
 
