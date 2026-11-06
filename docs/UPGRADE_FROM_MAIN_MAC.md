@@ -2,9 +2,11 @@
 
 适用于 macOS14+，Apple Silicon / Intel。新电脑先读 [DEPLOY_MAC](DEPLOY_MAC.md)。本教程直接使用官方 main 的固定提交，不等待海客 Release 包；旧 Windows .venv、exe、DLL 不用于 Mac。
 
+本次稳定交付固定为官方 `v1.2.5` 标签所指提交，首次接入按下文检出该标签；今后选择新版本另行核对其检查结果。
+
 ## 给 Agent 的一句话
 
-> 把本机海客工作台升级到 hrbj18/haike-workflow 的 main 最新已通过检查的源码，按 docs/UPGRADE_FROM_MAIN_MAC.md 识别架构和安装位置并接通页面检查更新。保留 Key、音色形象、账号、草稿任务和 Git 修改；只备份配置、数据库等元数据，不复制视频音频图片，原路径复用。依赖走国内镜像，完成启动和模板验收后复用已有素材及数字人成果导出一条完整高清有声测试视频，不新增付费或发布；失败按回执回退。
+> 把本机海客工作台升级到 hrbj18/haike-workflow 的官方 v1.2.5 固定源码，按 docs/UPGRADE_FROM_MAIN_MAC.md 识别架构和安装位置并接通页面检查更新。保留 Key、音色形象、账号、草稿任务和 Git 修改；只备份配置、数据库等元数据，不复制视频音频图片，原路径复用。依赖走国内镜像，复用本机Chrome/Edge，不下载浏览器或Whisper；完成启动和模板验收后复用已有素材及数字人成果导出一条完整高清有声测试视频，不新增付费或发布；失败按回执回退。
 
 ## 1. 识别唯一目标
 
@@ -25,12 +27,13 @@ set -euo pipefail
 task_source="$HOME/Haike-main-待填写新目录"
 test ! -e "$task_source"
 git clone --depth 1 --single-branch --branch main --no-checkout https://github.com/hrbj18/haike-workflow.git "$task_source"
-task_commit="$(git -C "$task_source" rev-parse origin/main)"
+git -C "$task_source" fetch --depth 1 origin tag v1.2.5
+task_commit="$(git -C "$task_source" rev-parse 'refs/tags/v1.2.5^{commit}')"
 git -C "$task_source" -c core.autocrlf=false checkout --detach "$task_commit"
 git -C "$task_source" rev-parse HEAD
 ```
 
-核对官方来源、完整提交及该提交的 Source delivery checks / Component checks，记录到本机回执。后续安装不再次追随浮动main。不通过检查的提交不作为可交付目标。
+核对官方来源、`v1.2.5`所指完整提交及该提交的 Source delivery checks / Component checks，记录到本机回执。标签不可核对或检查失败时保留原版本；后续安装不再次追随浮动main。不通过检查的提交不作为可交付目标。
 
 完成条件：固定源码身份可信，原目录/媒体/Git修改保留，元数据快照可读且数据库一致。
 
@@ -43,7 +46,7 @@ cd "$task_source"
 bash scripts/setup-mac.sh
 ```
 
-此入口按本机架构安装固定原生 Python/Node/媒体工具和五组 Python/npm依赖并构建工作台，默认跳过本地Qwen TTS。国内源、固定摘要及上游例外见 [DEPLOY_MAC](DEPLOY_MAC.md#国内依赖镜像与版本)。不要手工运行 Windows setup.ps1，或按旧教程从Google下载浮动浏览器。
+此入口按本机架构安装固定原生 Python/Node/媒体工具和五组 Python/npm依赖并构建工作台，复用本机Chrome/Edge，不下载浏览器、Whisper，默认跳过本地Qwen TTS。国内源、固定摘要及上游例外见 [DEPLOY_MAC](DEPLOY_MAC.md#国内依赖镜像与版本)。不要手工运行 Windows setup.ps1，或按旧教程从Google下载浮动浏览器。
 
 已有本地运行时只有架构、ABI、版本/摘要及实际加载匹配才可复用；不搬移旧venv。原生环境已就绪的干净源码原地更新由页面增量补依赖，不无条件重跑全量setup。独立部署首次安装与常规更新是不同步骤。
 
