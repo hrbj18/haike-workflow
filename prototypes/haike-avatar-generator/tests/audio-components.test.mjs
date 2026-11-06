@@ -11,8 +11,15 @@ const require=createRequire(import.meta.url),root=resolve(fileURLToPath(new URL(
 const result=await build({entryPoints:[resolve(root,'src/AudioCenter.jsx')],bundle:true,write:false,format:'cjs',platform:'node',packages:'external',jsx:'automatic',loader:{'.css':'empty'}});
 const compiled={exports:{}};
 new Function('require','module','exports',result.outputFiles[0].text)(require,compiled,compiled.exports);
-const {VoiceCatalog,VoiceDetails}=compiled.exports;
+const {VoiceCatalog,VoiceDetails,CloneVoiceForm}=compiled.exports;
 const voice={id:'public-a',name:'海客清朗',gender:'male',kind:'public',model:'haike/cosyvoice-public',available:true,preferences:{},provider_key:'must-not-appear',supplier_model:'private-provider-name'};
+
+test('创建声音使用单次确认，表单支持可选人物图并说明克隆及试听共用预算',()=>{
+  const markup=renderToStaticMarkup(React.createElement(CloneVoiceForm,{busy:false,unresolved:false,internal:false,onCreate:()=>{throw new Error('render must not submit');}}));
+  for(const text of ['确认克隆并试听','附上人物图（可选）','试听文案','本次总预算（元）','包含声音克隆和一次试听','点击确认即表示'])assert.ok(markup.includes(text),text);
+  assert.ok(!markup.includes('查看克隆报价'));assert.ok(!markup.includes('type="checkbox"'));
+  assert.match(markup,/aria-label="克隆关联人物图"/);assert.match(markup,/type="submit"/);
+});
 
 test('公共/私人音色分组呈现；首层只提供选择，不泄漏供应商字段',()=>{
   let actions=0;const markup=renderToStaticMarkup(React.createElement(VoiceCatalog,{items:[voice],defaultVoiceId:voice.id,onOpen:()=>actions++}));

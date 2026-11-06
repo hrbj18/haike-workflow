@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import asyncio
 
-from fastapi import APIRouter, Body, HTTPException, Request
+from fastapi import APIRouter, BackgroundTasks, Body, HTTPException, Request
 from fastapi.responses import FileResponse, Response
 
 from backlot.studio_audio import AudioCenter
@@ -106,6 +106,38 @@ async def quote(request: Request, data: dict = Body(...)):
 async def submit(request: Request, data: dict = Body(...)):
     mutation(request)
     return await invoke(request, "submit", data)
+
+
+async def enrollment_call(request, method, *args):
+    from backlot.studio_audio_enrollment import AudioEnrollment
+    def run():
+        enrollment = AudioEnrollment(center(request))
+        return enrollment, getattr(enrollment, method)(*args)
+    return await asyncio.to_thread(call, run)
+
+
+@router.post("/enrollments")
+async def create_enrollment(request: Request, background_tasks: BackgroundTasks, data: dict = Body(...)):
+    mutation(request)
+    enrollment, value = await enrollment_call(request, "create", data)
+    background_tasks.add_task(enrollment.run, value["id"])
+    return value
+
+
+@router.get("/enrollments/{operation_id}")
+async def read_enrollment(operation_id: str, request: Request):
+    _, value = await enrollment_call(request, "read", operation_id)
+    return value
+
+
+@router.post("/enrollments/{operation_id}/resume")
+async def resume_enrollment(operation_id: str, request: Request, background_tasks: BackgroundTasks, data: dict = Body(...)):
+    mutation(request)
+    if data:
+        raise HTTPException(400, "继续原任务无需修改录音或预算")
+    enrollment, value = await enrollment_call(request, "read", operation_id)
+    background_tasks.add_task(enrollment.run, operation_id)
+    return value
 
 
 @router.get("/jobs/{operation_id}")

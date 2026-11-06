@@ -28,9 +28,9 @@ bash 02-启动Mac.command
 
 ## 国内依赖镜像与版本
 
-可直接查看 [_distribution-tools/macos-runtime.json](../_distribution-tools/macos-runtime.json)：按架构列出 Python、Node、FFmpeg/ffprobe、渲染浏览器和登录浏览器的完整下载 URL、大小、SHA256 和上游来源。下载后先核对摘要再解压，不运行浮动的 latest，也不通过第三方 GitHub 代理转发凭据。
+可直接查看[_distribution-tools/macos-runtime.json](../_distribution-tools/macos-runtime.json)：按架构列出Python、Node、FFmpeg/ffprobe的固定下载URL、大小、SHA256和上游来源。1.2.5起安装器跳过其中历史browser/login_browser项，改用电脑已安装的Chrome或Edge；默认不安装Whisper。下载后先核对摘要再解压。
 
-- Python standalone、Node 和 Chrome for Testing 使用 [npmmirror 二进制镜像](https://npmmirror.com/mirrors)，npm 使用 [npmmirror registry](https://npmmirror.com/)。
+- Python standalone、Node使用[npmmirror二进制镜像](https://npmmirror.com/mirrors)，npm使用[npmmirror registry](https://npmmirror.com/)。浏览器直接复用本机安装。
 - Python 包使用[清华 PyPI 镜像](https://mirrors.tuna.tsinghua.edu.cn/help/pypi/)。
 - 素材采集器另按 `_distribution-tools/mediacrawler-source.json` 获取固定提交的公开源码归档并校验；保留已有采集器及其数据。新机及离线包补齐原生采集依赖，使用抖音仍需本机登录和原有授权检查。
 - 动效颜色转换使用 FFmpeg 9.0.2 的固定原生 ZIP，由清单中的构建发布方直连下载并核对公开摘要，不依赖 GitHub 下载代理；该地址不是国内托管镜像。
@@ -38,7 +38,7 @@ bash 02-启动Mac.command
 
 源码版本不附带依赖二进制；国内镜像是下载入口，当前网络可达性不能保证所有地区、所有时间均可达。镜像下载或摘要校验失败时停止，保留现场，不跳过校验或偷偷换包。
 
-CI 可显式从上游获取相同摘要的公开运行时以避免跨洲镜像延迟；目标 Mac 默认仍使用上述国内镜像。登录用的 Chromium 缓存与项目 Patchright 驱动版本匹配；真实平台写入继续遵循原有系统 Chrome、登录和账号检查。
+CI可显式从上游获取相同摘要的公开运行时；目标Mac默认使用上述国内镜像。浏览器短渲使用实际已安装浏览器，真实平台写入继续遵循原有系统Chrome、登录和账号检查。
 
 ## 私有部署 ZIP 与数据
 

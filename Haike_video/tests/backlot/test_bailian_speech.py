@@ -111,6 +111,7 @@ def test_voice_model_rate_are_frozen_and_duplicate_guard_uses_identity():
 @pytest.mark.parametrize("model,voice,usage,billing_unit", [
     (api.TTS_MODEL, api.TEST_VOICE, {"input_tokens": 5, "output_tokens": 10}, "tokens"),
     (api.COSYVOICE_TTS_MODEL, "cosyvoice-v3.5-flash-test-voice", {"characters": 42}, "characters"),
+    (api.TTS_PLUS_MODEL, "qwen-audio-3.1-tts-plus-test-voice", {"characters": 42}, "characters"),
 ])
 def test_tts_download_failure_recovers_without_paid_resubmit_and_normalises_header(
     tmp_path, monkeypatch, model, voice, usage, billing_unit,
@@ -128,7 +129,7 @@ def test_tts_download_failure_recovers_without_paid_resubmit_and_normalises_head
     monkeypatch.setattr(requests, "post", post)
     monkeypatch.setattr(api, "download", download)
     profile = {"id": "test", "name": "测试", "provider_id": "bailian", "provider_voice_id": voice,
-               "model_id": model, "speech_rate": 1.2}
+               "model_id": model, "speech_rate": 1.2, "synthesis_seed": 17}
     target = tmp_path / "take.wav"
     first = tts_runtime.generate_voice_audio(text="你好。", profile=profile, output_path=target)
     assert not first.success
@@ -138,10 +139,13 @@ def test_tts_download_failure_recovers_without_paid_resubmit_and_normalises_head
     assert posted[0]["model"] == model
     assert posted[0]["input"]["voice"] == voice
     assert posted[0]["input"]["rate"] == 1.2
+    assert posted[0]["input"]["seed"] == 17
     assert second.data["billing_unit"] == billing_unit
     assert second.data["estimated_cost_cny"] == api.tts_cost(usage, model) > 0
     if model == api.COSYVOICE_TTS_MODEL:
         assert second.data["estimated_cost_cny"] == 0.00336
+    if model == api.TTS_PLUS_MODEL:
+        assert second.data["estimated_cost_cny"] == 0.00588
     with wave.open(str(target)) as reader:
         assert reader.getnframes() == 2400
     assert second.data["audio_duration_seconds"] == 0.1
@@ -170,6 +174,15 @@ def test_cosyvoice_clone_is_visible_and_freezes_model_rate_and_billing():
 
 def test_cosyvoice_model_mismatch_is_rejected_before_provider_submission(tmp_path):
     voice = "cosyvoice-v3.5-flash-test-voice"
+    with pytest.raises(audio_center.AudioCenterError, match="不一致"):
+        audio_center.add_custom_cloud_voice({"provider": "bailian", "name": "模型错配", "voice_id": voice})
+    result = BailianTTS().execute({"text": "测试", "voice_id": voice,
+        "model": api.TTS_MODEL, "output_path": str(tmp_path / "mismatch.wav")})
+    assert not result.success and "不一致" in result.error
+
+
+def test_qwen_plus_clone_cannot_be_used_with_flash(tmp_path):
+    voice = api.TTS_PLUS_MODEL + "-test-voice"
     with pytest.raises(audio_center.AudioCenterError, match="不一致"):
         audio_center.add_custom_cloud_voice({"provider": "bailian", "name": "模型错配", "voice_id": voice})
     result = BailianTTS().execute({"text": "测试", "voice_id": voice,

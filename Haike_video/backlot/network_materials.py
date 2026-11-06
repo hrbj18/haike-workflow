@@ -29,14 +29,14 @@ _STATES = {"ready": "available", "active": "available",
 _SEARCH_CHECK_MAX_AGE_SECONDS = 8 * 60 * 60
 
 
-def creator_call(path, data=None, *, timeout=25):
+def creator_call(path, data=None, *, timeout=25, method=None):
     gateway = CreatorGateway()
     base = urlsplit(gateway.base_url)
     if (base.scheme != "http" or base.hostname not in {"127.0.0.1", "localhost", "::1"}
             or base.username or base.password):
         raise HTTPException(503, "账号服务需使用本机回环地址")
     req = http.Request(gateway.base_url + path, data=None if data is None else json.dumps(data).encode(),
-                       headers={"Content-Type": "application/json"})
+                       headers={"Content-Type": "application/json"}, method=method)
     try:
         with gateway.opener.open(req, timeout=timeout) as response:
             return json.load(response)
@@ -139,6 +139,30 @@ def session_view(value):
             "publish_saved": value.get("publish_saved") is True,
             "observability": _session_observability(value.get("observability")),
             "message": value.get("message") or "", "selected": value.get("selected") is True}
+
+
+def _login_checks_view(result):
+    values = result.get("values") if isinstance(result, dict) else None
+    enabled = values.get("background_account_checks_enabled") if isinstance(values, dict) else None
+    if type(enabled) is not bool:
+        raise HTTPException(503, "账号服务尚不支持自动检查设置，请更新并重启本副本的账号服务")
+    return {"enabled": enabled}
+
+
+@router.get("/api/studio/platform-login-checks")
+async def login_checks():
+    result = await asyncio.to_thread(creator_call, "/api/settings/engine")
+    return _login_checks_view(result)
+
+
+@router.post("/api/studio/platform-login-checks")
+async def save_login_checks(req: Request, data: dict = Body(...)):
+    mutation(req)
+    if set(data) != {"enabled"} or type(data["enabled"]) is not bool:
+        raise HTTPException(422, "请选择是否开启后台自动检查平台登录")
+    result = await asyncio.to_thread(creator_call, "/api/settings/engine",
+        {"background_account_checks_enabled": data["enabled"]}, method="PUT")
+    return _login_checks_view(result)
 
 
 @router.get("/api/studio/download-sessions")

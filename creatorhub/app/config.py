@@ -27,6 +27,7 @@ class EngineConfig:
     danmaku_max_probe_points: int = 120       # 单条视频最多探测的时间点数
     danmaku_max_records_per_scan: int = 1000  # 单轮最多入库弹幕数,0=不限
     danmaku_max_records_total: int = 0        # 每个监控最多保留记录数,0=不限
+    background_account_checks_enabled: bool = False  # 用户主动开启后才定时访问平台检查登录
     account_check_interval_seconds: int = 1800  # 账号体检/闲置保活轮询间隔(0=关闭)
     # 被判「登录失效」(status=invalid) 的账号低频自愈复检间隔。常规体检会把
     # invalid 账号排除在外,而风控闸又拒绝它们的一切非 LOGIN 操作 —— 没有这条

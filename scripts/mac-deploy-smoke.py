@@ -17,11 +17,11 @@ def main():
     spec.loader.exec_module(deploy)
     arch = deploy.architecture()
     env = deploy.environment(arch)
-    browser_probe = '''import asyncio
+    browser_probe = '''import asyncio,os
 from patchright.async_api import async_playwright
 async def main():
     async with async_playwright() as p:
-        browser = await p.chromium.launch(headless=True)
+        browser = await p.chromium.launch(headless=True, executable_path=os.environ['REMOTION_BROWSER_EXECUTABLE'])
         page = await browser.new_page()
         await page.set_content('<h1>Local deployment test</h1>')
         assert await page.locator('h1').inner_text() == 'Local deployment test'
@@ -31,14 +31,12 @@ asyncio.run(main())
 '''
     browser_version = subprocess.check_output([str(deploy.python_for('creatorhub')), '-c', browser_probe],
                                               env=env, text=True, timeout=60).strip()
-    expected_browser = next(row['version'] for row in deploy.read(deploy.SPEC)['assets'] if row['id'] == 'browser' and row['arch'] == arch)
-    assert browser_version == expected_browser
     crawler_py = deploy.python_for('copy_skill/copy_skill-main/third_party/MediaCrawler')
     collector_version = None
     if crawler_py.is_file():
         collector_version = subprocess.check_output([str(crawler_py), '-c', browser_probe.replace('patchright.async_api', 'playwright.async_api')],
                                                    env=env, text=True, timeout=60).strip()
-        assert collector_version == expected_browser
+        assert collector_version == browser_version
     folder = ROOT / '.local/mac-smoke'
     folder.mkdir(parents=True, exist_ok=True)
     cli = ROOT / 'Haike_video/remotion-composer/node_modules/.bin/remotion'
@@ -79,7 +77,7 @@ asyncio.run(main())
     receipt = {'ok': True, 'arch': arch, 'version': deploy.version(), 'http_templates': len(rows),
                'http_covers': covers, 'actual_renderer': 'existing HeroTitle / Remotion',
                'video_has_motion': True, 'audio_and_video': True, 'paid_calls': 0,
-               'bundled_login_browser_version': browser_version,
+               'installed_browser_version': browser_version,
                'collector_browser_version': collector_version,
                'full_18_template_execution': 'not tested by this smoke', 'physical_colleague_machine': False}
     deploy.write(ROOT / '.local/mac-smoke.json', receipt)

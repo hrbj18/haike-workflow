@@ -1,5 +1,17 @@
 # 给 Codex 一个 GitHub 地址完成更新
 
+## 1.2.5稳定源码：旧版一句话升级
+
+把下面完整一句发给旧电脑上的Agent：
+
+> 请按照 https://github.com/hrbj18/haike-workflow/blob/main/docs/UPDATE_WITH_CODEX.md 将我正在使用的海客工作台升级到1.2.5稳定源码：识别实际安装目录及Windows/Mac，采用官方v1.2.5固定版本并核对提交与检查结果；保留Key、账号、音色、任务、草稿、素材、作品和Git未提交/暂存修改，只备份元数据、原媒体按原路径复用；依赖使用国内镜像，复用本机Chrome，不下载浏览器或Whisper；完成前端构建、启动、模板及无新增付费的短渲验证，接通关于页更新，失败按回执回退。
+
+执行[Windows源码接入](UPGRADE_FROM_MAIN.md)或[Mac源码接入](UPGRADE_FROM_MAIN_MAC.md)。先固定官方`v1.2.5`标签所指完整提交；标签尚未可核对或检查失败时停止在原版本，不回退到旧Release冒充1.2.5。干净Git可安全快进，便携/dirty/index默认独立目录迁入，原文件和暂存区保持。当前稳定版范围见[1.2.5](releases/1.2.5.md)。
+
+这句话由Agent执行目标识别、备份、安装和验收；不是要求用户逐项操作。浏览器与Whisper不在本期依赖获取清单；已有历史能力保留。Github源码下载和国内依赖下载分别记录实际结果，不把本机通路当作所有地区的速度保证。
+
+## 历史便携发行包路线
+
 **旧电脑接入 main / 之后从页面更新：进入[Windows教程](UPGRADE_FROM_MAIN.md)或[Mac教程](UPGRADE_FROM_MAIN_MAC.md)。** Agent完成一次固定提交的源码部署、元数据恢复、原媒体绑定与验收；1.2.4 起干净 Git 安装从[关于页](APP_UPDATES.md)直接检查/安装 main。下文仅为便携发行包路线；`upgrade-haike.py apply`仍读取Release清单，从main下载CLI不改变这一点。
 
 适用于可识别的海客旧便携安装、历史目录布局和 Git 源码 checkout。Agent统一使用 scripts/upgrade-haike.py 的 plan/apply，由它选择原更新事务或隔离源码路线；首次安装仍按[README](../README.md)和[PORTABLE](PORTABLE.md)。

@@ -150,13 +150,14 @@ def keepalive_metadata(account, runtime, *, now=None):
     mode = "auth_recheck" if account.status == "invalid" else "keepalive"
     if mode == "auth_recheck":
         interval = _number(getattr(config, "invalid_auth_recheck_interval_seconds", None))
-    value = {"engine_running": running, "configured": interval > 0 if interval is not None else None,
+    enabled = getattr(config, "background_account_checks_enabled", False) is True
+    value = {"engine_running": running, "configured": enabled and interval > 0 if interval is not None else None,
              "mode": mode, "idle_hours": hours, "check_interval_seconds": interval,
              "jitter_ratio": jitter, "next_eligible_at": None, "schedule_status": "unknown"}
-    if interval is None:
-        return value
-    if interval <= 0:
+    if not enabled or (interval is not None and interval <= 0):
         value["schedule_status"] = "disabled"
+        return value
+    if interval is None:
         return value
     if running is not True:
         value["schedule_status"] = "engine_stopped" if running is False else "unknown"

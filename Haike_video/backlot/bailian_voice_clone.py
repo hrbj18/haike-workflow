@@ -1,10 +1,11 @@
 """Workbench voice enrollment, with durable boundaries around cloud creation.
 
-CosyVoice uses model-bound temporary upload or a configured private OSS object.
+Qwen Plus uses an inline reference; legacy models retain their recorded upload route.
 An accepted voice is persisted before registration, so recovery never creates it again.
 """
 from __future__ import annotations
 
+import base64
 from hashlib import sha256
 import os
 from pathlib import Path
@@ -22,41 +23,47 @@ from lib.ffmpeg_locator import resolve_ffmpeg
 
 MAX_UPLOAD_BYTES = 10 * 1024 * 1024
 ENROLLMENT_MODEL = "voice-enrollment"
-MODELS = (api.COSYVOICE_TTS_MODEL, api.TTS_MODEL)
+DEFAULT_MODEL = api.DEFAULT_CLONE_MODEL
+MODELS = (DEFAULT_MODEL, api.COSYVOICE_TTS_MODEL, api.TTS_MODEL)
 
 
 def _root() -> Path:
     return center.AUDIO_CENTER_DIR / "bailian-clones"
 
 
-def _storage_mode() -> str:
+def _storage_mode(model: str | None = None) -> str:
+    if model == api.TTS_PLUS_MODEL:
+        return "inline"
     required = ("BAILIAN_OSS_ENDPOINT", "BAILIAN_OSS_BUCKET",
                 "BAILIAN_OSS_ACCESS_KEY_ID", "BAILIAN_OSS_ACCESS_KEY_SECRET")
     return "oss" if all(os.environ.get(k, "").strip() for k in required) else "temporary"
 
 
 def readiness() -> dict:
-    required = ("BAILIAN_OSS_ENDPOINT", "BAILIAN_OSS_BUCKET",
-                "BAILIAN_OSS_ACCESS_KEY_ID", "BAILIAN_OSS_ACCESS_KEY_SECRET")
-    mode = _storage_mode()
     try:
         import oss2  # noqa: F401
         dependency = True
     except ImportError:
         dependency = False
-    dependency_ready = mode == "temporary" or dependency
-    capability = {"ready": api.configured() and dependency_ready, "requires_oss": mode == "oss",
-                  "detail": "请先在 API 管理中保存阿里云百炼 API Key。" if not api.configured() else
-                            ("使用百炼临时上传创建 CosyVoice 音色，无需自有 OSS。" if mode == "temporary" else
-                             ("使用已配置的私有 OSS 上传录音。" if dependency else "请安装 oss2 云端上传依赖。"))}
-    return {"configured": api.configured(), "dependency_ready": dependency_ready, "storage_mode": mode,
-            "ready": capability["ready"], "models": list(MODELS), "detail": capability["detail"],
-            "model_readiness": {model: capability for model in MODELS}}
+    capabilities = {}
+    for model in MODELS:
+        mode = _storage_mode(model)
+        dependency_ready = mode != "oss" or dependency
+        detail = {"inline": "录音直接上传百炼创建 Qwen 3.1 Plus 音色，无需自有 OSS。",
+                  "temporary": "使用百炼临时上传创建音色，无需自有 OSS。",
+                  "oss": "使用已配置的私有 OSS 上传录音。"}
+        capabilities[model] = {"ready": api.configured() and dependency_ready,
+            "requires_oss": mode == "oss", "storage_mode": mode, "dependency_ready": dependency_ready,
+            "detail": "请先在 API 管理中保存阿里云百炼 API Key。" if not api.configured() else
+                      (detail[mode] if dependency_ready else "请安装 oss2 云端上传依赖。")}
+    return {"configured": api.configured(), **capabilities[DEFAULT_MODEL],
+            "models": list(MODELS), "default_model": DEFAULT_MODEL, "model_readiness": capabilities}
 
 
 def validate_fields(name: object, model: object, consent: object) -> tuple[str, str]:
     if not isinstance(name, str) or not name.strip() or len(name.strip()) > 48 or any(ord(c) < 32 for c in name):
         raise center.AudioCenterError("请填写 1–48 字的音色名称，不含换行或控制字符")
+    model = DEFAULT_MODEL if model is None else model
     if model not in MODELS:
         raise center.AudioCenterError("请选择已接入的百炼配音模型")
     if consent != "yes":
@@ -83,7 +90,7 @@ def _normalize(source: Path, target: Path) -> dict:
         raise center.AudioCenterError("未找到 FFmpeg，请先完成项目基础初始化")
     try:
         command = [binary, "-nostdin", "-y", "-v", "error", "-protocol_whitelist", "file,pipe",
-                        "-format_whitelist", "wav,mp3,mov", "-i", str(source.resolve()),
+                        "-format_whitelist", "wav,mp3,mov,ogg", "-i", str(source.resolve()),
                         "-t", "61", "-vn", "-ac", "1", "-ar", "24000", "-c:a", "pcm_s16le", str(target)]
         subprocess.run(command,
                        check=True, timeout=90, capture_output=True)
@@ -99,7 +106,7 @@ def _normalize(source: Path, target: Path) -> dict:
             raise center.AudioCenterError("参考录音至少需要 5 秒，推荐 10–20 秒清晰单人朗读")
         return {"reference_duration_seconds": duration, "reference_trimmed": trimmed}
     except (subprocess.SubprocessError, OSError, wave.Error) as exc:
-        raise center.AudioCenterError("无法解码参考录音，请上传有效的 WAV、MP3 或 M4A 文件") from exc
+        raise center.AudioCenterError("无法解码参考录音，请上传有效的 WAV、MP3、M4A 或 OGG 文件") from exc
 
 
 def public_job(record: dict) -> dict:
@@ -168,11 +175,13 @@ def _execute(record: dict, path: Path, audio: Path | None) -> dict:
             if audio is None:
                 raise center.AudioCenterError("录音未提交到云端，请重新上传原录音继续")
             _preflight_name(record["name"])
-            mode = record.get("upload_storage") or ("oss" if record.get("oss_key") else _storage_mode())
+            mode = record.get("upload_storage") or ("oss" if record.get("oss_key") else _storage_mode(record["model_id"]))
             record.update(status="uploading", upload_storage=mode, updated_at=center._now())
             api.write_record(path, record)
             request_headers = api.headers()
-            if mode == "oss":
+            if mode == "inline":
+                audio_source = {"audio": "data:audio/wav;base64," + base64.b64encode(audio.read_bytes()).decode("ascii")}
+            elif mode == "oss":
                 storage = _storage_identity()
                 if record.get("storage") and storage != record["storage"]:
                     raise center.AudioCenterError("OSS 配置已变化，请恢复原存储配置后继续上传")
@@ -184,17 +193,19 @@ def _execute(record: dict, path: Path, audio: Path | None) -> dict:
                 api.write_record(path, record)
                 bucket.put_object_from_file(record["oss_key"], str(audio), headers={"x-oss-object-acl": "private"})
                 url = bucket.sign_url("GET", record["oss_key"], 3600, slash_safe=True)
+                audio_source = {"url": url}
             else:
                 # The upload policy must bind the request model, not the target TTS model.
                 uploaded = upload_audio(audio, "temporary", model=ENROLLMENT_MODEL)
                 url = uploaded["file_url"]
                 request_headers["X-DashScope-OssResourceResolve"] = "enable"
+                audio_source = {"url": url}
             record.update(status="submitting", updated_at=center._now())
             api.write_record(path, record)
             # No automatic retries: create_voice is not idempotent upstream.
             response = requests.post(api.api_base() + "/services/audio/tts/customization",
                 headers=request_headers, json={"model": ENROLLMENT_MODEL, "input": {
-                    "action": "create_voice", "target_model": record["model_id"], "prefix": "haike", "url": url}},
+                    "action": "create_voice", "target_model": record["model_id"], "prefix": "haike", **audio_source}},
                 timeout=(15, 120), allow_redirects=False)
             if response.status_code >= 500 or 300 <= response.status_code < 400:
                 raise api.BailianAmbiguous("云端创建返回异常，受理结果不明；已停止自动重发")
@@ -248,7 +259,7 @@ def create_voice(name: str, model: str, source: Path, consent: str) -> dict:
     name, model = validate_fields(name, model, consent)
     api.headers()
     # Validate storage and local audio before any reference upload/creation.
-    if _storage_mode() == "oss":
+    if _storage_mode(model) == "oss":
         _oss_bucket()
     if not source.is_file() or not 0 < source.stat().st_size <= MAX_UPLOAD_BYTES:
         raise center.AudioCenterError("参考录音不能为空，且不能超过 10 MB")

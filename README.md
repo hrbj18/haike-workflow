@@ -1,12 +1,14 @@
 # Haike Workflow
 
+当前稳定源码版本为 **1.2.5**，发布范围和受验成片见[稳定版说明](docs/releases/1.2.5.md)。旧版向Agent发送[一句话升级指令](docs/UPDATE_WITH_CODEX.md)，即可识别安装类型、保留数据并接入稳定源码。新版默认复用本机Chrome/Edge，使用云端ASR，安装和升级不自动下载浏览器或Whisper。
+
 Mac 新电脑直接从源码安装，支持 Apple Silicon / Intel，先读 [Mac 新机部署](docs/DEPLOY_MAC.md)，运行 `bash scripts/setup-mac.sh`。源码不包含依赖或私人配置，安装器提供国内镜像；用户明确授权的私有同事部署 ZIP 另附离线缓存和配置，不上传公开 GitHub。
 
 已有旧版直接升级 main：让 Agent 按[Windows教程](docs/UPGRADE_FROM_MAIN.md)或[Mac教程](docs/UPGRADE_FROM_MAIN_MAC.md)完成一次接入，保留配置、元数据和 Git 修改，原视频/音频/图片按原路径复用。**1.2.4 起，接入后的干净 Git 安装可在“关于海客视频 → 检查更新”直接取得 main 源码、补依赖并重启，不再依赖 Release 包或反复复制命令。** 规则与回退见[页面更新](docs/APP_UPDATES.md)。
 
 旧便携的发行包通道另见[UPDATE_WITH_CODEX](docs/UPDATE_WITH_CODEX.md)，其 CLI 仍依赖 Release 清单；不要用它取得 main 源码。模板升级还须核验合同、组件与实际运行，缺本期素材分别提示待配置。
 
-当前稳定源码入口为`main`（2026-10-27），版本范围与验收见[稳定版说明](docs/releases/20261027-stable.md)。本地新版ZIP另含40张用户授权截图，入口见[模板交付](docs/TEMPLATE_DELIVERY.md)；私人截图和样片不进入公开Git。Windows便携包按根`使用说明.txt`初始化并导入自己的私有配置；已有独立APIKey包也可用`00-install.cmd`，再运行`02-start.cmd`。Key不进入项目ZIP。两条RunningHub工作流都包含，性价比默认，高质量需明确指定；详情见`Haike_video/workflows/runninghub-high-quality/README.md`。
+`main`为稳定源码入口，历史2026-10-27基线及旧便携ZIP的范围分别见[历史稳定版](docs/releases/20261027-stable.md)和[模板交付](docs/TEMPLATE_DELIVERY.md)。私人截图、Key和样片不进入公开Git。两条RunningHub工作流保留，各制作入口沿用户选择和原任务使用；一条龙的已验收路线见[工作流契约](Haike_video/docs/一条龙视频生成流程.md)。
 
 海客科技视频工作台与统一API收费中转站的源码仓库。用户确认的仓库为 [hrbj18/haike-workflow](https://github.com/hrbj18/haike-workflow)，保留公开可见性和原提交历史；后续迭代、分支和提交见 [Git管理](docs/GIT_WORKFLOW.md)。`main`为稳定交付入口，旧基线保存在`legacy-main-before-20261027`及原有历史标签，功能分支继续保留。
 
@@ -31,7 +33,7 @@ Codex / Agent 首次接入请读[基础教程](START_HERE.md)：Codex 总控、�
 
 ## Windows 源码安装
 
-准备 64 位 Python 3.12、Node.js 22+、Git、uv 和兼容 MSVC 14.4x 的 [微软 Visual C++ x64 运行库](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist)，确保 `python`、`node`、`npm`、`uv` 在 PATH。安装需要联网获取 Python/npm 依赖、FFmpeg 和渲染浏览器。平台采集/发布另需系统 Chrome。本源码不捆绑本机 DLL。
+准备64位Python3.12、Node.js22+、Git、uv、本机Chrome（或Edge）和兼容MSVC14.4x的[微软Visual C++ x64运行库](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist)，确保`python`、`node`、`npm`、`uv`在PATH。安装从国内镜像获取锁定的Python/npm依赖和缺少的FFmpeg，复用本机浏览器，默认不安装Whisper或本地Qwen。本源码不捆绑本机DLL。
 
 Windows 的 pip/uv/npm 与渲染浏览器默认使用[国内镜像](docs/WINDOWS_DEPENDENCY_MIRRORS.md)，复用已有可用媒体工具；设置仅用于安装子进程，不改全局配置。日常页面更新按差异补依赖，不重复下载整套环境。
 

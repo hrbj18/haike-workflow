@@ -83,9 +83,9 @@ pwsh -NoProfile -ExecutionPolicy Bypass -File scripts/setup.ps1
 if ($LASTEXITCODE) { throw '安装未完成，读取失败日志后恢复。' }
 ```
 
-脚本同步Python模块锁、检查原生依赖、获取FFmpeg/Remotion浏览器并构建界面，默认跳过本地Qwen TTS。已有环境可由 Agent 按脚本局部补齐，避免无关全量安装。基础Python锁为 `_distribution-tools/locks/Haike_video.txt`、`creatorhub.txt`，采集使用其 `uv.lock`，npm使用各组件 `package-lock.json`；记录来源、版本及下载校验结果。
+1.2.5脚本同步Python模块锁、检查原生依赖、获取缺少的FFmpeg并构建界面；复用本机Chrome/Edge，默认跳过浏览器下载、Whisper和本地Qwen TTS。已有环境可由Agent按脚本局部补齐，避免无关全量安装。基础Python锁为`_distribution-tools/locks/Haike_video.txt`、`creatorhub.txt`，采集使用其`uv.lock`且不启用local-asr extra，npm使用各组件`package-lock.json`；记录来源、版本及下载校验结果。
 
-当前 setup 默认使用[国内依赖镜像](WINDOWS_DEPENDENCY_MIRRORS.md)，补齐 Snapcn 和 HTML npm 组件，并复用可用 FFmpeg；浏览器按固定镜像及摘要安装。它仍不等于18套全部制作已验收：按首选合同核对字体、组件及运行绑定，优先复用 SHA匹配的合法资源。缺件按声明来源取得并校验；不能还原固定字节时明确影响模板，不改摘要消除错误。
+当前setup默认使用[国内依赖镜像](WINDOWS_DEPENDENCY_MIRRORS.md)，补齐Snapcn和HTML npm组件，复用可用FFmpeg和本机浏览器，并为新任务登记独立原生运行绑定。按首选合同核对字体、组件及运行绑定；来源SHA匹配和短渲分别验收。缺件按声明来源取得并校验，不能还原固定字节时明确影响模板。
 
 setup成功已包含界面构建；局部依赖恢复时在源码根单独执行：
 

@@ -113,6 +113,8 @@ def install_runtimes(arch, offline):
     for row in spec['assets']:
         if row['arch'] != arch:
             continue
+        if row['id'] in {'browser', 'login_browser'}:
+            continue
         source = obtain(row, offline)
         kind = row['id']
         if kind == 'python':
@@ -165,9 +167,11 @@ def collector_source(offline):
 def environment(arch):
     runtime = ROOT / 'runtime/macos' / arch
     nodes = list((runtime / 'node').glob('node-*/bin/node'))
-    browsers = list((runtime / 'playwright').glob('chromium_headless_shell-*/chrome-headless-shell-*/chrome-headless-shell'))
-    if len(nodes) != 1 or len(browsers) != 1:
-        raise ValueError('原生 Node 或渲染浏览器缺失；请先运行安装入口')
+    sys.path.insert(0, str(ROOT))
+    from portable.system_browser import resolve
+    browser = resolve()
+    if len(nodes) != 1:
+        raise ValueError('原生 Node 缺失；请先运行安装入口')
     env = os.environ.copy()
     env.pop('PYTHONHOME', None)
     env.update(PYTHONUTF8='1', PYTHONIOENCODING='utf-8', PYTHONNOUSERSITE='1',
@@ -175,8 +179,8 @@ def environment(arch):
                VIDEOHUB_ROOT=str(ROOT), HAIKE_NODE_EXECUTABLE=str(nodes[0]),
                FFMPEG_BINARY=str(runtime / 'ffmpeg/bin/ffmpeg'),
                FFPROBE_BINARY=str(runtime / 'ffmpeg/bin/ffprobe'),
-               REMOTION_BROWSER_EXECUTABLE=str(browsers[0]), CHROME_PATH=str(browsers[0]),
-               HYPERFRAMES_BROWSER_PATH=str(browsers[0]), PRODUCER_HEADLESS_SHELL_PATH=str(browsers[0]),
+               REMOTION_BROWSER_EXECUTABLE=str(browser), CHROME_PATH=str(browser),
+               HYPERFRAMES_BROWSER_PATH=str(browser), PRODUCER_HEADLESS_SHELL_PATH=str(browser),
                PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD='1', BACKLOT_NO_BROWSER='1',
                PLAYWRIGHT_BROWSERS_PATH=str(runtime / 'playwright'),
                HYPERFRAMES_NO_TELEMETRY='1', HYPERFRAMES_NO_AUTO_INSTALL='1')
@@ -195,9 +199,9 @@ def execute(argv, *, cwd=ROOT, env=None, timeout=2400):
 
 def requirements(module, destination):
     if module == 'Haike_video':
-        # Cloud audio plus the existing optional local ASR fallback; no local Qwen.
+        # Cloud audio; local ASR remains an explicit optional dependency.
         lines = ['-r ' + str(ROOT / module / 'requirements.txt'),
-                 'faster-whisper>=1.2,<2', 'onnxruntime>=1.20', 'scipy>=1.14,<2', 'setuptools>=68', 'wheel',
+                 'scipy>=1.14,<2', 'setuptools>=68', 'wheel',
                  *tomllib.loads((ROOT / 'api-platform/pyproject.toml').read_text())['project']['dependencies']]
     elif module == 'copy_skill/copy_skill-main/third_party/MediaCrawler':
         lines = ['-r ' + str(ROOT / '_distribution-tools/mediacrawler-requirements.txt'), 'setuptools>=68', 'wheel']
@@ -286,10 +290,7 @@ def configure(arch, env):
         settings = override.setdefault('media_crawler', {})
         settings.setdefault('root', 'third_party/MediaCrawler')
         settings.setdefault('python', 'third_party/MediaCrawler/.venv/bin/python')
-        browsers = list((ROOT / 'runtime/macos' / arch / 'playwright').glob(
-            'chromium-*/chrome-mac-*/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing'))
-        if len(browsers) == 1:
-            settings.setdefault('chrome_path', str(browsers[0]))
+        settings.setdefault('chrome_path', env['CHROME_PATH'])
         write(override_path, override)
     from importlib.util import spec_from_file_location, module_from_spec
     spec = spec_from_file_location('haike_mac_private_profile', ROOT / 'scripts/install-private-profile.py')
@@ -323,8 +324,8 @@ def check(args):
     arch = architecture()
     env = environment(arch)
     for module in MODULES:
-        code = {'Haike_video': 'import fastapi,uvicorn,cv2,numpy,onnxruntime,ctranslate2,faster_whisper,scipy;from faster_whisper.vad import get_speech_timestamps',
-                'copy_skill/copy_skill-main': 'import cv2,faster_whisper,onnxruntime;import douyin_intelligence',
+        code = {'Haike_video': 'import fastapi,uvicorn,cv2,numpy,scipy,dashscope',
+                'copy_skill/copy_skill-main': 'import cv2;import douyin_intelligence',
                 'creatorhub': 'import fastapi,uvicorn,sqlmodel,patchright',
                 'api-platform': 'import fastapi,uvicorn,cryptography,dashscope'}[module]
         execute([python_for(module), '-c', code], env=env)

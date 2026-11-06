@@ -76,6 +76,7 @@ try {
         Invoke-Checked powershell.exe @('-NoProfile','-ExecutionPolicy','Bypass','-File',(Join-Path $workflowRoot 'Haike_video\scripts\setup_local_tts.ps1'))
     }
     Invoke-Checked python @((Join-Path $PSScriptRoot 'build-studio.py'))
+    Invoke-Checked (Join-Path $workflowRoot 'Haike_video\.venv\Scripts\python.exe') @((Join-Path $PSScriptRoot 'bind-media-runtime.py'))
     Invoke-Checked powershell.exe @('-NoProfile','-ExecutionPolicy','Bypass','-File',(Join-Path $PSScriptRoot 'check.ps1'))
     Write-Output 'Setup completed. Configure your own cloud credentials and platform accounts as needed.'
 } finally { Pop-Location }

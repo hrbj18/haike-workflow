@@ -13,7 +13,7 @@ if ((Test-Path -LiteralPath $sourceMediaReceipt -PathType Leaf) -and -not (Test-
     $sourceMedia = Get-Content -LiteralPath $sourceMediaReceipt -Raw | ConvertFrom-Json
     $env:FFMPEG_BINARY = Join-Path $PSScriptRoot $sourceMedia.tools.ffmpeg.path
     $env:FFPROBE_BINARY = Join-Path $PSScriptRoot $sourceMedia.tools.ffprobe.path
-    $env:REMOTION_BROWSER_EXECUTABLE = Join-Path $PSScriptRoot $sourceMedia.tools.browser.path
+    $env:REMOTION_BROWSER_EXECUTABLE = if ([IO.Path]::IsPathRooted($sourceMedia.tools.browser.path)) { $sourceMedia.tools.browser.path } else { Join-Path $PSScriptRoot $sourceMedia.tools.browser.path }
     $env:HYPERFRAMES_BROWSER_PATH = $env:REMOTION_BROWSER_EXECUTABLE
     $env:PRODUCER_HEADLESS_SHELL_PATH = $env:REMOTION_BROWSER_EXECUTABLE
     $env:PATH = "$(Split-Path $env:FFMPEG_BINARY -Parent);$env:PATH"

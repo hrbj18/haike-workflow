@@ -7,9 +7,11 @@
 | Python 包（pip / uv） | `https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple` |
 | npm 包 | `https://registry.npmmirror.com`（实际包可由其 CDN 提供） |
 | uv 按需取得 Python | npmmirror 的 python-build-standalone 镜像；优先复用已安装 Python 3.12 |
-| 渲染浏览器 | `portable/dependency-downloads.json` 中 npmmirror 的固定 Chrome Headless Shell 和 SHA256 |
+| 渲染浏览器 | 1.2.5起寻找并复用已安装Chrome/Edge，不下载浏览器；`HAIKE_BROWSER_PATH`可显式指定已有浏览器 |
 | FFmpeg / ffprobe | 先检测并复用已有可启动工具；缺失时使用同一 JSON 的固定加速地址、发布方直连地址及 SHA256。此项不是承诺全部由国内镜像托管 |
 | 源码与更新检查 | 官方 GitHub main；不经过第三方代理转发账号或 Key |
+
+1.2.5的制片Python锁已去除Whisper及其专用推理依赖，采集端将本地ASR移入显式`local-asr`extra，默认export/install不启用。云端ASR使用用户自己的配置；旧机器的模型和已受理任务保留，安装检查不要求本地模型。历史浏览器下载描述仍供旧版工具识别，不参与1.2.5源码安装。
 
 采集的 `uv.lock` 内保存了原 PyPI wheel URL，单独改环境变量再 `uv sync --locked` 仍可能走旧地址。Windows 安装先 `uv export --frozen --all-groups --no-emit-project`，保留固定版本和哈希，再通过镜像安装导出的清单；不改用户的 uv.lock。源码增量更新沿用此路线。
 

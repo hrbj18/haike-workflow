@@ -32,6 +32,7 @@ from .backends import (
     FingerprintChromiumBackend,
 )
 from .identity import Identity, fingerprint_script
+from .window_presentation import WindowPresentation
 from .session_snapshots import (
     SessionSnapshots, capture_platform_session_state, restore_platform_session_storage,
 )
@@ -321,6 +322,8 @@ class BrowserManager:
         # 后台租约(open_background)的「保持最小化」任务,按账号 key 存放,
         # 关闭 context / 换租约时取消。见 open_background 的说明。
         self._minimize_holds: Dict[Any, asyncio.Task] = {}
+        self._window_presentation = WindowPresentation()
+        self._window_contexts: Dict[int, dict] = {}
         self._last_used: Dict[Any, float] = {}
         self._locks: Dict[Any, asyncio.Lock] = {}
         self._cv_lock = asyncio.Lock()                   # 保护 context 字典的创建/驱逐
@@ -672,6 +675,13 @@ class BrowserManager:
         if self._pw:
             await self._pw.stop()
         self._pw = None
+        # Direct temporary contexts may not emit close after the driver exits.
+        for entry in self._window_contexts.values():
+            if entry.get("task") is not None:
+                entry["task"].cancel()
+            if entry.get("pid"):
+                self._window_presentation.forget(entry["pid"])
+        self._window_contexts.clear()
         for key in list(self._profile_process_locks):
             self._release_profile_lock(key)
 
@@ -1148,6 +1158,8 @@ class BrowserManager:
             raise
         with suppress(Exception):
             ctx.on("close", lambda *_: self._release_profile_lock(identity.key))
+        if not kwargs.get("headless", False):
+            await self._present_windows(ctx, background=off_screen)
         if not legacy:
             # Persist the UA exposed by this exact native context. It is
             # diagnostic state only; native launches still omit any override.
@@ -1289,6 +1301,8 @@ class BrowserManager:
                     with suppress(Exception):
                         await ctx.close()
         finally:
+            if ctx is not None:
+                self._release_window_presentation(ctx)
             self._release_profile_lock(key)
 
     async def rebind_context(self, old_key: Any, new_key: Any) -> bool:
@@ -1403,6 +1417,8 @@ class BrowserManager:
                     if effective_backend == FINGERPRINT_CHROMIUM_BACKEND:
                         self._runtime_by_key[key] = runtime_id
                 self._contexts[key] = ctx
+                if key in self._cdp_sessions or identity.platform == "xhs":
+                    await self._present_windows(ctx, background=True)
                 if (identity.identity_mode == "native"
                         and identity.platform in {"kuaishou", "shipinhao"}):
                     await self._start_minimize_hold(identity, ctx)
@@ -1878,6 +1894,72 @@ class BrowserManager:
             return None
         return max(candidates, key=lambda entry: entry["opened_at"])["context"]
 
+    def _release_window_presentation(self, ctx):
+        entry = self._window_contexts.pop(id(ctx), None)
+        if entry:
+            task = entry.get("task")
+            if task is not None:
+                task.cancel()
+            if entry.get("pid"):
+                self._window_presentation.forget(entry["pid"])
+
+    def _schedule_window_presentation(self, ctx):
+        entry = self._window_contexts.get(id(ctx))
+        if entry and entry.get("pid"):
+            entry["refresh"] = True
+            if entry.get("task") is None or entry["task"].done():
+                entry["task"] = asyncio.create_task(self._refresh_window_presentation(ctx))
+
+    async def _refresh_window_presentation(self, ctx):
+        entry = self._window_contexts.get(id(ctx))
+        while entry and self._window_contexts.get(id(ctx)) is entry and entry.pop("refresh", False):
+            await self._apply_window_presentation(ctx)
+
+    async def _apply_window_presentation(self, ctx):
+        entry = self._window_contexts.get(id(ctx))
+        if entry and entry.get("pid"):
+            async with entry["lock"]:
+                if self._window_contexts.get(id(ctx)) is entry:
+                    with suppress(Exception):
+                        await asyncio.to_thread(self._window_presentation.apply,
+                            entry["pid"], background=entry["background"])
+
+    async def _present_windows(self, ctx, *, background: bool):
+        """Resolve the owned browser PID via CDP; never select a window by title."""
+        if not self._window_presentation.available:
+            return
+        entry = self._window_contexts.get(id(ctx))
+        if entry is None:
+            entry = {"pid": None, "background": background, "task": None, "lock": asyncio.Lock()}
+            self._window_contexts[id(ctx)] = entry
+            session = None
+            try:
+                browser = ctx.browser
+                if browser is None:
+                    self._window_contexts.pop(id(ctx), None)
+                    return
+                session = await asyncio.wait_for(browser.new_browser_cdp_session(), timeout=2)
+                info = await asyncio.wait_for(session.send("SystemInfo.getProcessInfo"), timeout=2)
+                processes = info.get("processInfo", [])
+                pid = next((item.get("id") for item in processes
+                    if isinstance(item, dict) and item.get("type") == "browser"), None)
+                if type(pid) is not int or pid <= 0:
+                    self._window_contexts.pop(id(ctx), None)
+                    return
+                entry["pid"] = pid
+                ctx.on("page", lambda *_: self._schedule_window_presentation(ctx))
+                ctx.on("close", lambda *_: self._release_window_presentation(ctx))
+            except Exception:
+                self._window_contexts.pop(id(ctx), None)
+                return
+            finally:
+                if session is not None:
+                    with suppress(Exception):
+                        await session.detach()
+        else:
+            entry["background"] = background
+        await self._apply_window_presentation(ctx)
+
     async def open_headed(self, identity: Identity) -> BrowserContext:
         """Return the shared headed XHS context or a temporary legacy one."""
         if identity.platform == "xhs":
@@ -1889,6 +1971,7 @@ class BrowserManager:
             #   屏幕内,否则他根本看不到窗口去扫码 —— bring_window_to_front 用的是
             #   SWP_NOMOVE,不会帮我们移动位置。
             await self.stop_minimize_hold(identity)
+            await self._present_windows(ctx, background=False)
             page = await self._first_page(ctx)
             if page is not None:
                 await self._set_chromium_window_state(
@@ -1970,6 +2053,7 @@ class BrowserManager:
 
     async def _start_minimize_hold(self, identity: Identity, ctx) -> None:
         """把该账号的原生窗口钉到屏幕外,并启动保活任务。"""
+        await self._present_windows(ctx, background=True)
         old = self._minimize_holds.pop(identity.key, None)
         if old is not None:
             old.cancel()

@@ -48,6 +48,8 @@ jobs:
         run: python -m pytest -q tests/backlot/test_studio_storyboard.py tests/backlot/test_studio_motion.py tests/backlot/test_studio.py tests/backlot/test_studio_update_api.py tests/backlot/test_production_queue.py tests/backlot/test_production_queue_worker.py tests/backlot/test_production_queue_server.py tests/backlot/test_work_catalog.py tests/backlot/test_studio_template_library.py tests/backlot/test_studio_motion_preferred.py tests/backlot/test_studio_public_covers.py
       - name: Isolated account service update admission
         run: python -m pytest -q tests/backlot/test_publisher_update_guard.py
+      - name: One-stop flow and paid-operation recovery (fake providers)
+        run: python -m pytest -q tests/backlot/test_avatar_one_stop.py tests/backlot/test_avatar_one_stop_api.py tests/backlot/test_avatar_one_stop_calibration.py tests/backlot/test_avatar_one_stop_download.py tests/backlot/test_avatar_one_stop_policy.py tests/backlot/test_avatar_one_stop_production.py tests/backlot/test_avatar_one_stop_refinement.py tests/backlot/test_bailian_speech.py tests/backlot/test_bailian_voice_clone.py tests/backlot/test_studio_audio_enrollment.py tests/backlot/test_studio_audio_internal.py
   frontend:
     runs-on: ubuntu-latest
     timeout-minutes: 10

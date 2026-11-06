@@ -24,7 +24,7 @@ test('付费提交要求明确确认、有效费用上限与原报价的稳定�
   assert.equal(budgetMicros('0',0),0);assert.throws(()=>budgetMicros('1e3'),/有效/);assert.throws(()=>budgetMicros('-1'),/有效/);
 });
 test('未知提交保持阻塞，只有已知终态允许新报价；账号列表不会补造公共音色',()=>{
-  for(const status of ['submission_unknown','running','queued','uncertain'])assert.equal(jobState({status}).unresolved,true);
+  for(const status of ['submission_unknown','running','queued','uncertain','uploading','paused'])assert.equal(jobState({status}).unresolved,true);
   for(const status of ['completed','failed'])assert.equal(jobState({status}).unresolved,false);
   assert.deepEqual(normalizeCatalog({}).items,[]);
   const result=normalizeCatalog({items:[{...voice,name:'公开',kind:'public',preferences:{image_file_id:'file/one'}}],preferences:{voice_id:'public-a'}});
@@ -37,6 +37,7 @@ test('关闭弹窗后同一标签页仍可恢复原调用，只存操作编号�
   try{
     rememberAudioOperation(quote.operation_id);assert.equal(pendingAudioOperation(),quote.operation_id);
     assert.deepEqual([...stored.values()],[quote.operation_id]);
+    const enrollment='enroll_'+'b'.repeat(32);rememberAudioOperation(enrollment);assert.equal(pendingAudioOperation(),enrollment);
     assert.throws(()=>rememberAudioOperation('sk-key'),/编号/);
     forgetAudioOperation();assert.equal(pendingAudioOperation(),'');
   }finally{if(previous===undefined)delete globalThis.sessionStorage;else globalThis.sessionStorage=previous;}

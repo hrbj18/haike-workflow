@@ -65,5 +65,5 @@ export function paidJobBody(quote, budget, confirmed) {
 
 export function jobState(value = {}) {
   const status = value.status || 'pending';
-  return { ...value, status, unresolved: ['pending', 'queued', 'running', 'processing', 'submitted', 'submitting', 'submission_unknown', 'uncertain', 'unknown'].includes(status) };
+  return { ...value, status, unresolved: ['pending', 'uploading', 'queued', 'running', 'processing', 'submitted', 'submitting', 'submission_unknown', 'uncertain', 'unknown', 'paused'].includes(status) };
 }

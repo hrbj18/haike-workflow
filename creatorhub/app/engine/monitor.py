@@ -1106,7 +1106,10 @@ class MonitorEngine:
         return woken
 
     async def _probe_account_health(self, probe, *,
-                                    allow_invalid_probe: bool = False) -> dict:
+                                    allow_invalid_probe: bool = False,
+                                    automatic: bool = False) -> dict:
+        if automatic and not self.cfg.engine.background_account_checks_enabled:
+            return {"ok": False, "deferred": True, "reason": "后台自动检查已关闭"}
         aid, platform, state, creator_state, proxy, identity = probe
         decision = self.risk.preflight(aid, OperationKind.READ_LIGHT,
                                        allow_invalid_probe=allow_invalid_probe)
@@ -1124,6 +1127,9 @@ class MonitorEngine:
         u, err = {}, ""
         try:
             async with self._operation_guard(aid, OperationKind.READ_LIGHT):
+                # A setting may change while this check waits for the account lock.
+                if automatic and not self.cfg.engine.background_account_checks_enabled:
+                    return {"ok": False, "deferred": True, "reason": "后台自动检查已关闭"}
                 decision = self.risk.preflight(
                     aid, OperationKind.READ_LIGHT,
                     allow_invalid_probe=allow_invalid_probe)
@@ -1132,6 +1138,8 @@ class MonitorEngine:
                             "reason": decision.reason,
                             "next_allowed_at": decision.next_allowed_at}
                 await self._verify_proxy_region(aid, proxy, identity.timezone_id)
+                if automatic and not self.cfg.engine.background_account_checks_enabled:
+                    return {"ok": False, "deferred": True, "reason": "后台自动检查已关闭"}
                 if platform == "xhs" and self.cfg.engine.xhs_read_mode == "browser":
                     if not self._xhs_browser_reads_enabled():
                         return {"ok": False, "indeterminate": True,
@@ -1267,6 +1275,8 @@ class MonitorEngine:
 
     async def _process_risk_recovery(self) -> int:
         """Probe recovering accounts independently of idle keepalive cadence."""
+        if not self.cfg.engine.background_account_checks_enabled:
+            return 0
         now = datetime.utcnow()
         gap = max(1, self.cfg.risk_control.recovery_probe_gap_seconds)
         with get_session() as session:
@@ -1289,12 +1299,16 @@ class MonitorEngine:
                 probes.append(self._account_probe_tuple(account))
         completed = 0
         for probe in probes[:3]:
-            result = await self._probe_account_health(probe)
+            if not self.cfg.engine.background_account_checks_enabled:
+                break
+            result = await self._probe_account_health(probe, automatic=True)
             if result.get("ok"):
                 completed += 1
         return completed
 
     async def _check_accounts(self):
+        if not self.cfg.engine.background_account_checks_enabled:
+            return
         interval = self.cfg.engine.account_check_interval_seconds
         if interval <= 0 or time.time() - self._last_acct_check < interval:
             return
@@ -1306,7 +1320,9 @@ class MonitorEngine:
                       and account.status != "invalid"
                       and self._keepalive_due(account.last_active_at, account_id=account.id)]
         for probe in probes:
-            result = await self._probe_account_health(probe)
+            if not self.cfg.engine.background_account_checks_enabled:
+                break
+            result = await self._probe_account_health(probe, automatic=True)
             from ..session_observability import record_background_health
             record_background_health(probe, result, trigger="keepalive")
 
@@ -1323,6 +1339,8 @@ class MonitorEngine:
         `_probe_account_health` 自动写回 active 并唤醒被挡住的待发任务;确实已
         失效则原样保留,等人工扫码 —— 两种情况都不会更糟。
         """
+        if not self.cfg.engine.background_account_checks_enabled:
+            return
         interval = int(getattr(
             self.cfg.engine, "invalid_auth_recheck_interval_seconds", 0) or 0)
         if interval <= 0:
@@ -1341,9 +1359,11 @@ class MonitorEngine:
         log.info("登录态自愈复检:待验账号 %s", [p[0] for p in probes])
         probed = 0
         for probe in probes:
+            if not self.cfg.engine.background_account_checks_enabled:
+                break
             try:
                 result = await self._probe_account_health(
-                    probe, allow_invalid_probe=True)
+                    probe, allow_invalid_probe=True, automatic=True)
             except Exception as e:
                 log.warning("登录态自愈复检:账号 %s 探测异常 %s", probe[0], e)
                 probed += 1

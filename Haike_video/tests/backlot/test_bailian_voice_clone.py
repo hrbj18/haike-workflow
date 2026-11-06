@@ -4,6 +4,7 @@ import json
 import math
 from pathlib import Path
 import struct
+import subprocess
 from types import SimpleNamespace
 import wave
 
@@ -29,6 +30,20 @@ def wav(seconds=6):
         stream.setframerate(24000)
         stream.writeframes(b"".join(struct.pack("<h", int(4000 * math.sin(i / 9))) for i in range(int(seconds * 24000))))
     return result.getvalue()
+
+
+def test_ogg_reference_upload_can_be_decoded_before_any_cloud_call(tmp_path):
+    binary = clone.resolve_ffmpeg()
+    if not binary:
+        pytest.skip("FFmpeg is required for audio upload normalization")
+    source, encoded, target = tmp_path / "sample.wav", tmp_path / "sample.ogg", tmp_path / "normalized.wav"
+    source.write_bytes(wav())
+    subprocess.run([binary, "-nostdin", "-y", "-v", "error", "-i", str(source), "-c:a", "libvorbis", str(encoded)],
+                   check=True, capture_output=True, timeout=30)
+    result = clone._normalize(encoded, target)
+    assert result["reference_duration_seconds"] == pytest.approx(6, abs=.1)
+    with wave.open(str(target), "rb") as audio:
+        assert audio.getnchannels() == 1 and audio.getframerate() == 24000 and audio.getsampwidth() == 2
 
 
 @pytest.fixture
@@ -93,6 +108,43 @@ def test_enroll_register_default_preserved_and_repeat_does_not_create(rig):
     record = clone._path(result["id"]).read_text(encoding="utf-8")
     assert "Signature=" not in record and "fake-secret" not in record and "test-not-a-real-key" not in record
     assert len(center._load()["custom_cloud_profiles"]) == 2
+
+
+@pytest.mark.parametrize("query_interrupted", [False, True])
+def test_default_plus_enrollment_is_inline_and_recovers_without_recreating(rig, monkeypatch, query_interrupted):
+    voice = api.TTS_PLUS_MODEL + "-haike-test123"
+    calls = []
+    monkeypatch.setattr(clone, "_oss_bucket", lambda: pytest.fail("Plus must not require OSS"))
+    monkeypatch.setattr(clone, "upload_audio", lambda *a, **k: pytest.fail("Plus uses inline audio"))
+    def post(url, **kwargs):
+        body = kwargs["json"]
+        calls.append(body)
+        action = body["input"]["action"]
+        if action == "create_voice":
+            assert body["input"]["target_model"] == api.TTS_PLUS_MODEL
+            assert body["input"]["audio"].startswith("data:audio/wav;base64,UklG")
+            assert "url" not in body["input"]
+            output = {"voice_id": voice}
+        elif query_interrupted and len(calls) == 2:
+            raise requests.Timeout()
+        else:
+            output = {"status": "OK", "target_model": api.TTS_PLUS_MODEL}
+        return SimpleNamespace(status_code=200, ok=True, json=lambda: {"output": output, "request_id": "fake-plus"})
+    monkeypatch.setattr(clone.requests, "post", post)
+    default = center._load()["default_profile_id"]
+    result = clone.create_voice("Plus声音", None, rig.source, "yes")
+    assert result["voice_id"] == voice
+    if query_interrupted:
+        assert result["status"] == "checking"
+        result = clone.resume_voice(result["id"])
+    assert result["status"] == "completed"
+    assert center._load()["default_profile_id"] == default
+    profile = center.get_voice_profile(result["profile_id"])
+    assert profile["model_id"] == api.TTS_PLUS_MODEL and profile["voice_type"] == "cloud_clone"
+    assert clone.create_voice("Plus声音", None, rig.source, "yes")["voice_id"] == voice
+    assert sum(item["input"]["action"] == "create_voice" for item in calls) == 1
+    persisted = clone._path(result["id"]).read_text(encoding="utf-8")
+    assert "base64" not in persisted and "Signature" not in persisted
 
 
 def test_create_timeout_is_durable_ambiguous_never_resubmitted(rig, monkeypatch):
@@ -296,7 +348,10 @@ def temporary_rig(rig, monkeypatch):
 
 def test_cosyvoice_temporary_upload_needs_only_api_key_preserves_model_and_default(temporary_rig):
     default = center._load()["default_profile_id"]
-    assert clone.readiness()["ready"] and clone.readiness()["storage_mode"] == "temporary"
+    service = clone.readiness()
+    assert service["ready"] and service["default_model"] == api.TTS_PLUS_MODEL
+    assert service["storage_mode"] == "inline"
+    assert service["model_readiness"][api.COSYVOICE_TTS_MODEL]["storage_mode"] == "temporary"
     result = create(temporary_rig)
     assert result["status"] == "completed" and result["model_id"] == api.COSYVOICE_TTS_MODEL
     assert center._load()["default_profile_id"] == default

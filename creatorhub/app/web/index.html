@@ -2630,6 +2630,7 @@
         <summary>调度与账号保活</summary>
         <div class="collection-advanced-body stack">
           <p class="field-help">控制全局任务轮询和账号闲置保活；单个监控填写了自己的间隔时，以单个监控设置为准。</p>
+          <div class="form-field"><label class="switch-row" for="engine-background_account_checks_enabled"><input id="engine-background_account_checks_enabled" name="background_account_checks_enabled" type="checkbox" disabled><span class="switch-copy"><b>后台自动检查平台登录</b><span>默认关闭。开启后会定期访问平台，可能启动后台浏览器；关闭后，手动检查和实际任务仍按需验证登录。</span></span></label></div>
           <div class="form-grid">
             <div class="form-field"><label for="engine-scan_interval_seconds">全局扫描间隔（秒）</label><input id="engine-scan_interval_seconds" name="scan_interval_seconds" type="number" min="1" max="86400" step="1" required disabled><p class="field-help">仅影响跟随全局间隔的任务，推荐 300 秒（5 分钟）；实际执行仍受任务耗时、错峰和账号限制影响。</p></div>
             <div class="form-field"><label for="engine-idle_keepalive_hours">账号闲置保活阈值（小时）</label><input id="engine-idle_keepalive_hours" name="idle_keepalive_hours" type="number" min="0" max="168" step="0.5" required disabled><p class="field-help">账号超过该时长未活跃才执行一次保活；0 表示每轮都检查。</p></div>

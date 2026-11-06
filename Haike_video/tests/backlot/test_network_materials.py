@@ -85,6 +85,62 @@ def test_sessions_separate_download_and_publish_and_never_return_credentials(fix
     assert network.session_view(account(download_status="future_unknown"))["download_status"] == "unconfirmed"
 
 
+def test_login_check_setting_uses_allowlisted_persistent_engine_patch(fixture_service, monkeypatch):
+    calls = []
+    enabled = False
+
+    def creator(path, data=None, **kwargs):
+        nonlocal enabled
+        calls.append((path, data, kwargs))
+        assert path == "/api/settings/engine"
+        if data is not None:
+            assert kwargs["method"] == "PUT"
+            assert set(data) == {"background_account_checks_enabled"}
+            enabled = data["background_account_checks_enabled"]
+        return {"values": {"background_account_checks_enabled": enabled, "private": "SECRET"}}
+
+    monkeypatch.setattr(network, "creator_call", creator)
+    client = fixture_service.client
+    assert client.get("/api/studio/platform-login-checks").json() == {"enabled": False}
+    assert client.post("/api/studio/platform-login-checks", json={"enabled": True}).json() == {"enabled": True}
+    assert client.get("/api/studio/platform-login-checks").json() == {"enabled": True}
+    assert client.post("/api/studio/platform-login-checks", json={"enabled": False}).json() == {"enabled": False}
+    assert len(calls) == 4
+
+
+@pytest.mark.parametrize("payload", [{}, {"enabled": 1}, {"enabled": "false"},
+    {"enabled": None}, {"enabled": False, "api_key": "SECRET"}])
+def test_invalid_login_check_settings_do_not_reach_account_service(fixture_service, payload):
+    response = fixture_service.client.post("/api/studio/platform-login-checks", json=payload)
+    assert response.status_code == 422
+    assert "SECRET" not in response.text
+    assert not fixture_service.calls
+
+
+def test_other_origin_cannot_change_background_checks(fixture_service):
+    response = fixture_service.client.post("/api/studio/platform-login-checks", json={"enabled": True},
+        headers={"Origin": "https://other.example"})
+    assert response.status_code == 403
+    assert not fixture_service.calls
+
+
+def test_old_account_service_does_not_fake_a_disabled_setting(fixture_service, monkeypatch):
+    monkeypatch.setattr(network, "creator_call", lambda *_args, **_kwargs: {"values": {}})
+    response = fixture_service.client.get("/api/studio/platform-login-checks")
+    assert response.status_code == 503
+
+
+def test_creator_bridge_sends_the_engine_patch_with_put(monkeypatch):
+    class Opener:
+        def open(self, request, **_kwargs):
+            assert request.get_method() == "PUT"
+            assert json.loads(request.data) == {"background_account_checks_enabled": False}
+            return io.BytesIO(b'{"values":{"background_account_checks_enabled":false}}')
+
+    monkeypatch.setattr(network, "CreatorGateway", lambda: SimpleNamespace(base_url="http://127.0.0.1:8000", opener=Opener()))
+    assert network.creator_call("/api/settings/engine", {"background_account_checks_enabled": False}, method="PUT")["values"]["background_account_checks_enabled"] is False
+
+
 @pytest.fixture
 def search_clock(monkeypatch):
     now = datetime(2026, 10, 17, 3, 0, tzinfo=timezone.utc)

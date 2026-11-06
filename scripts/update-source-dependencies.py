@@ -14,14 +14,15 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from portable.dependency_sources import environment
+from portable.system_browser import environment as browser_environment
 from portable.source_app_update import SHA, git
 
 FRONTENDS = ('Haike_video/remotion-composer', 'Haike_video/motion-components/snapcn',
              'prototypes/haike-avatar-generator', 'creatorhub', '_distribution-tools/motion-html')
 
 
-def runtime_environment(root=ROOT):
-    env = environment()
+def runtime_environment(root=ROOT, *, browser_required=True):
+    env = browser_environment(environment(), required=browser_required)
     nodes = [Path(env['HAIKE_NODE_EXECUTABLE'])] if env.get('HAIKE_NODE_EXECUTABLE') else []
     nodes += [root / 'runtime/node/node.exe', *root.glob('runtime/macos/*/node/node-*/bin/node')]
     node = next((p for p in nodes if p.is_file()), None)
@@ -103,7 +104,7 @@ def refresh(previous, *, root=ROOT, dependencies_only=False):
     if not SHA.fullmatch(previous):
         raise ValueError('原提交编号无效。')
     changed = set(git(root, 'diff', '--name-only', previous, 'HEAD').stdout.splitlines())
-    env = runtime_environment(root)
+    env = runtime_environment(root, browser_required=not dependencies_only)
     npm = shutil.which('npm.cmd' if os.name == 'nt' else 'npm', path=env.get('PATH'))
     if not npm:
         raise ValueError('前端构建需要 Node.js 22+ 与 npm；原环境未修改。')
@@ -125,15 +126,16 @@ def refresh(previous, *, root=ROOT, dependencies_only=False):
             print('Reuse npm dependencies: ' + module, flush=True)
     if dependencies_only:
         return
+    if sys.platform == 'win32':
+        execute([sys.executable, root / 'scripts/setup-windows-media.py'], env, root)
     execute([sys.executable, root / 'scripts/build-studio.py', '--skip-install'], env, root)
     # CreatorHub ships its compiled bundle in Git. Rebuilding tracked output on
     # clients would create a dirty checkout and prevent the next safe update.
     if not (root / 'creatorhub/app/web/workbench.js').is_file():
         raise ValueError('源码缺少账号服务的已提交界面文件。')
     video_python = python_for('Haike_video')
-    if sys.platform == 'darwin':
-        execute([video_python, '-c', 'from backlot.motion_native_runtime import bind_installation; print(bind_installation())'],
-                env, root / 'Haike_video')
+    if sys.platform in {'darwin', 'win32'}:
+        execute([video_python, root / 'scripts/bind-media-runtime.py'], env, root)
     verified = subprocess.run([str(video_python), str(root / 'Haike_video/scripts/motion_replay.py'),
                                'verify', '--preferred'], cwd=root, env=env, check=True,
                               capture_output=True, text=True, encoding='utf-8', timeout=180,

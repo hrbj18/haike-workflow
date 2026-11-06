@@ -171,6 +171,7 @@ class RiskAdminTests(unittest.TestCase):
         self.assertEqual(task.next_allowed_at, next_at)
 
     def test_recovery_scheduler_probes_and_wakes_collection_job(self):
+        self.cfg.engine.background_account_checks_enabled = True
         self.cfg.engine.xhs_read_mode = "api"  # explicit creator API fixture
         self.cfg.risk_control.recovery_successes = 1
         self.cfg.risk_control.recovery_probe_gap_seconds = 1

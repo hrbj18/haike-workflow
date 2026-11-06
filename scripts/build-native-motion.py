@@ -153,7 +153,8 @@ def main():
             target.write_bytes(result)
         renderers.append({'source': source.relative_to(ROOT).as_posix(), 'source_sha256': sha(data),
                           'derived': target.relative_to(ROOT).as_posix(), 'derived_sha256': sha(result)})
-    document = {'schema': 'haike.motion-native-adapter/1', 'platform': 'darwin', 'adapter_version': '1.1.0',
+    document = {'schema': 'haike.motion-native-adapter/1', 'platform': 'native',
+                'supported_platforms': ['darwin', 'win32'], 'adapter_version': '1.2.0',
                 'changes': ['fixed native imports', 'pinned native binaries and npm', 'explicit local dependency resolution', 'actual BT.709 color conversion at native encode'],
                 'preserved': ['canonical source hashes', 'drawing sources', 'action IDs and clocks', 'claim/approval guards', 'full encoding and sound'],
                 'generator_sha256': sha(Path(__file__).read_bytes()),
