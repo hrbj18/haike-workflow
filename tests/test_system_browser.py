@@ -28,6 +28,16 @@ class SystemBrowserTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, '不会自动下载'):
                 system_browser.resolve({})
 
+    def test_existing_explicit_remotion_binding_is_preserved_and_missing_binding_stops(self):
+        with tempfile.TemporaryDirectory() as folder:
+            executable = Path(folder) / 'legacy-browser.exe'
+            executable.write_bytes(b'existing bound browser')
+            env = {'REMOTION_BROWSER_EXECUTABLE': str(executable)}
+            self.assertEqual(system_browser.resolve(env), executable.resolve())
+            executable.unlink()
+            with self.assertRaisesRegex(ValueError, '本地浏览器不存在'):
+                system_browser.resolve(env)
+
     def test_windows_setup_reuses_browser_and_downloads_only_missing_ffmpeg(self):
         spec = importlib.util.spec_from_file_location('media_setup_test', ROOT / 'scripts/setup-windows-media.py')
         setup = importlib.util.module_from_spec(spec)

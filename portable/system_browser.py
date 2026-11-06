@@ -48,6 +48,15 @@ def candidates(env=None, platform=None):
 
 
 def resolve(env=None, *, required=True, platform=None):
+    env = os.environ if env is None else env
+    explicit = env.get('HAIKE_BROWSER_PATH') or env.get('REMOTION_BROWSER_EXECUTABLE') or env.get('CHROME_PATH')
+    if explicit:
+        path = Path(explicit)
+        if path.is_file():
+            return path.resolve()
+        if required:
+            raise ValueError('配置的本地浏览器不存在；请选择已安装的Chrome/Edge，海客不会自动下载浏览器。')
+        return None
     for path in candidates(env, platform):
         if path.is_file():
             return path.resolve()
